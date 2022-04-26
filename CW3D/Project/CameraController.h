@@ -6,6 +6,8 @@ class CCameraController
 {
 private:
 	CCamera m_Camera;
+	CVector3 m_OffsetPos;
+	CVector3 m_OffsetLookPos;
 
 public:
 	CCameraController();

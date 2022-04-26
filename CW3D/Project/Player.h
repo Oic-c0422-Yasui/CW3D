@@ -14,9 +14,11 @@ private:
 	CVector3	m_Rotation;
 	CVector3	m_Scale;
 	CMeshContainer*		m_pMesh;
-	bool		m_MoveFlg;
+	bool		m_HorizontalMoveFlg;
+	bool		m_VerticalMoveFlg;
+	bool		m_ReverseFlg;
 
-#define TEMP_SPEED 1
+#define TEMP_SPEED 0.20f
 
 	Sample::InputPtr		m_pInput;
 	
@@ -24,6 +26,7 @@ private:
 
 	void UpdateKey();
 	void UpdateMove();
+	void SetReverse();
 
 public:
 	CPlayer();

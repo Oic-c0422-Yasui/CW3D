@@ -15,7 +15,7 @@
 CSceneBase* gScene = NULL;
 
 
-
+CMeshContainer test;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -27,13 +27,12 @@ CSceneBase* gScene = NULL;
 MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	CUtilities::SetFPS(60);
-	g_pGraphics->SetScreenSize(1920, 1080);
 
 	gScene = new CBattleScene;
 	gScene->Load();
 	gScene->Initialize();
 
-
+	test.Load("Stage/test.mom");
 	
 	return TRUE;
 }
@@ -65,6 +64,8 @@ MofBool CGameApp::Render(void){
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
 	gScene->Render();
+	CMatrix44 matWorld;
+	test.Render(matWorld);
 	//描画の終了
 	g_pGraphics->RenderEnd();
 	return TRUE;
@@ -83,5 +84,6 @@ MofBool CGameApp::Release(void){
 		delete gScene;
 		gScene = NULL;
 	}
+	test.Release();
 	return TRUE;
 }

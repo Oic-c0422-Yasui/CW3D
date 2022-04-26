@@ -101,8 +101,6 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerStatus.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>

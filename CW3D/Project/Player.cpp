@@ -28,12 +28,16 @@ void CPlayer::Initialize()
 	m_Velocity = Vector3(0, 0, 0);
 	m_Rotation = Vector3(0, 0, 0);
 	m_Scale = Vector3(1, 1, 1);
+	CMatrix44 matRotate;
+	matRotate.RotationY(MOF_ToRadian(-60));
+	matWorld *= matRotate;
 }
 
 void CPlayer::Update()
 {
 	UpdateKey();
 	UpdateMove();
+	SetReverse();
 
 	m_Position += m_Velocity;
 }
@@ -42,7 +46,6 @@ void CPlayer::Render()
 {
 
 	
-	matWorld.Scaling(m_Scale);
 	matWorld.SetTranslation(m_Position);
 	m_pMesh->Render(matWorld);
 }
@@ -53,11 +56,13 @@ void CPlayer::Release()
 
 void CPlayer::UpdateKey()
 {
-	m_MoveFlg = false;
+	m_HorizontalMoveFlg = false;
+	m_VerticalMoveFlg = false;
 	if (m_pInput->IsNegativePress(KEY_HORIZONTAL))
 	{
-		m_MoveFlg = true;
-		m_Velocity.x -= m_Speed / 4.0f;
+		m_HorizontalMoveFlg = true;
+		m_ReverseFlg = true;
+		m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
 		if (m_Velocity.x < -m_Speed)
 		{
 			m_Velocity.x = -m_Speed;
@@ -65,8 +70,9 @@ void CPlayer::UpdateKey()
 	}
 	else if (m_pInput->IsPress(KEY_HORIZONTAL))
 	{
-		m_MoveFlg = true;
-		m_Velocity.x += m_Speed / 4.0f;
+		m_HorizontalMoveFlg = true;
+		m_ReverseFlg = false;
+		m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
 		if (m_Velocity.x > m_Speed)
 		{
 			m_Velocity.x = m_Speed;
@@ -74,31 +80,31 @@ void CPlayer::UpdateKey()
 	}
 	if (m_pInput->IsNegativePress(KEY_VERTICAL))
 	{
-		m_MoveFlg = true;
-		m_Velocity.z -= m_Speed / 4.0f;
-		if (m_Velocity.z < -m_Speed)
+		m_VerticalMoveFlg = true;
+		m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
+		if (m_Velocity.z > m_Speed)
 		{
-			m_Velocity.z = -m_Speed;
+			m_Velocity.z = m_Speed;
 		}
 	}
 	else if (m_pInput->IsPress(KEY_VERTICAL))
 	{
-		m_MoveFlg = true;
-		m_Velocity.z += m_Speed / 4.0f;
-		if (m_Velocity.z > m_Speed)
+		m_VerticalMoveFlg = true;
+		m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
+		if (m_Velocity.z < -m_Speed)
 		{
-			m_Velocity.z = m_Speed;
+			m_Velocity.z = -m_Speed;
 		}
 	}
 }
 
 void CPlayer::UpdateMove()
 {
-	if (!m_MoveFlg)
+	if (!m_HorizontalMoveFlg)
 	{
 		if (m_Velocity.x > 0)
 		{
-			m_Velocity.x -= m_Speed / 4.0f;
+			m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
 			if (m_Velocity.x <= 0)
 			{
 				m_Velocity.x = 0;
@@ -106,16 +112,18 @@ void CPlayer::UpdateMove()
 		}
 		else if (m_Velocity.x < 0)
 		{
-			m_Velocity.x += m_Speed / 4.0f;
+			m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
 			if (m_Velocity.x >= 0)
 			{
 				m_Velocity.x = 0;
 			}
 		}
-
+	}
+	if (!m_VerticalMoveFlg)
+	{
 		if (m_Velocity.z > 0)
 		{
-			m_Velocity.z -= m_Speed / 4.0f;
+			m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
 			if (m_Velocity.z <= 0)
 			{
 				m_Velocity.z = 0;
@@ -123,12 +131,31 @@ void CPlayer::UpdateMove()
 		}
 		else if (m_Velocity.z < 0)
 		{
-			m_Velocity.z += m_Speed / 4.0f;
+			m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
 			if (m_Velocity.z >= 0)
 			{
 				m_Velocity.z = 0;
 			}
 		}
+	}
+		
+	
+	
+}
+
+void CPlayer::SetReverse()
+{
+	if (m_ReverseFlg)
+	{
+		CMatrix44 matRotate;
+		matRotate.RotationY(MOF_ToRadian(60));
+		matWorld = matRotate;
+	}
+	else
+	{
+		CMatrix44 matRotate;
+		matRotate.RotationY(MOF_ToRadian(-60));
+		matWorld = matRotate;
 	}
 	
 }

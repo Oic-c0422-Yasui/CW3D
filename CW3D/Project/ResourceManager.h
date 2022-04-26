@@ -6,8 +6,9 @@ namespace Sample
 {
 	//なにかの型（入れるまで決まっていない）
 	template<typename T>
-	class ResourceManager
+	class ResourceManager : public Singleton<ResourceManager<T>>
 	{
+		friend class Singleton<ResourceManager<T>>;
 	private:
 		//シェアポインタを使いやすいように名前を付ける
 		using ResourcePtr = std::shared_ptr<T>;
@@ -15,6 +16,7 @@ namespace Sample
 		std::unordered_map<std::string, ResourcePtr> m_Resources;
 
 		ResourceManager() :
+			Singleton<ResourceManager<T>>(),
 			m_Resources()
 		{
 
@@ -45,12 +47,12 @@ namespace Sample
 			return m_Resources[key];
 		}
 
-		//マネージャーのインスタンスを取得する
-		static ResourceManager& GetInstance()
-		{
-			static ResourceManager instance;
-			return instance;
-		}
+		////マネージャーのインスタンスを取得する
+		//static ResourceManager& GetInstance()
+		//{
+		//	static ResourceManager instance;
+		//	return instance;
+		//}
 
 	};
 }
