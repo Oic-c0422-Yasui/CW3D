@@ -27,8 +27,10 @@ CSceneBase* gScene = NULL;
 MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	CUtilities::SetFPS(60);
+	g_pGraphics->SetScreenSize(1920, 1080);
 
 	gScene = new CBattleScene;
+	gScene->Load();
 	gScene->Initialize();
 
 
@@ -46,7 +48,7 @@ MofBool CGameApp::Update(void){
 	//キーの更新
 	g_pInput->RefreshKey();
 
-	
+	gScene->Update();
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -62,7 +64,7 @@ MofBool CGameApp::Render(void){
 	//画面のクリア
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
-
+	gScene->Render();
 	//描画の終了
 	g_pGraphics->RenderEnd();
 	return TRUE;
@@ -77,6 +79,7 @@ MofBool CGameApp::Render(void){
 MofBool CGameApp::Release(void){
 	if (gScene)
 	{
+		gScene->Release();
 		delete gScene;
 		gScene = NULL;
 	}

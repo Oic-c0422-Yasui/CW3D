@@ -96,15 +96,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BattleScene.cpp" />
+    <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MofInput.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerStatus.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleScene.h" />
+    <ClInclude Include="CameraController.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
@@ -112,6 +116,8 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MofInput.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="TemplateSingleton.h" />
