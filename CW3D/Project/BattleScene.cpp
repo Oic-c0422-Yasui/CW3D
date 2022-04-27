@@ -20,7 +20,7 @@ bool CBattleScene::Load()
 	input->AddJoyStickHorizontal(KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(KEY_VERTICAL, 0);
 
-
+	
 	
 
 
@@ -41,6 +41,9 @@ void CBattleScene::Initialize()
 {
 	m_Player.Initialize();
 	m_Camera.Initialize();
+
+	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
+	CGraphicsUtilities::SetDirectionalLight(&m_Light);
 }
 
 void CBattleScene::Update()

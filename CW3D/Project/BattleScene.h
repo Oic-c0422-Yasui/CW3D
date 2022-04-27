@@ -16,6 +16,7 @@ private:
 
 	CMeshContainer	m_PlayerMesh;
 
+	CDirectionalLight m_Light;
 
 public:
 	CBattleScene();

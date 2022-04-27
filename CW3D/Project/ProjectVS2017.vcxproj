@@ -60,6 +60,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Library\Include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,21 +106,28 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
+    <ClInclude Include="IActor.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IState.h" />
+    <ClInclude Include="IStateMachine.h" />
     <ClInclude Include="MofInput.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="TemplateSingleton.h" />
     <ClInclude Include="Test.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
