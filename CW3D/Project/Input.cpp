@@ -7,43 +7,43 @@ using namespace Sample;
  */
 void Input::Update()
 {
-	for (auto k = keyMap_.begin(); k != keyMap_.end(); ++k)
+	for (auto k = m_KeyMap.begin(); k != m_KeyMap.end(); ++k)
 	{
-		k->second.prevValue = k->second.nowValue;
-		k->second.nowValue = 0;
-		for (auto& key : k->second.key)
+		k->second.m_PreviousValue = k->second.m_NowValue;
+		k->second.m_NowValue = 0;
+		for (auto& key : k->second.m_Key)
 		{
-			switch (key.type)
+			switch (key.m_Type)
 			{
 				//キーボード
 			case KeyData::Type::Keyboard:
-				k->second.nowValue += GetKeyboardKeyState(key.positiveNo, key.negativeNo);
+				k->second.m_NowValue += GetKeyboardKeyState(key.m_PositiveNo, key.m_NegativeNo);
 				break;
 
 				//マウス
 			case KeyData::Type::Mouse:
-				k->second.nowValue += GetMouseKeyState(key.positiveNo, key.negativeNo);
+				k->second.m_NowValue += GetMouseKeyState(key.m_PositiveNo, key.m_NegativeNo);
 				break;
 
 				//ジョイパッド
 			case KeyData::Type::JoyPad:
-				k->second.nowValue += GetJoypadKeyState(key.padNo, key.positiveNo, key.negativeNo);
+				k->second.m_NowValue += GetJoypadKeyState(key.m_PadNo, key.m_PositiveNo, key.m_NegativeNo);
 				break;
 
 				//ジョイスティック
 			case KeyData::Type::JoyStickHorizontal:
-				k->second.nowValue += GetJoypadStickHorizontal(key.padNo);
+				k->second.m_NowValue += GetJoypadStickHorizontal(key.m_PadNo);
 				break;
 
 				//ジョイスティック
 			case KeyData::Type::JoyStickVertical:
-				k->second.nowValue += GetJoypadStickVertical(key.padNo);
+				k->second.m_NowValue += GetJoypadStickVertical(key.m_PadNo);
 				break;
 
 			}
 		}
 		//-1～+1でクリップ
-		if (k->second.nowValue > 1) { k->second.nowValue = 1; }
-		else if (k->second.nowValue < -1) { k->second.nowValue = -1; }
+		if (k->second.m_NowValue > 1) { k->second.m_NowValue = 1; }
+		else if (k->second.m_NowValue < -1) { k->second.m_NowValue = -1; }
 	}
 }

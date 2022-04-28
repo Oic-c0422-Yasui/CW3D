@@ -25,6 +25,18 @@
     <Filter Include="ヘッダー ファイル\Actor">
       <UniqueIdentifier>{6d43ca46-2587-4d7d-89f6-f22746260d77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Action">
+      <UniqueIdentifier>{53716ce4-2b71-4514-ad26-35534698b1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Action">
+      <UniqueIdentifier>{2544aa60-1001-41b9-96c4-51add0f9339b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\ActionBase">
+      <UniqueIdentifier>{b8693d36-134d-442f-b792-3d4a0bda1511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\StateBase">
+      <UniqueIdentifier>{18b97007-6082-4f23-acc9-92cc553e68cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -50,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="CameraController.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,18 +107,6 @@
     <ClInclude Include="PlayerStatus.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IState.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="IStateMachine.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>ヘッダー ファイル\State</Filter>
-    </ClInclude>
     <ClInclude Include="TemplateSingleton.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
@@ -118,6 +121,30 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="IAction.h">
+      <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="IState.h">
+      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="IStateMachine.h">
+      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>ヘッダー ファイル\State\StateBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

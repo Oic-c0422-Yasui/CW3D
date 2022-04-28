@@ -9,8 +9,15 @@ enum tag_SCENENO
 	SCENE_RESULT,
 };
 
+//仮
+#define PLAYER_SPEED 0.02f
+#define GRAVITY 0.02f
+#define GRAVITYMAX 0.05f
 
-//キーの名称
-const std::string KEY_HORIZONTAL = "Horizontal";
-const std::string KEY_VERTICAL = "Vertical";
-const std::string KEY_JUMP = "Jump";
+//インプットキーの名称
+const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
+const std::string INPUT_KEY_VERTICAL = "Vertical";
+const std::string INPUT_KEY_JUMP = "Jump";
+
+//ステートキーの名称
+const std::string STATE_KEY_MOVE = "Move";

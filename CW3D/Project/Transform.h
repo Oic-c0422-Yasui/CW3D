@@ -22,27 +22,16 @@ namespace Sample
 
 	public:
 		
-		Transform():
-			m_Position(0,0,0),
-			m_Scale(1,1,1),
-			m_Rotate(0,0,0),
-			m_World()
+		Transform() :
+			m_Position(0, 0, 0),
+			m_Scale(1, 1, 1),
+			m_Rotate(0, 0, 0),
+			m_World(),
+			m_UpdateFlg(false)
 		{
 		}
 
-		void Move()
-		{
-			////intにconst => 定数へのポインタ
-			//const int* a = nullptr;
-			//int const* b = nullptr;
-
-			////int*にconst => ポインタが定数
-			//int* const c = nullptr;
-
-			////両方const
-			//const int* const d = nullptr;
-		}
-
+		//マトリクスを取得
 		const CMatrix44& GetWorld() {
 			if (m_UpdateFlg)
 			{
@@ -51,6 +40,197 @@ namespace Sample
 			}
 			return m_World;
 		}
+
+
+		/**
+		 * @brief		座標系
+		 */
+
+			//座標の移動
+			void MovePosition(CVector3 movePos) noexcept
+			{
+				m_Position += movePos;
+				m_World.SetTranslation(m_Position);
+			}
+
+			//座標の設定
+			void SetPosition(CVector3 position) noexcept
+			{
+				m_Position = position;
+				m_World.SetTranslation(m_Position);
+			}
+
+			//座標の設定
+			void SetPositionX(float position) noexcept
+			{
+				m_Position.x = position;
+				m_World.SetTranslation(m_Position);
+			}
+
+			//座標の設定
+			void SetPositionY(float position) noexcept
+			{
+				m_Position.y = position;
+				m_World.SetTranslation(m_Position);
+			}
+
+			//座標の設定
+			void SetPositionZ(float position) noexcept
+			{
+				m_Position.z = position;
+				m_World.SetTranslation(m_Position);
+			}
+
+			//座標の取得
+			CVector3 GetPosition() const noexcept
+			{
+				return m_Position;
+			}
+
+			//座標の取得
+			float GetPositionX() const noexcept
+			{
+				return m_Position.x;
+			}
+
+			//座標の取得
+			float GetPositionY() const noexcept
+			{
+				return m_Position.y;
+			}
+
+			//座標の取得
+			float GetPositionZ() const noexcept
+			{
+				return m_Position.z;
+			}
+
+		/**
+		 * @brief		サイズ系
+		 */
+
+			 //サイズの変更
+			void MoveScale(CVector3 changeScale) noexcept
+			{
+				m_Scale += changeScale;
+				m_UpdateFlg = true;
+			}
+
+			//サイズの設定
+			void SetScale(CVector3 scale) noexcept
+			{
+				m_Scale = scale;
+				m_UpdateFlg = true;
+			}
+
+			//サイズの設定
+			void SetScaleX(float scale) noexcept
+			{
+				m_Scale.x = scale;
+				m_UpdateFlg = true;
+			}
+
+			//サイズの設定
+			void SetScaleY(float scale) noexcept
+			{
+				m_Scale.y = scale;
+				m_UpdateFlg = true;
+			}
+
+			//サイズの設定
+			void SetScaleZ(float scale) noexcept
+			{
+				m_Scale.z = scale;
+				m_UpdateFlg = true;
+			}
+
+			//サイズの取得
+			CVector3 GetScale() const noexcept
+			{
+				return m_Scale;
+			}
+
+			//サイズの取得
+			float GetScaleX() const noexcept
+			{
+				return m_Scale.x;
+			}
+
+			//サイズの取得
+			float GetScaleY() const noexcept
+			{
+				return m_Scale.y;
+			}
+
+			//サイズの取得
+			float GetScaleZ() const noexcept
+			{
+				return m_Scale.z;
+			}
+
+		/**
+		 * @brief		回転系
+		 */
+
+			//回転
+			void MoveRotate(CVector3 rotate) noexcept
+			{
+				m_Rotate += rotate;
+				m_UpdateFlg = true;
+			}
+
+			//回転の設定
+			void SetRotate(CVector3 rotate) noexcept
+			{
+				m_Rotate = rotate;
+				m_UpdateFlg = true;
+			}
+
+			//回転の設定
+			void SetRotateX(float rotate) noexcept
+			{
+				m_Rotate.x = rotate;
+				m_UpdateFlg = true;
+			}
+
+			//回転の設定
+			void SetRotateY(float rotate) noexcept
+			{
+				m_Rotate.y = rotate;
+				m_UpdateFlg = true;
+			}
+
+			//回転の設定
+			void SetRotateZ(float rotate) noexcept
+			{
+				m_Rotate.z = rotate;
+				m_UpdateFlg = true;
+			}
+
+			//回転の取得
+			CVector3 GetRotate() const noexcept
+			{
+				return m_Scale;
+			}
+
+			//回転の取得
+			float GetRotateX() const noexcept
+			{
+				return m_Scale.x;
+			}
+
+			//回転の取得
+			float GetRotateY() const noexcept
+			{
+				return m_Scale.y;
+			}
+
+			//回転の取得
+			float GetRotateZ() const noexcept
+			{
+				return m_Scale.z;
+			}
+
 	private:
 		void UpdateMatrix()
 		{
@@ -65,5 +245,6 @@ namespace Sample
 			//m_World *= parent->GetWorld();
 		}
 	};
-
+	//ポインタ置き換え
+	using TransformPtr = std::shared_ptr<Transform>;
 }

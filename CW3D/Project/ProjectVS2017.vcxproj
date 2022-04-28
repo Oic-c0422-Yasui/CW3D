@@ -101,6 +101,7 @@
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MofInput.cpp" />
+    <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
+    <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
@@ -119,6 +121,8 @@
     <ClInclude Include="IState.h" />
     <ClInclude Include="IStateMachine.h" />
     <ClInclude Include="MofInput.h" />
+    <ClInclude Include="MoveAction.h" />
+    <ClInclude Include="MoveState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -128,6 +132,7 @@
     <ClInclude Include="TemplateSingleton.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Action.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

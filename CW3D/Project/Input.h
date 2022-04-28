@@ -23,25 +23,25 @@ namespace Sample {
 				JoyPad,
 			};
 			struct Key {
-				int				positiveNo;
-				int				negativeNo;
-				int				padNo;
-				Type			type;
+				int				m_PositiveNo;
+				int				m_NegativeNo;
+				int				m_PadNo;
+				Type			m_Type;
 			};
-			std::vector<Key>	key;
-			float				prevValue;
-			float				nowValue;
-			float				inputValue;
+			std::vector<Key>	m_Key;
+			float				m_PreviousValue;
+			float				m_NowValue;
+			float				m_InputValue;
 
 			KeyData()
-				: key()
-				, prevValue(0)
-				, nowValue(0)
-				, inputValue(0.5f) {
+				: m_Key()
+				, m_PreviousValue(0)
+				, m_NowValue(0)
+				, m_InputValue(0.5f) {
 			}
 		};
 		using KeyMap = std::unordered_map<KeyType, KeyData >;
-		KeyMap					keyMap_;
+		KeyMap					m_KeyMap;
 
 		/**
 		 * @brief		キーボードキーの取得
@@ -86,7 +86,7 @@ namespace Sample {
 		 * @brief		コンストラクタ
 		 */
 		Input()
-			: keyMap_()
+			: m_KeyMap()
 		{ }
 		/**
 		 * @brief		デストラクタ
@@ -99,14 +99,14 @@ namespace Sample {
 		 * @param[in]	key				登録キー
 		 */
 		void AddKeyboardKey(const KeyType& kn, int key) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
+				km->second.m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
+				m_KeyMap[kn].m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
 			}
 		}
 
@@ -117,14 +117,14 @@ namespace Sample {
 		 * @param[in]	negativeKey		-方向の登録キー
 		 */
 		void AddKeyboardKey(const KeyType& kn, int positiveKey, int negativeKey) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
+				km->second.m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
+				m_KeyMap[kn].m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
 			}
 		}
 
@@ -134,14 +134,14 @@ namespace Sample {
 		 * @param[in]	Key		登録キー
 		 */
 		void AddMouseKey(const KeyType& kn, int Key) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
+				km->second.m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
+				m_KeyMap[kn].m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
 			}
 		}
 
@@ -152,14 +152,14 @@ namespace Sample {
 		 * @param[in]	key				登録キー
 		 */
 		void AddJoypadKey(const KeyType& kn, int pad, int key) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
+				km->second.m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
+				m_KeyMap[kn].m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
 			}
 		}
 
@@ -169,14 +169,14 @@ namespace Sample {
 		 * @param[in]	pad				登録パッド
 		 */
 		void AddJoyStickHorizontal(const KeyType& kn, int pad) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+				km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+				m_KeyMap[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
 			}
 		}
 
@@ -186,14 +186,14 @@ namespace Sample {
 		 * @param[in]	pad				登録パッド
 		 */
 		void AddJoyStickVertical(const KeyType& kn, int pad) {
-			auto km = keyMap_.find(kn);
-			if (km != keyMap_.end())
+			auto km = m_KeyMap.find(kn);
+			if (km != m_KeyMap.end())
 			{
-				km->second.key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+				km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
 			}
 			else
 			{
-				keyMap_[kn].key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+				m_KeyMap[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
 			}
 		}
 
@@ -208,10 +208,10 @@ namespace Sample {
 		 * @return		キー入力の値
 		 */
 		float GetAxis(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue;
+			return kd.m_NowValue;
 		}
 
 		/**
@@ -221,10 +221,10 @@ namespace Sample {
 		 *				false	このフレームでは押されていない
 		 */
 		bool IsPush(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue > kd.inputValue && kd.prevValue < kd.inputValue;
+			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < kd.m_InputValue;
 		}
 
 		/**
@@ -234,10 +234,10 @@ namespace Sample {
 		 *				false	このフレームでは押されていない
 		 */
 		bool IsNegativePush(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue < -kd.inputValue && kd.prevValue > -kd.inputValue;
+			return kd.m_NowValue < -kd.m_InputValue && kd.m_PreviousValue > -kd.m_InputValue;
 		}
 
 		/**
@@ -247,10 +247,10 @@ namespace Sample {
 		 *				false	このフレームでは離されていない
 		 */
 		bool IsPull(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue < kd.inputValue && kd.prevValue > kd.inputValue;
+			return kd.m_NowValue < kd.m_InputValue && kd.m_PreviousValue > kd.m_InputValue;
 		}
 
 		/**
@@ -260,10 +260,10 @@ namespace Sample {
 		 *				false	このフレームでは離されていない
 		 */
 		bool IsNegativePull(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue > kd.inputValue && kd.prevValue < -kd.inputValue;
+			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < -kd.m_InputValue;
 		}
 
 		/**
@@ -273,10 +273,10 @@ namespace Sample {
 		 *				false	このフレームで押されていない
 		 */
 		bool IsPress(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue > kd.inputValue;
+			return kd.m_NowValue > kd.m_InputValue;
 		}
 
 		/**
@@ -286,10 +286,10 @@ namespace Sample {
 		 *				false	このフレームで押されていない
 		 */
 		bool IsNegativePress(const KeyType& kn) const override {
-			const auto& v = keyMap_.find(kn);
-			if (v == keyMap_.end()) { return 0; }
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
-			return kd.nowValue < -kd.inputValue;
+			return kd.m_NowValue < -kd.m_InputValue;
 		}
 
 		/**
@@ -298,7 +298,7 @@ namespace Sample {
 		 */
 		std::vector<KeyType> GetKeyList() const override {
 			std::vector<KeyType> keys;
-			for (auto& key : keyMap_)
+			for (auto& key : m_KeyMap)
 			{
 				keys.push_back(key.first);
 			}

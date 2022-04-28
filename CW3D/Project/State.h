@@ -10,11 +10,20 @@ namespace Sample {
 	class State : public IState
 	{
 	private:
+
+		/** アクタークラス */
+		ActorPtr					actor_;
+
 		/** 所属ステートマシン */
 		StateMachineWeakPtr			stateMachine_;
 
 		/** 入力クラス */
 		InputPtr					input_;
+
+		/**
+		 * @brief		アクター登録
+		 */
+		void SetActor(ActorPtr actor) final { actor_ = actor; }
 
 		/**
 		 * @brief		ステートマシン登録

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Input.h"
+#include "IInput.h"
+#include "IActor.h"
 
 
 class CPlayer;
