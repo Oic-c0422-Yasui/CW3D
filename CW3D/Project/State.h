@@ -45,6 +45,7 @@ namespace Sample {
 
 		/** privateメンバ取得専用 */
 		InputPtr Input() { return input_; }
+		ActorPtr Actor() { return actor_; }
 
 		/**
 		 * @brief		ステートの変更
@@ -52,8 +53,8 @@ namespace Sample {
 		 * @return		true		成功
 		 *				false		失敗
 		 */
-		bool ChangeState(CPlayer* player, const StateKeyType& key) override {
-			return stateMachine_.lock()->ChangeState(player, key);
+		bool ChangeState(const StateKeyType& key) override {
+			return stateMachine_.lock()->ChangeState(key);
 		}
 
 	public:
@@ -62,12 +63,13 @@ namespace Sample {
 		 * @return		生成したステート
 		 */
 		template < typename T >
-		static std::shared_ptr< T > Create(InputPtr input) {
+		static std::shared_ptr< T > Create(ActorPtr actor,InputPtr input) {
 			if (!std::is_base_of<State, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}
 			auto ptr = std::make_shared<T>();
+			ptr->SetActor(actor);
 			ptr->SetInput(input);
 			return ptr;
 		}

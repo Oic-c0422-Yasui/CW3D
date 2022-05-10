@@ -13,12 +13,12 @@ bool CBattleScene::Load()
 	auto input = InputManagerInstance.AddInput<Sample::MofInput>();
 	
 	//キーボード
-	input->AddKeyboardKey(KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
-	input->AddKeyboardKey(KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
-	input->AddKeyboardKey(KEY_JUMP,MOFKEY_X);
+	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
+	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
+	input->AddKeyboardKey(INPUT_KEY_JUMP,MOFKEY_X);
 	//パッド
-	input->AddJoyStickHorizontal(KEY_HORIZONTAL, 0);
-	input->AddJoyStickVertical(KEY_VERTICAL, 0);
+	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
+	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 
 	
 	

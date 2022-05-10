@@ -4,8 +4,6 @@
 #include "IActor.h"
 
 
-class CPlayer;
-
 namespace Sample
 {
 
@@ -22,6 +20,11 @@ namespace Sample
 		//ステートマシンからのみ登録ができる様にfriend指定
 		friend class StateMachine;
 	protected:
+		/**
+		 * @brief		アクター登録
+		 */
+		virtual void SetActor(ActorPtr actor) = 0;
+
 		/**
 		 * @brief		ステートマシン登録
 		 */
@@ -40,29 +43,29 @@ namespace Sample
 		/**
 		 * @brief		アクション内の開始処理
 		 */
-		virtual void Start(CPlayer * player) = 0;
+		virtual void Start() = 0;
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		virtual void Execution(CPlayer * player) = 0;
+		virtual void Execution() = 0;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		virtual void InputExecution(CPlayer * player) = 0;
+		virtual void InputExecution() = 0;
 
 		/**
 		 * @brief		アクション内の終了処理
 		 */
-		virtual void End(CPlayer * player) = 0;
+		virtual void End() = 0;
 
 		/**
 		 * @brief		ステート内の接触イベント
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		virtual void CollisionEvent(CPlayer* player, unsigned int type, std::any obj) = 0;
+		virtual void CollisionEvent(unsigned int type, std::any obj) = 0;
 
 		/**
 		 * @brief		ステートの変更
@@ -70,7 +73,7 @@ namespace Sample
 		 * @return		true		成功
 		 *				false		失敗
 		 */
-		virtual bool ChangeState(CPlayer * player, const StateKeyType & key) = 0;
+		virtual bool ChangeState(const StateKeyType & key) = 0;
 
 		/**
 		 * @brief		ステート名の取得

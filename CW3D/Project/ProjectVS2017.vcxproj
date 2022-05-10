@@ -99,6 +99,7 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="MoveAction.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
+    <ClInclude Include="IdleState.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />

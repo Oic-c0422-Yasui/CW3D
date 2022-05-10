@@ -52,7 +52,7 @@ namespace Sample {
 		 * @return		true		成功
 		 *				false		失敗
 		 */
-		bool ChangeState(CPlayer* player, const StateKeyType& key) override {
+		bool ChangeState(const StateKeyType& key) override {
 			auto& nextState = stateMap_.find(key);
 			if (nextState == stateMap_.end())
 			{
@@ -61,26 +61,26 @@ namespace Sample {
 			//前のステートの終了
 			if (currentState_)
 			{
-				currentState_->End(player);
+				currentState_->End();
 			}
 			//ステートの更新と開始
 			currentState_ = nextState->second;
-			currentState_->Start(player);
+			currentState_->Start();
 			return false;
 		}
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution(CPlayer* player) override {
-			if (currentState_) { currentState_->InputExecution(player); }
+		void InputExecution() override {
+			if (currentState_) { currentState_->InputExecution(); }
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution(CPlayer* player) override {
-			if (currentState_) { currentState_->Execution(player); }
+		void Execution() override {
+			if (currentState_) { currentState_->Execution(); }
 		}
 
 		/**
@@ -88,8 +88,8 @@ namespace Sample {
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(CPlayer* player, unsigned int type, std::any obj) override {
-			if (currentState_) { currentState_->CollisionEvent(player, type, obj); }
+		void CollisionEvent(unsigned int type, std::any obj) override {
+			if (currentState_) { currentState_->CollisionEvent(type, obj); }
 		}
 
 		/**

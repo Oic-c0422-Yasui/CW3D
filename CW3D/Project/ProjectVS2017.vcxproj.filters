@@ -37,6 +37,12 @@
     <Filter Include="ヘッダー ファイル\State\StateBase">
       <UniqueIdentifier>{18b97007-6082-4f23-acc9-92cc553e68cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\State">
+      <UniqueIdentifier>{1d779a6e-4dde-455b-8d43-b7c82daa8f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State">
+      <UniqueIdentifier>{e92cb12c-eccb-4933-9b8d-551380d55a84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -65,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="MoveAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="MoveState.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

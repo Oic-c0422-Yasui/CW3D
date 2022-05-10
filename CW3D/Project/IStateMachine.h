@@ -33,24 +33,24 @@ namespace Sample {
 		 * @return		true		成功
 		 *				false		失敗
 		 */
-		virtual bool ChangeState(CPlayer* player, const StateKeyType& key) = 0;
+		virtual bool ChangeState( const StateKeyType& key) = 0;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		virtual void InputExecution(CPlayer* player) = 0;
+		virtual void InputExecution() = 0;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		virtual void Execution(CPlayer* player) = 0;
+		virtual void Execution() = 0;
 
 		/**
 		 * @brief		ステート内の接触イベント
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		virtual void CollisionEvent(CPlayer* player, unsigned int type, std::any obj) = 0;
+		virtual void CollisionEvent(unsigned int type, std::any obj) = 0;
 
 		/**
 		 * @brief		現在のステート取得
