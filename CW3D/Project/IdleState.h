@@ -25,8 +25,8 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			moveAction_ = Actor()->GetAction<MoveAction>("Move");
-			//Actor()->GetAnimationState()->ChangeMotion("Wait");
+			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Wait", 1.0f, TRUE, TRUE);
 		}
 
 		/**
@@ -42,23 +42,23 @@ namespace Sample {
 			//キーボードでの移動
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->Acceleration(-PLAYER_SPEED, PLAYER_MAXSPEED, true);
+				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
 			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->Acceleration(PLAYER_SPEED, PLAYER_MAXSPEED, false);
+				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
-			//上キーでジャンプ
-			if (Input()->IsPress("Jump"))
+			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				ChangeState("Jump");
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				ChangeState(STATE_KEY_MOVE);
 			}
-			//SPACEキーで攻撃
-			if (Input()->IsPush("Attack"))
+			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				ChangeState("Attack");
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
+				ChangeState(STATE_KEY_MOVE);
 			}
 		}
 
@@ -73,14 +73,14 @@ namespace Sample {
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, anytype obj) override {
+		void CollisionEvent(unsigned int type, std::any obj) override {
 		}
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
 		const StateKeyType GetKey() const override {
-			return "Idle";
+			return STATE_KEY_IDLE;
 		}
 	};
 

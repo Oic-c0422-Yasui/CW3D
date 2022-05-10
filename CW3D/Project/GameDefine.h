@@ -22,3 +22,4 @@ const std::string INPUT_KEY_JUMP = "Jump";
 
 //ステートキーの名称
 const std::string STATE_KEY_MOVE = "Move";
+const std::string STATE_KEY_IDLE = "Idle";

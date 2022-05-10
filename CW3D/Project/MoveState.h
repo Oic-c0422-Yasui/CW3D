@@ -1,6 +1,7 @@
 #pragma once
 
 #include	"State.h"
+#include	"MoveAction.h"
 
 namespace Sample {
 
@@ -24,45 +25,45 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			moveAction_ = Actor()->GetAction<MoveAction>("Move");
-			//Actor()->GetAnimationState()->ChangeMotion("Move");
+			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Move",1.0f,TRUE,TRUE);
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Exec() override {
+		void Execution() override {
 		}
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExec() override {
+		void InputExecution() override {
 			//左右で移動
-			if (Input()->IsNegativePress("Horizontal"))
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->Acceleration(-PLAYER_SPEED, PLAYER_MAXSPEED, true);
+				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
 			}
-			else if (Input()->IsPress("Horizontal"))
+			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->Acceleration(PLAYER_SPEED, PLAYER_MAXSPEED, false);
+				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
 			}
-			else
+			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
+			{
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				ChangeState(STATE_KEY_MOVE);
+			}
+			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
+			{
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
+				ChangeState(STATE_KEY_MOVE);
+			}
+			if(moveAction_->GetSpeedX() != 0.0f && moveAction_->GetSpeedZ() != 0.0f)
 			{
 				if (!moveAction_->IsMove())
 				{
-					ChangeState("Idle");
+					ChangeState(STATE_KEY_IDLE);
 				}
-			}
-			//上キーでジャンプ
-			if (Input()->IsPress("Jump"))
-			{
-				ChangeState("Jump");
-			}
-			//SPACEキーで攻撃
-			if (Input()->IsPush("Attack"))
-			{
-				ChangeState("Attack");
 			}
 		}
 
@@ -77,14 +78,14 @@ namespace Sample {
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, anytype obj) override {
+		void CollisionEvent(unsigned int type, std::any obj) override {
 		}
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
 		const StateKeyType GetKey() const override {
-			return "Move";
+			return STATE_KEY_MOVE;
 		}
 	};
 

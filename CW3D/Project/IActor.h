@@ -7,6 +7,10 @@
 
 namespace Sample {
 
+	
+	//アニメーション用のシェアポインタ
+	using AnimationStatePtr = std::shared_ptr<CMeshMotionController>;
+
 	/**
 	 * @brief		アクターインターフェイス
 	 */
@@ -62,10 +66,20 @@ namespace Sample {
 		 */
 		virtual void SetPosition(CVector3 position) = 0;
 
+		/**
+		 * @brief		回転設定
+		 */
+		virtual void SetRotate(CVector3 rotate) = 0;
+
+		/**
+		 * @brief		サイズ設定
+		 */
+		virtual void SetScale(CVector3 scale) = 0;
+
 		///**
 		// * @brief		アニメーション
 		// */
-		//virtual void SetAnimationState(AnimationStatePtr animState) = 0;
+		virtual void SetAnimationState(AnimationStatePtr animState) = 0;
 
 		/**
 		 * @brief		姿勢取得
@@ -130,7 +144,7 @@ namespace Sample {
 		///**
 		// * @brief		アニメーション
 		// */
-		//virtual AnimationStatePtr GetAnimationState() const = 0;
+		virtual AnimationStatePtr GetAnimationState() const = 0;
 
 	protected:
 		///**
@@ -141,5 +155,4 @@ namespace Sample {
 	//ポインタ置き換え
 	using ActorPtr = std::shared_ptr<IActor>;
 	using ActorWeakPtr = std::weak_ptr<IActor>;
-
 }

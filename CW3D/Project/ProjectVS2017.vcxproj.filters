@@ -152,13 +152,16 @@
     <ClInclude Include="StateMachine.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
     </ClInclude>
-    <ClInclude Include="MoveState.h">
-      <Filter>ヘッダー ファイル\State\StateBase</Filter>
-    </ClInclude>
     <ClInclude Include="IdoleAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Velocity.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
   </ItemGroup>

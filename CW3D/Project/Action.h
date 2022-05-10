@@ -5,6 +5,8 @@
 
 namespace Sample {
 
+	//アニメーション用のシェアポインタ
+	using AnimationStatePtr = std::shared_ptr<CMeshMotionController>;
 	/**
 	 * @brief		アクション基底クラス
 	 */
@@ -15,7 +17,7 @@ namespace Sample {
 		TransformPtr					m_Transform;
 
 		///** アニメーションクラス */
-		//AnimationStatePtr				animation_;
+		AnimationStatePtr				m_Animation;
 
 		/**
 		 * @brief		姿勢登録
@@ -25,18 +27,18 @@ namespace Sample {
 		///**
 		// * @brief		アニメーション登録
 		// */
-		//void SetAnimation(AnimationStatePtr a) final { m_Transform = a; }
+		void SetAnimation(AnimationStatePtr a)  { m_Animation = a; }
 	protected:
 		/** privateメンバ取得専用 */
 		TransformPtr Transform() { return m_Transform; }
-		//AnimationStatePtr AnimationState() { return m_Transform; }
+		AnimationStatePtr AnimationState() { return m_Animation; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		Action()
-			: m_Transform(){
-			//, animation_() {
+			: m_Transform()
+			, m_Animation() {
 		}
 
 		/**

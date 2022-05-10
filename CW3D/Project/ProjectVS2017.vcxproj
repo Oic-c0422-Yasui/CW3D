@@ -136,6 +136,7 @@
     <ClInclude Include="Test.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="Velocity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

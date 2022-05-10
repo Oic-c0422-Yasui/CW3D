@@ -1,8 +1,15 @@
 #include "Player.h"
 
+#include "IdleState.h"
+#include "MoveState.h"
 
 
-CPlayer::CPlayer()
+
+CPlayer::CPlayer():
+	m_Actor(std::make_shared<Sample::Actor>()),
+	m_Move(),
+	m_StateMachine(),
+	m_pInput()
 {
 }
 
@@ -18,35 +25,57 @@ bool CPlayer::Load(CMeshContainer* pMesh)
 		return false;
 	}
 
+	//m_Motion = m_pMesh->CreateMotionController();
+	//m_Actor->SetAnimationState(m_Motion);
+
+	m_StateMachine = std::make_shared<Sample::StateMachine>();
+	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_pInput));
+
+	m_Move = Sample::Action::Create<Sample::MoveAction>();
+	m_Actor->AddAction(m_Move);
+
 	return true;
 }
 
 void CPlayer::Initialize()
 {
+	m_Actor->SetPosition(Vector3(0, 0,0));
+	m_Actor->SetRotate(Vector3(0, 0, 0));
+	m_Actor->SetScale(Vector3(1, 1, 1));
+	m_Move->Reset();
+
+	m_StateMachine->ChangeState(STATE_KEY_IDLE);
+
+
 	m_Speed = TEMP_SPEED;
-	m_Position = Vector3(0, 0, 0);
-	m_Velocity = Vector3(0, 0, 0);
-	m_Rotation = Vector3(0, 0, 0);
-	m_Scale = Vector3(1, 1, 1);
-	CMatrix44 matRotate;
-	matRotate.RotationY(MOF_ToRadian(-60));
-	matWorld *= matRotate;
+	//m_Position = Vector3(0, 0, 0);
+	//m_Velocity = Vector3(0, 0, 0);
+	/*m_Rotation = Vector3(0, 0, 0);
+	m_Scale = Vector3(1, 1, 1);*/
+	CMatrix44 matRotate = m_Actor->GetMatrix();
+	matWorld = matRotate;
 }
 
 void CPlayer::Update()
 {
-	UpdateKey();
-	UpdateMove();
-	SetReverse();
+	m_StateMachine->InputExecution();
+	m_StateMachine->Execution();
 
-	m_Position += m_Velocity;
+	m_Move->Exection();
+
+	m_Motion->AddTimer(CUtilities::GetFrameSecond());
+
+	/*UpdateKey();
+	UpdateMove();
+	SetReverse();*/
+
+	//m_Position += m_Velocity;
 }
 
 void CPlayer::Render()
 {
-
-	
-	matWorld.SetTranslation(m_Position);
+	//m_Motion->RefreshBoneMatrix(matWorld);
 	m_pMesh->Render(matWorld);
 }
 
@@ -58,7 +87,7 @@ void CPlayer::UpdateKey()
 {
 	m_HorizontalMoveFlg = false;
 	m_VerticalMoveFlg = false;
-	if (m_pInput->IsNegativePress(KEY_HORIZONTAL))
+	if (m_pInput->IsNegativePress(INPUT_KEY_HORIZONTAL))
 	{
 		m_HorizontalMoveFlg = true;
 		m_ReverseFlg = true;
@@ -68,7 +97,7 @@ void CPlayer::UpdateKey()
 			m_Velocity.x = -m_Speed;
 		}
 	}
-	else if (m_pInput->IsPress(KEY_HORIZONTAL))
+	else if (m_pInput->IsPress(INPUT_KEY_HORIZONTAL))
 	{
 		m_HorizontalMoveFlg = true;
 		m_ReverseFlg = false;
@@ -78,7 +107,7 @@ void CPlayer::UpdateKey()
 			m_Velocity.x = m_Speed;
 		}
 	}
-	if (m_pInput->IsNegativePress(KEY_VERTICAL))
+	if (m_pInput->IsNegativePress(INPUT_KEY_VERTICAL))
 	{
 		m_VerticalMoveFlg = true;
 		m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
@@ -87,7 +116,7 @@ void CPlayer::UpdateKey()
 			m_Velocity.z = m_Speed;
 		}
 	}
-	else if (m_pInput->IsPress(KEY_VERTICAL))
+	else if (m_pInput->IsPress(INPUT_KEY_VERTICAL))
 	{
 		m_VerticalMoveFlg = true;
 		m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
@@ -138,9 +167,9 @@ void CPlayer::UpdateMove()
 			}
 		}
 	}
-		
-	
-	
+
+
+
 }
 
 void CPlayer::SetReverse()
@@ -157,5 +186,156 @@ void CPlayer::SetReverse()
 		matRotate.RotationY(MOF_ToRadian(-60));
 		matWorld = matRotate;
 	}
-	
+
 }
+
+
+//bool CPlayer::Load(CMeshContainer* pMesh)
+//{
+//	m_pMesh = pMesh;
+//	if (m_pMesh != nullptr)
+//	{
+//		return false;
+//	}
+//
+//	return true;
+//}
+//
+//void CPlayer::Initialize()
+//{
+//	m_Speed = TEMP_SPEED;
+//	m_Position = Vector3(0, 0, 0);
+//	m_Velocity = Vector3(0, 0, 0);
+//	m_Rotation = Vector3(0, 0, 0);
+//	m_Scale = Vector3(1, 1, 1);
+//	CMatrix44 matRotate;
+//	matRotate.RotationY(MOF_ToRadian(-60));
+//	matWorld *= matRotate;
+//}
+//
+//void CPlayer::Update()
+//{
+//	UpdateKey();
+//	UpdateMove();
+//	SetReverse();
+//
+//	m_Position += m_Velocity;
+//}
+//
+//void CPlayer::Render()
+//{
+//
+//	
+//	matWorld.SetTranslation(m_Position);
+//	m_pMesh->Render(matWorld);
+//}
+//
+//void CPlayer::Release()
+//{
+//}
+//
+//void CPlayer::UpdateKey()
+//{
+//	m_HorizontalMoveFlg = false;
+//	m_VerticalMoveFlg = false;
+//	if (m_pInput->IsNegativePress(INPUT_KEY_HORIZONTAL))
+//	{
+//		m_HorizontalMoveFlg = true;
+//		m_ReverseFlg = true;
+//		m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
+//		if (m_Velocity.x < -m_Speed)
+//		{
+//			m_Velocity.x = -m_Speed;
+//		}
+//	}
+//	else if (m_pInput->IsPress(INPUT_KEY_HORIZONTAL))
+//	{
+//		m_HorizontalMoveFlg = true;
+//		m_ReverseFlg = false;
+//		m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
+//		if (m_Velocity.x > m_Speed)
+//		{
+//			m_Velocity.x = m_Speed;
+//		}
+//	}
+//	if (m_pInput->IsNegativePress(INPUT_KEY_VERTICAL))
+//	{
+//		m_VerticalMoveFlg = true;
+//		m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
+//		if (m_Velocity.z > m_Speed)
+//		{
+//			m_Velocity.z = m_Speed;
+//		}
+//	}
+//	else if (m_pInput->IsPress(INPUT_KEY_VERTICAL))
+//	{
+//		m_VerticalMoveFlg = true;
+//		m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
+//		if (m_Velocity.z < -m_Speed)
+//		{
+//			m_Velocity.z = -m_Speed;
+//		}
+//	}
+//}
+//
+//void CPlayer::UpdateMove()
+//{
+//	if (!m_HorizontalMoveFlg)
+//	{
+//		if (m_Velocity.x > 0)
+//		{
+//			m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
+//			if (m_Velocity.x <= 0)
+//			{
+//				m_Velocity.x = 0;
+//			}
+//		}
+//		else if (m_Velocity.x < 0)
+//		{
+//			m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
+//			if (m_Velocity.x >= 0)
+//			{
+//				m_Velocity.x = 0;
+//			}
+//		}
+//	}
+//	if (!m_VerticalMoveFlg)
+//	{
+//		if (m_Velocity.z > 0)
+//		{
+//			m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
+//			if (m_Velocity.z <= 0)
+//			{
+//				m_Velocity.z = 0;
+//			}
+//		}
+//		else if (m_Velocity.z < 0)
+//		{
+//			m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
+//			if (m_Velocity.z >= 0)
+//			{
+//				m_Velocity.z = 0;
+//			}
+//		}
+//	}
+//		
+//	
+//	
+//}
+//
+//void CPlayer::SetReverse()
+//{
+//	if (m_ReverseFlg)
+//	{
+//		CMatrix44 matRotate;
+//		matRotate.RotationY(MOF_ToRadian(60));
+//		matWorld = matRotate;
+//	}
+//	else
+//	{
+//		CMatrix44 matRotate;
+//		matRotate.RotationY(MOF_ToRadian(-60));
+//		matWorld = matRotate;
+//	}
+//	
+//}

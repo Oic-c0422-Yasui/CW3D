@@ -51,6 +51,15 @@ namespace Sample {
 			{
 				DecelerateZ(PLAYER_SPEED);
 			}
+			if (m_Move.x > 0)
+			{
+				m_ReverseFlg = true;
+			}
+			else if (m_Move.x < 0)
+			{
+				m_ReverseFlg = false;
+			}
+
 			//重力
 			Gravity(GRAVITY);
 			//実際に座標を移動させる
@@ -72,7 +81,7 @@ namespace Sample {
 		void Reset() {
 			m_XMoveFlg = false;
 			m_ZMoveFlg = false;
-			m_Move = Vector3(0, 0, 0);
+			//m_Move = Vector3(0, 0, 0);
 			m_ReverseFlg = false;
 		}
 
@@ -91,22 +100,20 @@ namespace Sample {
 		/**
 		 * @brief		加速
 		 * @param[in]	val		加速量
-		 * @param[in]	rev		反転フラグ
 		 */
-		void AccelerationX(float val, float maxspeed, bool reverse) {
+		void AccelerationX(float val, float maxspeed) {
 			m_XMoveFlg  = true;
 			m_Move.x += val;
 			m_Move.x = ((m_Move.x > maxspeed) ? maxspeed : ((m_Move.x < -maxspeed) ? -maxspeed : m_Move.x));
-			m_ReverseFlg = reverse;
 		}
 
 		/**
 		 * @brief		加速
 		 * @param[in]	val		加速量
 		 */
-		void Acceleration(float x, float maxspeed) {
+		void AccelerationZ(float speed, float maxspeed) {
 			m_ZMoveFlg = true;
-			m_Move.z += x;
+			m_Move.z += speed;
 			m_Move.z = ((m_Move.z > maxspeed) ? maxspeed : ((m_Move.z < -maxspeed) ? -maxspeed : m_Move.z));
 		}
 
