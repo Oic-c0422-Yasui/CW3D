@@ -103,11 +103,10 @@ namespace Sample {
 		/**
 		 * @brief		加速
 		 * @param[in]	val		加速量
-		 * @param[in]	rev		反転フラグ
 		 */
-		void AccelerationZ(float val, float maxspeed) {
+		void Acceleration(float x, float maxspeed) {
 			m_ZMoveFlg = true;
-			m_Move.z += val;
+			m_Move.z += x;
 			m_Move.z = ((m_Move.z > maxspeed) ? maxspeed : ((m_Move.z < -maxspeed) ? -maxspeed : m_Move.z));
 		}
 
@@ -160,12 +159,10 @@ namespace Sample {
 		/**
 		 * @brief		速度設定
 		 * @param[in]	val		速度
-		 * @param[in]	rev		反転フラグ
 		 */
-		void SetSpeed(float val, bool rev) {
+		void SetSpeed(float val) {
 			m_Move.x = val;
 			m_Move.z = val;
-			m_ReverseFlg = rev;
 		}
 
 		/**
@@ -190,6 +187,11 @@ namespace Sample {
 		 */
 		void SetSpeedZ(float val) {
 			m_Move.y = val;
+		}
+
+		void SetReverseFlg(bool isReverse)
+		{
+			m_ReverseFlg = isReverse;
 		}
 
 		/**

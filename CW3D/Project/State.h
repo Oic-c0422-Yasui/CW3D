@@ -63,7 +63,7 @@ namespace Sample {
 		 * @return		生成したステート
 		 */
 		template < typename T >
-		static std::shared_ptr< T > Create(ActorPtr actor,InputPtr input) {
+		static std::shared_ptr< T > Create(ActorPtr actor, InputPtr input) {
 			if (!std::is_base_of<State, T >::value)
 			{
 				return std::shared_ptr<T>();
@@ -74,3 +74,4 @@ namespace Sample {
 			return ptr;
 		}
 	};
+}

@@ -72,8 +72,8 @@
     <ClCompile Include="MoveAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="IdoleAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="MoveState.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
+    </ClInclude>
+    <ClInclude Include="IdoleAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>

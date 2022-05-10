@@ -1,7 +1,7 @@
 #pragma once
 
-#include "State.h"
-#include "Player.h"
+#include	"State.h"
+#include	"MoveAction.h"
 
 namespace Sample {
 
@@ -26,29 +26,29 @@ namespace Sample {
 		 */
 		void Start() override {
 			moveAction_ = Actor()->GetAction<MoveAction>("Move");
-			Actor()->GetAnimationState()->ChangeMotion("Wait");
+			//Actor()->GetAnimationState()->ChangeMotion("Wait");
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Exec() override {
+		void Execution() override {
 		}
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExec() override {
+		void InputExecution() override {
 			//キーボードでの移動
-			if (Input()->IsNegativePress("Horizontal"))
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
 				moveAction_->Acceleration(-PLAYER_SPEED, PLAYER_MAXSPEED, true);
-				ChangeState("Move");
+				ChangeState(STATE_KEY_MOVE);
 			}
-			else if (Input()->IsPress("Horizontal"))
+			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				moveAction_->Acceleration(PLAYER_SPEED, PLAYER_MAXSPEED, false);
-				ChangeState("Move");
+				ChangeState(STATE_KEY_MOVE);
 			}
 			//上キーでジャンプ
 			if (Input()->IsPress("Jump"))
@@ -85,8 +85,3 @@ namespace Sample {
 	};
 
 }
-	
-
-
-
-
