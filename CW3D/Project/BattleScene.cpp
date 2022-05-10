@@ -62,6 +62,11 @@ void CBattleScene::Render()
 	m_Player.Render();
 }
 
+void CBattleScene::RenderDebug()
+{
+	CGraphicsUtilities::RenderString(0, 0, "%.2f", m_Player.GetPosition().z);
+}
+
 void CBattleScene::Release()
 {
 	m_Player.Release();

@@ -26,7 +26,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			Actor()->GetAnimationState()->ChangeMotionByName("Move",1.0f,TRUE,TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName("Move",1.0f,TRUE,TRUE);
 		}
 
 		/**
@@ -43,22 +43,33 @@ namespace Sample {
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
 				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				
 			}
 			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
+				
 			}
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
+				//ChangeState(STATE_KEY_MOVE);
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				//ChangeState(STATE_KEY_MOVE);
 			}
-			if(moveAction_->GetSpeedX() != 0.0f && moveAction_->GetSpeedZ() != 0.0f)
+			if (moveAction_->IsReverse())
+			{
+				moveAction_->SetRotateY(MOF_ToRadian(90));
+			}
+			else
+			{
+				moveAction_->SetRotateY(MOF_ToRadian(-90));
+			}
+			if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
+				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
 				if (!moveAction_->IsMove())
 				{

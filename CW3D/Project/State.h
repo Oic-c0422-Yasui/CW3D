@@ -39,7 +39,8 @@ namespace Sample {
 		 * @brief		コンストラクタ
 		 */
 		State()
-			: stateMachine_()
+			: actor_()
+			, stateMachine_()
 			, input_() {
 		}
 

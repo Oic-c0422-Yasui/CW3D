@@ -53,6 +53,6 @@ public:
 	}
 
 
-	Vector3 GetPosition() { return m_Position; }
+	Vector3 GetPosition() { return m_Actor->GetPosition(); }
 };
 

@@ -66,6 +66,7 @@ MofBool CGameApp::Render(void){
 	gScene->Render();
 	CMatrix44 matWorld;
 	test.Render(matWorld);
+	gScene->RenderDebug();
 	//•`‰æ‚ÌI—¹
 	g_pGraphics->RenderEnd();
 	return TRUE;

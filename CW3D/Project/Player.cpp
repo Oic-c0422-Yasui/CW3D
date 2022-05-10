@@ -20,7 +20,7 @@ CPlayer::~CPlayer()
 bool CPlayer::Load(CMeshContainer* pMesh)
 {
 	m_pMesh = pMesh;
-	if (m_pMesh != nullptr)
+	if (m_pMesh == nullptr)
 	{
 		return false;
 	}
@@ -59,12 +59,22 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	//ステートのインプット
 	m_StateMachine->InputExecution();
+	//ステートの実行
 	m_StateMachine->Execution();
 
+	//移動の実行
 	m_Move->Exection();
 
-	m_Motion->AddTimer(CUtilities::GetFrameSecond());
+	//移動制限
+	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
+
+
+	//マトリクスを取得
+	matWorld = m_Actor->GetMatrix();
+
+	//m_Motion->AddTimer(CUtilities::GetFrameSecond());
 
 	/*UpdateKey();
 	UpdateMove();

@@ -25,6 +25,7 @@ public:
 	void Initialize();
 	void Update();
 	void Render();
+	void RenderDebug();
 	void Release();
 
 	

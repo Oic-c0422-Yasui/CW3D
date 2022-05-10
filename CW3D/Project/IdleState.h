@@ -26,7 +26,16 @@ namespace Sample {
 		 */
 		void Start() override {
 			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			Actor()->GetAnimationState()->ChangeMotionByName("Wait", 1.0f, TRUE, TRUE);
+			if (moveAction_->IsReverse())
+			{
+				moveAction_->SetRotateY(MOF_ToRadian(180));
+			}
+			else
+			{
+				moveAction_->SetRotateY(0);
+
+			}
+			//Actor()->GetAnimationState()->ChangeMotionByName("Wait", 1.0f, TRUE, TRUE);
 		}
 
 		/**
@@ -52,12 +61,12 @@ namespace Sample {
 			}
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
 		}

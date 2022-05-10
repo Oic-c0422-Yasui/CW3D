@@ -53,15 +53,15 @@ namespace Sample {
 			}
 			if (m_Move.x > 0)
 			{
-				m_ReverseFlg = true;
+				m_ReverseFlg = false;
 			}
 			else if (m_Move.x < 0)
 			{
-				m_ReverseFlg = false;
+				m_ReverseFlg = true;
 			}
 
 			//重力
-			Gravity(GRAVITY);
+			//Gravity(GRAVITY);
 			//実際に座標を移動させる
 			Transform()->MovePosition(m_Move);
 			//移動フラグOFF
@@ -201,6 +201,10 @@ namespace Sample {
 			m_ReverseFlg = isReverse;
 		}
 
+		void SetRotateY(float val) {
+			Transform()->SetRotateY(val);
+		}
+
 		/**
 		 * @brief		速度取得
 		 */
@@ -231,11 +235,17 @@ namespace Sample {
 
 		/**
 		 * @brief		移動判断
-		 *				横の移動速度が一定以下なら停止とみなす
+		 *				移動速度が一定以下なら停止とみなす
 		 */
 		bool IsMove() const {
-			return std::abs(m_Move.x) > 0.01f;
+			if (std::abs(m_Move.x) > 0.01f && std::abs(m_Move.z) > 0.01f)
+			{
+				return true;
+			}
+			return false;
 		}
+
+
 
 		/**
 		 * @brief		ステートキーの取得

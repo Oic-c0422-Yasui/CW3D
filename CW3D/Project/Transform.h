@@ -53,6 +53,12 @@ namespace Sample
 				m_World.SetTranslation(m_Position);
 			}
 
+			void ClipZ(float min, float max)
+			{
+				m_Position.z = ((m_Position.z > max) ?
+					max : ((m_Position.z < min) ? min : m_Position.z));
+			}
+
 			//À•W‚ÌÝ’è
 			void SetPosition(CVector3 position) noexcept
 			{

@@ -11,7 +11,7 @@ enum tag_SCENENO
 
 //‰¼
 #define PLAYER_SPEED 0.02f
-#define PLAYER_MAXSPEED 0.2f
+#define PLAYER_MAXSPEED 0.12f
 #define GRAVITY 0.02f
 #define GRAVITYMAX 0.05f
 
