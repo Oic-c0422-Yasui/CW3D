@@ -6,7 +6,8 @@ namespace Sample {
 
 	//キー
 	using ActionKeyType = std::string;
-
+	//アニメーション用のシェアポインタ
+	using AnimationStatePtr = LPMeshMotionController;
 	/**
 	 * @brief		アクションインターフェイス
 	 */
@@ -23,7 +24,7 @@ namespace Sample {
 		///**
 		// * @brief		アニメーション登録
 		// */
-		//virtual void SetAnimation(AnimationStatePtr a) = 0;
+		virtual void SetAnimation(AnimationStatePtr a) = 0;
 
 	public:
 		/**

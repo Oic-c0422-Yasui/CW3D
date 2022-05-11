@@ -9,7 +9,7 @@ namespace Sample {
 
 	
 	//アニメーション用のシェアポインタ
-	using AnimationStatePtr = std::shared_ptr<CMeshMotionController>;
+	using AnimationStatePtr = LPMeshMotionController;
 
 	/**
 	 * @brief		アクターインターフェイス

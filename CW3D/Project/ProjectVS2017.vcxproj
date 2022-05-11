@@ -116,6 +116,7 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
+    <ClInclude Include="IdleMotionState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="IdoleAction.h" />
     <ClInclude Include="IInput.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="RunState.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />

@@ -5,8 +5,7 @@
 
 namespace Sample {
 
-	//アニメーション用のシェアポインタ
-	using AnimationStatePtr = std::shared_ptr<CMeshMotionController>;
+	
 	/**
 	 * @brief		アクション基底クラス
 	 */

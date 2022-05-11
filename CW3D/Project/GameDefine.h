@@ -11,7 +11,8 @@ enum tag_SCENENO
 
 //仮
 #define PLAYER_SPEED 0.02f
-#define PLAYER_MAXSPEED 0.12f
+#define PLAYER_MAXSPEED 0.14f
+#define PLAYER_WALKSPEED 0.6
 #define GRAVITY 0.02f
 #define GRAVITYMAX 0.05f
 
@@ -23,3 +24,5 @@ const std::string INPUT_KEY_JUMP = "Jump";
 //ステートキーの名称
 const std::string STATE_KEY_MOVE = "Move";
 const std::string STATE_KEY_IDLE = "Idle";
+const std::string STATE_KEY_IDLEMOTION = "IdleMotion";
+const std::string STATE_KEY_RUN = "Run";

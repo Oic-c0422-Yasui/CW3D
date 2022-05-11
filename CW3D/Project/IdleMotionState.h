@@ -6,21 +6,19 @@
 namespace Sample {
 
 	/**
-	 * @brief		待機ステート
+	 * @brief		待機モーションステート
 	 */
-	class IdleState : public State
+	class IdleMotionState : public State
 	{
 	private:
 		/** 移動アクション */
 		MoveActionPtr			m_MoveAction;
-		float					m_Time;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleState()
+		IdleMotionState()
 			: State()
-			, m_Time(0.0f)
 		{
 		}
 
@@ -29,7 +27,6 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			m_Time = 0.0f;
 			if (m_MoveAction->IsReverse())
 			{
 				m_MoveAction->SetRotateY(MOF_ToRadian(180));
@@ -39,21 +36,16 @@ namespace Sample {
 				m_MoveAction->SetRotateY(0);
 
 			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Stand", 1.0f, TRUE, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Idle", 1.0f, FALSE, TRUE);
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			if (m_Time < 5.0f)
+			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				m_Time += CUtilities::GetFrameSecond();
-			}
-			else
-			{
-				ChangeState(STATE_KEY_IDLEMOTION);
-				
+				ChangeState(STATE_KEY_IDLE);
 			}
 		}
 
@@ -102,7 +94,7 @@ namespace Sample {
 		 * @brief		ステートキーの取得
 		 */
 		const StateKeyType GetKey() const override {
-			return STATE_KEY_IDLE;
+			return STATE_KEY_IDLEMOTION;
 		}
 	};
 

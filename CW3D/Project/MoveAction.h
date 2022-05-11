@@ -238,7 +238,7 @@ namespace Sample {
 		 *				ˆÚ“®‘¬“x‚ªˆê’èˆÈ‰º‚È‚ç’â~‚Æ‚İ‚È‚·
 		 */
 		bool IsMove() const {
-			if (std::abs(m_Move.x) > 0.01f && std::abs(m_Move.z) > 0.01f)
+			if (std::abs(m_Move.x) > 0.1f && std::abs(m_Move.z) > 0.1f)
 			{
 				return true;
 			}

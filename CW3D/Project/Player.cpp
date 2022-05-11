@@ -2,6 +2,7 @@
 
 #include "IdleState.h"
 #include "MoveState.h"
+#include "IdleMotionState.h"
 
 
 
@@ -25,11 +26,12 @@ bool CPlayer::Load(CMeshContainer* pMesh)
 		return false;
 	}
 
-	//m_Motion = m_pMesh->CreateMotionController();
-	//m_Actor->SetAnimationState(m_Motion);
+	m_Motion = m_pMesh->CreateMotionController();
+	m_Actor->SetAnimationState(m_Motion);
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::IdleMotionState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_pInput));
 
 	m_Move = Sample::Action::Create<Sample::MoveAction>();
@@ -74,7 +76,7 @@ void CPlayer::Update()
 	//マトリクスを取得
 	matWorld = m_Actor->GetMatrix();
 
-	//m_Motion->AddTimer(CUtilities::GetFrameSecond());
+	m_Motion->AddTimer(CUtilities::GetFrameSecond());
 
 	/*UpdateKey();
 	UpdateMove();
@@ -85,12 +87,13 @@ void CPlayer::Update()
 
 void CPlayer::Render()
 {
-	//m_Motion->RefreshBoneMatrix(matWorld);
-	m_pMesh->Render(matWorld);
+	m_Motion->RefreshBoneMatrix(matWorld);
+	m_pMesh->Render(m_Motion);
 }
 
 void CPlayer::Release()
 {
+	MOF_SAFE_DELETE(m_Motion);
 }
 
 void CPlayer::UpdateKey()

@@ -13,12 +13,23 @@ namespace Sample {
 	private:
 		/** 移動アクション */
 		MoveActionPtr			moveAction_;
+		BYTE					m_NowHorizontal;
+		BYTE					m_NowVertical;
+		enum Tag_Direction
+		{
+			NO_DIRECTION = 0,
+			PLUS_DIRECTION,
+			MINUS_DIRECTION,
+		};
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		MoveState()
-			: State() {
+			: State()
+			, m_NowHorizontal(NO_DIRECTION)
+			, m_NowVertical(NO_DIRECTION)
+		{
 		}
 
 		/**
@@ -26,7 +37,9 @@ namespace Sample {
 		 */
 		void Start() override {
 			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			//Actor()->GetAnimationState()->ChangeMotionByName("Move",1.0f,TRUE,TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Walk",1.0f,TRUE,TRUE);
+			m_NowHorizontal = NO_DIRECTION;
+			m_NowVertical = NO_DIRECTION;
 		}
 
 		/**
@@ -42,23 +55,53 @@ namespace Sample {
 			//左右で移動
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				if (m_NowHorizontal == MINUS_DIRECTION)
+				{
+					ChangeState(STATE_KEY_RUN);
+				}
+				else
+				{
+					m_NowHorizontal = MINUS_DIRECTION;
+				}
 				
 			}
 			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
+				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				if (m_NowHorizontal == PLUS_DIRECTION)
+				{
+					ChangeState(STATE_KEY_RUN);
+				}
+				else
+				{
+					m_NowHorizontal = PLUS_DIRECTION;
+				}
 				
 			}
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
-				//ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				if (m_NowVertical == PLUS_DIRECTION)
+				{
+					ChangeState(STATE_KEY_RUN);
+				}
+				else
+				{
+					m_NowVertical = PLUS_DIRECTION;
+				}
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				//ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				if (m_NowVertical == MINUS_DIRECTION)
+				{
+					ChangeState(STATE_KEY_RUN);
+				}
+				else
+				{
+					m_NowVertical = MINUS_DIRECTION;
+				}
 			}
 			if (moveAction_->IsReverse())
 			{

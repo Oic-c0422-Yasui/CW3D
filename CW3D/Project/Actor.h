@@ -50,7 +50,7 @@ namespace Sample {
 		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
 			actionMap_[key] = action;
 			action->SetTransform(transform_);
-			//action->SetAnimation(motion_);
+			action->SetAnimation(motion_);
 		}
 
 		/**

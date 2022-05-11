@@ -164,6 +164,12 @@
     <ClInclude Include="MoveState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
+    <ClInclude Include="IdleMotionState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="RunState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

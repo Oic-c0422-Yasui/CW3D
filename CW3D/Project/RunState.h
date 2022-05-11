@@ -6,81 +6,75 @@
 namespace Sample {
 
 	/**
-	 * @brief		待機ステート
+	 * @brief		移動ステート
 	 */
-	class IdleState : public State
+	class RunState : public State
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			m_MoveAction;
-		float					m_Time;
+		MoveActionPtr			moveAction_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleState()
-			: State()
-			, m_Time(0.0f)
-		{
+		RunState()
+			: State() {
 		}
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			m_Time = 0.0f;
-			if (m_MoveAction->IsReverse())
-			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(180));
-			}
-			else
-			{
-				m_MoveAction->SetRotateY(0);
-
-			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Stand", 1.0f, TRUE, TRUE);
+			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Run", 1.0f, TRUE, TRUE);
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			if (m_Time < 5.0f)
-			{
-				m_Time += CUtilities::GetFrameSecond();
-			}
-			else
-			{
-				ChangeState(STATE_KEY_IDLEMOTION);
-				
-			}
 		}
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-			//キーボードでの移動
+			//左右で移動
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
-				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
+
 			}
 			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
-				m_MoveAction->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
+
 			}
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				m_MoveAction->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
+				//ChangeState(STATE_KEY_MOVE);
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
+				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
+				//ChangeState(STATE_KEY_MOVE);
+			}
+			if (moveAction_->IsReverse())
+			{
+				moveAction_->SetRotateY(MOF_ToRadian(90));
+			}
+			else
+			{
+				moveAction_->SetRotateY(MOF_ToRadian(-90));
+			}
+			if (!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
+				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
+			{
+				if (!moveAction_->IsMove())
+				{
+					ChangeState(STATE_KEY_IDLE);
+				}
 			}
 		}
 
@@ -102,7 +96,7 @@ namespace Sample {
 		 * @brief		ステートキーの取得
 		 */
 		const StateKeyType GetKey() const override {
-			return STATE_KEY_IDLE;
+			return STATE_KEY_RUN;
 		}
 	};
 
