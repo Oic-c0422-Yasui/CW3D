@@ -42,12 +42,28 @@ namespace Sample {
 		virtual bool IsPush(const KeyType& kn) const = 0;
 
 		/**
+		 * @brief		指定名称の登録キーが指定のフレームに2回押されたかどうか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押された
+		 *				false	このフレームでは押されていない
+		 */
+		virtual bool IsDoublePush(const KeyType& kn) const = 0;
+
+		/**
 		 * @brief		指定名称の登録キーがこのフレームに押されたかどうか
 		 * @param[in]	kn		登録キー名
 		 * @return		true	このフレームで押された
 		 *				false	このフレームでは押されていない
 		 */
 		virtual bool IsNegativePush(const KeyType& kn) const = 0;
+
+		/**
+		 * @brief		指定名称の登録キーが指定のフレームに2回押されたかどうか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押された
+		 *				false	このフレームでは押されていない
+		 */
+		virtual bool IsNegativeDoublePush(const KeyType& kn) const = 0;
 
 		/**
 		 * @brief		指定名称の登録キーがこのフレームに離されたかどうか
@@ -80,6 +96,23 @@ namespace Sample {
 		 *				false	このフレームで押されていない
 		 */
 		virtual bool IsNegativePress(const KeyType& kn) const = 0;
+
+		/**
+		 * @brief		指定名称の登録キーが何秒押されているか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押されている
+		 *				false	このフレームで押されていない
+		 */
+		virtual float GetNegativePressTime(const KeyType& kn) const = 0;
+
+		/**
+		 * @brief		指定名称の登録キーが何秒押されているか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押されている
+		 *				false	このフレームで押されていない
+		 */
+		virtual float GetPressTime(const KeyType& kn) const = 0;
+
 
 		/**
 		 * @brief		登録されているキー配列

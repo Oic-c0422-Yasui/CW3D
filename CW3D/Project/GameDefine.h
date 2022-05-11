@@ -20,9 +20,12 @@ enum tag_SCENENO
 const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
 const std::string INPUT_KEY_VERTICAL = "Vertical";
 const std::string INPUT_KEY_JUMP = "Jump";
+const std::string INPUT_KEY_ATTACK = "Attack";
 
 //ステートキーの名称
 const std::string STATE_KEY_MOVE = "Move";
 const std::string STATE_KEY_IDLE = "Idle";
 const std::string STATE_KEY_IDLEMOTION = "IdleMotion";
 const std::string STATE_KEY_RUN = "Run";
+const std::string STATE_KEY_ATTACK1 = "Attack1";
+const std::string STATE_KEY_ATTACK2 = "Attack2";

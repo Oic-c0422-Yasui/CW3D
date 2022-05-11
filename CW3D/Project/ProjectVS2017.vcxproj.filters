@@ -170,6 +170,12 @@
     <ClInclude Include="RunState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
+    <ClInclude Include="Attack1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

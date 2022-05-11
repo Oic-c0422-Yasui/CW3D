@@ -32,14 +32,14 @@ namespace Sample {
 			m_Time = 0.0f;
 			if (m_MoveAction->IsReverse())
 			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(180));
+				m_MoveAction->SetRotateY(MOF_ToRadian(180), 0.2f);
 			}
 			else
 			{
-				m_MoveAction->SetRotateY(0);
+				m_MoveAction->SetRotateY(0, 0.2f);
 
 			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Stand", 1.0f, TRUE, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Stand", 0.0f, 1.0f, 0.2f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -61,8 +61,14 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
+			if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
+			{
+				ChangeState(STATE_KEY_RUN);
+				return;
+			}
 			//キーボードでの移動
-			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
 				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
@@ -81,6 +87,11 @@ namespace Sample {
 			{
 				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
+			}
+
+			if (Input()->IsPush(INPUT_KEY_ATTACK))
+			{
+				ChangeState(STATE_KEY_ATTACK1);
 			}
 		}
 

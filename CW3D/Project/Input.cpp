@@ -9,6 +9,24 @@ void Input::Update()
 {
 	for (auto k = m_KeyMap.begin(); k != m_KeyMap.end(); ++k)
 	{
+		if (IsPress(k->first) || IsNegativePress(k->first))
+		{
+			k->second.m_HoldTime += CUtilities::GetFrameSecond();
+		}
+		else
+		{
+			k->second.m_HoldTime = 0;
+		}
+		if (IsPush(k->first) || IsNegativePush(k->first))
+		{
+			k->second.m_PushTime = 0;
+		}
+		else
+		{
+			k->second.m_PushTime += CUtilities::GetFrameSecond();
+		}
+
+
 		k->second.m_PreviousValue = k->second.m_NowValue;
 		k->second.m_NowValue = 0;
 		for (auto& key : k->second.m_Key)
@@ -39,7 +57,6 @@ void Input::Update()
 			case KeyData::Type::JoyStickVertical:
 				k->second.m_NowValue += GetJoypadStickVertical(key.m_PadNo);
 				break;
-
 			}
 		}
 		//-1`+1‚ÅƒNƒŠƒbƒv

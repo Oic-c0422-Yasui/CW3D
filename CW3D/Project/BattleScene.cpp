@@ -16,9 +16,11 @@ bool CBattleScene::Load()
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
 	input->AddKeyboardKey(INPUT_KEY_JUMP,MOFKEY_X);
+	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
 	//ƒpƒbƒh
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
+	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,9);
 
 	
 	

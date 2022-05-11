@@ -2,7 +2,10 @@
 
 #include "IdleState.h"
 #include "MoveState.h"
+#include "RunState.h"
 #include "IdleMotionState.h"
+#include "Attack1State.h"
+
 
 
 
@@ -33,9 +36,13 @@ bool CPlayer::Load(CMeshContainer* pMesh)
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleMotionState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_pInput));
 
 	m_Move = Sample::Action::Create<Sample::MoveAction>();
 	m_Actor->AddAction(m_Move);
+	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
+
 
 	return true;
 }

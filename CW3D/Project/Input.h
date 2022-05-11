@@ -3,7 +3,7 @@
 #include	"IInput.h"
 
 namespace Sample {
-
+	constexpr float DOUBLE_PUSH_TIME = 0.25f;
 	/**
 	 * @brief		入力クラス
 	 */
@@ -32,12 +32,18 @@ namespace Sample {
 			float				m_PreviousValue;
 			float				m_NowValue;
 			float				m_InputValue;
-
+			float				m_HoldTime;
+			float				m_PushTime;
+			int					m_PushCount;
 			KeyData()
 				: m_Key()
 				, m_PreviousValue(0)
 				, m_NowValue(0)
-				, m_InputValue(0.5f) {
+				, m_InputValue(0.5f)
+				, m_HoldTime(0.0f)
+				, m_PushTime(0.0f)
+				, m_PushCount(0.0f)
+			{
 			}
 		};
 		using KeyMap = std::unordered_map<KeyType, KeyData >;
@@ -233,11 +239,39 @@ namespace Sample {
 		 * @return		true	このフレームで押された
 		 *				false	このフレームでは押されていない
 		 */
+		bool IsDoublePush(const KeyType& kn) const override {
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
+			const KeyData& kd = v->second;
+			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < kd.m_InputValue &&
+				kd.m_PushTime < DOUBLE_PUSH_TIME;
+		}
+
+		/**
+		 * @brief		指定名称の登録キーがこのフレームに押されたかどうか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押された
+		 *				false	このフレームでは押されていない
+		 */
 		bool IsNegativePush(const KeyType& kn) const override {
 			const auto& v = m_KeyMap.find(kn);
 			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
 			return kd.m_NowValue < -kd.m_InputValue && kd.m_PreviousValue > -kd.m_InputValue;
+		}
+
+		/**
+		 * @brief		指定名称の登録キーがこのフレームに押されたかどうか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押された
+		 *				false	このフレームでは押されていない
+		 */
+		bool IsNegativeDoublePush(const KeyType& kn) const override {
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
+			const KeyData& kd = v->second;
+			return kd.m_NowValue < -kd.m_InputValue && kd.m_PreviousValue > -kd.m_InputValue &&
+				kd.m_PushTime < DOUBLE_PUSH_TIME;
 		}
 
 		/**
@@ -277,6 +311,31 @@ namespace Sample {
 			if (v == m_KeyMap.end()) { return 0; }
 			const KeyData& kd = v->second;
 			return kd.m_NowValue > kd.m_InputValue;
+		}
+
+		/**
+		 * @brief		指定名称の登録キーが何秒押されているか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押されている
+		 *				false	このフレームで押されていない
+		 */
+		float GetPressTime(const KeyType& kn) const override {
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
+			const KeyData& kd = v->second;
+			return kd.m_HoldTime;
+		}
+		/**
+		 * @brief		指定名称の登録キーが押されているかどうか
+		 * @param[in]	kn		登録キー名
+		 * @return		true	このフレームで押されている
+		 *				false	このフレームで押されていない
+		 */
+		float GetNegativePressTime(const KeyType& kn) const override {
+			const auto& v = m_KeyMap.find(kn);
+			if (v == m_KeyMap.end()) { return 0; }
+			const KeyData& kd = v->second;
+			return kd.m_HoldTime;
 		}
 
 		/**

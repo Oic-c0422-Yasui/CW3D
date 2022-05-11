@@ -53,21 +53,14 @@ namespace Sample {
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
 				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
-				//ChangeState(STATE_KEY_MOVE);
+
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
 				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				//ChangeState(STATE_KEY_MOVE);
+
 			}
-			if (moveAction_->IsReverse())
-			{
-				moveAction_->SetRotateY(MOF_ToRadian(90));
-			}
-			else
-			{
-				moveAction_->SetRotateY(MOF_ToRadian(-90));
-			}
+			
 			if (!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
 				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
 			{

@@ -15,6 +15,10 @@ namespace Sample {
 		/** 縦移動フラグ */
 		bool			m_ZMoveFlg;
 
+		float m_TargetY;
+		float m_MoveTime;
+		float m_StartY;
+		float m_CurrentTime;
 		/** 移動量 */
 		CVector3 m_Move;
 
@@ -29,13 +33,25 @@ namespace Sample {
 			, m_XMoveFlg(false)
 			, m_ZMoveFlg(false)
 			, m_Move(0,0,0)
-			, m_ReverseFlg(false) {
+			, m_ReverseFlg(false)
+			, m_TargetY(0.0f)
+			, m_MoveTime(0.0f)
+			, m_StartY(0.0f)
+		{
 		}
 
 		/**
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			if (m_ReverseFlg)
+			{
+				SetRotateY(MOF_ToRadian(90), 0.2f);
+			}
+			else
+			{
+				SetRotateY(MOF_ToRadian(-90), 0.2f);
+			}
 		}
 
 		/**
@@ -45,19 +61,33 @@ namespace Sample {
 			//移動がない場合減速
 			if (!m_XMoveFlg)
 			{
-				DecelerateX(PLAYER_SPEED);
+				DecelerateX(PLAYER_SPEED * 0.5);
 			}
 			if (!m_ZMoveFlg)
 			{
-				DecelerateZ(PLAYER_SPEED);
+				DecelerateZ(PLAYER_SPEED * 0.5);
 			}
-			if (m_Move.x > 0)
+			if (m_Move.x > 0 && m_ReverseFlg)
 			{
 				m_ReverseFlg = false;
+				SetRotateY(MOF_ToRadian(-90), 0.2f);
+
 			}
-			else if (m_Move.x < 0)
+			else if (m_Move.x < 0 && !m_ReverseFlg)
 			{
 				m_ReverseFlg = true;
+				SetRotateY(MOF_ToRadian(90), 0.2f);
+			}
+
+			if (m_CurrentTime > m_MoveTime )
+			{
+				Transform()->SetRotateY(m_TargetY);
+			}
+			else
+			{
+				float t = m_CurrentTime / m_MoveTime;
+				Transform()->SetRotateY(m_StartY + (m_TargetY - m_StartY) * t);
+				m_CurrentTime += CUtilities::GetFrameSecond();
 			}
 
 			//重力
@@ -201,8 +231,11 @@ namespace Sample {
 			m_ReverseFlg = isReverse;
 		}
 
-		void SetRotateY(float val) {
-			Transform()->SetRotateY(val);
+		void SetRotateY(float val,float time) {
+			m_TargetY = val;
+			m_MoveTime = time;
+			m_StartY = Transform()->GetRotateY();
+			m_CurrentTime = 0;
 		}
 
 		/**
@@ -238,7 +271,7 @@ namespace Sample {
 		 *				移動速度が一定以下なら停止とみなす
 		 */
 		bool IsMove() const {
-			if (std::abs(m_Move.x) > 0.1f && std::abs(m_Move.z) > 0.1f)
+			if (std::abs(m_Move.x) > 0.01f || std::abs(m_Move.z) > 0.01f)
 			{
 				return true;
 			}

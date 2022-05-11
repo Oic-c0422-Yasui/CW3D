@@ -12,7 +12,7 @@ namespace Sample {
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			moveAction_;
+		MoveActionPtr			m_MoveAction;
 		BYTE					m_NowHorizontal;
 		BYTE					m_NowVertical;
 		enum Tag_Direction
@@ -36,10 +36,11 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
 			Actor()->GetAnimationState()->ChangeMotionByName("Walk",1.0f,TRUE,TRUE);
 			m_NowHorizontal = NO_DIRECTION;
 			m_NowVertical = NO_DIRECTION;
+			m_MoveAction->Start();
 		}
 
 		/**
@@ -52,74 +53,53 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
+			InputDash();
 			//左右で移動
+			
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				if (m_NowHorizontal == MINUS_DIRECTION)
-				{
-					ChangeState(STATE_KEY_RUN);
-				}
-				else
-				{
-					m_NowHorizontal = MINUS_DIRECTION;
-				}
+				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				
 				
 			}
 			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
-				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				if (m_NowHorizontal == PLUS_DIRECTION)
-				{
-					ChangeState(STATE_KEY_RUN);
-				}
-				else
-				{
-					m_NowHorizontal = PLUS_DIRECTION;
-				}
+				m_MoveAction->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 				
 			}
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				if (m_NowVertical == PLUS_DIRECTION)
-				{
-					ChangeState(STATE_KEY_RUN);
-				}
-				else
-				{
-					m_NowVertical = PLUS_DIRECTION;
-				}
+				m_MoveAction->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+
 			}
 			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				if (m_NowVertical == MINUS_DIRECTION)
-				{
-					ChangeState(STATE_KEY_RUN);
-				}
-				else
-				{
-					m_NowVertical = MINUS_DIRECTION;
-				}
+				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+
 			}
-			if (moveAction_->IsReverse())
-			{
-				moveAction_->SetRotateY(MOF_ToRadian(90));
-			}
-			else
-			{
-				moveAction_->SetRotateY(MOF_ToRadian(-90));
-			}
+
+			
+
 			if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
 				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				if (!moveAction_->IsMove())
+				if (!m_MoveAction->IsMove())
 				{
 					ChangeState(STATE_KEY_IDLE);
 				}
 			}
 		}
+
+		void InputDash()
+		{
+			if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) || 
+				Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
+			{
+					ChangeState(STATE_KEY_RUN);
+					return;
+			}
+		}
+
 
 		/**
 		 * @brief		ステート内の終了処理

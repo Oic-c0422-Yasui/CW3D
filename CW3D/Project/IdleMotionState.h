@@ -29,14 +29,14 @@ namespace Sample {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
 			if (m_MoveAction->IsReverse())
 			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(180));
+				m_MoveAction->SetRotateY(MOF_ToRadian(180), 0.2f);
 			}
 			else
 			{
-				m_MoveAction->SetRotateY(0);
+				m_MoveAction->SetRotateY(0, 0.2f);
 
 			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Idle", 1.0f, FALSE, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName("Idle", 0.0f, 1.0f, 0.2f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
