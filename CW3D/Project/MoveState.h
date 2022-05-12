@@ -37,10 +37,11 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			m_MoveAction->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName("Walk",1.0f,TRUE,TRUE);
 			m_NowHorizontal = NO_DIRECTION;
 			m_NowVertical = NO_DIRECTION;
-			m_MoveAction->Start();
+			
 		}
 
 		/**
@@ -77,7 +78,10 @@ namespace Sample {
 				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 
 			}
-
+			if (Input()->IsPush(INPUT_KEY_ATTACK))
+			{
+				ChangeState(STATE_KEY_ATTACK1);
+			}
 			
 
 			if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&

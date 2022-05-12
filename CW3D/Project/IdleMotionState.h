@@ -74,6 +74,11 @@ namespace Sample {
 				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
+
+			if (Input()->IsPush(INPUT_KEY_ATTACK))
+			{
+				ChangeState(STATE_KEY_ATTACK1);
+			}
 		}
 
 		/**

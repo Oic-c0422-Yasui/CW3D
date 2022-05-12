@@ -15,6 +15,7 @@ namespace Sample {
 		/** cˆÚ“®ƒtƒ‰ƒO */
 		bool			m_ZMoveFlg;
 
+		float m_SetRotateFlg;
 		float m_TargetY;
 		float m_MoveTime;
 		float m_StartY;
@@ -37,6 +38,8 @@ namespace Sample {
 			, m_TargetY(0.0f)
 			, m_MoveTime(0.0f)
 			, m_StartY(0.0f)
+			, m_CurrentTime(0.0f)
+			, m_SetRotateFlg(false)
 		{
 		}
 
@@ -79,11 +82,12 @@ namespace Sample {
 				SetRotateY(MOF_ToRadian(90), 0.2f);
 			}
 
-			if (m_CurrentTime > m_MoveTime )
+			if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
 			{
 				Transform()->SetRotateY(m_TargetY);
+				m_SetRotateFlg = false;
 			}
-			else
+			else if(m_SetRotateFlg)
 			{
 				float t = m_CurrentTime / m_MoveTime;
 				Transform()->SetRotateY(m_StartY + (m_TargetY - m_StartY) * t);
@@ -236,6 +240,7 @@ namespace Sample {
 			m_MoveTime = time;
 			m_StartY = Transform()->GetRotateY();
 			m_CurrentTime = 0;
+			m_SetRotateFlg = true;
 		}
 
 		/**

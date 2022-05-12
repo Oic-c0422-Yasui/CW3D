@@ -31,6 +31,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+			m_MoveAction->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName("Attack1", 0.0f,1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -52,18 +53,10 @@ namespace Sample {
 
 			if (Input()->IsNegativePress(INPUT_KEY_ATTACK))
 			{
-				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				//m_NextInputFlg = true;
 			}
 
-			//”½“]
-			if (m_MoveAction->IsReverse())
-			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(90), 0.2f);
-			}
-			else
-			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(-90), 0.2f);
-			}
+			
 		}
 
 
