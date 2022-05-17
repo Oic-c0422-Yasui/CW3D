@@ -26,7 +26,8 @@ namespace Sample {
 		 */
 		void Start() override {
 			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			Actor()->GetAnimationState()->ChangeMotionByName("Run", 1.0f, TRUE, TRUE);
+			moveAction_->Start();
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

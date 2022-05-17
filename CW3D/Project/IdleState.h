@@ -32,14 +32,14 @@ namespace Sample {
 			m_Time = 0.0f;
 			if (m_MoveAction->IsReverse())
 			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(180), 0.2f);
+				m_MoveAction->SetRotateY(MOF_ToRadian(90), 0.15f);
 			}
 			else
 			{
-				m_MoveAction->SetRotateY(0, 0.2f);
+				m_MoveAction->SetRotateY(MOF_ToRadian(-90), 0.15f);
 
 			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Stand", 0.0f, 1.0f, 0.2f, TRUE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLE, 0.0f, 1.0f, 0.15f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -93,6 +93,12 @@ namespace Sample {
 			{
 				ChangeState(STATE_KEY_ATTACK1);
 			}
+
+			//ボタンごとにスキルが変わる場合
+			/*if (Input()->IsPush(INPUT_KEY_ATTACK))
+			{
+				ChangeState(setting.skill1SetName);
+			}*/
 		}
 
 		/**

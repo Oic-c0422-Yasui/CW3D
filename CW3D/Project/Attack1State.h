@@ -32,7 +32,7 @@ namespace Sample {
 		void Start() override {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
 			m_MoveAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName("Attack1", 0.0f,1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f,1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

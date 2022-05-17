@@ -51,11 +51,11 @@ namespace Sample {
 		void Start() override {
 			if (m_ReverseFlg)
 			{
-				SetRotateY(MOF_ToRadian(90), 0.2f);
+				SetRotateY(MOF_ToRadian(90), 0.1f);
 			}
 			else
 			{
-				SetRotateY(MOF_ToRadian(-90), 0.2f);
+				SetRotateY(MOF_ToRadian(-90), 0.1f);
 			}
 		}
 

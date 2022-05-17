@@ -38,7 +38,7 @@ namespace Sample {
 		void Start() override {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
 			m_MoveAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName("Walk",1.0f,TRUE,TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_MOVE, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 			m_NowHorizontal = NO_DIRECTION;
 			m_NowVertical = NO_DIRECTION;
 			

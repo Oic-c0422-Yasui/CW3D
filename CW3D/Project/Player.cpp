@@ -5,6 +5,7 @@
 #include "RunState.h"
 #include "IdleMotionState.h"
 #include "Attack1State.h"
+#include "ResourceManager.h"
 
 
 
@@ -12,7 +13,7 @@
 CPlayer::CPlayer():
 	m_Actor(std::make_shared<Sample::Actor>()),
 	m_Move(),
-	m_StateMachine(),
+	m_StateMachine(std::make_shared<Sample::StateMachine>()),
 	m_pInput()
 {
 }
@@ -21,9 +22,10 @@ CPlayer::~CPlayer()
 {
 }
 
-bool CPlayer::Load(CMeshContainer* pMesh)
+bool CPlayer::Load()
 {
-	m_pMesh = pMesh;
+	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Player");
+
 	if (m_pMesh == nullptr)
 	{
 		return false;
@@ -58,12 +60,9 @@ void CPlayer::Initialize()
 
 
 	m_Speed = TEMP_SPEED;
-	//m_Position = Vector3(0, 0, 0);
-	//m_Velocity = Vector3(0, 0, 0);
-	/*m_Rotation = Vector3(0, 0, 0);
-	m_Scale = Vector3(1, 1, 1);*/
-	CMatrix44 matRotate = m_Actor->GetMatrix();
-	matWorld = matRotate;
+
+
+	matWorld = m_Actor->GetMatrix();
 }
 
 void CPlayer::Update()
@@ -85,11 +84,6 @@ void CPlayer::Update()
 
 	m_Motion->AddTimer(CUtilities::GetFrameSecond());
 
-	/*UpdateKey();
-	UpdateMove();
-	SetReverse();*/
-
-	//m_Position += m_Velocity;
 }
 
 void CPlayer::Render()
@@ -101,112 +95,7 @@ void CPlayer::Render()
 void CPlayer::Release()
 {
 	MOF_SAFE_DELETE(m_Motion);
-}
-
-void CPlayer::UpdateKey()
-{
-	m_HorizontalMoveFlg = false;
-	m_VerticalMoveFlg = false;
-	if (m_pInput->IsNegativePress(INPUT_KEY_HORIZONTAL))
-	{
-		m_HorizontalMoveFlg = true;
-		m_ReverseFlg = true;
-		m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
-		if (m_Velocity.x < -m_Speed)
-		{
-			m_Velocity.x = -m_Speed;
-		}
-	}
-	else if (m_pInput->IsPress(INPUT_KEY_HORIZONTAL))
-	{
-		m_HorizontalMoveFlg = true;
-		m_ReverseFlg = false;
-		m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
-		if (m_Velocity.x > m_Speed)
-		{
-			m_Velocity.x = m_Speed;
-		}
-	}
-	if (m_pInput->IsNegativePress(INPUT_KEY_VERTICAL))
-	{
-		m_VerticalMoveFlg = true;
-		m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
-		if (m_Velocity.z > m_Speed)
-		{
-			m_Velocity.z = m_Speed;
-		}
-	}
-	else if (m_pInput->IsPress(INPUT_KEY_VERTICAL))
-	{
-		m_VerticalMoveFlg = true;
-		m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
-		if (m_Velocity.z < -m_Speed)
-		{
-			m_Velocity.z = -m_Speed;
-		}
-	}
-}
-
-void CPlayer::UpdateMove()
-{
-	if (!m_HorizontalMoveFlg)
-	{
-		if (m_Velocity.x > 0)
-		{
-			m_Velocity.x -= m_Speed * (CUtilities::GetFrameSecond() * 10);
-			if (m_Velocity.x <= 0)
-			{
-				m_Velocity.x = 0;
-			}
-		}
-		else if (m_Velocity.x < 0)
-		{
-			m_Velocity.x += m_Speed * (CUtilities::GetFrameSecond() * 10);
-			if (m_Velocity.x >= 0)
-			{
-				m_Velocity.x = 0;
-			}
-		}
-	}
-	if (!m_VerticalMoveFlg)
-	{
-		if (m_Velocity.z > 0)
-		{
-			m_Velocity.z -= m_Speed * (CUtilities::GetFrameSecond() * 10);
-			if (m_Velocity.z <= 0)
-			{
-				m_Velocity.z = 0;
-			}
-		}
-		else if (m_Velocity.z < 0)
-		{
-			m_Velocity.z += m_Speed * (CUtilities::GetFrameSecond() * 10);
-			if (m_Velocity.z >= 0)
-			{
-				m_Velocity.z = 0;
-			}
-		}
-	}
-
-
-
-}
-
-void CPlayer::SetReverse()
-{
-	if (m_ReverseFlg)
-	{
-		CMatrix44 matRotate;
-		matRotate.RotationY(MOF_ToRadian(60));
-		matWorld = matRotate;
-	}
-	else
-	{
-		CMatrix44 matRotate;
-		matRotate.RotationY(MOF_ToRadian(-60));
-		matWorld = matRotate;
-	}
-
+	m_pMesh.reset();
 }
 
 

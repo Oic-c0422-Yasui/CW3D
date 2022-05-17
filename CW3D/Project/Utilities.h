@@ -32,27 +32,20 @@ namespace Sample
 		//–ß‚è’l:Œ»İŠÔ‚Å‚Ì‰ñ“]’l
 		static float RotateTimer(float startValue, float currentTime, float endValue, float endTime)
 		{
+			float result = 0;
 			//ˆÚ“®Šp“x
-			float my = endValue - startValue;
-			MOF_NORMALIZE_RADIANANGLE(my);
+			float end = endValue;
+			MOF_NORMALIZE_RADIANANGLE(end);
+			float start = startValue;
+			MOF_NORMALIZE_RADIANANGLE(start);
 
+			
 			//·•ªŠp“x
-			float sa = my - startValue;
+			float sa = end - start;
 			MOF_ROTDIRECTION_RADIANANGLE(sa);
 
-
-			float result = 0;
-			if (endTime <= currentTime)
-			{
-				result = endValue;
-			}
-			else
-			{
-				float sa = startValue;
-				float endVal = endValue;
-				float now = currentTime / endTime;
-				result = sa + (endVal - sa) * now;
-			}
+			sa = Timer(start, currentTime, start + sa, endTime);
+			result = MOF_NORMALIZE_RADIANANGLE(sa);
 
 			return result;
 		}

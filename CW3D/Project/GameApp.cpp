@@ -15,7 +15,6 @@
 CSceneBase* gScene = NULL;
 
 
-CMeshContainer test;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -32,7 +31,6 @@ MofBool CGameApp::Initialize(void){
 	gScene->Load();
 	gScene->Initialize();
 
-	test.Load("Stage/test.mom");
 	
 	return TRUE;
 }
@@ -64,8 +62,7 @@ MofBool CGameApp::Render(void){
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
 	gScene->Render();
-	CMatrix44 matWorld;
-	test.Render(matWorld);
+
 	gScene->RenderDebug();
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -85,6 +82,5 @@ MofBool CGameApp::Release(void){
 		delete gScene;
 		gScene = NULL;
 	}
-	test.Release();
 	return TRUE;
 }

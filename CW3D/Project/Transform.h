@@ -217,25 +217,25 @@ namespace Sample
 			//‰ñ“]‚ÌŽæ“¾
 			CVector3 GetRotate() const noexcept
 			{
-				return m_Scale;
+				return m_Rotate;
 			}
 
 			//‰ñ“]‚ÌŽæ“¾
 			float GetRotateX() const noexcept
 			{
-				return m_Scale.x;
+				return m_Rotate.x;
 			}
 
 			//‰ñ“]‚ÌŽæ“¾
 			float GetRotateY() const noexcept
 			{
-				return m_Scale.y;
+				return m_Rotate.y;
 			}
 
 			//‰ñ“]‚ÌŽæ“¾
 			float GetRotateZ() const noexcept
 			{
-				return m_Scale.z;
+				return m_Rotate.z;
 			}
 
 	private:

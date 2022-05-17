@@ -18,6 +18,8 @@ private:
 
 	CDirectionalLight m_Light;
 
+	CMeshContainer	m_Stage;
+
 public:
 	CBattleScene();
 	~CBattleScene();

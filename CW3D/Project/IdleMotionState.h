@@ -36,7 +36,7 @@ namespace Sample {
 				m_MoveAction->SetRotateY(0, 0.2f);
 
 			}
-			Actor()->GetAnimationState()->ChangeMotionByName("Idle", 0.0f, 1.0f, 0.2f, FALSE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLEMOTION, 0.0f, 1.0f, 0.2f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

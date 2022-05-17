@@ -22,19 +22,39 @@ bool CBattleScene::Load()
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,9);
 
-	
-	
-
-
-
-	if (m_PlayerMesh.Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
+	if (tempMesh->Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
+	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
+
+	tempMesh = std::make_shared<CMeshContainer>();
+	if (tempMesh->Load("Enemy/zombie/zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	{
+		return false;
+	}
+	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
+
+
+
 	m_Player.SetInput(input);
-	m_Player.Load(&m_PlayerMesh);
+	if (!m_Player.Load())
+	{
+		return false;
+	}
+	
 
+	
+	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	{
+		return false;
+	}
 
+	
+	
+
+	tempMesh.reset();
 
 	return true;
 }
@@ -61,7 +81,11 @@ void CBattleScene::Render()
 {
 	g_pGraphics->SetDepthEnable(TRUE);
 
+	CMatrix44 stgMat;
+	m_Stage.Render(stgMat);
 	m_Player.Render();
+
+	g_pGraphics->SetDepthEnable(FALSE);
 }
 
 void CBattleScene::RenderDebug()
@@ -72,7 +96,7 @@ void CBattleScene::RenderDebug()
 void CBattleScene::Release()
 {
 	m_Player.Release();
-	m_PlayerMesh.Release();
+	m_Stage.Release();
 	InputManagerInstance.Release();
-	
+	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 }

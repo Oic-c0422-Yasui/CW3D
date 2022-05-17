@@ -15,7 +15,7 @@ private:
 	CVector3	m_Velocity;
 	CVector3	m_Rotation;
 	CVector3	m_Scale;
-	CMeshContainer*		m_pMesh;
+	std::shared_ptr<CMeshContainer>		m_pMesh;
 
 	
 
@@ -34,14 +34,12 @@ private:
 	
 	CMatrix44 matWorld;
 
-	void UpdateKey();
-	void UpdateMove();
-	void SetReverse();
+
 
 public:
 	CPlayer();
 	~CPlayer();
-	bool Load(CMeshContainer* pMesh);
+	bool Load();
 	void Initialize();
 	void Update();
 	void Render();
