@@ -43,6 +43,7 @@ bool CPlayer::Load()
 
 	m_Move = Sample::Action::Create<Sample::MoveAction>();
 	m_Actor->AddAction(m_Move);
+	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
 
 
@@ -73,11 +74,12 @@ void CPlayer::Update()
 	m_StateMachine->Execution();
 
 	//移動の実行
-	m_Move->Exection();
+	m_Actor->Update();
+	//m_Move->Exection();
 
 	//移動制限
 	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
-
+	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
 
 	//マトリクスを取得
 	matWorld = m_Actor->GetMatrix();

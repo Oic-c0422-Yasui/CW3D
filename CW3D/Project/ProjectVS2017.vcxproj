@@ -134,6 +134,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="RunAction.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="State.h" />

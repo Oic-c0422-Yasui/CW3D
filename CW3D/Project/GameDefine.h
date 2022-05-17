@@ -12,9 +12,10 @@ enum tag_SCENENO
 //仮
 #define PLAYER_SPEED 0.02f
 #define PLAYER_MAXSPEED 0.14f
+//プレイヤーの移動速度(0.6倍)
 #define PLAYER_WALKSPEED 0.6f
 #define GRAVITY 0.02f
-#define GRAVITYMAX 0.05f
+#define GRAVITYMAX 0.6f
 
 //インプットキーの名称
 const std::string INPUT_KEY_HORIZONTAL = "Horizontal";

@@ -1,7 +1,7 @@
 #pragma once
 
 #include	"Action.h"
-#include	"MoveAction.h"
+#include	"GameDefine.h"
 
 namespace Sample {
 
@@ -11,7 +11,6 @@ namespace Sample {
 	class Attack1Action : public Action
 	{
 	public:
-		MoveActionPtr			m_MoveAction;
 	private:
 		//パラメーター
 
@@ -28,7 +27,8 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			m_MoveAction->Reset();
+			
+			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
 		}
 
 		/**

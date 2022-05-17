@@ -49,13 +49,20 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			if (m_ReverseFlg)
+			auto& vel = Velocity();
+			vel->SetMaxVelocity(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
+				
+			vel->SetMaxGravity(GRAVITYMAX);
+			vel->SetDecelerate(PLAYER_SPEED * PLAYER_WALKSPEED, PLAYER_SPEED * PLAYER_WALKSPEED);
+
+			float rotateY = Transform()->GetRotateY();
+			if (Transform()->IsReverse())
 			{
-				SetRotateY(MOF_ToRadian(90), 0.1f);
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
 			}
 			else
 			{
-				SetRotateY(MOF_ToRadian(-90), 0.1f);
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
 			}
 		}
 
@@ -64,7 +71,23 @@ namespace Sample {
 		 */
 		void Exection() override {
 			//移動がない場合減速
-			if (!m_XMoveFlg)
+
+			auto& velocity = Velocity();
+			bool isReverse = Transform()->IsReverse();
+			
+			if (velocity->GetVelocityX() < 0 && !isReverse)
+			{
+				float rotateY = Transform()->GetRotateY();
+				Transform()->SetReverse(true);
+				Velocity()->SetRotateY(rotateY,MOF_ToRadian(90), 0.18f);
+			}
+			else if (velocity->GetVelocityX() > 0 && isReverse)
+			{
+				float rotateY = Transform()->GetRotateY();
+				Transform()->SetReverse(false);
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+			}
+			/*if (!m_XMoveFlg)
 			{
 				DecelerateX(PLAYER_SPEED * 0.5);
 			}
@@ -82,9 +105,9 @@ namespace Sample {
 			{
 				m_ReverseFlg = true;
 				SetRotateY(MOF_ToRadian(90), 0.2f);
-			}
+			}*/
 
-			if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
+			/*if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
 			{
 				Transform()->SetRotateY(m_TargetY);
 				m_SetRotateFlg = false;
@@ -94,28 +117,15 @@ namespace Sample {
 
 				float rotateY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
 
-
 				Transform()->SetRotateY(rotateY);
 				m_CurrentTime += CUtilities::GetFrameSecond();
-			}
-
-			/*if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
-			{
-				Transform()->SetRotateY(m_TargetY);
-				m_SetRotateFlg = false;
-			}
-			else if(m_SetRotateFlg)
-			{
-
-				float t = m_CurrentTime / m_MoveTime;
-				Transform()->SetRotateY(m_StartY + (m_TargetY - m_StartY) * t);
-				m_CurrentTime += CUtilities::GetFrameSecond();
 			}*/
+
 
 			//重力
 			//Gravity(GRAVITY);
 			//実際に座標を移動させる
-			Transform()->MovePosition(m_Move);
+			/*Transform()->MovePosition(m_Move);*/
 			//移動フラグOFF
 			m_XMoveFlg = false;
 			m_ZMoveFlg = false;
@@ -133,7 +143,7 @@ namespace Sample {
 		void Reset() {
 			m_XMoveFlg = false;
 			m_ZMoveFlg = false;
-			//m_Move = Vector3(0, 0, 0);
+			m_Move = Vector3(0, 0, 0);
 			m_ReverseFlg = false;
 		}
 
@@ -167,6 +177,16 @@ namespace Sample {
 			m_ZMoveFlg = true;
 			m_Move.z += speed;
 			m_Move.z = ((m_Move.z > maxspeed) ? maxspeed : ((m_Move.z < -maxspeed) ? -maxspeed : m_Move.z));
+		}
+
+		/**
+		 * @brief		加速
+		 * @param[in]	x		加速量
+		 * @param[in]	z		加速量
+		 */
+		void Acceleration(float x, float z) {
+			Velocity()->Acceleration(x * (PLAYER_SPEED * PLAYER_WALKSPEED),
+				z *(PLAYER_SPEED * PLAYER_WALKSPEED));
 		}
 
 		/**

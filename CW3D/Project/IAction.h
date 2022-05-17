@@ -21,6 +21,11 @@ namespace Sample {
 		 */
 		virtual void SetTransform(TransformPtr t) = 0;
 
+		/**
+		 * @brief		‘¬“x“o˜^
+		 */
+		virtual void SetVelocity(VelocityPtr t) = 0;
+
 		///**
 		// * @brief		ƒAƒjƒ[ƒVƒ‡ƒ““o˜^
 		// */

@@ -15,6 +15,9 @@ namespace Sample {
 		/** 姿勢クラス */
 		TransformPtr					m_Transform;
 
+		/** 速度クラス */
+		VelocityPtr						m_Velocity;
+
 		///** アニメーションクラス */
 		AnimationStatePtr				m_Animation;
 
@@ -25,6 +28,11 @@ namespace Sample {
 		 */
 		void SetTransform(TransformPtr t) final { m_Transform = t; }
 
+		/**
+		 * @brief		姿勢登録
+		 */
+		void SetVelocity(VelocityPtr v) final { m_Velocity = v; }
+
 		///**
 		// * @brief		アニメーション登録
 		// */
@@ -32,6 +40,7 @@ namespace Sample {
 	protected:
 		/** privateメンバ取得専用 */
 		TransformPtr Transform() { return m_Transform; }
+		VelocityPtr	 Velocity()	 { return m_Velocity; }
 		AnimationStatePtr AnimationState() { return m_Animation; }
 	public:
 		/**
@@ -39,6 +48,7 @@ namespace Sample {
 		 */
 		Action()
 			: m_Transform()
+			, m_Velocity()
 			, m_Animation() {
 		}
 

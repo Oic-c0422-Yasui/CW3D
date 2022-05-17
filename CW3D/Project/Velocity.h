@@ -27,17 +27,33 @@ namespace Sample
 
 		//重力加速度
 		float					m_Gravity;
+
+
+		//回転用変数
+		bool					m_SetRotateFlg;
+		float					m_CurrentTime;
+		float					m_MoveTime;
+		float					m_TargetY;
+		float					m_StartY;
+		float					m_CurrentY;
+
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		Velocity()
-			: m_Velocity()
-			, m_MaxVelocity()
-			, m_UpdateVelocity()
-			, m_Decelerate()
+			: m_Velocity(0.0f, 0.0f, 0.0f)
+			, m_MaxVelocity(0.0f, 0.0f, 0.0f)
+			, m_UpdateVelocity(0.0f, 0.0f, 0.0f)
+			, m_Decelerate(0.0f, 0.0f, 0.0f)
 			, useGravity(true)
-			, m_Gravity()
+			, m_Gravity(0.0f)
+			, m_SetRotateFlg(false)
+			, m_CurrentTime(0.0f)
+			, m_MoveTime(0.0f)
+			, m_TargetY(0.0f)
+			, m_StartY(0.0f)
+			, m_CurrentY(0.0f)
 		{
 		}
 
@@ -51,6 +67,22 @@ namespace Sample
 				m_Velocity.y += m_Gravity;
 				m_Velocity.y = ((m_Velocity.y > m_MaxVelocity.y) ?
 					m_MaxVelocity.y : m_Velocity.y);
+			}
+
+			//回転の更新
+			if (m_SetRotateFlg)
+			{
+				if (m_CurrentTime <= m_MoveTime)
+				{
+					m_CurrentY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
+
+					m_CurrentTime += CUtilities::GetFrameSecond();
+				}
+				else
+				{
+					m_CurrentY = m_TargetY;
+					m_SetRotateFlg = false;
+				}
 			}
 			//速度の更新を実施
 			if (fabsf(m_UpdateVelocity.x) > 0)
@@ -201,6 +233,15 @@ namespace Sample
 			m_MaxVelocity.y = v;
 		}
 
+		void SetRotateY(float startRotate,float endRotate, float time) {
+			m_StartY = startRotate;
+			m_CurrentY = m_StartY;
+			m_TargetY = endRotate;
+			m_MoveTime = time;
+			m_CurrentTime = 0;
+			m_SetRotateFlg = true;
+		}
+
 		/**
 		 * @brief		速度の取得
 		 */
@@ -224,6 +265,10 @@ namespace Sample
 		 */
 		float GetVelocityZ() const noexcept {
 			return m_Velocity.z;
+		}
+
+		float GetRotateY() const noexcept {
+			return m_CurrentY;
 		}
 	};
 	//ポインタ置き換え

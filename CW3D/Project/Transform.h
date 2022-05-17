@@ -2,6 +2,7 @@
 
 #include	"Common.h"
 #include	"Utilities.h"
+#include	"Velocity.h"
 
 namespace Sample
 {
@@ -21,14 +22,17 @@ namespace Sample
 
 		bool		m_UpdateFlg;
 
+		bool		m_ReverseFlg;
+
 	public:
 		
-		Transform() :
-			m_Position(0, 0, 0),
-			m_Scale(1, 1, 1),
-			m_Rotate(0, 0, 0),
-			m_World(),
-			m_UpdateFlg(false)
+		Transform()
+			: m_Position(0, 0, 0)
+			, m_Scale(1, 1, 1)
+			, m_Rotate(0, 0, 0)
+			, m_World()
+			, m_UpdateFlg(false)
+			, m_ReverseFlg(false)
 		{
 		}
 
@@ -54,11 +58,41 @@ namespace Sample
 				m_World.SetTranslation(m_Position);
 			}
 
+			void MovePosition(const VelocityPtr& v) noexcept
+			{
+				m_Position += v->GetVelocity();
+				m_World.SetTranslation(m_Position);
+			}
+
+
+			void Clip(CVector3 min, CVector3 max)
+			{
+				ClipX(min.x, max.x);
+				ClipY(min.y, max.y);
+				ClipZ(min.z, max.z);
+			}
+
+			void ClipX(float min, float max)
+			{
+				m_Position.x = ((m_Position.x > max) ?
+					max : ((m_Position.x < min) ? min : m_Position.x));
+			}
+
+			void ClipY(float min, float max)
+			{
+				m_Position.y = ((m_Position.y > max) ?
+					max : ((m_Position.y < min) ? min : m_Position.y));
+			}
+
 			void ClipZ(float min, float max)
 			{
 				m_Position.z = ((m_Position.z > max) ?
 					max : ((m_Position.z < min) ? min : m_Position.z));
 			}
+
+			
+
+
 
 			//À•W‚ÌÝ’è
 			void SetPosition(CVector3 position) noexcept
@@ -236,6 +270,18 @@ namespace Sample
 			float GetRotateZ() const noexcept
 			{
 				return m_Rotate.z;
+			}
+
+
+			/*”½“]*/
+			void SetReverse(bool isReverse) noexcept
+			{
+				m_ReverseFlg = isReverse;
+			}
+
+			bool IsReverse() const noexcept
+			{
+				return m_ReverseFlg;
 			}
 
 	private:

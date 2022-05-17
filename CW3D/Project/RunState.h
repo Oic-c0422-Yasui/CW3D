@@ -1,7 +1,7 @@
 #pragma once
 
 #include	"State.h"
-#include	"MoveAction.h"
+#include	"RunAction.h"
 
 namespace Sample {
 
@@ -12,7 +12,7 @@ namespace Sample {
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			moveAction_;
+		RunActionPtr			runAction_;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -25,8 +25,8 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			moveAction_ = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			moveAction_->Start();
+			runAction_ = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
+			runAction_->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -34,6 +34,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
+			runAction_->Exection();
 		}
 
 		/**
@@ -41,34 +42,21 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 			//左右で移動
-			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
+				Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				moveAction_->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
-
+				runAction_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 			}
-			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
+			else
 			{
-				moveAction_->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
-
+				ChangeState(STATE_KEY_IDLE);
 			}
-			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
-			{
-				moveAction_->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
 
-			}
-			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
+			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
-				moveAction_->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-
-			}
-			
-			if (!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
-				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				if (!moveAction_->IsMove())
-				{
-					ChangeState(STATE_KEY_IDLE);
-				}
+				ChangeState(STATE_KEY_ATTACK1);
 			}
 		}
 

@@ -13,22 +13,12 @@ namespace Sample {
 	private:
 		/** 移動アクション */
 		MoveActionPtr			m_MoveAction;
-		BYTE					m_NowHorizontal;
-		BYTE					m_NowVertical;
-		enum Tag_Direction
-		{
-			NO_DIRECTION = 0,
-			PLUS_DIRECTION,
-			MINUS_DIRECTION,
-		};
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		MoveState()
 			: State()
-			, m_NowHorizontal(NO_DIRECTION)
-			, m_NowVertical(NO_DIRECTION)
 		{
 		}
 
@@ -39,8 +29,6 @@ namespace Sample {
 			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
 			m_MoveAction->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_MOVE, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
-			m_NowHorizontal = NO_DIRECTION;
-			m_NowVertical = NO_DIRECTION;
 			
 		}
 
@@ -48,6 +36,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
+			m_MoveAction->Exection();
 		}
 
 		/**
@@ -57,41 +46,33 @@ namespace Sample {
 			InputDash();
 			//左右で移動
 			
-			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
+				Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				
-				
+				m_MoveAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 			}
-			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
+			else
 			{
-				m_MoveAction->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-				
+				ChangeState(STATE_KEY_IDLE);
 			}
-			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
-			{
-				m_MoveAction->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 
-			}
-			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 
-			}
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
 				ChangeState(STATE_KEY_ATTACK1);
 			}
 			
 
-			if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
+			/*if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
 				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
 				if (!m_MoveAction->IsMove())
 				{
 					ChangeState(STATE_KEY_IDLE);
 				}
-			}
+			}*/
 		}
 
 		void InputDash()
@@ -110,6 +91,8 @@ namespace Sample {
 		 */
 		void End() override {
 		}
+
+
 
 		/**
 		 * @brief		ステート内の接触イベント

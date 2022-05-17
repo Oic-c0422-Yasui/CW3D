@@ -52,5 +52,6 @@ public:
 
 
 	Vector3 GetPosition() { return m_Actor->GetPosition(); }
+	Vector3 GetRotate() { return m_Actor->GetRotate(); }
 };
 

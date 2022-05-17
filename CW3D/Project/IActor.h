@@ -23,6 +23,11 @@ namespace Sample {
 		virtual ~IActor() = default;
 
 		/**
+		 * @brief		アクターの更新処理
+		 */
+		virtual void Update() = 0;
+
+		/**
 		 * @brief		アクションの追加
 		 * @param[in]	name		アクション名
 		 * @param[in]	action		追加するアクション
@@ -90,6 +95,11 @@ namespace Sample {
 		 * @brief		座標取得
 		 */
 		virtual CVector3 GetPosition() const = 0;
+
+		/**
+		 * @brief		回転取得
+		 */
+		virtual CVector3 GetRotate() const = 0;
 
 		/**
 		 * @brief		マトリクス取得

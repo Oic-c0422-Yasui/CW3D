@@ -12,6 +12,8 @@ namespace Sample {
 		/** 姿勢 */
 		TransformPtr			transform_;
 
+		VelocityPtr				velocity_;
+
 		/** アクション */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
 		ActionMap				actionMap_;
@@ -28,10 +30,24 @@ namespace Sample {
 		Actor()
 			: enable_shared_from_this()
 			, transform_(std::make_shared<Transform>())
+			, velocity_(std::make_shared<Velocity>())
 			, actionMap_()
 			//, parameterMap_()
 			, motion_() {
 		}
+
+		/**
+		 * @brief		アクターの更新処理
+		 */
+		void Update() override {
+			//速度更新
+			velocity_->Update();
+			//速度で座標移動
+			transform_->MovePosition(velocity_);
+
+			transform_->SetRotateY(velocity_->GetRotateY());
+		}
+
 
 		/**
 		 * @brief		アクションの追加
@@ -50,6 +66,7 @@ namespace Sample {
 		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
 			actionMap_[key] = action;
 			action->SetTransform(transform_);
+			action->SetVelocity(velocity_);
 			action->SetAnimation(motion_);
 		}
 
@@ -105,6 +122,13 @@ namespace Sample {
 		 */
 		CVector3 GetPosition() const override {
 			return transform_->GetPosition();
+		}
+
+		/**
+		 * @brief		回転取得
+		 */
+		CVector3 GetRotate() const override {
+			return transform_->GetRotate();
 		}
 
 		/**

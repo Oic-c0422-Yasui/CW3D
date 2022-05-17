@@ -90,7 +90,8 @@ void CBattleScene::Render()
 
 void CBattleScene::RenderDebug()
 {
-	CGraphicsUtilities::RenderString(0, 0, "%.2f", m_Player.GetPosition().z);
+	//CGraphicsUtilities::RenderString(0, 0, "%.2f", m_Player.GetPosition().z);
+	CGraphicsUtilities::RenderString(0, 0, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 }
 
 void CBattleScene::Release()

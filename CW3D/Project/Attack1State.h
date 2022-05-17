@@ -2,7 +2,6 @@
 
 
 #include	"State.h"
-#include	"MoveAction.h"
 #include	"Attack1Action.h"
 
 namespace Sample {
@@ -14,7 +13,7 @@ namespace Sample {
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			m_MoveAction;
+		Attack1ActionPtr			m_Attack1Action;
 		bool					m_NextInputFlg;
 	public:
 		/**
@@ -30,8 +29,9 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			m_MoveAction->Start();
+			m_Attack1Action = Actor()->GetAction<Attack1Action>(GetKey());
+
+			m_Attack1Action->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f,1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
