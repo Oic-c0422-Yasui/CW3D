@@ -18,6 +18,8 @@ namespace Sample {
 		///** アニメーションクラス */
 		AnimationStatePtr				m_Animation;
 
+		
+
 		/**
 		 * @brief		姿勢登録
 		 */

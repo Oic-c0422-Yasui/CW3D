@@ -23,6 +23,8 @@ namespace Sample {
 		/** à⁄ìÆó  */
 		CVector3 m_Move;
 
+		
+
 		/** îΩì]ÉtÉâÉO */
 		bool			m_ReverseFlg;
 	public:
@@ -87,12 +89,28 @@ namespace Sample {
 				Transform()->SetRotateY(m_TargetY);
 				m_SetRotateFlg = false;
 			}
+			else if (m_SetRotateFlg)
+			{
+
+				float rotateY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
+
+
+				Transform()->SetRotateY(rotateY);
+				m_CurrentTime += CUtilities::GetFrameSecond();
+			}
+
+			/*if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
+			{
+				Transform()->SetRotateY(m_TargetY);
+				m_SetRotateFlg = false;
+			}
 			else if(m_SetRotateFlg)
 			{
+
 				float t = m_CurrentTime / m_MoveTime;
 				Transform()->SetRotateY(m_StartY + (m_TargetY - m_StartY) * t);
 				m_CurrentTime += CUtilities::GetFrameSecond();
-			}
+			}*/
 
 			//èdóÕ
 			//Gravity(GRAVITY);

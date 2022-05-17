@@ -176,6 +176,9 @@
     <ClInclude Include="Attack1Action.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
