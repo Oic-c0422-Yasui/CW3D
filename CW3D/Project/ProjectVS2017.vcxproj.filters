@@ -72,9 +72,6 @@
     <ClCompile Include="MoveAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
-    <ClCompile Include="IdoleAction.cpp">
-      <Filter>ソース ファイル\Action</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -155,7 +152,7 @@
     <ClInclude Include="StateMachine.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
     </ClInclude>
-    <ClInclude Include="IdoleAction.h">
+    <ClInclude Include="IdleAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
@@ -186,6 +183,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="RunAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleMotionAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
   </ItemGroup>

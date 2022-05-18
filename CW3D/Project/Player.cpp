@@ -1,11 +1,11 @@
 #include "Player.h"
 
+#include "ResourceManager.h"
 #include "IdleState.h"
 #include "MoveState.h"
 #include "RunState.h"
 #include "IdleMotionState.h"
 #include "Attack1State.h"
-#include "ResourceManager.h"
 
 
 
@@ -43,6 +43,8 @@ bool CPlayer::Load()
 
 	m_Move = Sample::Action::Create<Sample::MoveAction>();
 	m_Actor->AddAction(m_Move);
+	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::IdleMotionAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
 

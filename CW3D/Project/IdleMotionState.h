@@ -1,7 +1,7 @@
 #pragma once
 
 #include	"State.h"
-#include	"MoveAction.h"
+#include	"IdleMotionAction.h"
 
 namespace Sample {
 
@@ -12,7 +12,7 @@ namespace Sample {
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			m_MoveAction;
+		IdleMotionActionPtr			m_IdleMotionAction;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -26,17 +26,10 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
-			if (m_MoveAction->IsReverse())
-			{
-				m_MoveAction->SetRotateY(MOF_ToRadian(180), 0.2f);
-			}
-			else
-			{
-				m_MoveAction->SetRotateY(0, 0.2f);
+			m_IdleMotionAction = Actor()->GetAction<IdleMotionAction>(GetKey());
+			m_IdleMotionAction->Start();
 
-			}
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLEMOTION, 0.0f, 1.0f, 0.2f, FALSE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLEMOTION, 0.0f, 1.0f, 0.3f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -54,26 +47,14 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 			//キーボードでの移動
-			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
+				Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				m_MoveAction->AccelerationX(-PLAYER_SPEED, PLAYER_MAXSPEED);
 				ChangeState(STATE_KEY_MOVE);
 			}
-			else if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
-			{
-				m_MoveAction->AccelerationX(PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
-			}
-			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
-			{
-				m_MoveAction->AccelerationZ(PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
-			}
-			else if (Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				m_MoveAction->AccelerationZ(-PLAYER_SPEED, PLAYER_MAXSPEED);
-				ChangeState(STATE_KEY_MOVE);
-			}
+			
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
