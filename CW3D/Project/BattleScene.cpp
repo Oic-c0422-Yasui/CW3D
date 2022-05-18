@@ -30,13 +30,13 @@ bool CBattleScene::Load()
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
 
 	tempMesh = std::make_shared<CMeshContainer>();
-	if (tempMesh->Load("Enemy/zombie/zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
-
+	
 
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
@@ -45,7 +45,6 @@ bool CBattleScene::Load()
 	}
 	
 
-	
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
@@ -64,6 +63,18 @@ void CBattleScene::Initialize()
 	m_Player.Initialize();
 	m_Camera.Initialize();
 
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		delete m_Enemys[i];
+	}
+	m_Enemys.clear();
+
+	CEnemyBuilder zb;
+	m_Enemys.push_back(zb.Create(Vector3(2, 0, 5)));
+	m_Enemys.push_back(zb.Create(Vector3(2, 0, 1)));
+	m_Enemys.push_back(zb.Create(Vector3(5, 0, 5)));
+	m_Enemys.push_back(zb.Create(Vector3(6, 0, 1)));
+
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
 	CGraphicsUtilities::SetDirectionalLight(&m_Light);
 }
@@ -73,6 +84,11 @@ void CBattleScene::Update()
 	//“ü—ÍXV
 	InputManagerInstance.Update();
 	m_Player.Update();
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		m_Enemys[i]->Update();
+	}
+
 
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 }
@@ -84,6 +100,12 @@ void CBattleScene::Render()
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
 	m_Player.Render();
+
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		m_Enemys[i]->Render();
+	}
+
 
 	g_pGraphics->SetDepthEnable(FALSE);
 }
@@ -98,6 +120,12 @@ void CBattleScene::Release()
 {
 	m_Player.Release();
 	m_Stage.Release();
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		delete m_Enemys[i];
+	}
+	m_Enemys.clear();
+
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 }

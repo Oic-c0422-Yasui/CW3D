@@ -11,10 +11,6 @@
 class CPlayer : public CPlayerStatus
 {
 private:
-	CVector3	m_Position;
-	CVector3	m_Velocity;
-	CVector3	m_Rotation;
-	CVector3	m_Scale;
 	std::shared_ptr<CMeshContainer>		m_pMesh;
 
 	
@@ -34,6 +30,8 @@ private:
 	
 	CMatrix44 matWorld;
 
+	CAABB m_Collider;
+
 
 
 public:
@@ -50,6 +48,11 @@ public:
 		m_pInput = ptr;
 	}
 
+	
+
+	/*CAABB GetCollider{
+		return m_Collider
+	}*/
 
 	Vector3 GetPosition() { return m_Actor->GetPosition(); }
 	Vector3 GetRotate() { return m_Actor->GetRotate(); }

@@ -14,6 +14,8 @@ namespace Sample {
 
 		VelocityPtr				velocity_;
 
+
+
 		/** ƒAƒNƒVƒ‡ƒ“ */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
 		ActionMap				actionMap_;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Transform.h"
+#include "ShotCollider.h"
 
 namespace Sample {
 

@@ -111,10 +111,14 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
+    <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="CollisionPlayerEnemy.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="IAction.h" />
@@ -137,7 +141,10 @@
     <ClInclude Include="RunAction.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="Shot.h" />
+    <ClInclude Include="ShotManager.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="TemplateSingleton.h" />
     <ClInclude Include="Test.h" />

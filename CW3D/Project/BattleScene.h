@@ -7,11 +7,16 @@
 #include "CameraController.h"
 
 #include	"Player.h"
+#include	"EnemyBuilder.h"
 
 class CBattleScene : public CSceneBase
 {
 private:
 	CPlayer m_Player;
+
+	std::vector<CEnemy*> m_Enemys;
+
+
 	CCameraController m_Camera;
 
 	CMeshContainer	m_PlayerMesh;
