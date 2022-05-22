@@ -45,8 +45,8 @@ namespace Sample {
 		}
 
 		/** privateメンバ取得専用 */
-		InputPtr Input() { return input_; }
-		ActorPtr Actor() { return actor_; }
+		const InputPtr& Input() { return input_; }
+		const ActorPtr& Actor() { return actor_; }
 
 		/**
 		 * @brief		ステートの変更

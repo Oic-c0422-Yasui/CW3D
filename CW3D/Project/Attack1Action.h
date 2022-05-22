@@ -29,6 +29,15 @@ namespace Sample {
 		void Start() override {
 			
 			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
+			float rotateY = Transform()->GetRotateY();
+			if (Transform()->IsReverse())
+			{
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+			}
+			else
+			{
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+			}
 		}
 
 		/**

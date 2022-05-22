@@ -77,7 +77,6 @@ void CPlayer::Update()
 
 	//ˆÚ“®‚ÌŽÀs
 	m_Actor->Update();
-	//m_Move->Exection();
 
 	//ˆÚ“®§ŒÀ
 	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);

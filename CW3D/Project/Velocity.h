@@ -87,7 +87,7 @@ namespace Sample
 			//‘¬“x‚ÌXV‚ðŽÀŽ{
 			if (fabsf(m_UpdateVelocity.x) > 0)
 			{
-				//Å‘å‘¬“x‚ð’´‚¦‚é‚æ‚¤‚È‚ç”{‘¬‚ÅŒ´‘¥
+				//Å‘å‘¬“x‚ð’´‚¦‚é‚æ‚¤‚È‚ç”{‘¬‚ÅŒ¸‘¬
 				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2)
 				{
 					m_Velocity.x -= m_Decelerate.x * 2;

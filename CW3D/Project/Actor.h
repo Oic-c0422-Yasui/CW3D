@@ -93,6 +93,10 @@ namespace Sample {
 			transform_->SetScale(scale);
 		}
 
+		void SetReverse(bool isReverse) override{
+			transform_->SetReverse(isReverse);
+		}
+
 		/**
 		 * @brief		アニメーション
 		 */
@@ -120,6 +124,13 @@ namespace Sample {
 		}
 
 		/**
+		 * @brief		速度取得
+		 */
+		VelocityPtr GetVelocity() const override {
+			return velocity_;
+		}
+
+		/**
 		 * @brief		座標取得
 		 */
 		CVector3 GetPosition() const override {
@@ -140,6 +151,9 @@ namespace Sample {
 			return transform_->GetWorld();
 		}
 
+		bool IsReverse() const{
+			return transform_->IsReverse();
+		}
 
 		/**
 		 * @brief		座標取得

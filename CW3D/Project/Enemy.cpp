@@ -36,14 +36,12 @@ bool CEnemy::Load()
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::IdleMotionState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_Input));
 
 	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::MoveAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::IdleMotionAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
 

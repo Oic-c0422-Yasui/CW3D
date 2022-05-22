@@ -20,7 +20,7 @@ bool CBattleScene::Load()
 	//ƒpƒbƒh
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
-	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,9);
+	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
 
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
@@ -88,6 +88,7 @@ void CBattleScene::Update()
 	{
 		m_Enemys[i]->Update();
 	}
+	ShotManagerInstance.Update();
 
 
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
@@ -105,6 +106,12 @@ void CBattleScene::Render()
 	{
 		m_Enemys[i]->Render();
 	}
+	ShotManagerInstance.Render();
+	
+	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	{
+		CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetCollider(), Vector4(1, 0, 0, 0.2f));
+	}
 
 
 	g_pGraphics->SetDepthEnable(FALSE);
@@ -112,8 +119,13 @@ void CBattleScene::Render()
 
 void CBattleScene::RenderDebug()
 {
-	//CGraphicsUtilities::RenderString(0, 0, "%.2f", m_Player.GetPosition().z);
-	CGraphicsUtilities::RenderString(0, 0, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
+	CGraphicsUtilities::RenderString(0, 0, "POS X:%.2f,Z:%.2f", m_Player.GetPosition().x,m_Player.GetPosition().z);
+	CGraphicsUtilities::RenderString(0, 30, "VEL X:%.2f,Z:%.2f", m_Player.GetVelocity().x, m_Player.GetVelocity().z);
+	
+	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
+	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
+	
+	
 }
 
 void CBattleScene::Release()
@@ -128,4 +140,5 @@ void CBattleScene::Release()
 
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
+	ShotManagerInstance.Release();
 }

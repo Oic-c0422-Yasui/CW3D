@@ -61,18 +61,11 @@ namespace Sample {
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
+				
 				ChangeState(STATE_KEY_ATTACK1);
 			}
 			
 
-			/*if(!Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) && !Input()->IsPress(INPUT_KEY_HORIZONTAL) &&
-				!Input()->IsNegativePress(INPUT_KEY_VERTICAL) && !Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				if (!m_MoveAction->IsMove())
-				{
-					ChangeState(STATE_KEY_IDLE);
-				}
-			}*/
 		}
 
 		void InputDash()
@@ -90,6 +83,7 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
+			
 		}
 
 

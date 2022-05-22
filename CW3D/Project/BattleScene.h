@@ -8,6 +8,7 @@
 
 #include	"Player.h"
 #include	"EnemyBuilder.h"
+#include	"ShotManager.h"
 
 class CBattleScene : public CSceneBase
 {

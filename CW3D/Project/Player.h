@@ -55,6 +55,8 @@ public:
 	}*/
 
 	Vector3 GetPosition() { return m_Actor->GetPosition(); }
+	Vector3 GetVelocity() { return m_Actor->GetVelocity()->GetVelocity(); }
+	bool IsReverse() { return m_Actor->IsReverse(); }
 	Vector3 GetRotate() { return m_Actor->GetRotate(); }
 };
 

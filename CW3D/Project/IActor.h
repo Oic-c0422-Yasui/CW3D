@@ -2,7 +2,8 @@
 
 #include "IAction.h"
 
-#include "Mof.h"
+#include "Common.h"
+#include "ShotManager.h"
 
 
 namespace Sample {
@@ -81,6 +82,9 @@ namespace Sample {
 		 */
 		virtual void SetScale(CVector3 scale) = 0;
 
+
+		virtual void SetReverse(bool isReverse) = 0;
+
 		///**
 		// * @brief		アニメーション
 		// */
@@ -90,6 +94,11 @@ namespace Sample {
 		 * @brief		姿勢取得
 		 */
 		virtual TransformPtr GetTransform() const = 0;
+
+		/**
+		 * @brief		速度取得
+		 */
+		virtual VelocityPtr GetVelocity() const = 0;
 
 		/**
 		 * @brief		座標取得
@@ -105,6 +114,11 @@ namespace Sample {
 		 * @brief		マトリクス取得
 		 */
 		virtual CMatrix44 GetMatrix() const = 0;
+
+		/**
+		 * @brief		反転取得
+		 */
+		virtual bool IsReverse() const = 0;
 
 		/**
 		 * @brief		座標取得

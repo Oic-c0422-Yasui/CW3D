@@ -14,7 +14,7 @@
 
 CSceneBase* gScene = NULL;
 
-
+bool debugFlg = false;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -46,6 +46,11 @@ MofBool CGameApp::Update(void){
 	g_pInput->RefreshKey();
 
 	gScene->Update();
+
+	if (g_pInput->IsKeyPush(MOFKEY_F1))
+	{
+		debugFlg = debugFlg ? false : true;
+	}
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -63,7 +68,10 @@ MofBool CGameApp::Render(void){
 
 	gScene->Render();
 
-	gScene->RenderDebug();
+	if (debugFlg)
+	{
+		gScene->RenderDebug();
+	}
 	//描画の終了
 	g_pGraphics->RenderEnd();
 	return TRUE;

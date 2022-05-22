@@ -21,11 +21,11 @@ namespace Sample
 
 	public:
 
-		void Create(Vector3 pos,float radius,int type)
+		void Create(Vector3 pos,float radius,int type,float speed)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, radius, type);
+			add->Create(pos, radius, type,speed);
 		}
 
 		void Delete()
@@ -44,10 +44,29 @@ namespace Sample
 			}
 		}
 
+		void Render()
+		{
+			for (auto& shot : m_Shots)
+			{
+				shot->Render();
+			}
+		}
 
 
-		ShotPtr& GetShot(int id) { return m_Shots[id]; }
 
+		ShotPtr& GetShot(int id) {
+			assert(m_Shots[id]);
+			return m_Shots[id]; }
+
+		size_t GetShotSize()
+		{
+			return m_Shots.size();
+		}
+
+		int GetShotBackId()
+		{
+			return m_Shots.size() - 1;
+		}
 
 	};
 }

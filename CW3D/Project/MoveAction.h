@@ -10,10 +10,6 @@ namespace Sample {
 	class MoveAction : public Action
 	{
 	private:
-		/** 横移動フラグ */
-		bool			m_XMoveFlg;
-		/** 縦移動フラグ */
-		bool			m_ZMoveFlg;
 
 		float m_SetRotateFlg;
 		float m_TargetY;
@@ -33,8 +29,6 @@ namespace Sample {
 		 */
 		MoveAction()
 			: Action()
-			, m_XMoveFlg(false)
-			, m_ZMoveFlg(false)
 			, m_Move(0,0,0)
 			, m_ReverseFlg(false)
 			, m_TargetY(0.0f)
@@ -53,7 +47,7 @@ namespace Sample {
 			vel->SetMaxVelocity(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 				
 			vel->SetMaxGravity(GRAVITYMAX);
-			vel->SetDecelerate(PLAYER_SPEED * PLAYER_WALKSPEED, PLAYER_SPEED * PLAYER_WALKSPEED);
+			vel->SetDecelerate(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
@@ -70,7 +64,6 @@ namespace Sample {
 		 * @brief		アクション内の実行処理
 		 */
 		void Exection() override {
-			//移動がない場合減速
 
 			auto& velocity = Velocity();
 			bool isReverse = Transform()->IsReverse();
@@ -79,13 +72,13 @@ namespace Sample {
 			{
 				float rotateY = Transform()->GetRotateY();
 				Transform()->SetReverse(true);
-				Velocity()->SetRotateY(rotateY,MOF_ToRadian(90), 0.18f);
+				Velocity()->SetRotateY(rotateY,MOF_ToRadian(90), 0.1f);
 			}
 			else if (velocity->GetVelocityX() > 0 && isReverse)
 			{
 				float rotateY = Transform()->GetRotateY();
 				Transform()->SetReverse(false);
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.1f);
 			}
 			/*if (!m_XMoveFlg)
 			{
@@ -126,9 +119,6 @@ namespace Sample {
 			//Gravity(GRAVITY);
 			//実際に座標を移動させる
 			/*Transform()->MovePosition(m_Move);*/
-			//移動フラグOFF
-			m_XMoveFlg = false;
-			m_ZMoveFlg = false;
 		}
 
 		/**
@@ -141,8 +131,6 @@ namespace Sample {
 		 * @brief		速度リセット
 		 */
 		void Reset() {
-			m_XMoveFlg = false;
-			m_ZMoveFlg = false;
 			m_Move = Vector3(0, 0, 0);
 			m_ReverseFlg = false;
 		}
@@ -161,26 +149,6 @@ namespace Sample {
 
 		/**
 		 * @brief		加速
-		 * @param[in]	val		加速量
-		 */
-		void AccelerationX(float val, float maxspeed) {
-			m_XMoveFlg  = true;
-			m_Move.x += val;
-			m_Move.x = ((m_Move.x > maxspeed) ? maxspeed : ((m_Move.x < -maxspeed) ? -maxspeed : m_Move.x));
-		}
-
-		/**
-		 * @brief		加速
-		 * @param[in]	val		加速量
-		 */
-		void AccelerationZ(float speed, float maxspeed) {
-			m_ZMoveFlg = true;
-			m_Move.z += speed;
-			m_Move.z = ((m_Move.z > maxspeed) ? maxspeed : ((m_Move.z < -maxspeed) ? -maxspeed : m_Move.z));
-		}
-
-		/**
-		 * @brief		加速
 		 * @param[in]	x		加速量
 		 * @param[in]	z		加速量
 		 */
@@ -189,84 +157,7 @@ namespace Sample {
 				z *(PLAYER_SPEED * PLAYER_WALKSPEED));
 		}
 
-		/**
-		 * @brief		減速
-		 * @param[in]	dec		減速量
-		 */
-		void DecelerateX(float dec) {
-			if (m_Move.x > 0)
-			{
-				m_Move.x -= dec;
-				if (m_Move.x <= 0)
-				{
-					m_Move.x = 0;
-				}
-			}
-			else if (m_Move.x < 0)
-			{
-				m_Move.x += dec;
-				if (m_Move.x >= 0)
-				{
-					m_Move.x = 0;
-				}
-			}
-		}
 
-		/**
-		 * @brief		減速
-		 * @param[in]	dec		減速量
-		 */
-		void DecelerateZ(float dec) {
-			if (m_Move.z > 0)
-			{
-				m_Move.z -= dec;
-				if (m_Move.z <= 0)
-				{
-					m_Move.z = 0;
-				}
-			}
-			else if (m_Move.z < 0)
-			{
-				m_Move.z += dec;
-				if (m_Move.z >= 0)
-				{
-					m_Move.z = 0;
-				}
-			}
-		}
-
-		/**
-		 * @brief		速度設定
-		 * @param[in]	val		速度
-		 */
-		void SetSpeed(float val) {
-			m_Move.x = val;
-			m_Move.z = val;
-		}
-
-		/**
-		 * @brief		速度設定
-		 * @param[in]	val		速度
-		 */
-		void SetSpeedX(float val) {
-			m_Move.x = val;
-		}
-
-		/**
-		 * @brief		速度設定
-		 * @param[in]	val		速度
-		 */
-		void SetSpeedY(float val) {
-			m_Move.y = val;
-		}
-
-		/**
-		 * @brief		速度設定
-		 * @param[in]	val		速度
-		 */
-		void SetSpeedZ(float val) {
-			m_Move.y = val;
-		}
 
 		void SetReverseFlg(bool isReverse)
 		{

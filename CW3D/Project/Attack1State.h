@@ -15,6 +15,7 @@ namespace Sample {
 		/** 移動アクション */
 		Attack1ActionPtr			m_Attack1Action;
 		bool					m_NextInputFlg;
+		int						m_ShotId;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -22,6 +23,7 @@ namespace Sample {
 		Attack1State()
 			: State()
 			, m_NextInputFlg(false)
+			, m_ShotId(-1)
 		{
 		}
 
@@ -30,8 +32,28 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_Attack1Action = Actor()->GetAction<Attack1Action>(GetKey());
-
+			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(false);
+				
+			}
+			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(true);
+				
+			}
 			m_Attack1Action->Start();
+			if (Actor()->IsReverse())
+			{
+				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.7f, 0), 1.0f, 0, 0);
+				
+			}
+			else
+			{
+				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.7f, 0), 1.0f, 0, 0);
+			}
+
+			m_ShotId = ShotManagerInstance.GetShotBackId();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f,1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -43,15 +65,18 @@ namespace Sample {
 			{
 				ChangeState(m_NextInputFlg ? STATE_KEY_ATTACK2 : STATE_KEY_IDLE);
 			}
+			if (ShotManagerInstance.GetShot(m_ShotId) != nullptr)
+			{
+				ShotManagerInstance.GetShot(m_ShotId)->AddPosition(Actor()->GetVelocity()->GetVelocity());
+			}
 		}
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-			//左右で移動
 
-			if (Input()->IsNegativePress(INPUT_KEY_ATTACK))
+			if (Input()->IsPress(INPUT_KEY_ATTACK))
 			{
 				//m_NextInputFlg = true;
 			}
@@ -65,6 +90,11 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
+			if (m_ShotId > -1)
+			{
+				ShotManagerInstance.GetShot(m_ShotId)->SetShow(false);
+				ShotManagerInstance.Delete();
+			}
 		}
 
 		/**
