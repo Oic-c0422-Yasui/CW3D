@@ -96,7 +96,7 @@ void CBattleScene::Update()
 
 void CBattleScene::Render()
 {
-	g_pGraphics->SetDepthEnable(TRUE);
+	
 
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
@@ -108,24 +108,37 @@ void CBattleScene::Render()
 	}
 	ShotManagerInstance.Render();
 	
-	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
-	{
-		CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetCollider(), Vector4(1, 0, 0, 0.2f));
-	}
+	
 
 
-	g_pGraphics->SetDepthEnable(FALSE);
+	
 }
 
 void CBattleScene::RenderDebug()
 {
-	CGraphicsUtilities::RenderString(0, 0, "POS X:%.2f,Z:%.2f", m_Player.GetPosition().x,m_Player.GetPosition().z);
-	CGraphicsUtilities::RenderString(0, 30, "VEL X:%.2f,Z:%.2f", m_Player.GetVelocity().x, m_Player.GetVelocity().z);
 	
+	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	{
+		if (!ShotManagerInstance.GetShot(i)->IsShow())
+		{
+			continue;
+		}
+		CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetCollider(), Vector4(1, 0, 0, 0.2f));
+	}
+	
+}
+
+void CBattleScene::Render2D()
+{
+}
+
+void CBattleScene::Render2DDebug()
+{
+	CGraphicsUtilities::RenderString(0, 0, "POS X:%.2f,Z:%.2f", m_Player.GetPosition().x, m_Player.GetPosition().z);
+	CGraphicsUtilities::RenderString(0, 30, "VEL X:%.2f,Z:%.2f", m_Player.GetVelocity().x, m_Player.GetVelocity().z);
+
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
-	
-	
 }
 
 void CBattleScene::Release()

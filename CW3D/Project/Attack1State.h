@@ -32,6 +32,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_Attack1Action = Actor()->GetAction<Attack1Action>(GetKey());
+			ShotManagerInstance.Delete();
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(false);
@@ -93,7 +94,7 @@ namespace Sample {
 			if (m_ShotId > -1)
 			{
 				ShotManagerInstance.GetShot(m_ShotId)->SetShow(false);
-				ShotManagerInstance.Delete();
+				
 			}
 		}
 

@@ -29,11 +29,13 @@ private:
 public:
 	CBattleScene();
 	~CBattleScene();
-	bool Load();
-	void Initialize();
-	void Update();
-	void Render();
-	void RenderDebug();
+	bool Load() override;
+	void Initialize() override;
+	void Update() override;
+	void Render() override;
+	void RenderDebug() override;
+	void Render2D() override;
+	void Render2DDebug() override;
 	void Release();
 
 	

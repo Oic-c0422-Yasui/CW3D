@@ -66,12 +66,25 @@ MofBool CGameApp::Render(void){
 	//‰æ–Ê‚ÌƒNƒŠƒA
 	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
 
+	g_pGraphics->SetDepthEnable(TRUE);
+
 	gScene->Render();
 
 	if (debugFlg)
 	{
 		gScene->RenderDebug();
 	}
+
+	g_pGraphics->SetDepthEnable(FALSE);
+
+	gScene->Render2D();
+
+	if (debugFlg)
+	{
+		gScene->Render2DDebug();
+	}
+
+
 	//•`‰æ‚ÌI—¹
 	g_pGraphics->RenderEnd();
 	return TRUE;
