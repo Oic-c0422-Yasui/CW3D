@@ -36,7 +36,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			m_MoveAction->Exection();
+			m_MoveAction->Execution();
 		}
 
 		/**

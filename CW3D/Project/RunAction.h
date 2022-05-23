@@ -45,7 +45,7 @@ namespace Sample {
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Exection() override {
+		void Execution() override {
 			//移動がない場合減速
 
 			auto& velocity = Velocity();

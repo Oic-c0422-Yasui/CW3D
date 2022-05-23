@@ -46,7 +46,7 @@ namespace Sample {
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		virtual void Exection() = 0;
+		virtual void Execution() = 0;
 
 		/**
 		 * @brief		アクション内の終了処理

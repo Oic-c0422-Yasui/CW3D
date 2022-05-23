@@ -11,6 +11,7 @@ namespace Sample
 		CVector3			m_Position;
 		float				m_Radius;
 		bool				m_ShowFlg;
+		bool				m_HideFlg;
 		int					m_Type;
 		float				m_Speed;
 
@@ -20,6 +21,7 @@ namespace Sample
 			,m_Position(0,0,0)
 			, m_Radius(0.0f)
 			, m_ShowFlg(false)
+			, m_HideFlg(false)
 			, m_Type(0)
 			, m_Speed(0.0f)
 
@@ -35,6 +37,7 @@ namespace Sample
 			m_Collider->SetPosition(m_Position);
 			m_Collider->SetRadius(m_Radius);
 			m_ShowFlg = true;
+			m_HideFlg = false;
 		}
 
 		void Update()
@@ -60,9 +63,18 @@ namespace Sample
 			return m_ShowFlg;
 		}
 
+		bool IsHide() const noexcept {
+			return m_HideFlg;
+		}
+
 		void SetShow(bool isShow) noexcept
 		{
 			m_ShowFlg = isShow;
+		}
+
+		void SetHide(bool isHide) noexcept
+		{
+			m_HideFlg = isHide;
 		}
 
 		void AddPosition(Vector3 pos) noexcept

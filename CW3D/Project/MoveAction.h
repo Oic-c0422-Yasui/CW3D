@@ -63,7 +63,7 @@ namespace Sample {
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Exection() override {
+		void Execution() override {
 
 			auto& velocity = Velocity();
 			bool isReverse = Transform()->IsReverse();

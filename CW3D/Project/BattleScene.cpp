@@ -89,7 +89,20 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 	ShotManagerInstance.Update();
-
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
+		{
+			if (!ShotManagerInstance.GetShot(j)->IsShow() || ShotManagerInstance.GetShot(j)->IsHide())
+			{
+				continue;
+			}
+			if (m_Enemys[i]->GetCollider().CollisionSphere(ShotManagerInstance.GetShot(j)->GetCollider()))
+			{
+				m_Enemys[i]->Damage();
+			}
+		}
+	}
 
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 }
@@ -119,7 +132,7 @@ void CBattleScene::RenderDebug()
 	
 	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
-		if (!ShotManagerInstance.GetShot(i)->IsShow())
+		if (!ShotManagerInstance.GetShot(i)->IsShow() || ShotManagerInstance.GetShot(i)->IsHide())
 		{
 			continue;
 		}

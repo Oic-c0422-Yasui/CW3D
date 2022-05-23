@@ -6,6 +6,7 @@
 #include "RunState.h"
 #include "IdleMotionState.h"
 #include "Attack1State.h"
+#include "DamageState.h"
 #include "StateInput.h"
 
 CEnemy::CEnemy()
@@ -23,7 +24,7 @@ CEnemy::~CEnemy()
 bool CEnemy::Load()
 {
 	m_Input = std::make_shared<Sample::StateInput>();
-
+	m_Collider = std::make_shared<Sample::CAttackCollider>();
 	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
 
 	if (m_pMesh == nullptr)
@@ -39,11 +40,13 @@ bool CEnemy::Load()
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_Input));
+	m_StateMachine->AddState(Sample::State::Create<Sample::DamageState>(m_Actor, m_Input));
 
 	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::MoveAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::DamageAction>());
 
 
 
@@ -56,6 +59,8 @@ void CEnemy::Initialize(CVector3 pos)
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
 
+	m_Collider->SetPosition(pos + Vector3(0, 0.7f, 0));
+	m_Collider->SetRadius(1.1f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
 	matWorld = m_Actor->GetMatrix();
@@ -98,4 +103,10 @@ void CEnemy::Release()
 {
 	MOF_SAFE_DELETE(m_Motion);
 	m_pMesh.reset();
+	m_Collider.reset();
+}
+
+void CEnemy::Damage()
+{
+	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }

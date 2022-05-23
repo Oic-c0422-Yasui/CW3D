@@ -5,6 +5,7 @@
 #include	"StateMachine.h"
 #include	"MoveAction.h"
 #include	"Actor.h"
+#include	"AttackCollider.h"
 
 class CEnemy
 {
@@ -21,6 +22,8 @@ protected:
 
 	CMatrix44 matWorld;
 
+	Sample::AttackColliderPtr m_Collider;
+
 public:
 	CEnemy();
 	~CEnemy();
@@ -31,5 +34,10 @@ public:
 	void RenderDebug();
 	void Release();
 
+	void Damage();
+
+	CSphere GetCollider() {
+		m_Collider->SetPosition(m_Actor->GetPosition());
+		return m_Collider->GetCollider(); }
 };
 

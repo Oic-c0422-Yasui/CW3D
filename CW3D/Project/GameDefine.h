@@ -30,3 +30,6 @@ constexpr char* STATE_KEY_IDLEMOTION = "IdleMotion";
 constexpr char* STATE_KEY_RUN = "Run";
 constexpr char* STATE_KEY_ATTACK1 = "Attack1";
 constexpr char* STATE_KEY_ATTACK2 = "Attack2";
+constexpr char* STATE_KEY_ATTACK3 = "Attack3";
+constexpr char* STATE_KEY_RUNATTACK1 = "RunAttack1";
+constexpr char* STATE_KEY_DAMAGE = "Damage";

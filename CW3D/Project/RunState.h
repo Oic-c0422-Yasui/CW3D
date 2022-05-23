@@ -34,7 +34,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			runAction_->Exection();
+			runAction_->Execution();
 		}
 
 		/**
@@ -56,7 +56,7 @@ namespace Sample {
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
-				ChangeState(STATE_KEY_ATTACK1);
+				ChangeState(STATE_KEY_RUNATTACK1);
 			}
 		}
 
