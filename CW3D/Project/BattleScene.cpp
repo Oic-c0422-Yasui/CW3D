@@ -93,13 +93,14 @@ void CBattleScene::Update()
 	{
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
-			if (!ShotManagerInstance.GetShot(j)->IsShow() || ShotManagerInstance.GetShot(j)->IsHide())
+			if (!ShotManagerInstance.GetShot(j)->IsShow() || !ShotManagerInstance.GetShot(j)->GetCollideFlg())
 			{
 				continue;
 			}
 			if (m_Enemys[i]->GetCollider().CollisionSphere(ShotManagerInstance.GetShot(j)->GetCollider()))
 			{
-				m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1,0,0) : Vector3(1, 0, 0));
+				float knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
+				m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1,0,0) : Vector3(1, 0, 0), knockBack);
 			}
 		}
 	}
@@ -132,7 +133,7 @@ void CBattleScene::RenderDebug()
 	
 	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
-		if (!ShotManagerInstance.GetShot(i)->IsShow() || ShotManagerInstance.GetShot(i)->IsHide())
+		if (!ShotManagerInstance.GetShot(i)->IsShow() || !ShotManagerInstance.GetShot(i)->GetCollideFlg())
 		{
 			continue;
 		}

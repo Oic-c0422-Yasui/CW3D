@@ -27,23 +27,27 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-
-			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
+			
+			
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				Velocity()->SetVelocity(Vector3(-0.1f, 0, 0));
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				Velocity()->SetVelocity(Vector3(0.1f, 0, 0));
 			}
+			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
 		}
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
 		void Execution() override {
+			
 		}
 
 		/**

@@ -21,11 +21,11 @@ namespace Sample
 
 	public:
 
-		void Create(Vector3 pos,float radius,int type,float speed)
+		void Create(Vector3 pos,float radius,int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, radius, type,speed);
+			add->Create(pos, radius, type);
 		}
 
 		void Delete()

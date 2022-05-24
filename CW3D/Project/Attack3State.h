@@ -38,16 +38,17 @@ namespace Sample {
 			m_Attack3Action->Start();
 			if (Actor()->IsReverse())
 			{
-				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.7f, 0), 1.0f, 0, 0);
+				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.7f, 0), 0.8f, 0);
 
 			}
 			else
 			{
-				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.7f, 0), 1.0f, 0, 0);
+				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.7f, 0), 0.8f, 0);
 			}
 
 			m_ShotId = ShotManagerInstance.GetShotBackId();
-			ShotManagerInstance.GetShot(m_ShotId)->SetHide(true);
+			ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(false);
+			ShotManagerInstance.GetShot(m_ShotId)->SetKnockBack(0.3f);
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -61,11 +62,15 @@ namespace Sample {
 				ShotManagerInstance.GetShot(m_ShotId)->AddPosition(Actor()->GetVelocity()->GetVelocity());
 				if (m_FrameTime == 25 || m_FrameTime == 55)
 				{
-					ShotManagerInstance.GetShot(m_ShotId)->SetHide(false);
+					ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(true);
+					if (m_FrameTime == 25)
+					{
+						m_Attack3Action->Execution();
+					}
 				}
-				else if (!ShotManagerInstance.GetShot(m_ShotId)->IsHide())
+				else if (ShotManagerInstance.GetShot(m_ShotId)->GetCollideFlg())
 				{
-					ShotManagerInstance.GetShot(m_ShotId)->SetHide(true);
+					ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(false);
 				}
 			}
 			m_FrameTime++;

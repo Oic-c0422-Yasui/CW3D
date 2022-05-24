@@ -34,7 +34,7 @@ public:
 	void RenderDebug();
 	void Release();
 
-	void Damage(const Vector3& direction);
+	void Damage(const Vector3& direction,float power);
 
 	CSphere GetCollider() {
 		m_Collider->SetPosition(m_Actor->GetPosition());

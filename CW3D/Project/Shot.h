@@ -11,9 +11,10 @@ namespace Sample
 		CVector3			m_Position;
 		float				m_Radius;
 		bool				m_ShowFlg;
-		bool				m_HideFlg;
+		bool				m_CollideFlg;
 		int					m_Type;
 		float				m_Speed;
+		float				m_KnockBack;
 
 	public:
 		CShot()
@@ -21,23 +22,25 @@ namespace Sample
 			,m_Position(0,0,0)
 			, m_Radius(0.0f)
 			, m_ShowFlg(false)
-			, m_HideFlg(false)
+			, m_CollideFlg(false)
 			, m_Type(0)
 			, m_Speed(0.0f)
+			, m_KnockBack(0.0f)
 
 		{
 		}
 
-		void Create(Vector3 pos, float radius, int type,float speed)
+		void Create(Vector3 pos, float radius, int type)
 		{
 			m_Position = pos;
 			m_Radius = radius;
 			m_Type = type;
-			m_Speed = speed;
+			m_Speed = 0.0f;
 			m_Collider->SetPosition(m_Position);
 			m_Collider->SetRadius(m_Radius);
 			m_ShowFlg = true;
-			m_HideFlg = false;
+			m_CollideFlg = true;
+			m_KnockBack = 0.0f;
 		}
 
 		void Update()
@@ -63,8 +66,8 @@ namespace Sample
 			return m_ShowFlg;
 		}
 
-		bool IsHide() const noexcept {
-			return m_HideFlg;
+		bool GetCollideFlg() const noexcept {
+			return m_CollideFlg;
 		}
 
 		void SetShow(bool isShow) noexcept
@@ -72,9 +75,19 @@ namespace Sample
 			m_ShowFlg = isShow;
 		}
 
-		void SetHide(bool isHide) noexcept
+		void SetCollideFlg(bool flg) noexcept
 		{
-			m_HideFlg = isHide;
+			m_CollideFlg = flg;
+		}
+
+		void SetKnockBack(float val) noexcept
+		{
+			m_KnockBack = val;
+		}
+
+		void SetSpeed(float val) noexcept
+		{
+			m_Speed = val;
 		}
 
 		void AddPosition(Vector3 pos) noexcept
@@ -90,7 +103,17 @@ namespace Sample
 			return m_Radius;
 		}
 
-		CSphere GetCollider() const noexcept { return m_Collider->GetCollider(); }
+		CSphere GetCollider() const noexcept {
+			return m_Collider->GetCollider(); 
+		}
+
+		float GetKnockBack() const noexcept {
+			return m_KnockBack;
+		}
+
+		float GetSpeed() const noexcept {
+			return m_Speed;
+		}
 
 	};
 

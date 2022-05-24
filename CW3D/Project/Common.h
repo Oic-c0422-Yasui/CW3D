@@ -33,3 +33,17 @@
 #ifdef 		__MOFLIB
 #include	<Mof.h>
 #endif		//__MOFLIB
+
+// Effekseerä÷òAÇÃëgÇ›çûÇ›
+#include	<Effekseer.h>
+#include	<EffekseerRendererDX11.h>
+#include	<EffekseerSoundXAudio2.h>
+#ifdef DEBUG
+#pragma comment(lib, "Effekseerd.lib")
+#pragma comment(lib, "EffekseerRendererDX11d.lib")
+#pragma comment(lib, "EffekseerSoundXAudio2d.lib")
+#else
+#pragma comment(lib, "Effekseer.lib")
+#pragma comment(lib, "EffekseerRendererDX11.lib")
+#pragma comment(lib, "EffekseerSoundXAudio2.lib")
+#endif // DEBUG
