@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
-    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
+    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -65,7 +65,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;$(SolutionDir)\Effekseer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;</IgnoreSpecificDefaultLibraries>
     </Link>
     <ResourceCompile>
@@ -98,6 +98,9 @@
   <ItemGroup>
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectController.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -123,6 +126,9 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="DamageAction.h" />
     <ClInclude Include="DamageState.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectController.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="GameApp.h" />

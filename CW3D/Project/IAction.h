@@ -2,6 +2,7 @@
 
 #include "Transform.h"
 #include "ShotManager.h"
+#include "EffectController.h"
 #include "ParameterMap.h"
 
 namespace Sample {

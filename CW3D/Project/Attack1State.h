@@ -58,6 +58,7 @@ namespace Sample {
 			}
 			m_FrameTime = 0;
 			m_ShotId = ShotManagerInstance.GetShotBackId();
+
 			ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(false);
 			ShotManagerInstance.GetShot(m_ShotId)->SetKnockBack(0.3f);
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f,1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);

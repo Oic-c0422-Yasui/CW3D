@@ -21,7 +21,7 @@ namespace Sample
 
 	public:
 
-		void Create(Vector3 pos,float radius,int type)
+		ShotPtr& Create(Vector3 pos,float radius,int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);

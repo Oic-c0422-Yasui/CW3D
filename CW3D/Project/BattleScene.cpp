@@ -36,7 +36,11 @@ bool CBattleScene::Load()
 	}
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
-	
+	EffectManagerInstance.Set();
+	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"impact.efk");
+	/*std::shared_ptr<Effekseer::EffectRef> effect = std::make_shared<Effekseer::EffectRef>(
+		Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"impact.efk"));*/
+	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
 
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
@@ -77,6 +81,9 @@ void CBattleScene::Initialize()
 
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
 	CGraphicsUtilities::SetDirectionalLight(&m_Light);
+	m_Light.SetAmbient(MOF_XRGB(255, 255, 255));
+	m_Light.SetDiffuse(MOF_XRGB(220, 220, 220));
+	m_Light.SetSpeculer(MOF_XRGB(255, 255, 255));
 }
 
 void CBattleScene::Update()
@@ -167,5 +174,8 @@ void CBattleScene::Release()
 
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
+	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	ShotManagerInstance.Release();
+	EffectManagerInstance.Release();
+	EffectControllerInstance.Release();
 }
