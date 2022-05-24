@@ -2,6 +2,7 @@
 
 #include "Transform.h"
 #include "ShotManager.h"
+#include "ParameterMap.h"
 
 namespace Sample {
 
@@ -27,10 +28,15 @@ namespace Sample {
 		 */
 		virtual void SetVelocity(VelocityPtr t) = 0;
 
-		///**
-		// * @brief		アニメーション登録
-		// */
+		/**
+		 * @brief		アニメーション登録
+		 */
 		virtual void SetAnimation(AnimationStatePtr a) = 0;
+
+		/**
+		 * @brief		パラメーター情報登録
+		 */
+		virtual void SetParameterMap(const AnyParameterMapPtr& a) = 0;
 
 	public:
 		/**

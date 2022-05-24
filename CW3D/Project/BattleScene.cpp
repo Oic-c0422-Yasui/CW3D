@@ -99,7 +99,7 @@ void CBattleScene::Update()
 			}
 			if (m_Enemys[i]->GetCollider().CollisionSphere(ShotManagerInstance.GetShot(j)->GetCollider()))
 			{
-				m_Enemys[i]->Damage();
+				m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1,0,0) : Vector3(1, 0, 0));
 			}
 		}
 	}

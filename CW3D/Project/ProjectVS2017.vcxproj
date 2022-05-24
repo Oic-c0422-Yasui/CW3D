@@ -141,6 +141,7 @@
     <ClInclude Include="MofInput.h" />
     <ClInclude Include="MoveAction.h" />
     <ClInclude Include="MoveState.h" />
+    <ClInclude Include="ParameterMap.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />

@@ -42,14 +42,6 @@ namespace Sample {
 		 */
 		virtual void AddAction(const ActionKeyType& key, const ActionPtr& action) = 0;
 
-		///**
-		// * @brief		パラメーターマップの生成
-		// */
-		//template< typename... Types >
-		//void CreateParameterMap() {
-		//	SetParameterMap(std::make_shared<ParameterMap<Types...>>());
-		//}
-
 		/**
 		 * @brief		アクションの取得
 		 * @param[in]	key			アクションキー
@@ -136,34 +128,10 @@ namespace Sample {
 		virtual float GetPositionZ() const = 0;
 
 
-
-		///**
-		// * @brief		パラメーター
-		// */
-		//virtual ParameterMapPtr GetParameterMap() = 0;
-
-		///**
-		// * @brief		パラメーター
-		// */
-		//virtual const ParameterMapPtr& GetParameterMap() const = 0;
-
-		///**
-		// * @brief		登録パラメーターの設定
-		// */
-		//template <typename T>
-		//void SetParameter(const ParameterKeyType& key, const T& value)
-		//{
-		//	return GetParameterMap()->Set<T>(key, value);
-		//}
-
-		///**
-		// * @brief		登録パラメーターの取得
-		// */
-		//template <typename T>
-		//ParameterHandle<T>& GetParameter(const ParameterKeyType& key)
-		//{
-		//	return GetParameterMap()->Get<T>(key);
-		//}
+		/**
+		 * @brief		パラメーター
+		 */
+		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
 
 		///**
 		// * @brief		アニメーション
@@ -171,10 +139,7 @@ namespace Sample {
 		virtual AnimationStatePtr GetAnimationState() const = 0;
 
 	protected:
-		///**
-		// * @brief		パラメーター
-		// */
-		//virtual void SetParameterMap(ParameterMapPtr ptr) = 0;
+
 	};
 	//ポインタ置き換え
 	using ActorPtr = std::shared_ptr<IActor>;

@@ -245,6 +245,9 @@
     <ClInclude Include="DamageState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
+    <ClInclude Include="ParameterMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

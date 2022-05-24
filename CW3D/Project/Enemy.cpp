@@ -48,6 +48,8 @@ bool CEnemy::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::DamageAction>());
 
+	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
+
 
 
 	return true;
@@ -106,7 +108,13 @@ void CEnemy::Release()
 	m_Collider.reset();
 }
 
-void CEnemy::Damage()
+void CEnemy::Damage(const Vector3& direction)
 {
+	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
+	auto& transform = m_Actor->GetTransform();
+	transform->SetReverse(direction.x > 0 ? true : false);
+
+	knockBack = direction * 0.2f;
+
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }

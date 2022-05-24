@@ -33,3 +33,7 @@ constexpr char* STATE_KEY_ATTACK2 = "Attack2";
 constexpr char* STATE_KEY_ATTACK3 = "Attack3";
 constexpr char* STATE_KEY_RUNATTACK1 = "RunAttack1";
 constexpr char* STATE_KEY_DAMAGE = "Damage";
+
+//パラメーターキーの名称
+
+const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";

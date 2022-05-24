@@ -26,8 +26,8 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-
-			Velocity()->SetVelocity(Vector3(0.2f, 0.0f, 0.0f));
+			auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
+			Velocity()->SetVelocity(knockBack);
 			Velocity()->SetDecelerate(0.05f,0.05f);
 		}
 

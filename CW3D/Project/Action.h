@@ -21,6 +21,8 @@ namespace Sample {
 		///** アニメーションクラス */
 		AnimationStatePtr				m_Animation;
 
+		//パラメーター情報
+		AnyParameterMapPtr				parameters;
 		
 
 		/**
@@ -37,11 +39,17 @@ namespace Sample {
 		// * @brief		アニメーション登録
 		// */
 		void SetAnimation(AnimationStatePtr a)  { m_Animation = a; }
+
+		/**
+		 * @brief		パラメーター情報登録
+		 */
+		void SetParameterMap(const AnyParameterMapPtr& a) final { parameters = a; }
 	protected:
 		/** privateメンバ取得専用 */
 		TransformPtr Transform() { return m_Transform; }
 		VelocityPtr	 Velocity()	 { return m_Velocity; }
 		AnimationStatePtr AnimationState() { return m_Animation; }
+		const AnyParameterMapPtr& ParameterMap() { return parameters; }
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -49,7 +57,9 @@ namespace Sample {
 		Action()
 			: m_Transform()
 			, m_Velocity()
-			, m_Animation() {
+			, m_Animation()
+			, parameters()
+		{
 		}
 
 		/**

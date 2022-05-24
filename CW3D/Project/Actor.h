@@ -20,8 +20,8 @@ namespace Sample {
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
 		ActionMap				actionMap_;
 
-		/** パラメーター */
-		//ParameterMapPtr			parameterMap_;
+		/*パラメーター情報*/
+		AnyParameterMapPtr		parameters;
 
 		/** モーション */
 		AnimationStatePtr		motion_;
@@ -34,7 +34,7 @@ namespace Sample {
 			, transform_(std::make_shared<Transform>())
 			, velocity_(std::make_shared<Velocity>())
 			, actionMap_()
-			//, parameterMap_()
+			, parameters(std::make_shared<AnyParameterMap>())
 			, motion_() {
 		}
 
@@ -70,6 +70,7 @@ namespace Sample {
 			action->SetTransform(transform_);
 			action->SetVelocity(velocity_);
 			action->SetAnimation(motion_);
+			action->SetParameterMap(parameters);
 		}
 
 		/**
@@ -179,16 +180,9 @@ namespace Sample {
 		/**
 		 * @brief		パラメーター
 		 */
-		/*ParameterMapPtr GetParameterMap() override {
-			return parameterMap_;
-		}*/
-
-		/**
-		 * @brief		パラメーター
-		 */
-		/*const ParameterMapPtr& GetParameterMap() const override {
-			return parameterMap_;
-		}*/
+		const AnyParameterMapPtr& GetParameterMap() const override {
+			return parameters;
+		}
 
 		/**
 		 * @brief		アニメーション
@@ -197,12 +191,5 @@ namespace Sample {
 			return motion_;
 		}
 
-	protected:
-		/**
-		 * @brief		パラメーター
-		 */
-		/*void SetParameterMap(ParameterMapPtr ptr) override {
-			parameterMap_ = ptr;
-		}*/
 	};
 }
