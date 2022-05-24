@@ -37,7 +37,7 @@ bool CBattleScene::Load()
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
 	EffectManagerInstance.Set();
-	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"impact.efk");
+	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
 	/*std::shared_ptr<Effekseer::EffectRef> effect = std::make_shared<Effekseer::EffectRef>(
 		Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"impact.efk"));*/
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
@@ -111,7 +111,7 @@ void CBattleScene::Update()
 			}
 		}
 	}
-
+	EffectManagerInstance.Update();
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 }
 
@@ -128,7 +128,7 @@ void CBattleScene::Render()
 		m_Enemys[i]->Render();
 	}
 	ShotManagerInstance.Render();
-	
+	EffectManagerInstance.Render();
 	
 
 

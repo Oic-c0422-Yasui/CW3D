@@ -30,6 +30,5 @@ void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 	{
 		m_OffsetPos.z -= 0.05f;
 	}
-
 	m_Camera.Update();
 }

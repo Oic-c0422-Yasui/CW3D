@@ -13,9 +13,12 @@ namespace Sample
 		EffekseerRendererDX11::RendererRef m_Renderer;
 		Effekseer::ManagerRef m_Manager;
 		EffekseerSound::SoundRef m_Sound;
+		Effekseer::Handle m_Handle;
+		int currentTime;
 
 		CEffectManager()
 			: Singleton<CEffectManager>()
+			, currentTime(0)
 		{
 		}
 
@@ -60,7 +63,7 @@ namespace Sample
 			//リソースマネージャーから指定されたエフェクトを取り出し
 			Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResourceT(resouceName);
 
-			return m_Manager->Play(effect, 0, 0, 0);
+			return m_Manager->Play(effect, 0, 1.0f, 0);
 		}
 
 		 Effekseer::ManagerRef& GetManager()
@@ -70,23 +73,34 @@ namespace Sample
 
 		void Update()
 		{
-			m_Manager->Update();
-			//m_Renderer->SetTime();
+			
 		}
 
 		void Render()
 		{
+			m_Manager->Update();
+			m_Renderer->SetTime(currentTime / 60.0f);
+			currentTime++;
+
 			// 投影行列を設定
 			m_Renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
-				60.0f / 180.0f * 3.14f,
+				//60.0f / 180.0f * 3.14f,
+				MOF_ToRadian(30),
 				(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(),
 				1.0f, 500.0f));
+
+			if (currentTime % 120 == 0)
+			{
+				// エフェクトの再生
+				/*Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResourceT("Effect1");
+				m_Handle = m_Manager->Play(effect, 0, 0, 0);*/
+			}
 
 			// カメラ行列を設定
 			m_Renderer->SetCameraMatrix(
 				::Effekseer::Matrix44().LookAtLH(
-					::Effekseer::Vector3D(0, 0, 0),
-					::Effekseer::Vector3D(0, 0, 0),
+					::Effekseer::Vector3D(1.0f, 3.0f, -15.0f),
+					::Effekseer::Vector3D(1.0f, 2.0f, 0.0f),
 					::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
 
 			m_Renderer->BeginRendering();
