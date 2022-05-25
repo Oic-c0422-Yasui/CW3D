@@ -29,9 +29,14 @@ namespace Sample
 		void Render2DDebug();
 		void Release();
 
-		const bool& IsStop()
+		const bool& IsStop() noexcept
 		{
 			return  m_StopFlg;
+		}
+
+		void SetStop(bool isStop) noexcept
+		{
+			m_StopFlg = isStop;
 		}
 
 		Effekseer::Handle GetHandle()

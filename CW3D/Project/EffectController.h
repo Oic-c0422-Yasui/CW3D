@@ -29,6 +29,26 @@ namespace Sample
 			return m_Effects[id];
 		}
 
+		void SetRotate(const Effekseer::Handle& handle,const Vector3& rotate)
+		{
+			EffectManagerInstance.GetManager()->SetRotation(handle, rotate.x, rotate.y, rotate.z);
+		}
+
+		void SetPosition(const Effekseer::Handle& handle, const Vector3& pos)
+		{
+			EffectManagerInstance.GetManager()->SetLocation(handle, pos.x, pos.y, pos.z);
+		}
+
+		void SetScale()
+		{
+
+		}
+
+		void AddPosition()
+		{
+
+		}
+
 		void Delete()
 		{
 			auto removeIt = std::remove_if(m_Effects.begin(), m_Effects.end(), [&](const EffectPtr& effect) {
