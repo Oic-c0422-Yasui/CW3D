@@ -73,15 +73,13 @@ namespace Sample
 
 		void Update()
 		{
-			
-		}
-
-		void Render()
-		{
 			m_Manager->Update();
 			m_Renderer->SetTime(currentTime / 60.0f);
-			currentTime++;
+		}
 
+		void Render(Vector3 pos, Vector3 look)
+		{
+			
 			// 投影行列を設定
 			m_Renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
 				//60.0f / 180.0f * 3.14f,
@@ -89,18 +87,11 @@ namespace Sample
 				(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(),
 				1.0f, 500.0f));
 
-			if (currentTime % 120 == 0)
-			{
-				// エフェクトの再生
-				/*Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResourceT("Effect1");
-				m_Handle = m_Manager->Play(effect, 0, 0, 0);*/
-			}
-
 			// カメラ行列を設定
 			m_Renderer->SetCameraMatrix(
 				::Effekseer::Matrix44().LookAtLH(
-					::Effekseer::Vector3D(1.0f, 3.0f, -15.0f),
-					::Effekseer::Vector3D(1.0f, 2.0f, 0.0f),
+					::Effekseer::Vector3D(pos.x, pos.y, pos.z) + ::Effekseer::Vector3D(1.0f, 3.0f, -15.0f),
+					::Effekseer::Vector3D(look.x, look.y, look.z) + ::Effekseer::Vector3D(1.0f, 2.0f, 0.0f),
 					::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
 
 			m_Renderer->BeginRendering();

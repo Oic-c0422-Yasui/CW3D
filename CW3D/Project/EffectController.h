@@ -29,6 +29,14 @@ namespace Sample
 			return m_Effects[id];
 		}
 
+		void Update()
+		{
+			for (auto& effect : m_Effects)
+			{
+				effect->Update();
+			}
+		}
+
 		void SetRotate(const Effekseer::Handle& handle,const Vector3& rotate)
 		{
 			EffectManagerInstance.GetManager()->SetRotation(handle, rotate.x, rotate.y, rotate.z);
@@ -39,14 +47,19 @@ namespace Sample
 			EffectManagerInstance.GetManager()->SetLocation(handle, pos.x, pos.y, pos.z);
 		}
 
-		void SetScale()
+		void SetScale(const Effekseer::Handle& handle, const Vector3& scale)
 		{
-
+			EffectManagerInstance.GetManager()->SetScale(handle, scale.x, scale.y, scale.z);
 		}
 
-		void AddPosition()
+		void SetColor(const Effekseer::Handle& handle, const Vector4& color)
 		{
+			EffectManagerInstance.GetManager()->SetAllColor(handle, Effekseer::Color(color.r, color.g, color.b, color.a));
+		}
 
+		void AddPosition(const Effekseer::Handle& handle, const Vector3& pos)
+		{
+			EffectManagerInstance.GetManager()->AddLocation(handle, Effekseer::Vector3D(pos.x, pos.y, pos.z));
 		}
 
 		void Delete()

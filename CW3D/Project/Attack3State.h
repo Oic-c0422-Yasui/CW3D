@@ -15,8 +15,8 @@ namespace Sample {
 		/** 移動アクション */
 		Attack3ActionPtr			m_Attack3Action;
 		bool						m_NextInputFlg;
-		int							m_ShotId;
 		int							m_FrameTime;
+		std::vector<ShotPtr>		m_Shots;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -24,7 +24,6 @@ namespace Sample {
 		Attack3State()
 			: State()
 			, m_NextInputFlg(false)
-			, m_ShotId(-1)
 			, m_FrameTime(0)
 		{
 		}
@@ -38,17 +37,19 @@ namespace Sample {
 			m_Attack3Action->Start();
 			if (Actor()->IsReverse())
 			{
-				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.7f, 0), 0.8f, 0);
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.7f, 0), 0.8f, 0));
 
 			}
 			else
 			{
-				ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.7f, 0), 0.8f, 0);
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.7f, 0), 0.8f, 0));
 			}
 
-			m_ShotId = ShotManagerInstance.GetShotBackId();
-			ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(false);
-			ShotManagerInstance.GetShot(m_ShotId)->SetKnockBack(0.3f);
+			for (auto& shot : m_Shots)
+			{
+				shot->SetCollideFlg(false);
+				shot->SetKnockBack(0.3f);
+			}
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -56,23 +57,25 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			
-			if (ShotManagerInstance.GetShot(m_ShotId) != nullptr)
+			for (auto& shot : m_Shots)
 			{
-				ShotManagerInstance.GetShot(m_ShotId)->AddPosition(Actor()->GetVelocity()->GetVelocity());
+				shot->AddPosition(Actor()->GetVelocity()->GetVelocity());
 				if (m_FrameTime == 25 || m_FrameTime == 55)
 				{
-					ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(true);
+					shot->SetCollideFlg(true);
 					if (m_FrameTime == 25)
 					{
 						m_Attack3Action->Execution();
 					}
+
 				}
-				else if (ShotManagerInstance.GetShot(m_ShotId)->GetCollideFlg())
+				else if (shot->GetCollideFlg())
 				{
-					ShotManagerInstance.GetShot(m_ShotId)->SetCollideFlg(false);
+					shot->SetCollideFlg(false);
 				}
+
 			}
+
 			m_FrameTime++;
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
@@ -86,8 +89,6 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 
-
-
 		}
 
 
@@ -96,11 +97,12 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
-			if (m_ShotId > -1)
+			for (auto& shot : m_Shots)
 			{
-				ShotManagerInstance.GetShot(m_ShotId)->SetShow(false);
-				ShotManagerInstance.Delete();
+				shot->SetShow(false);
+				shot.reset();
 			}
+			m_Shots.clear();
 		}
 
 		/**

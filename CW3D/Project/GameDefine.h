@@ -9,6 +9,12 @@ enum tag_SCENENO
 	SCENE_RESULT,
 };
 
+enum tag_COLLISIONTYPE
+{
+	COLLITION_SPHERE,
+	COLLITION_AABB,
+};
+
 //‰¼
 #define PLAYER_SPEED 0.02f
 #define PLAYER_MAXSPEED 0.14f

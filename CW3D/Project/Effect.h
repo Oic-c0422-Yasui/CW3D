@@ -24,10 +24,6 @@ namespace Sample
 		~CEffect();
 		void Initialize();
 		void Update();
-		void Render();
-		void RenderDebug();
-		void Render2DDebug();
-		void Release();
 
 		const bool& IsStop() noexcept
 		{

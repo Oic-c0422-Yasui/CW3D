@@ -12,6 +12,8 @@
 #include	"EffectManager.h"
 #include	"EffectController.h"
 
+#include	"Collision.h"
+
 class CBattleScene : public CSceneBase
 {
 private:
@@ -27,6 +29,7 @@ private:
 	CDirectionalLight m_Light;
 
 	CMeshContainer	m_Stage;
+
 
 public:
 	CBattleScene();

@@ -29,6 +29,14 @@ namespace Sample
 			return add;
 		}
 
+		ShotPtr Create(Vector3 pos, Vector3 size, int type)
+		{
+			auto add = std::make_shared<CShot>();
+			m_Shots.push_back(add);
+			add->Create(pos, size, type);
+			return add;
+		}
+
 		void Delete()
 		{
 			auto removeIt = std::remove_if(m_Shots.begin(), m_Shots.end(), [&](const ShotPtr& shot) {

@@ -15,9 +15,8 @@ namespace Sample {
 		/** 移動アクション */
 		Attack1ActionPtr			m_Attack1Action;
 		bool					m_NextInputFlg;
-		int						m_ShotId;
 		int						m_FrameTime;
-		ShotPtr					m_Shot;
+		std::vector<ShotPtr>	m_Shots;
 		EffectPtr				m_Effect;
 	public:
 		/**
@@ -26,7 +25,6 @@ namespace Sample {
 		Attack1State()
 			: State()
 			, m_NextInputFlg(false)
-			, m_ShotId(-1)
 			, m_FrameTime(0)
 		{
 		}
@@ -41,33 +39,37 @@ namespace Sample {
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(false);
-				
+
 			}
 			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(true);
-				
+
 			}
 			m_Attack1Action->Start();
 			if (Actor()->IsReverse())
 			{
-				m_Shot = ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.8f, 0.7f, 0), 0.8f, 0);
-				
+				//m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.8f, 0.7f, 0), 0.8f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.8f, 0.7f, 0), Vector3(1,1,1), 0));
+
 			}
 			else
 			{
-				m_Shot = ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.8f, 0.7f, 0), 0.8f, 0);
+				//m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.8f, 0.7f, 0), 0.8f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.8f, 0.7f, 0), Vector3(1, 1, 1), 0));
 			}
 
 			m_FrameTime = 0;
-			m_ShotId = ShotManagerInstance.GetShotBackId();
-			
+
 
 			//EffectManagerInstance.GetManager()->SetRotation(effect->GetHandle(), 0.0f, MOF_ToRadian(90.0f), 0.0f);
-			
-			m_Shot->SetCollideFlg(false);
-			m_Shot->SetKnockBack(0.3f);
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f,1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+
+			for (auto& shot : m_Shots)
+			{
+				shot->SetCollideFlg(false);
+				shot->SetKnockBack(0.3f);
+			}
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -75,23 +77,37 @@ namespace Sample {
 		 */
 		void Execution() override {
 
-			if (m_Shot != nullptr)
+			for (auto& shot : m_Shots)
 			{
-				m_Shot->AddPosition(Actor()->GetVelocity()->GetVelocity());
+				shot->AddPosition(Actor()->GetVelocity()->GetVelocity());
 				if (m_FrameTime == 25)
 				{
-					m_Shot->SetCollideFlg(true);
-					m_Effect = EffectControllerInstance.Play("Effect1");
+					shot->SetCollideFlg(true);
 
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90.0f), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, 0.7f, 0));
+
 				}
-				else if (m_Shot->GetCollideFlg())
+				else if (shot->GetCollideFlg())
 				{
-					m_Shot->SetCollideFlg(false);
+					shot->SetCollideFlg(false);
+				}
+
+			}
+			if (m_FrameTime == 25)
+			{
+				m_Effect = EffectControllerInstance.Play("Effect1");
+				if (Actor()->IsReverse())
+				{
+					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90.0f), 0.0f));
+					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.8f, 1.2f, 0));
+
+				}
+				else
+				{
+					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90.0f), 0.0f));
+					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.8f, 1.2f, 0));
 				}
 			}
-			
+
 			m_FrameTime++;
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
@@ -105,7 +121,7 @@ namespace Sample {
 					ChangeState(STATE_KEY_ATTACK2);
 				}
 			}
-			
+
 		}
 
 		/**
@@ -118,7 +134,7 @@ namespace Sample {
 				m_NextInputFlg = true;
 			}
 
-			
+
 		}
 
 
@@ -127,15 +143,16 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
-			if (m_Shot != nullptr)
+			for (auto& shot : m_Shots)
 			{
-				m_Shot->SetShow(false);
-				ShotManagerInstance.Delete();
+				shot->SetShow(false);
+				shot.reset();
 			}
+			m_Shots.clear();
 			if (m_Effect != nullptr)
 			{
 				m_Effect->SetStop(true);
-				EffectControllerInstance.Delete();
+				m_Effect.reset();
 			}
 		}
 

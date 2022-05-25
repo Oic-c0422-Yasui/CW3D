@@ -17,6 +17,7 @@ namespace Sample {
 		int						wait;
 		//現在時間
 		int						currentTime;
+
 	public:
 		/**
 		 * @brief		コンストラクタ

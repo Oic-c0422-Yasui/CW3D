@@ -1,5 +1,5 @@
 #include "Effect.h"
-
+#include "EffectManager.h"
 
 namespace Sample
 {
@@ -17,22 +17,10 @@ namespace Sample
 
 	void CEffect::Update()
 	{
-	}
-
-	void CEffect::Render()
-	{
-	}
-
-	void CEffect::RenderDebug()
-	{
-	}
-
-	void CEffect::Render2DDebug()
-	{
-	}
-
-	void CEffect::Release()
-	{
+		if (!CEffectManager::GetInstance().GetManager()->Exists(m_Handle))
+		{
+			m_StopFlg = true;
+		}
 	}
 
 }

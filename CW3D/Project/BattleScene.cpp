@@ -37,10 +37,10 @@ bool CBattleScene::Load()
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
 	EffectManagerInstance.Set();
-	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/impact.efk");
-	/*std::shared_ptr<Effekseer::EffectRef> effect = std::make_shared<Effekseer::EffectRef>(
-		Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"impact.efk"));*/
+	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/impact.efk");
+	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("DamageEffect1", effect);
 
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
@@ -100,19 +100,46 @@ void CBattleScene::Update()
 	{
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
+			//表示されていない OR コライダーOFFの場合
 			if (!ShotManagerInstance.GetShot(j)->IsShow() || !ShotManagerInstance.GetShot(j)->GetCollideFlg())
 			{
 				continue;
 			}
-			if (m_Enemys[i]->GetCollider().CollisionSphere(ShotManagerInstance.GetShot(j)->GetCollider()))
+
+			//弾の矩形ごとに判定
+			switch (ShotManagerInstance.GetShot(j)->GetColliderType())
 			{
-				float knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
-				m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1,0,0) : Vector3(1, 0, 0), knockBack);
+				case COLLITION_SPHERE:
+				{
+					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), ShotManagerInstance.GetShot(j)->GetColliderSphere()))
+					{
+						continue;
+					}
+					break;
+				}
+				case COLLITION_AABB:
+				{
+					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), ShotManagerInstance.GetShot(j)->GetColliderAABB()))
+					{
+						continue;
+					}
+					break;
+				}
+				default:
+					break;
 			}
+
+			//ノックバック値設定
+			float knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
+			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack);
+			
 		}
 	}
 	EffectManagerInstance.Update();
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
+
+	ShotManagerInstance.Delete();
+	EffectControllerInstance.Delete();
 }
 
 void CBattleScene::Render()
@@ -128,7 +155,7 @@ void CBattleScene::Render()
 		m_Enemys[i]->Render();
 	}
 	ShotManagerInstance.Render();
-	EffectManagerInstance.Render();
+	EffectManagerInstance.Render(m_Player.GetPosition(), m_Player.GetPosition());
 	
 
 
@@ -138,13 +165,32 @@ void CBattleScene::Render()
 void CBattleScene::RenderDebug()
 {
 	
-	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
 		if (!ShotManagerInstance.GetShot(i)->IsShow() || !ShotManagerInstance.GetShot(i)->GetCollideFlg())
 		{
 			continue;
 		}
-		CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetCollider(), Vector4(1, 0, 0, 0.2f));
+		switch (ShotManagerInstance.GetShot(i)->GetColliderType())
+		{
+		case COLLITION_SPHERE:
+		{
+			CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetColliderSphere(), Vector4(1, 0, 0, 0.2f));
+			break;
+		}
+		case COLLITION_AABB:
+		{
+			CGraphicsUtilities::RenderBox(ShotManagerInstance.GetShot(i)->GetColliderAABB(), Vector4(1, 0, 0, 0.2f));
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		CGraphicsUtilities::RenderSphere(m_Enemys[i]->GetCollider(), Vector4(0, 1, 0, 0.2f));
 	}
 	
 }

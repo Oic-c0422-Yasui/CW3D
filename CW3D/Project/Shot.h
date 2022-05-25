@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AttackCollider.h"
+#include "GameDefine.h"
 
 namespace Sample
 {
@@ -8,11 +9,14 @@ namespace Sample
 	{
 	protected:
 		AttackColliderPtr	m_Collider;
+		CAABB				m_AABB;
 		CVector3			m_Position;
 		float				m_Radius;
+		CVector3			m_Size;
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
-		int					m_Type;
+		BYTE				m_Type;
+		int					m_CollisionType;
 		float				m_Speed;
 		float				m_KnockBack;
 
@@ -20,6 +24,7 @@ namespace Sample
 		CShot()
 			:m_Collider(std::make_shared<CAttackCollider>())
 			,m_Position(0,0,0)
+			, m_AABB()
 			, m_Radius(0.0f)
 			, m_ShowFlg(false)
 			, m_CollideFlg(false)
@@ -40,6 +45,21 @@ namespace Sample
 			m_Collider->SetRadius(m_Radius);
 			m_ShowFlg = true;
 			m_CollideFlg = true;
+			m_CollisionType = COLLITION_SPHERE;
+			m_KnockBack = 0.0f;
+		}
+
+		void Create(Vector3 pos, Vector3 size, int type)
+		{
+			m_Position = pos;
+			m_Size = size;
+			m_Type = type;
+			m_Speed = 0.0f;
+			m_AABB.SetPosition(m_Position);
+			m_AABB.Size = size;
+			m_ShowFlg = true;
+			m_CollideFlg = true;
+			m_CollisionType = COLLITION_AABB;
 			m_KnockBack = 0.0f;
 		}
 
@@ -50,7 +70,23 @@ namespace Sample
 				return;
 			}
 			m_Position.x += m_Speed;
-			m_Collider->SetPosition(m_Position);
+			switch (m_CollisionType)
+			{
+			case COLLITION_SPHERE:
+			{
+				m_Collider->SetPosition(m_Position);
+				break;
+			}
+			case COLLITION_AABB:
+			{
+				m_AABB.SetPosition(m_Position);
+				break;
+			}
+			default:
+			{
+			}
+			}
+			
 		}
 
 		void Render()
@@ -68,6 +104,10 @@ namespace Sample
 
 		bool GetCollideFlg() const noexcept {
 			return m_CollideFlg;
+		}
+
+		int GetColliderType() const noexcept {
+			return m_CollisionType;
 		}
 
 		void SetShow(bool isShow) noexcept
@@ -103,9 +143,14 @@ namespace Sample
 			return m_Radius;
 		}
 
-		CSphere GetCollider() const noexcept {
-			return m_Collider->GetCollider(); 
+		CSphere GetColliderSphere() const noexcept {
+			return m_Collider->GetCollider();
 		}
+
+		CAABB GetColliderAABB() const noexcept {
+				return m_AABB;
+		}
+
 
 		float GetKnockBack() const noexcept {
 			return m_KnockBack;
