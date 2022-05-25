@@ -17,9 +17,13 @@ namespace Sample
 
 	void CEffect::Update()
 	{
-		if (!CEffectManager::GetInstance().GetManager()->Exists(m_Handle))
+		if (!EffectManagerInstance.GetManager()->Exists(m_Handle))
 		{
 			m_StopFlg = true;
+		}
+		if (m_StopFlg)
+		{
+			EffectManagerInstance.GetManager()->StopEffect(m_Handle);
 		}
 	}
 

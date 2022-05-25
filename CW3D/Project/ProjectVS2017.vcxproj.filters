@@ -269,6 +269,12 @@
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Skill1_1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill1_1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

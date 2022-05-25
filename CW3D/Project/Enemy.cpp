@@ -62,7 +62,7 @@ void CEnemy::Initialize(CVector3 pos)
 	m_Actor->SetScale(Vector3(1, 1, 1));
 
 	m_Collider->SetPosition(pos + Vector3(0, 5.0f, 0));
-	m_Collider->SetRadius(1.1f);
+	m_Collider->SetRadius(0.6f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
 	matWorld = m_Actor->GetMatrix();
@@ -112,7 +112,7 @@ void CEnemy::Damage(const Vector3& direction,float power)
 {
 
 	Sample::EffectPtr effect = EffectControllerInstance.Play("DamageEffect1");
-	EffectControllerInstance.SetPosition(effect->GetHandle(), m_Collider->GetPosition());
+	EffectControllerInstance.SetPosition(effect->GetHandle(), m_Collider->GetPosition() + Vector3(0, 1.2f, 0));
 	EffectControllerInstance.SetScale(effect->GetHandle(), Vector3(0.5f, 0.5f,1.0f) );
 
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);

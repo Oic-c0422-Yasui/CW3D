@@ -51,8 +51,8 @@ namespace Sample
 
 		void Create(Vector3 pos, Vector3 size, int type)
 		{
-			m_Position = pos;
 			m_Size = size;
+			m_Position = pos;
 			m_Type = type;
 			m_Speed = 0.0f;
 			m_AABB.SetPosition(m_Position);

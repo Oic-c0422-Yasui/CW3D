@@ -9,6 +9,7 @@
 #include "Attack2State.h"
 #include "Attack3State.h"
 #include "RunAttack1State.h"
+#include "Skill1_1State.h"
 
 
 
@@ -46,6 +47,7 @@ bool CPlayer::Load()
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack2State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack3State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunAttack1State>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::Skill1_1State>(m_Actor, m_pInput));
 
 	m_Move = Sample::Action::Create<Sample::MoveAction>();
 	m_Actor->AddAction(m_Move);
@@ -56,6 +58,7 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack2Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack3Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunAttack1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::Skill1_1Action>());
 
 
 	return true;

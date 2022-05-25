@@ -28,6 +28,7 @@ const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
 const std::string INPUT_KEY_VERTICAL = "Vertical";
 const std::string INPUT_KEY_JUMP = "Jump";
 const std::string INPUT_KEY_ATTACK = "Attack";
+const std::string INPUT_KEY_SKILL1 = "Skill1";
 
 //ステートキーの名称
 constexpr char* STATE_KEY_MOVE = "Move";
@@ -39,6 +40,7 @@ constexpr char* STATE_KEY_ATTACK2 = "Attack2";
 constexpr char* STATE_KEY_ATTACK3 = "Attack3";
 constexpr char* STATE_KEY_RUNATTACK1 = "RunAttack1";
 constexpr char* STATE_KEY_DAMAGE = "Damage";
+constexpr char* STATE_KEY_SKILL1_1 = "Skill1_1";
 
 //パラメーターキーの名称
 

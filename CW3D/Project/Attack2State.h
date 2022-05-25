@@ -83,7 +83,7 @@ namespace Sample {
 			}
 			if (m_NextInputFlg)
 			{
-				if (Actor()->GetAnimationState()->GetTime() > 0.7f)
+				if (m_FrameTime > 40)
 				{
 					ChangeState(STATE_KEY_ATTACK3);
 				}

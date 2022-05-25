@@ -94,18 +94,21 @@ namespace Sample {
 			}
 			if (m_FrameTime == 25)
 			{
-				m_Effect = EffectControllerInstance.Play("Effect1");
+				m_Effect = EffectControllerInstance.Play("Effect2");
 				if (Actor()->IsReverse())
 				{
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90.0f), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.8f, 1.2f, 0));
+					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(180.0f), 0.0f));
+					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-0.8f, 0.8f, 0));
+					
 
 				}
 				else
 				{
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90.0f), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.8f, 1.2f, 0));
+					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, 0, 0.0f));
+					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, 0.8f, 0));
 				}
+				EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(0.5f, 0.8f, 0.0f));
+				EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 1.5f);
 			}
 
 			m_FrameTime++;

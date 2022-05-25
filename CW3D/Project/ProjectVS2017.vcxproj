@@ -159,6 +159,8 @@
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Shot.h" />
     <ClInclude Include="ShotManager.h" />
+    <ClInclude Include="Skill1_1Action.h" />
+    <ClInclude Include="Skill1_1State.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />

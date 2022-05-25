@@ -71,6 +71,11 @@ namespace Sample {
 				ChangeState(STATE_KEY_ATTACK1);
 			}
 
+			if (Input()->IsPush(INPUT_KEY_SKILL1))
+			{
+				ChangeState(STATE_KEY_SKILL1_1);
+			}
+
 			//ボタンごとにスキルが変わる場合
 			/*if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{

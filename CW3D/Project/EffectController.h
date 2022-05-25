@@ -62,6 +62,11 @@ namespace Sample
 			EffectManagerInstance.GetManager()->AddLocation(handle, Effekseer::Vector3D(pos.x, pos.y, pos.z));
 		}
 
+		void SetSpeed(const Effekseer::Handle& handle, const float& speed)
+		{
+			EffectManagerInstance.GetManager()->SetSpeed(handle, speed);
+		}
+
 		void Delete()
 		{
 			auto removeIt = std::remove_if(m_Effects.begin(), m_Effects.end(), [&](const EffectPtr& effect) {
