@@ -22,7 +22,7 @@ namespace Sample
 			return m_Collision;
 		}
 
-		const CVector3& GetPosition() const noexcept
+		CVector3 GetPosition() const noexcept
 		{
 			CVector3 pos(0,0,0);
 			pos.x = m_Collision.x;

@@ -103,7 +103,7 @@ public:
 		return result;
 	}
 
-	static bool Collition(const CSphere& sphere1, const CSphere& sphere2)
+	static bool Collition(CSphere sphere1, CSphere sphere2)
 	{
 		return sphere1.CollisionSphere(sphere2);
 	}

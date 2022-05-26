@@ -14,10 +14,10 @@ namespace Sample {
 	private:
 		/** 移動アクション */
 		Skill1_1ActionPtr			m_SkillAction;
-		bool					m_NextInputFlg;
-		int						m_FrameTime;
-		std::vector<ShotPtr>	m_Shots;
-		EffectPtr				m_Effect;
+		bool						m_NextInputFlg;
+		int							m_FrameTime;
+		std::vector<ShotPtr>		m_Shots;
+		EffectPtr					m_Effect;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -36,6 +36,7 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<Skill1_1Action>(GetKey());
 
 			m_NextInputFlg = false;
+			m_FrameTime = 0;
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(false);
@@ -47,41 +48,30 @@ namespace Sample {
 
 			}
 			m_SkillAction->Start();
-			if (Actor()->IsReverse())
-			{
-				//m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.8f, 0.7f, 0), 0.8f, 0));
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
-
-			}
-			else
-			{
-				//m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.8f, 0.7f, 0), 0.8f, 0));
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
-			}
-
-			m_FrameTime = 0;
-
-
-			for (auto& shot : m_Shots)
-			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBack(0.8f);
-			}
 			m_Effect = EffectControllerInstance.Play("Effect3");
 			if (Actor()->IsReverse())
 			{
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-0.8f, -1.5f, 0));
-
 
 			}
 			else
 			{
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, -1.5f, 0));
 			}
 			EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(1.0f, 1.0f, 1.0f));
 			EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 1.8f);
+
+			
+			for (auto& shot : m_Shots)
+			{
+				shot->SetCollideFlg(false);
+				shot->SetKnockBack(0.8f);
+			}
+			
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.6f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
