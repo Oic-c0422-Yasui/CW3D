@@ -47,6 +47,8 @@ bool CBattleScene::Load()
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sandStome.efk");
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect3", effect);
 
+	CSkillCreater::Create();
+
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
 	{
@@ -230,4 +232,5 @@ void CBattleScene::Release()
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
+	SkillManagerInstance.Release();
 }

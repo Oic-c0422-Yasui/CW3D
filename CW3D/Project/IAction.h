@@ -4,6 +4,7 @@
 #include "ShotManager.h"
 #include "EffectController.h"
 #include "ParameterMap.h"
+#include "SkillManager.h"
 
 namespace Sample {
 

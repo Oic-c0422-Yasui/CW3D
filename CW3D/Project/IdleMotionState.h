@@ -60,6 +60,20 @@ namespace Sample {
 			{
 				ChangeState(STATE_KEY_ATTACK1);
 			}
+
+			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
+			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			{
+				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg())
+				{
+					continue;
+				}
+				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				{
+					ChangeState(SkillManagerInstance.GetSkill(i)->GetName());
+					break;
+				}
+			}
 		}
 
 		/**

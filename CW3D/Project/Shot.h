@@ -23,7 +23,7 @@ namespace Sample
 	public:
 		CShot()
 			:m_Collider(std::make_shared<CAttackCollider>())
-			,m_Position(0,0,0)
+			, m_Position(0,0,0)
 			, m_AABB()
 			, m_Radius(0.0f)
 			, m_ShowFlg(false)
@@ -33,6 +33,10 @@ namespace Sample
 			, m_KnockBack(0.0f)
 
 		{
+		}
+
+		~CShot() {
+
 		}
 
 		void Create(Vector3 pos, float radius, int type)

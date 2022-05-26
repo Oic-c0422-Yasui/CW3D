@@ -58,6 +58,9 @@
     <Filter Include="ヘッダー ファイル\Effect">
       <UniqueIdentifier>{463f80cb-1402-4ace-8c4f-4716598a4092}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Skill">
+      <UniqueIdentifier>{6dccfec3-060d-43fe-8f96-22dcaf22bfcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -279,7 +282,13 @@
       <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillCreater.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

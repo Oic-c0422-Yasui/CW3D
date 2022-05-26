@@ -71,16 +71,20 @@ namespace Sample {
 				ChangeState(STATE_KEY_ATTACK1);
 			}
 
-			if (Input()->IsPush(INPUT_KEY_SKILL1))
+			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
+			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
 			{
-				ChangeState(STATE_KEY_SKILL1_1);
+				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg())
+				{
+					continue;
+				}
+				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				{
+					ChangeState(SkillManagerInstance.GetSkill(i)->GetName());
+					break;
+				}
 			}
-
-			//ボタンごとにスキルが変わる場合
-			/*if (Input()->IsPush(INPUT_KEY_ATTACK))
-			{
-				ChangeState(setting.skill1SetName);
-			}*/
+			
 		}
 
 		/**

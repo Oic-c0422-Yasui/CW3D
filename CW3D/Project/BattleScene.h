@@ -9,8 +9,8 @@
 #include	"Player.h"
 #include	"EnemyBuilder.h"
 #include	"ShotManager.h"
-#include	"EffectManager.h"
 #include	"EffectController.h"
+#include	"SkillCreater.h"
 
 #include	"Collision.h"
 

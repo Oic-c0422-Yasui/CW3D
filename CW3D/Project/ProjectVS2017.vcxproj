@@ -161,7 +161,9 @@
     <ClInclude Include="ShotManager.h" />
     <ClInclude Include="Skill1_1Action.h" />
     <ClInclude Include="Skill1_1State.h" />
+    <ClInclude Include="SkillCreater.h" />
     <ClInclude Include="SkillManager.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
