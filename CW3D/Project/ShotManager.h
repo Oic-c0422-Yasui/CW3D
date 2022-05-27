@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shot.h"
-#include "TemplateSingleton.h"
+#include "Singleton.h"
 #include "Common.h"
 
 
@@ -21,19 +21,19 @@ namespace Sample
 
 	public:
 
-		ShotPtr Create(Vector3 pos,float radius,int type)
+		ShotPtr Create(Vector3 pos,Vector3 offset,float radius,int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, radius, type);
+			add->Create(pos, offset, radius, type);
 			return add;
 		}
 
-		ShotPtr Create(Vector3 pos, Vector3 size, int type)
+		ShotPtr Create(Vector3 pos, Vector3 offset, Vector3 size, int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, size, type);
+			add->Create(pos, offset, size, type);
 			return add;
 		}
 

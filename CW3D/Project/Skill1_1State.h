@@ -51,14 +51,14 @@ namespace Sample {
 			m_Effect = EffectControllerInstance.Play("Effect3");
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() , Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-0.8f, -1.5f, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, -1.5f, 0));
 			}
@@ -82,7 +82,7 @@ namespace Sample {
 
 			for (auto& shot : m_Shots)
 			{
-				shot->AddPosition(Actor()->GetVelocity()->GetVelocity());
+				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime < 55)
 				{
 					shot->SetCollideFlg(false);
@@ -109,7 +109,15 @@ namespace Sample {
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				ChangeState(STATE_KEY_IDLE);
+				if (Actor()->GetTransform()->GetPositionY() > 0)
+				{
+					ChangeState(STATE_KEY_FALL);
+				}
+				else
+				{
+					ChangeState(STATE_KEY_IDLE);
+				}
+				
 			}
 
 
@@ -146,6 +154,7 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
+			m_SkillAction->End();
 			for (auto& shot : m_Shots)
 			{
 				shot->SetShow(false);
@@ -157,6 +166,7 @@ namespace Sample {
 				m_Effect->SetStop(true);
 				m_Effect.reset();
 			}
+			
 		}
 
 		/**

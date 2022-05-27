@@ -55,6 +55,10 @@ namespace Sample {
 				ChangeState(STATE_KEY_MOVE);
 			}
 			
+			if (Input()->IsPush(INPUT_KEY_JUMP))
+			{
+				ChangeState(STATE_KEY_JUMP);
+			}
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{

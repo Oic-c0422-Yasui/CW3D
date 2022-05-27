@@ -10,7 +10,12 @@
 #include "Attack3State.h"
 #include "RunAttack1State.h"
 #include "Skill1_1State.h"
-
+#include "JumpState.h"
+#include "FallState.h"
+#include "LandingState.h"
+#include "RunJumpState.h"
+#include "RunFallState.h"
+#include "RunLandingState.h"
 
 
 
@@ -43,6 +48,12 @@ bool CPlayer::Load()
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleMotionState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::JumpState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::FallState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::LandingState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::RunJumpState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::RunFallState>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::RunLandingState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack2State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack3State>(m_Actor, m_pInput));
@@ -54,6 +65,12 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::IdleMotionAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::JumpAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::FallAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::LandingAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::RunJumpAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::RunFallAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::RunLandingAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack2Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Attack3Action>());

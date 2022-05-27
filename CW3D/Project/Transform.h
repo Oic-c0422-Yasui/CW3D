@@ -60,7 +60,15 @@ namespace Sample
 
 			void MovePosition(const VelocityPtr& v) noexcept
 			{
-				m_Position += v->GetVelocity();
+				if (v->IsGravity())
+				{
+					m_Position += v->GetVelocity();
+				}
+				else
+				{
+					m_Position.x += v->GetVelocityX();
+					m_Position.z += v->GetVelocityZ();
+				}
 				m_World.SetTranslation(m_Position);
 			}
 

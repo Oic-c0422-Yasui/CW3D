@@ -107,6 +107,7 @@
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SkillData.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -132,6 +133,8 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBuilder.h" />
+    <ClInclude Include="FallAction.h" />
+    <ClInclude Include="FallState.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="IAction.h" />
@@ -145,6 +148,10 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="IStateMachine.h" />
+    <ClInclude Include="JumpAction.h" />
+    <ClInclude Include="JumpState.h" />
+    <ClInclude Include="LandingAction.h" />
+    <ClInclude Include="LandingState.h" />
     <ClInclude Include="MofInput.h" />
     <ClInclude Include="MoveAction.h" />
     <ClInclude Include="MoveState.h" />
@@ -155,6 +162,12 @@
     <ClInclude Include="RunAction.h" />
     <ClInclude Include="RunAttack1Action.h" />
     <ClInclude Include="RunAttack1State.h" />
+    <ClInclude Include="RunFallAction.h" />
+    <ClInclude Include="RunFallState.h" />
+    <ClInclude Include="RunJumpAction.h" />
+    <ClInclude Include="RunJumpState.h" />
+    <ClInclude Include="RunLandingAction.h" />
+    <ClInclude Include="RunLandingState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Shot.h" />
@@ -167,7 +180,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="TemplateSingleton.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />

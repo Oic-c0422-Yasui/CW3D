@@ -1,6 +1,5 @@
 #pragma once
 #include "Common.h"
-#include "ResourceManager.h"
 namespace Sample
 {
 	class CEffect

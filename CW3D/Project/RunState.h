@@ -27,7 +27,7 @@ namespace Sample {
 		void Start() override {
 			runAction_ = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
 			runAction_->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.12f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -57,6 +57,11 @@ namespace Sample {
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
 				ChangeState(STATE_KEY_RUNATTACK1);
+			}
+
+			if (Input()->IsPush(INPUT_KEY_JUMP))
+			{
+				ChangeState(STATE_KEY_RUNJUMP);
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動

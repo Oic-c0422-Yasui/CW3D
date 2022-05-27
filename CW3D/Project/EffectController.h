@@ -1,7 +1,7 @@
 #pragma once
 #include "Effect.h"
 #include "EffectManager.h"
-#include "TemplateSingleton.h"
+#include "Singleton.h"
 
 namespace Sample 
 {

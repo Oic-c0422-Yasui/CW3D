@@ -20,8 +20,9 @@ enum tag_COLLISIONTYPE
 #define PLAYER_MAXSPEED 0.14f
 //プレイヤーの移動速度(0.6倍)
 #define PLAYER_WALKSPEED 0.6f
-#define GRAVITY 0.02f
-#define GRAVITYMAX 0.6f
+#define GRAVITY 0.01f
+#define GRAVITYMAX 0.3f
+#define PLAYER_JUMPPOWER 0.25f
 
 //インプットキーの名称
 const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
@@ -35,6 +36,12 @@ constexpr char* STATE_KEY_MOVE = "Move";
 constexpr char* STATE_KEY_IDLE = "Idle";
 constexpr char* STATE_KEY_IDLEMOTION = "IdleMotion";
 constexpr char* STATE_KEY_RUN = "Run";
+constexpr char* STATE_KEY_JUMP = "Jump";
+constexpr char* STATE_KEY_RUNJUMP = "RunJump";
+constexpr char* STATE_KEY_FALL = "Fall";
+constexpr char* STATE_KEY_RUNFALL = "RunFall";
+constexpr char* STATE_KEY_LANDING = "Landing";
+constexpr char* STATE_KEY_RUNLANDING = "RunLanding";
 constexpr char* STATE_KEY_ATTACK1 = "Attack1";
 constexpr char* STATE_KEY_ATTACK2 = "Attack2";
 constexpr char* STATE_KEY_ATTACK3 = "Attack3";
@@ -43,5 +50,10 @@ constexpr char* STATE_KEY_DAMAGE = "Damage";
 constexpr char* STATE_KEY_SKILL1_1 = "Skill1_1";
 
 //パラメーターキーの名称
-
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
+
+const std::string SKILL_KEY_1 = "SkillKey1";
+const std::string SKILL_KEY_2 = "SkillKey2";
+const std::string SKILL_KEY_3 = "SkillKey3";
+const std::string SKILL_KEY_4 = "SkillKey4";
+const std::string SKILL_KEY_5 = "SkillKey5";

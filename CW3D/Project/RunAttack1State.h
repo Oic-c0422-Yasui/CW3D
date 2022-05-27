@@ -40,12 +40,12 @@ namespace Sample {
 			m_RunAttack1Action->Start();
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(-0.7f, 0.8f, 0), 0.45f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.8f, 0), 0.45f, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() + Vector3(0.7f, 0.8f, 0), 0.45f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.8f, 0), 0.45f, 0));
 			}
 			for (auto& shot : m_Shots)
 			{
@@ -65,7 +65,7 @@ namespace Sample {
 			
 			for (auto& shot : m_Shots)
 			{
-				shot->AddPosition(Actor()->GetVelocity()->GetVelocity());
+				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime == 20)
 				{
 					shot->SetCollideFlg(true);

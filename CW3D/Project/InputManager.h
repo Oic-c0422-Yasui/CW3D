@@ -1,7 +1,7 @@
 #pragma once
 
 #include	"Input.h"
-#include	"TemplateSingleton.h"
+#include	"Singleton.h"
 
 namespace Sample {
 

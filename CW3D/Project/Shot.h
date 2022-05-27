@@ -13,6 +13,7 @@ namespace Sample
 		CVector3			m_Position;
 		float				m_Radius;
 		CVector3			m_Size;
+		Vector3				m_Offset;
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
 		BYTE				m_Type;
@@ -31,6 +32,7 @@ namespace Sample
 			, m_Type(0)
 			, m_Speed(0.0f)
 			, m_KnockBack(0.0f)
+			, m_Offset(0,0,0)
 
 		{
 		}
@@ -39,9 +41,10 @@ namespace Sample
 
 		}
 
-		void Create(Vector3 pos, float radius, int type)
+		void Create(Vector3 pos,Vector3 offset, float radius, int type)
 		{
 			m_Position = pos;
+			m_Offset = offset;
 			m_Radius = radius;
 			m_Type = type;
 			m_Speed = 0.0f;
@@ -53,10 +56,11 @@ namespace Sample
 			m_KnockBack = 0.0f;
 		}
 
-		void Create(Vector3 pos, Vector3 size, int type)
+		void Create(Vector3 pos, Vector3 offset, Vector3 size, int type)
 		{
 			m_Size = size;
 			m_Position = pos;
+			m_Offset = offset;
 			m_Type = type;
 			m_Speed = 0.0f;
 			m_AABB.SetPosition(m_Position);
@@ -134,6 +138,16 @@ namespace Sample
 			m_Speed = val;
 		}
 
+		void SetPosition(Vector3 pos) noexcept
+		{
+			m_Position = pos;
+		}
+
+		void SetOffset(Vector3 offset) noexcept
+		{
+			m_Offset = offset;
+		}
+
 		void AddPosition(Vector3 pos) noexcept
 		{
 			m_Position += pos;
@@ -141,6 +155,10 @@ namespace Sample
 
 		Vector3 GetPosition() const noexcept {
 			return m_Position;
+		}
+
+		Vector3 GetOffset() const noexcept {
+			return m_Offset;
 		}
 
 		float GetRadius() const noexcept {

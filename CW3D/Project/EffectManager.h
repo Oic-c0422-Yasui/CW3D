@@ -1,5 +1,5 @@
 #pragma once
-#include "TemplateSingleton.h"
+#include "Singleton.h"
 #include "Common.h"
 #include "Effect.h"
 #include "ResourceManager.h"

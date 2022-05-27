@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "TemplateSingleton.h"
+#include "Singleton.h"
 #include "Common.h"
 #include "Skill.h"
 
@@ -24,11 +24,11 @@ namespace Sample
 
 	public:
 
-		SKillPtr Create(std::string key,std::string button,char* name,float ct,int damage)
+		SKillPtr Create(std::string key,std::string button,char* name)
 		{
 			auto add = std::make_shared<CSkill>();
 			m_Skills.push_back(add);
-			add->Create(key, button, name, ct, damage);
+			add->Create(key, button, name);
 			return add;
 		}
 

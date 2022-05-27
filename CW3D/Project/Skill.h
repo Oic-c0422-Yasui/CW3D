@@ -28,13 +28,11 @@ namespace Sample
 		{
 		}
 
-		void Create(std::string key, std::string button, char* name, float ct, int damage)
+		void Create(std::string key, std::string button, char* name)
 		{
 			m_Key = key;
 			m_Button = button;
 			m_Name = name;
-			m_CT = ct;
-			m_Damage = damage;
 			m_CanUseFlg = true;
 		}
 

@@ -27,7 +27,7 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-
+			Velocity()->SetGravityFlg(false);
 			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
@@ -50,6 +50,7 @@ namespace Sample {
 		 * @brief		アクション内の終了処理
 		 */
 		void End() override {
+			Velocity()->SetGravityFlg(true);
 		}
 
 		/**

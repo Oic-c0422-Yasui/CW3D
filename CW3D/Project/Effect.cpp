@@ -12,7 +12,6 @@ namespace Sample
 	void CEffect::Initialize()
 	{
 		m_Position = Vector3(0, 0, 0);
-		//m_Handle = CEffectManager::GetInstance().Play(エフェクト指定);
 	}
 
 	void CEffect::Update()

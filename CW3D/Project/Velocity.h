@@ -23,7 +23,7 @@ namespace Sample
 		CVector3				m_Decelerate;
 
 		//重力利用フラグ
-		bool					useGravity;
+		bool					m_UseGravity;
 
 		//重力加速度
 		float					m_Gravity;
@@ -46,7 +46,7 @@ namespace Sample
 			, m_MaxVelocity(0.0f, 0.0f, 0.0f)
 			, m_UpdateVelocity(0.0f, 0.0f, 0.0f)
 			, m_Decelerate(0.0f, 0.0f, 0.0f)
-			, useGravity(true)
+			, m_UseGravity(true)
 			, m_Gravity(0.0f)
 			, m_SetRotateFlg(false)
 			, m_CurrentTime(0.0f)
@@ -62,11 +62,11 @@ namespace Sample
 		 */
 		void Update() {
 			//重力の適用
-			if (useGravity)
+			if (m_UseGravity)
 			{
-				m_Velocity.y += m_Gravity;
-				m_Velocity.y = ((m_Velocity.y > m_MaxVelocity.y) ?
-					m_MaxVelocity.y : m_Velocity.y);
+				m_Velocity.y -= m_Gravity;
+				m_Velocity.y = ((m_Velocity.y < -m_MaxVelocity.y) ?
+					-m_MaxVelocity.y : m_Velocity.y);
 			}
 
 			//回転の更新
@@ -242,6 +242,10 @@ namespace Sample
 			m_SetRotateFlg = true;
 		}
 
+		void SetGravityFlg(bool isGravity) noexcept {
+			m_UseGravity = isGravity;
+		}
+
 		/**
 		 * @brief		速度の取得
 		 */
@@ -270,6 +274,11 @@ namespace Sample
 		float GetRotateY() const noexcept {
 			return m_CurrentY;
 		}
+
+		bool IsGravity() const noexcept {
+			return m_UseGravity;
+		}
+
 	};
 	//ポインタ置き換え
 	using VelocityPtr = std::shared_ptr<Velocity>;
