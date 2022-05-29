@@ -69,7 +69,7 @@ namespace Sample {
 			for (auto& shot : m_Shots)
 			{
 				shot->SetCollideFlg(false);
-				shot->SetKnockBack(0.8f);
+				shot->SetKnockBack(Vector3(0.5f,0.2f,0));
 			}
 			
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.6f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);

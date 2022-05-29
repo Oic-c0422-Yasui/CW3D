@@ -149,6 +149,14 @@
     <ClInclude Include="IState.h" />
     <ClInclude Include="IStateMachine.h" />
     <ClInclude Include="JumpAction.h" />
+    <ClInclude Include="JumpAttack1Action.h" />
+    <ClInclude Include="JumpAttack1State.h" />
+    <ClInclude Include="RunJumpAttack1Action.h" />
+    <ClInclude Include="RunJumpAttack2Action.h" />
+    <ClInclude Include="RunJumpAttack1State.h" />
+    <ClInclude Include="RunJumpAttack3Action.h" />
+    <ClInclude Include="RunJumpAttack2State.h" />
+    <ClInclude Include="RunJumpAttack3State.h" />
     <ClInclude Include="JumpState.h" />
     <ClInclude Include="LandingAction.h" />
     <ClInclude Include="LandingState.h" />

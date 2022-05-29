@@ -22,7 +22,7 @@ enum tag_COLLISIONTYPE
 #define PLAYER_WALKSPEED 0.6f
 #define GRAVITY 0.01f
 #define GRAVITYMAX 0.3f
-#define PLAYER_JUMPPOWER 0.25f
+#define PLAYER_JUMPPOWER 0.22f
 
 //インプットキーの名称
 const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
@@ -45,7 +45,11 @@ constexpr char* STATE_KEY_RUNLANDING = "RunLanding";
 constexpr char* STATE_KEY_ATTACK1 = "Attack1";
 constexpr char* STATE_KEY_ATTACK2 = "Attack2";
 constexpr char* STATE_KEY_ATTACK3 = "Attack3";
+constexpr char* STATE_KEY_JUMPATTACK1 = "JumpAttack1";
 constexpr char* STATE_KEY_RUNATTACK1 = "RunAttack1";
+constexpr char* STATE_KEY_RUNJUMPATTACK1 = "RunJumpAttack1";
+constexpr char* STATE_KEY_RUNJUMPATTACK2 = "RunJumpAttack2";
+constexpr char* STATE_KEY_RUNJUMPATTACK3 = "RunJumpAttack3";
 constexpr char* STATE_KEY_DAMAGE = "Damage";
 constexpr char* STATE_KEY_SKILL1_1 = "Skill1_1";
 

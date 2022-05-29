@@ -61,7 +61,7 @@ namespace Sample {
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
-				ChangeState(STATE_KEY_RUNATTACK1);
+				ChangeState(STATE_KEY_RUNJUMPATTACK1);
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動

@@ -50,7 +50,7 @@ namespace Sample {
 			for (auto& shot : m_Shots)
 			{
 				shot->SetCollideFlg(false);
-				shot->SetKnockBack(0.4f);
+				shot->SetKnockBackX(0.4f);
 			}
 			
 			

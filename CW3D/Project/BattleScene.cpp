@@ -105,6 +105,10 @@ void CBattleScene::Update()
 	ShotManagerInstance.Update();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
+		for (int j = i + 1; j < m_Enemys.size(); j++)
+		{
+			CCollision::CollisionEnemyEnemy(m_Enemys[i], m_Enemys[j]);
+		}
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
 			//表示されていない OR コライダーOFFの場合
@@ -137,9 +141,8 @@ void CBattleScene::Update()
 			}
 
 			//ノックバック値設定
-			float knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
+			Vector3 knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
 			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack);
-			
 		}
 	}
 	EffectManagerInstance.Update();

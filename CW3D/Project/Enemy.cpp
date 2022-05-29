@@ -108,18 +108,20 @@ void CEnemy::Release()
 	m_Collider.reset();
 }
 
-void CEnemy::Damage(const Vector3& direction,float power)
+void CEnemy::Damage(const Vector3& direction,Vector3 power)
 {
 
 	Sample::EffectPtr effect = EffectControllerInstance.Play("DamageEffect1");
-	EffectControllerInstance.SetPosition(effect->GetHandle(), m_Collider->GetPosition() + Vector3(0, 1.2f, 0));
-	EffectControllerInstance.SetScale(effect->GetHandle(), Vector3(0.5f, 0.5f,1.0f) );
+	EffectControllerInstance.SetPosition(effect->GetHandle(), m_Collider->GetPosition() + Vector3(0, 1.0f, 0));
+	EffectControllerInstance.SetScale(effect->GetHandle(), Vector3(1.0f, 1.0f,1.0f) );
 
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 	auto& transform = m_Actor->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
 
-	knockBack = direction * power;
+	knockBack = power;
+	//X‚¾‚¯•ûŒü‚ð‰Á–¡‚µ‚½’l‚É‚·‚é
+	knockBack.x = direction.x * power.x;
 
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }

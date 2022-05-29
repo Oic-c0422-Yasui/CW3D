@@ -11,14 +11,21 @@ namespace Sample {
 	{
 	private:
 
-		float m_SetRotateFlg;
-		float m_TargetY;
 		float m_MoveTime;
-		float m_StartY;
 		float m_CurrentTime;
 		/** 移動量 */
 		CVector3 m_Move;
 
+		int m_NowDirection;
+		enum tag_DIRECTION
+		{
+			DIRECTION_RIGHT,
+			DIRECTION_RIGHTUP,
+			DIRECTION_RIGHTDOWN,
+			DIRECTION_LEFT,
+			DIRECTION_LEFTUP,
+			DIRECTION_LEFTDOWN,
+		};
 		
 
 		/** 反転フラグ */
@@ -31,11 +38,9 @@ namespace Sample {
 			: Action()
 			, m_Move(0,0,0)
 			, m_ReverseFlg(false)
-			, m_TargetY(0.0f)
 			, m_MoveTime(0.0f)
-			, m_StartY(0.0f)
 			, m_CurrentTime(0.0f)
-			, m_SetRotateFlg(false)
+			, m_NowDirection(0)
 		{
 		}
 
@@ -53,10 +58,12 @@ namespace Sample {
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				m_NowDirection = DIRECTION_RIGHT;
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				m_NowDirection = DIRECTION_LEFT;
 			}
 		}
 
@@ -67,58 +74,55 @@ namespace Sample {
 
 			auto& velocity = Velocity();
 			bool isReverse = Transform()->IsReverse();
-			
+			float rotateY = Transform()->GetRotateY();
+
 			if (velocity->GetVelocityX() < 0 && !isReverse)
 			{
-				float rotateY = Transform()->GetRotateY();
 				Transform()->SetReverse(true);
-				Velocity()->SetRotateY(rotateY,MOF_ToRadian(90), 0.1f);
+				
+				
 			}
 			else if (velocity->GetVelocityX() > 0 && isReverse)
 			{
-				float rotateY = Transform()->GetRotateY();
 				Transform()->SetReverse(false);
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.1f);
+				
 			}
-			/*if (!m_XMoveFlg)
+			if (velocity->GetVelocityX() < 0)
 			{
-				DecelerateX(PLAYER_SPEED * 0.5);
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
+					m_NowDirection = DIRECTION_LEFTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
+					m_NowDirection = DIRECTION_LEFTDOWN;
+				}
+				else if(velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
+					m_NowDirection = DIRECTION_LEFT;
+				}
 			}
-			if (!m_ZMoveFlg)
+			else if (velocity->GetVelocityX() > 0)
 			{
-				DecelerateZ(PLAYER_SPEED * 0.5);
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
+					m_NowDirection = DIRECTION_RIGHTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
+					m_NowDirection = DIRECTION_RIGHTDOWN;
+				}
+				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
+					m_NowDirection = DIRECTION_RIGHT;
+				}
 			}
-			if (m_Move.x > 0 && m_ReverseFlg)
-			{
-				m_ReverseFlg = false;
-				SetRotateY(MOF_ToRadian(-90), 0.2f);
-
-			}
-			else if (m_Move.x < 0 && !m_ReverseFlg)
-			{
-				m_ReverseFlg = true;
-				SetRotateY(MOF_ToRadian(90), 0.2f);
-			}*/
-
-			/*if (m_CurrentTime > m_MoveTime && m_SetRotateFlg)
-			{
-				Transform()->SetRotateY(m_TargetY);
-				m_SetRotateFlg = false;
-			}
-			else if (m_SetRotateFlg)
-			{
-
-				float rotateY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
-
-				Transform()->SetRotateY(rotateY);
-				m_CurrentTime += CUtilities::GetFrameSecond();
-			}*/
-
-
-			//重力
-			//Gravity(GRAVITY);
-			//実際に座標を移動させる
-			/*Transform()->MovePosition(m_Move);*/
 		}
 
 		/**
@@ -164,13 +168,6 @@ namespace Sample {
 			m_ReverseFlg = isReverse;
 		}
 
-		void SetRotateY(float val,float time) {
-			m_TargetY = val;
-			m_MoveTime = time;
-			m_StartY = Transform()->GetRotateY();
-			m_CurrentTime = 0;
-			m_SetRotateFlg = true;
-		}
 
 		/**
 		 * @brief		速度取得

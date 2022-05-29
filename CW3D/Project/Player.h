@@ -25,7 +25,6 @@ private:
 	Sample::StateMachinePtr m_StateMachine;
 	Sample::AnimationStatePtr m_Motion;
 	Sample::ActorPtr m_Actor;
-	Sample::MoveActionPtr m_Move;
 	Sample::InputPtr		m_pInput;
 	
 	CMatrix44 matWorld;

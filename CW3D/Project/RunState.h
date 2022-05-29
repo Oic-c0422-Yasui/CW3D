@@ -26,6 +26,14 @@ namespace Sample {
 		 */
 		void Start() override {
 			runAction_ = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
+			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(false);
+			}
+			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(true);
+			}
 			runAction_->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.12f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}

@@ -19,7 +19,7 @@ namespace Sample
 		BYTE				m_Type;
 		int					m_CollisionType;
 		float				m_Speed;
-		float				m_KnockBack;
+		CVector3			m_KnockBack;
 
 	public:
 		CShot()
@@ -31,7 +31,7 @@ namespace Sample
 			, m_CollideFlg(false)
 			, m_Type(0)
 			, m_Speed(0.0f)
-			, m_KnockBack(0.0f)
+			, m_KnockBack(0,0,0)
 			, m_Offset(0,0,0)
 
 		{
@@ -53,7 +53,7 @@ namespace Sample
 			m_ShowFlg = true;
 			m_CollideFlg = true;
 			m_CollisionType = COLLITION_SPHERE;
-			m_KnockBack = 0.0f;
+			m_KnockBack = Vector3(0, 0, 0);
 		}
 
 		void Create(Vector3 pos, Vector3 offset, Vector3 size, int type)
@@ -68,7 +68,7 @@ namespace Sample
 			m_ShowFlg = true;
 			m_CollideFlg = true;
 			m_CollisionType = COLLITION_AABB;
-			m_KnockBack = 0.0f;
+			m_KnockBack = Vector3(0, 0, 0);
 		}
 
 		void Update()
@@ -80,19 +80,20 @@ namespace Sample
 			m_Position.x += m_Speed;
 			switch (m_CollisionType)
 			{
-			case COLLITION_SPHERE:
-			{
-				m_Collider->SetPosition(m_Position);
-				break;
-			}
-			case COLLITION_AABB:
-			{
-				m_AABB.SetPosition(m_Position);
-				break;
-			}
-			default:
-			{
-			}
+				case COLLITION_SPHERE:
+				{
+					m_Collider->SetPosition(m_Position);
+					break;
+				}
+				case COLLITION_AABB:
+				{
+					m_AABB.SetPosition(m_Position);
+					break;
+				}
+				default:
+				{
+					break;
+				}
 			}
 			
 		}
@@ -128,10 +129,24 @@ namespace Sample
 			m_CollideFlg = flg;
 		}
 
-		void SetKnockBack(float val) noexcept
+		void SetKnockBack(Vector3 val) noexcept
 		{
 			m_KnockBack = val;
 		}
+		void SetKnockBackX(float val) noexcept
+		{
+			m_KnockBack.x = val;
+		}
+		void SetKnockBackY(float val) noexcept
+		{
+			m_KnockBack.y = val;
+		}
+		void SetKnockBackZ(float val) noexcept
+		{
+			m_KnockBack.z = val;
+		}
+
+
 
 		void SetSpeed(float val) noexcept
 		{
@@ -174,7 +189,7 @@ namespace Sample
 		}
 
 
-		float GetKnockBack() const noexcept {
+		Vector3 GetKnockBack() const noexcept {
 			return m_KnockBack;
 		}
 

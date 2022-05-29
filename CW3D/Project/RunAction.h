@@ -10,14 +10,23 @@ namespace Sample {
 	class RunAction : public Action
 	{
 	private:
-
+		int m_NowDirection;
+		enum tag_DIRECTION
+		{
+			DIRECTION_RIGHT,
+			DIRECTION_RIGHTUP,
+			DIRECTION_RIGHTDOWN,
+			DIRECTION_LEFT,
+			DIRECTION_LEFTUP,
+			DIRECTION_LEFTDOWN,
+		};
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		RunAction()
 			: Action()
-
+			, m_NowDirection(-1)
 		{
 		}
 
@@ -35,10 +44,12 @@ namespace Sample {
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				m_NowDirection = DIRECTION_RIGHT;
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				m_NowDirection = DIRECTION_LEFT;
 			}
 		}
 
@@ -50,18 +61,52 @@ namespace Sample {
 
 			auto& velocity = Velocity();
 			bool isReverse = Transform()->IsReverse();
+			float rotateY = Transform()->GetRotateY();
 
 			if (velocity->GetVelocityX() < 0 && !isReverse)
 			{
-				float rotateY = Transform()->GetRotateY();
 				Transform()->SetReverse(true);
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
 			}
 			else if (velocity->GetVelocityX() > 0 && isReverse)
 			{
-				float rotateY = Transform()->GetRotateY();
+				
 				Transform()->SetReverse(false);
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+			}
+			if (velocity->GetVelocityX() < 0)
+			{
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
+					m_NowDirection = DIRECTION_LEFTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
+					m_NowDirection = DIRECTION_LEFTDOWN;
+				}
+				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
+					m_NowDirection = DIRECTION_LEFT;
+				}
+			}
+			else if (velocity->GetVelocityX() > 0)
+			{
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
+					m_NowDirection = DIRECTION_RIGHTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
+					m_NowDirection = DIRECTION_RIGHTDOWN;
+				}
+				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
+					m_NowDirection = DIRECTION_RIGHT;
+				}
 			}
 		
 		}
