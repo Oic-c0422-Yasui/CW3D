@@ -10,7 +10,16 @@ namespace Sample {
 	class RunJumpAction : public Action
 	{
 	private:
-
+		int m_NowDirection;
+		enum tag_DIRECTION
+		{
+			DIRECTION_RIGHT,
+			DIRECTION_RIGHTUP,
+			DIRECTION_RIGHTDOWN,
+			DIRECTION_LEFT,
+			DIRECTION_LEFTUP,
+			DIRECTION_LEFTDOWN,
+		};
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -38,10 +47,12 @@ namespace Sample {
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				m_NowDirection = DIRECTION_LEFT;
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				m_NowDirection = DIRECTION_RIGHT;
 			}
 		}
 
@@ -50,7 +61,46 @@ namespace Sample {
 		 */
 		void Execution() override {
 
+			auto& velocity = Velocity();
+			bool isReverse = Transform()->IsReverse();
+			float rotateY = Transform()->GetRotateY();
 
+			if (Transform()->IsReverse())
+			{
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.1f);
+					m_NowDirection = DIRECTION_LEFTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.1f);
+					m_NowDirection = DIRECTION_LEFTDOWN;
+				}
+				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.1f);
+					m_NowDirection = DIRECTION_LEFT;
+				}
+			}
+			else
+			{
+				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.1f);
+					m_NowDirection = DIRECTION_RIGHTUP;
+				}
+				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.1f);
+					m_NowDirection = DIRECTION_RIGHTDOWN;
+				}
+				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+				{
+					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.1f);
+					m_NowDirection = DIRECTION_RIGHT;
+				}
+			}
 		}
 
 		/**

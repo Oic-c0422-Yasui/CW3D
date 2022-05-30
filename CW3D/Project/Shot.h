@@ -20,6 +20,7 @@ namespace Sample
 		int					m_CollisionType;
 		float				m_Speed;
 		CVector3			m_KnockBack;
+		int					m_Damage;
 
 	public:
 		CShot()
@@ -33,6 +34,7 @@ namespace Sample
 			, m_Speed(0.0f)
 			, m_KnockBack(0,0,0)
 			, m_Offset(0,0,0)
+			, m_Damage(0)
 
 		{
 		}
@@ -41,12 +43,13 @@ namespace Sample
 
 		}
 
-		void Create(Vector3 pos,Vector3 offset, float radius, int type)
+		void Create(Vector3 pos,Vector3 offset, float radius,int damage, int type)
 		{
 			m_Position = pos;
 			m_Offset = offset;
 			m_Radius = radius;
 			m_Type = type;
+			m_Damage = damage;
 			m_Speed = 0.0f;
 			m_Collider->SetPosition(m_Position);
 			m_Collider->SetRadius(m_Radius);
@@ -56,12 +59,13 @@ namespace Sample
 			m_KnockBack = Vector3(0, 0, 0);
 		}
 
-		void Create(Vector3 pos, Vector3 offset, Vector3 size, int type)
+		void Create(Vector3 pos, Vector3 offset, Vector3 size, int damage,  int type)
 		{
 			m_Size = size;
 			m_Position = pos;
 			m_Offset = offset;
 			m_Type = type;
+			m_Damage = damage;
 			m_Speed = 0.0f;
 			m_AABB.SetPosition(m_Position);
 			m_AABB.Size = size;
@@ -146,7 +150,15 @@ namespace Sample
 			m_KnockBack.z = val;
 		}
 
+		void SetDamage(int val) noexcept
+		{
+			m_Damage = val;
+		}
 
+		void AddDamage(int val) noexcept
+		{
+			m_Damage += val;
+		}
 
 		void SetSpeed(float val) noexcept
 		{
@@ -195,6 +207,10 @@ namespace Sample
 
 		float GetSpeed() const noexcept {
 			return m_Speed;
+		}
+
+		int GetDamage() const noexcept {
+			return m_Damage;
 		}
 
 	};

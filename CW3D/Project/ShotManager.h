@@ -21,19 +21,19 @@ namespace Sample
 
 	public:
 
-		ShotPtr Create(Vector3 pos,Vector3 offset,float radius,int type)
+		ShotPtr Create(Vector3 pos,Vector3 offset,float radius,int damage,int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, offset, radius, type);
+			add->Create(pos, offset, radius,damage, type);
 			return add;
 		}
 
-		ShotPtr Create(Vector3 pos, Vector3 offset, Vector3 size, int type)
+		ShotPtr Create(Vector3 pos, Vector3 offset, Vector3 size, int damage, int type)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, offset, size, type);
+			add->Create(pos, offset, size, damage, type);
 			return add;
 		}
 

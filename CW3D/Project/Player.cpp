@@ -87,6 +87,12 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunJumpAttack3Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Skill1_1Action>());
 
+	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 30);
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ALPHA, 255);
+	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
 	return true;
 }

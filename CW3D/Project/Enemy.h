@@ -26,6 +26,8 @@ protected:
 
 	bool	m_ShowFlg;
 
+	bool	m_DeadFlg;
+
 public:
 	CEnemy();
 	~CEnemy();
@@ -36,7 +38,9 @@ public:
 	void RenderDebug();
 	void Release();
 
-	void Damage(const Vector3& direction,Vector3 power);
+	void Damage(const Vector3& direction,Vector3 power, int damage);
+
+	bool IsInvincible() const;
 
 	CSphere GetCollider() {
 		m_Collider->SetPosition(m_Actor->GetPosition() + Vector3(0, 0.7f, 0));
@@ -62,9 +66,16 @@ public:
 		return m_Actor->GetPosition();
 	}
 
+	int GetHP()
+	{
+		return m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
+	}
+
 	void SetPosition(Vector3 pos)
 	{
 		m_Actor->SetPosition(pos);
 	}
+
+
 };
 

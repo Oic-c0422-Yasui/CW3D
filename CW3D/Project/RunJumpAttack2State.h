@@ -37,14 +37,15 @@ namespace Sample {
 			m_FrameTime = 0;
 			m_NextInputFlg = false;
 			m_Attack2Action->Start();
+			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), 1.5f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), 1.5f, attack, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), 1.5f, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), 1.5f, attack, 0));
 			}
 			for (auto& shot : m_Shots)
 			{

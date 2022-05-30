@@ -48,17 +48,18 @@ namespace Sample {
 
 			}
 			m_SkillAction->Start();
+			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			m_Effect = EffectControllerInstance.Play("Effect3");
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() , Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition() , Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), attack, 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-0.8f, -1.5f, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 10.0f, 7.0f), attack, 0));
 				EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90), 0.0f));
 				EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, -1.5f, 0));
 			}

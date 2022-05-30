@@ -30,6 +30,7 @@ private:
 
 	CMeshContainer	m_Stage;
 
+	CFont m_Font;
 
 public:
 	CBattleScene();

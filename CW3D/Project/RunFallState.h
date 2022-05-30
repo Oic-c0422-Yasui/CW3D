@@ -60,6 +60,7 @@ namespace Sample {
 			}
 
 
+
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
 				ChangeState(STATE_KEY_RUNJUMPATTACK1);

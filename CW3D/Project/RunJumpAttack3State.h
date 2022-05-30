@@ -35,14 +35,15 @@ namespace Sample {
 			m_Attack3Action = Actor()->GetAction<RunJumpAttack3Action>(GetKey());
 			m_FrameTime = 0;
 			m_Attack3Action->Start();
+			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), Vector3(1.0f, 1.5f, 1.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), Vector3(1.0f, 1.5f, 1.0f), attack, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), Vector3(1.0f, 1.5f, 1.0f), 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), Vector3(1.0f, 1.5f, 1.0f), attack, 0));
 			}
 
 			for (auto& shot : m_Shots)

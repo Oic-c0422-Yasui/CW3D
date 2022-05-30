@@ -1,18 +1,18 @@
 #pragma once
 
 #include	"State.h"
-#include	"DamageAction.h"
+#include	"FlyDamageAction.h"
 
 namespace Sample {
 
 	/**
 	 * @brief		ダメージステート
 	 */
-	class DamageState : public State
+	class FlyDamageState : public State
 	{
 	private:
 		//ダメージステート
-		DamageActionPtr			m_DamageAction;
+		FlyDamageActionPtr			m_DamageAction;
 		//ウェイト
 		int						wait;
 		//現在時間
@@ -22,7 +22,7 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DamageState()
+		FlyDamageState()
 			: State()
 			, wait(0)
 			, currentTime(0) {
@@ -32,12 +32,9 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			currentTime = 0;
-			wait = 10;
-			m_DamageAction = Actor()->GetAction<DamageAction>(GetKey());
+			m_DamageAction = Actor()->GetAction<FlyDamageAction>(GetKey());
 			m_DamageAction->Start();
-			
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_FLYDAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -46,12 +43,7 @@ namespace Sample {
 		void Execution() override {
 			m_DamageAction->Execution();
 			currentTime++;
-
-			if (Actor()->GetTransform()->GetPositionY() > 0)
-			{
-				ChangeState(STATE_KEY_FLYDAMAGE);
-			}
-			if (Actor()->GetAnimationState()->IsEndMotion())
+			if (Actor()->GetTransform()->GetPositionY() <= 0)
 			{
 				auto& hp = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
 				if (hp <= 0)
@@ -60,11 +52,10 @@ namespace Sample {
 				}
 				else
 				{
-					ChangeState(STATE_KEY_IDLE);
+					ChangeState(STATE_KEY_DOWN);
 				}
 				
 			}
-			
 		}
 
 		/**
@@ -92,7 +83,7 @@ namespace Sample {
 		 * @brief		ステートキーの取得
 		 */
 		const StateKeyType GetKey() const override {
-			return STATE_KEY_DAMAGE;
+			return STATE_KEY_FLYDAMAGE;
 		}
 	};
 }

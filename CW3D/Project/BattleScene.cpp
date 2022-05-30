@@ -85,12 +85,17 @@ void CBattleScene::Initialize()
 	m_Enemys.push_back(zb.Create(Vector3(2, 0, 1)));
 	m_Enemys.push_back(zb.Create(Vector3(5, 0, 5)));
 	m_Enemys.push_back(zb.Create(Vector3(6, 0, 1)));
+	m_Enemys.push_back(zb.Create(Vector3(7, 0, 2)));
+	m_Enemys.push_back(zb.Create(Vector3(1, 0, 3)));
+	m_Enemys.push_back(zb.Create(Vector3(-2, 0, 4)));
 
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
 	CGraphicsUtilities::SetDirectionalLight(&m_Light);
 	m_Light.SetAmbient(MOF_XRGB(255, 255, 255));
 	m_Light.SetDiffuse(MOF_XRGB(220, 220, 220));
 	m_Light.SetSpeculer(MOF_XRGB(255, 255, 255));
+
+	m_Font.Create(225, "MS gosikku");
 }
 
 void CBattleScene::Update()
@@ -105,9 +110,14 @@ void CBattleScene::Update()
 	ShotManagerInstance.Update();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
+
 		for (int j = i + 1; j < m_Enemys.size(); j++)
 		{
 			CCollision::CollisionEnemyEnemy(m_Enemys[i], m_Enemys[j]);
+		}
+		if (m_Enemys[i]->IsInvincible())
+		{
+			continue;
 		}
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
@@ -142,7 +152,7 @@ void CBattleScene::Update()
 
 			//ƒmƒbƒNƒoƒbƒN’lÝ’è
 			Vector3 knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
-			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack);
+			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack, ShotManagerInstance.GetShot(j)->GetDamage());
 		}
 	}
 	EffectManagerInstance.Update();
@@ -160,11 +170,12 @@ void CBattleScene::Render()
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
 	m_Player.Render();
-
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		m_Enemys[i]->Render();
 	}
+
+	
 	ShotManagerInstance.Render();
 	EffectManagerInstance.Render(m_Player.GetPosition(), m_Player.GetPosition());
 	
@@ -208,6 +219,25 @@ void CBattleScene::RenderDebug()
 
 void CBattleScene::Render2D()
 {
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		CGraphicsUtilities::RenderString(300, i * 30, "“G%dHP:%d", i, m_Enemys[i]->GetHP());
+	}
+	float count = 0;
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		if (!m_Enemys[i]->IsShow())
+		{
+			count++;
+		}
+	}
+
+	if (count >= m_Enemys.size())
+	{
+		CRectangle rect;
+		m_Font.CalculateStringRect(0, 0, "‘S•”“|‚µ‚½‚ ‚ ‚ ‚ ‚ ", rect);
+		m_Font.RenderString(g_pGraphics->GetTargetWidth() * 0.5f - (rect.GetWidth() * 0.5f), g_pGraphics->GetTargetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "‘S•”“|‚µ‚½‚ ‚ ‚ ‚ ‚ ");
+	}
 }
 
 void CBattleScene::Render2DDebug()
@@ -217,6 +247,7 @@ void CBattleScene::Render2DDebug()
 
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
+	
 }
 
 void CBattleScene::Release()

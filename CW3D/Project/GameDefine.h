@@ -1,5 +1,6 @@
 #pragma once
 #include "Mof.h"
+#include "Utilities.h"
 
 enum tag_SCENENO
 {
@@ -51,11 +52,20 @@ constexpr char* STATE_KEY_RUNJUMPATTACK1 = "RunJumpAttack1";
 constexpr char* STATE_KEY_RUNJUMPATTACK2 = "RunJumpAttack2";
 constexpr char* STATE_KEY_RUNJUMPATTACK3 = "RunJumpAttack3";
 constexpr char* STATE_KEY_DAMAGE = "Damage";
+constexpr char* STATE_KEY_FLYDAMAGE = "FlyDamage";
+constexpr char* STATE_KEY_DOWN = "Down";
+constexpr char* STATE_KEY_DEAD = "Dead";
 constexpr char* STATE_KEY_SKILL1_1 = "Skill1_1";
 
 //パラメーターキーの名称
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
+const std::string PARAMETER_KEY_HP = "HP";
+const std::string PARAMETER_KEY_DAMAGE = "Damage";
+const std::string PARAMETER_KEY_ATTACK = "Attack";
+const std::string PARAMETER_KEY_ALPHA = "Alpha";
+const std::string PARAMETER_KEY_INVINCIBLE = "Invincible";
 
+//スキルキーの名称
 const std::string SKILL_KEY_1 = "SkillKey1";
 const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";

@@ -128,6 +128,10 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="DamageAction.h" />
     <ClInclude Include="DamageState.h" />
+    <ClInclude Include="DeadAction.h" />
+    <ClInclude Include="DeadState.h" />
+    <ClInclude Include="DownAction.h" />
+    <ClInclude Include="DownState.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectController.h" />
     <ClInclude Include="EffectManager.h" />
@@ -135,6 +139,8 @@
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="FallAction.h" />
     <ClInclude Include="FallState.h" />
+    <ClInclude Include="FlyDamageAction.h" />
+    <ClInclude Include="FlyDamageState.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="IAction.h" />

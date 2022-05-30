@@ -353,6 +353,24 @@
     <ClInclude Include="RunJumpAttack3State.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
+    <ClInclude Include="FlyDamageAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="DownAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadAction.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyDamageState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="DownState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
