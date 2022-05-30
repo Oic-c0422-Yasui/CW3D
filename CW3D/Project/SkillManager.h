@@ -24,12 +24,20 @@ namespace Sample
 
 	public:
 
-		SKillPtr Create(std::string key,std::string button,char* name)
+		SKillPtr Create(std::string key,std::string button,char* state, char* flyState)
 		{
 			auto add = std::make_shared<CSkill>();
 			m_Skills.push_back(add);
-			add->Create(key, button, name);
+			add->Create(key, button, state, flyState);
 			return add;
+		}
+
+		void Update()
+		{
+			for (auto& skill : m_Skills)
+			{
+				skill->Update();
+			}
 		}
 
 		size_t GetCount() const noexcept

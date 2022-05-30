@@ -136,13 +136,23 @@ namespace Sample {
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg())
+				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetState() == NULL)
 				{
 					continue;
 				}
 				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
 				{
-					ChangeState(SkillManagerInstance.GetSkill(i)->GetName());
+
+					SkillManagerInstance.GetSkill(i)->Start();
+					//宙に浮いていれば空中発動
+					if (Actor()->GetTransform()->GetPositionY() > 0)
+					{
+						ChangeState(SkillManagerInstance.GetSkill(i)->GetFlyState());
+					}
+					else
+					{
+						ChangeState(SkillManagerInstance.GetSkill(i)->GetState());
+					}
 					break;
 				}
 			}

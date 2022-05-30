@@ -14,10 +14,10 @@ namespace Sample {
 	private:
 		/** 移動アクション */
 		JumpAttack1ActionPtr			m_JumpAttack1Action;
-		bool					m_NextInputFlg;
-		int						m_FrameTime;
-		std::vector<ShotPtr>	m_Shots;
-		EffectPtr				m_Effect;
+		bool							m_NextInputFlg;
+		int								m_FrameTime;
+		std::vector<ShotPtr>			m_Shots;
+		EffectPtr						m_Effect;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -110,13 +110,15 @@ namespace Sample {
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg())
+				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetFlyState() == NULL)
 				{
 					continue;
 				}
 				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
 				{
-					ChangeState(SkillManagerInstance.GetSkill(i)->GetName());
+
+					SkillManagerInstance.GetSkill(i)->Start();
+					ChangeState(SkillManagerInstance.GetSkill(i)->GetFlyState());
 					break;
 				}
 			}
