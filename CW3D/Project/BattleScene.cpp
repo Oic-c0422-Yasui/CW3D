@@ -17,7 +17,9 @@ bool CBattleScene::Load()
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
 	input->AddKeyboardKey(INPUT_KEY_JUMP,MOFKEY_X);
 	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
-	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_A);
+	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
+	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
+	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
 	//ƒpƒbƒh
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
@@ -46,6 +48,10 @@ bool CBattleScene::Load()
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect2", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sandStome.efk");
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect3", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
+	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect4", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tornade.efk");
+	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
 
 	CSkillCreater::Create();
 

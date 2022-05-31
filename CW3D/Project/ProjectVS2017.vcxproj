@@ -156,6 +156,10 @@
     <ClInclude Include="JumpAction.h" />
     <ClInclude Include="JumpAttack1Action.h" />
     <ClInclude Include="JumpAttack1State.h" />
+    <ClInclude Include="JumpSkill2_1Action.h" />
+    <ClInclude Include="JumpSkill2_1State.h" />
+    <ClInclude Include="JumpSkill3_1Action.h" />
+    <ClInclude Include="JumpSkill3_1State.h" />
     <ClInclude Include="RunJumpAttack1Action.h" />
     <ClInclude Include="RunJumpAttack2Action.h" />
     <ClInclude Include="RunJumpAttack1State.h" />
@@ -187,6 +191,10 @@
     <ClInclude Include="ShotManager.h" />
     <ClInclude Include="Skill1_1Action.h" />
     <ClInclude Include="Skill1_1State.h" />
+    <ClInclude Include="Skill2_1Action.h" />
+    <ClInclude Include="Skill2_1State.h" />
+    <ClInclude Include="Skill3_1Action.h" />
+    <ClInclude Include="Skill3_1State.h" />
     <ClInclude Include="SkillCreater.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillManager.h" />

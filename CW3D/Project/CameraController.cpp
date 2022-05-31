@@ -22,13 +22,13 @@ void CCameraController::Initialize()
 void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 {
 	m_Camera.LookAt(pos + m_OffsetPos, lookPos + m_OffsetLookPos, Vector3(0, 1, 0));
-	if (g_pInput->IsKeyHold(MOFKEY_W))
+	/*if (g_pInput->IsKeyHold(MOFKEY_W))
 	{
 		m_OffsetPos.z += 0.05f;
 	}
 	else if (g_pInput->IsKeyHold(MOFKEY_S))
 	{
 		m_OffsetPos.z -= 0.05f;
-	}
+	}*/
 	m_Camera.Update();
 }

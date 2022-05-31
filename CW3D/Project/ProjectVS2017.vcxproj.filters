@@ -371,6 +371,30 @@
     <ClInclude Include="SkillData.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Skill2_1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill2_1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill3_1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill3_1Action.h">
+      <Filter>ヘッダー ファイル\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill2_1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill2_1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill3_1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill3_1State.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

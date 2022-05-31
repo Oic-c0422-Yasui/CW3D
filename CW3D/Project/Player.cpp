@@ -20,6 +20,10 @@
 #include "RunJumpAttack2State.h"
 #include "RunJumpAttack3State.h"
 #include "JumpAttack1State.h"
+#include "Skill2_1State.h"
+#include "JumpSkill2_1State.h"
+#include "Skill3_1State.h"
+#include "JumpSkill3_1State.h"
 
 
 
@@ -66,6 +70,10 @@ bool CPlayer::Load()
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunJumpAttack2State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunJumpAttack3State>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Skill1_1State>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::Skill2_1State>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::JumpSkill2_1State>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::Skill3_1State>(m_Actor, m_pInput));
+	m_StateMachine->AddState(Sample::State::Create<Sample::JumpSkill3_1State>(m_Actor, m_pInput));
 
 	m_Actor->AddAction(Sample::Action::Create<Sample::MoveAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
@@ -86,6 +94,10 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunJumpAttack2Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::RunJumpAttack3Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Skill1_1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::Skill2_1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill2_1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::Skill3_1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill3_1Action>());
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
