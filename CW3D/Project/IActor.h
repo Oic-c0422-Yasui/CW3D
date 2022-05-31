@@ -138,6 +138,11 @@ namespace Sample {
 		// */
 		virtual AnimationStatePtr GetAnimationState() const = 0;
 
+		///**
+		// * @brief		ÉXÉLÉã
+		// */
+		virtual SkillControllerPtr GetSkillController() const = 0;
+
 	protected:
 
 	};

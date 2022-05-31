@@ -23,6 +23,8 @@ namespace Sample {
 
 		//パラメーター情報
 		AnyParameterMapPtr				parameters;
+
+		SkillControllerPtr				m_SkillController;
 		
 
 		/**
@@ -44,12 +46,19 @@ namespace Sample {
 		 * @brief		パラメーター情報登録
 		 */
 		void SetParameterMap(const AnyParameterMapPtr& a) final { parameters = a; }
+
+		/**
+		 * @brief		パラメーター情報登録
+		 */
+		void SetSkillController(const SkillControllerPtr & a) final { m_SkillController = a; }
+
 	protected:
 		/** privateメンバ取得専用 */
 		TransformPtr Transform() { return m_Transform; }
 		VelocityPtr	 Velocity()	 { return m_Velocity; }
 		AnimationStatePtr AnimationState() { return m_Animation; }
 		const AnyParameterMapPtr& ParameterMap() { return parameters; }
+		SkillControllerPtr SkillController() { return m_SkillController; }
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -59,6 +68,7 @@ namespace Sample {
 			, m_Velocity()
 			, m_Animation()
 			, parameters()
+			, m_SkillController()
 		{
 		}
 

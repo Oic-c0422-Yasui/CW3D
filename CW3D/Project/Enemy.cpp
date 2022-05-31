@@ -60,7 +60,7 @@ bool CEnemy::Load()
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ALPHA, 255);
+	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
 
@@ -77,6 +77,7 @@ void CEnemy::Initialize(CVector3 pos)
 	m_Collider->SetRadius(0.6f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
+	m_HPUI.Initialize();
 	matWorld = m_Actor->GetMatrix();
 	m_DeadFlg = false;
 
@@ -102,12 +103,14 @@ void CEnemy::Update()
 	}
 	if (m_DeadFlg)
 	{
-		auto& alpha = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_ALPHA);
+		auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 		if (alpha <= 0)
 		{
 			m_ShowFlg = false;
 		}
 	}
+
+	
 	//ˆÚ“®§ŒÀ
 	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
 	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
@@ -124,19 +127,27 @@ void CEnemy::Render()
 	{
 		return;
 	}
-	if (m_DeadFlg)
-	{
-		auto& alpha = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_ALPHA);
-		
-		/*LPGeometry pGeometry = m_pMesh->GetGeometry(0);
-		LPMaterial pMaterial = pGeometry->GetMaterial();
-		pMaterial->SetDiffuse(MOF_ARGB(alpha, 255, 255, 255));*/
-	}
+
+	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	m_Motion->RefreshBoneMatrix(matWorld);
-	m_pMesh->Render(m_Motion);
+	m_pMesh->Render(m_Motion, Vector4(1.0f, 1.0f, 1.0f, alpha));
 }
 
 void CEnemy::RenderDebug()
+{
+}
+
+void CEnemy::Render2D()
+{
+	if (!m_ShowFlg)
+	{
+		return;
+	}
+	m_HPUI.SetHPGauge((float)GetHP() / 500.0f);
+	m_HPUI.Render(GetPosition());
+}
+
+void CEnemy::Render2DDebug()
 {
 }
 

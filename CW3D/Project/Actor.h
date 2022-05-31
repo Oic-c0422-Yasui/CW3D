@@ -23,6 +23,8 @@ namespace Sample {
 		/*パラメーター情報*/
 		AnyParameterMapPtr		parameters;
 
+		SkillControllerPtr		m_SkillController;
+
 		/** モーション */
 		AnimationStatePtr		motion_;
 	public:
@@ -35,7 +37,9 @@ namespace Sample {
 			, velocity_(std::make_shared<Velocity>())
 			, actionMap_()
 			, parameters(std::make_shared<AnyParameterMap>())
-			, motion_() {
+			, motion_()
+			, m_SkillController(std::make_shared<CSkillController>())
+		{
 		}
 
 		/**
@@ -48,6 +52,8 @@ namespace Sample {
 			transform_->MovePosition(velocity_);
 
 			transform_->SetRotateY(velocity_->GetRotateY());
+
+			m_SkillController->Update();
 		}
 
 
@@ -71,6 +77,7 @@ namespace Sample {
 			action->SetVelocity(velocity_);
 			action->SetAnimation(motion_);
 			action->SetParameterMap(parameters);
+			action->SetSkillController(m_SkillController);
 		}
 
 		/**
@@ -189,6 +196,13 @@ namespace Sample {
 		 */
 		AnimationStatePtr GetAnimationState() const override {
 			return motion_;
+		}
+
+		/**
+		 * @brief		スキル
+		 */
+		SkillControllerPtr GetSkillController() const override {
+			return m_SkillController;
 		}
 
 	};

@@ -27,7 +27,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
-			Velocity()->SetMaxGravity(GRAVITYMAX);
+			Velocity()->SetMaxGravity(GRAVITYMAX * 0.4f);
 			Velocity()->SetGravity(GRAVITY);
 			//Velocity()->SetVelocity(knockBack);
 			Velocity()->SetDecelerate(0.05f, 0.05f);

@@ -55,21 +55,25 @@ namespace Sample {
 
 			}
 			m_SkillAction->Start();
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			auto attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			//スキルの倍率(%)を攻撃力に加算
+			attack *= Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage() * 0.01f;
+
+
 			m_Effect = EffectControllerInstance.Play("Effect5");
 			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0, 0, 0), Vector3(4.0f, 10.0f, 4.0f), attack, 0));
 			EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0, -1.5f, 0));
 			EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(1.0f, 1.0f, 1.0f));
 			EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 1.8f);
 
-			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
-				if (SkillManagerInstance.GetSkill(i)->GetState() != STATE_KEY_SKILL3_1)
+				if (Actor()->GetSkillController()->GetSkill(i)->GetState() != STATE_KEY_SKILL3_1)
 				{
 					continue;
 				}
 
-				m_Key = SkillManagerInstance.GetSkill(i)->GetButton();
+				m_Key = Actor()->GetSkillController()->GetSkill(i)->GetButton();
 				break;
 			}
 
@@ -145,24 +149,24 @@ namespace Sample {
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetState() == NULL)
+				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
 				{
 					continue;
 				}
-				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
 				{
 
-					SkillManagerInstance.GetSkill(i)->Start();
+					Actor()->GetSkillController()->GetSkill(i)->Start();
 					//宙に浮いていれば空中発動
 					if (Actor()->GetTransform()->GetPositionY() > 0)
 					{
-						ChangeState(SkillManagerInstance.GetSkill(i)->GetFlyState());
+						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
 					}
 					else
 					{
-						ChangeState(SkillManagerInstance.GetSkill(i)->GetState());
+						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
 					}
 					break;
 				}

@@ -67,17 +67,17 @@ namespace Sample {
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetFlyState() == NULL)
+				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetFlyState() == NULL)
 				{
 					continue;
 				}
-				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
 				{
 
-					SkillManagerInstance.GetSkill(i)->Start();
-					ChangeState(SkillManagerInstance.GetSkill(i)->GetFlyState());
+					Actor()->GetSkillController()->GetSkill(i)->Start();
+					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
 					break;
 				}
 			}

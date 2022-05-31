@@ -6,6 +6,7 @@
 #include	"MoveAction.h"
 #include	"Actor.h"
 #include	"AttackCollider.h"
+#include	"EnemyHPUI.h"
 
 class CEnemy
 {
@@ -20,6 +21,7 @@ protected:
 	Sample::ActorPtr m_Actor;
 	Sample::InputPtr m_Input;
 
+
 	CMatrix44 matWorld;
 
 	Sample::AttackColliderPtr m_Collider;
@@ -27,6 +29,8 @@ protected:
 	bool	m_ShowFlg;
 
 	bool	m_DeadFlg;
+
+	Sample::EnemyHPUI m_HPUI;
 
 public:
 	CEnemy();
@@ -36,6 +40,8 @@ public:
 	void Update();
 	void Render();
 	void RenderDebug();
+	void Render2D();
+	void Render2DDebug();
 	void Release();
 
 	void Damage(const Vector3& direction,Vector3 power, int damage);

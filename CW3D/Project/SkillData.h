@@ -4,10 +4,15 @@ namespace Sample
 {
 	class CSkillData
 	{
-	public:
-		int DamagePercent;
-		int CT;
 
+	public:
+		CSkillData()
+			: DamagePercent(0)
+			, CT(0.0f)
+		{
+		}
+		int		DamagePercent;
+		float	CT;
 	};
 
 	using SkillDataPtr = std::shared_ptr<CSkillData>;

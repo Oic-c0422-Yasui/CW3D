@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "SkillData.h"
 
 namespace Sample
 {
@@ -7,15 +8,15 @@ namespace Sample
 	{
 	private:
 
-		std::string	m_Key;
-		std::string m_Button;
-		char*		m_State;
-		char*		m_FlyState;
-		float		m_CT;
-		float		m_CurrentTime;
-		int			m_Damage;
-		bool		m_CanUseFlg;
-		bool		m_StartFlg;
+		std::string		m_Key;
+		std::string		m_Button;
+		char*			m_State;
+		char*			m_FlyState;
+		float			m_CurrentTime;
+		bool			m_CanUseFlg;
+		bool			m_StartFlg;
+		SkillDataPtr	m_SkillData;
+
 
 	public:
 		CSkill()
@@ -23,9 +24,8 @@ namespace Sample
 			, m_Button()
 			, m_State(NULL)
 			, m_FlyState(NULL)
-			, m_CT(0)
-			, m_Damage(0)
 			, m_CanUseFlg(false)
+			, m_SkillData(std::make_shared<CSkillData>())
 		{
 		}
 		~CSkill()
@@ -55,7 +55,7 @@ namespace Sample
 			{
 				return;
 			}
-			if (m_CurrentTime < m_CT)
+			if (m_CurrentTime < m_SkillData->CT)
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
 			}
@@ -90,7 +90,7 @@ namespace Sample
 
 		float GetCT() const noexcept
 		{
-			return m_CT;
+			return m_SkillData->CT;
 		}
 
 		float GetTime() const noexcept
@@ -100,7 +100,7 @@ namespace Sample
 
 		int GetDamage() const noexcept
 		{
-			return m_Damage;
+			return m_SkillData->DamagePercent;
 		}
 
 		bool GetCanUseFlg() const noexcept
@@ -127,17 +127,28 @@ namespace Sample
 
 		void SetCT(float ct) noexcept
 		{
-			m_CT = ct;
+			m_SkillData->CT = ct;
 		}
 
 		void SetDamage(float damage) noexcept
 		{
-			m_Damage = damage;
+			m_SkillData->DamagePercent = damage;
 		}
 
 		void SetCanUseFlg(bool isCanUse) noexcept
 		{
 			m_CanUseFlg = isCanUse;
+		}
+
+		void SetSkillData(SkillDataPtr& skill) noexcept
+		{
+			m_SkillData = skill;
+		}
+
+		void SetSkillData(float damagePercent, float ct) noexcept
+		{
+			m_SkillData->CT = ct;
+			m_SkillData->DamagePercent = damagePercent;
 		}
 
 

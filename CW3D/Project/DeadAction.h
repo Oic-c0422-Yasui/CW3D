@@ -42,9 +42,9 @@ namespace Sample {
 			if (AnimationState()->IsEndMotion())
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
-				auto& alpha = ParameterMap()->Get<int>(PARAMETER_KEY_ALPHA);
+				auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 
-				alpha = MyUtilities::Timer(255, m_CurrentTime, 0, m_FinishTime);
+				alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_FinishTime);
 			}
 		}
 

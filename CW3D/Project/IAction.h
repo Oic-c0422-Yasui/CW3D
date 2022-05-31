@@ -4,7 +4,7 @@
 #include "ShotManager.h"
 #include "EffectController.h"
 #include "ParameterMap.h"
-#include "SkillManager.h"
+#include "SkillController.h"
 
 namespace Sample {
 
@@ -39,6 +39,11 @@ namespace Sample {
 		 * @brief		パラメーター情報登録
 		 */
 		virtual void SetParameterMap(const AnyParameterMapPtr& a) = 0;
+
+		/**
+		 * @brief		パラメーター情報登録
+		 */
+		virtual void SetSkillController(const SkillControllerPtr& a) = 0;
 
 	public:
 		/**

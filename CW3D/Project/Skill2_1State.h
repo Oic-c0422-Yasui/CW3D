@@ -48,7 +48,8 @@ namespace Sample {
 
 			}
 			m_SkillAction->Start();
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			auto attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			attack *= Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f;
 			m_Effect = EffectControllerInstance.Play("Effect4");
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
@@ -163,24 +164,24 @@ namespace Sample {
 
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetState() == NULL)
+				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
 				{
 					continue;
 				}
-				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
 				{
 
-					SkillManagerInstance.GetSkill(i)->Start();
+					Actor()->GetSkillController()->GetSkill(i)->Start();
 					//宙に浮いていれば空中発動
 					if (Actor()->GetTransform()->GetPositionY() > 0)
 					{
-						ChangeState(SkillManagerInstance.GetSkill(i)->GetFlyState());
+						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
 					}
 					else
 					{
-						ChangeState(SkillManagerInstance.GetSkill(i)->GetState());
+						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
 					}
 					break;
 				}

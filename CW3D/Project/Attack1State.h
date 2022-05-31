@@ -14,10 +14,10 @@ namespace Sample {
 	private:
 		/** 移動アクション */
 		Attack1ActionPtr			m_Attack1Action;
-		bool					m_NextInputFlg;
-		int						m_FrameTime;
-		std::vector<ShotPtr>	m_Shots;
-		EffectPtr				m_Effect;
+		bool						m_NextInputFlg;
+		int							m_FrameTime;
+		std::vector<ShotPtr>		m_Shots;
+		EffectPtr					m_Effect;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -134,17 +134,17 @@ namespace Sample {
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < SkillManagerInstance.GetCount(); i++)
+			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
-				if (!SkillManagerInstance.GetSkill(i)->GetCanUseFlg() || SkillManagerInstance.GetSkill(i)->GetState() == NULL)
+				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
 				{
 					continue;
 				}
-				if (Input()->IsPush(SkillManagerInstance.GetSkill(i)->GetButton()))
+				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
 				{
 
-					SkillManagerInstance.GetSkill(i)->Start();
-					ChangeState(SkillManagerInstance.GetSkill(i)->GetState());
+					Actor()->GetSkillController()->GetSkill(i)->Start();
+					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
 					break;
 				}
 			}

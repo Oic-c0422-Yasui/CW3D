@@ -25,6 +25,7 @@ bool CBattleScene::Load()
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
 
+	//メッシュ読み込み
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
@@ -39,6 +40,22 @@ bool CBattleScene::Load()
 	}
 	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
+
+	//テクスチャ読み込み
+	std::shared_ptr<CSprite3D> tempTex = std::make_shared<CSprite3D>();
+	if (!tempTex->CreateSprite("UI/HP.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("HPBar", tempTex);
+	tempTex = std::make_shared<CSprite3D>();
+	if (!tempTex->CreateSprite("UI/HPFrame.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("HPFrame", tempTex);
+
+	//エフェクト読み込み
 	EffectManagerInstance.Set();
 	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
@@ -53,7 +70,9 @@ bool CBattleScene::Load()
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tornade.efk");
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
 
-	CSkillCreater::Create();
+
+
+
 
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
@@ -70,6 +89,7 @@ bool CBattleScene::Load()
 	
 	
 
+	tempTex.reset();
 	tempMesh.reset();
 
 	return true;
@@ -114,7 +134,6 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 	ShotManagerInstance.Update();
-	SkillManagerInstance.Update();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 
@@ -228,6 +247,7 @@ void CBattleScene::Render2D()
 {
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
+		m_Enemys[i]->Render2D();
 		CGraphicsUtilities::RenderString(300, i * 30, "敵%dHP:%d", i, m_Enemys[i]->GetHP());
 	}
 	float count = 0;
@@ -270,8 +290,8 @@ void CBattleScene::Release()
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
+	Sample::ResourceManager<CSprite3D>::GetInstance().Release();
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
-	SkillManagerInstance.Release();
 }
