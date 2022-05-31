@@ -107,7 +107,6 @@
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SkillData.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -189,6 +188,7 @@
     <ClInclude Include="Skill1_1Action.h" />
     <ClInclude Include="Skill1_1State.h" />
     <ClInclude Include="SkillCreater.h" />
+    <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="State.h" />

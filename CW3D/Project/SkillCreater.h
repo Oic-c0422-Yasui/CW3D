@@ -1,11 +1,12 @@
 #pragma once
 #include "SkillManager.h"
 #include "GameDefine.h"
+#include "SkillData.h"
 
 class CSkillCreater
 {
 private:
-
+	
 
 public:
 

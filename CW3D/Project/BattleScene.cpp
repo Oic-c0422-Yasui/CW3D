@@ -108,6 +108,7 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 	ShotManagerInstance.Update();
+	SkillManagerInstance.Update();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 

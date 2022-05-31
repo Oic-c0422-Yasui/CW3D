@@ -73,13 +73,6 @@ namespace Sample
 			return m_ResourcesT[key];
 		}
 
-		////マネージャーのインスタンスを取得する
-		//static ResourceManager& GetInstance()
-		//{
-		//	static ResourceManager instance;
-		//	return instance;
-		//}
-
 	};
 }
 	

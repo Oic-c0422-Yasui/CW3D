@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "Common.h"
 #include "Skill.h"
+#include "SkillData.h"
 
 
 namespace Sample
@@ -14,7 +15,7 @@ namespace Sample
 	private:
 
 		std::vector<SKillPtr> m_Skills;
-
+		std::unordered_map<std::string, CSkillData> m_SkillData;
 
 		CSkillManager()
 			: Singleton<CSkillManager>()
@@ -63,7 +64,7 @@ namespace Sample
 			return nullptr;
 		}
 
-
+		/*void AddData(std::string)*/
 
 	};
 }

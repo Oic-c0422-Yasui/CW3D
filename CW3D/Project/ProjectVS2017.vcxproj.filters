@@ -102,9 +102,6 @@
     <ClCompile Include="EffectController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SkillData.cpp">
-      <Filter>ヘッダー ファイル\Skill</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -370,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="DeadState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillData.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
