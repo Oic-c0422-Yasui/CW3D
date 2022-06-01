@@ -45,10 +45,15 @@ namespace Sample
 			m_pFrame = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("HPFrame");
 			
 
-			m_pHPBar->m_Angle.x = MOF_MATH_HALFPI;
-			m_pFrame->m_Angle.x = MOF_MATH_HALFPI;
 			m_Offset = Vector3(0, 2, 0);
-			m_Size = Vector3(2, 5, 1);
+			m_Size = Vector3(1, 1.5f, 1);
+			m_pHPBar->m_Angle.z = MOF_ToRadian(180);
+			m_pFrame->m_Angle.z = MOF_ToRadian(180);
+			m_pHPBar->m_Angle.x = MOF_ToRadian(0);
+			m_pFrame->m_Angle.x = MOF_ToRadian(0);
+			m_pFrame->m_Scale = m_Size;
+			m_pHPBar->m_Scale = m_Size;
+			m_pFrame->m_Color = CVector4(1.0f, 1.0f, 1.0f, 0.75f);
 
 		}
 
@@ -74,8 +79,7 @@ namespace Sample
 			
 			m_pFrame->m_Position = pos + m_Offset;
 			m_pHPBar->m_Position = pos + m_Offset;
-			m_pFrame->m_Scale = m_Size;
-			m_pHPBar->m_Scale = m_Size;
+			
 			//ŽlŠp‚ÅHPƒQ[ƒW•`‰æ
 			m_pFrame->Update();
 			
@@ -85,7 +89,6 @@ namespace Sample
 			if (fabsf(m_CurrentGauge - m_CurrentHP) > 0.01f)
 			{
 				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.1f;
-				int bright = (int)(74 + 496 * m_CurrentGauge);
 				//m_C
 				//DrawFillBox(74, 14, bright, 34, GetColor(0, 0, 0));
 			}
@@ -93,8 +96,9 @@ namespace Sample
 			{
 				m_CurrentGauge = m_CurrentHP;
 			}
-			int gright = (int)(74 + 496 * m_CurrentHP);
 			m_pHPBar->m_Scale.x = m_Size.x *  m_CurrentGauge;
+			float offset = (m_Size.x - m_pHPBar->m_Scale.x) * 0.5f;
+			m_pHPBar->m_Position.x = (pos.x + m_Offset.x) - offset;
 			m_pHPBar->Update();
 			m_pHPBar->Render();
 			//DrawFillBox(74, 14, gright, 34, GetColor(0, 255, 0));

@@ -181,9 +181,9 @@ void CBattleScene::Update()
 			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack, ShotManagerInstance.GetShot(j)->GetDamage());
 		}
 	}
+	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();
-	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
@@ -203,7 +203,7 @@ void CBattleScene::Render()
 
 	
 	ShotManagerInstance.Render();
-	EffectManagerInstance.Render(m_Player.GetPosition(), m_Player.GetPosition());
+	EffectManagerInstance.Render(m_Camera.GetPosition(), m_Camera.GetLookPosition());
 	
 
 
@@ -248,7 +248,6 @@ void CBattleScene::Render2D()
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		m_Enemys[i]->Render2D();
-		CGraphicsUtilities::RenderString(300, i * 30, "“G%dHP:%d", i, m_Enemys[i]->GetHP());
 	}
 	float count = 0;
 	for (int i = 0; i < m_Enemys.size(); i++)
@@ -274,7 +273,7 @@ void CBattleScene::Render2DDebug()
 
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
-	
+	m_Camera.Render2DDebug();
 }
 
 void CBattleScene::Release()

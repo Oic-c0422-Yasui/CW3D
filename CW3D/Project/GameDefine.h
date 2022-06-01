@@ -66,6 +66,7 @@ constexpr char* STATE_KEY_JUMPSKILL3_1 = "JumpSkill3_1";
 //パラメーターキーの名称
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
 const std::string PARAMETER_KEY_HP = "HP";
+const std::string PARAMETER_KEY_MAXHP = "MaxHP";
 const std::string PARAMETER_KEY_DAMAGE = "Damage";
 const std::string PARAMETER_KEY_ATTACK = "Attack";
 const std::string PARAMETER_KEY_ALPHA = "Alpha";

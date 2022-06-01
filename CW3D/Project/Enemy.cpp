@@ -59,6 +59,7 @@ bool CEnemy::Load()
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_MAXHP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
@@ -143,8 +144,12 @@ void CEnemy::Render2D()
 	{
 		return;
 	}
-	m_HPUI.SetHPGauge((float)GetHP() / 500.0f);
-	m_HPUI.Render(GetPosition());
+	if (!m_DeadFlg)
+	{
+		m_HPUI.SetHPGauge((float)GetHP() / (float)GetMaxHP());
+		m_HPUI.Render(GetPosition());
+	}
+	
 }
 
 void CEnemy::Render2DDebug()

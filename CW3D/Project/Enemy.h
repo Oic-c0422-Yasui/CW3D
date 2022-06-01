@@ -76,12 +76,17 @@ public:
 	{
 		return m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
 	}
+	int GetMaxHP()
+	{
+		return m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_MAXHP);
+	}
 
 	void SetPosition(Vector3 pos)
 	{
 		m_Actor->SetPosition(pos);
 	}
 
+	
 
 };
 

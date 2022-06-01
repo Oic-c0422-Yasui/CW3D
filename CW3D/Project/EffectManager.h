@@ -45,6 +45,11 @@ namespace Sample
 			m_Manager->SetMaterialLoader(m_Renderer->CreateMaterialLoader());
 			m_Manager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 
+			// 投影行列を設定
+			m_Renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
+				MOF_ToRadian(30),
+				(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(),
+				1.0f, 500.0f));
 			//// サウンドモジュールの設定
 			//sound = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
 
@@ -80,18 +85,13 @@ namespace Sample
 		void Render(Vector3 pos, Vector3 look)
 		{
 			
-			// 投影行列を設定
-			m_Renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
-				//60.0f / 180.0f * 3.14f,
-				MOF_ToRadian(30),
-				(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(),
-				1.0f, 500.0f));
+			
 
 			// カメラ行列を設定
 			m_Renderer->SetCameraMatrix(
 				::Effekseer::Matrix44().LookAtLH(
-					::Effekseer::Vector3D(pos.x, pos.y, pos.z) + ::Effekseer::Vector3D(1.0f, 3.0f, -15.0f),
-					::Effekseer::Vector3D(look.x, look.y, look.z) + ::Effekseer::Vector3D(1.0f, 2.0f, 0.0f),
+					::Effekseer::Vector3D(pos.x, pos.y, pos.z),
+					::Effekseer::Vector3D(look.x, look.y, look.z),
 					::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
 
 			m_Renderer->BeginRendering();
