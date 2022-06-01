@@ -28,6 +28,24 @@ namespace Sample {
 			, m_FrameTime(0)
 		{
 		}
+		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, 0, Vector3(0.8f, 1.5f, 0.8f) };
+
+		virtual const ShotAABB& GetCreateShotStatus() {
+			return createShotStatus;
+		}
+
+		virtual void CreateShot()
+		{
+			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			ShotAABB status = GetCreateShotStatus();
+			status.damage += attack;
+			if (Actor()->IsReverse())
+			{
+				status.offset.x *= -1;
+			}
+
+			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+		}
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -37,6 +55,8 @@ namespace Sample {
 			m_FrameTime = 0;
 			m_NextInputFlg = false;
 			m_Attack2Action->Start();
+			CreateShot();
+
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			if (Actor()->IsReverse())
 			{
@@ -47,6 +67,15 @@ namespace Sample {
 			{
 				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), 0.8f, attack, 0));
 			}
+			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			ShotAABB status = createShotStatus;
+			status.damage += attack;
+			if (Actor()->IsReverse())
+			{
+				status.offset.x *= -1;
+			}
+
+			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 			for (auto& shot : m_Shots)
 			{
 				shot->SetCollideFlg(false);
@@ -59,7 +88,6 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			
 
 			for (auto& shot : m_Shots)
 			{

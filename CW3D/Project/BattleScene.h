@@ -11,6 +11,7 @@
 #include	"ShotManager.h"
 #include	"EffectController.h"
 #include	"SkillCreater.h"
+#include	"IDManager.h"
 
 #include	"Collision.h"
 

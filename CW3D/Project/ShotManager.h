@@ -7,6 +7,8 @@
 
 namespace Sample
 {
+	
+
 	class CShotManager : public Singleton<CShotManager>
 	{
 		friend class Singleton<CShotManager>;
@@ -21,19 +23,19 @@ namespace Sample
 
 	public:
 
-		ShotPtr Create(Vector3 pos,Vector3 offset,float radius,int damage,int type)
+		ShotPtr Create(Vector3 pos,ShotSphere sphere)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, offset, radius,damage, type);
+			add->Create(pos, sphere);
 			return add;
 		}
 
-		ShotPtr Create(Vector3 pos, Vector3 offset, Vector3 size, int damage, int type)
+		ShotPtr Create(Vector3 pos, ShotAABB aabb)
 		{
 			auto add = std::make_shared<CShot>();
 			m_Shots.push_back(add);
-			add->Create(pos, offset, size, damage, type);
+			add->Create(pos, aabb);
 			return add;
 		}
 
@@ -70,11 +72,6 @@ namespace Sample
 		size_t GetShotSize()
 		{
 			return m_Shots.size();
-		}
-
-		int GetShotBackId()
-		{
-			return m_Shots.size() - 1;
 		}
 
 	};

@@ -401,6 +401,12 @@
     <ClInclude Include="EnemyHPUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
+    <ClInclude Include="IDManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBaseState.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

@@ -1,7 +1,9 @@
 #pragma once
 #include	"IActor.h"
+#include	"IDManager.h"
 
 namespace Sample {
+
 
 	/**
 	 * @brief		アクション基底クラス
@@ -14,8 +16,6 @@ namespace Sample {
 
 		VelocityPtr				velocity_;
 
-
-
 		/** アクション */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
 		ActionMap				actionMap_;
@@ -27,6 +27,9 @@ namespace Sample {
 
 		/** モーション */
 		AnimationStatePtr		motion_;
+
+		CMyID					myId_;
+
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -39,6 +42,7 @@ namespace Sample {
 			, parameters(std::make_shared<AnyParameterMap>())
 			, motion_()
 			, m_SkillController(std::make_shared<CSkillController>())
+			, myId_(IDManagerInstance.GetId())
 		{
 		}
 
@@ -182,6 +186,13 @@ namespace Sample {
 		 */
 		float GetPositionZ() const override {
 			return transform_->GetPositionZ();
+		}
+
+		/**
+		 * @brief		ID取得
+		 */
+		unsigned int GetID() const override {
+			return myId_.GetID();
 		}
 
 		/**

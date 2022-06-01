@@ -28,6 +28,8 @@ namespace Sample {
 		{
 		}
 
+		//1:offset 2:nextHitTime 3:damage 4:type 5:size
+		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, 0, Vector3(0.8f, 1.5f, 0.8f) };
 		/**
 		 * @brief		ステート内の開始処理
 		 */
@@ -36,15 +38,14 @@ namespace Sample {
 			m_FrameTime = 0;
 			m_Attack3Action->Start();
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			ShotAABB shotParam = createShotStatus;
+			shotParam.damage += attack;
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), Vector3(0.8f, 1.5f, 0.8f), attack, 0));
-
+				shotParam.offset.x *= -1;
 			}
-			else
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), Vector3(0.8f, 1.5f, 0.8f), attack, 0));
-			}
+			
+			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), shotParam));
 
 			for (auto& shot : m_Shots)
 			{

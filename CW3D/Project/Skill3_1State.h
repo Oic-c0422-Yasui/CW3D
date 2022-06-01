@@ -61,7 +61,7 @@ namespace Sample {
 
 
 			m_Effect = EffectControllerInstance.Play("Effect5");
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0, 0, 0), Vector3(4.0f, 10.0f, 4.0f), attack, 0));
+			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0, 0, 0), Vector3(4.0f, 10.0f, 4.0f), attack, 0.1f, 0));
 			EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0, -1.5f, 0));
 			EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(1.0f, 1.0f, 1.0f));
 			EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 1.8f);

@@ -127,6 +127,10 @@ namespace Sample {
 		 */
 		virtual float GetPositionZ() const = 0;
 
+		/**
+		 * @brief		ID取得
+		 */
+		virtual unsigned int GetID() const = 0;
 
 		/**
 		 * @brief		パラメーター

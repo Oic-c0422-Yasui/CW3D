@@ -5,9 +5,29 @@
 
 namespace Sample
 {
+	struct ShotCreateParameter {
+		Vector3 offset;
+		float	nextHitTime;
+		int		damage;
+		Vector3	knockBack;
+		bool	collideFlg;
+		int type;
+	};
+	struct ShotSphere : public ShotCreateParameter {
+		float Radius;
+	};
+	struct ShotAABB : public ShotCreateParameter{
+		Vector3 size;
+	};
 	class CShot
 	{
 	protected:
+		struct Hit
+		{
+			unsigned int ID;
+			float Time;
+		};
+
 		AttackColliderPtr	m_Collider;
 		CAABB				m_AABB;
 		CVector3			m_Position;
@@ -21,6 +41,9 @@ namespace Sample
 		float				m_Speed;
 		CVector3			m_KnockBack;
 		int					m_Damage;
+		std::vector<Hit>	m_HitIDs;
+		float				m_NextHitTime;
+
 
 	public:
 		CShot()
@@ -35,6 +58,7 @@ namespace Sample
 			, m_KnockBack(0,0,0)
 			, m_Offset(0,0,0)
 			, m_Damage(0)
+			, m_NextHitTime(0.0f)
 
 		{
 		}
@@ -43,32 +67,34 @@ namespace Sample
 
 		}
 
-		void Create(Vector3 pos,Vector3 offset, float radius,int damage, int type)
+		void Create(Vector3 pos, ShotSphere sphire)
 		{
 			m_Position = pos;
-			m_Offset = offset;
-			m_Radius = radius;
-			m_Type = type;
-			m_Damage = damage;
+			m_Offset = sphire.offset;
+			m_Radius = sphire.Radius;
+			m_Type = sphire.type;
+			m_Damage = sphire.damage;
+			m_NextHitTime = sphire.nextHitTime;
 			m_Speed = 0.0f;
 			m_Collider->SetPosition(m_Position);
 			m_Collider->SetRadius(m_Radius);
 			m_ShowFlg = true;
-			m_CollideFlg = true;
+			m_CollideFlg = sphire.collideFlg;
 			m_CollisionType = COLLITION_SPHERE;
 			m_KnockBack = Vector3(0, 0, 0);
 		}
 
-		void Create(Vector3 pos, Vector3 offset, Vector3 size, int damage,  int type)
+		void Create(Vector3 pos, ShotAABB aabb)
 		{
-			m_Size = size;
+			m_Size = aabb.size;
 			m_Position = pos;
-			m_Offset = offset;
-			m_Type = type;
-			m_Damage = damage;
+			m_Offset = aabb.offset;
+			m_Type = aabb.type;
+			m_Damage = aabb.damage;
+			m_NextHitTime = aabb.nextHitTime;
 			m_Speed = 0.0f;
 			m_AABB.SetPosition(m_Position);
-			m_AABB.Size = size;
+			m_AABB.Size = m_Size;
 			m_ShowFlg = true;
 			m_CollideFlg = true;
 			m_CollisionType = COLLITION_AABB;
@@ -81,6 +107,7 @@ namespace Sample
 			{
 				return;
 			}
+			
 			m_Position.x += m_Speed;
 			switch (m_CollisionType)
 			{
@@ -99,7 +126,8 @@ namespace Sample
 					break;
 				}
 			}
-			
+			UpdateTime();
+			DeleteHitId();
 		}
 
 		void Render()
@@ -122,6 +150,12 @@ namespace Sample
 		int GetColliderType() const noexcept {
 			return m_CollisionType;
 		}
+
+		float GetNextHitTime() const noexcept
+		{
+			return m_NextHitTime;
+		}
+
 
 		void SetShow(bool isShow) noexcept
 		{
@@ -158,6 +192,11 @@ namespace Sample
 		void AddDamage(int val) noexcept
 		{
 			m_Damage += val;
+		}
+
+		void SetNextHitTime(float val) noexcept
+		{
+			m_NextHitTime = val;
 		}
 
 		void SetSpeed(float val) noexcept
@@ -211,6 +250,43 @@ namespace Sample
 
 		int GetDamage() const noexcept {
 			return m_Damage;
+		}
+
+		bool IsHitId(unsigned int hitId)
+		{
+			for (auto& id : m_HitIDs)
+			{
+				if (id.ID == hitId)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		void UpdateTime()
+		{
+			for (auto& id : m_HitIDs)
+			{
+				if (id.Time > 0.0f)
+				{
+					id.Time -= CUtilities::GetFrameSecond();
+				}
+			}
+		}
+
+		void AddHit(unsigned int hitId)
+		{
+
+			Hit hit = { hitId, m_NextHitTime };
+			m_HitIDs.push_back(hit);
+		}
+
+		void DeleteHitId()
+		{
+			auto removeIt = std::remove_if(m_HitIDs.begin(), m_HitIDs.end(), [&](const Hit& id) {
+				return id.Time <= 0.0f; });
+			m_HitIDs.erase(removeIt, m_HitIDs.end());
 		}
 
 	};

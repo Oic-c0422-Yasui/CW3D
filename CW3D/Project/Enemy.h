@@ -86,6 +86,10 @@ public:
 		m_Actor->SetPosition(pos);
 	}
 
+	unsigned int GetID() const
+	{
+		return m_Actor->GetID();
+	}
 	
 
 };

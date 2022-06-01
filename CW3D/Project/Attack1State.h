@@ -29,6 +29,8 @@ namespace Sample {
 		{
 		}
 
+		//1:offset 2:nextHitTime 3:damage 4:type 5:size
+		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, 0, Vector3(0.8f, 1.5f, 0.8f) };
 		/**
 		 * @brief		ステート内の開始処理
 		 */
@@ -44,19 +46,18 @@ namespace Sample {
 			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(true);
-
 			}
 			m_Attack1Action->Start();
+
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+			ShotAABB status = createShotStatus;
+			status.damage += attack;
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.8f, 0.7f, 0), 0.8f, attack, 0));
+				status.offset.x *= -1;
+			}
 
-			}
-			else
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.8f, 0.7f, 0), 0.8f, attack, 0));
-			}
+			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 
 			m_FrameTime = 0;
 

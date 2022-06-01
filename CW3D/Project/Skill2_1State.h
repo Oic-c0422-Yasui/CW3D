@@ -57,9 +57,9 @@ namespace Sample {
 				{
 					float rad = MOF_ToRadian(-30);
 					Vector3 direction(cos(rad), sin(rad), 0);
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(10 * direction.x),0.7f + -(10 * direction.y), 0), 2.0f, attack, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack,0.1f, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0.1f, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(10 * direction.x),0.7f + -(10 * direction.y), 0), 2.0f, attack, 0.1f, 0));
 					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(MOF_ToRadian(-30), MOF_ToRadian(-90), 0));
 					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.7f, 1.2f, 0));
 
@@ -68,9 +68,9 @@ namespace Sample {
 				{
 					float rad = MOF_ToRadian(-30);
 					Vector3 direction(cos(rad), sin(rad), 0);
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((10 * direction.x), 0.7f + -(10 * direction.y), 0), 2.0f, attack, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack, 0.1f, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0.1f, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((10 * direction.x), 0.7f + -(10 * direction.y), 0), 2.0f, attack, 0.1f, 0));
 					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(MOF_ToRadian(-30), MOF_ToRadian(90), 0));
 					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.7f, 1.2f, 0));
 				}
@@ -79,14 +79,14 @@ namespace Sample {
 			{
 				if (Actor()->IsReverse())
 				{
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0.1f, 0));
 					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90), 0.0f));
 					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.7f, 1.2f, 0));
 
 				}
 				else
 				{
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0));
+					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0.1f, 0));
 					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90), 0.0f));
 					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.7f, 1.2f, 0));
 				}

@@ -41,12 +41,12 @@ namespace Sample {
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			if (Actor()->IsReverse())
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.8f, 0), 0.45f, attack, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.8f, 0), 0.45f, attack, 10.0f, 0));
 
 			}
 			else
 			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.8f, 0), 0.45f, attack, 0));
+				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.8f, 0), 0.45f, attack, 10.0f, 0));
 			}
 			for (auto& shot : m_Shots)
 			{

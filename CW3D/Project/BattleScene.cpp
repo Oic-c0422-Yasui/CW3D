@@ -54,6 +54,12 @@ bool CBattleScene::Load()
 		return false;
 	}
 	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("HPFrame", tempTex);
+	tempTex = std::make_shared<CSprite3D>();
+	if (!tempTex->CreateSprite("UI/Damage.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("DamageBar", tempTex);
 
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
@@ -147,18 +153,23 @@ void CBattleScene::Update()
 		}
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
+			auto& shot = ShotManagerInstance.GetShot(j);
 			//表示されていない OR コライダーOFFの場合
-			if (!ShotManagerInstance.GetShot(j)->IsShow() || !ShotManagerInstance.GetShot(j)->GetCollideFlg())
+			if (!shot->IsShow() || !shot->GetCollideFlg())
+			{
+				continue;
+			}
+			if (!shot->IsHitId(m_Enemys[i]->GetID()))
 			{
 				continue;
 			}
 
 			//弾の矩形ごとに判定
-			switch (ShotManagerInstance.GetShot(j)->GetColliderType())
+			switch (shot->GetColliderType())
 			{
 				case COLLITION_SPHERE:
 				{
-					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), ShotManagerInstance.GetShot(j)->GetColliderSphere()))
+					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), shot->GetColliderSphere()))
 					{
 						continue;
 					}
@@ -166,7 +177,7 @@ void CBattleScene::Update()
 				}
 				case COLLITION_AABB:
 				{
-					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), ShotManagerInstance.GetShot(j)->GetColliderAABB()))
+					if (!CCollision::Collition(m_Enemys[i]->GetCollider(), shot->GetColliderAABB()))
 					{
 						continue;
 					}
@@ -177,8 +188,9 @@ void CBattleScene::Update()
 			}
 
 			//ノックバック値設定
-			Vector3 knockBack = ShotManagerInstance.GetShot(j)->GetKnockBack();
-			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack, ShotManagerInstance.GetShot(j)->GetDamage());
+			Vector3 knockBack = shot->GetKnockBack();
+			shot->AddHit(m_Enemys[i]->GetID());
+			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack, shot->GetDamage());
 		}
 	}
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
@@ -293,4 +305,6 @@ void CBattleScene::Release()
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
+	IDManagerInstance.Release();
+	
 }

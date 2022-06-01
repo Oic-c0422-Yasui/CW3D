@@ -118,6 +118,7 @@
     <ClInclude Include="Attack2State.h" />
     <ClInclude Include="Attack3Action.h" />
     <ClInclude Include="Attack3State.h" />
+    <ClInclude Include="AttackBaseState.h" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraController.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="IdleMotionState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="IdleAction.h" />
+    <ClInclude Include="IDManager.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
