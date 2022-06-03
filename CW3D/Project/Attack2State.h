@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"AttackBaseState.h"
 #include	"Attack2Action.h"
 
 namespace Sample {
@@ -9,78 +9,40 @@ namespace Sample {
 	/**
 	 * @brief		移動ステート
 	 */
-	class Attack2State : public State
+	class Attack2State : public AttackBaseState
 	{
 	private:
 		/** 移動アクション */
 		Attack2ActionPtr			m_Attack2Action;
-		bool						m_NextInputFlg;
-		int							m_FrameTime;
-		std::vector<ShotPtr>		m_Shots;
-		EffectPtr					m_Effect;
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,0, Vector3(0.8f, 1.5f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		Attack2State()
-			: State()
-			, m_NextInputFlg(false)
-			, m_FrameTime(0)
+			: AttackBaseState()
 		{
 		}
-		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, 0, Vector3(0.8f, 1.5f, 0.8f) };
 
-		virtual const ShotAABB& GetCreateShotStatus() {
-			return createShotStatus;
-		}
+		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
 
-		virtual void CreateShot()
-		{
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			ShotAABB status = GetCreateShotStatus();
-			status.damage += attack;
-			if (Actor()->IsReverse())
-			{
-				status.offset.x *= -1;
-			}
-
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
-		}
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_Attack2Action = Actor()->GetAction<Attack2Action>(GetKey());
-			m_FrameTime = 0;
-			m_NextInputFlg = false;
+
+			AttackBaseState::Start();
+
 			m_Attack2Action->Start();
-			CreateShot();
 
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			if (Actor()->IsReverse())
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), 0.8f, attack, 0));
+			//当たり判定用の弾作成
+			CreateShotAABB();
 
-			}
-			else
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), 0.8f, attack, 0));
-			}
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			ShotAABB status = createShotStatus;
-			status.damage += attack;
-			if (Actor()->IsReverse())
-			{
-				status.offset.x *= -1;
-			}
-
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
-			for (auto& shot : m_Shots)
-			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBackX(0.2f);
-			}
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK2, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -89,7 +51,7 @@ namespace Sample {
 		 */
 		void Execution() override {
 
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime == 25)
@@ -102,15 +64,15 @@ namespace Sample {
 				{
 					shot->SetCollideFlg(false);
 				}
-
 			}
 
 			m_FrameTime++;
+
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
 				ChangeState(STATE_KEY_IDLE);
 			}
-			if (m_NextInputFlg)
+			else if (m_NextInputFlg)
 			{
 				if (m_FrameTime > 40)
 				{
@@ -129,21 +91,8 @@ namespace Sample {
 				m_NextInputFlg = true;
 			}
 			
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-					break;
-				}
-			}
+			AttackBaseState::InputExecution();
+			
 		}
 
 
@@ -152,13 +101,7 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
-
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_Shots.clear();
+			AttackBaseState::End();
 		}
 
 		/**

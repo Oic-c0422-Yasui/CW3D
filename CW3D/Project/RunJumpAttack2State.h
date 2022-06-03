@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"AttackBaseState.h"
 #include	"RunJumpAttack2Action.h"
 
 namespace Sample {
@@ -9,49 +9,35 @@ namespace Sample {
 	/**
 	 * @brief		移動ステート
 	 */
-	class RunJumpAttack2State : public State
+	class RunJumpAttack2State : public AttackBaseState
 	{
 	private:
 		/** 移動アクション */
 		RunJumpAttack2ActionPtr			m_Attack2Action;
-		bool						m_NextInputFlg;
-		int							m_FrameTime;
-		std::vector<ShotPtr>		m_Shots;
-		EffectPtr					m_Effect;
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.2f, 0.2f, 0.0f),true,0, Vector3(1.5f, 1.5f, 1.5f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		RunJumpAttack2State()
-			: State()
-			, m_NextInputFlg(false)
-			, m_FrameTime(0)
+			: AttackBaseState()
 		{
 		}
+
+		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_Attack2Action = Actor()->GetAction<RunJumpAttack2Action>(GetKey());
-			m_FrameTime = 0;
-			m_NextInputFlg = false;
+			AttackBaseState::Start();
 			m_Attack2Action->Start();
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			if (Actor()->IsReverse())
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.7f, 0), 1.5f, attack, 10.0f, 0));
-
-			}
-			else
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.7f, 0), 1.5f, attack, 10.0f, 0));
-			}
-			for (auto& shot : m_Shots)
-			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBack(Vector3(0.2f, 0.2f, 0));
-			}
+			//当たり判定用の弾作成
+			CreateShotAABB();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK2, 0.0f, 1.5f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -61,10 +47,10 @@ namespace Sample {
 		void Execution() override {
 
 
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime == 12)
+				/*if (m_FrameTime == 12)
 				{
 					shot->SetCollideFlg(true);
 
@@ -73,7 +59,7 @@ namespace Sample {
 				else if (shot->GetCollideFlg())
 				{
 					shot->SetCollideFlg(false);
-				}
+				}*/
 
 			}
 
@@ -101,21 +87,7 @@ namespace Sample {
 				m_NextInputFlg = true;
 			}
 
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetFlyState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
-					break;
-				}
-			}
+			AttackBaseState::InputExecution();
 		}
 
 
@@ -125,12 +97,7 @@ namespace Sample {
 		 */
 		void End() override {
 
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_Shots.clear();
+			AttackBaseState::End();
 		}
 
 		/**

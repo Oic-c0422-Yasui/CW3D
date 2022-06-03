@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"AttackBaseState.h"
 #include	"Attack3Action.h"
 
 namespace Sample {
@@ -9,49 +9,39 @@ namespace Sample {
 	/**
 	 * @brief		移動ステート
 	 */
-	class Attack3State : public State
+	class Attack3State : public AttackBaseState
 	{
 	private:
 		/** 移動アクション */
 		Attack3ActionPtr			m_Attack3Action;
-		bool						m_NextInputFlg;
-		int							m_FrameTime;
-		std::vector<ShotPtr>		m_Shots;
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, Vector3(0.8f, 1.5f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		Attack3State()
-			: State()
-			, m_NextInputFlg(false)
-			, m_FrameTime(0)
+			: AttackBaseState()
 		{
 		}
 
-		//1:offset 2:nextHitTime 3:damage 4:type 5:size
-		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, 0, Vector3(0.8f, 1.5f, 0.8f) };
+		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
+
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_Attack3Action = Actor()->GetAction<Attack3Action>(GetKey());
-			m_FrameTime = 0;
-			m_Attack3Action->Start();
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			ShotAABB shotParam = createShotStatus;
-			shotParam.damage += attack;
-			if (Actor()->IsReverse())
-			{
-				shotParam.offset.x *= -1;
-			}
-			
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), shotParam));
 
-			for (auto& shot : m_Shots)
-			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBack(Vector3(0.3f, 0.2f,0));
-			}
+			AttackBaseState::Start();
+
+			m_Attack3Action->Start();
+
+			//当たり判定用の弾作成
+			CreateShotAABB();
+
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -59,7 +49,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime == 25 || m_FrameTime == 55)
@@ -90,22 +80,7 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-					break;
-				}
-			}
-
+			AttackBaseState::InputExecution();
 		}
 
 
@@ -114,12 +89,7 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_Shots.clear();
+			AttackBaseState::End();
 		}
 
 		/**

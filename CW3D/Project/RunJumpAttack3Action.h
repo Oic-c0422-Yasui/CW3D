@@ -62,6 +62,11 @@ namespace Sample {
 		void End() override {
 		}
 
+		void Jump()
+		{
+			Velocity()->SetVelocityY(PLAYER_JUMPPOWER * 0.7f);
+		}
+
 		/**
 		 * @brief		ステートキーの取得
 		 */

@@ -85,8 +85,6 @@ namespace Sample
 		void Render(Vector3 pos, Vector3 look)
 		{
 			
-			
-
 			// ƒJƒƒ‰s—ñ‚ðÝ’è
 			m_Renderer->SetCameraMatrix(
 				::Effekseer::Matrix44().LookAtLH(

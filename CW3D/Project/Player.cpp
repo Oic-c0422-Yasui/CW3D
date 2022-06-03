@@ -102,21 +102,21 @@ bool CPlayer::Load()
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 30);
+	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 25);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
 	Sample::SKillPtr skill;
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
-	skill->SetSkillData(150, 5);
+	skill->SetSkillData(250, 5);
 
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1);
-	skill->SetSkillData(80, 5);
+	skill->SetSkillData(120, 5);
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL3, STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
-	skill->SetSkillData(50, 5);
+	skill->SetSkillData(100, 5);
 
 	return true;
 }

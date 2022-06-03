@@ -10,16 +10,25 @@ namespace Sample
 		friend class Singleton<CEffectController>;
 	private:
 		std::vector<EffectPtr> m_Effects;
+
+		void Create(const Effekseer::Handle& handle, Vector3 position,EffectCreateParameter param)
+		{
+			SetPosition(handle, position + param.offset);
+			SetScale(handle, param.scale);
+			SetRotate(handle, param.rotate);
+			SetSpeed(handle, param.speed);
+		}
 		CEffectController()
 			: Singleton<CEffectController>()
 		{
 		}
 	public:
 
-		EffectPtr Play(const std::string& resouceName)
+		EffectPtr Play(const std::string& resouceName,Vector3 position, EffectCreateParameter param)
 		{
 			EffectPtr efc = std::make_shared<CEffect>(EffectManagerInstance.Play(resouceName));
 			m_Effects.push_back(efc);
+			Create(efc->GetHandle(), position, param);
 			return efc;
 		}
 
@@ -36,6 +45,8 @@ namespace Sample
 				effect->Update();
 			}
 		}
+
+		
 
 		void SetRotate(const Effekseer::Handle& handle,const Vector3& rotate)
 		{

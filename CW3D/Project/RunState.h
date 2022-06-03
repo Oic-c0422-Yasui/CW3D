@@ -12,7 +12,7 @@ namespace Sample {
 	{
 	private:
 		/** 移動アクション */
-		RunActionPtr			runAction_;
+		RunActionPtr			m_RunAction;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -25,7 +25,7 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			runAction_ = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
+			m_RunAction = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(false);
@@ -34,7 +34,7 @@ namespace Sample {
 			{
 				Actor()->SetReverse(true);
 			}
-			runAction_->Start();
+			m_RunAction->Start();
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUN, 0.0f, 1.0f, 0.12f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
@@ -42,7 +42,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			runAction_->Execution();
+			m_RunAction->Execution();
 		}
 
 		/**
@@ -55,7 +55,7 @@ namespace Sample {
 				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 				Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
-				runAction_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+				m_RunAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 			}
 			else
 			{

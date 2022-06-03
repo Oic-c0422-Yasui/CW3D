@@ -159,7 +159,7 @@ void CBattleScene::Update()
 			{
 				continue;
 			}
-			if (!shot->IsHitId(m_Enemys[i]->GetID()))
+			if (shot->IsHitId(m_Enemys[i]->GetID()))
 			{
 				continue;
 			}

@@ -81,7 +81,7 @@ namespace Sample
 			m_ShowFlg = true;
 			m_CollideFlg = sphire.collideFlg;
 			m_CollisionType = COLLITION_SPHERE;
-			m_KnockBack = Vector3(0, 0, 0);
+			m_KnockBack = sphire.knockBack;
 		}
 
 		void Create(Vector3 pos, ShotAABB aabb)
@@ -96,9 +96,9 @@ namespace Sample
 			m_AABB.SetPosition(m_Position);
 			m_AABB.Size = m_Size;
 			m_ShowFlg = true;
-			m_CollideFlg = true;
+			m_CollideFlg = aabb.collideFlg;
 			m_CollisionType = COLLITION_AABB;
-			m_KnockBack = Vector3(0, 0, 0);
+			m_KnockBack = aabb.knockBack;
 		}
 
 		void Update()

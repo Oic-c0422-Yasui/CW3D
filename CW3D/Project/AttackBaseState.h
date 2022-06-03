@@ -13,20 +13,25 @@ namespace Sample {
 	protected:
 
 		int								m_FrameTime;
+		bool							m_NextInputFlg;
 
-		std::vector<ShotPtr>			m_Shots;
-		EffectPtr						m_Effect;
+		std::vector<ShotPtr>			m_pShots;
+		std::vector<EffectPtr>			m_pEffects;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		AttackBaseState()
 			: State()
+			, m_FrameTime(0)
+			, m_NextInputFlg(false)
 		{
 		}
-		virtual const ShotAABB& GetCreateShotStatusAABB() = 0;
-		virtual const ShotSphere& GetCreateShotStatusSphere() = 0;
+		virtual const ShotAABB& GetCreateShotStatusAABB() { return ShotAABB(); }
+		virtual const ShotSphere& GetCreateShotStatusSphere() { return ShotSphere(); }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() { return EffectCreateParameter(); }
 
+		//立方体の弾を作成する
 		virtual void CreateShotAABB()
 		{
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
@@ -37,8 +42,9 @@ namespace Sample {
 				status.offset.x *= -1;
 			}
 
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 		}
+		//球体の弾を作成する
 		virtual void CreateShotSphere()
 		{
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
@@ -49,13 +55,44 @@ namespace Sample {
 				status.offset.x *= -1;
 			}
 
-			m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 		}
+
+		//エフェクトを作成する
+		virtual void CreateEffect()
+		{
+			EffectCreateParameter status = GetCreateEffectStatus();
+			
+			if (Actor()->IsReverse())
+			{
+				status.offset.x *= -1;
+				if (status.rotate.y == MOF_ToRadian(360))
+				{
+					status.rotate.y = MOF_ToRadian(180);
+				}
+				else
+				{
+					status.rotate.y *= -1;
+				}
+			}
+			m_pEffects.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(),status));
+		}
+
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		virtual void Start() override {
+			m_FrameTime = 0;
+			m_NextInputFlg = false;
+			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(false);
 
+			}
+			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
+			{
+				Actor()->SetReverse(true);
+			}
 		}
 
 		/**
@@ -103,17 +140,18 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		virtual void End() override {
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetShow(false);
 				shot.reset();
 			}
-			m_Shots.clear();
-			if (m_Effect != nullptr)
+			m_pShots.clear();
+			for (auto& effect : m_pEffects)
 			{
-				m_Effect->SetStop(true);
-				m_Effect.reset();
+				effect->SetStop(true);
+				effect.reset();
 			}
+			m_pEffects.clear();
 		}
 
 	};

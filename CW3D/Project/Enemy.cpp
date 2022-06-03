@@ -165,10 +165,8 @@ void CEnemy::Release()
 
 void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 {
-
-	Sample::EffectPtr effect = EffectControllerInstance.Play("DamageEffect1");
-	EffectControllerInstance.SetPosition(effect->GetHandle(), m_Collider->GetPosition() + Vector3(0, 1.0f, 0));
-	EffectControllerInstance.SetScale(effect->GetHandle(), Vector3(1.0f, 1.0f,1.0f) );
+	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
+	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, m_Collider->GetPosition(),param);
 
 	auto& hp = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);

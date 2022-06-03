@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"AttackBaseState.h"
 #include	"RunAttack1Action.h"
 
 namespace Sample {
@@ -9,52 +9,42 @@ namespace Sample {
 	/**
 	 * @brief		移動ステート
 	 */
-	class RunAttack1State : public State
+	class RunAttack1State : public AttackBaseState
 	{
 	private:
 		/** 移動アクション */
 		RunAttack1ActionPtr			m_RunAttack1Action;
-		bool					m_NextInputFlg;
-		int						m_FrameTime;
-		std::vector<ShotPtr>	m_Shots;
-		EffectPtr				m_Effect;
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
+		const ShotAABB createShotStatus = { Vector3(0.7f, 0.8f, 0), 0.5f, 0, Vector3(0.4f, 0.0f, 0.0f),false,0, Vector3(1.2f, 1.5f, 0.8f) };
+
+		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
+		//5:speed(float)
+		const EffectCreateParameter createEffectStatus = { "Effect2", Vector3(0.8f, 1.0f, 0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(-180.0f), 0.0f),2.0f };
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		RunAttack1State()
-			: State()
-			, m_NextInputFlg(false)
-			, m_FrameTime(0)
+			: AttackBaseState()
 		{
 		}
+
+		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_RunAttack1Action = Actor()->GetAction<RunAttack1Action>(GetKey());
-			ShotManagerInstance.Delete();
-			m_NextInputFlg = false;
-			m_FrameTime = 0;
-			m_RunAttack1Action->Start();
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			if (Actor()->IsReverse())
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-0.7f, 0.8f, 0), 0.45f, attack, 10.0f, 0));
 
-			}
-			else
-			{
-				m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(0.7f, 0.8f, 0), 0.45f, attack, 10.0f, 0));
-			}
-			for (auto& shot : m_Shots)
-			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBackX(0.4f);
-			}
-			
-			
+			AttackBaseState::Start();
+
+			m_RunAttack1Action->Start();
+			//当たり判定用の弾作成
+			CreateShotAABB();
 			
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_RUNATTACK1, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
@@ -64,7 +54,7 @@ namespace Sample {
 		 */
 		void Execution() override {
 			
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime == 20)
@@ -79,7 +69,8 @@ namespace Sample {
 
 			if (m_FrameTime == 20)
 			{
-				m_Effect = EffectControllerInstance.Play("Effect2");
+				CreateEffect();
+				/*m_Effect = EffectControllerInstance.Play("Effect2");
 				if (Actor()->IsReverse())
 				{
 					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(180.0f), 0.0f));
@@ -91,7 +82,7 @@ namespace Sample {
 					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, 1.0f, 0));
 				}
 				EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(0.3f, 0.4f, 0.0f));
-				EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 2.0f);
+				EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 2.0f);*/
 			}
 			m_FrameTime++;
 			
@@ -122,21 +113,7 @@ namespace Sample {
 				}
 			}
 			
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-					break;
-				}
-			}
+			AttackBaseState::InputExecution();
 
 		}
 
@@ -146,17 +123,7 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		void End() override {
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_Shots.clear();
-			if (m_Effect != nullptr)
-			{
-				m_Effect->SetStop(true);
-				m_Effect.reset();
-			}
+			AttackBaseState::End();
 		}
 
 		/**

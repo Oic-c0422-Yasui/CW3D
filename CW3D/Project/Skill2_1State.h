@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"AttackBaseState.h"
 #include	"Skill2_1Action.h"
 
 namespace Sample {
@@ -9,25 +9,39 @@ namespace Sample {
 	/**
 	 * @brief		移動ステート
 	 */
-	class Skill2_1State : public State
+	class Skill2_1State : public AttackBaseState
 	{
 	private:
 		/** 移動アクション */
 		Skill2_1ActionPtr			m_SkillAction;
-		bool						m_NextInputFlg;
-		int							m_FrameTime;
-		std::vector<ShotPtr>		m_Shots;
-		EffectPtr					m_Effect;
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
+		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, Vector3(5.0f, 2.0f, 2.0f) };
+
+		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
+		//5:collideFlg(bool) 6:type(int) 7:radius(float)
+		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0,2.0f };
+
+		ShotSphere m_ShotStatusSphere;
+
+		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
+		//5:speed(float)
+		const EffectCreateParameter createEffectStatus = { "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f };
+
+		EffectCreateParameter m_EffectStatus;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		Skill2_1State()
-			: State()
-			, m_NextInputFlg(false)
-			, m_FrameTime(0)
+			: AttackBaseState()
 		{
 		}
+
+		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
+		const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -35,71 +49,38 @@ namespace Sample {
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<Skill2_1Action>(GetKey());
 
-			m_NextInputFlg = false;
-			m_FrameTime = 0;
-			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
-			{
-				Actor()->SetReverse(false);
+			AttackBaseState::Start();
 
-			}
-			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
-			{
-				Actor()->SetReverse(true);
-
-			}
 			m_SkillAction->Start();
-			auto attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			attack *= Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f;
-			m_Effect = EffectControllerInstance.Play("Effect4");
+
+			m_EffectStatus = createEffectStatus;
+			m_ShotStatusSphere = createShotStatusSphere;
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
-				if (Actor()->IsReverse())
+				float rad = MOF_ToRadian(-30);
+				Vector3 direction(cos(rad), sin(rad), 0);
+				int shotCount = 3;
+				for (int i = 0; i < shotCount; i++)
 				{
-					float rad = MOF_ToRadian(-30);
-					Vector3 direction(cos(rad), sin(rad), 0);
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack,0.1f, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0.1f, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-(10 * direction.x),0.7f + -(10 * direction.y), 0), 2.0f, attack, 0.1f, 0));
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(MOF_ToRadian(-30), MOF_ToRadian(-90), 0));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.7f, 1.2f, 0));
+					m_ShotStatusSphere.offset = Vector3(((2 + (4 * i)) * direction.x), 0.7f + -((2 + (4 * i)) * direction.y), 0);
+					CreateShotSphere();
+				}
 
-				}
-				else
-				{
-					float rad = MOF_ToRadian(-30);
-					Vector3 direction(cos(rad), sin(rad), 0);
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((2 * direction.x), 0.7f + -(2 * direction.y), 0), 2.0f, attack, 0.1f, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((6 * direction.x), 0.7f + -(6 * direction.y), 0), 2.0f, attack, 0.1f, 0));
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3((10 * direction.x), 0.7f + -(10 * direction.y), 0), 2.0f, attack, 0.1f, 0));
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(MOF_ToRadian(-30), MOF_ToRadian(90), 0));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.7f, 1.2f, 0));
-				}
+				m_EffectStatus.offset = Vector3(1.7f, 0.7f, 0);
+				m_EffectStatus.rotate = Vector3(MOF_ToRadian(-30), MOF_ToRadian(90), 0);
+				CreateEffect();
+
 			}
 			else
 			{
-				if (Actor()->IsReverse())
-				{
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(-6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0.1f, 0));
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(-90), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-1.7f, 1.2f, 0));
-
-				}
-				else
-				{
-					m_Shots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), Vector3(6.0f, 0.7f, 0), Vector3(5.0f, 2.0f, 2.0f), attack, 0.1f, 0));
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(90), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(1.7f, 1.2f, 0));
-				}
+				CreateShotAABB();
+				CreateEffect();
+				
 			}
-			
-			EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(1.0f, 1.0f, 1.0f));
-			EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 1.2f);
-
-
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
-				shot->SetCollideFlg(false);
-				shot->SetKnockBack(Vector3(0.5f, 0.2f, 0));
+				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+				shot->SetDamage(damage);
 			}
 
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL2_1, 0.7f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
@@ -110,7 +91,7 @@ namespace Sample {
 		 */
 		void Execution() override {
 
-			for (auto& shot : m_Shots)
+			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 				if (m_FrameTime < 15)
@@ -123,7 +104,7 @@ namespace Sample {
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_FrameTime > 20)
+				if (m_FrameTime > 25)
 				{
 					if (shot->GetCollideFlg())
 					{
@@ -133,8 +114,6 @@ namespace Sample {
 
 			}
 			m_FrameTime++;
-
-
 
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
@@ -162,30 +141,7 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 
-
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->GetCanUseFlg() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					//宙に浮いていれば空中発動
-					if (Actor()->GetTransform()->GetPositionY() > 0)
-					{
-						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
-					}
-					else
-					{
-						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-					}
-					break;
-				}
-			}
+			AttackBaseState::InputExecution();
 		}
 
 
@@ -195,17 +151,7 @@ namespace Sample {
 		 */
 		void End() override {
 			m_SkillAction->End();
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_Shots.clear();
-			if (m_Effect != nullptr)
-			{
-				m_Effect->SetStop(true);
-				m_Effect.reset();
-			}
+			AttackBaseState::End();
 
 		}
 
