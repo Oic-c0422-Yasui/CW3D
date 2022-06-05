@@ -128,6 +128,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionPlayerEnemy.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="CTGauge.h" />
     <ClInclude Include="DamageAction.h" />
     <ClInclude Include="DamageState.h" />
     <ClInclude Include="DeadAction.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="HPShowFlg.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
+    <ClInclude Include="ICTGauge.h" />
     <ClInclude Include="IdleMotionAction.h" />
     <ClInclude Include="IdleMotionState.h" />
     <ClInclude Include="IdleState.h" />
@@ -210,6 +212,7 @@
     <ClInclude Include="Skill3_1Action.h" />
     <ClInclude Include="Skill3_1State.h" />
     <ClInclude Include="SkillCreater.h" />
+    <ClInclude Include="SkillCTRender.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="Skill.h" />

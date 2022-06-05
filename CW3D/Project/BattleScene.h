@@ -14,6 +14,7 @@
 #include	"IDManager.h"
 
 #include	"EnemyHPRender.h"
+#include	"SkillCTRender.h"
 
 #include	"Collision.h"
 
@@ -36,6 +37,7 @@ private:
 	CFont m_Font;
 
 	std::vector<Sample::EnemyHPRender> m_EnemysHPRender;
+	std::vector < Sample::SkillCTRender>	m_SkillCTRender;
 
 
 public:

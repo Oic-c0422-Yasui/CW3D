@@ -1,6 +1,8 @@
 #pragma once
 #include "Common.h"
 #include "SkillData.h"
+#include	"ReactiveParameter.h"
+#include	"ParameterHandle.h"
 
 namespace Sample
 {
@@ -16,6 +18,7 @@ namespace Sample
 		bool			m_CanUseFlg;
 		bool			m_StartFlg;
 		SkillDataPtr	m_SkillData;
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
 
 
 	public:
@@ -44,7 +47,7 @@ namespace Sample
 
 		void Start()
 		{
-			m_CurrentTime = 0;
+			m_CT = m_SkillData->CT;
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
@@ -55,9 +58,9 @@ namespace Sample
 			{
 				return;
 			}
-			if (m_CurrentTime < m_SkillData->CT)
+			if (m_CT > 0.0f)
 			{
-				m_CurrentTime += CUtilities::GetFrameSecond();
+				m_CT -= CUtilities::GetFrameSecond();
 			}
 			else
 			{
@@ -95,7 +98,12 @@ namespace Sample
 
 		float GetTime() const noexcept
 		{
-			return m_CurrentTime;
+			return m_CT.Get();
+		}
+
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetTimeParam()
+		{
+			return m_CT;
 		}
 
 		int GetDamage() const noexcept

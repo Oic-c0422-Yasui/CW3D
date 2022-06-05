@@ -104,15 +104,17 @@ bool CPlayer::Load()
 
 	Sample::SKillPtr skill;
 
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
-	skill->SetSkillData(250, 5);
+	
 
 
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1);
-	skill->SetSkillData(120, 5);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1);
+	skill->SetSkillData(120, 3);
 
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL3, STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
 	skill->SetSkillData(100, 5);
+
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
+	skill->SetSkillData(250, 8);
 
 	return true;
 }

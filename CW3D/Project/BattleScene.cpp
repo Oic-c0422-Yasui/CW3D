@@ -60,6 +60,25 @@ bool CBattleScene::Load()
 		return false;
 	}
 	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("DamageBar", tempTex);
+	
+	std::shared_ptr<CTexture> tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill1.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill1", tempTex2D);
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill2.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill2", tempTex2D);
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill3.png"))
+	{
+		return false;
+	}
+	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill3", tempTex2D);
 
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
@@ -85,6 +104,16 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
+	for (int i = 0; i < 3; i++)
+	{
+		m_SkillCTRender.push_back(Sample::SkillCTRender(std::make_shared<Sample::CTGauge>(m_Player.GetSkillController()->GetSkill(i)->GetCT())));
+	}
+	m_SkillCTRender[0].Initialize("Skill1");
+	m_SkillCTRender[1].Initialize("Skill2");
+	m_SkillCTRender[2].Initialize("Skill3");
+	m_Player.GetCT1Subject()->Subscribe(m_SkillCTRender[0].GetGauge());
+	m_Player.GetCT2Subject()->Subscribe(m_SkillCTRender[1].GetGauge());
+	m_Player.GetCT3Subject()->Subscribe(m_SkillCTRender[2].GetGauge());
 	
 	//ステージ読み込み
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
@@ -97,6 +126,7 @@ bool CBattleScene::Load()
 
 	tempTex.reset();
 	tempMesh.reset();
+	tempTex2D.reset();
 
 	return true;
 }
@@ -288,7 +318,10 @@ void CBattleScene::Render2D()
 	{
 		enemyHP.Render();
 	}
-
+	for (int i = 0;i < m_SkillCTRender.size();i++)
+	{
+		m_SkillCTRender[i].Render(i * 150);
+	}
 
 	if (count >= m_Enemys.size())
 	{
@@ -326,10 +359,17 @@ void CBattleScene::Release()
 		m_EnemysHPRender[i].Release();
 	}
 	m_EnemysHPRender.clear();
+	for (int i = 0; i < m_SkillCTRender.size(); i++)
+	{
+		m_SkillCTRender[i].Release();
+	}
+	m_SkillCTRender.clear();
+
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	Sample::ResourceManager<CSprite3D>::GetInstance().Release();
+	Sample::ResourceManager<CTexture>::GetInstance().Release();
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
