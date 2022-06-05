@@ -96,6 +96,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActorObject.cpp" />
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -112,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorObject.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
     <ClInclude Include="Attack2Action.h" />
@@ -137,13 +139,16 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBuilder.h" />
-    <ClInclude Include="EnemyHPUI.h" />
+    <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="FallAction.h" />
     <ClInclude Include="FallState.h" />
     <ClInclude Include="FlyDamageAction.h" />
     <ClInclude Include="FlyDamageState.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
+    <ClInclude Include="HPGauge.h" />
+    <ClInclude Include="HPPosition.h" />
+    <ClInclude Include="HPShowFlg.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
     <ClInclude Include="IdleMotionAction.h" />
@@ -151,6 +156,8 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="IdleAction.h" />
     <ClInclude Include="IDManager.h" />
+    <ClInclude Include="IHPGauge.h" />
+    <ClInclude Include="IHPPosition.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
@@ -163,6 +170,10 @@
     <ClInclude Include="JumpSkill2_1State.h" />
     <ClInclude Include="JumpSkill3_1Action.h" />
     <ClInclude Include="JumpSkill3_1State.h" />
+    <ClInclude Include="Observable.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="ParameterHandle.h" />
+    <ClInclude Include="ReactiveParameter.h" />
     <ClInclude Include="RunJumpAttack1Action.h" />
     <ClInclude Include="RunJumpAttack2Action.h" />
     <ClInclude Include="RunJumpAttack1State.h" />
@@ -206,11 +217,13 @@
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
+    <ClInclude Include="IHPShowFlg.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

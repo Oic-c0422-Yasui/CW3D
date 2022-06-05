@@ -79,14 +79,14 @@ bool CBattleScene::Load()
 
 
 
-
+	//プレイヤー読み込み
 	m_Player.SetInput(input);
 	if (!m_Player.Load())
 	{
 		return false;
 	}
 	
-
+	//ステージ読み込み
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
@@ -120,6 +120,18 @@ void CBattleScene::Initialize()
 	m_Enemys.push_back(zb.Create(Vector3(7, 0, 2)));
 	m_Enemys.push_back(zb.Create(Vector3(1, 0, 3)));
 	m_Enemys.push_back(zb.Create(Vector3(-2, 0, 4)));
+
+	//敵のHPバー生成＆オブザーバーに登録
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		m_EnemysHPRender.push_back(Sample::EnemyHPRender(std::make_shared<Sample::HPGauge>(m_Enemys[i]->GetHP()),
+														 std::make_shared<Sample::HPPosition>(Vector3(0,0,0)),
+														 std::make_shared<Sample::HPShowFlg>(true)));
+		m_Enemys[i]->GetHPSubject()->Subscribe(m_EnemysHPRender[i].GetGauge());
+		m_Enemys[i]->GetPositionSubject()->Subscribe(m_EnemysHPRender[i].GetHPPositonPtr());
+		m_Enemys[i]->GetShowSubject()->Subscribe(m_EnemysHPRender[i].GetHPShowFlgPtr());
+		m_EnemysHPRender[i].Initialize();
+	}
 
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
 	CGraphicsUtilities::SetDirectionalLight(&m_Light);
@@ -199,6 +211,7 @@ void CBattleScene::Update()
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
+
 }
 
 void CBattleScene::Render()
@@ -212,13 +225,8 @@ void CBattleScene::Render()
 	{
 		m_Enemys[i]->Render();
 	}
-
-	
 	ShotManagerInstance.Render();
 	EffectManagerInstance.Render(m_Camera.GetPosition(), m_Camera.GetLookPosition());
-	
-
-
 	
 }
 
@@ -270,6 +278,18 @@ void CBattleScene::Render2D()
 		}
 	}
 
+	//HPバーの描画入れ替え
+	std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
+		[](Sample::EnemyHPRender& obj1,Sample::EnemyHPRender& obj2)
+	{
+		return obj1.GetPosition().z > obj2.GetPosition().z;
+	});
+	for (auto& enemyHP : m_EnemysHPRender)
+	{
+		enemyHP.Render();
+	}
+
+
 	if (count >= m_Enemys.size())
 	{
 		CRectangle rect;
@@ -286,6 +306,10 @@ void CBattleScene::Render2DDebug()
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
 	m_Camera.Render2DDebug();
+	for (int i = 0;i < m_EnemysHPRender.size();i++)
+	{
+		CGraphicsUtilities::RenderString(0, 500 + 30 * i, "PosZ:%.2f", m_EnemysHPRender[i].GetPosition().z);
+	}
 }
 
 void CBattleScene::Release()
@@ -297,7 +321,11 @@ void CBattleScene::Release()
 		delete m_Enemys[i];
 	}
 	m_Enemys.clear();
-
+	for (int i = 0; i < m_EnemysHPRender.size(); i++)
+	{
+		m_EnemysHPRender[i].Release();
+	}
+	m_EnemysHPRender.clear();
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();

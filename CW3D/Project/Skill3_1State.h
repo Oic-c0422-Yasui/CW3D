@@ -25,7 +25,7 @@ namespace Sample {
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect5", Vector3(0, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f };
+		const EffectCreateParameter createEffectStatus = { "Effect5", Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f };
 
 	public:
 		/**

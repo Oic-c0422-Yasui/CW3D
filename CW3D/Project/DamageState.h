@@ -53,7 +53,7 @@ namespace Sample {
 			}
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				auto& hp = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
+				auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 				if (hp <= 0)
 				{
 					ChangeState(STATE_KEY_DEAD);

@@ -1,6 +1,5 @@
 #include "Player.h"
 
-#include "ResourceManager.h"
 #include "IdleState.h"
 #include "MoveState.h"
 #include "RunState.h"
@@ -28,8 +27,7 @@
 
 
 CPlayer::CPlayer():
-	m_Actor(std::make_shared<Sample::Actor>()),
-	m_StateMachine(std::make_shared<Sample::StateMachine>()),
+	Sample::CActorObject(),
 	m_pInput()
 {
 }
@@ -99,11 +97,9 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::Skill3_1Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill3_1Action>());
 
-	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 25);
-	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
 	Sample::SKillPtr skill;
@@ -123,48 +119,35 @@ bool CPlayer::Load()
 
 void CPlayer::Initialize()
 {
+	m_ShowFlg = true;
 	m_Actor->SetPosition(Vector3(0, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
 
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
-
-	m_Speed = TEMP_SPEED;
-
-
 	matWorld = m_Actor->GetMatrix();
 }
 
 void CPlayer::Update()
 {
-	//ステートのインプット
-	m_StateMachine->InputExecution();
-	//ステートの実行
-	m_StateMachine->Execution();
-
-	//移動の実行
-	m_Actor->Update();
-
-	//移動制限
-	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
-	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
-
-	//マトリクスを取得
-	matWorld = m_Actor->GetMatrix();
-
-	m_Motion->AddTimer(CUtilities::GetFrameSecond());
-
+	if (!m_ShowFlg)
+	{
+		return;
+	}
+	Sample::CActorObject::Update();
 }
 
 void CPlayer::Render()
 {
-	m_Motion->RefreshBoneMatrix(matWorld);
-	m_pMesh->Render(m_Motion);
+	if (!m_ShowFlg)
+	{
+		return;
+	}
+	Sample::CActorObject::Render();
 }
 
 void CPlayer::Release()
 {
-	MOF_SAFE_DELETE(m_Motion);
-	m_pMesh.reset();
+	Sample::CActorObject::Release();
 }

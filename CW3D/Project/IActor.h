@@ -4,6 +4,8 @@
 
 #include "Common.h"
 #include "ShotManager.h"
+#include "ReactiveParameter.h"
+
 
 
 namespace Sample {

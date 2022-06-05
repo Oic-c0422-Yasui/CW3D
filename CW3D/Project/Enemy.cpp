@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-#include "ResourceManager.h"
+
 #include "IdleState.h"
 #include "MoveState.h"
 #include "RunState.h"
@@ -13,8 +13,7 @@
 #include "StateInput.h"
 
 CEnemy::CEnemy()
-	: m_Actor(std::make_shared<Sample::Actor>())
-	, m_StateMachine(std::make_shared<Sample::StateMachine>())
+	: Sample::CActorObject()
 	,m_Input()
 {
 }
@@ -58,13 +57,15 @@ bool CEnemy::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::DeadAction>());
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_MAXHP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
-
+	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	m_Position = m_Actor->GetPosition();
+	m_HPShowFlg = true;
 	return true;
 }
 
@@ -77,9 +78,8 @@ void CEnemy::Initialize(CVector3 pos)
 	m_Collider->SetPosition(pos + Vector3(0, 5.0f, 0));
 	m_Collider->SetRadius(0.6f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
-
-	m_HPUI.Initialize();
 	matWorld = m_Actor->GetMatrix();
+	m_ShowFlg = true;
 	m_DeadFlg = false;
 
 }
@@ -90,13 +90,9 @@ void CEnemy::Update()
 	{
 		return;
 	}
-	//ステートのインプット
-	m_StateMachine->InputExecution();
-	//ステートの実行
-	m_StateMachine->Execution();
+	
+	
 
-	//移動の実行
-	m_Actor->Update();
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
@@ -110,16 +106,8 @@ void CEnemy::Update()
 			m_ShowFlg = false;
 		}
 	}
-
-	
-	//移動制限
-	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
-	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
-
-	//マトリクスを取得
-	matWorld = m_Actor->GetMatrix();
-
-	m_Motion->AddTimer(CUtilities::GetFrameSecond());
+	Sample::CActorObject::Update();
+	m_Position = m_Actor->GetPosition();
 }
 
 void CEnemy::Render()
@@ -146,8 +134,7 @@ void CEnemy::Render2D()
 	}
 	if (!m_DeadFlg)
 	{
-		m_HPUI.SetHPGauge((float)GetHP() / (float)GetMaxHP());
-		m_HPUI.Render(GetPosition());
+
 	}
 	
 }
@@ -158,8 +145,7 @@ void CEnemy::Render2DDebug()
 
 void CEnemy::Release()
 {
-	MOF_SAFE_DELETE(m_Motion);
-	m_pMesh.reset();
+	Sample::CActorObject::Release();
 	m_Collider.reset();
 }
 
@@ -168,7 +154,7 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, m_Collider->GetPosition(),param);
 
-	auto& hp = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 
 	auto& transform = m_Actor->GetTransform();
@@ -180,8 +166,9 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 		hp = 0;
 
 		m_DeadFlg = true;
+		m_HPShowFlg = false;
 	}
-
+	m_HP = hp;
 	knockBack = power;
 	//Xだけ方向を加味した値にする
 	knockBack.x = direction.x * power.x;

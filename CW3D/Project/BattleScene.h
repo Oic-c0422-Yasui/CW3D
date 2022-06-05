@@ -13,6 +13,8 @@
 #include	"SkillCreater.h"
 #include	"IDManager.h"
 
+#include	"EnemyHPRender.h"
+
 #include	"Collision.h"
 
 class CBattleScene : public CSceneBase
@@ -32,6 +34,9 @@ private:
 	CMeshContainer	m_Stage;
 
 	CFont m_Font;
+
+	std::vector<Sample::EnemyHPRender> m_EnemysHPRender;
+
 
 public:
 	CBattleScene();

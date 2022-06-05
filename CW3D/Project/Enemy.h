@@ -2,54 +2,48 @@
 #include "GameDefine.h"
 #include	"InputManager.h"
 #include	"ResourceManager.h"
-#include	"StateMachine.h"
-#include	"MoveAction.h"
-#include	"Actor.h"
 #include	"AttackCollider.h"
-#include	"EnemyHPUI.h"
+#include	"ReactiveParameter.h"
+#include	"ParameterHandle.h"
+#include	"Observer.h"
 
-class CEnemy
+#include	"ActorObject.h"
+
+class CEnemy : public Sample::CActorObject
 {
 protected:
 
-	std::shared_ptr<CMeshContainer> m_pMesh;
 
-	
-
-	Sample::StateMachinePtr m_StateMachine;
-	Sample::AnimationStatePtr m_Motion;
-	Sample::ActorPtr m_Actor;
 	Sample::InputPtr m_Input;
 
 
-	CMatrix44 matWorld;
-
 	Sample::AttackColliderPtr m_Collider;
 
-	bool	m_ShowFlg;
 
 	bool	m_DeadFlg;
 
-	Sample::EnemyHPUI m_HPUI;
+	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_HP;
+	Sample::ParameterHandle< Sample::ReactiveParameter<Vector3> > m_Position;
+	Sample::ParameterHandle< Sample::ReactiveParameter<bool> > m_HPShowFlg;
 
 public:
 	CEnemy();
-	~CEnemy();
+	~CEnemy() override;
 	bool Load();
 	void Initialize(CVector3 pos);
-	void Update();
-	void Render();
+	void Update() override;
+	void Render() override;
 	void RenderDebug();
 	void Render2D();
 	void Render2DDebug();
-	void Release();
+	void Release() override;
 
 	void Damage(const Vector3& direction,Vector3 power, int damage);
 
 	bool IsInvincible() const;
 
 	CSphere GetCollider() {
-		m_Collider->SetPosition(m_Actor->GetPosition() + Vector3(0, 0.7f, 0));
+		m_Collider->SetPosition(m_Position.Get() + Vector3(0, 0.7f, 0));
 		return m_Collider->GetCollider(); }
 
 	float GetSize()
@@ -69,21 +63,33 @@ public:
 
 	Vector3 GetPosition()
 	{
-		return m_Actor->GetPosition();
+		return m_Position.Get();
 	}
+
+	/**
+	 * @brief		HP変化通知
+	 */
+	Sample::IObservable<int>* GetHPSubject() { return &(m_HP.Get()); }
+
+	/**
+	 * @brief		座標変化通知
+	 */
+	Sample::IObservable<Vector3>* GetPositionSubject() { return &(m_Position.Get()); }
+
+	/**
+	 * @brief		表示変化通知
+	 */
+	Sample::IObservable<bool>* GetShowSubject() { return &(m_HPShowFlg.Get()); }
 
 	int GetHP()
 	{
-		return m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
-	}
-	int GetMaxHP()
-	{
-		return m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_MAXHP);
+		return m_HP.Get();
 	}
 
 	void SetPosition(Vector3 pos)
 	{
 		m_Actor->SetPosition(pos);
+		m_Position = m_Actor->GetPosition();
 	}
 
 	unsigned int GetID() const
