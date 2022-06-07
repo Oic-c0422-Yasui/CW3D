@@ -18,12 +18,14 @@
 
 #include	"Collision.h"
 
+
+
 class CBattleScene : public CSceneBase
 {
 private:
 	CPlayer m_Player;
 
-	std::vector<CEnemy*> m_Enemys;
+	std::vector<Sample::EnemyPtr> m_Enemys;
 
 
 	CCameraController m_Camera;

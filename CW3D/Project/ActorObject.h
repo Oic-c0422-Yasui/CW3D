@@ -15,6 +15,7 @@ namespace Sample
 		ActorPtr							m_Actor;
 		CMatrix44							matWorld;
 		CAABB								m_Collider;
+		CVector3							m_ColliderOffset;
 		bool								m_ShowFlg;
 		bool								m_DeadFlg;
 	public:
@@ -54,6 +55,12 @@ namespace Sample
 		void SetShow(bool isShow)
 		{
 			m_ShowFlg = isShow;
+		}
+		CAABB GetCollider()
+		{
+			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
+
+			return m_Collider;
 		}
 
 	};

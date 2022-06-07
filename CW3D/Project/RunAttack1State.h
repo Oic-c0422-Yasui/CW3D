@@ -21,7 +21,7 @@ namespace Sample {
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect2", Vector3(0.8f, 1.0f, 0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(-180.0f), 0.0f),2.0f };
+		const EffectCreateParameter createEffectStatus = { "Effect2", Vector3(0.8f, 1.0f, 0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360.0f), 0.0f),2.0f };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -70,19 +70,6 @@ namespace Sample {
 			if (m_FrameTime == 20)
 			{
 				CreateEffect();
-				/*m_Effect = EffectControllerInstance.Play("Effect2");
-				if (Actor()->IsReverse())
-				{
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, MOF_ToRadian(180.0f), 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(-0.8f, 1.0f, 0));
-				}
-				else
-				{
-					EffectControllerInstance.SetRotate(m_Effect->GetHandle(), Vector3(0.0f, 0, 0.0f));
-					EffectControllerInstance.SetPosition(m_Effect->GetHandle(), Actor()->GetPosition() + Vector3(0.8f, 1.0f, 0));
-				}
-				EffectControllerInstance.SetScale(m_Effect->GetHandle(), Vector3(0.3f, 0.4f, 0.0f));
-				EffectControllerInstance.SetSpeed(m_Effect->GetHandle(), 2.0f);*/
 			}
 			m_FrameTime++;
 			

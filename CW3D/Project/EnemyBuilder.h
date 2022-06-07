@@ -4,8 +4,8 @@
 
 class CEnemyBuilder {
 public:
-	CEnemy* Create(Vector3 pos) {
-		CEnemy* enemy = new CEnemy();
+	Sample::EnemyPtr Create(Vector3 pos) {
+		Sample::EnemyPtr enemy = std::make_shared<Sample::CEnemy>();
 		enemy->Load();
 		enemy->Initialize(pos);
 		return enemy;

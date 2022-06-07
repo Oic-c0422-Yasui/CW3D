@@ -1,5 +1,9 @@
 #include "BattleScene.h"
 
+#include	"CollisionEnemyEnemy.h"
+
+using namespace Sample;
+
 CBattleScene::CBattleScene()
 {
 }
@@ -138,7 +142,7 @@ void CBattleScene::Initialize()
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		delete m_Enemys[i];
+		m_Enemys[i].reset();
 	}
 	m_Enemys.clear();
 
@@ -187,7 +191,7 @@ void CBattleScene::Update()
 
 		for (int j = i + 1; j < m_Enemys.size(); j++)
 		{
-			CCollision::CollisionEnemyEnemy(m_Enemys[i], m_Enemys[j]);
+			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
 		}
 		if (m_Enemys[i]->IsInvincible())
 		{
@@ -205,6 +209,8 @@ void CBattleScene::Update()
 			{
 				continue;
 			}
+
+			CCollision::CollisionObj(shot, m_Enemys[i]);
 
 			//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 			switch (shot->GetColliderType())
@@ -251,9 +257,9 @@ void CBattleScene::Render()
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
 	m_Player.Render();
-	for (int i = 0; i < m_Enemys.size(); i++)
+	for (auto& enemy : m_Enemys)
 	{
-		m_Enemys[i]->Render();
+		enemy->Render();
 	}
 	ShotManagerInstance.Render();
 	EffectManagerInstance.Render(m_Camera.GetPosition(), m_Camera.GetLookPosition());
@@ -351,7 +357,7 @@ void CBattleScene::Release()
 	m_Stage.Release();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		delete m_Enemys[i];
+		m_Enemys[i].reset();
 	}
 	m_Enemys.clear();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)

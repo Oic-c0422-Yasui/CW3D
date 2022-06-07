@@ -12,6 +12,8 @@
 #include "DeadState.h"
 #include "StateInput.h"
 
+using namespace Sample;
+
 CEnemy::CEnemy()
 	: Sample::CActorObject()
 	,m_Input()
@@ -172,6 +174,8 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 	knockBack = power;
 	//X‚¾‚¯•ûŒü‚ð‰Á–¡‚µ‚½’l‚É‚·‚é
 	knockBack.x = direction.x * power.x;
+
+
 
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }
