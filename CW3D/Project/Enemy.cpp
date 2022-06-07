@@ -12,6 +12,8 @@
 #include "DeadState.h"
 #include "StateInput.h"
 
+using namespace Sample;
+
 CEnemy::CEnemy()
 	: Sample::CActorObject()
 	,m_Input()
@@ -58,12 +60,13 @@ bool CEnemy::Load()
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 500);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_MAXHP, 500);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 500);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
 	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
 	m_Position = m_Actor->GetPosition();
 	m_HPShowFlg = true;
 	return true;

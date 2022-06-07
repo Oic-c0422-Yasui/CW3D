@@ -23,9 +23,12 @@ namespace Sample
 		std::shared_ptr<CSprite3D>			m_pFrame;
 		std::shared_ptr<CSprite3D>			m_pDamageBar;
 
-		HPGaugePtr							m_HP;
-		HPPositionPtr						m_Position;
-		HPShowFlgPtr						m_ShowFlg;
+		int m_HP;
+		int m_MaxHP;
+
+		Vector3 m_Position;
+
+		bool	m_ShowFlg;
 
 		Vector3								m_Offset;
 		Vector3								m_Size;
@@ -34,12 +37,12 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		EnemyHPRender(const HPGaugePtr& hp,const HPPositionPtr& pos, const HPShowFlgPtr& isShow)
+		EnemyHPRender()
 			: m_CurrentHP(1.0f)
 			, m_CurrentGauge(1.0f)
-			, m_HP(hp)
-			, m_Position(pos)
-			, m_ShowFlg(isShow)
+			, m_HP(0)
+			, m_Position(0,0,0)
+			, m_ShowFlg(false)
 		{
 			
 		}
@@ -73,23 +76,35 @@ namespace Sample
 
 		}
 
-		/**
-		 * @brief		HPゲージ
-		 */
-		HPGaugePtr& GetGauge() { return m_HP; }
 
-		HPPositionPtr& GetHPPositonPtr() { return m_Position; }
+		void SetHP(int hp)
+		{
+			m_HP = hp;
+		}
 
-		HPShowFlgPtr& GetHPShowFlgPtr() { return m_ShowFlg; }
+		void SetMaxHP(int hp)
+		{
+			m_MaxHP = hp;
+		}
 
 		bool IsShow()
 		{
-			return m_ShowFlg->Get();
+			return m_ShowFlg;
+		}
+
+		void SetPosition(Vector3 pos)
+		{
+			m_Position = pos;
+		}
+
+		void SetShow(bool isShow)
+		{
+			m_ShowFlg = isShow;
 		}
 
 		Vector3 GetPosition()
 		{
-			return m_Position->Get();
+			return m_Position;
 		}
 
 		/**
@@ -108,11 +123,12 @@ namespace Sample
 			{
 				return;
 			}
-			m_pFrame->m_Position = m_Position->Get() + m_Offset;
-			m_pHPBar->m_Position = m_Position->Get() + m_Offset;
-			m_pDamageBar->m_Position = m_Position->Get() + m_Offset;
+			m_pFrame->m_Position = m_Position + m_Offset;
+			m_pHPBar->m_Position = m_Position + m_Offset;
+			m_pDamageBar->m_Position = m_Position + m_Offset;
 			
-			m_CurrentHP = m_HP->GetPercent();
+			float parcent = (float)m_HP / (float)m_MaxHP;
+			m_CurrentHP = parcent;
 
 			//四角でHPゲージ描画
 			m_pFrame->Update();
@@ -124,7 +140,7 @@ namespace Sample
 				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.1f;
 				m_pDamageBar->m_Scale.x = m_Size.x * m_CurrentGauge;
 				float offset = (m_Size.x - m_pDamageBar->m_Scale.x) * 0.5f;
-				m_pDamageBar->m_Position.x = (m_Position->Get().x + m_Offset.x) - offset;
+				m_pDamageBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
 				m_pDamageBar->Update();
 				m_pDamageBar->Render();
 			}
@@ -134,7 +150,7 @@ namespace Sample
 			}
 			m_pHPBar->m_Scale.x = m_Size.x * m_CurrentHP;
 			float offset = (m_Size.x - m_pHPBar->m_Scale.x) * 0.5f;
-			m_pHPBar->m_Position.x = (m_Position->Get().x + m_Offset.x) - offset;
+			m_pHPBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
 			m_pHPBar->Update();
 			m_pHPBar->Render();
 		}
@@ -143,10 +159,8 @@ namespace Sample
 			m_pHPBar.reset();
 			m_pFrame.reset();
 			m_pDamageBar.reset();
-			m_HP.reset();
-			m_Position.reset();
-			m_ShowFlg.reset();
 		}
 	};
 
+	using EnemyHPRenderPtr = std::shared_ptr<EnemyHPRender>;
 }

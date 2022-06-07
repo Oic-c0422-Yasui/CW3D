@@ -14,7 +14,7 @@
 #include	"IDManager.h"
 
 #include	"EnemyHPRender.h"
-#include	"SkillCTRender.h"
+#include	"SkillUIRender.h"
 
 #include	"Collision.h"
 
@@ -23,7 +23,7 @@ class CBattleScene : public CSceneBase
 private:
 	CPlayer m_Player;
 
-	std::vector<CEnemy*> m_Enemys;
+	std::vector<Sample::CEnemy*> m_Enemys;
 
 
 	CCameraController m_Camera;
@@ -36,8 +36,8 @@ private:
 
 	CFont m_Font;
 
-	std::vector<Sample::EnemyHPRender> m_EnemysHPRender;
-	std::vector < Sample::SkillCTRender>	m_SkillCTRender;
+	std::vector<Sample::EnemyHPRenderPtr> m_EnemysHPRender;
+	std::vector < Sample::SkillUIRenderPtr>	m_SkillCTRender;
 
 
 public:

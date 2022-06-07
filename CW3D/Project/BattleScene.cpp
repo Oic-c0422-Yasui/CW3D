@@ -1,4 +1,8 @@
 #include "BattleScene.h"
+#include "HPPresenter.h"
+#include	"SkillPresenter.h"
+
+using namespace Sample;
 
 CBattleScene::CBattleScene()
 {
@@ -31,14 +35,14 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
-	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
+	ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
 
 	tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
-	Sample::ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
+	ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
 
 	//テクスチャ読み込み
@@ -47,53 +51,53 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
-	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("HPBar", tempTex);
+	ResourceManager<CSprite3D>::GetInstance().AddResource("HPBar", tempTex);
 	tempTex = std::make_shared<CSprite3D>();
 	if (!tempTex->CreateSprite("UI/HPFrame.png"))
 	{
 		return false;
 	}
-	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("HPFrame", tempTex);
+	ResourceManager<CSprite3D>::GetInstance().AddResource("HPFrame", tempTex);
 	tempTex = std::make_shared<CSprite3D>();
 	if (!tempTex->CreateSprite("UI/Damage.png"))
 	{
 		return false;
 	}
-	Sample::ResourceManager<CSprite3D>::GetInstance().AddResource("DamageBar", tempTex);
+	ResourceManager<CSprite3D>::GetInstance().AddResource("DamageBar", tempTex);
 	
 	std::shared_ptr<CTexture> tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/Skill1.png"))
 	{
 		return false;
 	}
-	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill1", tempTex2D);
+	ResourceManager<CTexture>::GetInstance().AddResource("Skill1", tempTex2D);
 	tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/Skill2.png"))
 	{
 		return false;
 	}
-	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill2", tempTex2D);
+	ResourceManager<CTexture>::GetInstance().AddResource("Skill2", tempTex2D);
 	tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/Skill3.png"))
 	{
 		return false;
 	}
-	Sample::ResourceManager<CTexture>::GetInstance().AddResource("Skill3", tempTex2D);
+	ResourceManager<CTexture>::GetInstance().AddResource("Skill3", tempTex2D);
 
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
 	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sword.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("DamageEffect1", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("DamageEffect1", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tuki.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect2", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect2", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sandStome.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect3", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect3", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect4", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect4", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tornade.efk");
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
 
 
 
@@ -106,14 +110,15 @@ bool CBattleScene::Load()
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		m_SkillCTRender.push_back(Sample::SkillCTRender(std::make_shared<Sample::CTGauge>(m_Player.GetSkillController()->GetSkill(i)->GetCT())));
+		m_SkillCTRender.push_back(std::make_shared<SkillUIRender>());
+		CSkillPresenter::Present(m_Player, m_SkillCTRender[i], i);
 	}
-	m_SkillCTRender[0].Initialize("Skill1");
-	m_SkillCTRender[1].Initialize("Skill2");
-	m_SkillCTRender[2].Initialize("Skill3");
-	m_Player.GetCT1Subject()->Subscribe(m_SkillCTRender[0].GetGauge());
-	m_Player.GetCT2Subject()->Subscribe(m_SkillCTRender[1].GetGauge());
-	m_Player.GetCT3Subject()->Subscribe(m_SkillCTRender[2].GetGauge());
+	m_SkillCTRender[0]->Initialize("Skill1");
+	m_SkillCTRender[1]->Initialize("Skill2");
+	m_SkillCTRender[2]->Initialize("Skill3");
+
+
+
 	
 	//ステージ読み込み
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
@@ -154,13 +159,10 @@ void CBattleScene::Initialize()
 	//敵のHPバー生成＆オブザーバーに登録
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		m_EnemysHPRender.push_back(Sample::EnemyHPRender(std::make_shared<Sample::HPGauge>(m_Enemys[i]->GetHP()),
-														 std::make_shared<Sample::HPPosition>(Vector3(0,0,0)),
-														 std::make_shared<Sample::HPShowFlg>(true)));
-		m_Enemys[i]->GetHPSubject()->Subscribe(m_EnemysHPRender[i].GetGauge());
-		m_Enemys[i]->GetPositionSubject()->Subscribe(m_EnemysHPRender[i].GetHPPositonPtr());
-		m_Enemys[i]->GetShowSubject()->Subscribe(m_EnemysHPRender[i].GetHPShowFlgPtr());
-		m_EnemysHPRender[i].Initialize();
+		m_EnemysHPRender.push_back(std::make_shared<Sample::EnemyHPRender>());
+
+		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
+		m_EnemysHPRender[i]->Initialize();
 	}
 
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
@@ -310,17 +312,17 @@ void CBattleScene::Render2D()
 
 	//HPバーの描画入れ替え
 	std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
-		[](Sample::EnemyHPRender& obj1,Sample::EnemyHPRender& obj2)
+		[](Sample::EnemyHPRenderPtr& obj1,Sample::EnemyHPRenderPtr& obj2)
 	{
-		return obj1.GetPosition().z > obj2.GetPosition().z;
+		return obj1->GetPosition().z > obj2->GetPosition().z;
 	});
 	for (auto& enemyHP : m_EnemysHPRender)
 	{
-		enemyHP.Render();
+		enemyHP->Render();
 	}
 	for (int i = 0;i < m_SkillCTRender.size();i++)
 	{
-		m_SkillCTRender[i].Render(i * 150);
+		m_SkillCTRender[i]->Render(i * 150);
 	}
 
 	if (count >= m_Enemys.size())
@@ -339,10 +341,10 @@ void CBattleScene::Render2DDebug()
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
 	m_Camera.Render2DDebug();
-	for (int i = 0;i < m_EnemysHPRender.size();i++)
-	{
-		CGraphicsUtilities::RenderString(0, 500 + 30 * i, "PosZ:%.2f", m_EnemysHPRender[i].GetPosition().z);
-	}
+	//for (int i = 0;i < m_EnemysHPRender.size();i++)
+	//{
+	//	//CGraphicsUtilities::RenderString(0, 500 + 30 * i, "PosZ:%.2f", m_EnemysHPRender[i]->GetPosition().z);
+	//}
 }
 
 void CBattleScene::Release()
@@ -356,12 +358,12 @@ void CBattleScene::Release()
 	m_Enemys.clear();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
 	{
-		m_EnemysHPRender[i].Release();
+		m_EnemysHPRender[i].reset();
 	}
 	m_EnemysHPRender.clear();
 	for (int i = 0; i < m_SkillCTRender.size(); i++)
 	{
-		m_SkillCTRender[i].Release();
+		m_SkillCTRender[i].reset();
 	}
 	m_SkillCTRender.clear();
 

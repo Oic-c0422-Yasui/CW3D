@@ -14,12 +14,11 @@ namespace Sample
 		std::string		m_Button;
 		char*			m_State;
 		char*			m_FlyState;
-		float			m_CurrentTime;
 		bool			m_CanUseFlg;
 		bool			m_StartFlg;
 		SkillDataPtr	m_SkillData;
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CurrentTime;
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
-
 
 	public:
 		CSkill()
@@ -43,11 +42,12 @@ namespace Sample
 			m_FlyState = flyState;
 			m_CanUseFlg = true;
 			m_StartFlg = false;
+			m_CT = m_SkillData->CT;
 		}
 
 		void Start()
 		{
-			m_CT = m_SkillData->CT;
+			m_CurrentTime = m_SkillData->CT;
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
@@ -58,9 +58,9 @@ namespace Sample
 			{
 				return;
 			}
-			if (m_CT > 0.0f)
+			if (m_CurrentTime > 0.0f)
 			{
-				m_CT -= CUtilities::GetFrameSecond();
+				m_CurrentTime -= CUtilities::GetFrameSecond();
 			}
 			else
 			{
@@ -98,10 +98,15 @@ namespace Sample
 
 		float GetTime() const noexcept
 		{
-			return m_CT.Get();
+			return m_CurrentTime.Get();
 		}
 
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetTimeParam()
+		{
+			return m_CurrentTime;
+		}
+
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetCTParam()
 		{
 			return m_CT;
 		}

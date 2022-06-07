@@ -10,6 +10,7 @@ int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
 	Info.WindowCreateInfo.Width = 1920;
 	Info.WindowCreateInfo.Height = 1080;
 
+	
 	if ( pFrame->Initialize(&Info) )
 	{
 		pFrame->Run();

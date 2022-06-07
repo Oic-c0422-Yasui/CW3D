@@ -33,9 +33,10 @@ public:
 	/**
 	 * @brief		CT•Ï‰»’Ê’m
 	 */
-	Sample::IObservable<float>* GetCT1Subject() { return &(GetSkillController()->GetSkill(SKILL_KEY_1)->GetTimeParam().Get()); }
-	Sample::IObservable<float>* GetCT2Subject() { return &(GetSkillController()->GetSkill(SKILL_KEY_2)->GetTimeParam().Get()); }
-	Sample::IObservable<float>* GetCT3Subject() { return &(GetSkillController()->GetSkill(SKILL_KEY_3)->GetTimeParam().Get()); }
+
+
+	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetTimeParam().Get()); }
+	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
 
 	Sample::SkillControllerPtr GetSkillController()
 	{

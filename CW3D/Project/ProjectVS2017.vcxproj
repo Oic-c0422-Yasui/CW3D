@@ -104,6 +104,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="HPPresenter.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="MoveAction.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="GameDefine.h" />
     <ClInclude Include="HPGauge.h" />
     <ClInclude Include="HPPosition.h" />
+    <ClInclude Include="HPPresenter.h" />
     <ClInclude Include="HPShowFlg.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
@@ -212,10 +214,11 @@
     <ClInclude Include="Skill3_1Action.h" />
     <ClInclude Include="Skill3_1State.h" />
     <ClInclude Include="SkillCreater.h" />
-    <ClInclude Include="SkillCTRender.h" />
+    <ClInclude Include="SkillUIRender.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillPresenter.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
