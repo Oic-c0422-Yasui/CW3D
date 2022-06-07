@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-#include "Enemy.h"
+#include "ActorObject.h"
 
 namespace Sample
 {
@@ -19,7 +19,7 @@ namespace Sample
 
 
 		//ãÖÇ∆óßï˚ëÃÇ∆ÇÃìñÇΩÇËîªíË
-		static bool Collition(const CSphere& sphere, const CAABB& aabb)
+		static bool Collision(const CSphere& sphere, const CAABB& aabb)
 		{
 
 			Vector3 boxMin = aabb.Position - aabb.Size;
@@ -107,24 +107,29 @@ namespace Sample
 		}
 
 		//ãÖÇ∆ãÖÇ∆ÇÃìñÇΩÇËîªíË
-		static bool Collition(CSphere sphere1, CSphere sphere2)
+		static bool Collision(CSphere sphere1, CSphere sphere2)
 		{
 			return sphere1.CollisionSphere(sphere2);
 		}
 
-		//ìGÇ∆ìGÇ∆ÇÃìñÇΩÇËîªíË
-		static void CollisionEnemyEnemy(CEnemy*& enemy1, CEnemy*& enemy2)
+		static bool Collision(CAABB aabb1, CAABB aabb2)
 		{
-			if (!enemy1->IsShow() || !enemy2->IsShow())
+			return aabb1.CollisionAABB(aabb2);
+		}
+
+		//ìGÇ∆ìGÇ∆ÇÃìñÇΩÇËîªíË
+		static void CollisionActorObject(CActorObject& obj1, CActorObject& obj2)
+		{
+			if (!obj1.IsShow() || !obj2.IsShow())
 			{
 				return;
 			}
 			//ñÑÇ‹ÇËñhé~îªíË
-			const Vector3& pos1 = enemy1->GetPosition();
-			const Vector3& pos2 = enemy2->GetPosition();
-			const CSphere& sphere1 = enemy1->GetCollider();
-			const CSphere& sphere2 = enemy2->GetCollider();
-			if (Collition(sphere1, sphere2))
+			const Vector3& pos1 = obj1.GetPosition();
+			const Vector3& pos2 = obj2.GetPosition();
+			const CAABB& size1 = obj1.GetCollider();
+			const CAABB& size2 = obj2.GetCollider();
+			if (Collision(size1, size2))
 			{
 
 				//ç∑ï™ãóó£
@@ -137,23 +142,36 @@ namespace Sample
 				if (ml <= 0)
 				{
 					//ÇªÇÃèÍçáñÑÇ‹ÇËÇÃäÑçáÇ≈âüÇµèoÇµ
-					ax = fabsf(sv.x) / (sphere1.r + sphere2.r);
-					az = fabsf(sv.z) / (sphere1.r + sphere2.r);
+					ax = fabsf(sv.x) / (size1.Size.x + size2.Size.x);
+					az = fabsf(sv.z) / (size1.Size.z + size2.Size.z);
 					ml = ax > az ? ax : az;
 				}
 				ax /= ml;
 				az /= ml;
 				//ñÑÇ‹ÇËñhé~ÇÇ®Ç±Ç»Ç§
-				float slx = copysignf((sphere1.r + sphere1.r) - (fabsf(sv.x) - 1), sv.x) * ax;
-				float slz = copysignf((sphere1.r + sphere1.r) - (fabsf(sv.z) - 1), sv.z) * az;
-				enemy1->SetPosition(pos1 + Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
-				enemy2->SetPosition(pos2 - Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
+				float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x) - 1), sv.x) * ax;
+				float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z) - 1), sv.z) * az;
+				obj1.SetPosition(pos1 + Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
+				obj2.SetPosition(pos2 - Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
 
 			}
 		}
 
+		/**
+			 * @brief		ìñÇΩÇËîªíËÉeÉìÉvÉåÅ[Égä÷êî
+			 */
+		template < typename T1, typename T2 >
+		static void CollisionObj(T1& obj1, T2& obj2) {
+#if _HAS_CXX17
+			static_assert("Collision Pair Not Found!!");
+#else
+			assert(false);
+#endif
+		}
 	};
+
 }
+
 
 
 

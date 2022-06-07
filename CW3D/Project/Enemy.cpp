@@ -176,6 +176,8 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 	//X‚¾‚¯•ûŒü‚ð‰Á–¡‚µ‚½’l‚É‚·‚é
 	knockBack.x = direction.x * power.x;
 
+
+
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }
 

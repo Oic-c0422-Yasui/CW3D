@@ -9,7 +9,7 @@ namespace Sample
 	{
 	public:
 
-		static void Present(CEnemy* enemy, const Sample::EnemyHPRenderPtr& view)
+		static void Present(EnemyPtr enemy, const Sample::EnemyHPRenderPtr& view)
 		{
 			enemy->GetHPSubject()->Subscribe([view](int hp) { view->SetHP(hp); });
 			enemy->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });
