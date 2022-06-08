@@ -2,6 +2,7 @@
 
 #include "AttackCollider.h"
 #include "GameDefine.h"
+#include	"KnockBack.h"
 
 namespace Sample
 {
@@ -12,6 +13,7 @@ namespace Sample
 		Vector3	knockBack;
 		bool	collideFlg;
 		int type;
+		KnockBackPtr direction;
 	};
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
@@ -43,6 +45,8 @@ namespace Sample
 		int					m_Damage;
 		std::vector<Hit>	m_HitIDs;
 		float				m_NextHitTime;
+		KnockBackPtr		m_Direction;
+
 
 
 	public:
@@ -82,6 +86,7 @@ namespace Sample
 			m_CollideFlg = sphire.collideFlg;
 			m_CollisionType = COLLITION_SPHERE;
 			m_KnockBack = sphire.knockBack;
+			m_Direction = sphire.direction;
 		}
 
 		void Create(Vector3 pos, ShotAABB aabb)
@@ -99,6 +104,7 @@ namespace Sample
 			m_CollideFlg = aabb.collideFlg;
 			m_CollisionType = COLLITION_AABB;
 			m_KnockBack = aabb.knockBack;
+			m_Direction = aabb.direction;
 		}
 
 		void Update()
@@ -214,6 +220,16 @@ namespace Sample
 			m_Offset = offset;
 		}
 
+		void SetDirection(KnockBackPtr dir) noexcept
+		{
+			m_Direction = dir;
+		}
+
+		KnockBackPtr GetDirection() const noexcept
+		{
+			return m_Direction;
+		}
+
 		void AddPosition(Vector3 pos) noexcept
 		{
 			m_Position += pos;
@@ -247,6 +263,8 @@ namespace Sample
 		float GetSpeed() const noexcept {
 			return m_Speed;
 		}
+
+		
 
 		int GetDamage() const noexcept {
 			return m_Damage;

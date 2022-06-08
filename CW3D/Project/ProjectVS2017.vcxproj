@@ -125,7 +125,7 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraController.h" />
-    <ClInclude Include="CKnockBack.h" />
+    <ClInclude Include="KnockBack.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionEnemyEnemy.h" />
     <ClInclude Include="CollisionManager.h" />

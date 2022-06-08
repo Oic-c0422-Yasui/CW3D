@@ -200,22 +200,7 @@ void CBattleScene::Update()
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
 			auto& shot = ShotManagerInstance.GetShot(j);
-			//表示されていない OR コライダーOFFの場合
-			if (!shot->IsShow() || !shot->GetCollideFlg())
-			{
-				continue;
-			}
-			if (shot->IsHitId(m_Enemys[i]->GetID()))
-			{
-				continue;
-			}
-
-			CCollision::CollisionObj(shot, m_Enemys[i]);
-
-			//ノックバック値設定
-			Vector3 knockBack = shot->GetKnockBack();
-			shot->AddHit(m_Enemys[i]->GetID());
-			m_Enemys[i]->Damage(m_Player.IsReverse() ? Vector3(-1, 0, 0) : Vector3(1, 0, 0), knockBack, shot->GetDamage());
+			CCollision::CollisionObj(m_Enemys[i], shot);
 		}
 	}
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());

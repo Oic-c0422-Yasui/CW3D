@@ -40,6 +40,7 @@ namespace Sample {
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;
+				status.direction
 			}
 
 			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
