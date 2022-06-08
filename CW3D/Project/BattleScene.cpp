@@ -3,6 +3,7 @@
 #include	"SkillPresenter.h"
 
 #include	"CollisionEnemyEnemy.h"
+#include	"CollisionShotEnemy.h"
 
 using namespace Sample;
 
@@ -100,6 +101,8 @@ bool CBattleScene::Load()
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect4", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tornade.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/fire.efk");
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect6", effect);
 
 
 
@@ -200,7 +203,7 @@ void CBattleScene::Update()
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
 			auto& shot = ShotManagerInstance.GetShot(j);
-			CCollision::CollisionObj(m_Enemys[i], shot);
+			CCollision::CollisionObj(shot, m_Enemys[i]);
 		}
 	}
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());

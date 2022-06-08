@@ -15,9 +15,12 @@ namespace Sample {
 		/** 移動アクション */
 		Attack2ActionPtr			m_Attack2Action;
 
+		const float CollideStartFrameTime = GameFrameTime * 25.0f;
+		const float NextInputFrameTime = GameFrameTime * 40.0f;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(0.8f, 1.5f, 0.8f) };
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,0, nullptr, Vector3(0.8f, 1.5f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -54,7 +57,7 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime == 25)
+				if (m_CurrentTime == CollideStartFrameTime )
 				{
 					shot->SetCollideFlg(true);
 
@@ -66,19 +69,18 @@ namespace Sample {
 				}
 			}
 
-			m_FrameTime++;
-
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
 				ChangeState(STATE_KEY_IDLE);
 			}
 			else if (m_NextInputFlg)
 			{
-				if (m_FrameTime > 40)
+				if (m_CurrentTime > NextInputFrameTime)
 				{
 					ChangeState(STATE_KEY_ATTACK3);
 				}
 			}
+			AttackBaseState::Execution();
 		}
 
 		/**

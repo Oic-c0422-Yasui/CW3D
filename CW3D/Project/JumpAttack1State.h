@@ -4,6 +4,7 @@
 #include	"AttackBaseState.h"
 #include	"JumpAttack1Action.h"
 
+
 namespace Sample {
 
 	/**
@@ -15,9 +16,13 @@ namespace Sample {
 		/** 移動アクション */
 		JumpAttack1ActionPtr			m_JumpAttack1Action;
 
+		const float EffectStartFrameTime = GameFrameTime * 20.0f;
+
+		bool effectStartFlg;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.0f, 0.0f),true,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(1.2f, 1.5f, 1.2f) };
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.0f, 0.0f),true,0, nullptr, Vector3(1.2f, 1.5f, 1.2f) };
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
@@ -30,7 +35,6 @@ namespace Sample {
 			: AttackBaseState()
 		{
 		}
-
 		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
 		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
 
@@ -41,6 +45,7 @@ namespace Sample {
 			m_JumpAttack1Action = Actor()->GetAction<JumpAttack1Action>(GetKey());
 			AttackBaseState::Start();
 			m_JumpAttack1Action->Start();
+			effectStartFlg = false;
 
 			//当たり判定用の弾作成
 			CreateShotAABB();
@@ -56,28 +61,20 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				/*if (m_FrameTime == 20)
-				{
-					shot->SetCollideFlg(true);
-				}
-				else if (shot->GetCollideFlg())
-				{
-					shot->SetCollideFlg(false);
-				}*/
 			}
 
-			if (m_FrameTime == 20)
+			if (m_CurrentTime >= EffectStartFrameTime && !effectStartFlg)
 			{
 				CreateEffect();
+				effectStartFlg = true;
 			}
-			m_FrameTime++;
 
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
 				ChangeState(STATE_KEY_FALL);
 			}
-
+			AttackBaseState::Execution();
 		}
 
 		/**

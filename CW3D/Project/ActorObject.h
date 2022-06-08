@@ -29,7 +29,7 @@ namespace Sample
 		{
 			return m_Actor;
 		}
-		const Vector3& GetPosition() const noexcept 
+		const CVector3& GetPosition() const noexcept 
 		{ 
 			return m_Actor->GetPosition(); 
 		}
@@ -37,15 +37,15 @@ namespace Sample
 		{
 			m_Actor->SetPosition(position);
 		}
-		const Vector3& GetVelocity() const noexcept
+		const CVector3& GetVelocity() const noexcept
 		{ 
 			return m_Actor->GetVelocity()->GetVelocity(); 
 		}
-		const bool& IsReverse() const noexcept
+		const bool IsReverse() const noexcept
 		{ 
 			return m_Actor->IsReverse(); 
 		}
-		const Vector3& GetRotate() const noexcept
+		const CVector3& GetRotate() const noexcept
 		{ 
 			return m_Actor->GetRotate(); 
 		}

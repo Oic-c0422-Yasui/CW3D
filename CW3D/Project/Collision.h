@@ -8,7 +8,7 @@ namespace Sample
 	{
 	private:
 
-		static bool Calculate(const float& boxX, const float& boxY, const float& boxZ, const Vector3& spherePos, const float& sphereR)
+		static bool Calculate(const float boxX, const float boxY, const float boxZ, const Vector3& spherePos, const float sphereR)
 		{
 			return (boxX - spherePos.x) * (boxX - spherePos.x) +
 				(boxY - spherePos.y) * (boxY - spherePos.y) +
@@ -107,12 +107,12 @@ namespace Sample
 		}
 
 		//‹…‚Æ‹…‚Æ‚Ì“–‚½‚è”»’è
-		static bool Collision(CSphere sphere1, CSphere sphere2)
+		static bool Collision(const CSphere& sphere1,const CSphere& sphere2)
 		{
 			return sphere1.CollisionSphere(sphere2);
 		}
 
-		static bool Collision(CAABB aabb1, CAABB aabb2)
+		static bool Collision(const CAABB& aabb1, const  CAABB& aabb2)
 		{
 			return aabb1.CollisionAABB(aabb2);
 		}

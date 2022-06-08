@@ -78,3 +78,13 @@ const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";
 const std::string SKILL_KEY_4 = "SkillKey4";
 const std::string SKILL_KEY_5 = "SkillKey5";
+
+//FPS60
+constexpr float GameFrameTime = 1.0f / 60.0f;
+
+enum CHARACTER_TYPE
+{
+	CHARA_PLAYER,
+	CHARA_ENEMY,
+	CHARA_OBJECT,
+};

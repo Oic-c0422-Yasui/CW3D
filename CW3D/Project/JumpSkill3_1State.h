@@ -3,6 +3,7 @@
 
 #include	"AttackBaseState.h"
 #include	"JumpSkill3_1Action.h"
+#include	"FixedYInhaleKnockBack.h"
 
 namespace Sample {
 
@@ -14,14 +15,18 @@ namespace Sample {
 	private:
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		JumpSkill3_1ActionPtr			m_SkillAction;
-		float							m_CurrentTime;
+		float							m_AttackTime;
 		float							m_FinishTime;
 		bool							m_ContinueFlg;
 		std::string						m_Key;
 
+
+
+		const float SkillActionFrameTime = GameFrameTime * 7.0f;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.1f, 0, Vector3(-0.1f, 0.1f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(4.0f, 8.0f, 4.0f) };
+		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.5f, 0.15f, 0.5f),false,0,nullptr, Vector3(4.0f, 8.0f, 4.0f) };
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
@@ -36,6 +41,8 @@ namespace Sample {
 		{
 		}
 
+
+		const KnockBackPtr GetKnockBack() override { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
 		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
 		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
 
@@ -45,7 +52,7 @@ namespace Sample {
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<JumpSkill3_1Action>(GetKey());
 
-			m_CurrentTime = 0.0f;
+			m_AttackTime = 0.0f;
 			m_FinishTime = 3.5f;
 			m_ContinueFlg = true;
 
@@ -79,28 +86,31 @@ namespace Sample {
 		 */
 		void Execution() override {
 
+			
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime % 7 == 0)
+				if (m_AttackTime >= SkillActionFrameTime)
 				{
 					shot->SetCollideFlg(true);
+					
 				}
 				else if (shot->GetCollideFlg())
 				{
 					shot->SetCollideFlg(false);
 				}
-
 			}
-			m_FrameTime++;
-			
+			if (m_AttackTime >= SkillActionFrameTime)
+			{
+				m_AttackTime = 0.0f;
+			}
 			for (auto& effect : m_pEffects)
 			{
 				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + createEffectStatus.offset);
 			}
 			
 
-			m_CurrentTime += CUtilities::GetFrameSecond();
+			m_AttackTime += CUtilities::GetFrameSecond() * gameSpeed;
 
 			if (m_CurrentTime > m_FinishTime || !m_ContinueFlg)
 			{
@@ -114,7 +124,7 @@ namespace Sample {
 				}
 			}
 
-
+			AttackBaseState::Execution();
 
 		}
 

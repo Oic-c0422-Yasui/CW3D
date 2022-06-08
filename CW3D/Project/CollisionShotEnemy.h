@@ -2,7 +2,6 @@
 #include "Collision.h"
 #include "Enemy.h"
 #include "Shot.h"
-#include "Player.h"
 
 namespace Sample
 {

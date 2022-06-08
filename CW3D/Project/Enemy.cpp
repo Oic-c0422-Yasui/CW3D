@@ -172,9 +172,8 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 		m_HPShowFlg = false;
 	}
 	m_HP = hp;
-	knockBack = power;
-	//X‚¾‚¯•ûŒü‚ð‰Á–¡‚µ‚½’l‚É‚·‚é
-	knockBack.x = direction.x * power.x;
+
+	knockBack = direction * power;
 
 
 

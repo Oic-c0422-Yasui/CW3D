@@ -33,8 +33,6 @@ public:
 	/**
 	 * @brief		CT•Ï‰»’Ê’m
 	 */
-
-
 	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetTimeParam().Get()); }
 	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
 

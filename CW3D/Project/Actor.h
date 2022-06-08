@@ -2,6 +2,7 @@
 #include	"IActor.h"
 #include	"IDManager.h"
 
+
 namespace Sample {
 
 
@@ -87,21 +88,21 @@ namespace Sample {
 		/**
 		 * @brief		座標設定
 		 */
-		void SetPosition(CVector3 position) override {
+		void SetPosition(const Vector3& position) override {
 			transform_->SetPosition(position);
 		}
 
 		/**
 		 * @brief		回転設定
 		 */
-		void SetRotate(CVector3 rotate) override{
+		void SetRotate(const  Vector3& rotate) override{
 			transform_->SetRotate(rotate);
 		}
 
 		/**
 		 * @brief		サイズ設定
 		 */
-		void SetScale(CVector3 scale) override {
+		void SetScale(const Vector3& scale) override {
 			transform_->SetScale(scale);
 		}
 
@@ -145,21 +146,21 @@ namespace Sample {
 		/**
 		 * @brief		座標取得
 		 */
-		CVector3 GetPosition() const override {
+		const CVector3& GetPosition() const override {
 			return transform_->GetPosition();
 		}
 
 		/**
 		 * @brief		回転取得
 		 */
-		CVector3 GetRotate() const override {
+		const CVector3& GetRotate() const override {
 			return transform_->GetRotate();
 		}
 
 		/**
 		 * @brief		マトリクス取得
 		 */
-		CMatrix44 GetMatrix() const override {
+		const CMatrix44& GetMatrix() const override {
 			return transform_->GetWorld();
 		}
 

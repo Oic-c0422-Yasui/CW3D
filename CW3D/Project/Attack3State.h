@@ -15,9 +15,15 @@ namespace Sample {
 		/** 移動アクション */
 		Attack3ActionPtr			m_Attack3Action;
 
+		const float CollideFirstStartFrameTime = GameFrameTime * 25.0f;
+		const float CollideSecondStartFrameTime = GameFrameTime * 55.0f;
+
+		bool collideFirstStartFlg;
+		bool collideSecondStartFlg;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(0.8f, 1.5f, 0.8f) };
+		//5:collideFlg(bool) 6:type(int) ,7:direction(CKnockBack) 8:size(Vector3)
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, nullptr, Vector3(0.8f, 1.5f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -49,15 +55,24 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
+			if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
+			{
+				collideFirstStartFlg = true;
+			}
+			if (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg)
+			{
+				collideSecondStartFlg = true;
+			}
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime == 25 || m_FrameTime == 55)
+				if ((m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg) || (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg))
 				{
 					shot->SetCollideFlg(true);
-					if (m_FrameTime == 25)
+					if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
 					{
 						m_Attack3Action->Execution();
+						
 					}
 
 				}
@@ -67,13 +82,14 @@ namespace Sample {
 				}
 
 			}
-
-			m_FrameTime++;
+			
+;
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
 				ChangeState(STATE_KEY_IDLE);
 			}
+			AttackBaseState::Execution();
 		}
 
 		/**

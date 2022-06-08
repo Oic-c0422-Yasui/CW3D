@@ -4,6 +4,9 @@
 #include "Effect.h"
 #include "ResourceManager.h"
 
+
+extern float gameSpeed;
+
 namespace Sample
 {
 	class CEffectManager : public Singleton<CEffectManager>
@@ -78,8 +81,8 @@ namespace Sample
 
 		void Update()
 		{
-			m_Manager->Update();
-			m_Renderer->SetTime(currentTime / 60.0f);
+			m_Manager->Update(1.0f * gameSpeed);
+			m_Renderer->SetTime(currentTime / 60.0f * gameSpeed);
 		}
 
 		void Render(Vector3 pos, Vector3 look)

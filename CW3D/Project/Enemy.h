@@ -65,7 +65,7 @@ namespace Sample
 			m_ShowFlg = isShow;
 		}
 
-		Vector3 GetPosition()
+		const Vector3& GetPosition()
 		{
 			return m_Position.Get();
 		}
@@ -95,7 +95,7 @@ namespace Sample
 			return m_HP.Get();
 		}
 
-		void SetPosition(Vector3 pos)
+		void SetPosition(const Vector3& pos)
 		{
 			m_Actor->SetPosition(pos);
 			m_Position = m_Actor->GetPosition();

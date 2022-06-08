@@ -4,6 +4,8 @@
 #include	"AttackBaseState.h"
 #include	"JumpSkill2_1Action.h"
 
+
+
 namespace Sample {
 
 	/**
@@ -15,13 +17,21 @@ namespace Sample {
 		/** 移動アクション */
 		JumpSkill2_1ActionPtr			m_SkillAction;
 
+		bool collideStartFlg;
+
+		//FPS60換算の25フレーム分
+		const float SkillActionFrameTime = GameFrameTime * 25.0f;
+
+		const float CollideStartFrameTime = GameFrameTime * 15.0f;
+		const float CollideEndFrameTime = GameFrameTime * 25.0f;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(5.0f, 2.0f, 2.0f) };
+		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, nullptr, Vector3(5.0f, 2.0f, 2.0f) };
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:radius(float)
-		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()),2.0f };
+		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0,nullptr,2.0f };
 
 		ShotSphere m_ShotStatusSphere;
 
@@ -38,7 +48,6 @@ namespace Sample {
 			: AttackBaseState()
 		{
 		}
-
 		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
 		const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
 		const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
@@ -50,14 +59,13 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<JumpSkill2_1Action>(GetKey());
 			AttackBaseState::Start();
 			m_SkillAction->Start();
-
+			collideStartFlg = false;
 			m_EffectStatus = createEffectStatus;
 			m_ShotStatusSphere = createShotStatusSphere;
 
 			if (Input()->IsPress(INPUT_KEY_VERTICAL))
 			{
 				
-
 				float rad = MOF_ToRadian(-30);
 				Vector3 direction(cos(rad), sin(rad), 0);
 				int shotCount = 3;
@@ -96,17 +104,11 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime < 15)
-				{
-					shot->SetCollideFlg(false);
-
-
-				}
-				else if (!shot->GetCollideFlg())
+				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_FrameTime > 25)
+				if (m_CurrentTime > CollideEndFrameTime)
 				{
 					if (shot->GetCollideFlg())
 					{
@@ -115,11 +117,14 @@ namespace Sample {
 				}
 
 			}
-			m_FrameTime++;
+			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			{
+				collideStartFlg = true;
+			}
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				if (m_FrameTime > 30)
+				if (m_CurrentTime > SkillActionFrameTime)
 				{
 					if (Actor()->GetTransform()->GetPositionY() > 0)
 					{
@@ -131,7 +136,7 @@ namespace Sample {
 					}
 				}
 			}
-
+			AttackBaseState::Execution();
 		}
 
 		/**

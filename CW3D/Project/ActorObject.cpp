@@ -2,6 +2,8 @@
 
 using namespace Sample;
 
+extern float gameSpeed;
+
 CActorObject::CActorObject()
 	: m_Actor(std::make_shared<Sample::Actor>())
 	, m_StateMachine(std::make_shared<Sample::StateMachine>())
@@ -40,7 +42,7 @@ void CActorObject::Update()
 	//マトリクスを取得
 	matWorld = m_Actor->GetMatrix();
 
-	m_Motion->AddTimer(CUtilities::GetFrameSecond());
+	m_Motion->AddTimer(CUtilities::GetFrameSecond() * gameSpeed);
 }
 
 void CActorObject::Render()

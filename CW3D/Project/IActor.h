@@ -64,17 +64,17 @@ namespace Sample {
 		/**
 		 * @brief		座標設定
 		 */
-		virtual void SetPosition(CVector3 position) = 0;
+		virtual void SetPosition(const Vector3& position) = 0;
 
 		/**
 		 * @brief		回転設定
 		 */
-		virtual void SetRotate(CVector3 rotate) = 0;
+		virtual void SetRotate(const Vector3& rotate) = 0;
 
 		/**
 		 * @brief		サイズ設定
 		 */
-		virtual void SetScale(CVector3 scale) = 0;
+		virtual void SetScale(const Vector3& scale) = 0;
 
 
 		virtual void SetReverse(bool isReverse) = 0;
@@ -97,17 +97,17 @@ namespace Sample {
 		/**
 		 * @brief		座標取得
 		 */
-		virtual CVector3 GetPosition() const = 0;
+		virtual const CVector3& GetPosition() const = 0;
 
 		/**
 		 * @brief		回転取得
 		 */
-		virtual CVector3 GetRotate() const = 0;
+		virtual const CVector3& GetRotate() const = 0;
 
 		/**
 		 * @brief		マトリクス取得
 		 */
-		virtual CMatrix44 GetMatrix() const = 0;
+		virtual const CMatrix44& GetMatrix() const = 0;
 
 		/**
 		 * @brief		反転取得

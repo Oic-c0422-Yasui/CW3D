@@ -2,6 +2,8 @@
 
 #include "Common.h"
 
+extern float gameSpeed;
+
 namespace Sample
 {
 	/**
@@ -64,7 +66,7 @@ namespace Sample
 			//重力の適用
 			if (m_UseGravity)
 			{
-				m_Velocity.y -= m_Gravity;
+				m_Velocity.y -= m_Gravity * gameSpeed;
 				m_Velocity.y = ((m_Velocity.y < -m_MaxVelocity.y) ?
 					-m_MaxVelocity.y : m_Velocity.y);
 			}
@@ -76,7 +78,7 @@ namespace Sample
 				{
 					m_CurrentY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
 
-					m_CurrentTime += CUtilities::GetFrameSecond();
+					m_CurrentTime += CUtilities::GetFrameSecond() * gameSpeed;
 				}
 				else
 				{
@@ -88,25 +90,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.x) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2)
+				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2 * gameSpeed)
 				{
-					m_Velocity.x -= m_Decelerate.x * 2;
+					m_Velocity.x -= m_Decelerate.x * 2 * gameSpeed;
 					if (m_UpdateVelocity.x < 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x;
+						m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
 					}
 				}
-				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2)
+				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2 * gameSpeed)
 				{
-					m_Velocity.x += m_Decelerate.x * 2;
+					m_Velocity.x += m_Decelerate.x * 2 * gameSpeed;
 					if (m_UpdateVelocity.x > 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x;
+						m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
 					}
 				}
 				else
 				{
-					m_Velocity.x += m_UpdateVelocity.x;
+					m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
 					m_Velocity.x = ((m_Velocity.x > m_MaxVelocity.x) ?
 						m_MaxVelocity.x : ((m_Velocity.x < -m_MaxVelocity.x) ?
 							-m_MaxVelocity.x : m_Velocity.x));
@@ -121,25 +123,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.z) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2)
+				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2 * gameSpeed)
 				{
-					m_Velocity.z -= m_Decelerate.z * 2;
+					m_Velocity.z -= m_Decelerate.z * 2 * gameSpeed;
 					if (m_UpdateVelocity.z < 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z;
+						m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
 					}
 				}
-				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2)
+				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2 * gameSpeed)
 				{
-					m_Velocity.z += m_Decelerate.z * 2;
+					m_Velocity.z += m_Decelerate.z * 2 * gameSpeed;
 					if (m_UpdateVelocity.z > 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z;
+						m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
 					}
 				}
 				else
 				{
-					m_Velocity.z += m_UpdateVelocity.z;
+					m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
 					m_Velocity.z = ((m_Velocity.z > m_MaxVelocity.z) ?
 						m_MaxVelocity.z : ((m_Velocity.z < -m_MaxVelocity.z) ?
 							-m_MaxVelocity.z : m_Velocity.z));
@@ -166,7 +168,7 @@ namespace Sample
 		/**
 		 * @brief		速度の設定
 		 */
-		void SetVelocity(const CVector3& v) noexcept {
+		void SetVelocity(const Vector3& v) noexcept {
 			m_Velocity = v;
 		}
 

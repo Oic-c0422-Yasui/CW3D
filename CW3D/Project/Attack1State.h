@@ -16,9 +16,14 @@ namespace Sample {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		Attack1ActionPtr			m_Attack1Action;
 
+		const float CollideStartFrameTime = GameFrameTime * 25.0f;
+		const float NextInputFrameTime = GameFrameTime * 42.0f;
+
+		bool collideStartFlg;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()) ,Vector3(0.8f, 1.5f, 0.8f) };
+		const ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,0, nullptr ,Vector3(0.8f, 1.5f, 0.8f) };
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
@@ -40,7 +45,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_Attack1Action = Actor()->GetAction<Attack1Action>(GetKey());
-
+			collideStartFlg = false;
 			AttackBaseState::Start();
 
 			m_Attack1Action->Start();
@@ -59,10 +64,9 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime == 25)
+				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
 				{
 					shot->SetCollideFlg(true);
-
 
 				}
 				else if (shot->GetCollideFlg())
@@ -71,13 +75,11 @@ namespace Sample {
 				}
 
 			}
-			if (m_FrameTime == 25)
+			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
 			{
 				CreateEffect();
-				
+				collideStartFlg = true;
 			}
-
-			m_FrameTime++;
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
@@ -85,12 +87,12 @@ namespace Sample {
 			}
 			else if (m_NextInputFlg)
 			{
-				if (Actor()->GetAnimationState()->GetTime() > 0.7f)
+				if (Actor()->GetAnimationState()->GetTime() > NextInputFrameTime)
 				{
 					ChangeState(STATE_KEY_ATTACK2);
 				}
 			}
-
+			AttackBaseState::Execution();
 		}
 
 		/**

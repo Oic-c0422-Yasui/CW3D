@@ -125,6 +125,9 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="FixedKnockBack.h" />
+    <ClInclude Include="FixedYInhaleKnockBack.h" />
+    <ClInclude Include="InhaleKnockBack.h" />
     <ClInclude Include="KnockBack.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionEnemyEnemy.h" />
@@ -228,6 +231,8 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Test.h" />
+    <ClInclude Include="TimeController.h" />
+    <ClInclude Include="TimeScale.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="Utilities.h" />

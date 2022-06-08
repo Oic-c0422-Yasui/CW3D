@@ -16,6 +16,7 @@ CSceneBase* gScene = NULL;
 
 bool debugFlg = false;
 
+float gameSpeed = 1.0f;
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -47,6 +48,14 @@ MofBool CGameApp::Update(void){
 
 	gScene->Update();
 
+	if (g_pInput->IsKeyPush(MOFKEY_F2))
+	{
+		gameSpeed = 0.1f;
+	}
+	if (g_pInput->IsKeyPush(MOFKEY_F3))
+	{
+		gameSpeed = 1.0f;
+	}
 	if (g_pInput->IsKeyPush(MOFKEY_F1))
 	{
 		debugFlg = debugFlg ? false : true;

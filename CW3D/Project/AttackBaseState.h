@@ -2,6 +2,8 @@
 
 
 #include	"State.h"
+#include	"FixedKnockBack.h"
+
 
 namespace Sample {
 
@@ -12,7 +14,7 @@ namespace Sample {
 	{
 	protected:
 
-		int								m_FrameTime;
+		float							m_CurrentTime;
 		bool							m_NextInputFlg;
 
 		std::vector<ShotPtr>			m_pShots;
@@ -23,13 +25,29 @@ namespace Sample {
 		 */
 		AttackBaseState()
 			: State()
-			, m_FrameTime(0)
+			, m_CurrentTime(0.0f)
 			, m_NextInputFlg(false)
 		{
 		}
-		virtual const ShotAABB& GetCreateShotStatusAABB() { return ShotAABB(); }
-		virtual const ShotSphere& GetCreateShotStatusSphere() { return ShotSphere(); }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() { return EffectCreateParameter(); }
+		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CFixedKnockBack>(Actor()); }
+		virtual const ShotAABB& GetCreateShotStatusAABB()
+		{
+			assert(false);
+			static const ShotAABB box = {};
+			return box;
+		}
+		virtual const ShotSphere& GetCreateShotStatusSphere()
+		{
+			assert(false);
+			static const ShotSphere sphere = {};
+			return sphere;
+		}
+		virtual const EffectCreateParameter& GetCreateEffectStatus()
+		{
+			assert(false);
+			static const EffectCreateParameter param = {};
+			return param;
+		}
 
 		//立方体の弾を作成する
 		virtual void CreateShotAABB()
@@ -40,8 +58,8 @@ namespace Sample {
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;
-				status.direction
 			}
+			status.direction = GetKnockBack();
 
 			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 		}
@@ -55,7 +73,7 @@ namespace Sample {
 			{
 				status.offset.x *= -1;
 			}
-
+			status.direction = GetKnockBack();
 			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 		}
 
@@ -83,7 +101,7 @@ namespace Sample {
 		 * @brief		ステート内の開始処理
 		 */
 		virtual void Start() override {
-			m_FrameTime = 0;
+			m_CurrentTime = 0.0f;
 			m_NextInputFlg = false;
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
@@ -100,7 +118,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		virtual void Execution() override {
-
+			m_CurrentTime += CUtilities::GetFrameSecond() * gameSpeed;
 
 		}
 

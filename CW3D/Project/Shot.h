@@ -114,7 +114,7 @@ namespace Sample
 				return;
 			}
 			
-			m_Position.x += m_Speed;
+			m_Position.x += m_Speed * gameSpeed;
 			switch (m_CollisionType)
 			{
 				case COLLITION_SPHERE:
@@ -288,7 +288,7 @@ namespace Sample
 			{
 				if (id.Time > 0.0f)
 				{
-					id.Time -= CUtilities::GetFrameSecond();
+					id.Time -= CUtilities::GetFrameSecond() * gameSpeed;
 				}
 			}
 		}

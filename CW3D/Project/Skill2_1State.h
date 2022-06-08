@@ -15,13 +15,18 @@ namespace Sample {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		Skill2_1ActionPtr			m_SkillAction;
 
+		const float CollideStartFrameTime = GameFrameTime * 15.0f;
+		const float CollideEndFrameTime = GameFrameTime * 25.0f;
+
+		bool collideStartFlg;
+
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()), Vector3(5.0f, 2.0f, 2.0f) };
+		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, nullptr, Vector3(5.0f, 2.0f, 2.0f) };
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:radius(float)
-		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, std::make_shared<CFixedKnockBack>(Actor()),2.0f };
+		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, nullptr,2.0f };
 
 		ShotSphere m_ShotStatusSphere;
 
@@ -50,7 +55,7 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<Skill2_1Action>(GetKey());
 
 			AttackBaseState::Start();
-
+			collideStartFlg = false;
 			m_SkillAction->Start();
 
 			m_EffectStatus = createEffectStatus;
@@ -94,32 +99,27 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_FrameTime < 15)
-				{
-					shot->SetCollideFlg(false);
-
-
-				}
-				else if (!shot->GetCollideFlg())
+				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_FrameTime > 25)
+				if (m_CurrentTime > CollideEndFrameTime)
 				{
 					if (shot->GetCollideFlg())
 					{
 						shot->SetCollideFlg(false);
 					}
 				}
-
 			}
-			m_FrameTime++;
+			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			{
+				collideStartFlg = true;
+			}
+			
 
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				if (m_FrameTime > 30)
-				{
 					if (Actor()->GetTransform()->GetPositionY() > 0)
 					{
 						ChangeState(STATE_KEY_FALL);
@@ -128,11 +128,8 @@ namespace Sample {
 					{
 						ChangeState(STATE_KEY_IDLE);
 					}
-				}
-				
-
 			}
-
+			AttackBaseState::Execution();
 
 		}
 

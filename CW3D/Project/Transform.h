@@ -4,6 +4,8 @@
 #include	"Utilities.h"
 #include	"Velocity.h"
 
+extern float gameSpeed;
+
 namespace Sample
 {
 	//姿勢変換クラス
@@ -52,9 +54,9 @@ namespace Sample
 		 */
 
 			//座標の移動
-			void MovePosition(CVector3 movePos) noexcept
+			void MovePosition(const Vector3& movePos) noexcept
 			{
-				m_Position += movePos;
+				m_Position += movePos * gameSpeed;
 				m_World.SetTranslation(m_Position);
 			}
 
@@ -62,18 +64,18 @@ namespace Sample
 			{
 				if (v->IsGravity())
 				{
-					m_Position += v->GetVelocity();
+					m_Position += v->GetVelocity() * gameSpeed;
 				}
 				else
 				{
-					m_Position.x += v->GetVelocityX();
-					m_Position.z += v->GetVelocityZ();
+					m_Position.x += v->GetVelocityX() * gameSpeed;
+					m_Position.z += v->GetVelocityZ() * gameSpeed;
 				}
 				m_World.SetTranslation(m_Position);
 			}
 
 
-			void Clip(CVector3 min, CVector3 max)
+			void Clip(const Vector3& min, const  Vector3& max)
 			{
 				ClipX(min.x, max.x);
 				ClipY(min.y, max.y);
@@ -103,7 +105,7 @@ namespace Sample
 
 
 			//座標の設定
-			void SetPosition(CVector3 position) noexcept
+			void SetPosition(const Vector3& position) noexcept
 			{
 				m_Position = position;
 				m_World.SetTranslation(m_Position);
@@ -131,7 +133,7 @@ namespace Sample
 			}
 
 			//座標の取得
-			CVector3 GetPosition() const noexcept
+			const CVector3& GetPosition() const noexcept
 			{
 				return m_Position;
 			}
@@ -159,14 +161,14 @@ namespace Sample
 		 */
 
 			 //サイズの変更
-			void MoveScale(CVector3 changeScale) noexcept
+			void MoveScale(const Vector3& changeScale) noexcept
 			{
 				m_Scale += changeScale;
 				m_UpdateFlg = true;
 			}
 
 			//サイズの設定
-			void SetScale(CVector3 scale) noexcept
+			void SetScale(const Vector3& scale) noexcept
 			{
 				m_Scale = scale;
 				m_UpdateFlg = true;
@@ -194,7 +196,7 @@ namespace Sample
 			}
 
 			//サイズの取得
-			CVector3 GetScale() const noexcept
+			const CVector3& GetScale() const noexcept
 			{
 				return m_Scale;
 			}
@@ -222,14 +224,14 @@ namespace Sample
 		 */
 
 			//回転
-			void MoveRotate(CVector3 rotate) noexcept
+			void MoveRotate(const Vector3& rotate) noexcept
 			{
 				m_Rotate += rotate;
 				m_UpdateFlg = true;
 			}
 
 			//回転の設定
-			void SetRotate(CVector3 rotate) noexcept
+			void SetRotate(const Vector3& rotate) noexcept
 			{
 				m_Rotate = rotate;
 				m_UpdateFlg = true;
@@ -257,7 +259,7 @@ namespace Sample
 			}
 
 			//回転の取得
-			CVector3 GetRotate() const noexcept
+			const CVector3& GetRotate() const noexcept
 			{
 				return m_Rotate;
 			}
