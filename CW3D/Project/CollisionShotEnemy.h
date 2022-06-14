@@ -20,7 +20,7 @@ namespace Sample
 		{
 		case COLLITION_SPHERE:
 		{
-			if (!CCollision::Collision(enemy->GetCollider(), shot->GetColliderSphere()))
+			if (!CCollision::Collision(shot->GetColliderSphere(), enemy->GetCollider()))
 			{
 				return;
 			}
@@ -28,7 +28,7 @@ namespace Sample
 		}
 		case COLLITION_AABB:
 		{
-			if (!CCollision::Collision(enemy->GetCollider(), shot->GetColliderAABB()))
+			if (!CCollision::Collision(shot->GetColliderAABB(), enemy->GetCollider()))
 			{
 				return;
 			}

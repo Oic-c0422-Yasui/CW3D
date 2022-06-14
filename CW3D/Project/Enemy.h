@@ -45,10 +45,10 @@ namespace Sample
 
 		bool IsInvincible() const;
 
-		CSphere GetCollider() {
+		/*CSphere GetCollider() {
 			m_Collider->SetPosition(m_Position.Get() + Vector3(0, 0.7f, 0));
 			return m_Collider->GetCollider();
-		}
+		}*/
 
 		float GetSize()
 		{

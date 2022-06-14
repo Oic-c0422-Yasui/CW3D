@@ -130,14 +130,16 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-
-			if (Input()->IsPress(m_Key))
+			if (m_CurrentTime > 0.5f)
 			{
-				m_ContinueFlg = true;
-			}
-			else
-			{
-				m_ContinueFlg = false;
+				if (Input()->IsPress(m_Key))
+				{
+					m_ContinueFlg = true;
+				}
+				else
+				{
+					m_ContinueFlg = false;
+				}
 			}
 
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||

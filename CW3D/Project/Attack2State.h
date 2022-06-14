@@ -17,6 +17,7 @@ namespace Sample {
 
 		const float CollideStartFrameTime = GameFrameTime * 25.0f;
 		const float NextInputFrameTime = GameFrameTime * 40.0f;
+		bool collideStartFlg;
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
@@ -42,7 +43,7 @@ namespace Sample {
 			AttackBaseState::Start();
 
 			m_Attack2Action->Start();
-
+			collideStartFlg = false;
 			//“–‚½‚è”»’è—p‚Ì’eì¬
 			CreateShotAABB();
 
@@ -57,7 +58,7 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_CurrentTime == CollideStartFrameTime )
+				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg )
 				{
 					shot->SetCollideFlg(true);
 
@@ -67,6 +68,10 @@ namespace Sample {
 				{
 					shot->SetCollideFlg(false);
 				}
+			}
+			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			{
+				collideStartFlg = true;
 			}
 
 			if (Actor()->GetAnimationState()->IsEndMotion())

@@ -12,6 +12,7 @@
 #include	"EffectController.h"
 #include	"SkillCreater.h"
 #include	"IDManager.h"
+#include	"TimeController.h"
 
 #include	"EnemyHPRender.h"
 #include	"SkillUIRender.h"

@@ -49,6 +49,112 @@ namespace Sample
 
 			return result;
 		}
+
+		//イージングの種類
+		enum EASING_TYPE {
+			EASE_LINER,
+			EASE_IN_SINE,
+			EASE_OUT_SINE,
+			EASE_INOUT_SINE,
+		};
+
+		//アニメーション用構造体
+		struct ANIM_DATA
+		{
+			float	Time;
+			float	Value;
+			EASING_TYPE EasingType;
+		};
+
+		using ANIM_DATAPtr = std::shared_ptr<ANIM_DATA>;
+
+		//保管アニメーション
+		static float InterpolationAnim(float animTime, ANIM_DATA* animData, int count)
+		{
+			int phase;
+			for (phase = 1; phase < count; phase++)
+			{
+				if (animTime < animData[phase].Time)
+				{
+					break;
+				}
+			}
+			phase = min(phase, count - 1);
+
+			float nt = animTime - animData[phase - 1].Time;
+			float at = animData[phase].Time - animData[phase - 1].Time;
+			float t = nt / at;
+			t = MOF_CLIPING(t, 0.0f, 1.0f);
+
+			switch (animData[phase].EasingType)
+			{
+			case EASE_IN_SINE:
+			{
+				t = 1.0f - cos(MOF_MATH_HALFPI * t);
+				break;
+			}
+			case EASE_OUT_SINE:
+			{
+				t = sin(MOF_MATH_HALFPI * t);
+				break;
+			}
+			case EASE_INOUT_SINE:
+			{
+				t = 0.5f - 0.5f * cos(MOF_MATH_PI * t);
+				break;
+			}
+			default:
+				break;
+			}
+
+			float from = animData[phase - 1].Value;
+			float to = animData[phase].Value;
+			return from + (to - from) * t;
+		}
+
+		//保管アニメーション
+		static float InterpolationAnim(float animTime, ANIM_DATAPtr* animData, int count)
+		{
+			int phase;
+			for (phase = 1; phase < count; phase++)
+			{
+				if (animTime < animData[phase]->Time)
+				{
+					break;
+				}
+			}
+			phase = min(phase, count - 1);
+
+			float nt = animTime - animData[phase - 1]->Time;
+			float at = animData[phase]->Time - animData[phase - 1]->Time;
+			float t = nt / at;
+			t = MOF_CLIPING(t, 0.0f, 1.0f);
+
+			switch (animData[phase]->EasingType)
+			{
+			case EASE_IN_SINE:
+			{
+				t = 1.0f - cos(MOF_MATH_HALFPI * t);
+				break;
+			}
+			case EASE_OUT_SINE:
+			{
+				t = sin(MOF_MATH_HALFPI * t);
+				break;
+			}
+			case EASE_INOUT_SINE:
+			{
+				t = 0.5f - 0.5f * cos(MOF_MATH_PI * t);
+				break;
+			}
+			default:
+				break;
+			}
+
+			float from = animData[phase - 1]->Value;
+			float to = animData[phase]->Value;
+			return from + (to - from) * t;
+		}
 	};
 
 }

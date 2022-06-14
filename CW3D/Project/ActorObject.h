@@ -16,6 +16,7 @@ namespace Sample
 		CMatrix44							matWorld;
 		CAABB								m_Collider;
 		CVector3							m_ColliderOffset;
+		CVector3							m_ColliderSize;
 		bool								m_ShowFlg;
 		bool								m_DeadFlg;
 	public:
@@ -58,6 +59,7 @@ namespace Sample
 		}
 		CAABB GetCollider()
 		{
+			m_Collider.Size = m_ColliderSize;
 			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
 
 			return m_Collider;

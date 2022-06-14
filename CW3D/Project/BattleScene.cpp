@@ -189,6 +189,11 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 	ShotManagerInstance.Update();
+	if (g_pInput->IsKeyPush(MOFKEY_I))
+	{
+
+		TimeControllerInstance.SetTimeScale(0.5f, 1.0f, MyUtilities::EASE_LINER);
+	}
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 
@@ -209,6 +214,7 @@ void CBattleScene::Update()
 	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();
+	TimeControllerInstance.Update();
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
@@ -259,7 +265,7 @@ void CBattleScene::RenderDebug()
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		CGraphicsUtilities::RenderSphere(m_Enemys[i]->GetCollider(), Vector4(0, 1, 0, 0.2f));
+		CGraphicsUtilities::RenderBox(m_Enemys[i]->GetCollider(), Vector4(0, 1, 0, 0.2f));
 	}
 	
 }
@@ -294,6 +300,8 @@ void CBattleScene::Render2D()
 		m_SkillCTRender[i]->Render(i * 150);
 	}
 
+	
+
 	if (count >= m_Enemys.size())
 	{
 		CRectangle rect;
@@ -310,6 +318,8 @@ void CBattleScene::Render2DDebug()
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
 	m_Camera.Render2DDebug();
+
+	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
 	//for (int i = 0;i < m_EnemysHPRender.size();i++)
 	//{
 	//	//CGraphicsUtilities::RenderString(0, 500 + 30 * i, "PosZ:%.2f", m_EnemysHPRender[i]->GetPosition().z);
@@ -345,5 +355,6 @@ void CBattleScene::Release()
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
 	IDManagerInstance.Release();
+	TimeControllerInstance.Release();
 	
 }

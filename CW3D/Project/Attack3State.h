@@ -23,7 +23,7 @@ namespace Sample {
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) ,7:direction(CKnockBack) 8:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.5f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, nullptr, Vector3(0.8f, 1.5f, 0.8f) };
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, nullptr, Vector3(0.8f, 2.0f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -44,7 +44,8 @@ namespace Sample {
 			AttackBaseState::Start();
 
 			m_Attack3Action->Start();
-
+			collideFirstStartFlg = false;
+			collideSecondStartFlg = false;
 			//当たり判定用の弾作成
 			CreateShotAABB();
 
@@ -55,14 +56,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
-			{
-				collideFirstStartFlg = true;
-			}
-			if (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg)
-			{
-				collideSecondStartFlg = true;
-			}
+			
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
@@ -82,7 +76,14 @@ namespace Sample {
 				}
 
 			}
-			
+			if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
+			{
+				collideFirstStartFlg = true;
+			}
+			if (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg)
+			{
+				collideSecondStartFlg = true;
+			}
 ;
 
 			if (Actor()->GetAnimationState()->IsEndMotion())

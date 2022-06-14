@@ -11,6 +11,7 @@ CActorObject::CActorObject()
 	, m_ShowFlg(false)
 	, m_DeadFlg(false)
 	, m_ColliderOffset(0,0,0)
+	, m_ColliderSize(1, 1, 1)
 {
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
