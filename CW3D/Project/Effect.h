@@ -32,7 +32,7 @@ namespace Sample
 			
 		}
 		~CEffect();
-		void Initialize();
+		void Initialize( const Vector3& offset);
 		void Update();
 
 		const bool& IsStop() noexcept
@@ -49,6 +49,12 @@ namespace Sample
 		{
 			return m_Handle;
 		}
+
+		const Vector3& GetOffset() const noexcept
+		{
+			return m_Offset;
+		}
+
 
 
 	

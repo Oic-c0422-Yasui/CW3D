@@ -43,7 +43,7 @@ void CActorObject::Update()
 	//マトリクスを取得
 	matWorld = m_Actor->GetMatrix();
 
-	m_Motion->AddTimer(CUtilities::GetFrameSecond() * gameSpeed);
+	m_Motion->AddTimer(CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Actor->GetType()));
 }
 
 void CActorObject::Render()

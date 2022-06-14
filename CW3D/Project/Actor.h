@@ -3,6 +3,7 @@
 #include	"IDManager.h"
 
 
+
 namespace Sample {
 
 
@@ -31,6 +32,8 @@ namespace Sample {
 
 		CMyID					myId_;
 
+		CHARACTER_TYPE			charaType;
+
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -44,6 +47,7 @@ namespace Sample {
 			, motion_()
 			, m_SkillController(std::make_shared<CSkillController>())
 			, myId_(IDManagerInstance.GetId())
+			, charaType()
 		{
 		}
 
@@ -115,6 +119,15 @@ namespace Sample {
 		 */
 		void SetAnimationState(AnimationStatePtr animState) override {
 			motion_ = animState;
+		}
+
+		/**
+		 * @brief		タイプ設定
+		 */
+		void SetType(CHARACTER_TYPE type) override {
+			charaType = type;
+			transform_->SetType(type);
+			velocity_->SetType(type);
 		}
 
 		/**
@@ -194,6 +207,10 @@ namespace Sample {
 		 */
 		unsigned int GetID() const override {
 			return myId_.GetID();
+		}
+
+		CHARACTER_TYPE GetType() const override {
+			return charaType;
 		}
 
 		/**

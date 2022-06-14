@@ -5,7 +5,7 @@
 #include "Common.h"
 #include "ShotManager.h"
 #include "ReactiveParameter.h"
-
+#include	"TimeController.h"
 
 
 namespace Sample {
@@ -84,6 +84,9 @@ namespace Sample {
 		// */
 		virtual void SetAnimationState(AnimationStatePtr animState) = 0;
 
+		//タイプ
+		virtual void SetType(CHARACTER_TYPE type) = 0;
+
 		/**
 		 * @brief		姿勢取得
 		 */
@@ -133,6 +136,11 @@ namespace Sample {
 		 * @brief		ID取得
 		 */
 		virtual unsigned int GetID() const = 0;
+
+		/**
+		 * @brief		タイプ取得
+		 */
+		virtual CHARACTER_TYPE GetType() const = 0;
 
 		/**
 		 * @brief		パラメーター

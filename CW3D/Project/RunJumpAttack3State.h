@@ -21,7 +21,7 @@ namespace Sample {
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),true,0, nullptr, Vector3(1.5f, 2.0f, 1.5f) };
+		ShotAABB createShotStatus = { Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.3f, 0.15f, 0.0f),true,CHARA_PLAYER, nullptr, Vector3(1.5f, 2.0f, 1.5f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -39,6 +39,7 @@ namespace Sample {
 		void Start() override {
 			m_Attack3Action = Actor()->GetAction<RunJumpAttack3Action>(GetKey());
 			AttackBaseState::Start();
+			collideStartFlg = false;
 			m_Attack3Action->Start();
 			//当たり判定用の弾作成
 			CreateShotAABB();

@@ -9,7 +9,7 @@ namespace Sample
 	{
 	private:
 		float	m_Time;
-		MyUtilities::ANIM_DATA* m_AnimData;
+		MyUtilities::ANIM_DATA m_AnimData[10];
 		float	m_ChangeTime;
 		bool	m_ChangeFlg;
 		float	m_CurrentTime;
@@ -20,8 +20,8 @@ namespace Sample
 			: m_Time(1.0f)
 			, m_ChangeFlg(false)
 			, m_ChangeTime(0.0f)
-			, m_AnimData()
 			, m_Count(0)
+			, m_AnimData()
 		{
 		}
 		~CTimeScale() {
@@ -36,7 +36,6 @@ namespace Sample
 			if (m_ChangeTime > m_CurrentTime)
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
-				
 			}
 			else
 			{
@@ -52,20 +51,24 @@ namespace Sample
 
 		void SetScale(const float scale, const float changeTime, MyUtilities::EASING_TYPE easeType) noexcept
 		{
-			MyUtilities::ANIM_DATA anim[] =
+			m_Count = 2;
+			MyUtilities::ANIM_DATA anim[2] =
 			{
-				{changeTime,scale,easeType},
+				{0, m_Time, easeType},
+				{changeTime, scale, easeType}
 			};
-			m_Count = _countof(anim);
-			m_AnimData = anim;
+			m_AnimData[0] = anim[0];
+			m_AnimData[1] = anim[1];
 			m_CurrentTime = 0.0f;
+			m_ChangeTime = changeTime;
 			m_ChangeFlg = true;
 		}
 
 		void SetScale(MyUtilities::ANIM_DATA* anim,int count)
 		{
-			m_AnimData = anim;
+			memcpy(m_AnimData, anim, sizeof(MyUtilities::ANIM_DATA) * count);
 			m_Count = count;
+			m_ChangeTime = m_AnimData[count - 1].Time;
 			m_CurrentTime = 0.0f;
 			m_ChangeFlg = true;
 		}
@@ -74,6 +77,7 @@ namespace Sample
 		{
 			m_Time = 1.0f;
 			m_CurrentTime = 0.0f;
+			m_ChangeTime = 0.0f;
 			m_ChangeFlg = false;
 		}
 

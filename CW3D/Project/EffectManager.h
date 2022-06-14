@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Effect.h"
 #include "ResourceManager.h"
+#include "TimeController.h"
 
 
 extern float gameSpeed;
@@ -81,8 +82,8 @@ namespace Sample
 
 		void Update()
 		{
-			m_Manager->Update(1.0f * gameSpeed);
-			m_Renderer->SetTime(currentTime / 60.0f * gameSpeed);
+			m_Manager->Update(1.0f * TimeControllerInstance.GetTimeScale());
+			m_Renderer->SetTime(currentTime / 60.0f * TimeControllerInstance.GetTimeScale());
 		}
 
 		void Render(Vector3 pos, Vector3 look)

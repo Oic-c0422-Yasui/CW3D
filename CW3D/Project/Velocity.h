@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common.h"
+#include "TimeController.h"
 
 extern float gameSpeed;
 
@@ -30,6 +31,7 @@ namespace Sample
 		//重力加速度
 		float					m_Gravity;
 
+		CHARACTER_TYPE			m_Type;
 
 		//回転用変数
 		bool					m_SetRotateFlg;
@@ -56,6 +58,7 @@ namespace Sample
 			, m_TargetY(0.0f)
 			, m_StartY(0.0f)
 			, m_CurrentY(0.0f)
+			, m_Type()
 		{
 		}
 
@@ -66,7 +69,7 @@ namespace Sample
 			//重力の適用
 			if (m_UseGravity)
 			{
-				m_Velocity.y -= m_Gravity * gameSpeed;
+				m_Velocity.y -= m_Gravity * TimeControllerInstance.GetTimeScale(m_Type);
 				m_Velocity.y = ((m_Velocity.y < -m_MaxVelocity.y) ?
 					-m_MaxVelocity.y : m_Velocity.y);
 			}
@@ -78,7 +81,7 @@ namespace Sample
 				{
 					m_CurrentY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
 
-					m_CurrentTime += CUtilities::GetFrameSecond() * gameSpeed;
+					m_CurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
 				}
 				else
 				{
@@ -90,25 +93,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.x) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2 * gameSpeed)
+				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.x -= m_Decelerate.x * 2 * gameSpeed;
+					m_Velocity.x -= m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.x < 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
+						m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
 					}
 				}
-				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2 * gameSpeed)
+				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.x += m_Decelerate.x * 2 * gameSpeed;
+					m_Velocity.x += m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.x > 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
+						m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
 					}
 				}
 				else
 				{
-					m_Velocity.x += m_UpdateVelocity.x * gameSpeed;
+					m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
 					m_Velocity.x = ((m_Velocity.x > m_MaxVelocity.x) ?
 						m_MaxVelocity.x : ((m_Velocity.x < -m_MaxVelocity.x) ?
 							-m_MaxVelocity.x : m_Velocity.x));
@@ -123,25 +126,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.z) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2 * gameSpeed)
+				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.z -= m_Decelerate.z * 2 * gameSpeed;
+					m_Velocity.z -= m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.z < 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
+						m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
 					}
 				}
-				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2 * gameSpeed)
+				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.z += m_Decelerate.z * 2 * gameSpeed;
+					m_Velocity.z += m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.z > 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
+						m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
 					}
 				}
 				else
 				{
-					m_Velocity.z += m_UpdateVelocity.z * gameSpeed;
+					m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
 					m_Velocity.z = ((m_Velocity.z > m_MaxVelocity.z) ?
 						m_MaxVelocity.z : ((m_Velocity.z < -m_MaxVelocity.z) ?
 							-m_MaxVelocity.z : m_Velocity.z));
@@ -246,6 +249,11 @@ namespace Sample
 
 		void SetGravityFlg(bool isGravity) noexcept {
 			m_UseGravity = isGravity;
+		}
+
+		void SetType(CHARACTER_TYPE type) noexcept
+		{
+			m_Type = type;
 		}
 
 		/**

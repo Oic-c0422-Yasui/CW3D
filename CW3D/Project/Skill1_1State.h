@@ -22,7 +22,7 @@ namespace Sample {
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.05f, 0, Vector3(0.5f, 0.2f, 0.0f),false,0, nullptr, Vector3(5.0f, 10.0f, 7.0f) };
+		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.05f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr, Vector3(5.0f, 10.0f, 7.0f) };
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
@@ -56,7 +56,16 @@ namespace Sample {
 				shot->SetDamage(damage);
 			}
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.6f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			MyUtilities::ANIM_DATA anim[] =
+			{
+				{0.0f,0.0f},
+				{0.5f,0.0f},
+				{0.5f,1.0f},
+			};
+
+			TimeControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
+
+			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.7f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -71,7 +80,7 @@ namespace Sample {
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_CurrentTime > CollideStartFrameTime)
+				if (m_CurrentTime > CollideEndFrameTime)
 				{
 					if (shot->GetCollideFlg())
 					{

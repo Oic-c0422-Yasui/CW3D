@@ -88,6 +88,7 @@ void CEnemy::Initialize(CVector3 pos)
 	matWorld = m_Actor->GetMatrix();
 	m_ShowFlg = true;
 	m_DeadFlg = false;
+	m_Actor->SetType(CHARA_ENEMY);
 
 }
 

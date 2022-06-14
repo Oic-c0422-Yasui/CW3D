@@ -29,6 +29,7 @@ namespace Sample
 			EffectPtr efc = std::make_shared<CEffect>(EffectManagerInstance.Play(resouceName));
 			m_Effects.push_back(efc);
 			Create(efc->GetHandle(), position, param);
+			efc->Initialize(param.offset);
 			return efc;
 		}
 

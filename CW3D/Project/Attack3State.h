@@ -23,7 +23,7 @@ namespace Sample {
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) ,7:direction(CKnockBack) 8:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,0, nullptr, Vector3(0.8f, 2.0f, 0.8f) };
+		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr, Vector3(0.8f, 2.0f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ

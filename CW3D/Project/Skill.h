@@ -3,6 +3,7 @@
 #include "SkillData.h"
 #include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
+#include	"TimeController.h"
 
 namespace Sample
 {
@@ -60,7 +61,7 @@ namespace Sample
 			}
 			if (m_CurrentTime > 0.0f)
 			{
-				m_CurrentTime -= CUtilities::GetFrameSecond();
+				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 			}
 			else
 			{

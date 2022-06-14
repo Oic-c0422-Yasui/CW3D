@@ -3,6 +3,7 @@
 #include "AttackCollider.h"
 #include "GameDefine.h"
 #include	"KnockBack.h"
+#include "TimeController.h"
 
 namespace Sample
 {
@@ -12,7 +13,7 @@ namespace Sample
 		int		damage;
 		Vector3	knockBack;
 		bool	collideFlg;
-		int type;
+		CHARACTER_TYPE type;
 		KnockBackPtr direction;
 	};
 	struct ShotSphere : public ShotCreateParameter {
@@ -38,7 +39,7 @@ namespace Sample
 		Vector3				m_Offset;
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
-		BYTE				m_Type;
+		CHARACTER_TYPE		m_Type;
 		int					m_CollisionType;
 		float				m_Speed;
 		CVector3			m_KnockBack;
@@ -57,7 +58,7 @@ namespace Sample
 			, m_Radius(0.0f)
 			, m_ShowFlg(false)
 			, m_CollideFlg(false)
-			, m_Type(0)
+			, m_Type()
 			, m_Speed(0.0f)
 			, m_KnockBack(0,0,0)
 			, m_Offset(0,0,0)
@@ -114,7 +115,7 @@ namespace Sample
 				return;
 			}
 			
-			m_Position.x += m_Speed * gameSpeed;
+			m_Position.x += m_Speed * TimeControllerInstance.GetTimeScale(m_Type);
 			switch (m_CollisionType)
 			{
 				case COLLITION_SPHERE:
@@ -288,7 +289,7 @@ namespace Sample
 			{
 				if (id.Time > 0.0f)
 				{
-					id.Time -= CUtilities::GetFrameSecond() * gameSpeed;
+					id.Time -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
 				}
 			}
 		}

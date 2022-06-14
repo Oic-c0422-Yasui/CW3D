@@ -129,6 +129,7 @@ void CPlayer::Initialize()
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
 	matWorld = m_Actor->GetMatrix();
+	m_Actor->SetType(CHARA_PLAYER);
 }
 
 void CPlayer::Update()

@@ -17,8 +17,6 @@ namespace Sample
 		CTimeScale m_PlayerTimeScale;
 		CTimeScale m_EnemyTimeScale;
 
-
-
 		CTimeController()
 			: Singleton<CTimeController>()
 			, m_TimeScale()
@@ -36,7 +34,8 @@ namespace Sample
 			m_EnemyTimeScale.Update();
 		}
 
-		float GetTimeScale(const int type) const noexcept
+
+		float GetTimeScale(CHARACTER_TYPE type) const noexcept
 		{
 			switch (type)
 			{
@@ -91,15 +90,86 @@ namespace Sample
 			m_TimeScale.SetScale(anim, count);
 		}
 
-		/*void SetPlayerTimeScale(const float scale) noexcept
+		void SetTimeScale(CHARACTER_TYPE id,const float scale, const float changeTime, MyUtilities::EASING_TYPE easeType) noexcept
 		{
-			m_PlayerTimeScale = time;
+			switch (id)
+			{
+			case CHARA_PLAYER:
+			{
+				m_PlayerTimeScale.SetScale(scale, changeTime, easeType);
+				break;
+			}
+			case CHARA_ENEMY:
+			{
+				m_EnemyTimeScale.SetScale(scale, changeTime, easeType);
+				break;
+			}
+			default:
+				break;
+			}
+			
+		}
+		//animData,count
+		void SetTimeScale(CHARACTER_TYPE id, MyUtilities::ANIM_DATA* anim, int count)
+		{
+			switch (id)
+			{
+			case CHARA_PLAYER:
+			{
+				m_PlayerTimeScale.SetScale(anim,count);
+				break;
+			}
+			case CHARA_ENEMY:
+			{
+				m_EnemyTimeScale.SetScale(anim, count);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 
-		void SetEnemyTimeScale(const float scale) noexcept
+
+		//ID以外のタイムスケールを変える
+		void SetOtherTimeScale(CHARACTER_TYPE id, const float scale, const float changeTime, MyUtilities::EASING_TYPE easeType) noexcept
 		{
-			m_EnemyTimeScale = time;
-		}*/
+			switch (id)
+			{
+			case CHARA_PLAYER:
+			{
+				m_EnemyTimeScale.SetScale(scale, changeTime, easeType);
+				
+				break;
+			}
+			case CHARA_ENEMY:
+			{
+				m_PlayerTimeScale.SetScale(scale, changeTime, easeType);
+				break;
+			}
+			default:
+				break;
+			}
+
+		}
+		//animData,count
+		void SetOtherTimeScale(CHARACTER_TYPE id, MyUtilities::ANIM_DATA* anim, int count)
+		{
+			switch (id)
+			{
+			case CHARA_PLAYER:
+			{
+				m_EnemyTimeScale.SetScale(anim, count);
+				break;
+			}
+			case CHARA_ENEMY:
+			{
+				m_PlayerTimeScale.SetScale(anim, count);
+				break;
+			}
+			default:
+				break;
+			}
+		}
 
 	};
 }

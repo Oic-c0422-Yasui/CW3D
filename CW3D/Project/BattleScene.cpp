@@ -189,11 +189,7 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 	ShotManagerInstance.Update();
-	if (g_pInput->IsKeyPush(MOFKEY_I))
-	{
 
-		TimeControllerInstance.SetTimeScale(0.5f, 1.0f, MyUtilities::EASE_LINER);
-	}
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 

@@ -9,9 +9,9 @@ namespace Sample
 	{
 	}
 
-	void CEffect::Initialize()
+	void CEffect::Initialize( const Vector3& offset)
 	{
-		m_Position = Vector3(0, 0, 0);
+		m_Offset = offset;
 	}
 
 	void CEffect::Update()

@@ -4,6 +4,7 @@
 #include	"Utilities.h"
 #include	"Velocity.h"
 
+
 extern float gameSpeed;
 
 namespace Sample
@@ -26,6 +27,8 @@ namespace Sample
 
 		bool		m_ReverseFlg;
 
+		CHARACTER_TYPE m_Type;
+
 	public:
 		
 		Transform()
@@ -35,6 +38,7 @@ namespace Sample
 			, m_World()
 			, m_UpdateFlg(false)
 			, m_ReverseFlg(false)
+			, m_Type()
 		{
 		}
 
@@ -56,7 +60,7 @@ namespace Sample
 			//À•W‚ÌˆÚ“®
 			void MovePosition(const Vector3& movePos) noexcept
 			{
-				m_Position += movePos * gameSpeed;
+				m_Position += movePos * TimeControllerInstance.GetTimeScale(m_Type);
 				m_World.SetTranslation(m_Position);
 			}
 
@@ -64,12 +68,12 @@ namespace Sample
 			{
 				if (v->IsGravity())
 				{
-					m_Position += v->GetVelocity() * gameSpeed;
+					m_Position += v->GetVelocity() * TimeControllerInstance.GetTimeScale(m_Type);
 				}
 				else
 				{
-					m_Position.x += v->GetVelocityX() * gameSpeed;
-					m_Position.z += v->GetVelocityZ() * gameSpeed;
+					m_Position.x += v->GetVelocityX() * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Position.z += v->GetVelocityZ() * TimeControllerInstance.GetTimeScale(m_Type);
 				}
 				m_World.SetTranslation(m_Position);
 			}
@@ -292,6 +296,11 @@ namespace Sample
 			bool IsReverse() const noexcept
 			{
 				return m_ReverseFlg;
+			}
+
+			void SetType(CHARACTER_TYPE type) noexcept
+			{
+				m_Type = type;
 			}
 
 	private:

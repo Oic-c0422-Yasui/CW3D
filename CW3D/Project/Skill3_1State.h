@@ -24,7 +24,7 @@ namespace Sample {
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.5f, 0.15f, 0.5f),false,0, nullptr, Vector3(4.0f, 8.0f, 4.0f) };
+		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.5f, 0.15f, 0.5f),false,CHARA_PLAYER, nullptr, Vector3(4.0f, 8.0f, 4.0f) };
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
