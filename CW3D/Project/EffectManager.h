@@ -4,6 +4,7 @@
 #include "Effect.h"
 #include "ResourceManager.h"
 #include "TimeController.h"
+#include "CameraController.h"
 
 
 extern float gameSpeed;
@@ -86,9 +87,10 @@ namespace Sample
 			m_Renderer->SetTime(currentTime / 60.0f * TimeControllerInstance.GetTimeScale());
 		}
 
-		void Render(Vector3 pos, Vector3 look)
+		void Render()
 		{
-			
+			Vector3 pos = CameraControllerInstance.GetPosition();
+			Vector3 look = CameraControllerInstance.GetLookPosition();
 			// ƒJƒƒ‰s—ñ‚ðÝ’è
 			m_Renderer->SetCameraMatrix(
 				::Effekseer::Matrix44().LookAtLH(

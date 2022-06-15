@@ -26,9 +26,6 @@ private:
 
 	std::vector<Sample::EnemyPtr> m_Enemys;
 
-
-	CCameraController m_Camera;
-
 	CMeshContainer	m_PlayerMesh;
 
 	CDirectionalLight m_Light;

@@ -64,6 +64,18 @@
     <Filter Include="ヘッダー ファイル\UI">
       <UniqueIdentifier>{a03327a9-306a-4911-9430-0760851f3f10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Camera">
+      <UniqueIdentifier>{12dcaffe-bf28-469e-8e7a-d5b38849a884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\KnockBack">
+      <UniqueIdentifier>{33ab550f-317b-4f7f-bb6d-3082dadafcea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Time">
+      <UniqueIdentifier>{6cdb5e02-8ef3-4e0d-9d77-bb3a86036993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shot">
+      <UniqueIdentifier>{c91e8c7e-34ca-4773-aff0-07458238d320}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -111,6 +123,15 @@
     <ClCompile Include="HPPresenter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CameraBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NomalCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InterpolateCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -132,9 +153,6 @@
       <Filter>Inputファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameDefine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
@@ -239,9 +257,6 @@
     <ClInclude Include="AttackCollider.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Shot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Attack2State.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
@@ -265,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="DamageState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="ShotManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Skill1_1State.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
@@ -410,9 +422,6 @@
     <ClInclude Include="AttackBaseState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
-    <ClInclude Include="ActorObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IHPGauge.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
@@ -470,22 +479,43 @@
     <ClInclude Include="CollisionShotEnemy.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="KnockBack.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="ActorObject.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="FixedKnockBack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="InhaleKnockBack.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
     </ClInclude>
     <ClInclude Include="FixedYInhaleKnockBack.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
+    <ClInclude Include="KnockBack.h">
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
+    <ClInclude Include="InhaleKnockBack.h">
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
     <ClInclude Include="TimeController.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Time</Filter>
     </ClInclude>
     <ClInclude Include="TimeScale.h">
+      <Filter>ヘッダー ファイル\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotManager.h">
+      <Filter>ヘッダー ファイル\Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="Shot.h">
+      <Filter>ヘッダー ファイル\Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBase.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="NomalCamera.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="InterpolateCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

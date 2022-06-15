@@ -4,6 +4,7 @@
 
 #include	"CollisionEnemyEnemy.h"
 #include	"CollisionShotEnemy.h"
+#include	"NomalCamera.h"
 
 using namespace Sample;
 
@@ -132,7 +133,9 @@ bool CBattleScene::Load()
 	}
 
 	
-	
+	CameraPtr camera = std::make_shared<CNomalCamera>();
+
+	CameraControllerInstance.Load(camera);
 
 	tempTex.reset();
 	tempMesh.reset();
@@ -144,7 +147,6 @@ bool CBattleScene::Load()
 void CBattleScene::Initialize()
 {
 	m_Player.Initialize();
-	m_Camera.Initialize();
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -207,10 +209,10 @@ void CBattleScene::Update()
 			CCollision::CollisionObj(shot, m_Enemys[i]);
 		}
 	}
-	m_Camera.Update(m_Player.GetPosition(), m_Player.GetPosition());
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();
 	TimeControllerInstance.Update();
+	CameraControllerInstance.Update(m_Player.GetPosition(), m_Player.GetPosition());
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
@@ -229,7 +231,7 @@ void CBattleScene::Render()
 		enemy->Render();
 	}
 	ShotManagerInstance.Render();
-	EffectManagerInstance.Render(m_Camera.GetPosition(), m_Camera.GetLookPosition());
+	EffectManagerInstance.Render();
 	
 }
 
@@ -313,7 +315,7 @@ void CBattleScene::Render2DDebug()
 
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
-	m_Camera.Render2DDebug();
+	//m_Camera.Render2DDebug();
 
 	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
 	//for (int i = 0;i < m_EnemysHPRender.size();i++)
@@ -352,5 +354,5 @@ void CBattleScene::Release()
 	EffectControllerInstance.Release();
 	IDManagerInstance.Release();
 	TimeControllerInstance.Release();
-	
+	CameraControllerInstance.Release();
 }

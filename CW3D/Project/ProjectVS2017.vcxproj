@@ -98,7 +98,10 @@
   <ItemGroup>
     <ClCompile Include="ActorObject.cpp" />
     <ClCompile Include="BattleScene.cpp" />
+    <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="InterpolateCamera.cpp" />
+    <ClCompile Include="NomalCamera.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectController.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -124,7 +127,10 @@
     <ClInclude Include="AttackBaseState.h" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
+    <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="InterpolateCamera.h" />
+    <ClInclude Include="NomalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
     <ClInclude Include="FixedYInhaleKnockBack.h" />
     <ClInclude Include="InhaleKnockBack.h" />
