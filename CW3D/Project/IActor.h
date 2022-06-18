@@ -5,7 +5,8 @@
 #include "Common.h"
 #include "ShotManager.h"
 #include "ReactiveParameter.h"
-#include	"TimeController.h"
+#include "CameraController.h"
+
 
 
 namespace Sample {

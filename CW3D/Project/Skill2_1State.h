@@ -88,6 +88,8 @@ namespace Sample {
 				shot->SetDamage(damage);
 			}
 
+			
+
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL2_1, 0.7f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 

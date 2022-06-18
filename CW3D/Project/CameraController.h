@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "CameraBase.h"
-#include "TimeController.h"
+
 
 
 
@@ -14,14 +14,17 @@
 		CameraPtr	m_NextCamera;
 		CameraPtr	m_DefaultCamera;
 		bool		m_LeapFlg;
-		bool		m_EndLeapFlg;
-		float		m_EndLeapTime;
+		bool		m_LeapStartFlg;
+		float		m_LeapTime;
+		bool		m_LeapEndFlg;
+		float		m_TempLeapEndTime;
 		Sample::MyUtilities::EASING_TYPE m_EndEaseType;
 		float		m_Time;
 		float		m_CurrentTime;
 		bool		m_TimerStartFlg;
 		
 		CCameraController();
+		void Reset();
 
 	public:
 		~CCameraController();
@@ -30,7 +33,7 @@
 		void SetCamera(const CameraPtr& camera);
 		void SetCamera(const CameraPtr& camera, float tTime);
 		void SetCamera(const CameraPtr& camera, float tTime, Sample::MyUtilities::EASING_TYPE startEaseType, float leapStartTime, Sample::MyUtilities::EASING_TYPE endEaseType, float leapEndTime);
-		void SetDefault() { SetCamera(m_DefaultCamera); }
+		void SetDefault();
 		void Update(Vector3 pos, Vector3 lookPos);
 
 		void Render2DDebug();

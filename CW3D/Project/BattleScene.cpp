@@ -133,7 +133,7 @@ bool CBattleScene::Load()
 	}
 
 	
-	CameraPtr camera = std::make_shared<CNomalCamera>();
+	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player.GetPosition(), m_Player.GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 
 	CameraControllerInstance.Load(camera);
 

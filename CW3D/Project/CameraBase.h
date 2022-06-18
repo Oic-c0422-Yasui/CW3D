@@ -3,16 +3,18 @@
 class CCameraBase
 {
 protected:
-	CCamera m_Camera;
-	CVector3 m_OffsetPos;
-	CVector3 m_OffsetLookPos;
-	CVector3 m_LookPos;
-	CVector3 m_Position;
-	CVector3 m_TargetPos;
-	CVector3 m_TargetLookPos;
+	CCamera		m_Camera;
+	CVector3	m_OffsetPos;
+	CVector3	m_OffsetLookPos;
+	CVector3	m_LookPos;
+	CVector3	m_Position;
+	CVector3	m_TargetPos;
+	CVector3	m_TargetLookPos;
+	bool		m_AnimEndFlg;
+	bool		m_ResetFlg;
 
 public:
-	CCameraBase();
+	CCameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
 	virtual ~CCameraBase() {};
 	virtual void Create();
 	virtual void Update(const Vector3& pos, const Vector3& lookPos) = 0;
@@ -47,6 +49,10 @@ public:
 	{
 		return m_Camera;
 	}
+	bool IsEnd() const noexcept
+	{
+		return m_AnimEndFlg;
+	}
 
 	void SetPos(const Vector3& pos) noexcept
 	{
@@ -72,7 +78,14 @@ public:
 	{
 		m_OffsetLookPos = pos;
 	}
-
+	void SetEndAnimFlg(bool isEnd) noexcept
+	{
+		m_AnimEndFlg = isEnd;
+	}
+	void SetResetFlg(bool isReset) noexcept
+	{
+		m_ResetFlg = isReset; 
+	}
 };
 
 using CameraPtr = std::shared_ptr<CCameraBase>;

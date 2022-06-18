@@ -3,6 +3,7 @@
 
 #include	"AttackBaseState.h"
 #include	"Skill1_1Action.h"
+#include	"FixedCamera.h"
 
 namespace Sample {
 
@@ -26,7 +27,7 @@ namespace Sample {
 
 		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
 		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect3", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f };
+		const EffectCreateParameter createEffectStatus = { "Effect3", Vector3(0.8f, -1.5f, -1), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -63,7 +64,18 @@ namespace Sample {
 				{0.5f,1.0f},
 			};
 
+
 			TimeControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
+			Vector3 pos(-12, 2, -2);
+			Vector3 lookPos(2, 1, 2);
+			if (Actor()->IsReverse())
+			{
+				pos.x *= -1;
+				lookPos.x *= -1;
+			}
+			CameraPtr camera;
+			camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
+			CameraControllerInstance.SetCamera(camera,1,MyUtilities::EASE_IN_SINE,0.3f, MyUtilities::EASE_IN_SINE,0.15f);
 
 			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.7f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}

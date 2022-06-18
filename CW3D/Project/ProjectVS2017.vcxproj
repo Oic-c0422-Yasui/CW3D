@@ -100,6 +100,8 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="FixedCamera.cpp" />
+    <ClCompile Include="FollowFixedCamera.cpp" />
     <ClCompile Include="InterpolateCamera.cpp" />
     <ClCompile Include="NomalCamera.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -129,6 +131,8 @@
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="FixedCamera.h" />
+    <ClInclude Include="FollowFixedCamera.h" />
     <ClInclude Include="InterpolateCamera.h" />
     <ClInclude Include="NomalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
