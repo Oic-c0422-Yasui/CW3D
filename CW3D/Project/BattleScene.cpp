@@ -5,10 +5,12 @@
 #include	"CollisionEnemyEnemy.h"
 #include	"CollisionShotEnemy.h"
 #include	"NomalCamera.h"
+#include	"ServiceLocator.h"
 
 using namespace Sample;
 
 CBattleScene::CBattleScene()
+	: m_Player(std::make_shared<CPlayer>())
 {
 }
 
@@ -109,8 +111,8 @@ bool CBattleScene::Load()
 
 
 	//プレイヤー読み込み
-	m_Player.SetInput(input);
-	if (!m_Player.Load())
+	m_Player->SetInput(input);
+	if (!m_Player->Load())
 	{
 		return false;
 	}
@@ -133,9 +135,11 @@ bool CBattleScene::Load()
 	}
 
 	
-	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player.GetPosition(), m_Player.GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
+	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 
 	CameraControllerInstance.Load(camera);
+
+	ServiceLocator<CPlayer>::SetService(m_Player);
 
 	tempTex.reset();
 	tempMesh.reset();
@@ -146,7 +150,7 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
-	m_Player.Initialize();
+	m_Player->Initialize();
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -185,7 +189,7 @@ void CBattleScene::Update()
 {
 	//入力更新
 	InputManagerInstance.Update();
-	m_Player.Update();
+	m_Player->Update();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		m_Enemys[i]->Update();
@@ -212,7 +216,7 @@ void CBattleScene::Update()
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();
 	TimeControllerInstance.Update();
-	CameraControllerInstance.Update(m_Player.GetPosition(), m_Player.GetPosition());
+	CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
@@ -225,7 +229,7 @@ void CBattleScene::Render()
 
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
-	m_Player.Render();
+	m_Player->Render();
 	for (auto& enemy : m_Enemys)
 	{
 		enemy->Render();
@@ -310,11 +314,11 @@ void CBattleScene::Render2D()
 
 void CBattleScene::Render2DDebug()
 {
-	CGraphicsUtilities::RenderString(0, 0, "POS X:%.2f,Z:%.2f", m_Player.GetPosition().x, m_Player.GetPosition().z);
-	CGraphicsUtilities::RenderString(0, 30, "VEL X:%.2f,Z:%.2f", m_Player.GetVelocity().x, m_Player.GetVelocity().z);
+	CGraphicsUtilities::RenderString(0, 0, "POS X:%.2f,Z:%.2f", m_Player->GetPosition().x, m_Player->GetPosition().z);
+	CGraphicsUtilities::RenderString(0, 30, "VEL X:%.2f,Z:%.2f", m_Player->GetVelocity().x, m_Player->GetVelocity().z);
 
-	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player.GetRotate().y));
-	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player.IsReverse());
+	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player->GetRotate().y));
+	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player->IsReverse());
 	//m_Camera.Render2DDebug();
 
 	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
@@ -326,7 +330,10 @@ void CBattleScene::Render2DDebug()
 
 void CBattleScene::Release()
 {
-	m_Player.Release();
+	m_Player->Release();
+	m_Player.reset();
+	ServiceLocator<CPlayer>::SetService(nullptr);
+	ServiceLocator<CPlayer>::GetInstance().Release();
 	m_Stage.Release();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{

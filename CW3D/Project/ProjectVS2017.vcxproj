@@ -134,6 +134,7 @@
     <ClInclude Include="FixedCamera.h" />
     <ClInclude Include="FollowFixedCamera.h" />
     <ClInclude Include="InterpolateCamera.h" />
+    <ClInclude Include="IStateAI.h" />
     <ClInclude Include="NomalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
     <ClInclude Include="FixedYInhaleKnockBack.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="RunLandingState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Shot.h" />
     <ClInclude Include="ShotManager.h" />
     <ClInclude Include="Skill1_1Action.h" />
@@ -236,6 +238,7 @@
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillPresenter.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateAI.h" />
     <ClInclude Include="StateInput.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Singleton.h" />

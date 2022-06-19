@@ -22,7 +22,7 @@
 class CBattleScene : public CSceneBase
 {
 private:
-	CPlayer m_Player;
+	PlayerPtr m_Player;
 
 	std::vector<Sample::EnemyPtr> m_Enemys;
 
@@ -50,7 +50,7 @@ public:
 	void Render2DDebug() override;
 	void Release();
 
-	
-
 };
+
+
 

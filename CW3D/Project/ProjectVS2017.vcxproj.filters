@@ -79,6 +79,9 @@
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{2adb6587-2ec8-44d7-b619-fe2835a42bd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\AI">
+      <UniqueIdentifier>{cb8d6fc2-6420-4818-8070-eb944fd269fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -446,14 +449,8 @@
     <ClInclude Include="ReactiveParameter.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ParameterMap.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
     <ClInclude Include="HPGauge.h">
       <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ParameterHandle.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="IHPPosition.h">
       <Filter>ヘッダー ファイル\UI</Filter>
@@ -532,6 +529,21 @@
     </ClInclude>
     <ClInclude Include="FollowFixedCamera.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IStateAI.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="StateAI.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterHandle.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterMap.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

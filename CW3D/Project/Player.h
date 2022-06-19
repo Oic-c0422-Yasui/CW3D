@@ -45,3 +45,4 @@ public:
 	}*/
 };
 
+using PlayerPtr = std::shared_ptr<CPlayer>;

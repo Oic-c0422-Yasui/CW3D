@@ -137,7 +137,7 @@ namespace Sample
 			//表示ゲージを徐々に変化させる
 			if (fabsf(m_CurrentGauge - m_CurrentHP) > 0.01f)
 			{
-				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.1f;
+				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.05f;
 				m_pDamageBar->m_Scale.x = m_Size.x * m_CurrentGauge;
 				float offset = (m_Size.x - m_pDamageBar->m_Scale.x) * 0.5f;
 				m_pDamageBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
