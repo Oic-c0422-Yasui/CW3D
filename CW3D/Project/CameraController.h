@@ -22,6 +22,14 @@
 		float		m_Time;
 		float		m_CurrentTime;
 		bool		m_TimerStartFlg;
+
+		float		m_QuakePower;
+		float		m_QuakeFrequent;
+		float		m_QuakeTime;
+		float		m_QuakeCurrentTime;
+
+		Vector3		m_TargetPos;
+		Vector3		m_TargetLookPos;
 		
 		CCameraController();
 		void Reset();
@@ -60,6 +68,9 @@
 			SetTargetPos(pos);
 			SetTargetLookPos(lookPos);
 		}
+
+		void Quake(float power, float freq, int time);
+		void Enable(const Vector3& pos, const Vector3& lookPos);
 
 	};
 

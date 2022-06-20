@@ -175,7 +175,7 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
-
+			CameraControllerInstance.SetDefault();
 		}
 
 		/**

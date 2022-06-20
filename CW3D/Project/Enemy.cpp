@@ -11,6 +11,7 @@
 #include "DownState.h"
 #include "DeadState.h"
 #include "StateInput.h"
+#include	"CameraController.h"
 
 using namespace Sample;
 
@@ -180,7 +181,7 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 
 	knockBack = direction * power;
 
-
+	//CameraControllerInstance.Quake(2, 3, 1);
 
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }

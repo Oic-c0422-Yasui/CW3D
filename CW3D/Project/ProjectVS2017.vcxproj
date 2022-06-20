@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorObject.h" />
+    <ClInclude Include="AICycleFixed.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
     <ClInclude Include="Attack2Action.h" />
@@ -131,10 +132,15 @@
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="FixedCamera.h" />
     <ClInclude Include="FollowFixedCamera.h" />
+    <ClInclude Include="IAICycle.h" />
+    <ClInclude Include="ICharacterAI.h" />
+    <ClInclude Include="IdleStateAI.h" />
     <ClInclude Include="InterpolateCamera.h" />
     <ClInclude Include="IStateAI.h" />
+    <ClInclude Include="MoveStateAI.h" />
     <ClInclude Include="NomalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
     <ClInclude Include="FixedYInhaleKnockBack.h" />

@@ -13,6 +13,12 @@ CCameraController::CCameraController()
 	, m_CurrentTime(0.0f)
 	, m_TempLeapEndTime(0.0f)
 	, m_Time(0.0f)
+	, m_QuakePower(0.0f)
+	, m_QuakeFrequent(0.0f)
+	, m_QuakeTime(0.0f)
+	, m_QuakeCurrentTime(0.0f)
+	, m_TargetPos(0,0,0)
+	, m_TargetLookPos(0,0,0)
 	
 {
 }
@@ -131,8 +137,10 @@ void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 			m_LeapEndFlg = false;
 		}
 	}
-	m_Camera->Update(pos, lookPos);
+	Enable(pos, lookPos);
+	m_Camera->Update(m_TargetPos, m_TargetLookPos);
 }
+
 
 void CCameraController::Reset()
 {
@@ -142,5 +150,31 @@ void CCameraController::Reset()
 void CCameraController::Render2DDebug()
 {
 	//CGraphicsUtilities::RenderString(300, 100, "CameraOff X:%.2f,Y:%.2f,Z:%.2f", m_OffsetPos.x, m_OffsetPos.y, m_OffsetPos.z);
+}
+
+void CCameraController::Quake(float power, float freq, int time)
+{
+	m_QuakePower = m_QuakePower > power ? m_QuakePower : power;
+	m_QuakeFrequent = m_QuakeFrequent > freq ? m_QuakeFrequent : freq;
+	m_QuakeTime = time;
+}
+
+void CCameraController::Enable(const Vector3& pos, const Vector3& lookPos)
+{
+	m_TargetPos = pos;
+	m_TargetLookPos = lookPos;
+	//U“®“K—p
+	if (m_QuakeTime > 0)
+	{
+		m_TargetPos.x += sinf(m_QuakeTime * m_QuakeFrequent) * m_QuakePower;
+		m_TargetLookPos.x += sinf(m_QuakeTime * m_QuakeFrequent) * m_QuakePower;
+		m_QuakeTime -= CUtilities::GetFrameSecond();
+	}
+	else
+	{
+		m_QuakeTime = 0;
+		m_QuakeFrequent = 0;
+		m_QuakePower = 0;
+	}
 }
 

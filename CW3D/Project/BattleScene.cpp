@@ -5,7 +5,7 @@
 #include	"CollisionEnemyEnemy.h"
 #include	"CollisionShotEnemy.h"
 #include	"NomalCamera.h"
-#include	"ServiceLocator.h"
+
 
 using namespace Sample;
 

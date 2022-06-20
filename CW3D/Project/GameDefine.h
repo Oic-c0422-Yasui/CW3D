@@ -1,6 +1,7 @@
 #pragma once
 #include "Mof.h"
 #include "Utilities.h"
+#include	"ServiceLocator.h"
 
 enum tag_SCENENO
 {
