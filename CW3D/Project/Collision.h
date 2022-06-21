@@ -133,26 +133,45 @@ namespace Sample
 			{
 
 				//差分距離
-				Vector3 sv = pos1 - pos2;
-				//お互いの移動ベクトル
-				float ax = fabsf(pos1.x) + fabsf(pos2.x);
-				float az = fabsf(pos1.z) + fabsf(pos2.z);
+				CVector3 sv = pos1 - pos2;
+
+				Vector3 mv1 = pos1 - obj1.GetPrevPos();
+				Vector3 mv2 = pos2 - obj2.GetPrevPos();
+				Vector3 mv = mv1 - mv2;
+				/*float ax = fabsf(mv1.x) + fabsf(mv2.x);
+				float az = fabsf(mv1.z) + fabsf(mv2.z);
 				float ml = ax > az ? ax : az;
-				//移動していないのに接触？
-				if (ml <= 0)
-				{
-					//その場合埋まりの割合で押し出し
-					ax = fabsf(sv.x) / (size1.Size.x + size2.Size.x);
-					az = fabsf(sv.z) / (size1.Size.z + size2.Size.z);
-					ml = ax > az ? ax : az;
-				}
+				float dir = mv1.Dot(mv2);
+
 				ax /= ml;
 				az /= ml;
-				//埋まり防止をおこなう
-				float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x) - 1), sv.x) * ax;
-				float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z) - 1), sv.z) * az;
-				obj1.SetPosition(pos1 + Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
-				obj2.SetPosition(pos2 - Vector3(slx * 0.5f, 0.0f, slz * 0.5f));
+				*/
+				//dir = mv1.x * mv2.x + mv1.y * mv2.y + mv1.z * mv2.z;
+
+				float dir = sv.Dot(mv);
+				if (dir > 0.0f)
+				{
+					float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x)), sv.x);
+					float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z)), sv.z);
+					obj1.SetPosition(pos1 + Vector3(slx * 0.5f, pos1.y, slz * 0.5f));
+					obj2.SetPosition(pos2 - Vector3(slx * 0.5f, pos1.y, slz * 0.5f));
+					//移動前の位置＋空いている分のベクトル
+					/*float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x) - 1), sv.x) * ax;
+					float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z) - 1), sv.z) * az;
+					obj1.SetPosition(pos1 + Vector3(slx * 0.5f, pos1.y, slz * 0.5f));
+					obj2.SetPosition(pos2 - Vector3(slx * 0.5f, pos1.y, slz * 0.5f));*/
+				}
+				else
+				{
+					
+					obj1.SetPosition(Vector3(obj1.GetPrevPos().x, pos1.y, pos1.z + mv1.z));
+					obj2.SetPosition(Vector3(obj2.GetPrevPos().x, pos2.y, pos2.z + mv2.z));
+				}
+
+				//お互いの間で空いているベクトルを計算
+				//Vector3 
+				
+				
 
 			}
 		}

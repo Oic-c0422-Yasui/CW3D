@@ -14,6 +14,14 @@ namespace Sample
 		//–„‚Ü‚è–hŽ~”»’è
 		CollisionActorObject(en1, en2);
 	}
+
+	/**
+	 * @brief		“G‚Æ“G‚Ì‚ ‚½‚è”»’è
+	 */
+	template < >
+	inline void CCollision::CollisionObj<>(EnemyPtr& en1, EnemyPtr& en2) {
+		CollisionObj(*en1, *en2);
+	}
 }
 
 

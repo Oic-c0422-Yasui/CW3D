@@ -1,19 +1,32 @@
 #pragma once
 
-#include	"CollisionManager.h"
+#include	"Collision.h"
 #include	"Player.h"
 #include	"Enemy.h"
 
 namespace Sample {
 
 	template< >
-	inline bool CollisionManager::Collision<CPlayer, CEnemy>(CPlayer& obj1, CEnemy& obj2) {
-
-		
+	inline void CCollision::CollisionObj<>(CPlayer& obj1, CEnemy& obj2) {
+		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
+		if (!obj1.IsShow() || !obj2.IsShow()) { return; }
+		if (obj2.IsInvincible()) { return; }
+		//–„‚Ü‚è–hŽ~”»’è
+		CollisionActorObject(obj1, obj2);
 	}
 
 	template< >
-	inline bool CollisionManager::Collision<CEnemy, CPlayer>(CEnemy& obj1, CPlayer& obj2) {
-		return Collision(obj2, obj1);
+	inline void CCollision::CollisionObj<>(CEnemy& obj1, CPlayer& obj2) {
+		return CollisionObj(obj1, obj2);
+	}
+
+	template< >
+	inline void CCollision::CollisionObj<>(PlayerPtr& obj1, EnemyPtr& obj2) {
+		return CollisionObj(*obj1, *obj2);
+	}
+
+	template< >
+	inline void CCollision::CollisionObj<>(EnemyPtr& obj1, PlayerPtr& obj2) {
+		return CollisionObj(*obj1, *obj2);
 	}
 }

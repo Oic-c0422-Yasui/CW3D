@@ -3,6 +3,7 @@
 #include	"SkillPresenter.h"
 
 #include	"CollisionEnemyEnemy.h"
+#include	"CollisionPlayerEnemy.h"
 #include	"CollisionShotEnemy.h"
 #include	"NomalCamera.h"
 #include	"StateInput.h"
@@ -200,7 +201,7 @@ void CBattleScene::Update()
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-
+		CCollision::CollisionObj(m_Player, m_Enemys[i]);
 		for (int j = i + 1; j < m_Enemys.size(); j++)
 		{
 			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
@@ -266,6 +267,8 @@ void CBattleScene::RenderDebug()
 			break;
 		}
 	}
+
+	CGraphicsUtilities::RenderBox(m_Player->GetCollider(), Vector4(0, 1, 0, 0.2f));
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{

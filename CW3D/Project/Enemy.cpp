@@ -98,7 +98,7 @@ void CEnemy::Initialize(CVector3 pos)
 	matWorld = m_Actor->GetMatrix();
 	m_ShowFlg = true;
 	m_DeadFlg = false;
-	m_Actor->SetType(CHARA_ENEMY);
+	SetType(CHARA_ENEMY);
 
 }
 
@@ -201,3 +201,5 @@ bool CEnemy::IsInvincible() const
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
+
+

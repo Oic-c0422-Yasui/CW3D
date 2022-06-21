@@ -130,8 +130,8 @@ namespace Sample
 			float parcent = (float)m_HP / (float)m_MaxHP;
 			m_CurrentHP = parcent;
 			//四角でHPゲージ描画
-			m_pFrame->Update();
 			LPCamera cam = CGraphicsUtilities::GetCamera();
+			m_pFrame->Update();
 			m_pFrame->m_World.Multiply3x3(cam->GetBillBoardMatrix());
 			m_pFrame->Render();
 			//表示ゲージを徐々に変化させる

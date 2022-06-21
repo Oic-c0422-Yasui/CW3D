@@ -14,6 +14,7 @@ namespace Sample
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!shot->IsShow() || !enemy->IsShow()) { return; }
 		if (!shot->GetCollideFlg()){ return; }
+		if (shot->GetCharaType() == CHARA_ENEMY) { return; }
 		if (shot->IsHitId(enemy->GetID())) { return; }
 		//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 		switch (shot->GetColliderType())

@@ -163,6 +163,15 @@ namespace Sample
 			return m_NextHitTime;
 		}
 
+		CHARACTER_TYPE GetCharaType() const noexcept
+		{
+			return m_Type;
+		}
+
+		void SetCharaType(CHARACTER_TYPE type) noexcept
+		{
+			m_Type = type;
+		}
 
 		void SetShow(bool isShow) noexcept
 		{

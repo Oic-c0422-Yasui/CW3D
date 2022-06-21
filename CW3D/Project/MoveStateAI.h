@@ -55,7 +55,7 @@ namespace Sample {
 			if (!CCollision::Collision(player->GetCollider(), collider))
 			{
 				currentLostTime++;
-				if (currentLostTime < 15)
+				if (currentLostTime < 3)
 				{
 					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, transform->IsReverse() ? -1.0f : 1.0f);
 				}

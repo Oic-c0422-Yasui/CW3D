@@ -19,6 +19,9 @@ namespace Sample
 		CVector3							m_ColliderSize;
 		bool								m_ShowFlg;
 		bool								m_DeadFlg;
+		BYTE								m_ArmorLevel;
+		CVector3							m_PrevPos;
+
 	public:
 		CActorObject();
 		virtual ~CActorObject();
@@ -30,6 +33,15 @@ namespace Sample
 		{
 			return m_Actor;
 		}
+		CHARACTER_TYPE GetType() const noexcept
+		{
+			return m_Actor->GetType();
+		}
+		void SetType(CHARACTER_TYPE type) noexcept
+		{
+			m_Actor->SetType(type);
+		}
+
 		const CVector3& GetPosition() const noexcept 
 		{ 
 			return m_Actor->GetPosition(); 
@@ -42,7 +54,7 @@ namespace Sample
 		{ 
 			return m_Actor->GetVelocity()->GetVelocity(); 
 		}
-		const bool IsReverse() const noexcept
+		bool IsReverse() const noexcept
 		{ 
 			return m_Actor->IsReverse(); 
 		}
@@ -50,19 +62,32 @@ namespace Sample
 		{ 
 			return m_Actor->GetRotate(); 
 		}
-		const bool& IsShow() const noexcept {
+		bool IsShow() const noexcept {
 			return m_ShowFlg;
 		}
 		void SetShow(bool isShow)
 		{
 			m_ShowFlg = isShow;
 		}
+		BYTE GetArmorLevel() const noexcept
+		{
+			return m_ArmorLevel;
+		}
+		void SetArmorLevel(BYTE level) noexcept
+		{
+			m_ArmorLevel = level;
+		}
+
 		CAABB GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
 			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
 
 			return m_Collider;
+		}
+		const CVector3& GetPrevPos() const noexcept
+		{
+			return m_PrevPos;
 		}
 
 	};

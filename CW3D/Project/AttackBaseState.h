@@ -55,6 +55,7 @@ namespace Sample {
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			ShotAABB status = GetCreateShotStatusAABB();
 			status.damage += attack;
+			status.type = Actor()->GetType();
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;
@@ -69,6 +70,7 @@ namespace Sample {
 			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 			ShotSphere status = GetCreateShotStatusSphere();
 			status.damage += attack;
+			status.type = Actor()->GetType();
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;

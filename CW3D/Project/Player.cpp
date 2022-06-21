@@ -125,11 +125,15 @@ void CPlayer::Initialize()
 	m_Actor->SetPosition(Vector3(0, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
+	m_ColliderSize.x = 0.5f;
+	m_ColliderSize.y = 0.8f;
+	m_ColliderSize.z = 0.5f;
+	m_ColliderOffset.y = 1.0f;
 
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
 	matWorld = m_Actor->GetMatrix();
-	m_Actor->SetType(CHARA_PLAYER);
+	SetType(CHARA_PLAYER);
 }
 
 void CPlayer::Update()
