@@ -68,6 +68,10 @@
 			SetTargetPos(pos);
 			SetTargetLookPos(lookPos);
 		}
+		const CCamera& GetCamera()
+		{
+			return m_Camera->GetCamera();
+		}
 
 		void Quake(float power, float freq, int time);
 		void Enable(const Vector3& pos, const Vector3& lookPos);

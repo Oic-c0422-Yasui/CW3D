@@ -3,7 +3,7 @@
 #include "GameDefine.h"
 #include	"HPGauge.h"
 #include	"HPPosition.h"
-#include	"HPShowFlg.h"
+
 #include "ResourceManager.h"
 
 namespace Sample
@@ -129,10 +129,10 @@ namespace Sample
 			
 			float parcent = (float)m_HP / (float)m_MaxHP;
 			m_CurrentHP = parcent;
-
 			//lŠp‚ÅHPƒQ[ƒW•`‰æ
 			m_pFrame->Update();
-			
+			LPCamera cam = CGraphicsUtilities::GetCamera();
+			m_pFrame->m_World.Multiply3x3(cam->GetBillBoardMatrix());
 			m_pFrame->Render();
 			//•\¦ƒQ[ƒW‚ğ™X‚É•Ï‰»‚³‚¹‚é
 			if (fabsf(m_CurrentGauge - m_CurrentHP) > 0.01f)
@@ -142,6 +142,7 @@ namespace Sample
 				float offset = (m_Size.x - m_pDamageBar->m_Scale.x) * 0.5f;
 				m_pDamageBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
 				m_pDamageBar->Update();
+				m_pDamageBar->m_World.Multiply3x3(cam->GetBillBoardMatrix());
 				m_pDamageBar->Render();
 			}
 			else
@@ -152,6 +153,7 @@ namespace Sample
 			float offset = (m_Size.x - m_pHPBar->m_Scale.x) * 0.5f;
 			m_pHPBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
 			m_pHPBar->Update();
+			m_pHPBar->m_World.Multiply3x3(cam->GetBillBoardMatrix());
 			m_pHPBar->Render();
 		}
 

@@ -461,9 +461,6 @@
     <ClInclude Include="IHPShowFlg.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="HPShowFlg.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ICTGauge.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>

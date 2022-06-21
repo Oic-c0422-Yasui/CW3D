@@ -30,6 +30,8 @@ public:
 	{
 		m_pInput = ptr;
 	}
+
+	
 	/**
 	 * @brief		CT•Ï‰»’Ê’m
 	 */

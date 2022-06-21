@@ -42,21 +42,24 @@ namespace Sample {
 			//プレイヤー取得
 			const auto& player = ServiceLocator< CPlayer >::GetService();
 			const auto& transform = Actor()->GetTransform();
-			////警戒ボックス
-			//const Vector3F pos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-150, 50, 0) : Vector3F(150, 50, 0));
-			//const Vector3F size(280, 50, 80);
-			////警戒範囲内に入ってきたら移動
-			//if (CollisionFunction::CollisionAABB(player->GetPos(), player->GetSize(), pos, size))
-			//{
-			//	Input()->SetKeyValue(HorizontalKey,
-			//		player->GetPos().x < transform->GetPos().x ? -1.0f : 1.0f);
-			//}
-			////停止中にランダムで適当に逆方向入力
-			//else if (RandomUtility::Random(100) == 0)
-			//{
-			//	Input()->SetKeyValue(HorizontalKey,
-			//		transform->IsReverse() ? 1.0f : -1.0f);
-			//}
+			//警戒ボックス
+			CAABB collider;
+			collider.Position = transform->GetPosition();
+			collider.Size = Vector3(10, 3, 10);
+			
+			//警戒範囲内に入ってきたら移動
+			if (CCollision::Collision(player->GetCollider(), collider))
+			{
+				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+					
+					player->GetPosition().x < transform->GetPosition().x ? -1.0f : 1.0f);
+			}
+			//停止中にランダムで適当に逆方向入力
+			else if (RandomUtility::Random(100) == 0)
+			{
+				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+					transform->IsReverse() ? 1.0f : -1.0f);
+			}
 			////攻撃ボックス
 			//const Vector3F atkpos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-30, 20, 0) : Vector3F(30, 20, 0));
 			//const Vector3F atksize(25, 25, 15);

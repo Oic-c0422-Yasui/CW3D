@@ -174,7 +174,6 @@
     <ClInclude Include="HPGauge.h" />
     <ClInclude Include="HPPosition.h" />
     <ClInclude Include="HPPresenter.h" />
-    <ClInclude Include="HPShowFlg.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
     <ClInclude Include="ICTGauge.h" />
