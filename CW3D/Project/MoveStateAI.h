@@ -47,32 +47,33 @@ namespace Sample {
 			//プレイヤー取得
 			const auto& player = ServiceLocator< CPlayer >::GetService();
 			const auto& transform = Actor()->GetTransform();
-			////警戒ボックス
-			//const Vector3F pos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-150, 50, 0) : Vector3F(150, 50, 0));
-			//const Vector3F size(280, 50, 80);
-			////警戒範囲内にプレイヤーがいなくなるとカウントして一定後に停止
-			//if (!CollisionFunction::CollisionAABB(player->GetPos(), player->GetSize(), pos, size))
-			//{
-			//	currentLostTime++;
-			//	if (currentLostTime < 3)
-			//	{
-			//		Input()->SetKeyValue(HorizontalKey, transform->IsReverse() ? -1.0f : 1.0f);
-			//	}
-			//	return;
-			//}
-			//else
-			//{
-			//	currentLostTime = 0;
-			//}
-			////移動入力
-			//float sx = player->GetPos().x - transform->GetPos().x;
-			//float sz = player->GetPos().z - transform->GetPos().z;
-			//sx /= 300.0f;
-			//sz /= 60.0f;
-			//sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
-			//sz = ((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
-			//Input()->SetKeyValue(HorizontalKey, sx);
-			//Input()->SetKeyValue(VerticalKey, sz);
+			//警戒ボックス
+			CAABB collider;
+			collider.SetPosition(transform->GetPosition());
+			collider.Size = Vector3(3, 3, 3);
+			//警戒範囲内にプレイヤーがいなくなるとカウントして一定後に停止
+			if (!CCollision::Collision(player->GetCollider(), collider))
+			{
+				currentLostTime++;
+				if (currentLostTime < 15)
+				{
+					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, transform->IsReverse() ? -1.0f : 1.0f);
+				}
+				return;
+			}
+			else
+			{
+				currentLostTime = 0;
+			}
+			//移動入力
+			float sx = player->GetPosition().x - transform->GetPosition().x;
+			float sz = player->GetPosition().z - transform->GetPosition().z;
+			sx /= 300.0f;
+			sz /= 60.0f;
+			sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
+			sz = ((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
+			Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
+			Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
 			////攻撃ボックス
 			//const Vector3F atkpos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-30, 20, 0) : Vector3F(30, 20, 0));
 			//const Vector3F atksize(25, 25, 15);

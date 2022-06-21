@@ -6,6 +6,8 @@
 #include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
 #include	"Observer.h"
+#include	"CharacterStateAI.h"
+
 
 #include	"ActorObject.h"
 
@@ -21,6 +23,7 @@ namespace Sample
 
 		AttackColliderPtr m_Collider;
 
+		CharacterAIPtr	m_AI;
 
 		bool	m_DeadFlg;
 

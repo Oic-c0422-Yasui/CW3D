@@ -58,11 +58,11 @@ namespace Sample {
 				}
 				if (IsPush(k->first) || IsNegativePush(k->first))
 				{
-					k->second.m_PushTime = 0;
+					k->second.m_PushTime = DOUBLE_PUSH_TIME + 1;
 				}
 				else
 				{
-					k->second.m_PushTime += CUtilities::GetFrameSecond();
+					k->second.m_PushTime = DOUBLE_PUSH_TIME + 1;
 				}
 
 				k->second.m_PreviousValue = k->second.m_NowValue;

@@ -44,22 +44,24 @@ namespace Sample {
 			const auto& transform = Actor()->GetTransform();
 			//Œx‰úƒ{ƒbƒNƒX
 			CAABB collider;
-			collider.Position = transform->GetPosition();
-			collider.Size = Vector3(10, 3, 10);
+			collider.SetPosition(transform->GetPosition());
+			collider.Size = Vector3(2, 3, 1);
 			
 			//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çˆÚ“®
 			if (CCollision::Collision(player->GetCollider(), collider))
 			{
-				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
-					
-					player->GetPosition().x < transform->GetPosition().x ? -1.0f : 1.0f);
+				if (!Input()->IsPush(INPUT_KEY_HORIZONTAL) && !Input()->IsNegativePush(INPUT_KEY_HORIZONTAL))
+				{
+					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+						player->GetPosition().x < transform->GetPosition().x ? -1.0f : 1.0f);
+				}
 			}
-			//’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
-			else if (RandomUtility::Random(100) == 0)
-			{
-				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
-					transform->IsReverse() ? 1.0f : -1.0f);
-			}
+			////’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
+			//else if (CUtilities::Random(100) == 0)
+			//{
+			//	Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+			//		transform->IsReverse() ? 1.0f : -1.0f);
+			//}
 			////UŒ‚ƒ{ƒbƒNƒX
 			//const Vector3F atkpos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-30, 20, 0) : Vector3F(30, 20, 0));
 			//const Vector3F atksize(25, 25, 15);

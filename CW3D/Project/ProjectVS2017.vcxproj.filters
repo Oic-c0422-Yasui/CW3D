@@ -560,6 +560,12 @@
     <ClInclude Include="MoveStateAI.h">
       <Filter>ヘッダー ファイル\AI</Filter>
     </ClInclude>
+    <ClInclude Include="ICharacterAICreator.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterAICreator.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

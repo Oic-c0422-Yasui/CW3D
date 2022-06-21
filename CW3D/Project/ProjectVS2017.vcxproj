@@ -132,11 +132,13 @@
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CharacterAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="FixedCamera.h" />
     <ClInclude Include="FollowFixedCamera.h" />
     <ClInclude Include="IAICycle.h" />
     <ClInclude Include="ICharacterAI.h" />
+    <ClInclude Include="ICharacterAICreator.h" />
     <ClInclude Include="IdleStateAI.h" />
     <ClInclude Include="InterpolateCamera.h" />
     <ClInclude Include="IStateAI.h" />

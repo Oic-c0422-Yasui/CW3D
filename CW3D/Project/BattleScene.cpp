@@ -5,6 +5,7 @@
 #include	"CollisionEnemyEnemy.h"
 #include	"CollisionShotEnemy.h"
 #include	"NomalCamera.h"
+#include	"StateInput.h"
 
 
 using namespace Sample;
@@ -21,6 +22,7 @@ CBattleScene::~CBattleScene()
 bool CBattleScene::Load()
 {
 	auto input = InputManagerInstance.AddInput<Sample::MofInput>();
+	InputManagerInstance.AddInput<Sample::StateInput>();
 	
 	//キーボード
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);

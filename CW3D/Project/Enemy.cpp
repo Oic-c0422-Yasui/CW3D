@@ -12,12 +12,15 @@
 #include "DeadState.h"
 #include "StateInput.h"
 #include	"CameraController.h"
+#include "CharacterAICreator.h"
+
 
 using namespace Sample;
 
 CEnemy::CEnemy()
 	: Sample::CActorObject()
 	,m_Input()
+	,m_AI()
 {
 }
 
@@ -28,7 +31,8 @@ CEnemy::~CEnemy()
 
 bool CEnemy::Load()
 {
-	m_Input = std::make_shared<Sample::StateInput>();
+	auto stateInput = std::make_shared<Sample::StateInput>();
+	m_Input = stateInput;
 	m_Collider = std::make_shared<Sample::CAttackCollider>();
 	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
 
@@ -70,6 +74,11 @@ bool CEnemy::Load()
 	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
 	m_Position = m_Actor->GetPosition();
 	m_HPShowFlg = true;
+
+	CharacterAICreatorPtr aiCreator = std::make_shared<CharacterAICreator>();
+
+	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
+
 	return true;
 }
 
@@ -100,7 +109,7 @@ void CEnemy::Update()
 		return;
 	}
 	
-	
+	m_Input->Update();
 
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
@@ -115,6 +124,7 @@ void CEnemy::Update()
 			m_ShowFlg = false;
 		}
 	}
+	m_AI->Update();
 	Sample::CActorObject::Update();
 	m_Position = m_Actor->GetPosition();
 }
