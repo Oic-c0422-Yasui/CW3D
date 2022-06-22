@@ -54,6 +54,7 @@ namespace Sample {
 			m_AttackTime = 0.0f;
 			m_FinishTime = 3.5f;
 			m_ContinueFlg = true;
+			Actor()->SetThrough(true);
 
 			AttackBaseState::Start();
 			m_SkillAction->Start();
@@ -172,6 +173,7 @@ namespace Sample {
 			m_SkillAction->End();
 			AttackBaseState::End();
 			CameraControllerInstance.SetDefault();
+			Actor()->SetThrough(false);
 
 		}
 

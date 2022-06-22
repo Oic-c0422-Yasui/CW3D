@@ -234,5 +234,18 @@ namespace Sample {
 			return m_SkillController;
 		}
 
+		/**
+		 * @brief		ÚG”»’è‰ñ”ð‰Â”ÛŽæ“¾
+		 */
+		bool IsThrough() const override {
+			return transform_->IsThrough();
+		}
+
+		/**
+		 * @brief		ÚG”»’è‰ñ”ð‰Â”ÛÝ’è
+		 */
+		void SetThrough(bool isThrough) override {
+			transform_->SetThrough(isThrough);
+		}
 	};
 }

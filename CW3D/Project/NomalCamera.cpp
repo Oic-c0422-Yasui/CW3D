@@ -11,7 +11,7 @@ CNomalCamera::~CNomalCamera()
 
 void CNomalCamera::Create()
 {
-	m_OffsetLookPos = Vector3(0.0f, 2.0f, 0.0f);
+	m_OffsetLookPos = Vector3(0.0f, 1.5f, 0.0f);
 	m_OffsetPos = Vector3(0.0f, 4.0f, -15.0f);
 	CCameraBase::Create();
 }

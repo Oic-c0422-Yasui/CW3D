@@ -158,6 +158,11 @@ namespace Sample {
 		// */
 		virtual SkillControllerPtr GetSkillController() const = 0;
 
+		//ÚG”»’è‰ñ”ğæ“¾
+		virtual bool IsThrough() const = 0;
+
+		virtual void SetThrough(bool isThrough) = 0;
+
 	protected:
 
 	};

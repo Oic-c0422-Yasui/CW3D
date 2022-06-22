@@ -27,6 +27,8 @@ namespace Sample
 
 		bool		m_ReverseFlg;
 
+		bool		m_ThroughFlg;
+
 		CHARACTER_TYPE m_Type;
 
 	public:
@@ -39,6 +41,7 @@ namespace Sample
 			, m_UpdateFlg(false)
 			, m_ReverseFlg(false)
 			, m_Type()
+			, m_ThroughFlg(false)
 		{
 		}
 
@@ -301,6 +304,15 @@ namespace Sample
 			void SetType(CHARACTER_TYPE type) noexcept
 			{
 				m_Type = type;
+			}
+
+			void SetThrough(bool isThrough) noexcept
+			{
+				m_ThroughFlg = isThrough;
+			}
+			bool IsThrough() const noexcept
+			{
+				return m_ThroughFlg;
 			}
 
 	private:

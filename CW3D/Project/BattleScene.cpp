@@ -202,10 +202,10 @@ void CBattleScene::Update()
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		CCollision::CollisionObj(m_Player, m_Enemys[i]);
-		for (int j = i + 1; j < m_Enemys.size(); j++)
+		/*for (int j = i + 1; j < m_Enemys.size(); j++)
 		{
 			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-		}
+		}*/
 		if (m_Enemys[i]->IsInvincible())
 		{
 			continue;

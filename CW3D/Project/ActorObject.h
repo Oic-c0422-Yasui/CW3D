@@ -29,7 +29,7 @@ namespace Sample
 		virtual void Render();
 		virtual void Release();
 
-		const ActorPtr& GetActor()
+		const ActorPtr& GetActor() const noexcept
 		{
 			return m_Actor;
 		}
@@ -46,7 +46,7 @@ namespace Sample
 		{ 
 			return m_Actor->GetPosition(); 
 		}
-		void SetPosition(const Vector3& position)
+		void SetPosition(const Vector3& position) noexcept
 		{
 			m_Actor->SetPosition(position);
 		}
@@ -78,7 +78,7 @@ namespace Sample
 			m_ArmorLevel = level;
 		}
 
-		CAABB GetCollider()
+		const CAABB& GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
 			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
@@ -88,6 +88,11 @@ namespace Sample
 		const CVector3& GetPrevPos() const noexcept
 		{
 			return m_PrevPos;
+		}
+
+		bool IsThrough() const noexcept
+		{
+			return m_Actor->IsThrough();
 		}
 
 	};

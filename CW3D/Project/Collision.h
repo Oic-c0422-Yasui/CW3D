@@ -124,6 +124,10 @@ namespace Sample
 			{
 				return;
 			}
+			if (obj1.IsThrough() || obj2.IsThrough())
+			{
+				return;
+			}
 			//埋まり防止判定
 			const Vector3& pos1 = obj1.GetPosition();
 			const Vector3& pos2 = obj2.GetPosition();
@@ -153,8 +157,8 @@ namespace Sample
 				{
 					float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x)), sv.x);
 					float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z)), sv.z);
-					obj1.SetPosition(pos1 + Vector3(slx * 0.5f, pos1.y, slz * 0.5f));
-					obj2.SetPosition(pos2 - Vector3(slx * 0.5f, pos1.y, slz * 0.5f));
+					obj1.SetPosition(pos1 + Vector3(slx * 0.5f, 0, slz * 0.5f));
+					obj2.SetPosition(pos2 - Vector3(slx * 0.5f, 0, slz * 0.5f));
 					//移動前の位置＋空いている分のベクトル
 					/*float slx = copysignf((size1.Size.x + size2.Size.x) - (fabsf(sv.x) - 1), sv.x) * ax;
 					float slz = copysignf((size1.Size.z + size2.Size.z) - (fabsf(sv.z) - 1), sv.z) * az;

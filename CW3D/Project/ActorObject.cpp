@@ -2,7 +2,6 @@
 
 using namespace Sample;
 
-extern float gameSpeed;
 
 CActorObject::CActorObject()
 	: m_Actor(std::make_shared<Sample::Actor>())
