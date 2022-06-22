@@ -9,15 +9,26 @@ namespace Sample {
 	 */
 	class RunLandingAction : public Action
 	{
-	private:
+	public:
+		/**
+			 * @brief		攻撃アクションの設定値
+			 */
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
 
+		};
+	private:
+		//パラメーター
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunLandingAction()
+		RunLandingAction(Parameter param)
 			: Action()
-
+			, m_Parameter(param)
 		{
 		}
 
@@ -25,8 +36,8 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			auto& vel = Velocity();
-
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			//vel->SetDecelerate(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
 
 			float rotateY = Transform()->GetRotateY();

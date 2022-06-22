@@ -28,7 +28,7 @@ namespace Sample {
 		void Start() override {
 			m_JumpAction = Actor()->GetAction<JumpAction>(GetKey());
 			m_JumpAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_JUMP, 0.3f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_JUMP, 0.3f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 
 		}
 

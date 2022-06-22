@@ -104,10 +104,7 @@ namespace Sample
 			m_Position = m_Actor->GetPosition();
 		}
 
-		unsigned int GetID() const
-		{
-			return m_Actor->GetID();
-		}
+		
 
 
 	};

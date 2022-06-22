@@ -10,11 +10,16 @@ namespace Sample {
 	 */
 	class DownState : public State
 	{
+	public:
+		struct Parameter
+		{
+			float endTime;
+		};
 	private:
-		//ダメージステート
-		DownActionPtr			m_DownAction;
-		//終了時間
-		float						m_FinishTime;
+		Parameter m_Parameter;
+
+		//ダウンステート
+		DownActionPtr				m_DownAction;
 		//現在時間
 		float						m_CurrentTime;
 
@@ -22,9 +27,9 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DownState()
+		DownState(Parameter param)
 			: State()
-			, m_FinishTime(0)
+			, m_Parameter(param)
 			, m_CurrentTime(0) {
 		}
 
@@ -33,12 +38,11 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_CurrentTime = 0;
-			m_FinishTime = 3;
 			auto& invincible = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-			invincible = m_FinishTime;
+			invincible = m_Parameter.endTime;
 			m_DownAction = Actor()->GetAction<DownAction>(GetKey());
 			m_DownAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DOWN, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DOWN, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -46,7 +50,8 @@ namespace Sample {
 		 */
 		void Execution() override {
 			m_DownAction->Execution();
-			if (m_CurrentTime < m_FinishTime)
+			//3
+			if (m_CurrentTime < m_Parameter.endTime)
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
 			}

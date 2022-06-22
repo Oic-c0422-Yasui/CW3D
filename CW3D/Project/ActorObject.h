@@ -90,6 +90,11 @@ namespace Sample
 			return m_PrevPos;
 		}
 
+		unsigned int GetID() const noexcept
+		{
+			return m_Actor->GetID();
+		}
+
 		bool IsThrough() const noexcept
 		{
 			return m_Actor->IsThrough();

@@ -9,7 +9,27 @@ namespace Sample {
 	 */
 	class RunFallAction : public Action
 	{
+	public:
+		/**
+		* @brief		攻撃アクションの設定値
+		*/
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+
+			//減速値
+			Vector3					decelerate;
+			//加速値
+			Vector3					velocity;
+			Vector3					maxVelocty;
+			//重力
+			float					gravity;
+			float					maxGravity;
+		};
 	private:
+		//パラメーター
+		Parameter					m_Parameter;
 		int m_NowDirection;
 		enum tag_DIRECTION
 		{
@@ -24,9 +44,10 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunFallAction()
+		RunFallAction(Parameter param)
 			: Action()
-
+			, m_NowDirection(0)
+			, m_Parameter(param)
 		{
 		}
 
@@ -34,23 +55,28 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+
 			auto& vel = Velocity();
 
 			vel->SetMaxVelocity(PLAYER_MAXSPEED , PLAYER_MAXSPEED );
-
-			vel->SetMaxGravity(GRAVITYMAX);
-			//vel->SetDecelerate(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-			vel->SetGravity(GRAVITY);
+			//PLAYER_MAXSPEED
+			vel->SetMaxVelocity(m_Parameter.maxVelocty.x, m_Parameter.maxVelocty.z);
+			//GRAVITYMAX
+			vel->SetMaxGravity(m_Parameter.maxGravity);
+			//GRAVITY
+			vel->SetGravity(m_Parameter.gravity);
 
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
 				m_NowDirection = DIRECTION_LEFT;
 			}
 			else
 			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				vel->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
 				m_NowDirection = DIRECTION_RIGHT;
 			}
 		}
@@ -59,23 +85,23 @@ namespace Sample {
 		 * @brief		アクション内の実行処理
 		 */
 		void Execution() override {
-			auto& velocity = Velocity();
+			auto& vel = Velocity();
 			bool isReverse = Transform()->IsReverse();
 			float rotateY = Transform()->GetRotateY();
 
 			if (Transform()->IsReverse())
 			{
-				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+				if (vel->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.1f);
 					m_NowDirection = DIRECTION_LEFTUP;
 				}
-				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+				else if (vel->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.1f);
 					m_NowDirection = DIRECTION_LEFTDOWN;
 				}
-				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+				else if (vel->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.1f);
 					m_NowDirection = DIRECTION_LEFT;
@@ -83,17 +109,17 @@ namespace Sample {
 			}
 			else
 			{
-				if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+				if (vel->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.1f);
 					m_NowDirection = DIRECTION_RIGHTUP;
 				}
-				else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+				else if (vel->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.1f);
 					m_NowDirection = DIRECTION_RIGHTDOWN;
 				}
-				else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+				else if (vel->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
 				{
 					Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.1f);
 					m_NowDirection = DIRECTION_RIGHT;
@@ -113,8 +139,8 @@ namespace Sample {
 		 * @param[in]	z		加速量
 		 */
 		void Acceleration(float x, float z) {
-			Velocity()->Acceleration(x * PLAYER_SPEED,
-				z * PLAYER_SPEED);
+			Velocity()->Acceleration(x * m_Parameter.velocity.x,
+				z * m_Parameter.velocity.z);
 		}
 
 

@@ -158,3 +158,30 @@ void CPlayer::Release()
 {
 	Sample::CActorObject::Release();
 }
+
+void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage)
+{
+	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
+	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
+
+	auto& hp = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
+	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
+
+	auto& transform = m_Actor->GetTransform();
+	transform->SetReverse(direction.x > 0 ? true : false);
+
+	hp -= damage;
+	if (hp <= 0)
+	{
+		hp = 0;
+
+		m_DeadFlg = true;
+	}
+	m_HP = hp;
+
+	knockBack = direction * power;
+
+	//CameraControllerInstance.Quake(2, 3, 1);
+
+	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
+}

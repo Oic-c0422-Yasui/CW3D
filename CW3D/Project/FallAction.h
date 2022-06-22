@@ -9,15 +9,34 @@ namespace Sample {
 	 */
 	class FallAction : public Action
 	{
-	private:
+	public:
+		/**
+		* @brief		攻撃アクションの設定値
+		*/
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
 
+			//減速値
+			Vector3					decelerate;
+			//加速値
+			Vector3					velocity;
+			Vector3					maxVelocty;
+			//重力
+			float					gravity;
+			float					maxGravity;
+		};
+	private:
+		//パラメーター
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		FallAction()
+		FallAction(Parameter param)
 			: Action()
-
+			, m_Parameter(param)
 		{
 		}
 
@@ -25,13 +44,18 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& vel = Velocity();
+			//PLAYERMAXSPEED * PLAYERWALKSPEED
+			vel->SetMaxVelocity(m_Parameter.maxVelocty.x, m_Parameter.maxVelocty.z);
 
-			vel->SetMaxVelocity(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-
-			vel->SetMaxGravity(GRAVITYMAX);
-			vel->SetDecelerate(PLAYER_MAXSPEED * PLAYER_WALKSPEED, PLAYER_MAXSPEED * PLAYER_WALKSPEED);
-			vel->SetGravity(GRAVITY);
+			//PLAYERMAXSPEED * PLAYERWALKSPEED
+			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+			//GRAVITYMAX
+			vel->SetMaxGravity(m_Parameter.maxGravity);
+			//GRAVITY
+			vel->SetGravity(m_Parameter.gravity);
 
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
@@ -64,8 +88,8 @@ namespace Sample {
 		 * @param[in]	z		加速量
 		 */
 		void Acceleration(float x, float z) {
-			Velocity()->Acceleration(x * PLAYER_SPEED,
-				z * PLAYER_SPEED);
+			Velocity()->Acceleration(x * m_Parameter.velocity.x,
+				z * m_Parameter.velocity.z);
 		}
 
 

@@ -5,6 +5,7 @@
 #include	"CollisionEnemyEnemy.h"
 #include	"CollisionPlayerEnemy.h"
 #include	"CollisionShotEnemy.h"
+#include	"CollisionShotPlayer.h"
 #include	"NomalCamera.h"
 #include	"StateInput.h"
 
@@ -215,6 +216,11 @@ void CBattleScene::Update()
 			auto& shot = ShotManagerInstance.GetShot(j);
 			CCollision::CollisionObj(shot, m_Enemys[i]);
 		}
+	}
+	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	{
+		auto& shot = ShotManagerInstance.GetShot(i);
+		CCollision::CollisionObj(shot, m_Player);
 	}
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();

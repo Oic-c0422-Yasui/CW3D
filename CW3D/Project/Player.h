@@ -16,6 +16,8 @@ private:
 
 	Sample::InputPtr		m_pInput;
 
+	int						m_HP;
+
 
 public:
 	CPlayer();
@@ -31,7 +33,8 @@ public:
 		m_pInput = ptr;
 	}
 
-	
+	void Damage(const Vector3& direction, Vector3 power, int damage);
+
 	/**
 	 * @brief		CT•Ï‰»’Ê’m
 	 */

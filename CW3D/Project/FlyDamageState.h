@@ -10,13 +10,18 @@ namespace Sample {
 	 */
 	class FlyDamageState : public State
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			float NextInputFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		//ダメージステート
 		FlyDamageActionPtr			m_DamageAction;
-		//ウェイト
-		int						wait;
-		//現在時間
-		int						currentTime;
 
 	public:
 		/**
@@ -24,8 +29,7 @@ namespace Sample {
 		 */
 		FlyDamageState()
 			: State()
-			, wait(0)
-			, currentTime(0) {
+		{
 		}
 
 		/**
@@ -42,7 +46,7 @@ namespace Sample {
 		 */
 		void Execution() override {
 			m_DamageAction->Execution();
-			currentTime++;
+
 			if (Actor()->GetTransform()->GetPositionY() <= 0)
 			{
 				auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);

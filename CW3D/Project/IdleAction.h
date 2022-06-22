@@ -9,15 +9,30 @@ namespace Sample {
 	 */
 	class IdleAction : public Action
 	{
+	public:
+		/**
+		* @brief		攻撃アクションの設定値
+		*/
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+			
+			//減速値
+			Vector3					decelerate;
+			//加速値
+			Vector3					velocity;
+		};
 	private:
-
+		//パラメーター
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleAction()
+		IdleAction(Parameter param)
 			: Action()
-
+			, m_Parameter(param)
 		{
 		}
 
@@ -25,9 +40,10 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			auto& vel = Velocity();
-
-			vel->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+			//PLAERSPEED * 0.3f
+			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
@@ -59,8 +75,8 @@ namespace Sample {
 		 * @param[in]	z		加速量
 		 */
 		void Acceleration(float x, float z) {
-			Velocity()->Acceleration(x * PLAYER_SPEED,
-				z * PLAYER_SPEED);
+			Velocity()->Acceleration(x * m_Parameter.velocity.x,
+				z * m_Parameter.velocity.z);
 		}
 
 		/**

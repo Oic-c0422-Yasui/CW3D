@@ -12,13 +12,21 @@ namespace Sample {
 	 */
 	class JumpAttack1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		JumpAttack1ActionPtr			m_JumpAttack1Action;
 
 		const float EffectStartFrameTime = GameFrameTime * 20.0f;
 
-		bool effectStartFlg;
+		bool collideStartFlg;
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
 		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
@@ -31,12 +39,14 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpAttack1State()
+		JumpAttack1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideStartFlg(false)
 		{
 		}
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -45,7 +55,7 @@ namespace Sample {
 			m_JumpAttack1Action = Actor()->GetAction<JumpAttack1Action>(GetKey());
 			AttackBaseState::Start();
 			m_JumpAttack1Action->Start();
-			effectStartFlg = false;
+			collideStartFlg = false;
 
 			//当たり判定用の弾作成
 			CreateShotAABB();
@@ -61,12 +71,17 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
+				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+				{
+					shot->SetCollideFlg(true);
+
+				}
 			}
 
-			if (m_CurrentTime >= EffectStartFrameTime && !effectStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 			{
 				CreateEffect();
-				effectStartFlg = true;
+				collideStartFlg = true;
 			}
 
 

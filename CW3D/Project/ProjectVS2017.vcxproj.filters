@@ -82,6 +82,12 @@
     <Filter Include="ヘッダー ファイル\AI">
       <UniqueIdentifier>{cb8d6fc2-6420-4818-8070-eb944fd269fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Skill">
+      <UniqueIdentifier>{1cb35810-c5fd-49ed-8331-f042208058e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Skill">
+      <UniqueIdentifier>{0fc67747-6d1d-4c7c-a86d-6a7819b09366}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -293,12 +299,6 @@
     <ClInclude Include="DamageState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
-    <ClInclude Include="Skill1_1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill1_1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
@@ -400,30 +400,6 @@
     </ClInclude>
     <ClInclude Include="SkillData.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill2_1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpSkill2_1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill3_1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpSkill3_1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill2_1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpSkill2_1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill3_1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpSkill3_1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
     <ClInclude Include="EnemyHPRender.h">
       <Filter>ヘッダー ファイル\UI</Filter>
@@ -565,6 +541,39 @@
     </ClInclude>
     <ClInclude Include="CharacterAICreator.h">
       <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShotPlayer.h">
+      <Filter>ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill2_1Action.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill3_1Action.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill1_1Action.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill2_1Action.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill3_1Action.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill2_1State.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSkill3_1State.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill1_1State.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill2_1State.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill3_1State.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

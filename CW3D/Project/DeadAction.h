@@ -10,18 +10,31 @@ namespace Sample {
 	class DeadAction : public Action
 	{
 	public:
-		//終了時間
-		float						m_FinishTime;
+		/**
+					 * @brief		攻撃アクションの設定値
+					 */
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+			//減速値
+			Vector3					decelerate;
+			//終了時間
+			float					finishTime;
+		};
+	private:
+		//パラメーター
+		Parameter					m_Parameter;
+
 		//現在時間
 		float						m_CurrentTime;
-	private:
-
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DeadAction()
+		DeadAction(Parameter param)
 			: Action()
+			, m_Parameter(param)
 		{
 		}
 
@@ -29,10 +42,11 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 			Velocity()->SetDecelerate(PLAYER_SPEED, PLAYER_SPEED);
 			m_CurrentTime = 0;
-			m_FinishTime = 3;
 		}
 
 		/**
@@ -43,8 +57,8 @@ namespace Sample {
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
 				auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-
-				alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_FinishTime);
+				//3
+				alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_Parameter.finishTime);
 			}
 		}
 

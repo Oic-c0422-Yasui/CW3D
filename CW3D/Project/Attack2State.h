@@ -11,7 +11,17 @@ namespace Sample {
 	 */
 	class Attack2State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			float NextInputFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
+
 		/** 移動アクション */
 		Attack2ActionPtr			m_Attack2Action;
 
@@ -26,12 +36,14 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Attack2State()
+		Attack2State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideStartFlg(false)
 		{
 		}
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
 
 
 		/**
@@ -47,7 +59,7 @@ namespace Sample {
 			//当たり判定用の弾作成
 			CreateShotAABB();
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK2, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK2, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -58,7 +70,7 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg )
+				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg )
 				{
 					shot->SetCollideFlg(true);
 
@@ -69,7 +81,7 @@ namespace Sample {
 					shot->SetCollideFlg(false);
 				}
 			}
-			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 			{
 				collideStartFlg = true;
 			}
@@ -80,7 +92,7 @@ namespace Sample {
 			}
 			else if (m_NextInputFlg)
 			{
-				if (m_CurrentTime > NextInputFrameTime)
+				if (m_CurrentTime > m_Parameter.NextInputFrameTime)
 				{
 					ChangeState(STATE_KEY_ATTACK3);
 				}

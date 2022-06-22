@@ -11,7 +11,17 @@ namespace Sample {
 	 */
 	class Skill2_1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			float CollideEndFrameTime;
+			ShotAABB AABBShotStatus;
+			ShotSphere SphereShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		Skill2_1ActionPtr			m_SkillAction;
 
@@ -39,14 +49,16 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Skill2_1State()
+		Skill2_1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideStartFlg(false)
 		{
 		}
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
-		const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.AABBShotStatus; }
+		const ShotSphere& GetCreateShotStatusSphere() override { return m_Parameter.SphereShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -90,7 +102,7 @@ namespace Sample {
 
 			
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL2_1, 0.7f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL2_1, 0.7f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -101,11 +113,11 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_CurrentTime > CollideEndFrameTime)
+				if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
 				{
 					if (shot->GetCollideFlg())
 					{
@@ -117,7 +129,7 @@ namespace Sample {
 			{
 				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
 			}
-			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 			{
 				collideStartFlg = true;
 			}

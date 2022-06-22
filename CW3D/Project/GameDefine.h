@@ -89,3 +89,17 @@ enum CHARACTER_TYPE
 	CHARA_ENEMY,
 	CHARA_OBJECT,
 };
+
+struct AnimParam
+{
+	//利用するアニメーションの名前
+	char*					name;
+	//アニメ開始時間
+	float					startTime;
+	//アニメ補間時間
+	float					tTime;
+	//アニメ速度
+	float					speed;
+	//アニメループフラグ
+	bool					loopFlg;
+};

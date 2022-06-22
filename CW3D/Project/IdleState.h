@@ -10,7 +10,13 @@ namespace Sample {
 	 */
 	class IdleState : public State
 	{
+	public:
+		struct Parameter
+		{
+			float idleTime;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		IdleActionPtr			m_IdleAction;
 		float					m_Time;
@@ -18,9 +24,10 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleState()
+		IdleState(Parameter param)
 			: State()
 			, m_Time(0.0f)
+			, m_Parameter(param)
 		{
 		}
 
@@ -31,14 +38,14 @@ namespace Sample {
 			m_IdleAction = Actor()->GetAction<IdleAction>(GetKey());
 			m_Time = 0.0f;
 			m_IdleAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLE, 0.0f, 1.0f, 0.25f, TRUE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLE, 0.0f, 1.0f, 0.25f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
 		void Execution() override {
-			if (m_Time < 5.0f)
+			if (m_Time < m_Parameter.idleTime)
 			{
 				m_Time += CUtilities::GetFrameSecond();
 			}
@@ -57,7 +64,6 @@ namespace Sample {
 				Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
 			{
 				ChangeState(STATE_KEY_RUN);
-				//return;
 			}
 			//キーボードでの移動
 			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) || Input()->IsPress(INPUT_KEY_HORIZONTAL) ||

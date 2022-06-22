@@ -12,7 +12,16 @@ namespace Sample {
 	 */
 	class Skill1_1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			float CollideEndFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		Skill1_1ActionPtr			m_SkillAction;
 
@@ -32,14 +41,16 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Skill1_1State()
+		Skill1_1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideStartFlg(false)
 		{
 		}
 
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -63,9 +74,10 @@ namespace Sample {
 				{0.5f,0.0f},
 				{0.5f,1.0f},
 			};
-
-
 			TimeControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
+
+
+
 			Vector3 pos(-12, 2, -2);
 			Vector3 lookPos(2, 1, 2);
 			if (Actor()->IsReverse())
@@ -77,7 +89,7 @@ namespace Sample {
 			camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera,1,MyUtilities::EASE_IN_SINE,0.3f, MyUtilities::EASE_IN_SINE,0.15f);
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.7f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.7f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -88,11 +100,11 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 				{
 					shot->SetCollideFlg(true);
 				}
-				if (m_CurrentTime > CollideEndFrameTime)
+				if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
 				{
 					if (shot->GetCollideFlg())
 					{
@@ -101,7 +113,7 @@ namespace Sample {
 				}
 
 			}
-			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 			{
 				collideStartFlg = true;
 			}

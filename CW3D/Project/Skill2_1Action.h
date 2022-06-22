@@ -11,15 +11,26 @@ namespace Sample {
 	class Skill2_1Action : public Action
 	{
 	public:
+	/**
+			 * @brief		攻撃アクションの設定値
+			 */
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+			//減速値
+			Vector3					decelerate;
+		};
 	private:
 		//パラメーター
-
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Skill2_1Action()
+		Skill2_1Action(Parameter param)
 			: Action()
+			, m_Parameter(param)
 		{
 		}
 
@@ -27,7 +38,11 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+
+			//PLAYERSPEED * 0.3
+			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{

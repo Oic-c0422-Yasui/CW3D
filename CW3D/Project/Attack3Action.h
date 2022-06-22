@@ -11,15 +11,30 @@ namespace Sample {
 	class Attack3Action : public Action
 	{
 	public:
+		/**
+			 * @brief		攻撃アクションの設定値
+			 */
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+			//減速値
+			Vector3					decelerate;
+			//加速値
+			Vector3					velocity;
+			//加速値
+			Vector3					velocity2;
+		};
 	private:
 		//パラメーター
-
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Attack3Action()
+		Attack3Action(Parameter param)
 			: Action()
+			, m_Parameter(param)
 		{
 		}
 
@@ -27,18 +42,24 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			Velocity()->SetDecelerate(PLAYER_SPEED * 0.3f, PLAYER_SPEED * 0.3f);
+			//PLAYERSPEED * 0.3
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-				Velocity()->SetVelocity(Vector3(-0.05f, 0, 0));
+				//x:0.05f
+				Velocity()->SetVelocity(Vector3(-m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-				Velocity()->SetVelocity(Vector3(0.05f, 0, 0));
+				//x:0.05f
+				Velocity()->SetVelocity(Vector3(m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
 			}
+			//PLAYERSPEED * 0.3
+			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 		}
 
 		/**
@@ -47,11 +68,12 @@ namespace Sample {
 		void Execution() override {
 			if (Transform()->IsReverse())
 			{
-				Velocity()->SetVelocity(Vector3(-0.1f, 0, 0));
+				//x:0.1f
+				Velocity()->SetVelocity(Vector3(-m_Parameter.velocity2.x, m_Parameter.velocity2.y, m_Parameter.velocity2.z));
 			}
 			else
 			{
-				Velocity()->SetVelocity(Vector3(0.1f, 0, 0));
+				Velocity()->SetVelocity(Vector3(m_Parameter.velocity2.x, m_Parameter.velocity2.y, m_Parameter.velocity2.z));
 			}
 		}
 

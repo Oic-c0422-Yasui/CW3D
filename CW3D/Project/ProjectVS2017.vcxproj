@@ -134,6 +134,7 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CharacterAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
+    <ClInclude Include="CollisionShotPlayer.h" />
     <ClInclude Include="FixedCamera.h" />
     <ClInclude Include="FollowFixedCamera.h" />
     <ClInclude Include="IAICycle.h" />

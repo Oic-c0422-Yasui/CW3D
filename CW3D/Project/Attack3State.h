@@ -11,7 +11,17 @@ namespace Sample {
 	 */
 	class Attack3State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideFirstStartFrameTime;
+			float CollideSecondStartFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
+
 		/** 移動アクション */
 		Attack3ActionPtr			m_Attack3Action;
 
@@ -28,12 +38,15 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Attack3State()
+		Attack3State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideFirstStartFlg(false)
+			, collideSecondStartFlg(false)
 		{
 		}
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -49,7 +62,7 @@ namespace Sample {
 			//当たり判定用の弾作成
 			CreateShotAABB();
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -60,10 +73,11 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if ((m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg) || (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg))
+				if ((m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg) 
+					|| (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg))
 				{
 					shot->SetCollideFlg(true);
-					if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
+					if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 					{
 						m_Attack3Action->Execution();
 						
@@ -76,11 +90,11 @@ namespace Sample {
 				}
 
 			}
-			if (m_CurrentTime >= CollideFirstStartFrameTime && !collideFirstStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 			{
 				collideFirstStartFlg = true;
 			}
-			if (m_CurrentTime >= CollideSecondStartFrameTime && !collideSecondStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg)
 			{
 				collideSecondStartFlg = true;
 			}

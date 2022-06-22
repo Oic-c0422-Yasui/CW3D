@@ -12,7 +12,16 @@ namespace Sample {
 	 */
 	class JumpSkill3_1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float SkillActionFrameTime;
+			float FinishTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		JumpSkill3_1ActionPtr			m_SkillAction;
 		float							m_AttackTime;
@@ -36,15 +45,18 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpSkill3_1State()
+		JumpSkill3_1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, m_ContinueFlg(false)
+			, m_AttackTime(0.0f)
 		{
 		}
 
 
 		const KnockBackPtr GetKnockBack() override { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -53,7 +65,6 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<JumpSkill3_1Action>(GetKey());
 
 			m_AttackTime = 0.0f;
-			m_FinishTime = 3.5f;
 			m_ContinueFlg = true;
 
 			AttackBaseState::Start();
@@ -89,7 +100,7 @@ namespace Sample {
 			camera = std::make_shared<CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
 
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -101,17 +112,17 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_AttackTime >= SkillActionFrameTime)
+				if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
 				{
 					shot->SetCollideFlg(true);
-					
+
 				}
 				else if (shot->GetCollideFlg())
 				{
 					shot->SetCollideFlg(false);
 				}
 			}
-			if (m_AttackTime >= SkillActionFrameTime)
+			if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
 			{
 				m_AttackTime = 0.0f;
 			}
@@ -123,7 +134,7 @@ namespace Sample {
 
 			m_AttackTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(Actor()->GetType());
 
-			if (m_CurrentTime > m_FinishTime || !m_ContinueFlg)
+			if (m_CurrentTime > m_Parameter.FinishTime || !m_ContinueFlg)
 			{
 				if (Actor()->GetTransform()->GetPositionY() > 0)
 				{

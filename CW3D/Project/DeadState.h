@@ -29,7 +29,7 @@ namespace Sample {
 		void Start() override {
 			m_DeadAction = Actor()->GetAction<DeadAction>(GetKey());
 			m_DeadAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DOWN, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DOWN, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

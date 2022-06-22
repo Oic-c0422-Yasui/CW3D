@@ -45,7 +45,7 @@ namespace Sample {
 			//Œx‰úƒ{ƒbƒNƒX
 			CAABB collider;
 			collider.SetPosition(transform->GetPosition());
-			collider.Size = Vector3(2, 3, 1);
+			collider.Size = Vector3(3, 1, 1.5);
 			
 			//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çˆÚ“®
 			if (CCollision::Collision(player->GetCollider(), collider))
@@ -56,20 +56,20 @@ namespace Sample {
 						player->GetPosition().x < transform->GetPosition().x ? -1.0f : 1.0f);
 				}
 			}
-			////’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
-			//else if (CUtilities::Random(100) == 0)
-			//{
-			//	Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
-			//		transform->IsReverse() ? 1.0f : -1.0f);
-			//}
-			////UŒ‚ƒ{ƒbƒNƒX
-			//const Vector3F atkpos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-30, 20, 0) : Vector3F(30, 20, 0));
-			//const Vector3F atksize(25, 25, 15);
-			////UŒ‚”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
-			//if (CollisionFunction::CollisionAABB(player->GetPos(), player->GetSize(), atkpos, atksize))
-			//{
-			//	Input()->SetKeyValue(AttackKey, 1.0f);
-			//}
+			//’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
+			else if (CUtilities::Random(100) == 0)
+			{
+				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+					transform->IsReverse() ? 1.0f : -1.0f);
+			}
+			//UŒ‚ƒ{ƒbƒNƒX
+
+			collider.Size = Vector3(1.5, 1, 1);
+			//UŒ‚”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
+			if (CCollision::Collision(player->GetCollider(), collider))
+			{
+				Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
+			}
 		}
 
 		/**

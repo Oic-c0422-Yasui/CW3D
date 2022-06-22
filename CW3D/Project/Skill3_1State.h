@@ -13,11 +13,20 @@ namespace Sample {
 	 */
 	class Skill3_1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float SkillActionFrameTime;
+			float FinishTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		Skill3_1ActionPtr			m_SkillAction;
 		float						m_AttackTime;
-		float						m_FinishTime;
+
 		bool						m_ContinueFlg;
 		std::string					m_Key;
 
@@ -35,15 +44,18 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Skill3_1State()
+		Skill3_1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, m_ContinueFlg(false)
+			, m_AttackTime(0.0f)
 		{
 		}
 
 
 		const KnockBackPtr GetKnockBack() override { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatusAABB; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -52,9 +64,10 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<Skill3_1Action>(GetKey());
 
 			m_AttackTime = 0.0f;
-			m_FinishTime = 3.5f;
+			//3.5
+
 			m_ContinueFlg = true;
-			Actor()->SetThrough(true);
+			
 
 			AttackBaseState::Start();
 			m_SkillAction->Start();
@@ -66,16 +79,9 @@ namespace Sample {
 				shot->SetDamage(damage);
 			}
 
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (Actor()->GetSkillController()->GetSkill(i)->GetState() != STATE_KEY_SKILL3_1)
-				{
-					continue;
-				}
+			
+			m_Key = Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetKey();
 
-				m_Key = Actor()->GetSkillController()->GetSkill(i)->GetButton();
-				break;
-			}
 			Vector3 pos(0, 10, -20);
 			Vector3 lookPos(0, 3, 0);
 			if (Actor()->IsReverse())
@@ -86,7 +92,7 @@ namespace Sample {
 			CameraPtr camera;
 			camera = std::make_shared<CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -97,7 +103,7 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_AttackTime >= SkillActionFrameTime)
+				if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
 				{
 					shot->SetCollideFlg(true);
 
@@ -108,7 +114,7 @@ namespace Sample {
 				}
 
 			}
-			if (m_AttackTime >= SkillActionFrameTime)
+			if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
 			{
 				m_AttackTime = 0.0f;
 			}
@@ -121,7 +127,7 @@ namespace Sample {
 
 			m_AttackTime += CUtilities::GetFrameSecond();
 
-			if (m_CurrentTime > m_FinishTime || !m_ContinueFlg)
+			if (m_CurrentTime > m_Parameter.FinishTime || !m_ContinueFlg)
 			{
 				if (Actor()->GetTransform()->GetPositionY() > 0)
 				{
@@ -173,7 +179,6 @@ namespace Sample {
 			m_SkillAction->End();
 			AttackBaseState::End();
 			CameraControllerInstance.SetDefault();
-			Actor()->SetThrough(false);
 
 		}
 

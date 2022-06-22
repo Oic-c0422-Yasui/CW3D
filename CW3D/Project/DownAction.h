@@ -10,15 +10,27 @@ namespace Sample {
 	class DownAction : public Action
 	{
 	public:
+		/**
+					 * @brief		攻撃アクションの設定値
+					 */
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
 
+			//減速値
+			Vector3					decelerate;
+		};
 	private:
-
+		//パラメーター
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DownAction()
+		DownAction(Parameter param)
 			: Action()
+			, m_Parameter(param)
 		{
 		}
 
@@ -26,8 +38,10 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
-			
-			Velocity()->SetDecelerate(0.05f, 0.05f);
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+			//0.05f
+			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 		}
 
 		/**

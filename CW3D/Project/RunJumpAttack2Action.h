@@ -11,15 +11,27 @@ namespace Sample {
 	class RunJumpAttack2Action : public Action
 	{
 	public:
+		/**
+		* @brief		攻撃アクションの設定値
+		*/
+		struct Parameter
+		{
+			//アニメーションパラメーター
+			AnimParam				anim;
+			//加速値
+			Vector3					velocity;
+			float					jumpPower;
+		};
 	private:
 		//パラメーター
-
+		Parameter					m_Parameter;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunJumpAttack2Action()
+		RunJumpAttack2Action(Parameter param)
 			: Action()
+			, m_Parameter(param)
 		{
 		}
 
@@ -27,19 +39,23 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& vel = Velocity();
-			vel->SetVelocityY(PLAYER_JUMPPOWER * 0.7f);
+			//JUMPPOWER * 0.7
+			vel->SetVelocityY(m_Parameter.jumpPower);
 
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-				Velocity()->SetVelocityX(-0.15f);
+				//x:0.15
+				Velocity()->SetVelocityX(-m_Parameter.velocity.x);
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-				Velocity()->SetVelocityX(0.15f);
+				Velocity()->SetVelocityX(m_Parameter.velocity.x);
 			}
 			
 		}

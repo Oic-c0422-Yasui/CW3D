@@ -36,7 +36,7 @@ namespace Sample {
 				Actor()->SetReverse(true);
 			}
 			m_MoveAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_MOVE, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_MOVE, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 			
 		}
 

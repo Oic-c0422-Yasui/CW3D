@@ -10,34 +10,37 @@ namespace Sample {
 	 */
 	class DamageState : public State
 	{
+	public:
+		struct Parameter
+		{
+			float time;
+		};
 	private:
+		Parameter m_Parameter;
 		//ダメージステート
 		DamageActionPtr			m_DamageAction;
-		//ウェイト
-		int						wait;
 		//現在時間
-		int						currentTime;
+		float						m_CurrentTime;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DamageState()
+		DamageState(Parameter param)
 			: State()
-			, wait(0)
-			, currentTime(0) {
+			, m_Parameter(param)
+			, m_CurrentTime(0.0f) {
 		}
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
-			currentTime = 0;
-			wait = 10;
+			m_CurrentTime = 0.0f;
 			m_DamageAction = Actor()->GetAction<DamageAction>(GetKey());
 			m_DamageAction->Start();
 			
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -45,26 +48,21 @@ namespace Sample {
 		 */
 		void Execution() override {
 			m_DamageAction->Execution();
-			currentTime++;
 
 			if (Actor()->GetTransform()->GetPositionY() > 0)
 			{
 				ChangeState(STATE_KEY_FLYDAMAGE);
 			}
+			
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-				if (hp <= 0)
-				{
-					ChangeState(STATE_KEY_DEAD);
-				}
-				else
-				{
-					ChangeState(STATE_KEY_IDLE);
-				}
-				
+				ChangeState(STATE_KEY_IDLE);
 			}
-			
+			auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+			if (hp <= 0)
+			{
+				ChangeState(STATE_KEY_DEAD);
+			}
 		}
 
 		/**

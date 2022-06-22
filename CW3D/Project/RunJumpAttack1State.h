@@ -11,11 +11,21 @@ namespace Sample {
 	 */
 	class RunJumpAttack1State : public AttackBaseState
 	{
+	public:
+		struct Parameter
+		{
+			float CollideStartFrameTime;
+			float NextInputFrameTime;
+			ShotAABB ShotStatus;
+			EffectCreateParameter EffectStatus;
+		};
 	private:
+		Parameter m_Parameter;
 		/** 移動アクション */
 		RunJumpAttack1ActionPtr			m_Attack1Action;
 
 		const float CollideStartFrameTime = GameFrameTime * 15.0f;
+		const float NextInputFrameTime = GameFrameTime * 42.0f;
 		bool collideStartFlg;
 
 		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
@@ -29,14 +39,16 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunJumpAttack1State()
+		RunJumpAttack1State(Parameter param)
 			: AttackBaseState()
+			, m_Parameter(param)
+			, collideStartFlg(false)
 		{
 		}
 
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return createShotStatus; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return createEffectStatus; }
+		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 		/**
 		 * @brief		ステート内の開始処理
 		 */
@@ -58,9 +70,12 @@ namespace Sample {
 			for (auto& shot : m_pShots)
 			{
 				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				
+				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+				{
+					shot->SetCollideFlg(true);
+				}
 			}
-			if (m_CurrentTime >= CollideStartFrameTime && !collideStartFlg)
+			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 			{
 				CreateEffect();
 				collideStartFlg = true;
@@ -73,7 +88,7 @@ namespace Sample {
 			}
 			else if (m_NextInputFlg)
 			{
-				if (Actor()->GetAnimationState()->GetTime() > 0.35f)
+				if (Actor()->GetAnimationState()->GetTime() > m_Parameter.NextInputFrameTime)
 				{
 					ChangeState(STATE_KEY_RUNJUMPATTACK2);
 				}
