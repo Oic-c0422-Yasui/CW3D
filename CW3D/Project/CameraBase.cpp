@@ -20,7 +20,7 @@ void CCameraBase::Create()
 	m_Position = m_TargetPos + m_OffsetPos;
 	m_LookPos = m_TargetLookPos + m_OffsetLookPos;
 	m_Camera.LookAt(m_Position, m_LookPos, Vector3(0, 1, 0));
-	m_Camera.PerspectiveFov(MOF_ToRadian(30), 1920.0f / 1080.0f, 0.01f, 150.0f);
+	m_Camera.PerspectiveFov(MOF_ToRadian(30), 1920.0f / 1080.0f, 0.01f, 250.0f);
 	m_Camera.Update();
 }
 

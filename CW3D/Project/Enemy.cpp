@@ -185,7 +185,7 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 
 	knockBack = direction * power;
 
-	CameraControllerInstance.Quake(0.3f, 50.0f, 0.2f);
+	CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
 
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }
