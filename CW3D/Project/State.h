@@ -63,13 +63,13 @@ namespace Sample {
 		 * @brief		新規ステートの生成
 		 * @return		生成したステート
 		 */
-		template < typename T >
-		static std::shared_ptr< T > Create(ActorPtr actor, InputPtr input) {
+		template < typename T, typename... _Args >
+		static std::shared_ptr< T > Create(ActorPtr actor, InputPtr input, _Args&& ... args) {
 			if (!std::is_base_of<State, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}
-			auto ptr = std::make_shared<T>();
+			auto ptr = std::make_shared<T>(args...);
 			ptr->SetActor(actor);
 			ptr->SetInput(input);
 			return ptr;

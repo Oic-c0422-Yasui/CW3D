@@ -76,13 +76,13 @@ namespace Sample {
 		 * @brief		新規アクションの生成
 		 * @return		生成したアクション
 		 */
-		template < typename T >
-		static std::shared_ptr< T > Create() {
+		template < typename T, typename... _Args >
+		static std::shared_ptr< T > Create(_Args&& ... args) {
 			if (!std::is_base_of<Action, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}
-			auto re = std::make_shared<T>();
+			auto re = std::make_shared<T>(args...);
 			return re;
 		}
 	};

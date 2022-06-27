@@ -17,7 +17,6 @@ namespace Sample {
 			float CollideFirstStartFrameTime;
 			float CollideSecondStartFrameTime;
 			ShotAABB ShotStatus;
-			EffectCreateParameter EffectStatus;
 		};
 	private:
 		Parameter m_Parameter;

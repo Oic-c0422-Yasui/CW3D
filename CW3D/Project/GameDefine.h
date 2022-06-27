@@ -34,6 +34,7 @@ const std::string INPUT_KEY_ATTACK = "Attack";
 const std::string INPUT_KEY_SKILL1 = "Skill1";
 const std::string INPUT_KEY_SKILL2 = "Skill2";
 const std::string INPUT_KEY_SKILL3 = "Skill3";
+const std::string INPUT_KEY_ESCAPE = "Escape";
 
 //ステートキーの名称
 constexpr char* STATE_KEY_MOVE = "Move";
@@ -63,6 +64,7 @@ constexpr char* STATE_KEY_SKILL2_1 = "Skill2_1";
 constexpr char* STATE_KEY_JUMPSKILL2_1 = "JumpSkill2_1";
 constexpr char* STATE_KEY_SKILL3_1 = "Skill3_1";
 constexpr char* STATE_KEY_JUMPSKILL3_1 = "JumpSkill3_1";
+constexpr char* STATE_KEY_ESCAPE = "Escape";
 
 //パラメーターキーの名称
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
@@ -78,7 +80,7 @@ const std::string SKILL_KEY_1 = "SkillKey1";
 const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";
 const std::string SKILL_KEY_4 = "SkillKey4";
-const std::string SKILL_KEY_5 = "SkillKey5";
+const std::string SKILL_KEY_ESCAPE = "EscapeKey";
 
 //FPS60
 constexpr float GameFrameTime = 1.0f / 60.0f;
@@ -90,16 +92,27 @@ enum CHARACTER_TYPE
 	CHARA_OBJECT,
 };
 
+
+/*利用するアニメーションの名前
+		char* name;
+		アニメ開始時間
+		float					startTime;
+		アニメ補間時間
+		float					tTime;
+		アニメ速度
+		float					speed;
+		アニメループフラグ
+		bool					loopFlg;*/
 struct AnimParam
 {
 	//利用するアニメーションの名前
 	char*					name;
 	//アニメ開始時間
 	float					startTime;
-	//アニメ補間時間
-	float					tTime;
 	//アニメ速度
 	float					speed;
+	//アニメ補間時間
+	float					tTime;
 	//アニメループフラグ
 	bool					loopFlg;
 };

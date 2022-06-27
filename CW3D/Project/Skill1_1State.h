@@ -71,8 +71,8 @@ namespace Sample {
 			MyUtilities::ANIM_DATA anim[] =
 			{
 				{0.0f,0.0f},
-				{0.5f,0.0f},
-				{0.5f,1.0f},
+				{0.8f,0.0f},
+				{0.8f,1.0f},
 			};
 			TimeControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
 
@@ -89,7 +89,6 @@ namespace Sample {
 			camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera,1,MyUtilities::EASE_IN_SINE,0.3f, MyUtilities::EASE_IN_SINE,0.15f);
 
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK1, 0.0f, 0.7f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

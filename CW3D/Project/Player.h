@@ -2,10 +2,12 @@
 #include "GameDefine.h"
 #include	"InputManager.h"
 #include	"ResourceManager.h"
-
+#include	"ReactiveParameter.h"
+#include	"ParameterHandle.h"
 #include	"ActorObject.h"
 #include	"Observer.h"
-
+#include "PlayerActionCreator.h"
+#include "PlayerStateCreator.h"
 
 class CPlayer : public Sample::CActorObject
 {
@@ -16,8 +18,12 @@ private:
 
 	Sample::InputPtr		m_pInput;
 
-	int						m_HP;
+	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_HP;
+	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_MaxHP;
+	
 
+	Sample::PlayerActionCreator m_ActionCreator;
+	Sample::PlayerStateCreator m_StateCreator;
 
 public:
 	CPlayer();
@@ -35,6 +41,12 @@ public:
 
 	void Damage(const Vector3& direction, Vector3 power, int damage);
 
+
+	/**
+	* @brief		HP•Ï‰»’Ê’m
+	*/
+	Sample::IObservable<int>* GetHPSubject() { return &(m_HP.Get()); }
+	Sample::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
 	/**
 	 * @brief		CT•Ï‰»’Ê’m
 	 */

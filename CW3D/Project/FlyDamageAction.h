@@ -21,8 +21,8 @@ namespace Sample {
 			//減速値
 			Vector3					decelerate;
 			//重力
-			float					maxGravity;
 			float					gravity;
+			float					maxGravity;
 		};
 	private:
 		//パラメーター

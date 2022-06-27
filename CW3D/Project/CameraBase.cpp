@@ -30,6 +30,14 @@ void CCameraBase::UpdateCamera()
 	m_Camera.Update();
 }
 
+
 void CCameraBase::Render2DDebug()
 {
+}
+
+void CCameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
+{
+	m_Position = pos;
+	m_LookPos = lookPos;
+	UpdateCamera();
 }

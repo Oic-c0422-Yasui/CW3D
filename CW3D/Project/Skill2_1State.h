@@ -30,19 +30,7 @@ namespace Sample {
 
 		bool collideStartFlg;
 
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr, Vector3(5.0f, 2.0f, 2.0f) };
-
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:radius(float)
-		const ShotSphere createShotStatusSphere = { Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,2.0f };
-
 		ShotSphere m_ShotStatusSphere;
-
-		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
-		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f };
 
 		EffectCreateParameter m_EffectStatus;
 	public:
@@ -57,8 +45,8 @@ namespace Sample {
 		}
 
 		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.AABBShotStatus; }
-		const ShotSphere& GetCreateShotStatusSphere() override { return m_Parameter.SphereShotStatus; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
+		const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -70,8 +58,8 @@ namespace Sample {
 			collideStartFlg = false;
 			m_SkillAction->Start();
 
-			m_EffectStatus = createEffectStatus;
-			m_ShotStatusSphere = createShotStatusSphere;
+			m_EffectStatus = m_Parameter.EffectStatus;
+			m_ShotStatusSphere = m_Parameter.SphereShotStatus;
 			if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 			{
 				float rad = MOF_ToRadian(-30);
@@ -101,8 +89,6 @@ namespace Sample {
 			}
 
 			
-
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL2_1, 0.7f, 2.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

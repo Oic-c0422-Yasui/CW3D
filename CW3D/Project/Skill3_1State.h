@@ -75,12 +75,12 @@ namespace Sample {
 			CreateEffect();
 			for (auto& shot : m_pShots)
 			{
-				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage() * 0.01f);
+				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
 				shot->SetDamage(damage);
 			}
 
 			
-			m_Key = Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetKey();
+			m_Key = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();
 
 			Vector3 pos(0, 10, -20);
 			Vector3 lookPos(0, 3, 0);
@@ -92,7 +92,6 @@ namespace Sample {
 			CameraPtr camera;
 			camera = std::make_shared<CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

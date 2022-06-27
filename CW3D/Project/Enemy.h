@@ -7,7 +7,8 @@
 #include	"ParameterHandle.h"
 #include	"Observer.h"
 #include	"CharacterStateAI.h"
-
+#include	"ZombieActionCreator.h"
+#include	"ZombieStateCreator.h"
 
 #include	"ActorObject.h"
 
@@ -31,6 +32,9 @@ namespace Sample
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
 		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
 		ParameterHandle< ReactiveParameter<bool> > m_HPShowFlg;
+
+		ZombieActionCreator m_ActionCreator;
+		ZombieStateCreator	m_StateCreator;
 
 	public:
 		CEnemy();

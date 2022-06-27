@@ -20,6 +20,7 @@ public:
 	virtual void Update(const Vector3& pos, const Vector3& lookPos) = 0;
 	virtual void UpdateCamera();
 	virtual void Render2DDebug();
+	virtual void Enable(const Vector3& pos, const Vector3& lookPos);
 
 	const CVector3& GetPos() const noexcept
 	{
@@ -45,7 +46,7 @@ public:
 	{
 		return m_OffsetLookPos;
 	}
-	CCamera& GetCamera()
+	CCamera& GetCamera() noexcept
 	{
 		return m_Camera;
 	}

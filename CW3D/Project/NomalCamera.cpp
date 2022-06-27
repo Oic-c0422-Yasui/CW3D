@@ -28,5 +28,14 @@ void CNomalCamera::Update(const Vector3& pos, const Vector3& lookPos)
 		m_LookPos = m_TargetLookPos;
 		m_ResetFlg = false;
 	}
+	//CCameraBase::UpdateCamera();
+}
+
+void CNomalCamera::Enable(const Vector3& pos, const Vector3& lookPos)
+{
+	m_TargetPos = pos;
+	m_LookPos = lookPos;
+	m_Position = pos;
+	m_LookPos = lookPos;
 	CCameraBase::UpdateCamera();
 }

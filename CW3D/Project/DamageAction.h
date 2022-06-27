@@ -19,10 +19,10 @@ namespace Sample {
 			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
-			//最大重力
-			float					maxGravity;
 			//重力
 			float					gravity;
+			//最大重力
+			float					maxGravity;
 		};
 	private:
 		//パラメーター

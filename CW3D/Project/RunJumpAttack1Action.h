@@ -42,7 +42,7 @@ namespace Sample {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& vel = Velocity();
-			//JUMPPOWER * 0.7
+			//JUMPPOWER * 0.7f
 			vel->SetVelocityY(m_Parameter.jumpPower);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())

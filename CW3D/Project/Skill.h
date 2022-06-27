@@ -72,12 +72,12 @@ namespace Sample
 
 		}
 
-		std::string GetKey() const noexcept
+		const std::string& GetKey() const noexcept
 		{
 			return m_Key;
 		}
 
-		std::string GetButton() const noexcept
+		const std::string& GetButton() const noexcept
 		{
 			return m_Button;
 		}

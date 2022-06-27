@@ -73,7 +73,7 @@
 			return m_Camera->GetCamera();
 		}
 
-		void Quake(float power, float freq, int time);
+		void Quake(float power, float freq, float time);
 		void Enable(const Vector3& pos, const Vector3& lookPos);
 
 	};

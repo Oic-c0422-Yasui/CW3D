@@ -108,7 +108,6 @@ namespace Sample {
 			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 			{
 				Actor()->SetReverse(false);
-
 			}
 			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
 			{

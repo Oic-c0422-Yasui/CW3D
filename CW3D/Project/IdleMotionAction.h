@@ -29,9 +29,9 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleMotionAction()
+		IdleMotionAction(Parameter param)
 			: Action()
-
+			, m_Parameter(param)
 		{
 		}
 

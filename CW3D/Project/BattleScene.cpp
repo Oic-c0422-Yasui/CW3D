@@ -34,6 +34,7 @@ bool CBattleScene::Load()
 	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
+	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	//ƒpƒbƒh
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);

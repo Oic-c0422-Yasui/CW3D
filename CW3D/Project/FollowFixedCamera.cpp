@@ -20,5 +20,5 @@ void CFollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 	m_TargetLookPos = lookPos + m_OffsetLookPos;
 	m_Position = m_TargetPos;
 	m_LookPos = m_TargetLookPos;
-	CCameraBase::UpdateCamera();
+	//CCameraBase::UpdateCamera();
 }

@@ -41,7 +41,7 @@ namespace Sample {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 
-			//PLAYERSPEED * 0.3
+			//PLAYER_SPEED * 0.3f
 			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())

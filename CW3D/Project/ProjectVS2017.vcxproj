@@ -135,14 +135,18 @@
     <ClInclude Include="CharacterAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="CollisionShotPlayer.h" />
+    <ClInclude Include="EscapeAction.h" />
+    <ClInclude Include="EscapeState.h" />
     <ClInclude Include="FixedCamera.h" />
     <ClInclude Include="FollowFixedCamera.h" />
+    <ClInclude Include="IActionCreator.h" />
     <ClInclude Include="IAICycle.h" />
     <ClInclude Include="ICharacterAI.h" />
     <ClInclude Include="ICharacterAICreator.h" />
     <ClInclude Include="IdleStateAI.h" />
     <ClInclude Include="InterpolateCamera.h" />
     <ClInclude Include="IStateAI.h" />
+    <ClInclude Include="IStateCreator.h" />
     <ClInclude Include="MoveStateAI.h" />
     <ClInclude Include="NomalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
@@ -202,6 +206,8 @@
     <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ParameterHandle.h" />
+    <ClInclude Include="PlayerActionCreator.h" />
+    <ClInclude Include="PlayerStateCreator.h" />
     <ClInclude Include="ReactiveParameter.h" />
     <ClInclude Include="RunJumpAttack1Action.h" />
     <ClInclude Include="RunJumpAttack2Action.h" />
@@ -259,6 +265,8 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
     <ClInclude Include="IHPShowFlg.h" />
+    <ClInclude Include="ZombieActionCreator.h" />
+    <ClInclude Include="ZombieStateCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

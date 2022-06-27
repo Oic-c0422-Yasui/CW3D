@@ -38,7 +38,7 @@ namespace Sample {
 		void Start() override {
 			m_DamageAction = Actor()->GetAction<FlyDamageAction>(GetKey());
 			m_DamageAction->Start();
-			Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_FLYDAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_FLYDAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

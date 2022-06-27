@@ -1,28 +1,6 @@
 #include "Player.h"
 
-#include "IdleState.h"
-#include "MoveState.h"
-#include "RunState.h"
-#include "IdleMotionState.h"
-#include "Attack1State.h"
-#include "Attack2State.h"
-#include "Attack3State.h"
-#include "RunAttack1State.h"
-#include "Skill1_1State.h"
-#include "JumpState.h"
-#include "FallState.h"
-#include "LandingState.h"
-#include "RunJumpState.h"
-#include "RunFallState.h"
-#include "RunLandingState.h"
-#include "RunJumpAttack1State.h"
-#include "RunJumpAttack2State.h"
-#include "RunJumpAttack3State.h"
-#include "JumpAttack1State.h"
-#include "Skill2_1State.h"
-#include "JumpSkill2_1State.h"
-#include "Skill3_1State.h"
-#include "JumpSkill3_1State.h"
+
 
 
 
@@ -49,7 +27,7 @@ bool CPlayer::Load()
 	m_Actor->SetAnimationState(m_Motion);
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
-	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_pInput));
+	/*m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::IdleMotionState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_pInput));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_pInput));
@@ -95,13 +73,19 @@ bool CPlayer::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::Skill2_1Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill2_1Action>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::Skill3_1Action>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill3_1Action>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::JumpSkill3_1Action>());*/
 
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_HP, 500);
+	m_ActionCreator.Create(m_Actor);
+	m_StateCreator.Create(m_StateMachine, m_Actor, m_pInput);
+
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 800);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 25);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 
+	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
 	Sample::SKillPtr skill;
 
 	
@@ -115,6 +99,9 @@ bool CPlayer::Load()
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
 	skill->SetSkillData(250, 8);
+
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
+	skill->SetCT(1);
 
 	return true;
 }
@@ -164,7 +151,7 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage)
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
-	auto& hp = m_Actor->GetParameterMap()->Get<int>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 
 	auto& transform = m_Actor->GetTransform();

@@ -1,16 +1,6 @@
 #include "Enemy.h"
 
 
-#include "IdleState.h"
-#include "MoveState.h"
-#include "RunState.h"
-#include "IdleMotionState.h"
-#include "Attack1State.h"
-#include "DamageState.h"
-#include "FlyDamageState.h"
-#include "DownState.h"
-#include "DeadState.h"
-#include "StateInput.h"
 #include	"CameraController.h"
 #include "CharacterAICreator.h"
 
@@ -45,7 +35,7 @@ bool CEnemy::Load()
 	m_Actor->SetAnimationState(m_Motion);
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
-	m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_Input));
+	/*m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_Input));
 	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_Input));
@@ -61,7 +51,10 @@ bool CEnemy::Load()
 	m_Actor->AddAction(Sample::Action::Create<Sample::DamageAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::FlyDamageAction>());
 	m_Actor->AddAction(Sample::Action::Create<Sample::DownAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::DeadAction>());
+	m_Actor->AddAction(Sample::Action::Create<Sample::DeadAction>());*/
+
+	m_ActionCreator.Create(m_Actor);
+	m_StateCreator.Create(m_StateMachine, m_Actor, m_Input);
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
@@ -192,7 +185,7 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 
 	knockBack = direction * power;
 
-	//CameraControllerInstance.Quake(2, 3, 1);
+	CameraControllerInstance.Quake(0.3f, 50.0f, 0.2f);
 
 	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }
