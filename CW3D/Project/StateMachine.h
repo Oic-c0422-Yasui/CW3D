@@ -16,6 +16,9 @@ namespace Sample {
 
 		/** 現在のステート */
 		StatePtr		currentState_;
+
+		StateKeyType	tempChangeKey_;
+		
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -24,6 +27,7 @@ namespace Sample {
 			: enable_shared_from_this()
 			, stateMap_()
 			, currentState_()
+			, tempChangeKey_()
 		{
 
 		}
@@ -65,6 +69,31 @@ namespace Sample {
 			}
 			//ステートの更新と開始
 			currentState_ = nextState->second;
+			currentState_->SetKeepKey(tempChangeKey_);
+			currentState_->Start();
+			return false;
+		}
+		/**
+		 * @brief		ステートの変更
+		 * @param[in]	key			ステートキー
+		 * @return		true		成功
+		 *				false		失敗
+		 */
+		bool ChangeState(const StateKeyType& key, const StateKeyType& keepKey) override {
+			auto& nextState = stateMap_.find(key);
+			if (nextState == stateMap_.end())
+			{
+				return true;
+			}
+			//前のステートの終了
+			if (currentState_)
+			{
+				currentState_->End();
+			}
+			//ステートの更新と開始
+			tempChangeKey_ = keepKey;
+			currentState_ = nextState->second;
+			currentState_->SetKeepKey(tempChangeKey_);
 			currentState_->Start();
 			return false;
 		}

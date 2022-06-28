@@ -14,7 +14,7 @@ namespace Sample {
 	class JumpSkill2_1State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float CollideStartFrameTime;
 			float CollideEndFrameTime;
@@ -29,14 +29,8 @@ namespace Sample {
 
 		bool collideStartFlg;
 
-		//FPS60Š·Z‚ÌƒtƒŒ[ƒ€•ª
-
-		const float CollideStartFrameTime = GameFrameTime * 15.0f;
-		const float CollideEndFrameTime = GameFrameTime * 25.0f;
-
 
 		ShotSphere m_ShotStatusSphere;
-
 
 		EffectCreateParameter m_EffectStatus;
 	public:

@@ -114,7 +114,7 @@ namespace Sample {
 						0.12f,
 						true
 					},
-					Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
+					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
 					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
 					Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
 					GRAVITYMAX,

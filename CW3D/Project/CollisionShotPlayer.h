@@ -42,7 +42,7 @@ namespace Sample
 		//ノックバック値設定
 		Vector3 knockBack = shot->GetKnockBack();
 		shot->AddHit(player->GetID());
-		player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage());
+		player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel());
 	}
 
 	template< >

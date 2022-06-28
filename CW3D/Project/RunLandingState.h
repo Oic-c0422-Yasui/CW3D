@@ -28,7 +28,7 @@ namespace Sample {
 		void Start() override {
 			m_LandingAction = Actor()->GetAction<RunLandingAction>(GetKey());
 			m_LandingAction->Start();
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_LANDING, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
+
 
 		}
 

@@ -36,7 +36,6 @@ namespace Sample {
 				Actor()->SetReverse(true);
 			}
 			m_MoveAction->Start();
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_MOVE, 0.0f, 1.0f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 			
 		}
 
@@ -63,18 +62,18 @@ namespace Sample {
 			}
 			else
 			{
-				ChangeState(STATE_KEY_IDLE);
+				ChangeState(STATE_KEY_IDLE, GetKey());
 			}
 
 			if (Input()->IsPush(INPUT_KEY_JUMP))
 			{
-				ChangeState(STATE_KEY_JUMP);
+				ChangeState(STATE_KEY_JUMP,GetKey());
 			}
 
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
-				ChangeState(STATE_KEY_ATTACK1);
+				ChangeState(STATE_KEY_ATTACK1, GetKey());
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
@@ -88,7 +87,7 @@ namespace Sample {
 				{
 
 					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
+					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(),GetKey());
 					break;
 				}
 			}
@@ -100,7 +99,7 @@ namespace Sample {
 			if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) || 
 				Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
 			{
-					ChangeState(STATE_KEY_RUN);
+					ChangeState(STATE_KEY_RUN, GetKey());
 					return;
 			}
 		}

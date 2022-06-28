@@ -112,9 +112,6 @@ bool CBattleScene::Load()
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/fire.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect6", effect);
 
-
-
-
 	//プレイヤー読み込み
 	m_Player->SetInput(input);
 	if (!m_Player->Load())
@@ -131,8 +128,6 @@ bool CBattleScene::Load()
 	m_SkillCTRender[2]->Initialize("Skill3");
 
 
-
-	
 	//ステージ読み込み
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
@@ -236,7 +231,6 @@ void CBattleScene::Update()
 void CBattleScene::Render()
 {
 	
-
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
 	m_Player->Render();
@@ -331,13 +325,8 @@ void CBattleScene::Render2DDebug()
 
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player->GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player->IsReverse());
-	//m_Camera.Render2DDebug();
 
 	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
-	//for (int i = 0;i < m_EnemysHPRender.size();i++)
-	//{
-	//	//CGraphicsUtilities::RenderString(0, 500 + 30 * i, "PosZ:%.2f", m_EnemysHPRender[i]->GetPosition().z);
-	//}
 }
 
 void CBattleScene::Release()

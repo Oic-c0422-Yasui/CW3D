@@ -14,25 +14,27 @@ namespace Sample {
 	{
 	protected:
 		/** 姿勢 */
-		TransformPtr			transform_;
+		TransformPtr			m_Transform;
 
-		VelocityPtr				velocity_;
+		VelocityPtr				m_Velocity;
 
 		/** アクション */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
-		ActionMap				actionMap_;
+		ActionMap				m_ActionMap;
 
 		/*パラメーター情報*/
-		AnyParameterMapPtr		parameters;
+		AnyParameterMapPtr		m_Parameters;
 
 		SkillControllerPtr		m_SkillController;
 
 		/** モーション */
-		AnimationStatePtr		motion_;
+		AnimationStatePtr		m_Motion;
 
-		CMyID					myId_;
+		CMyID					m_MyID;
 
-		CHARACTER_TYPE			charaType;
+		CHARACTER_TYPE			m_CharaType;
+
+		BYTE					m_ArmorLevel;
 
 	public:
 		/**
@@ -40,14 +42,15 @@ namespace Sample {
 		 */
 		Actor()
 			: enable_shared_from_this()
-			, transform_(std::make_shared<Transform>())
-			, velocity_(std::make_shared<Velocity>())
-			, actionMap_()
-			, parameters(std::make_shared<AnyParameterMap>())
-			, motion_()
+			, m_Transform(std::make_shared<Transform>())
+			, m_Velocity(std::make_shared<Velocity>())
+			, m_ActionMap()
+			, m_Parameters(std::make_shared<AnyParameterMap>())
+			, m_Motion()
 			, m_SkillController(std::make_shared<CSkillController>())
-			, myId_(IDManagerInstance.GetId())
-			, charaType()
+			, m_MyID(IDManagerInstance.GetId())
+			, m_CharaType()
+			, m_ArmorLevel(DEFAULT_ARMORLEVEL)
 		{
 		}
 
@@ -56,11 +59,11 @@ namespace Sample {
 		 */
 		void Update() override {
 			//速度更新
-			velocity_->Update();
+			m_Velocity->Update();
 			//速度で座標移動
-			transform_->MovePosition(velocity_);
+			m_Transform->MovePosition(m_Velocity);
 
-			transform_->SetRotateY(velocity_->GetRotateY());
+			m_Transform->SetRotateY(m_Velocity->GetRotateY());
 
 			m_SkillController->Update();
 		}
@@ -81,11 +84,11 @@ namespace Sample {
 		 * @param[in]	action		追加するアクション
 		 */
 		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
-			actionMap_[key] = action;
-			action->SetTransform(transform_);
-			action->SetVelocity(velocity_);
-			action->SetAnimation(motion_);
-			action->SetParameterMap(parameters);
+			m_ActionMap[key] = action;
+			action->SetTransform(m_Transform);
+			action->SetVelocity(m_Velocity);
+			action->SetAnimation(m_Motion);
+			action->SetParameterMap(m_Parameters);
 			action->SetSkillController(m_SkillController);
 		}
 
@@ -93,41 +96,41 @@ namespace Sample {
 		 * @brief		座標設定
 		 */
 		void SetPosition(const Vector3& position) override {
-			transform_->SetPosition(position);
+			m_Transform->SetPosition(position);
 		}
 
 		/**
 		 * @brief		回転設定
 		 */
 		void SetRotate(const  Vector3& rotate) override{
-			transform_->SetRotate(rotate);
+			m_Transform->SetRotate(rotate);
 		}
 
 		/**
 		 * @brief		サイズ設定
 		 */
 		void SetScale(const Vector3& scale) override {
-			transform_->SetScale(scale);
+			m_Transform->SetScale(scale);
 		}
 
 		void SetReverse(bool isReverse) override{
-			transform_->SetReverse(isReverse);
+			m_Transform->SetReverse(isReverse);
 		}
 
 		/**
 		 * @brief		アニメーション
 		 */
 		void SetAnimationState(AnimationStatePtr animState) override {
-			motion_ = animState;
+			m_Motion = animState;
 		}
 
 		/**
 		 * @brief		タイプ設定
 		 */
 		void SetType(CHARACTER_TYPE type) override {
-			charaType = type;
-			transform_->SetType(type);
-			velocity_->SetType(type);
+			m_CharaType = type;
+			m_Transform->SetType(type);
+			m_Velocity->SetType(type);
 		}
 
 		/**
@@ -136,8 +139,8 @@ namespace Sample {
 		 * @return		アクション
 		 */
 		ActionPtr GetAction(const ActionKeyType& key) override {
-			auto& act = actionMap_.find(key);
-			assert(act != actionMap_.end());
+			auto& act = m_ActionMap.find(key);
+			assert(act != m_ActionMap.end());
 			return act->second;
 		}
 
@@ -146,85 +149,85 @@ namespace Sample {
 		 * @brief		姿勢取得
 		 */
 		TransformPtr GetTransform() const override {
-			return transform_;
+			return m_Transform;
 		}
 
 		/**
 		 * @brief		速度取得
 		 */
 		VelocityPtr GetVelocity() const override {
-			return velocity_;
+			return m_Velocity;
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		const CVector3& GetPosition() const override {
-			return transform_->GetPosition();
+			return m_Transform->GetPosition();
 		}
 
 		/**
 		 * @brief		回転取得
 		 */
 		const CVector3& GetRotate() const override {
-			return transform_->GetRotate();
+			return m_Transform->GetRotate();
 		}
 
 		/**
 		 * @brief		マトリクス取得
 		 */
 		const CMatrix44& GetMatrix() const override {
-			return transform_->GetWorld();
+			return m_Transform->GetWorld();
 		}
 
 		bool IsReverse() const{
-			return transform_->IsReverse();
+			return m_Transform->IsReverse();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionX() const override {
-			return transform_->GetPositionX();
+			return m_Transform->GetPositionX();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionY() const override {
-			return transform_->GetPositionY();
+			return m_Transform->GetPositionY();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionZ() const override {
-			return transform_->GetPositionZ();
+			return m_Transform->GetPositionZ();
 		}
 
 		/**
 		 * @brief		ID取得
 		 */
 		unsigned int GetID() const override {
-			return myId_.GetID();
+			return m_MyID.GetID();
 		}
 
 		CHARACTER_TYPE GetType() const override {
-			return charaType;
+			return m_CharaType;
 		}
 
 		/**
 		 * @brief		パラメーター
 		 */
 		const AnyParameterMapPtr& GetParameterMap() const override {
-			return parameters;
+			return m_Parameters;
 		}
 
 		/**
 		 * @brief		アニメーション
 		 */
 		AnimationStatePtr GetAnimationState() const override {
-			return motion_;
+			return m_Motion;
 		}
 
 		/**
@@ -238,14 +241,24 @@ namespace Sample {
 		 * @brief		接触判定回避可否取得
 		 */
 		bool IsThrough() const override {
-			return transform_->IsThrough();
+			return m_Transform->IsThrough();
 		}
 
 		/**
 		 * @brief		接触判定回避可否設定
 		 */
 		void SetThrough(bool isThrough) override {
-			transform_->SetThrough(isThrough);
+			m_Transform->SetThrough(isThrough);
+		}
+
+		BYTE GetArmorLevel() const override
+		{
+			return m_ArmorLevel;
+		}
+
+		void SetArmorLevel(BYTE armor) override
+		{
+			m_ArmorLevel = armor;
 		}
 	};
 }

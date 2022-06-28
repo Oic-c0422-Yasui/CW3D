@@ -35,23 +35,6 @@ bool CEnemy::Load()
 	m_Actor->SetAnimationState(m_Motion);
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
-	/*m_StateMachine->AddState(Sample::State::Create<Sample::IdleState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::MoveState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::RunState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::Attack1State>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::DamageState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::FlyDamageState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::DownState>(m_Actor, m_Input));
-	m_StateMachine->AddState(Sample::State::Create<Sample::DeadState>(m_Actor, m_Input));
-
-	m_Actor->AddAction(Sample::Action::Create<Sample::IdleAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::MoveAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::RunAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::Attack1Action>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::DamageAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::FlyDamageAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::DownAction>());
-	m_Actor->AddAction(Sample::Action::Create<Sample::DeadAction>());*/
 
 	m_ActionCreator.Create(m_Actor);
 	m_StateCreator.Create(m_StateMachine, m_Actor, m_Input);
@@ -162,7 +145,7 @@ void CEnemy::Release()
 	m_Collider.reset();
 }
 
-void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
+void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage,BYTE level)
 {
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
@@ -183,11 +166,14 @@ void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage)
 	}
 	m_HP = hp;
 
-	knockBack = direction * power;
+	if (m_Actor->GetArmorLevel() <= level)
+	{
+		knockBack = direction * power;
 
-	CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
+		CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
 
-	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
+		m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
+	}
 }
 
 bool CEnemy::IsInvincible() const

@@ -29,7 +29,6 @@ namespace Sample {
 			m_IdleMotionAction = Actor()->GetAction<IdleMotionAction>(GetKey());
 			m_IdleMotionAction->Start();
 
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLEMOTION, 0.0f, 1.0f, 0.3f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

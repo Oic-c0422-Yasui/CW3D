@@ -13,9 +13,10 @@ namespace Sample {
 	class EscapeState : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
-			float ThroughTime;
+			float ThroughStartTime;
+			float ThroughEndTime;
 		};
 	private:
 		Parameter m_Parameter;
@@ -70,7 +71,7 @@ namespace Sample {
 		 */
 		void Execution() override {
 
-			if (m_CurrentTime > m_Parameter.ThroughTime && !m_ThroughFlg)
+			if (m_CurrentTime > m_Parameter.ThroughStartTime && !m_ThroughFlg)
 			{
 				m_EscapeAction->StartThrough();
 				m_ThroughFlg = true;
@@ -80,13 +81,45 @@ namespace Sample {
 			{
 				if (Actor()->GetTransform()->GetPositionY() > 0)
 				{
-					ChangeState(STATE_KEY_FALL);
+						ChangeState(STATE_KEY_FALL);
 				}
 				else
 				{
 					ChangeState(STATE_KEY_IDLE);
 				}
 			}
+			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
+				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
+				Input()->IsPress(INPUT_KEY_VERTICAL))
+			{
+				if (m_CurrentTime > m_Parameter.ThroughEndTime)
+				{
+					if (Actor()->GetTransform()->GetPositionY() > 0)
+					{
+						if (GetKeepKey() == STATE_KEY_RUN)
+						{
+							ChangeState(STATE_KEY_RUNFALL);
+						}
+						else
+						{
+							ChangeState(STATE_KEY_FALL);
+						}
+					}
+					else
+					{
+						if (GetKeepKey() == STATE_KEY_RUN)
+						{
+							ChangeState(STATE_KEY_RUN);
+						}
+						else
+						{
+							ChangeState(STATE_KEY_MOVE);
+						}
+					}
+				}
+			}
+			
 			AttackBaseState::Execution();
 		}
 
@@ -94,7 +127,7 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-
+			
 			AttackBaseState::InputExecution();
 		}
 

@@ -38,7 +38,6 @@ namespace Sample {
 			m_IdleAction = Actor()->GetAction<IdleAction>(GetKey());
 			m_Time = 0.0f;
 			m_IdleAction->Start();
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_IDLE, 0.0f, 1.0f, 0.25f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -74,12 +73,12 @@ namespace Sample {
 
 			if (Input()->IsPush(INPUT_KEY_JUMP))
 			{
-				ChangeState(STATE_KEY_JUMP);
+				ChangeState(STATE_KEY_JUMP, STATE_KEY_MOVE);
 			}
 
 			if (Input()->IsPush(INPUT_KEY_ATTACK))
 			{
-				ChangeState(STATE_KEY_ATTACK1);
+				ChangeState(STATE_KEY_ATTACK1, STATE_KEY_MOVE);
 			}
 
 			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
@@ -93,7 +92,7 @@ namespace Sample {
 				{
 
 					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
+					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(), STATE_KEY_MOVE);
 					break;
 				}
 			}

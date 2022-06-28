@@ -12,7 +12,7 @@ namespace Sample {
 	class Skill2_1State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float CollideStartFrameTime;
 			float CollideEndFrameTime;
@@ -25,8 +25,6 @@ namespace Sample {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		Skill2_1ActionPtr			m_SkillAction;
 
-		const float CollideStartFrameTime = GameFrameTime * 15.0f;
-		const float CollideEndFrameTime = GameFrameTime * 25.0f;
 
 		bool collideStartFlg;
 

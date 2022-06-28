@@ -12,8 +12,13 @@ namespace Sample {
 	 */
 	class AttackBaseState : public State
 	{
+	public:
+		typedef struct BASEPARAM
+		{
+			BYTE armorLevel;
+		}BaseParam;
 	protected:
-
+		
 		float							m_CurrentTime;
 		bool							m_NextInputFlg;
 
@@ -172,6 +177,7 @@ namespace Sample {
 				effect.reset();
 			}
 			m_pEffects.clear();
+			Actor()->SetArmorLevel(DEFAULT_ARMORLEVEL);
 		}
 
 	};

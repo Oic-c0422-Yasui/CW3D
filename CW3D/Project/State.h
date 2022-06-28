@@ -20,6 +20,9 @@ namespace Sample {
 		/** 入力クラス */
 		InputPtr					input_;
 
+		StateKeyType				tempChangeKey_;
+
+
 		/**
 		 * @brief		アクター登録
 		 */
@@ -56,6 +59,31 @@ namespace Sample {
 		 */
 		bool ChangeState(const StateKeyType& key) override {
 			return stateMachine_.lock()->ChangeState(key);
+		}
+		/**
+		 * @brief		ステートの変更
+		 * @param[in]	key			ステートキー
+		 * @param[in]	keepKey		保持しておくステートキー
+		 * @return		true		成功
+		 *				false		失敗
+		 */
+		bool ChangeState(const StateKeyType& key, const StateKeyType& keepKey) override {
+			return stateMachine_.lock()->ChangeState(key,keepKey);
+		}
+
+		bool ChangeKeepState() override
+		{
+			return stateMachine_.lock()->ChangeState(tempChangeKey_);
+		}
+
+		const StateKeyType GetKeepKey() const override
+		{
+			return tempChangeKey_;
+		}
+
+		void SetKeepKey(const StateKeyType& keepKey) override
+		{
+			tempChangeKey_ = keepKey;
 		}
 
 	public:

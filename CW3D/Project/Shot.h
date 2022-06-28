@@ -15,6 +15,7 @@ namespace Sample
 		bool	collideFlg;
 		CHARACTER_TYPE type;
 		KnockBackPtr direction;
+		BYTE armorBreakLevel;
 	};
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
@@ -47,6 +48,7 @@ namespace Sample
 		std::list<Hit>		m_HitIDs;
 		float				m_NextHitTime;
 		KnockBackPtr		m_Direction;
+		BYTE				m_ArmorBreakLevel;
 
 
 
@@ -65,6 +67,7 @@ namespace Sample
 			, m_Damage(0)
 			, m_NextHitTime(0.0f)
 			, m_CollisionType(COLLITION_AABB)
+			, m_ArmorBreakLevel(0)
 
 		{
 		}
@@ -89,6 +92,7 @@ namespace Sample
 			m_CollisionType = COLLITION_SPHERE;
 			m_KnockBack = sphire.knockBack;
 			m_Direction = sphire.direction;
+			m_ArmorBreakLevel = sphire.armorBreakLevel;
 		}
 
 		void Create(Vector3 pos, ShotAABB aabb)
@@ -107,6 +111,7 @@ namespace Sample
 			m_CollisionType = COLLITION_AABB;
 			m_KnockBack = aabb.knockBack;
 			m_Direction = aabb.direction;
+			m_ArmorBreakLevel = aabb.armorBreakLevel;
 		}
 
 		void Update()
@@ -236,6 +241,11 @@ namespace Sample
 			m_Direction = dir;
 		}
 
+		void SetArmorBreakLevel(BYTE level) noexcept
+		{
+			m_ArmorBreakLevel = level;
+		}
+
 		KnockBackPtr GetDirection() const noexcept
 		{
 			return m_Direction;
@@ -275,10 +285,12 @@ namespace Sample
 			return m_Speed;
 		}
 
-		
-
 		int GetDamage() const noexcept {
 			return m_Damage;
+		}
+
+		const BYTE& GetArmorBreakLevel() const noexcept{
+			return m_ArmorBreakLevel;
 		}
 
 		bool IsHitId(unsigned int hitId)

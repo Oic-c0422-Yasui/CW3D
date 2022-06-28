@@ -42,6 +42,6 @@ namespace Sample
 		//ノックバック値設定
 		Vector3 knockBack = shot->GetKnockBack();
 		shot->AddHit(enemy->GetID());
-		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage());
+		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage(), shot->GetArmorBreakLevel());
 	}
 }

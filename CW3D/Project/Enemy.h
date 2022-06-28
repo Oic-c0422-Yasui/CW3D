@@ -48,7 +48,7 @@ namespace Sample
 		void Render2DDebug();
 		void Release() override;
 
-		void Damage(const Vector3& direction, Vector3 power, int damage);
+		void Damage(const Vector3& direction, Vector3 power, int damage,BYTE level);
 
 		bool IsInvincible() const;
 

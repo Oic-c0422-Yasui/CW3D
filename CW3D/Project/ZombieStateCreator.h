@@ -49,9 +49,10 @@ namespace Sample {
 
 			stateMachine->AddState(State::Create<Attack1State>(actor, input,
 				Attack1State::Parameter{
-					GameFrameTime * 40.0f
+					2
+					,GameFrameTime * 40.0f
 					,GameFrameTime * 42.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr ,Vector3(0.8f, 1.0f, 1.0f) }
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr ,1,Vector3(0.8f, 1.0f, 1.0f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
 
 				}));

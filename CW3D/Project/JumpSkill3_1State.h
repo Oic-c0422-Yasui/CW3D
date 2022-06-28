@@ -13,7 +13,7 @@ namespace Sample {
 	class JumpSkill3_1State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float SkillActionFrameTime;
 			float FinishTime;
@@ -27,10 +27,6 @@ namespace Sample {
 		float							m_AttackTime;
 		bool							m_ContinueFlg;
 		std::string						m_Key;
-
-
-
-		const float SkillActionFrameTime = GameFrameTime * 7.0f;
 
 
 	public:

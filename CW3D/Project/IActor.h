@@ -163,6 +163,11 @@ namespace Sample {
 
 		virtual void SetThrough(bool isThrough) = 0;
 
+		virtual BYTE GetArmorLevel() const = 0;
+
+		virtual void SetArmorLevel(BYTE armor) = 0;
+
+
 	protected:
 
 	};

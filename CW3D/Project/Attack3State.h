@@ -12,7 +12,7 @@ namespace Sample {
 	class Attack3State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float CollideFirstStartFrameTime;
 			float CollideSecondStartFrameTime;
@@ -24,15 +24,10 @@ namespace Sample {
 		/** 移動アクション */
 		Attack3ActionPtr			m_Attack3Action;
 
-		const float CollideFirstStartFrameTime = GameFrameTime * 25.0f;
-		const float CollideSecondStartFrameTime = GameFrameTime * 55.0f;
 
 		bool collideFirstStartFlg;
 		bool collideSecondStartFlg;
 
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) ,7:direction(CKnockBack) 8:size(Vector3)
-		ShotAABB createShotStatus = { Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr, Vector3(0.8f, 2.0f, 0.8f) };
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -61,7 +56,6 @@ namespace Sample {
 			//当たり判定用の弾作成
 			CreateShotAABB();
 
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK3, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

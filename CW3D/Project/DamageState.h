@@ -40,7 +40,6 @@ namespace Sample {
 			m_DamageAction = Actor()->GetAction<DamageAction>(GetKey());
 			m_DamageAction->Start();
 			
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

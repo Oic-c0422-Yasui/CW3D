@@ -39,14 +39,15 @@ namespace Sample {
 		 * @brief		アクション内の開始処理
 		 */
 		void Start() override {
+			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
+				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+
 			auto& vel = Velocity();
-			//JUMPPOWER * 0.7
 			vel->SetVelocityY(m_Parameter.jumpPower);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
 				vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-				//x:0.15
 				vel->SetVelocityX(-m_Parameter.velocity.x);
 			}
 			else

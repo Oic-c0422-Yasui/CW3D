@@ -85,6 +85,9 @@ const std::string SKILL_KEY_ESCAPE = "EscapeKey";
 //FPS60
 constexpr float GameFrameTime = 1.0f / 60.0f;
 
+//初期アーマーレベル
+constexpr BYTE DEFAULT_ARMORLEVEL = 1;
+
 enum CHARACTER_TYPE
 {
 	CHARA_PLAYER,

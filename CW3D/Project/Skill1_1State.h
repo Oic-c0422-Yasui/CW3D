@@ -13,7 +13,7 @@ namespace Sample {
 	class Skill1_1State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float CollideStartFrameTime;
 			float CollideEndFrameTime;
@@ -25,18 +25,8 @@ namespace Sample {
 		/** 移動アクション */
 		Skill1_1ActionPtr			m_SkillAction;
 
-		const float CollideStartFrameTime = GameFrameTime * 55.0f;
-		const float CollideEndFrameTime = GameFrameTime * 80.0f;
-
 		bool collideStartFlg;
 
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(6.0f, 0.7f, 0), 0.05f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr, Vector3(5.0f, 10.0f, 7.0f) };
-
-		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
-		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect3", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f };
 	public:
 		/**
 		 * @brief		コンストラクタ

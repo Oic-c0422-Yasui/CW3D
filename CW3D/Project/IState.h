@@ -76,9 +76,32 @@ namespace Sample
 		virtual bool ChangeState(const StateKeyType & key) = 0;
 
 		/**
+		 * @brief		ステートの変更
+		 * @param[in]	key			ステートキー
+		 * @param[in]	keepKey		保持しておくステートキー
+		 * @return		true		成功
+		 *				false		失敗
+		 */
+		virtual bool ChangeState(const StateKeyType& key, const StateKeyType& keepKey) = 0;
+
+		/**
+		 * @brief		保持しているステートで変更
+		 * @return		true		成功
+		 *				false		失敗
+		 */
+		virtual bool ChangeKeepState() = 0;
+
+		/**
 		 * @brief		ステート名の取得
 		 */
 		virtual const StateKeyType GetKey() const = 0;
+
+		/**
+		 * @brief		保持しているステート名の取得
+		 */
+		virtual const StateKeyType GetKeepKey() const = 0;
+
+		virtual void SetKeepKey(const StateKeyType& keepKey) = 0;
 	};
 	//ポインタ置き換え
 	using StatePtr = std::shared_ptr<IState>;

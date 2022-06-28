@@ -100,7 +100,7 @@ void CPlayer::Release()
 	Sample::CActorObject::Release();
 }
 
-void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage)
+void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE level)
 {
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
@@ -119,10 +119,11 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage)
 		m_DeadFlg = true;
 	}
 	m_HP = hp;
+	if (m_Actor->GetArmorLevel() <= level)
+	{
+		knockBack = direction * power;
 
-	knockBack = direction * power;
+		m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
+	}
 
-	//CameraControllerInstance.Quake(2, 3, 1);
-
-	m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 }

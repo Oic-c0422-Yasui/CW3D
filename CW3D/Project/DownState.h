@@ -42,7 +42,6 @@ namespace Sample {
 			invincible = m_Parameter.endTime;
 			m_DownAction = Actor()->GetAction<DownAction>(GetKey());
 			m_DownAction->Start();
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_DOWN, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

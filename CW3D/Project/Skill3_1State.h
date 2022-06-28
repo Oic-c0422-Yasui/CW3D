@@ -14,7 +14,7 @@ namespace Sample {
 	class Skill3_1State : public AttackBaseState
 	{
 	public:
-		struct Parameter
+		struct Parameter : public BaseParam
 		{
 			float SkillActionFrameTime;
 			float FinishTime;

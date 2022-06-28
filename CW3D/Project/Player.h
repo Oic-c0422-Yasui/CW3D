@@ -39,7 +39,7 @@ public:
 		m_pInput = ptr;
 	}
 
-	void Damage(const Vector3& direction, Vector3 power, int damage);
+	void Damage(const Vector3& direction, Vector3 power, int damage, BYTE level);
 
 
 	/**
