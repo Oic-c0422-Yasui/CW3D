@@ -15,7 +15,7 @@ namespace Sample {
 	public:
 		struct Parameter
 		{
-			//float NextInputFrameTime;
+			float ThroughTime;
 		};
 	private:
 		Parameter m_Parameter;
@@ -23,6 +23,7 @@ namespace Sample {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		EscapeActionPtr			m_EscapeAction;
 
+		bool m_ThroughFlg;
 
 	public:
 		/**
@@ -31,6 +32,7 @@ namespace Sample {
 		EscapeState(Parameter param)
 			: AttackBaseState()
 			, m_Parameter(param)
+			, m_ThroughFlg(false)
 		{
 		}
 
@@ -42,7 +44,7 @@ namespace Sample {
 		void Start() override {
 			m_EscapeAction = Actor()->GetAction<EscapeAction>(GetKey());
 			AttackBaseState::Start();
-
+			m_ThroughFlg = false;
 			m_EscapeAction->Start();
 
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
@@ -68,6 +70,11 @@ namespace Sample {
 		 */
 		void Execution() override {
 
+			if (m_CurrentTime > m_Parameter.ThroughTime && !m_ThroughFlg)
+			{
+				m_EscapeAction->StartThrough();
+				m_ThroughFlg = true;
+			}
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
@@ -98,6 +105,7 @@ namespace Sample {
 		 */
 		void End() override {
 			AttackBaseState::End();
+			m_EscapeAction->End();
 		}
 
 		/**

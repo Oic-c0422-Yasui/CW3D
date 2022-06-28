@@ -10,16 +10,7 @@ namespace Sample {
 	 */
 	class FlyDamageState : public State
 	{
-	public:
-		struct Parameter
-		{
-			float CollideStartFrameTime;
-			float NextInputFrameTime;
-			ShotAABB ShotStatus;
-			EffectCreateParameter EffectStatus;
-		};
 	private:
-		Parameter m_Parameter;
 		//ダメージステート
 		FlyDamageActionPtr			m_DamageAction;
 
@@ -38,7 +29,6 @@ namespace Sample {
 		void Start() override {
 			m_DamageAction = Actor()->GetAction<FlyDamageAction>(GetKey());
 			m_DamageAction->Start();
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_FLYDAMAGE, 0.0f, 1.2f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

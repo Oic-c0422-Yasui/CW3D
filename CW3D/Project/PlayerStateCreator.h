@@ -179,7 +179,7 @@ namespace Sample {
 				}));
 			stateMachine->AddState(State::Create<EscapeState>(actor, input,
 				EscapeState::Parameter{
-
+					GameFrameTime * 5.0f
 				}));
 
 			return true;

@@ -64,6 +64,7 @@ namespace Sample {
 		 * @brief		アクション内の終了処理
 		 */
 		void End() override {
+			Transform()->SetThrough(false);
 		}
 
 		/**
@@ -74,6 +75,15 @@ namespace Sample {
 		void Move(float x, float z) {
 			Velocity()->SetVelocityX(x * m_Parameter.velocity.x);
 			Velocity()->SetVelocityZ(z * m_Parameter.velocity.z);
+		}
+
+		void StartThrough()
+		{
+			Transform()->SetThrough(true);
+		}
+		void EndThrough()
+		{
+			Transform()->SetThrough(false);
 		}
 
 		/**
