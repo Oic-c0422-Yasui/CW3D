@@ -30,15 +30,7 @@ namespace Sample {
 		bool						m_ContinueFlg;
 		std::string					m_Key;
 
-		const float SkillActionFrameTime = GameFrameTime * 7.0f;
 
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.5f, 0.15f, 0.5f),false,CHARA_PLAYER, nullptr, Vector3(4.0f, 8.0f, 4.0f) };
-
-		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
-		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect5", Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f };
 
 	public:
 		/**
@@ -64,7 +56,6 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<Skill3_1Action>(GetKey());
 
 			m_AttackTime = 0.0f;
-			//3.5
 
 			m_ContinueFlg = true;
 			
@@ -75,7 +66,7 @@ namespace Sample {
 			CreateEffect();
 			for (auto& shot : m_pShots)
 			{
-				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+				int damage = (int)(shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f));
 				shot->SetDamage(damage);
 			}
 
@@ -121,7 +112,7 @@ namespace Sample {
 
 			for (auto& effect : m_pEffects)
 			{
-				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + createEffectStatus.offset);
+				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + m_Parameter.EffectStatus.offset);
 			}
 
 			m_AttackTime += CUtilities::GetFrameSecond();

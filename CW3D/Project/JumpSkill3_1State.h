@@ -25,7 +25,6 @@ namespace Sample {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		JumpSkill3_1ActionPtr			m_SkillAction;
 		float							m_AttackTime;
-		float							m_FinishTime;
 		bool							m_ContinueFlg;
 		std::string						m_Key;
 
@@ -33,13 +32,6 @@ namespace Sample {
 
 		const float SkillActionFrameTime = GameFrameTime * 7.0f;
 
-		//1:offset(Vector3) 2:nextHitTime(float) 3:damage(int) 4:knockBack(Vector3)
-		//5:collideFlg(bool) 6:type(int) 7:size(Vector3)
-		const ShotAABB createShotStatusAABB = { Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.5f, 0.15f, 0.5f),false,CHARA_PLAYER,nullptr, Vector3(4.0f, 8.0f, 4.0f) };
-
-		//1:name(string) 2:offset(Vector3) 3:scale(Vector3) 4:rotate(Vector3)
-		//5:speed(float)
-		const EffectCreateParameter createEffectStatus = { "Effect5", Vector3(0, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f };
 
 	public:
 		/**
@@ -50,6 +42,7 @@ namespace Sample {
 			, m_Parameter(param)
 			, m_ContinueFlg(false)
 			, m_AttackTime(0.0f)
+			, m_Key()
 		{
 		}
 
@@ -75,19 +68,10 @@ namespace Sample {
 			CreateEffect();
 			for (auto& shot : m_pShots)
 			{
-				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage() * 0.01f);
+				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
 				shot->SetDamage(damage);
 			}
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (Actor()->GetSkillController()->GetSkill(i)->GetState() != STATE_KEY_SKILL3_1)
-				{
-					continue;
-				}
-
-				m_Key = Actor()->GetSkillController()->GetSkill(i)->GetButton();
-				break;
-			}
+			m_Key = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();
 
 			Vector3 pos(0, 10, -20);
 			Vector3 lookPos(0, 3, 0);
@@ -100,7 +84,6 @@ namespace Sample {
 			camera = std::make_shared<CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 			CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
 
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_SKILL3_1, 0.0f, 0.6f, 0.1f, TRUE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**
@@ -128,7 +111,7 @@ namespace Sample {
 			}
 			for (auto& effect : m_pEffects)
 			{
-				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + createEffectStatus.offset);
+				EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + m_Parameter.EffectStatus.offset);
 			}
 			
 

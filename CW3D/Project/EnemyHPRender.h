@@ -27,6 +27,7 @@ namespace Sample
 		int m_MaxHP;
 
 		Vector3 m_Position;
+		Vector3 m_ViewPosition;
 
 		bool	m_ShowFlg;
 
@@ -56,13 +57,13 @@ namespace Sample
 
 		void Initialize()
 		{
-			m_pHPBar = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("HPBar");
+			m_pHPBar = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("DamageBar");
 			m_pFrame = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("HPFrame");
-			m_pDamageBar = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("DamageBar");
+			m_pDamageBar = Sample::ResourceManager<CSprite3D>::GetInstance().GetResource("HPBar");
 			
 
 			m_Offset = Vector3(0, 2, 0);
-			m_Size = Vector3(1, 0.8f, 1);
+			m_Size = Vector3(1, 0.85f, 1);
 			m_pHPBar->m_Angle.z = MOF_ToRadian(180);
 			m_pFrame->m_Angle.z = MOF_ToRadian(180);
 			m_pDamageBar->m_Angle.z = MOF_ToRadian(180);
@@ -133,11 +134,12 @@ namespace Sample
 			LPCamera cam = CGraphicsUtilities::GetCamera();
 			m_pFrame->Update();
 			m_pFrame->m_World.Multiply3x3(cam->GetBillBoardMatrix());
+			
 			m_pFrame->Render();
 			//表示ゲージを徐々に変化させる
 			if (fabsf(m_CurrentGauge - m_CurrentHP) > 0.01f)
 			{
-				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.05f;
+				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.02f;
 				m_pDamageBar->m_Scale.x = m_Size.x * m_CurrentGauge;
 				float offset = (m_Size.x - m_pDamageBar->m_Scale.x) * 0.5f;
 				m_pDamageBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
@@ -161,6 +163,14 @@ namespace Sample
 			m_pHPBar.reset();
 			m_pFrame.reset();
 			m_pDamageBar.reset();
+		}
+
+		const Vector3& GetViewPosition()
+		{
+			LPCamera cam = CGraphicsUtilities::GetCamera();
+			m_ViewPosition = m_Position;
+			m_ViewPosition *= cam->GetViewMatrix();
+			return m_ViewPosition;
 		}
 	};
 

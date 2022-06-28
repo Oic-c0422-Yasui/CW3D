@@ -44,7 +44,7 @@ namespace Sample
 		float				m_Speed;
 		CVector3			m_KnockBack;
 		int					m_Damage;
-		std::vector<Hit>	m_HitIDs;
+		std::list<Hit>		m_HitIDs;
 		float				m_NextHitTime;
 		KnockBackPtr		m_Direction;
 
@@ -64,6 +64,7 @@ namespace Sample
 			, m_Offset(0,0,0)
 			, m_Damage(0)
 			, m_NextHitTime(0.0f)
+			, m_CollisionType(COLLITION_AABB)
 
 		{
 		}

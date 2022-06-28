@@ -303,7 +303,7 @@ void CBattleScene::Render2D()
 	std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
 		[](Sample::EnemyHPRenderPtr& obj1,Sample::EnemyHPRenderPtr& obj2)
 	{
-		return obj1->GetPosition().z > obj2->GetPosition().z;
+		return obj1->GetViewPosition().z > obj2->GetViewPosition().z;
 	});
 	for (auto& enemyHP : m_EnemysHPRender)
 	{
