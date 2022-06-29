@@ -160,7 +160,6 @@
     <ClInclude Include="CollisionPlayerEnemy.h" />
     <ClInclude Include="CollisionShotEnemy.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="CTGauge.h" />
     <ClInclude Include="DamageAction.h" />
     <ClInclude Include="DamageState.h" />
     <ClInclude Include="DeadAction.h" />
@@ -179,19 +178,14 @@
     <ClInclude Include="FlyDamageState.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameDefine.h" />
-    <ClInclude Include="HPGauge.h" />
-    <ClInclude Include="HPPosition.h" />
     <ClInclude Include="HPPresenter.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActor.h" />
-    <ClInclude Include="ICTGauge.h" />
     <ClInclude Include="IdleMotionAction.h" />
     <ClInclude Include="IdleMotionState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="IdleAction.h" />
     <ClInclude Include="IDManager.h" />
-    <ClInclude Include="IHPGauge.h" />
-    <ClInclude Include="IHPPosition.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
@@ -265,7 +259,6 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
-    <ClInclude Include="IHPShowFlg.h" />
     <ClInclude Include="ZombieActionCreator.h" />
     <ClInclude Include="ZombieStateCreator.h" />
   </ItemGroup>

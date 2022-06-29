@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameDefine.h"
-#include	"CTGauge.h"
 #include "ResourceManager.h"
 
 namespace Sample
@@ -22,6 +21,9 @@ namespace Sample
 		Vector2								m_Offset;
 		Vector2								m_Size;
 		Vector2								m_Position;
+
+		CShader								m_Shader;
+		CShaderBind_SpriteBase				m_ShaderBind;
 
 	public:
 		/**
@@ -51,8 +53,9 @@ namespace Sample
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);
-
-
+			m_Shader.Load("UI/Shader.hlsl");
+			m_ShaderBind.Create(&m_Shader);
+			CGraphicsUtilities::SetScreenSize(g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), &m_ShaderBind);
 		}
 
 
@@ -79,6 +82,9 @@ namespace Sample
 		void Render(float x) {
 
 			float percent = m_CT / m_MaxCT;
+			//描画したターゲットをテクスチャとして画面に描画する
+			CTexture* tex = m_pUsedSKillFrame.get();
+			CGraphicsUtilities::RenderTexture(20, 20, tex, &m_Shader, &m_ShaderBind);
 
 			m_pUsedSKillFrame->Render(g_pGraphics->GetTargetWidth() * 0.4f + x, g_pGraphics->GetTargetHeight() * 0.9f, MOF_ARGB(255, 10, 10, 10), TEXALIGN_BOTTOMCENTER);
 
@@ -101,6 +107,8 @@ namespace Sample
 
 		void Release(void) {
 			m_pSKillFrame.reset();
+			m_Shader.Release();
+			m_ShaderBind.Release();
 		}
 	};
 	

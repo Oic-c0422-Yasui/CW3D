@@ -1,14 +1,13 @@
 #pragma once
-#include	"Common.h"
+
 #include	"SkillData.h"
-#include	"ReactiveParameter.h"
-#include	"ParameterHandle.h"
 #include	"TimeController.h"
 
 namespace Sample
 {
 	class CSkill
 	{
+	public:
 	protected:
 
 		std::string		m_Key;
@@ -17,10 +16,22 @@ namespace Sample
 		char*			m_FlyState;
 		bool			m_CanUseFlg;
 		bool			m_StartFlg;
-		SkillDataPtr	m_SkillData;
+		CSkillData	m_SkillData;
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CurrentTime;
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
 
+
+		void AddTimer()
+		{
+			if (m_CurrentTime > 0.0f)
+			{
+				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+			}
+			else
+			{
+				m_StartFlg = false;
+				m_CanUseFlg = true;
+			}
+		}
 
 	public:
 		CSkill()
@@ -29,10 +40,11 @@ namespace Sample
 			, m_State(NULL)
 			, m_FlyState(NULL)
 			, m_CanUseFlg(false)
-			, m_SkillData(std::make_shared<CSkillData>())
+			, m_SkillData()
 			, m_StartFlg(false)
 		{
 		}
+
 		virtual ~CSkill()
 		{
 		}
@@ -45,12 +57,11 @@ namespace Sample
 			m_FlyState = flyState;
 			m_CanUseFlg = true;
 			m_StartFlg = false;
-			m_CT = m_SkillData->CT;
 		}
 
 		virtual void Start()
 		{
-			m_CurrentTime = m_SkillData->CT;
+			m_CurrentTime = m_SkillData.CT.Get();
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
@@ -61,16 +72,10 @@ namespace Sample
 			{
 				return;
 			}
-			if (m_CurrentTime > 0.0f)
-			{
-				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
-			}
-			else
-			{
-				m_StartFlg = false;
-				m_CanUseFlg = true;
-			}
+			AddTimer();
 		}
+
+		
 
 		const std::string& GetKey() const noexcept
 		{
@@ -94,7 +99,7 @@ namespace Sample
 
 		float GetCT() const noexcept
 		{
-			return m_SkillData->CT;
+			return m_SkillData.CT.Get();
 		}
 
 		float GetTime() const noexcept
@@ -109,12 +114,16 @@ namespace Sample
 
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetCTParam()
 		{
-			return m_CT;
+			return m_SkillData.CT;
+		}
+		Sample::ParameterHandle< Sample::ReactiveParameter<int> >& GetDamageParam()
+		{
+			return m_SkillData.DamagePercent;
 		}
 
 		int GetDamage() const noexcept
 		{
-			return m_SkillData->DamagePercent;
+			return m_SkillData.DamagePercent.Get();
 		}
 
 		bool GetCanUseFlg() const noexcept
@@ -141,12 +150,12 @@ namespace Sample
 
 		void SetCT(float ct) noexcept
 		{
-			m_SkillData->CT = ct;
+			m_SkillData.CT = ct;
 		}
 
 		void SetDamage(float damage) noexcept
 		{
-			m_SkillData->DamagePercent = damage;
+			m_SkillData.DamagePercent = damage;
 		}
 
 		void SetCanUseFlg(bool isCanUse) noexcept
@@ -154,15 +163,15 @@ namespace Sample
 			m_CanUseFlg = isCanUse;
 		}
 
-		void SetSkillData(SkillDataPtr& skill) noexcept
+		void SetSkillData(const CSkillData& skill) noexcept
 		{
 			m_SkillData = skill;
 		}
 
 		void SetSkillData(float damagePercent, float ct) noexcept
 		{
-			m_SkillData->CT = ct;
-			m_SkillData->DamagePercent = damagePercent;
+			m_SkillData.CT = ct;
+			m_SkillData.DamagePercent = damagePercent;
 		}
 
 

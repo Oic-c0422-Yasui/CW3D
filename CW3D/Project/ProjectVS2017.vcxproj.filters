@@ -413,9 +413,6 @@
     <ClInclude Include="AttackBaseState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
-    <ClInclude Include="IHPGauge.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
@@ -427,24 +424,6 @@
     </ClInclude>
     <ClInclude Include="ReactiveParameter.h">
       <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="HPGauge.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="IHPPosition.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="HPPosition.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="IHPShowFlg.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ICTGauge.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CTGauge.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="SkillUIRender.h">
       <Filter>ヘッダー ファイル\UI</Filter>

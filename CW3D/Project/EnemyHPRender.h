@@ -1,8 +1,6 @@
 #pragma once
 
 #include "GameDefine.h"
-#include	"HPGauge.h"
-#include	"HPPosition.h"
 
 #include "ResourceManager.h"
 
@@ -34,6 +32,7 @@ namespace Sample
 		Vector3								m_Offset;
 		Vector3								m_Size;
 
+		
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -74,6 +73,8 @@ namespace Sample
 			m_pHPBar->m_Scale = m_Size;
 			m_pDamageBar->m_Scale = m_Size;
 			m_pFrame->m_Color = CVector4(1.0f, 1.0f, 1.0f, 0.75f);
+
+
 
 		}
 

@@ -1,5 +1,5 @@
 #include "Player.h"
-
+#include "AdditionalSkill.h"
 
 
 
@@ -44,9 +44,11 @@ bool CPlayer::Load()
 
 	
 
-
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1);
-	skill->SetSkillData(180, 3);
+	Sample::SKillPtr additionalSkill = std::make_shared<Sample::CAdditionalSkill>();
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1, additionalSkill);
+	Sample::CSkillData skillData;
+	skillData.SetData(180, 3, 0.8f, 0);
+	skill->SetSkillData(skillData);
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
 	skill->SetSkillData(125, 5);

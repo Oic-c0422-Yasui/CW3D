@@ -1,10 +1,9 @@
 #pragma once
 
 
-#include "Singleton.h"
-#include "Common.h"
-#include "Skill.h"
-#include "SkillData.h"
+#include	"Singleton.h"
+#include	"Skill.h"
+#include	"AdditionalSkill.h"
 
 
 namespace Sample
@@ -22,9 +21,17 @@ namespace Sample
 		{
 		}
 
-		SKillPtr Create(std::string key,std::string button,char* state, char* flyState)
+		SKillPtr Create(const std::string& key, const std::string& button,char* state, char* flyState)
 		{
-			auto add = std::make_shared<CSkill>();
+			auto& add = std::make_shared<CSkill>();
+			m_Skills.push_back(add);
+
+			add->Create(key, button, state, flyState);
+			return add;
+		}
+		SKillPtr Create(const std::string& key, const std::string& button, char* state, char* flyState,const SKillPtr& skill)
+		{
+			auto& add = skill;
 			m_Skills.push_back(add);
 
 			add->Create(key, button, state, flyState);
