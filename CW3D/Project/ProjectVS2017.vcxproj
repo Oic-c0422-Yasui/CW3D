@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorObject.h" />
+    <ClInclude Include="AdditionalSkill.h" />
     <ClInclude Include="AICycleFixed.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />

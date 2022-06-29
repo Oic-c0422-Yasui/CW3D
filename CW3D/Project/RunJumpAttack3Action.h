@@ -21,6 +21,8 @@ namespace Sample {
 			//加速値
 			Vector3					velocity;
 			float					jumpPower;
+			float					gravity;
+			float					defaultGravity;
 		};
 	private:
 		//パラメーター
@@ -75,6 +77,7 @@ namespace Sample {
 		 * @brief		アクション内の終了処理
 		 */
 		void End() override {
+			Velocity()->SetGravity(m_Parameter.defaultGravity);
 		}
 
 		void Jump()

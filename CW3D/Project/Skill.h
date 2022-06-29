@@ -1,6 +1,6 @@
 #pragma once
-#include "Common.h"
-#include "SkillData.h"
+#include	"Common.h"
+#include	"SkillData.h"
 #include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
 #include	"TimeController.h"
@@ -9,7 +9,7 @@ namespace Sample
 {
 	class CSkill
 	{
-	private:
+	protected:
 
 		std::string		m_Key;
 		std::string		m_Button;
@@ -21,6 +21,7 @@ namespace Sample
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CurrentTime;
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
 
+
 	public:
 		CSkill()
 			: m_Key()
@@ -29,13 +30,14 @@ namespace Sample
 			, m_FlyState(NULL)
 			, m_CanUseFlg(false)
 			, m_SkillData(std::make_shared<CSkillData>())
+			, m_StartFlg(false)
 		{
 		}
-		~CSkill()
+		virtual ~CSkill()
 		{
 		}
 
-		void Create(std::string key, std::string button, char* state, char* flyState)
+		virtual void Create(std::string key, std::string button, char* state, char* flyState)
 		{
 			m_Key = key;
 			m_Button = button;
@@ -46,14 +48,14 @@ namespace Sample
 			m_CT = m_SkillData->CT;
 		}
 
-		void Start()
+		virtual void Start()
 		{
 			m_CurrentTime = m_SkillData->CT;
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
 
-		void Update()
+		virtual void Update()
 		{
 			if (!m_StartFlg)
 			{
@@ -68,8 +70,6 @@ namespace Sample
 				m_StartFlg = false;
 				m_CanUseFlg = true;
 			}
-
-
 		}
 
 		const std::string& GetKey() const noexcept

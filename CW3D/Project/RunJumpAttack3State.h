@@ -98,6 +98,7 @@ namespace Sample {
 		 */
 		void End() override {
 			AttackBaseState::End();
+			m_Attack3Action->End();
 		}
 
 		/**

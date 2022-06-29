@@ -21,6 +21,8 @@ namespace Sample {
 			//加速値
 			Vector3					velocity;
 			float					jumpPower;
+			float					gravity;
+			float					defaultGravity;
 		};
 	private:
 		//パラメーター
@@ -42,8 +44,10 @@ namespace Sample {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& vel = Velocity();
-			//JUMPPOWER * 0.7f
+
 			vel->SetVelocityY(m_Parameter.jumpPower);
+			vel->SetGravity(m_Parameter.gravity);
+
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
@@ -68,6 +72,7 @@ namespace Sample {
 		 * @brief		アクション内の終了処理
 		 */
 		void End() override {
+			Velocity()->SetGravity(m_Parameter.defaultGravity);
 		}
 
 		/**

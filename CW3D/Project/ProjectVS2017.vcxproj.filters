@@ -602,6 +602,9 @@
     <ClInclude Include="FixedCamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="AdditionalSkill.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

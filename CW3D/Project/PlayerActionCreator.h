@@ -216,7 +216,8 @@ namespace Sample {
 						0.1f,
 						false
 					},
-					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
+					Vector3(0.2f, 1.0f, 1.0f),
 				}));
 
 			//攻撃２
@@ -284,8 +285,10 @@ namespace Sample {
 						0.1f,
 						false
 					},
-					Vector3(0.1f, 0.0f, 0.0f),
-					PLAYER_JUMPPOWER * 0.7f,
+					Vector3(0.25f, 0.0f, 0.0f),
+					PLAYER_JUMPPOWER * 0.4f,
+					GRAVITY * 0.7f,
+					GRAVITY,
 				}));
 			//ダッシュジャンプ攻撃２
 			actor->AddAction(Action::Create<RunJumpAttack2Action>(
@@ -297,8 +300,10 @@ namespace Sample {
 						0.1f,
 						false
 					},
-					Vector3(0.15f, 0.0f,0.0f),
-					PLAYER_JUMPPOWER * 0.7f,
+					Vector3(0.25f, 0.0f,0.0f),
+					PLAYER_JUMPPOWER * 0.4f,
+					GRAVITY * 0.7f,
+					GRAVITY,
 				}));
 			//ダッシュジャンプ攻撃３
 			actor->AddAction(Action::Create<RunJumpAttack3Action>(
@@ -310,8 +315,10 @@ namespace Sample {
 						0.1f,
 						false
 					},
-					Vector3(0.15f, 0.0f, 0.0f),
-					PLAYER_JUMPPOWER * 0.7f,
+					Vector3(0.25f, 0.0f, 0.0f),
+					PLAYER_JUMPPOWER * 0.4f,
+					GRAVITY * 0.7f,
+					GRAVITY,
 				}));
 
 			//ダメージ

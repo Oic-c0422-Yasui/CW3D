@@ -20,6 +20,7 @@ namespace Sample {
 			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
+			Vector3					velocity;
 		};
 	private:
 		//パラメーター
@@ -40,16 +41,18 @@ namespace Sample {
 		void Start() override {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-			//PLAYERSPEED * 0.3
 			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+			
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
+				Velocity()->SetVelocityX(-m_Parameter.velocity.x);
 			}
 			else
 			{
 				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+				Velocity()->SetVelocityX(m_Parameter.velocity.x);
 			}
 		}
 

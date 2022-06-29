@@ -124,7 +124,7 @@ namespace Sample {
 					2
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 22.0f
-					,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.3f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,2, Vector3(1.5f, 1.5f, 1.5f) }
+					,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.3f, 0.15f, 0.0f),false,CHARA_PLAYER, nullptr,2, Vector3(1.5f, 1.5f, 1.5f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
 
 				}));
@@ -132,7 +132,7 @@ namespace Sample {
 				RunJumpAttack2State::Parameter{
 					2
 					,GameFrameTime * 20.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.2f, 0.2f, 0.0f),true,CHARA_PLAYER, nullptr,2, Vector3(1.5f, 1.5f, 1.5f) }
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.2f, 0.15f, 0.0f),true,CHARA_PLAYER, nullptr,2, Vector3(1.5f, 1.5f, 1.5f) }
 
 				}));
 			stateMachine->AddState(State::Create<RunJumpAttack3State>(actor, input,
