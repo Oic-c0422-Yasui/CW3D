@@ -14,6 +14,7 @@ namespace Sample
 
 		std::shared_ptr<CTexture>			m_pSKillFrame;
 		std::shared_ptr<CTexture>			m_pUsedSKillFrame;
+		std::shared_ptr<CFont>				m_pFont;
 
 		float								m_CT;
 		float								m_MaxCT;
@@ -22,8 +23,6 @@ namespace Sample
 		Vector2								m_Size;
 		Vector2								m_Position;
 
-		CShader								m_Shader;
-		CShaderBind_SpriteBase				m_ShaderBind;
 
 	public:
 		/**
@@ -46,16 +45,20 @@ namespace Sample
 		}
 
 
-		void Initialize(std::string key)
+		void Load(std::string key)
 		{
 			m_pSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key);
-			m_pUsedSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key);
+			m_pUsedSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key + "Mono");
+			m_pFont = Sample::ResourceManager<CFont>::GetInstance().GetResource("CTFont");
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);
-			m_Shader.Load("UI/Shader.hlsl");
-			m_ShaderBind.Create(&m_Shader);
-			CGraphicsUtilities::SetScreenSize(g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight(), &m_ShaderBind);
+		}
+
+		void Initialize(const Vector2& pos )
+		{
+			m_Position = pos;
+			m_Position.y += m_pSKillFrame->GetHeight() * 0.5f;
 		}
 
 
@@ -79,27 +82,28 @@ namespace Sample
 		/**
 		 * @brief		管理スコア初期化
 		 */
-		void Render(float x) {
+		void Render() {
 
 			float percent = m_CT / m_MaxCT;
-			//描画したターゲットをテクスチャとして画面に描画する
-			CTexture* tex = m_pUsedSKillFrame.get();
-			CGraphicsUtilities::RenderTexture(20, 20, tex, &m_Shader, &m_ShaderBind);
 
-			m_pUsedSKillFrame->Render(g_pGraphics->GetTargetWidth() * 0.4f + x, g_pGraphics->GetTargetHeight() * 0.9f, MOF_ARGB(255, 10, 10, 10), TEXALIGN_BOTTOMCENTER);
+			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 200, 200, 200), TEXALIGN_BOTTOMCENTER);
 
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
-			m_pSKillFrame->Render(g_pGraphics->GetTargetWidth() * 0.4f + x, g_pGraphics->GetTargetHeight() * 0.9f, rect, TEXALIGN_BOTTOMCENTER);
+			m_pSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
 
 			if (m_CT > 0.0f)
 			{
 				if (m_CT > 1.0f)
 				{
-					CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.4f - 5 + x, g_pGraphics->GetTargetHeight() * 0.9f - m_pUsedSKillFrame->GetHeight() * 0.5f, "%.0f", m_CT);
+					CRectangle rect;
+					m_pFont->CalculateStringRect(0, 0, "0", rect);
+					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", m_CT);
 				}
 				else
 				{
-					CGraphicsUtilities::RenderString(g_pGraphics->GetTargetWidth() * 0.4f - 5 + x, g_pGraphics->GetTargetHeight() * 0.9f - m_pUsedSKillFrame->GetHeight() * 0.5f, "%.1f", m_CT);
+					CRectangle rect;
+					m_pFont->CalculateStringRect(0, 0, "0.0", rect);
+					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", m_CT);
 				}
 			}
 			
@@ -107,8 +111,7 @@ namespace Sample
 
 		void Release(void) {
 			m_pSKillFrame.reset();
-			m_Shader.Release();
-			m_ShaderBind.Release();
+			m_pFont.reset();
 		}
 	};
 	

@@ -45,7 +45,7 @@ namespace Sample
 			m_StopFlg = isStop;
 		}
 
-		Effekseer::Handle GetHandle()
+		Effekseer::Handle GetHandle() const noexcept
 		{
 			return m_Handle;
 		}
@@ -55,6 +55,7 @@ namespace Sample
 			return m_Offset;
 		}
 
+		float GetAnimTime();
 
 
 	

@@ -17,6 +17,9 @@ CSceneBase* gScene = NULL;
 bool debugFlg = false;
 
 float gameSpeed = 1.0f;
+
+CTexture	testUI;
+
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
 		@param			None
@@ -31,7 +34,7 @@ MofBool CGameApp::Initialize(void){
 	gScene = new CBattleScene;
 	gScene->Load();
 	gScene->Initialize();
-
+	testUI.Load("UI/UItest.png");
 	
 	return TRUE;
 }
@@ -92,7 +95,7 @@ MofBool CGameApp::Render(void){
 	{
 		gScene->Render2DDebug();
 	}
-
+	//testUI.Render(0, 0);
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -112,5 +115,6 @@ MofBool CGameApp::Release(void){
 		delete gScene;
 		gScene = NULL;
 	}
+	testUI.Release();
 	return TRUE;
 }

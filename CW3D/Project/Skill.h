@@ -3,13 +3,13 @@
 #include	"SkillData.h"
 #include	"TimeController.h"
 
+
 namespace Sample
 {
 	class CSkill
 	{
 	public:
 	protected:
-
 		std::string		m_Key;
 		std::string		m_Button;
 		char*			m_State;
@@ -17,8 +17,21 @@ namespace Sample
 		bool			m_CanUseFlg;
 		bool			m_StartFlg;
 		CSkillData	m_SkillData;
+		
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CurrentTime;
 
+		void AddTimerAndResetFlg()
+		{
+			if (m_CurrentTime > 0.0f)
+			{
+				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+			}
+			else
+			{
+				m_StartFlg = false;
+				m_CanUseFlg = true;
+			}
+		}
 
 		void AddTimer()
 		{
@@ -26,7 +39,11 @@ namespace Sample
 			{
 				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 			}
-			else
+		}
+
+		void ResetFlg()
+		{
+			if (m_CurrentTime <= 0.0f)
 			{
 				m_StartFlg = false;
 				m_CanUseFlg = true;
@@ -72,7 +89,7 @@ namespace Sample
 			{
 				return;
 			}
-			AddTimer();
+			AddTimerAndResetFlg();
 		}
 
 		

@@ -70,6 +70,7 @@ constexpr char* STATE_KEY_ESCAPE = "Escape";
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
 const std::string PARAMETER_KEY_HP = "HP";
 const std::string PARAMETER_KEY_MAXHP = "MaxHP";
+const std::string PARAMETER_KEY_ULTGAUGE = "ULTGauge";
 const std::string PARAMETER_KEY_DAMAGE = "Damage";
 const std::string PARAMETER_KEY_ATTACK = "Attack";
 const std::string PARAMETER_KEY_ALPHA = "Alpha";
@@ -81,6 +82,25 @@ const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";
 const std::string SKILL_KEY_4 = "SkillKey4";
 const std::string SKILL_KEY_ESCAPE = "EscapeKey";
+
+//現在のスキル数
+#define SKILL_COUNT 4
+
+//設定できる最大スキル数
+#define SKILLMAX_COUNT 18
+
+//スキル欄左側の行の数
+#define SKILL_LEFTLINE_COUNT 1
+
+//スキル欄真ん中の行の数
+#define SKILL_CENTERLINE_COUNT 6
+
+//スキル欄右側の行の数
+#define SKILL_RIGHTLINE_COUNT 2
+
+//スキル欄の列の数
+#define SKILL_COLUMN_COUNT 2
+
 
 //FPS60
 constexpr float GameFrameTime = 1.0f / 60.0f;

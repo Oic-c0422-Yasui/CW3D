@@ -3,6 +3,7 @@
 
 #include	"AttackBaseState.h"
 #include	"Skill2_1Action.h"
+#include	"AdditionalSkill.h"
 
 namespace Sample {
 
@@ -27,7 +28,7 @@ namespace Sample {
 
 		std::string m_Key;
 
-		AdditionalSKillPtr m_AddSkill;
+		AdditionalWeakSKillPtr m_AddSkill;
 
 		bool collideStartFlg;
 
@@ -59,9 +60,9 @@ namespace Sample {
 			m_SkillAction = Actor()->GetAction<Skill2_1Action>(GetKey());
 			Initialize();
 			m_AddSkill = std::dynamic_pointer_cast<CAdditionalSkill>(Actor()->GetSkillController()->GetSkill(SKILL_KEY_1));
-			if (m_AddSkill != nullptr)
+			if (m_AddSkill.lock() != nullptr)
 			{
-				m_Key = m_AddSkill->GetButton();
+				m_Key = m_AddSkill.lock()->GetButton();
 			}
 		}
 
@@ -100,6 +101,10 @@ namespace Sample {
 			{
 				if (m_NextInputFlg)
 				{
+					for (auto& shot : m_pShots)
+					{
+						shot->SetShow(false);
+					}
 					Initialize();
 				}
 				else
@@ -123,11 +128,11 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 
-			if (m_AddSkill != nullptr)
+			if (m_AddSkill.lock() != nullptr)
 			{
 				if (Input()->IsPush(m_Key))
 				{
-					if (m_AddSkill->IsAdditional())
+					if (m_AddSkill.lock()->IsAdditional())
 					{
 						m_NextInputFlg = true;
 					}
@@ -145,7 +150,7 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
-
+			m_AddSkill.reset();
 		}
 
 		/**
@@ -167,7 +172,6 @@ namespace Sample {
 		void Initialize()
 		{
 			
-
 			AttackBaseState::Start();
 			collideStartFlg = false;
 			m_SkillAction->Start();

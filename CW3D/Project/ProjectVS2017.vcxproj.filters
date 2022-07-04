@@ -91,6 +91,18 @@
     <Filter Include="ヘッダー ファイル\Creator">
       <UniqueIdentifier>{c5d5961e-658c-42eb-b0c5-a52a1e4b3e1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{af55a494-6745-4301-8344-d6afd2444a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render">
+      <UniqueIdentifier>{529cbe07-d461-4f44-84af-3ae1772cb11f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Creator">
+      <UniqueIdentifier>{41067a10-8f77-4a6b-bb36-97f961891004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Presenter">
+      <UniqueIdentifier>{cd4aef48-ccaf-4b10-ab56-ef450e30abfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -152,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="FollowFixedCamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillControllerUIRender.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUIRender.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -404,9 +422,6 @@
     <ClInclude Include="SkillData.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHPRender.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="IDManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -424,15 +439,6 @@
     </ClInclude>
     <ClInclude Include="ReactiveParameter.h">
       <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillUIRender.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="HPPresenter.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillPresenter.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="CollisionEnemyEnemy.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
@@ -583,6 +589,36 @@
     </ClInclude>
     <ClInclude Include="AdditionalSkill.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="UltimateSkill.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleUICreater.h">
+      <Filter>ヘッダー ファイル\UI\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="HPPresenter.h">
+      <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillPresenter.h">
+      <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHPRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHPRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUIRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillControllerUIRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillUIRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillsUIRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

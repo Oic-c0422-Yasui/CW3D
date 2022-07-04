@@ -10,6 +10,7 @@
 #include	"StateInput.h"
 
 
+
 using namespace Sample;
 
 CBattleScene::CBattleScene()
@@ -55,45 +56,12 @@ bool CBattleScene::Load()
 	}
 	ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
-
-	//テクスチャ読み込み
-	std::shared_ptr<CSprite3D> tempTex = std::make_shared<CSprite3D>();
-	if (!tempTex->CreateSprite("UI/HP.png"))
-	{
-		return false;
-	}
-	ResourceManager<CSprite3D>::GetInstance().AddResource("HPBar", tempTex);
-	tempTex = std::make_shared<CSprite3D>();
-	if (!tempTex->CreateSprite("UI/HPFrame.png"))
-	{
-		return false;
-	}
-	ResourceManager<CSprite3D>::GetInstance().AddResource("HPFrame", tempTex);
-	tempTex = std::make_shared<CSprite3D>();
-	if (!tempTex->CreateSprite("UI/Damage.png"))
-	{
-		return false;
-	}
-	ResourceManager<CSprite3D>::GetInstance().AddResource("DamageBar", tempTex);
 	
-	std::shared_ptr<CTexture> tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/Skill1.png"))
+	//テクスチャ読み込み
+	if (!m_UICreater.Create())
 	{
 		return false;
 	}
-	ResourceManager<CTexture>::GetInstance().AddResource("Skill1", tempTex2D);
-	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/Skill2.png"))
-	{
-		return false;
-	}
-	ResourceManager<CTexture>::GetInstance().AddResource("Skill2", tempTex2D);
-	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/Skill3.png"))
-	{
-		return false;
-	}
-	ResourceManager<CTexture>::GetInstance().AddResource("Skill3", tempTex2D);
 
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
@@ -118,32 +86,28 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
-	for (int i = 0; i < 3; i++)
-	{
-		m_SkillCTRender.push_back(std::make_shared<SkillUIRender>());
-		CSkillPresenter::Present(m_Player, m_SkillCTRender[i], i);
-	}
-	m_SkillCTRender[0]->Initialize("Skill1");
-	m_SkillCTRender[1]->Initialize("Skill2");
-	m_SkillCTRender[2]->Initialize("Skill3");
+	//サービスロケーターの設定
+	ServiceLocator<CPlayer>::SetService(m_Player);
 
-
+	
+	m_PlayerUIRender = std::make_shared<PlayerUIRender>();
+	m_PlayerUIRender->Load();
+	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 	//ステージ読み込み
 	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
 
-	
+	//カメラ初期化
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
-
 	CameraControllerInstance.Load(camera);
 
-	ServiceLocator<CPlayer>::SetService(m_Player);
 
-	tempTex.reset();
+	
+
+
 	tempMesh.reset();
-	tempTex2D.reset();
 
 	return true;
 }
@@ -151,6 +115,7 @@ bool CBattleScene::Load()
 void CBattleScene::Initialize()
 {
 	m_Player->Initialize();
+	m_PlayerUIRender->Initialize();
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -230,7 +195,6 @@ void CBattleScene::Update()
 
 void CBattleScene::Render()
 {
-	
 	CMatrix44 stgMat;
 	m_Stage.Render(stgMat);
 	m_Player->Render();
@@ -303,12 +267,10 @@ void CBattleScene::Render2D()
 	{
 		enemyHP->Render();
 	}
-	for (int i = 0;i < m_SkillCTRender.size();i++)
-	{
-		m_SkillCTRender[i]->Render(i * 150);
-	}
 
-	
+	m_PlayerUIRender->Render();
+
+
 
 	if (count >= m_Enemys.size())
 	{
@@ -327,14 +289,20 @@ void CBattleScene::Render2DDebug()
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player->IsReverse());
 
 	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
+	Vector2 pos;
+	g_pInput->GetMousePos(pos);
+	CGraphicsUtilities::RenderString(400, 30, "X:%.1f Y:%.1f", pos.x, pos.y);
 }
 
 void CBattleScene::Release()
 {
 	m_Player->Release();
 	m_Player.reset();
-	ServiceLocator<CPlayer>::SetService(nullptr);
+	//ServiceLocator<CPlayer>::SetService(nullptr);
+
 	ServiceLocator<CPlayer>::GetInstance().Release();
+
+
 	m_Stage.Release();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -346,17 +314,15 @@ void CBattleScene::Release()
 		m_EnemysHPRender[i].reset();
 	}
 	m_EnemysHPRender.clear();
-	for (int i = 0; i < m_SkillCTRender.size(); i++)
-	{
-		m_SkillCTRender[i].reset();
-	}
-	m_SkillCTRender.clear();
+	m_PlayerUIRender.reset();
+	
 
 	InputManagerInstance.Release();
 	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	Sample::ResourceManager<CSprite3D>::GetInstance().Release();
 	Sample::ResourceManager<CTexture>::GetInstance().Release();
+	ResourceManager<CFont>::GetInstance().Release();
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();

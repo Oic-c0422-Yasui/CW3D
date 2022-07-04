@@ -6,8 +6,8 @@
 #include	"ParameterHandle.h"
 #include	"ActorObject.h"
 #include	"Observer.h"
-#include "PlayerActionCreator.h"
-#include "PlayerStateCreator.h"
+#include	"PlayerActionCreator.h"
+#include	"PlayerStateCreator.h"
 
 class CPlayer : public Sample::CActorObject
 {
@@ -41,6 +41,10 @@ public:
 
 	void Damage(const Vector3& direction, Vector3 power, int damage, BYTE level);
 
+	int GetHP()
+	{
+		return m_HP.Get();
+	}
 
 	/**
 	* @brief		HP•Ï‰»’Ê’m

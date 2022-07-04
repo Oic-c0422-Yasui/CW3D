@@ -3,7 +3,6 @@
 
 #include	"Singleton.h"
 #include	"Skill.h"
-#include	"AdditionalSkill.h"
 
 
 namespace Sample

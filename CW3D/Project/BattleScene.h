@@ -17,7 +17,10 @@
 #include	"EnemyHPRender.h"
 #include	"SkillUIRender.h"
 
+#include	"BattleUICreater.h"
+
 #include	"Collision.h"
+#include	"PlayerUIRender.h"
 
 class CBattleScene : public CSceneBase
 {
@@ -35,8 +38,9 @@ private:
 	CFont m_Font;
 
 	std::vector<Sample::EnemyHPRenderPtr> m_EnemysHPRender;
-	std::vector < Sample::SkillUIRenderPtr>	m_SkillCTRender;
+	Sample::PlayerUIRenderPtr m_PlayerUIRender;
 
+	Sample::CBattleUICreater m_UICreater;
 
 public:
 	CBattleScene();

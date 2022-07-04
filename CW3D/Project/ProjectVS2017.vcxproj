@@ -114,6 +114,8 @@
     <ClCompile Include="MofInput.cpp" />
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerUIRender.cpp" />
+    <ClCompile Include="SkillControllerUIRender.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -131,6 +133,7 @@
     <ClInclude Include="AttackBaseState.h" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BattleScene.h" />
+    <ClInclude Include="BattleUICreater.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CharacterAICreator.h" />
@@ -202,7 +205,9 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ParameterHandle.h" />
     <ClInclude Include="PlayerActionCreator.h" />
+    <ClInclude Include="PlayerHPRender.h" />
     <ClInclude Include="PlayerStateCreator.h" />
+    <ClInclude Include="PlayerUIRender.h" />
     <ClInclude Include="ReactiveParameter.h" />
     <ClInclude Include="RunJumpAttack1Action.h" />
     <ClInclude Include="RunJumpAttack2Action.h" />
@@ -240,7 +245,9 @@
     <ClInclude Include="Skill2_1State.h" />
     <ClInclude Include="Skill3_1Action.h" />
     <ClInclude Include="Skill3_1State.h" />
+    <ClInclude Include="SkillControllerUIRender.h" />
     <ClInclude Include="SkillCreater.h" />
+    <ClInclude Include="SkillsUIRender.h" />
     <ClInclude Include="SkillUIRender.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillController.h" />
@@ -257,6 +264,7 @@
     <ClInclude Include="TimeScale.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="UltimateSkill.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
     <ClInclude Include="ZombieActionCreator.h" />

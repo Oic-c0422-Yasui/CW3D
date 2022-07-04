@@ -9,7 +9,7 @@ public:
 	{
 		player->GetCTSubject(skillID)->Subscribe([view](float ct) { view->SetCT(ct); });
 		player->GetMaxCTSubject(skillID)->Subscribe([view](float ct) { view->SetMaxCT(ct); });
-
+		
 		view->SetCT(0);
 		view->SetMaxCT(player->GetSkillController()->GetSkill(skillID)->GetCT());
 	}

@@ -43,7 +43,7 @@ namespace Sample
 			else
 			{
 				m_AdditionalFlg = false;
-				CSkill::AddTimer();
+				CSkill::AddTimerAndResetFlg();
 			}
 		}
 
@@ -94,4 +94,5 @@ namespace Sample
 
 	//ポインタ置き換え
 	using AdditionalSKillPtr = std::shared_ptr<CAdditionalSkill>;
+	using AdditionalWeakSKillPtr = std::weak_ptr<CAdditionalSkill>;
 }

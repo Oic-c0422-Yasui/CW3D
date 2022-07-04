@@ -25,5 +25,4 @@ namespace Sample
 			EffectManagerInstance.GetManager()->StopEffect(m_Handle);
 		}
 	}
-
 }
