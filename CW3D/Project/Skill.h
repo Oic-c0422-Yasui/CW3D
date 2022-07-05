@@ -138,6 +138,11 @@ namespace Sample
 			return m_SkillData.DamagePercent;
 		}
 
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetUltGaugeParam()
+		{
+			return m_SkillData.ExpendGauge;
+		}
+
 		int GetDamage() const noexcept
 		{
 			return m_SkillData.DamagePercent.Get();

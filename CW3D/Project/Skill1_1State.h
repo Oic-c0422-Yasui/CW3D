@@ -76,7 +76,7 @@ namespace Sample {
 			MyUtilities::ANIMV3_DATA animLookPos[] =
 			{
 				{0.0f,Vector3(2, 1, 2)},
-				{0.7f,Vector3(2, 1, 2)},
+				{1.0f,Vector3(2, 1, 2)},
 				{1.0f,Vector3(2, 1, 2)},
 			};
 			Vector3 pos(-7, 2, -2);
@@ -84,7 +84,7 @@ namespace Sample {
 			if (Actor()->IsReverse())
 			{
 				pos.x *= -1;
-				lookPos *= -1;
+				lookPos.x *= -1;
 				for (int i = 0; i < _countof(animPos); i++)
 				{
 					animPos[i].Value.x *= -1;
