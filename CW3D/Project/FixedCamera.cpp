@@ -7,6 +7,7 @@ CFixedCamera::CFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vec
 
 CFixedCamera::~CFixedCamera()
 {
+	m_AnimData.Release();
 }
 
 void CFixedCamera::Create()
@@ -16,7 +17,16 @@ void CFixedCamera::Create()
 
 void CFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
-	m_TargetPos = pos + m_OffsetPos;
-	m_TargetLookPos = lookPos + m_OffsetLookPos;
+
+	if (m_AnimData.flg)
+	{
+		m_OffsetPos = Sample::MyUtilities::InterpolationAnim(m_AnimData.currentTime, m_AnimData.pos, m_AnimData.count);
+		m_OffsetLookPos = Sample::MyUtilities::InterpolationAnim(m_AnimData.currentTime, m_AnimData.lookPos, m_AnimData.count);
+		m_AnimData.currentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+	}
+
+	m_Position	= m_TargetPos + m_OffsetPos;
+	m_LookPos	= m_TargetLookPos + m_OffsetLookPos;
+
 	CCameraBase::UpdateCamera();
 }

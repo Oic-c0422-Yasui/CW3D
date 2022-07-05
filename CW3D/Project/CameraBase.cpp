@@ -10,6 +10,7 @@ CCameraBase::CCameraBase(const Vector3& pos, const Vector3& lookPos, const Vecto
 	, m_OffsetLookPos(offsetLookPos)
 	, m_AnimEndFlg(false)
 	, m_ResetFlg(false)
+	, m_AnimData()
 {
 	Create();
 }
@@ -40,4 +41,19 @@ void CCameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
 	m_Position = pos;
 	m_LookPos = lookPos;
 	UpdateCamera();
+}
+
+void CCameraBase::SetAnim(Sample::MyUtilities::ANIMV3_DATA* offsetPos, Sample::MyUtilities::ANIMV3_DATA* offsetLookPos, int size)
+{
+	m_AnimData.pos = new Sample::MyUtilities::ANIMV3_DATA[size];
+	m_AnimData.lookPos = new Sample::MyUtilities::ANIMV3_DATA[size];
+
+	for (int i = 0; i < size; i++)
+	{
+		m_AnimData.pos[i] = offsetPos[i];
+		m_AnimData.lookPos[i] = offsetLookPos[i];
+	}
+	m_AnimData.flg = true;
+	m_AnimData.currentTime = 0.0f;
+	m_AnimData.count = size;
 }

@@ -1,5 +1,5 @@
 #include "InterpolateCamera.h"
-
+#include "TimeController.h"
 
 
 CInterpolateCamera::CInterpolateCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
@@ -67,7 +67,7 @@ void CInterpolateCamera::Update(const Vector3& pos, const Vector3& lookPos)
 	{
 		m_AnimEndFlg = true;
 	}
-	m_CurrentTime += CUtilities::GetFrameSecond();
+	m_CurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 	CCameraBase::UpdateCamera();
 }
 

@@ -68,13 +68,13 @@ namespace Sample
 		};
 
 		// アニメーション用構造体
-		struct ANIMV3_DATA
+		typedef struct tag_ANIMV3_DATA
 		{
 			float	Time;
 			Vector3	Value;
 			EASING_TYPE EasingType;
 
-		};
+		}ANIMV3_DATA;
 
 
 		//保管アニメーション
@@ -168,6 +168,7 @@ namespace Sample
 		
 	};
 
+	using AnimV3Ptr = std::shared_ptr<MyUtilities::ANIMV3_DATA>;
 }
 
 

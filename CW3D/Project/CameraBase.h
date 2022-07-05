@@ -13,6 +13,39 @@ protected:
 	bool		m_AnimEndFlg;
 	bool		m_ResetFlg;
 
+	//アニメーション用構造体
+	struct animData
+	{
+		Sample::MyUtilities::ANIMV3_DATA* pos;
+		Sample::MyUtilities::ANIMV3_DATA* lookPos;
+		bool		flg;
+		float		currentTime;
+		int			count;
+
+		animData()
+			: pos(nullptr)
+			, lookPos(nullptr)
+			, flg(false)
+			, currentTime(0.0f)
+			, count(0)
+		{
+		}
+		void Release()
+		{
+			if (pos)
+			{
+				delete[] pos;
+				pos = nullptr;
+			}
+			if (lookPos)
+			{
+				delete[] lookPos;
+				lookPos = nullptr;
+			}
+		}
+	};
+	animData m_AnimData;
+
 public:
 	CCameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
 	virtual ~CCameraBase() {};
@@ -21,6 +54,7 @@ public:
 	virtual void UpdateCamera();
 	virtual void Render2DDebug();
 	virtual void Enable(const Vector3& pos, const Vector3& lookPos);
+	virtual void SetAnim( Sample::MyUtilities::ANIMV3_DATA* offsetPos, Sample::MyUtilities::ANIMV3_DATA* offsetLookPos,int size);
 
 	const CVector3& GetPos() const noexcept
 	{

@@ -1,5 +1,6 @@
 #pragma once
 #include "CameraBase.h"
+#include "TimeController.h"
 class CFixedCamera :  public CCameraBase
 {
 public:

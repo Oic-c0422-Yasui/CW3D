@@ -201,7 +201,7 @@ namespace Sample {
 			}
 			for (auto& shot : m_pShots)
 			{
-				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_1)->GetDamage() * 0.01f);
 				shot->SetDamage(damage);
 			}
 		}

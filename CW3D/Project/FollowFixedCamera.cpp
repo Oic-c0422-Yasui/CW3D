@@ -7,6 +7,7 @@ CFollowFixedCamera::CFollowFixedCamera(const Vector3& pos, const Vector3& lookPo
 
 CFollowFixedCamera::~CFollowFixedCamera()
 {
+	m_AnimData.Release();
 }
 
 void CFollowFixedCamera::Create()

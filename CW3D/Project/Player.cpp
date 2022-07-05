@@ -56,7 +56,7 @@ bool CPlayer::Load()
 	Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>();
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
 	//skillData.SetData()
-	skill->SetSkillData(250, 8);
+	skill->SetSkillData(550, 8);
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
 	skill->SetCT(1);
