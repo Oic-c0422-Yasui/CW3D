@@ -109,7 +109,7 @@ namespace Sample
 			{
 				return false;
 			}
-			ResourceManager<CTexture>::GetInstance().AddResource("UItSkillGaugeFrame", tempTex2D);
+			ResourceManager<CTexture>::GetInstance().AddResource("UltSkillGaugeFrame", tempTex2D);
 			tempTex2D = std::make_shared<CTexture>();
 			if (!tempTex2D->Load("UI/UltGauge.png"))
 			{

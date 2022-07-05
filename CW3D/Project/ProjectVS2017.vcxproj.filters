@@ -620,6 +620,18 @@
     <ClInclude Include="SkillsUIRender.h">
       <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
+    <ClInclude Include="UltimateGaugeRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="UltGaugePresenter.h">
+      <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillUltGaugeRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillUltGaugePresenter.h">
+      <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

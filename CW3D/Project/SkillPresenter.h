@@ -12,7 +12,7 @@ public:
 		player->GetCanUseSubject(skillID)->Subscribe([view](bool canUse) {view->SetCanUseFlg(canUse); });
 
 		view->SetCT(0);
-		view->SetCanUseFlg(true);
+		view->SetCanUseFlg(player->GetSkillController()->GetSkill(skillID)->GetCanUseFlg());
 		view->SetMaxCT(player->GetSkillController()->GetSkill(skillID)->GetCT());
 	}
 

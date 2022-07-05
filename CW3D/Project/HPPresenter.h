@@ -25,7 +25,7 @@ namespace Sample
 
 		static void Present(const PlayerPtr& player, const Sample::PlayerHPRenderPtr& view)
 		{
-			player->GetHPSubject()->Subscribe([view](int hp) { view->SetHP(hp); });
+			player->GetHPSubject().Subscribe([view](int hp) { view->SetHP(hp); });
 			player->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });
 
 			view->SetHP(player->GetHP());

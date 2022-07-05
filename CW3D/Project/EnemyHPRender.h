@@ -104,7 +104,7 @@ namespace Sample
 			m_ShowFlg = isShow;
 		}
 
-		Vector3 GetPosition()
+		const Vector3& GetPosition()
 		{
 			return m_Position;
 		}

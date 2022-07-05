@@ -3,6 +3,8 @@
 #include "PlayerHPRender.h"
 #include "SkillControllerUIRender.h"
 #include "SkillsUIRender.h"
+#include "UltimateGaugeRender.h"
+#include "UltGaugePresenter.h"
 
 namespace Sample
 {
@@ -15,6 +17,7 @@ namespace Sample
 		PlayerHPRenderPtr m_HPRender;
 		SkillControllerUIRenderPtr m_SkillControllerRender;
 		SkillsUIRenderPtr m_SkillsRender;
+		UltimateGaugeUIRenderPtr m_UltGaugeRender;
 
 	public:
 		/**
@@ -24,6 +27,7 @@ namespace Sample
 			: m_HPRender(std::make_shared<PlayerHPRender>())
 			, m_SkillControllerRender(std::make_shared<SkillControllerUIRender>())
 			, m_SkillsRender(std::make_shared<SkillsUIRender>())
+			, m_UltGaugeRender(std::make_shared<UltimateGaugeUIRender>())
 		{
 
 		}
@@ -38,17 +42,19 @@ namespace Sample
 
 		void Load()
 		{
+			auto& player = ServiceLocator< CPlayer >::GetService();
 			m_SkillControllerRender->Load();
 			m_HPRender->Load();
 			m_SkillsRender->Load();
+			m_UltGaugeRender->Load();
+			
+			CUltGaugePresenter::Present(player, m_UltGaugeRender);
 		}
 
 		void Initialize()
 		{
-			m_SkillsRender->Initialize(0, m_SkillControllerRender->GetSkillPosition(3));
-			m_SkillsRender->Initialize(1, m_SkillControllerRender->GetSkillPosition(5));
-			m_SkillsRender->Initialize(2, m_SkillControllerRender->GetSkillPosition(7));
-			m_SkillsRender->Initialize(3, m_SkillControllerRender->GetSkillPosition(1));
+			auto GetPosition = [this](const std::string& key) { return m_SkillControllerRender->GetSkillPosition(key); };
+			m_SkillsRender->Initialize(GetPosition);
 		}
 
 		const PlayerHPRenderPtr& GetHPRender() const noexcept
@@ -63,6 +69,7 @@ namespace Sample
 			m_SkillControllerRender->Render();
 			m_SkillsRender->Render();
 			m_HPRender->Render();
+			m_UltGaugeRender->Render();
 			m_SkillControllerRender->RenderKeyName();
 		}
 
@@ -73,6 +80,8 @@ namespace Sample
 			m_SkillsRender.reset();
 			m_HPRender->Release();
 			m_HPRender.reset();
+			m_UltGaugeRender->Release();
+			m_UltGaugeRender.reset();
 		}
 
 	};

@@ -43,10 +43,11 @@ namespace Sample
 		 * @brief		デストラクタ
 		 */
 		~SkillUIRender() {
+			Release();
 		}
 
 
-		void Load(std::string key)
+		void Load(const std::string& key)
 		{
 			m_pSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key);
 			m_pUsedSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key + "Mono");
@@ -62,6 +63,11 @@ namespace Sample
 			m_Position.y += m_pSKillFrame->GetHeight() * 0.5f;
 		}
 
+
+		const Vector2& GetPosition()
+		{
+			return m_Position;
+		}
 
 		void SetCT(float  ct)
 		{

@@ -18,10 +18,9 @@ private:
 
 	Sample::InputPtr		m_pInput;
 
-	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_HP;
 	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_MaxHP;
-	Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_UltGauge;
-	Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_UltMaxGauge;
+
+	Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_MaxUltGauge;
 
 	Sample::PlayerActionCreator m_ActionCreator;
 	Sample::PlayerStateCreator m_StateCreator;
@@ -44,13 +43,14 @@ public:
 
 	int GetHP()
 	{
-		return m_HP.Get();
+		return m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	}
+
 
 	/**
 	* @brief		HPïœâªí ím
 	*/
-	Sample::IObservable<int>* GetHPSubject() { return &(m_HP.Get()); }
+	Sample::IObservable<int>& GetHPSubject() { return  m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
 	Sample::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
 	/**
 	 * @brief		CTïœâªí ím
@@ -58,9 +58,16 @@ public:
 	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetTimeParam().Get()); }
 	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
 	Sample::IObservable<bool>* GetCanUseSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCanUseFlgParam().Get()); }
+
 	//ïKéEãZÉQÅ[ÉW
-	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_UltMaxGauge.Get()); }
-	Sample::IObservable<float>* GetUltSubject() { return &(m_UltGauge.Get()); }
+	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }
+	Sample::IObservable<float>& GetUltSubject() { return m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
+	Sample::IObservable<float>* GetSkillUltSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetUltGaugeParam().Get()); }
+
+	float GetMaxUltGauge()
+	{
+		return m_MaxUltGauge.Get();
+	}
 
 	Sample::SkillControllerPtr GetSkillController()
 	{

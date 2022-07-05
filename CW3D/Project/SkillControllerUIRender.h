@@ -28,6 +28,7 @@ namespace Sample
 		
 		SkillFrame m_SkillFrame[SKILLMAX_COUNT];
 
+		std::map<std::string, int> keyIndexs;
 
 		void FrameSetting();
 
@@ -62,6 +63,10 @@ namespace Sample
 		Vector2 GetSkillPosition(int id)
 		{
 			return m_SkillFrame[id].position;
+		}
+		Vector2 GetSkillPosition(const std::string& key)
+		{
+			return m_SkillFrame[keyIndexs[key]].position;
 		}
 
 		SkillFrame GetSkillFrame(int id)

@@ -1,4 +1,5 @@
 #include "SkillControllerUIRender.h"
+#include "Player.h"
 
 using namespace Sample;
 
@@ -20,7 +21,7 @@ bool Sample::SkillControllerUIRender::Load()
 	m_pFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("SkillUI");
 	m_pFont = Sample::ResourceManager<CFont>::GetInstance().GetResource("SkillFont");
 	m_Position = Vector2(582, 884);
-
+	auto& player = ServiceLocator< CPlayer >::GetService();
 
 	FrameSetting();
 
@@ -103,6 +104,9 @@ void Sample::SkillControllerUIRender::FrameSetting()
 	}
 
 	SetName();
+
+
+
 }
 
 void Sample::SkillControllerUIRender::SetName()
@@ -163,5 +167,11 @@ void Sample::SkillControllerUIRender::SetName()
 
 	cnt++;
 	m_SkillFrame[cnt].str = "ÇS";
+
+	//ÉLÅ[ÇÃç¿ïW
+	keyIndexs[INPUT_KEY_SKILL1] = 7;
+	keyIndexs[INPUT_KEY_SKILL2] = 3;
+	keyIndexs[INPUT_KEY_SKILL3] = 5;
+	keyIndexs[INPUT_KEY_ESCAPE] = 1;
 
 }

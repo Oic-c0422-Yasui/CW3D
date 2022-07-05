@@ -37,30 +37,30 @@ bool CPlayer::Load()
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 25);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE, 0);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);
 
-	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	m_MaxUltGauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+
 	Sample::SKillPtr skill;
 
-	
-
 	Sample::SKillPtr additionalSkill = std::make_shared<Sample::CAdditionalSkill>();
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2, STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1, additionalSkill);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2,"Skill1", STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1, additionalSkill);
 	Sample::CSkillData skillData;
 	skillData.SetData(180, 3, 0.8f, 0);
 	skill->SetSkillData(skillData);
 
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, "Skill2", STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
 	skill->SetSkillData(125, 5);
 
-	Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>();
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1);
-	//skillData.SetData()
-	skill->SetSkillData(550, 8);
+	Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>(m_Actor);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, "Skill3", STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1,ultSkill);
+	skillData.SetData(550, 8, 20.0f);
+	skill->SetSkillData(skillData);
 
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
+	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, "Escape", STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
 	skill->SetCT(1);
-
 	return true;
 }
 
@@ -115,15 +115,18 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 	auto& transform = m_Actor->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
 
-	m_HP -= damage;
-	if (m_HP <= 0)
+	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	hp -= damage;
+	auto& ult = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+
+	ult += 10.0f;
+	if (hp <= 0)
 	{
-		m_HP = 0;
+		hp = 0;
 
 		m_DeadFlg = true;
 	}
-	//m_HP = hp;
-	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+
 	if (m_Actor->GetArmorLevel() <= level)
 	{
 		knockBack = direction * power;

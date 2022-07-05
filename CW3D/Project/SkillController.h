@@ -20,20 +20,20 @@ namespace Sample
 		{
 		}
 
-		SKillPtr Create(const std::string& key, const std::string& button,char* state, char* flyState)
+		SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName,char* state, char* flyState)
 		{
 			auto& add = std::make_shared<CSkill>();
 			m_Skills.push_back(add);
 
-			add->Create(key, button, state, flyState);
+			add->Create(key, button, texName,state, flyState);
 			return add;
 		}
-		SKillPtr Create(const std::string& key, const std::string& button, char* state, char* flyState,const SKillPtr& skill)
+		SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName, char* state, char* flyState,const SKillPtr& skill)
 		{
 			auto& add = skill;
 			m_Skills.push_back(add);
 
-			add->Create(key, button, state, flyState);
+			add->Create(key, button, texName, state, flyState);
 			return add;
 		}
 

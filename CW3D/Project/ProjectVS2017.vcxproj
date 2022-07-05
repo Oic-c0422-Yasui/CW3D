@@ -253,6 +253,8 @@
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillPresenter.h" />
+    <ClInclude Include="SkillUltGaugeRender.h" />
+    <ClInclude Include="SkillUltGaugePresenter.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateAI.h" />
     <ClInclude Include="StateInput.h" />
@@ -264,6 +266,8 @@
     <ClInclude Include="TimeScale.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="UltGaugePresenter.h" />
+    <ClInclude Include="UltimateGaugeRender.h" />
     <ClInclude Include="UltimateSkill.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />

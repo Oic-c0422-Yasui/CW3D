@@ -11,6 +11,7 @@ namespace Sample
 	public:
 	protected:
 		std::string		m_Key;
+		std::string		m_TexName;
 		std::string		m_Button;
 		char*			m_State;
 		char*			m_FlyState;
@@ -66,10 +67,11 @@ namespace Sample
 		{
 		}
 
-		virtual void Create(std::string key, std::string button, char* state, char* flyState)
+		virtual void Create(const std::string& key, const std::string& button, const std::string& texName, char* state, char* flyState)
 		{
 			m_Key = key;
 			m_Button = button;
+			m_TexName = texName;
 			m_State = state;
 			m_FlyState = flyState;
 			m_CanUseFlg = true;
@@ -97,6 +99,11 @@ namespace Sample
 		const std::string& GetKey() const noexcept
 		{
 			return m_Key;
+		}
+
+		const std::string& GetTexName() const noexcept
+		{
+			return m_TexName;
 		}
 
 		const std::string& GetButton() const noexcept
@@ -151,6 +158,11 @@ namespace Sample
 		int GetDamage() const noexcept
 		{
 			return m_SkillData.DamagePercent.Get();
+		}
+
+		float GetUltGauge() const noexcept
+		{
+			return m_SkillData.ExpendGauge.Get();
 		}
 
 		bool GetCanUseFlg() const noexcept

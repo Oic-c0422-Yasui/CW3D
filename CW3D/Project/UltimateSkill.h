@@ -10,27 +10,28 @@ namespace Sample
 
 		bool m_MaxGaugeFlg;
 
-		ActorPtr m_Actor;
+		ActorWeakPtr m_Actor;
 
 	public:
-		CUltimateSkill()
+		CUltimateSkill(const ActorWeakPtr& actor)
 			: CSkill()
+			, m_Actor(actor)
 			,m_MaxGaugeFlg(false)
 		{
 		}
 		~CUltimateSkill()
 		{
 		}
-		void Create(std::string key, std::string button, char* state, char* flyState) override
+		void Create(const std::string& key, const std::string& button, const std::string& texName, char* state, char* flyState) override
 		{
-			CSkill::Create(key, button, state, flyState);
+			CSkill::Create(key, button,texName, state, flyState);
 			m_CanUseFlg = false;
 		}
 
 		void Start() override
 		{
 			CSkill::Start();
-			auto& currentGauge = m_Actor->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+			auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 			currentGauge -= m_SkillData.ExpendGauge.Get();
 		}
 
@@ -38,7 +39,7 @@ namespace Sample
 		{
 			if (!m_CanUseFlg.Get() && !m_StartFlg)
 			{
-				auto& currentGauge = m_Actor->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+				auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 				if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CurrentTime <= 0.0f)
 				{
 					m_CanUseFlg = true;
@@ -49,7 +50,7 @@ namespace Sample
 				return;
 			}
 			CSkill::AddTimer();
-			auto& currentGauge = m_Actor->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+			auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 			if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CurrentTime <= 0.0f)
 			{
 				CSkill::ResetFlg();
