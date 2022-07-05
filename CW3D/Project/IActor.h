@@ -6,7 +6,7 @@
 #include "ShotManager.h"
 #include "ReactiveParameter.h"
 #include "CameraController.h"
-
+#include "ParameterHandle.h"
 
 
 namespace Sample {
@@ -147,6 +147,23 @@ namespace Sample {
 		 * @brief		パラメーター
 		 */
 		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
+		///**
+		// * @brief		登録パラメーターの設定
+		// */
+		//template <typename T>
+		//void SetParameter(const std::string& key, const T& value)
+		//{
+		//	return GetParameterMap()->Set<T>(key, value);
+		//}
+
+		///**
+		// * @brief		登録パラメーターの取得
+		// */
+		//template <typename T>
+		//ParameterHandle<T>& GetParameter(const std::string& key)
+		//{
+		//	return GetParameterMap()->Get<T>(key);
+		//}
 
 		///**
 		// * @brief		アニメーション

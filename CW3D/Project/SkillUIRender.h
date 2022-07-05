@@ -18,6 +18,7 @@ namespace Sample
 
 		float								m_CT;
 		float								m_MaxCT;
+		bool								m_CanUseFlg;
 
 		Vector2								m_Offset;
 		Vector2								m_Size;
@@ -72,6 +73,11 @@ namespace Sample
 			m_MaxCT = ct;
 		}
 
+		void SetCanUseFlg(bool canUse)
+		{
+			m_CanUseFlg = canUse;
+		}
+
 		/**
 		 * @brief		ŠÇ—HP‰Šú‰»
 		 */
@@ -86,10 +92,14 @@ namespace Sample
 
 			float percent = m_CT / m_MaxCT;
 
-			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 200, 200, 200), TEXALIGN_BOTTOMCENTER);
-
+			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
-			m_pSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
+			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
+
+			if (m_CanUseFlg)
+			{
+				m_pSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
+			}
 
 			if (m_CT > 0.0f)
 			{

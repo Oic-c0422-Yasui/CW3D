@@ -3,7 +3,7 @@
 
 #include	"AttackBaseState.h"
 #include	"JumpSkill2_1Action.h"
-
+#include	"AdditionalSkill.h"
 
 
 namespace Sample {
@@ -29,6 +29,9 @@ namespace Sample {
 
 		bool collideStartFlg;
 
+		std::string m_Key;
+
+		AdditionalWeakSKillPtr m_AddSkill;
 
 		ShotSphere m_ShotStatusSphere;
 
@@ -52,40 +55,13 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<JumpSkill2_1Action>(GetKey());
-			AttackBaseState::Start();
-			m_SkillAction->Start();
-			collideStartFlg = false;
-			m_EffectStatus = m_Parameter.EffectStatus;
-			m_ShotStatusSphere = m_Parameter.SphereShotStatus;
-
-			if (Input()->IsPress(INPUT_KEY_VERTICAL))
+			Initialize();
+			m_AddSkill = std::dynamic_pointer_cast<CAdditionalSkill>(Actor()->GetSkillController()->GetSkill(SKILL_KEY_1));
+			if (m_AddSkill.lock() != nullptr)
 			{
-				
-				float rad = MOF_ToRadian(-30);
-				Vector3 direction(cos(rad), sin(rad), 0);
-				int shotCount = 3;
-				for (int i = 0; i < shotCount; i++)
-				{
-					m_ShotStatusSphere.offset = Vector3(((2 + (4 * i)) * direction.x), 0.7f + ((2 + (4 * i)) * direction.y), 0);
-					CreateShotSphere();
-				}
-
-				m_EffectStatus.offset = Vector3(1.7f, 0.7f, 0);
-				m_EffectStatus.rotate = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
-				CreateEffect();
-				
+				m_Key = m_AddSkill.lock()->GetButton();
 			}
-			else
-			{
-				CreateShotAABB();
-				CreateEffect();
-				
-			}
-			for (auto& shot : m_pShots)
-			{
-				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
-				shot->SetDamage(damage);
-			}
+			
 
 		}
 
@@ -121,7 +97,15 @@ namespace Sample {
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
-				if (m_CurrentTime > m_Parameter.CollideStartFrameTime)
+				if (m_NextInputFlg)
+				{
+					for (auto& shot : m_pShots)
+					{
+						shot->SetShow(false);
+					}
+					Initialize();
+				}
+				else
 				{
 					if (Actor()->GetTransform()->GetPositionY() > 0)
 					{
@@ -140,6 +124,16 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
+			if (m_AddSkill.lock() != nullptr)
+			{
+				if (Input()->IsPush(m_Key))
+				{
+					if (m_AddSkill.lock()->IsAdditional())
+					{
+						m_NextInputFlg = true;
+					}
+				}
+			}
 			AttackBaseState::InputExecution();
 		}
 
@@ -151,6 +145,7 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
+			m_AddSkill.reset();
 		}
 
 		/**
@@ -166,6 +161,46 @@ namespace Sample {
 		 */
 		const StateKeyType GetKey() const override {
 			return STATE_KEY_JUMPSKILL2_1;
+		}
+
+
+		void Initialize()
+		{
+
+			AttackBaseState::Start();
+			m_SkillAction->Start();
+			collideStartFlg = false;
+			m_EffectStatus = m_Parameter.EffectStatus;
+			m_ShotStatusSphere = m_Parameter.SphereShotStatus;
+
+			if (Input()->IsPress(INPUT_KEY_VERTICAL))
+			{
+
+				float rad = MOF_ToRadian(-30);
+				Vector3 direction(cos(rad), sin(rad), 0);
+				int shotCount = 3;
+				for (int i = 0; i < shotCount; i++)
+				{
+					m_ShotStatusSphere.offset = Vector3(((2 + (4 * i)) * direction.x), 0.7f + ((2 + (4 * i)) * direction.y), 0);
+					CreateShotSphere();
+				}
+
+				m_EffectStatus.offset = Vector3(1.7f, 0.7f, 0);
+				m_EffectStatus.rotate = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
+				CreateEffect();
+
+			}
+			else
+			{
+				CreateShotAABB();
+				CreateEffect();
+
+			}
+			for (auto& shot : m_pShots)
+			{
+				float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+				shot->SetDamage(damage);
+			}
 		}
 	};
 

@@ -57,6 +57,7 @@ public:
 	 */
 	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetTimeParam().Get()); }
 	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
+	Sample::IObservable<bool>* GetCanUseSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCanUseFlgParam().Get()); }
 	//•KE‹ZƒQ[ƒW
 	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_UltMaxGauge.Get()); }
 	Sample::IObservable<float>* GetUltSubject() { return &(m_UltGauge.Get()); }

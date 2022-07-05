@@ -15,6 +15,7 @@ namespace Sample
 	public:
 		CUltimateSkill()
 			: CSkill()
+			,m_MaxGaugeFlg(false)
 		{
 		}
 		~CUltimateSkill()
@@ -35,7 +36,7 @@ namespace Sample
 
 		void Update() override
 		{
-			if (!m_CanUseFlg && !m_StartFlg)
+			if (!m_CanUseFlg.Get() && !m_StartFlg)
 			{
 				auto& currentGauge = m_Actor->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 				if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CurrentTime <= 0.0f)

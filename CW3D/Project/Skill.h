@@ -14,7 +14,7 @@ namespace Sample
 		std::string		m_Button;
 		char*			m_State;
 		char*			m_FlyState;
-		bool			m_CanUseFlg;
+		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >			m_CanUseFlg;
 		bool			m_StartFlg;
 		CSkillData	m_SkillData;
 		
@@ -143,6 +143,11 @@ namespace Sample
 			return m_SkillData.ExpendGauge;
 		}
 
+		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >& GetCanUseFlgParam()
+		{
+			return m_CanUseFlg;
+		}
+
 		int GetDamage() const noexcept
 		{
 			return m_SkillData.DamagePercent.Get();
@@ -150,7 +155,7 @@ namespace Sample
 
 		bool GetCanUseFlg() const noexcept
 		{
-			return m_CanUseFlg;
+			return m_CanUseFlg.Get();
 		}
 
 		void SetKey(std::string key) noexcept
