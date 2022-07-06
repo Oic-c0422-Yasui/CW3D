@@ -32,6 +32,7 @@ public:
 	void Initialize();
 	void Update() override;
 	void Render() override;
+	void RenderDebug2D();
 	void Release()override;
 
 	void SetInput(const Sample::InputPtr& ptr)

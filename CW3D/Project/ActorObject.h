@@ -19,8 +19,8 @@ namespace Sample
 		CVector3							m_ColliderSize;
 		bool								m_ShowFlg;
 		bool								m_DeadFlg;
-		BYTE								m_ArmorLevel;
 		CVector3							m_PrevPos;
+		float								m_UltBoostMag;
 
 	public:
 		CActorObject();
@@ -29,6 +29,9 @@ namespace Sample
 		virtual void Render();
 		virtual void Release();
 
+		/**
+		 * @brief		ゲッター
+		 */
 		const ActorPtr& GetActor() const noexcept
 		{
 			return m_Actor;
@@ -37,18 +40,9 @@ namespace Sample
 		{
 			return m_Actor->GetType();
 		}
-		void SetType(CHARACTER_TYPE type) noexcept
-		{
-			m_Actor->SetType(type);
-		}
-
 		const CVector3& GetPosition() const noexcept 
 		{ 
 			return m_Actor->GetPosition(); 
-		}
-		void SetPosition(const Vector3& position) noexcept
-		{
-			m_Actor->SetPosition(position);
 		}
 		const CVector3& GetVelocity() const noexcept
 		{ 
@@ -65,19 +59,6 @@ namespace Sample
 		bool IsShow() const noexcept {
 			return m_ShowFlg;
 		}
-		void SetShow(bool isShow)
-		{
-			m_ShowFlg = isShow;
-		}
-		BYTE GetArmorLevel() const noexcept
-		{
-			return m_ArmorLevel;
-		}
-		void SetArmorLevel(BYTE level) noexcept
-		{
-			m_ArmorLevel = level;
-		}
-
 		const CAABB& GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
@@ -89,15 +70,36 @@ namespace Sample
 		{
 			return m_PrevPos;
 		}
-
 		unsigned int GetID() const noexcept
 		{
 			return m_Actor->GetID();
 		}
-
 		bool IsThrough() const noexcept
 		{
 			return m_Actor->IsThrough();
+		}
+		float GetUltBoostMag() const noexcept
+		{
+			return m_UltBoostMag;
+		}
+		/**
+		 * @brief		セッター
+		 */
+		void SetType(CHARACTER_TYPE type) noexcept
+		{
+			m_Actor->SetType(type);
+		}
+		void SetPosition(const Vector3& position) noexcept
+		{
+			m_Actor->SetPosition(position);
+		}
+		void SetShow(bool isShow)
+		{
+			m_ShowFlg = isShow;
+		}
+		void SetUltBoostMag(float magnification) noexcept
+		{
+			m_UltBoostMag = magnification;
 		}
 
 	};

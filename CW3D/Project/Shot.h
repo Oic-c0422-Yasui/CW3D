@@ -16,6 +16,7 @@ namespace Sample
 		CHARACTER_TYPE type;
 		KnockBackPtr direction;
 		BYTE armorBreakLevel;
+		float getUltGauge;
 	};
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
@@ -49,6 +50,7 @@ namespace Sample
 		float				m_NextHitTime;
 		KnockBackPtr		m_Direction;
 		BYTE				m_ArmorBreakLevel;
+		float				m_GetUltGauge;
 
 
 
@@ -68,6 +70,7 @@ namespace Sample
 			, m_NextHitTime(0.0f)
 			, m_CollisionType(COLLITION_AABB)
 			, m_ArmorBreakLevel(0)
+			, m_GetUltGauge(0.0f)
 
 		{
 		}
@@ -93,6 +96,7 @@ namespace Sample
 			m_KnockBack = sphire.knockBack;
 			m_Direction = sphire.direction;
 			m_ArmorBreakLevel = sphire.armorBreakLevel;
+			m_GetUltGauge = sphire.getUltGauge;
 		}
 
 		void Create(Vector3 pos, ShotAABB aabb)
@@ -112,6 +116,7 @@ namespace Sample
 			m_KnockBack = aabb.knockBack;
 			m_Direction = aabb.direction;
 			m_ArmorBreakLevel = aabb.armorBreakLevel;
+			m_GetUltGauge = aabb.getUltGauge;
 		}
 
 		void Update()

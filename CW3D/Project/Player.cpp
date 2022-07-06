@@ -79,6 +79,7 @@ void CPlayer::Initialize()
 
 	matWorld = m_Actor->GetMatrix();
 	SetType(CHARA_PLAYER);
+
 }
 
 void CPlayer::Update()
@@ -99,6 +100,11 @@ void CPlayer::Render()
 	Sample::CActorObject::Render();
 }
 
+void CPlayer::RenderDebug2D()
+{
+	CGraphicsUtilities::RenderString(400, 20, "ARMLv:", m_Actor->GetArmorLevel());
+}
+
 void CPlayer::Release()
 {
 	Sample::CActorObject::Release();
@@ -117,9 +123,9 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 
 	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
-	auto& ult = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& ultGauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 
-	ult += 10.0f;
+	ultGauge += 1.0f;
 	if (hp <= 0)
 	{
 		hp = 0;
