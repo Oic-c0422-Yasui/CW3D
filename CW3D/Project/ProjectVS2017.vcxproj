@@ -115,14 +115,16 @@
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerUIRender.cpp" />
-    <ClCompile Include="SkillControllerUIRender.cpp" />
+    <ClCompile Include="SkillControllerRender.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorObject.h" />
+    <ClInclude Include="ActorObjectManager.h" />
     <ClInclude Include="AdditionalSkill.h" />
+    <ClInclude Include="AdditionalSkillRender.h" />
     <ClInclude Include="AICycleFixed.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
@@ -245,10 +247,10 @@
     <ClInclude Include="Skill2_1State.h" />
     <ClInclude Include="Skill3_1Action.h" />
     <ClInclude Include="Skill3_1State.h" />
-    <ClInclude Include="SkillControllerUIRender.h" />
+    <ClInclude Include="SkillControllerRender.h" />
     <ClInclude Include="SkillCreater.h" />
-    <ClInclude Include="SkillsUIRender.h" />
-    <ClInclude Include="SkillUIRender.h" />
+    <ClInclude Include="SkillRenderContainer.h" />
+    <ClInclude Include="SkillRender.h" />
     <ClInclude Include="SkillData.h" />
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="Skill.h" />

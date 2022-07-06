@@ -1,25 +1,25 @@
-#include "SkillControllerUIRender.h"
+#include "SkillControllerRender.h"
 #include "Player.h"
 
 using namespace Sample;
 
 
-Sample::SkillControllerUIRender::SkillControllerUIRender()
+CSkillControllerRender::CSkillControllerRender()
 	: m_Position(0, 0)
 {
 }
 
-Sample::SkillControllerUIRender::~SkillControllerUIRender()
+CSkillControllerRender::~CSkillControllerRender()
 {
 }
 
 
 
-bool Sample::SkillControllerUIRender::Load()
+bool CSkillControllerRender::Load()
 {
 
-	m_pFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("SkillUI");
-	m_pFont = Sample::ResourceManager<CFont>::GetInstance().GetResource("SkillFont");
+	m_pFrame = ResourceManager<CTexture>::GetInstance().GetResource("SkillUI");
+	m_pFont = ResourceManager<CFont>::GetInstance().GetResource("SkillFont");
 	m_Position = Vector2(582, 884);
 	auto& player = ServiceLocator< CPlayer >::GetService();
 
@@ -29,24 +29,24 @@ bool Sample::SkillControllerUIRender::Load()
 
 }
 
-void Sample::SkillControllerUIRender::Render()
+void CSkillControllerRender::Render()
 {
 	m_pFrame->Render(m_Position.x, m_Position.y);
 }
 
-void Sample::SkillControllerUIRender::RenderDebug2D()
+void CSkillControllerRender::RenderDebug2D()
 {
 
 }
 
-void Sample::SkillControllerUIRender::Release(void)
+void CSkillControllerRender::Release(void)
 {
 	m_pFrame.reset();
 	m_pSkill.reset();
 	m_pFont.reset();
 }
 
-void Sample::SkillControllerUIRender::RenderKeyName()
+void CSkillControllerRender::RenderKeyName()
 {
 	for (int i = 0; i < SKILLMAX_COUNT; i++)
 	{
@@ -56,7 +56,7 @@ void Sample::SkillControllerUIRender::RenderKeyName()
 
 
 
-void Sample::SkillControllerUIRender::FrameSetting()
+void CSkillControllerRender::FrameSetting()
 {
 	for (int i = 0; i < SKILLMAX_COUNT; i++)
 	{
@@ -109,7 +109,7 @@ void Sample::SkillControllerUIRender::FrameSetting()
 
 }
 
-void Sample::SkillControllerUIRender::SetName()
+void CSkillControllerRender::SetName()
 {
 
 	//キーボード名設定

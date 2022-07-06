@@ -77,6 +77,8 @@ void CEnemy::Initialize(CVector3 pos)
 	m_DeadFlg = false;
 	SetType(CHARA_ENEMY);
 
+	//‘Šè‚ªŠl“¾‚·‚é•KE‹ZƒQ[ƒW‚Ì”{—¦
+	SetUltBoostMag(1.0f);
 }
 
 void CEnemy::Update()

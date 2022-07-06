@@ -8,6 +8,7 @@
 #include	"CollisionShotPlayer.h"
 #include	"NomalCamera.h"
 #include	"StateInput.h"
+#include	"ActorObjectManager.h"
 
 
 
@@ -103,7 +104,8 @@ bool CBattleScene::Load()
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
 
-
+	//プレイヤーをマネージャーに登録
+	ActorObjectManagerInstance.Add(m_Player);
 	
 
 
@@ -132,11 +134,14 @@ void CBattleScene::Initialize()
 	m_Enemys.push_back(zb.Create(Vector3(1, 0, 3)));
 	m_Enemys.push_back(zb.Create(Vector3(-2, 0, 4)));
 
-	//敵のHPバー生成＆オブザーバーに登録
+	
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		m_EnemysHPRender.push_back(std::make_shared<Sample::EnemyHPRender>());
+		//敵をマネージャーに登録
+		ActorObjectManagerInstance.Add(m_Enemys[i]);
 
+		//敵のHPバー生成＆オブザーバーに登録
+		m_EnemysHPRender.push_back(std::make_shared<Sample::EnemyHPRender>());
 		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
 		m_EnemysHPRender[i]->Initialize();
 	}
@@ -190,7 +195,7 @@ void CBattleScene::Update()
 
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
-
+	ActorObjectManagerInstance.Delete();
 }
 
 void CBattleScene::Render()
@@ -329,4 +334,5 @@ void CBattleScene::Release()
 	IDManagerInstance.Release();
 	TimeControllerInstance.Release();
 	CameraControllerInstance.Release();
+	ActorObjectManagerInstance.Release();
 }

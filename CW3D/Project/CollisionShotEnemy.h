@@ -2,12 +2,13 @@
 #include "Collision.h"
 #include "Enemy.h"
 #include "Shot.h"
+#include "ActorObjectManager.h"
 
 namespace Sample
 {
 	
 	/**
-	 * @brief		“G‚Æ“G‚Ì‚ ‚½‚è”»’è
+	 * @brief		“G‚Æ’e‚Ì‚ ‚½‚è”»’è
 	 */
 	template < >
 	inline void CCollision::CollisionObj<>(ShotPtr& shot, EnemyPtr& enemy) {
@@ -42,6 +43,12 @@ namespace Sample
 		//ƒmƒbƒNƒoƒbƒN’lÝ’è
 		Vector3 knockBack = shot->GetKnockBack();
 		shot->AddHit(enemy->GetID());
+		//ƒ_ƒ[ƒWÝ’è
 		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage(), shot->GetArmorBreakLevel());
+		//Šl“¾•KŽE‹ZƒQ[ƒW
+		float gauge = shot->GetGetUltGauge() * enemy->GetUltBoostMag();
+
+		auto& actor =  ActorObjectManagerInstance.GetActor(shot->GetCharaType(), shot->GetParentID());
+		actor->AddUltGauge(gauge);
 	}
 }

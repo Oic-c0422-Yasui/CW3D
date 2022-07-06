@@ -273,6 +273,7 @@ namespace Sample {
 						false
 					},
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+					GRAVITY,
 				}));
 
 			//ダッシュジャンプ攻撃１

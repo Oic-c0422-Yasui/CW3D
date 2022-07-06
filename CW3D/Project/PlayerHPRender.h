@@ -4,7 +4,8 @@
 
 #include "ResourceManager.h"
 
-namespace Sample
+
+namespace Sample::UI
 {
 	/**
 	 * @brief		ƒvƒŒƒCƒ„[HPUI

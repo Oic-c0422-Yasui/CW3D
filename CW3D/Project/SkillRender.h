@@ -8,9 +8,9 @@ namespace Sample
 	/**
 	 * @brief		プレイヤーCTUI
 	 */
-	class SkillUIRender
+	class CSkillRender
 	{
-	private:
+	protected:
 
 		std::shared_ptr<CTexture>			m_pSKillFrame;
 		std::shared_ptr<CTexture>			m_pUsedSKillFrame;
@@ -29,12 +29,13 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		SkillUIRender()
+		CSkillRender()
 			: m_CT(0.0f)
 			, m_MaxCT(0.0f)
 			, m_Offset(0,0)
 			, m_Size(0, 0)
 			, m_Position(0, 0)
+			, m_CanUseFlg(false)
 		{
 
 		}
@@ -42,12 +43,12 @@ namespace Sample
 		/**
 		 * @brief		デストラクタ
 		 */
-		~SkillUIRender() {
+		virtual ~CSkillRender() {
 			Release();
 		}
 
 
-		void Load(const std::string& key)
+		virtual void Load(const std::string& key)
 		{
 			m_pSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key);
 			m_pUsedSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource(key + "Mono");
@@ -57,7 +58,7 @@ namespace Sample
 			m_Size = Vector2(1, 1);
 		}
 
-		void Initialize(const Vector2& pos )
+		virtual void Initialize(const Vector2& pos )
 		{
 			m_Position = pos;
 			m_Position.y += m_pSKillFrame->GetHeight() * 0.5f;
@@ -94,10 +95,10 @@ namespace Sample
 		/**
 		 * @brief		管理スコア初期化
 		 */
-		void Render() {
+		virtual void Render() {
 
 			float percent = m_CT / m_MaxCT;
-
+			
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
@@ -107,29 +108,36 @@ namespace Sample
 				m_pSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
 			}
 
-			if (m_CT > 0.0f)
+			
+			RenderStrCT(m_CT);
+		}
+
+
+		void RenderStrCT(float ct)
+		{
+			if (ct > 0.0f)
 			{
-				if (m_CT > 1.0f)
+
+				if (ct > 1.0f)
 				{
 					CRectangle rect;
 					m_pFont->CalculateStringRect(0, 0, "0", rect);
-					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", m_CT);
+					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
 				}
 				else
 				{
 					CRectangle rect;
 					m_pFont->CalculateStringRect(0, 0, "0.0", rect);
-					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", m_CT);
+					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", ct);
 				}
 			}
-			
 		}
 
-		void Release(void) {
+		virtual void Release(void) {
 			m_pSKillFrame.reset();
 			m_pFont.reset();
 		}
 	};
 	
-	using SkillUIRenderPtr = std::shared_ptr<SkillUIRender>;
+	using SkillRenderPtr = std::shared_ptr<CSkillRender>;
 }

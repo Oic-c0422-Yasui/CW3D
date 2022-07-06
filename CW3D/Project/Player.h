@@ -59,6 +59,8 @@ public:
 	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetTimeParam().Get()); }
 	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
 	Sample::IObservable<bool>* GetCanUseSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCanUseFlgParam().Get()); }
+	Sample::IObservable<float>* GetAddCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetAddTimeParam().Get()); }
+	Sample::IObservable<float>* GetAddMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
 
 	//ïKéEãZÉQÅ[ÉW
 	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }
@@ -70,13 +72,13 @@ public:
 		return m_MaxUltGauge.Get();
 	}
 
+	
+
 	Sample::SkillControllerPtr GetSkillController()
 	{
 		return m_Actor->GetSkillController();
 	}
-	/*CAABB GetCollider{
-		return m_Collider
-	}*/
+	
 };
 
 using PlayerPtr = std::shared_ptr<CPlayer>;

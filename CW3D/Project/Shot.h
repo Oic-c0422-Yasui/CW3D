@@ -17,6 +17,7 @@ namespace Sample
 		KnockBackPtr direction;
 		BYTE armorBreakLevel;
 		float getUltGauge;
+		unsigned int parentID;
 	};
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
@@ -51,7 +52,7 @@ namespace Sample
 		KnockBackPtr		m_Direction;
 		BYTE				m_ArmorBreakLevel;
 		float				m_GetUltGauge;
-
+		unsigned int		m_ParentID;
 
 
 	public:
@@ -71,6 +72,7 @@ namespace Sample
 			, m_CollisionType(COLLITION_AABB)
 			, m_ArmorBreakLevel(0)
 			, m_GetUltGauge(0.0f)
+			, m_ParentID(0)
 
 		{
 		}
@@ -97,6 +99,7 @@ namespace Sample
 			m_Direction = sphire.direction;
 			m_ArmorBreakLevel = sphire.armorBreakLevel;
 			m_GetUltGauge = sphire.getUltGauge;
+			m_ParentID = sphire.parentID;
 		}
 
 		void Create(Vector3 pos, ShotAABB aabb)
@@ -117,6 +120,7 @@ namespace Sample
 			m_Direction = aabb.direction;
 			m_ArmorBreakLevel = aabb.armorBreakLevel;
 			m_GetUltGauge = aabb.getUltGauge;
+			m_ParentID = aabb.parentID;
 		}
 
 		void Update()
@@ -177,6 +181,16 @@ namespace Sample
 		CHARACTER_TYPE GetCharaType() const noexcept
 		{
 			return m_Type;
+		}
+
+		float GetGetUltGauge() const noexcept
+		{
+			return m_GetUltGauge;
+		}
+
+		unsigned int GetParentID() const noexcept
+		{
+			return m_ParentID;
 		}
 
 		void SetCharaType(CHARACTER_TYPE type) noexcept
@@ -249,6 +263,16 @@ namespace Sample
 		void SetArmorBreakLevel(BYTE level) noexcept
 		{
 			m_ArmorBreakLevel = level;
+		}
+
+		void SetGetUltGauge(float gauge) noexcept
+		{
+			m_GetUltGauge = gauge;
+		}
+
+		void SetParentID(unsigned int id)noexcept
+		{
+			m_ParentID = id;
 		}
 
 		KnockBackPtr GetDirection() const noexcept

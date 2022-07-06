@@ -103,6 +103,18 @@
     <Filter Include="ヘッダー ファイル\UI\Presenter">
       <UniqueIdentifier>{cd4aef48-ccaf-4b10-ab56-ef450e30abfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render\Skill">
+      <UniqueIdentifier>{3ca343d0-bd34-4711-92a1-b3b7e3e0a355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render\HP">
+      <UniqueIdentifier>{b89491af-6533-4520-84bb-9daa82d531f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render\Skill\CT">
+      <UniqueIdentifier>{b61e3899-509f-432c-8bb1-aa22f9376b7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render\Skill\Ultimate">
+      <UniqueIdentifier>{77a936ce-70e6-4453-9127-376f53e10b9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -165,7 +177,7 @@
     <ClCompile Include="FollowFixedCamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SkillControllerUIRender.cpp">
+    <ClCompile Include="SkillControllerRender.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="PlayerUIRender.cpp">
@@ -602,35 +614,41 @@
     <ClInclude Include="SkillPresenter.h">
       <Filter>ヘッダー ファイル\UI\Presenter</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHPRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerHPRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerUIRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillControllerUIRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillUIRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillsUIRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="UltimateGaugeRender.h">
       <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
     <ClInclude Include="UltGaugePresenter.h">
       <Filter>ヘッダー ファイル\UI\Presenter</Filter>
     </ClInclude>
-    <ClInclude Include="SkillUltGaugeRender.h">
-      <Filter>ヘッダー ファイル\UI\Render</Filter>
-    </ClInclude>
     <ClInclude Include="SkillUltGaugePresenter.h">
       <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorObjectManager.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHPRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHPRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="AdditionalSkillRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill\CT</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillControllerRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillRenderContainer.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="UltimateGaugeRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill\Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill\CT</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillUltGaugeRender.h">
+      <Filter>ヘッダー ファイル\UI\Render\Skill\Ultimate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

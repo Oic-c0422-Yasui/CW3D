@@ -61,6 +61,7 @@ namespace Sample {
 			ShotAABB status = GetCreateShotStatusAABB();
 			status.damage += attack;
 			status.type = Actor()->GetType();
+			status.parentID = Actor()->GetID();
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;
@@ -76,6 +77,7 @@ namespace Sample {
 			ShotSphere status = GetCreateShotStatusSphere();
 			status.damage += attack;
 			status.type = Actor()->GetType();
+			status.parentID = Actor()->GetID();
 			if (Actor()->IsReverse())
 			{
 				status.offset.x *= -1;

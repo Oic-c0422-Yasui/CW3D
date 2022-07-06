@@ -11,6 +11,7 @@ CActorObject::CActorObject()
 	, m_DeadFlg(false)
 	, m_ColliderOffset(0,0,0)
 	, m_ColliderSize(1, 1, 1)
+	, m_UltBoostMag(0.0f)
 {
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
@@ -59,4 +60,12 @@ void CActorObject::Release()
 {
 	MOF_SAFE_DELETE(m_Motion);
 	m_pMesh.reset();
+}
+
+void Sample::CActorObject::AddUltGauge(float gauge)
+{
+	auto& ult = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	ult += gauge;
+	auto& maxUlt = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	ult = min(ult, maxUlt);
 }

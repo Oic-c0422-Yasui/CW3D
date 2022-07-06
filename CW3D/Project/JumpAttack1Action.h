@@ -21,6 +21,7 @@ namespace Sample {
 
 			//減速値
 			Vector3					decelerate;
+			float					gravity;
 		};
 	private:
 		//パラメーター
@@ -43,6 +44,7 @@ namespace Sample {
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			//PLAYER_SPEED * 0.3
 			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+			Velocity()->SetGravity(m_Parameter.gravity);
 			float rotateY = Transform()->GetRotateY();
 			if (Transform()->IsReverse())
 			{

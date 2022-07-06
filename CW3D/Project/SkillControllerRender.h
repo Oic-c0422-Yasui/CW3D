@@ -14,9 +14,9 @@ namespace Sample
 		char* str;
 	};
 	/**
-	 * @brief		プレイヤーHPUI
+	 * @brief		スキル操作のUI表示とスキル枠の座標を決める
 	 */
-	class SkillControllerUIRender
+	class CSkillControllerRender
 	{
 	private:
 
@@ -39,11 +39,11 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		SkillControllerUIRender();
+		CSkillControllerRender();
 		/**
 		 * @brief		デストラクタ
 		 */
-		~SkillControllerUIRender();
+		~CSkillControllerRender();
 
 		bool Load();
 
@@ -79,5 +79,5 @@ namespace Sample
 
 	};
 
-	using SkillControllerUIRenderPtr = std::shared_ptr<SkillControllerUIRender>;
+	using SkillControllerRenderPtr = std::shared_ptr<CSkillControllerRender>;
 }

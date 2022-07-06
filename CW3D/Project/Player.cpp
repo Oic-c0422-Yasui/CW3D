@@ -8,6 +8,7 @@ CPlayer::CPlayer():
 	Sample::CActorObject(),
 	m_pInput()
 {
+	SetType(CHARA_PLAYER);
 }
 
 CPlayer::~CPlayer()
@@ -56,7 +57,7 @@ bool CPlayer::Load()
 
 	Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>(m_Actor);
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, "Skill3", STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1,ultSkill);
-	skillData.SetData(550, 8, 20.0f);
+	skillData.SetData(550, 8, 50.0f);
 	skill->SetSkillData(skillData);
 
 	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, "Escape", STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
@@ -78,8 +79,8 @@ void CPlayer::Initialize()
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
 	matWorld = m_Actor->GetMatrix();
-	SetType(CHARA_PLAYER);
-
+	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
+	SetUltBoostMag(1.0f);
 }
 
 void CPlayer::Update()
@@ -123,9 +124,8 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 
 	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
-	auto& ultGauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 
-	ultGauge += 1.0f;
+	AddUltGauge(1.0f);
 	if (hp <= 0)
 	{
 		hp = 0;

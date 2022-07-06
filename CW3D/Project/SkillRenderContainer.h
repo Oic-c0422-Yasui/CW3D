@@ -1,36 +1,38 @@
 #pragma once
 
-#include "SkillUIRender.h"
+#include "SkillRender.h"
 #include "SkillPresenter.h"
 #include "ServiceLocator.h"
+
 #include "SkillUltGaugePresenter.h"
 #include "SkillUltGaugeRender.h"
 #include "UltimateSkill.h"
+#include "AdditionalSkill.h"
 
 namespace Sample
 {
 	/**
-	 * @brief		プレイヤーCTUI
+	 * @brief		スキルをまとめて表示する
 	 */
-	class SkillsUIRender
+	class SkillRenderContainer
 	{
 	private:
 
-		std::vector < Sample::SkillUIRenderPtr>	m_SkillRender;
+		std::vector < Sample::SkillRenderPtr>	m_SkillRender;
 		std::vector < Sample::SkillUltGaugeRenderPtr> m_UltGaugeRender;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		SkillsUIRender()
+		SkillRenderContainer()
 		{
 		}
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~SkillsUIRender() {
+		~SkillRenderContainer() {
 
 		}
 
@@ -42,11 +44,25 @@ namespace Sample
 			for (int i = 0; i < skillController->GetCount(); i++)
 			{
 				auto& skillPtr = skillController->GetSkill(i);
-				auto render = std::make_shared<SkillUIRender>();
+
+				SkillRenderPtr render;
+				if (std::dynamic_pointer_cast<CAdditionalSkill>(skillPtr) != nullptr)
+				{
+					//追加攻撃スキルならロード
+					auto addRender = std::make_shared<CAdditionalSkillRender>();
+					CSkillPresenter::Present(player, render, i);
+					render = addRender;
+				}
+				else
+				{
+					render = std::make_shared<CSkillRender>();
+				}
 				CSkillPresenter::Present(player, render, i);
+
 				render->Load(skillPtr->GetTexName());
 				m_SkillRender.push_back(render);
 
+				//必殺技ならロード
 				if (std::dynamic_pointer_cast<CUltimateSkill>(skillPtr) != nullptr)
 				{
 					auto gauge = std::make_shared<SkillUltGaugeRender>();
@@ -110,5 +126,5 @@ namespace Sample
 		}
 	};
 
-	using SkillsUIRenderPtr = std::shared_ptr<SkillsUIRender>;
+	using SkillRenderContainerPtr = std::shared_ptr<SkillRenderContainer>;
 }

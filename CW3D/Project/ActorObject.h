@@ -102,9 +102,15 @@ namespace Sample
 			m_UltBoostMag = magnification;
 		}
 
+		/**
+		 * @brief	必殺技ゲージ
+		 */
+		void AddUltGauge(float gauge);
+
 	};
 	//ポインタ置き換え
 	using ActorObjectPtr = std::shared_ptr<CActorObject>;
+	using ActorObjectWeakPtr = std::weak_ptr<CActorObject>;
 	using ActorObjectList = std::list<ActorObjectPtr>;
 }
 

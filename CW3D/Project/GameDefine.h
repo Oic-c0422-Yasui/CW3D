@@ -115,7 +115,10 @@ enum CHARACTER_TYPE
 	CHARA_PLAYER,
 	CHARA_ENEMY,
 	CHARA_OBJECT,
+
+	CHARA_COUNT,
 };
+
 
 
 /*利用するアニメーションの名前
