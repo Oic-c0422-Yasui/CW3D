@@ -44,9 +44,8 @@ namespace Sample {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 			auto& vel = Velocity();
-			//PLAYER_MAXSPEED * PLAYER_WALKSPEED
+
 			vel->SetMaxVelocity(m_Parameter.maxVelocity.x, m_Parameter.maxVelocity.z);
-			//PLAYER_MAXSPEED * PLAYER_WALKSPEED
 			vel->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 
 			float rotateY = Transform()->GetRotateY();
@@ -72,7 +71,6 @@ namespace Sample {
 		 * @param[in]	z		‰Á‘¬—Ê
 		 */
 		void Acceleration(float x, float z) {
-			//PLAYER_MAXSPEED * PLAYER_WALKSPEED
 			Velocity()->Acceleration(x * m_Parameter.velocity.x,
 				z * m_Parameter.velocity.z);
 		}

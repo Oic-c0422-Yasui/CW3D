@@ -9,7 +9,7 @@ namespace Sample
 	/**
 	 * @brief		プレイヤーHPUI
 	 */
-	class EnemyHPRender
+	class CEnemyHPRender
 	{
 	private:
 		//現在の描画HP
@@ -37,7 +37,7 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		EnemyHPRender()
+		CEnemyHPRender()
 			: m_CurrentHP(1.0f)
 			, m_CurrentGauge(1.0f)
 			, m_HP(0)
@@ -50,7 +50,7 @@ namespace Sample
 		/**
 		 * @brief		デストラクタ
 		 */
-		~EnemyHPRender() {
+		~CEnemyHPRender() {
 		}
 
 
@@ -130,6 +130,7 @@ namespace Sample
 			m_pDamageBar->m_Position = m_Position + m_Offset;
 			
 			float parcent = (float)m_HP / (float)m_MaxHP;
+			parcent = min(parcent, 1.0f);
 			m_CurrentHP = parcent;
 			//四角でHPゲージ描画
 			LPCamera cam = CGraphicsUtilities::GetCamera();
@@ -175,5 +176,5 @@ namespace Sample
 		}
 	};
 
-	using EnemyHPRenderPtr = std::shared_ptr<EnemyHPRender>;
+	using EnemyHPRenderPtr = std::shared_ptr<CEnemyHPRender>;
 }

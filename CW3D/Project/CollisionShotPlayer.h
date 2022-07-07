@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Shot.h"
 
+
 namespace Sample
 {
 
@@ -16,12 +17,20 @@ namespace Sample
 		if (!shot->GetCollideFlg()) { return; }
 		if (shot->GetCharaType() == CHARA_PLAYER) { return; }
 		if (shot->IsHitId(player->GetID())) { return; }
+		if (player->IsInvincible()) { return; }
 		//弾の矩形ごとに判定
 		switch (shot->GetColliderType())
 		{
 		case COLLITION_SPHERE:
 		{
-			if (!CCollision::Collision(shot->GetColliderSphere(), player->GetCollider()))
+			if (player->IsEscape())
+			{
+				if (!CCollision::Collision(shot->GetColliderSphere(), player->GetEscapeCollider()))
+				{
+					return;
+				}
+			}
+			else if (!CCollision::Collision(shot->GetColliderSphere(), player->GetCollider()))
 			{
 				return;
 			}
@@ -29,7 +38,14 @@ namespace Sample
 		}
 		case COLLITION_AABB:
 		{
-			if (!CCollision::Collision(shot->GetColliderAABB(), player->GetCollider()))
+			if (player->IsEscape())
+			{
+				if (!CCollision::Collision(shot->GetColliderAABB(), player->GetEscapeCollider()))
+				{
+					return;
+				}
+			}
+			else if (!CCollision::Collision(shot->GetColliderAABB(), player->GetCollider()))
 			{
 				return;
 			}
@@ -39,10 +55,28 @@ namespace Sample
 			break;
 		}
 
-		//ノックバック値設定
-		Vector3 knockBack = shot->GetKnockBack();
-		shot->AddHit(player->GetID());
-		player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel());
+		if (player->IsEscape())
+		{
+			player->AddUltGauge(20.0f);
+			auto& invincible = player->GetActor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+			invincible = 1.0f;
+			MyUtilities::ANIM_DATA anim[] =
+			{
+				{0.0f,TimeControllerInstance.GetTimeScale()},
+				{0.05f,TimeControllerInstance.GetTimeScale()},
+				{0.1f,0.0f},
+				{0.15f,0.0f},
+				{0.5f,TimeControllerInstance.GetTimeScale()}
+			};
+			TimeControllerInstance.SetTimeScale(anim, _countof(anim));
+		}
+		else
+		{
+			//ノックバック値設定
+			Vector3 knockBack = shot->GetKnockBack();
+			shot->AddHit(player->GetID());
+			player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel());
+		}
 	}
 
 	template< >

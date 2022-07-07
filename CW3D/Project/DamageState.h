@@ -60,7 +60,14 @@ namespace Sample {
 			auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 			if (hp <= 0)
 			{
-				ChangeState(STATE_KEY_DEAD);
+				if (Actor()->GetTransform()->GetPositionY() > 0)
+				{
+					ChangeState(STATE_KEY_FLYDAMAGE);
+				}
+				else
+				{
+					ChangeState(STATE_KEY_DEAD);
+				}
 			}
 		}
 

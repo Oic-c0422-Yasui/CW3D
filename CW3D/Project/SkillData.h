@@ -15,7 +15,8 @@ namespace Sample
 			, StuckCount(0)
 		{
 		}
-		ParameterHandle< ReactiveParameter<int> >	DamagePercent;
+		int	DamagePercent;
+		float AditionalStartTime;
 		ParameterHandle< ReactiveParameter<float>>	CT;
 		ParameterHandle< ReactiveParameter<float>>	AditionalTime;
 		ParameterHandle< ReactiveParameter<int>>	StuckCount;
@@ -27,11 +28,12 @@ namespace Sample
 			CT = ct;
 			ExpendGauge = gauge;
 		}
-		void SetData(float damage, float ct, float addTime, int stuckCount) noexcept
+		void SetData(float damage, float ct, float addTime, float addStartTime, int stuckCount) noexcept
 		{
 			DamagePercent = damage;
 			CT = ct;
 			AditionalTime = addTime;
+			AditionalStartTime = addStartTime;
 			StuckCount = stuckCount;
 		}
 	};

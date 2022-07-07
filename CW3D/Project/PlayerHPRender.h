@@ -5,12 +5,12 @@
 #include "ResourceManager.h"
 
 
-namespace Sample::UI
+namespace Sample
 {
 	/**
 	 * @brief		プレイヤーHPUI
 	 */
-	class PlayerHPRender
+	class CPlayerHPRender
 	{
 	private:
 		//現在の描画HP
@@ -33,7 +33,7 @@ namespace Sample::UI
 		/**
 		 * @brief		コンストラクタ
 		 */
-		PlayerHPRender()
+		CPlayerHPRender()
 			: m_CurrentHP(1.0f)
 			, m_CurrentGauge(1.0f)
 			, m_HP(0)
@@ -47,7 +47,7 @@ namespace Sample::UI
 		/**
 		 * @brief		デストラクタ
 		 */
-		~PlayerHPRender() {
+		~CPlayerHPRender() {
 		}
 
 
@@ -93,6 +93,7 @@ namespace Sample::UI
 
 			//g_pInput->GetMousePos(m_Offset);
 			float parcent = (float)m_HP / (float)m_MaxHP;
+			parcent = min(parcent, 1.0f);
 			m_CurrentHP = parcent;
 			//四角でHPゲージ描画
 			m_pFrame->Render(m_Position.x, m_Position.y);
@@ -121,5 +122,5 @@ namespace Sample::UI
 
 	};
 
-	using PlayerHPRenderPtr = std::shared_ptr<PlayerHPRender>;
+	using PlayerHPRenderPtr = std::shared_ptr<CPlayerHPRender>;
 }

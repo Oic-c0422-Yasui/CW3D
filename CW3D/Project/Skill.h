@@ -15,17 +15,23 @@ namespace Sample
 		std::string		m_Button;
 		char*			m_State;
 		char*			m_FlyState;
-		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >			m_CanUseFlg;
 		bool			m_StartFlg;
-		CSkillData	m_SkillData;
+		CSkillData		m_SkillData;
 		
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CurrentTime;
+		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >	m_CanUseFlg;
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
+
+		//TODO:dynamic_castは重いため宣言だけ用意。拡張性的にはどうなの？
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >	m_AddCT;
+		int		m_AddCount;
+		bool	m_AddFlg;
+		bool	m_DelayAddFlg;
 
 		void AddTimerAndResetFlg()
 		{
-			if (m_CurrentTime > 0.0f)
+			if (m_CT > 0.0f)
 			{
-				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_CT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 			}
 			else
 			{
@@ -36,15 +42,15 @@ namespace Sample
 
 		void AddTimer()
 		{
-			if (m_CurrentTime > 0.0f)
+			if (m_CT > 0.0f)
 			{
-				m_CurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_CT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 			}
 		}
 
 		void ResetFlg()
 		{
-			if (m_CurrentTime <= 0.0f)
+			if (m_CT <= 0.0f)
 			{
 				m_StartFlg = false;
 				m_CanUseFlg = true;
@@ -58,8 +64,13 @@ namespace Sample
 			, m_State(NULL)
 			, m_FlyState(NULL)
 			, m_CanUseFlg(false)
+			, m_CT(0.0f)
 			, m_SkillData()
 			, m_StartFlg(false)
+			, m_AddCT(0.0f)
+			, m_AddCount(0)
+			, m_AddFlg(false)
+			, m_DelayAddFlg(false)
 		{
 		}
 
@@ -80,7 +91,7 @@ namespace Sample
 
 		virtual void Start()
 		{
-			m_CurrentTime = m_SkillData.CT.Get();
+			m_CT = m_SkillData.CT.Get();
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
@@ -121,28 +132,40 @@ namespace Sample
 			return m_FlyState;
 		}
 
-		float GetCT() const noexcept
+		float GetMaxCT() const noexcept
 		{
 			return m_SkillData.CT.Get();
 		}
 
-		float GetTime() const noexcept
+		float GetCT() const noexcept
 		{
-			return m_CurrentTime.Get();
+			return m_CT.Get();
 		}
 
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetTimeParam()
+		
+		int GetDamage() const noexcept
 		{
-			return m_CurrentTime;
+			return m_SkillData.DamagePercent;
+		}
+
+		float GetUltGauge() const noexcept
+		{
+			return m_SkillData.ExpendGauge.Get();
+		}
+
+		virtual bool IsCanUse()
+		{
+			return m_CanUseFlg.Get();
 		}
 
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetCTParam()
 		{
-			return m_SkillData.CT;
+			return m_CT;
 		}
-		Sample::ParameterHandle< Sample::ReactiveParameter<int> >& GetDamageParam()
+
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetMaxCTParam()
 		{
-			return m_SkillData.DamagePercent;
+			return m_SkillData.CT;
 		}
 
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetUltGaugeParam()
@@ -154,21 +177,41 @@ namespace Sample
 		{
 			return m_CanUseFlg;
 		}
-
-		int GetDamage() const noexcept
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetAddCTParam()
 		{
-			return m_SkillData.DamagePercent.Get();
+			return m_AddCT;
 		}
 
-		float GetUltGauge() const noexcept
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetAddMaxCTParam()
 		{
-			return m_SkillData.ExpendGauge.Get();
+			return m_SkillData.AditionalTime;
 		}
 
-		bool GetCanUseFlg() const noexcept
+		bool IsAdditional() const noexcept
 		{
-			return m_CanUseFlg.Get();
+			return m_AddFlg;
 		}
+		virtual bool IsDelayAdditional()
+		{
+			return m_DelayAddFlg;
+		}
+
+		float GetAddCT() const noexcept
+		{
+			return m_AddCT.Get();
+		}
+		float GetAddMaxCT() const noexcept
+		{
+			return m_SkillData.AditionalTime.Get();
+		}
+
+
+		int GetAddCount() const noexcept
+		{
+			return m_AddCount;
+		}
+
+
 
 		void SetKey(std::string key) noexcept
 		{
@@ -188,6 +231,15 @@ namespace Sample
 		}
 
 		void SetCT(float ct) noexcept
+		{
+			m_CT = ct;
+		}
+		void SubCT(float ct)
+		{
+			m_CT = max(m_CT.Get() - ct, 0.0f);
+		}
+
+		void SetMaxCT(float ct) noexcept
 		{
 			m_SkillData.CT = ct;
 		}
@@ -213,9 +265,12 @@ namespace Sample
 			m_SkillData.DamagePercent = damagePercent;
 		}
 
+		virtual void AddInput() {}
+		
 
 	};
 
 	//ポインタ置き換え
 	using SKillPtr = std::shared_ptr<CSkill>;
+	using SkillWeakPtr = std::weak_ptr<CSkill>;
 }

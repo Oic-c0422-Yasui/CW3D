@@ -5,6 +5,7 @@
 #include	"MoveAction.h"
 
 #include	"Attack1Action.h"
+#include	"Attack2Action.h"
 
 #include	"FlyDamageAction.h"
 #include	"DownAction.h"
@@ -81,6 +82,19 @@ namespace Sample {
 						false
 					},
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+				}));
+			//çUåÇÇQ
+			actor->AddAction(Action::Create<Attack2Action>(
+				Attack2Action::Parameter{
+					AnimParam{
+						STATE_KEY_ATTACK1,
+						0.0f,
+						1.3f,
+						0.1f,
+						false
+					},
+					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+					Vector3(0.1f, 0.0f, 0.0f),
 				}));
 
 			//É_ÉÅÅ[ÉW

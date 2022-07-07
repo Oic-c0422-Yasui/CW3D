@@ -212,7 +212,7 @@ namespace Sample {
 					AnimParam{
 						STATE_KEY_ATTACK1,
 						0.0f,
-						1.2f,
+						1.5f,
 						0.1f,
 						false
 					},
@@ -226,7 +226,7 @@ namespace Sample {
 					AnimParam{
 						STATE_KEY_ATTACK2,
 						0.0f,
-						1.0f,
+						1.3f,
 						0.1f,
 						false
 					},
@@ -240,7 +240,7 @@ namespace Sample {
 					AnimParam{
 						STATE_KEY_ATTACK3,
 						0.0f,
-						1.0f,
+						1.3f,
 						0.1f,
 						false
 					},
@@ -454,7 +454,7 @@ namespace Sample {
 						false
 					},
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
-					Vector3(PLAYER_MAXSPEED * 1.5f, 1.0f, PLAYER_MAXSPEED * 1.5f),
+					Vector3(PLAYER_MAXSPEED * 1.4f, 1.0f, PLAYER_MAXSPEED * 1.4f),
 				}));
 			return true;
 		}

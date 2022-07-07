@@ -7,9 +7,9 @@
 namespace Sample
 {
 	/**
-	 * @brief		プレイヤーCTUI
+	 * @brief		必殺技ゲージ
 	 */
-	class UltimateGaugeUIRender
+	class CUltimateGaugeRender
 	{
 	private:
 
@@ -31,7 +31,7 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		UltimateGaugeUIRender()
+		CUltimateGaugeRender()
 			: m_Gauge(0.2f)
 			, m_MaxGauge(1.0f)
 			, m_Offset(0, 0)
@@ -44,7 +44,7 @@ namespace Sample
 		/**
 		 * @brief		デストラクタ
 		 */
-		~UltimateGaugeUIRender() {
+		~CUltimateGaugeRender() {
 		}
 
 
@@ -102,5 +102,5 @@ namespace Sample
 		}
 	};
 
-	using UltimateGaugeUIRenderPtr = std::shared_ptr<UltimateGaugeUIRender>;
+	using UltimateGaugeUIRenderPtr = std::shared_ptr<CUltimateGaugeRender>;
 }

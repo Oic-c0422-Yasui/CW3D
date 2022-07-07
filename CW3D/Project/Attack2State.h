@@ -54,7 +54,6 @@ namespace Sample {
 			//“–‚½‚è”»’è—p‚Ì’eì¬
 			CreateShotAABB();
 
-			//Actor()->GetAnimationState()->ChangeMotionByName(STATE_KEY_ATTACK2, 0.0f, 1.0f, 0.1f, FALSE, MOTIONLOCK_OFF, TRUE);
 		}
 
 		/**

@@ -76,6 +76,7 @@ const std::string PARAMETER_KEY_DAMAGE = "Damage";
 const std::string PARAMETER_KEY_ATTACK = "Attack";
 const std::string PARAMETER_KEY_ALPHA = "Alpha";
 const std::string PARAMETER_KEY_INVINCIBLE = "Invincible";
+const std::string PARAMETER_KEY_ESCAPE = "Escape";
 
 //スキルキーの名称
 const std::string SKILL_KEY_1 = "SkillKey1";

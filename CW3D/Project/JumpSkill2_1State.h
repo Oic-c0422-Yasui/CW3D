@@ -29,9 +29,11 @@ namespace Sample {
 
 		bool collideStartFlg;
 
+		bool m_DelayInputFlg;
+
 		std::string m_Key;
 
-		AdditionalWeakSKillPtr m_AddSkill;
+		SkillWeakPtr m_Skill;
 
 		ShotSphere m_ShotStatusSphere;
 
@@ -44,6 +46,7 @@ namespace Sample {
 			: AttackBaseState()
 			, m_Parameter(param)
 			, collideStartFlg(false)
+			, m_DelayInputFlg(false)
 		{
 		}
 		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.AABBShotStatus; }
@@ -55,14 +58,18 @@ namespace Sample {
 		 */
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<JumpSkill2_1Action>(GetKey());
+			m_Skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_1);
+			m_Key = m_Skill.lock()->GetButton();
 			Initialize();
-			m_AddSkill = std::dynamic_pointer_cast<CAdditionalSkill>(Actor()->GetSkillController()->GetSkill(SKILL_KEY_1));
-			if (m_AddSkill.lock() != nullptr)
+			if (m_Skill.lock()->IsDelayAdditional())
 			{
-				m_Key = m_AddSkill.lock()->GetButton();
+				m_DelayInputFlg = true;
+				m_Skill.lock()->AddInput();
 			}
-			
-
+			else
+			{
+				m_DelayInputFlg = false;
+			}
 		}
 
 		/**
@@ -124,13 +131,14 @@ namespace Sample {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override {
-			if (m_AddSkill.lock() != nullptr)
+			if (!m_DelayInputFlg)
 			{
-				if (Input()->IsPush(m_Key))
+				if (Input()->IsPush(m_Key) && !m_NextInputFlg)
 				{
-					if (m_AddSkill.lock()->IsAdditional())
+					if (m_Skill.lock()->IsAdditional())
 					{
 						m_NextInputFlg = true;
+						m_Skill.lock()->AddInput();
 					}
 				}
 			}
@@ -145,7 +153,7 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
-			m_AddSkill.reset();
+			m_Skill.reset();
 		}
 
 		/**

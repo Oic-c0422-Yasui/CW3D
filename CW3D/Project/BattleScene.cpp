@@ -91,7 +91,7 @@ bool CBattleScene::Load()
 	ServiceLocator<CPlayer>::SetService(m_Player);
 
 	
-	m_PlayerUIRender = std::make_shared<PlayerUIRender>();
+	m_PlayerUIRender = std::make_shared<CPlayerUIRender>();
 	m_PlayerUIRender->Load();
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 	//ステージ読み込み
@@ -132,8 +132,10 @@ void CBattleScene::Initialize()
 	m_Enemys.push_back(zb.Create(Vector3(6, 0, 1)));
 	m_Enemys.push_back(zb.Create(Vector3(7, 0, 2)));
 	m_Enemys.push_back(zb.Create(Vector3(1, 0, 3)));
-	m_Enemys.push_back(zb.Create(Vector3(-2, 0, 4)));
-
+	m_Enemys.push_back(zb.Create(Vector3(-3, 0, 6)));
+	m_Enemys.push_back(zb.Create(Vector3(-5, 0, 4)));
+	m_Enemys.push_back(zb.Create(Vector3(-6, 0, 2)));
+	m_Enemys.push_back(zb.Create(Vector3(-1, 0, 3)));
 	
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -141,7 +143,7 @@ void CBattleScene::Initialize()
 		ActorObjectManagerInstance.Add(m_Enemys[i]);
 
 		//敵のHPバー生成＆オブザーバーに登録
-		m_EnemysHPRender.push_back(std::make_shared<Sample::EnemyHPRender>());
+		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
 		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
 		m_EnemysHPRender[i]->Initialize();
 	}
@@ -169,13 +171,13 @@ void CBattleScene::Update()
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		CCollision::CollisionObj(m_Player, m_Enemys[i]);
-		/*for (int j = i + 1; j < m_Enemys.size(); j++)
-		{
-			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-		}*/
 		if (m_Enemys[i]->IsInvincible())
 		{
 			continue;
+		}
+		for (int j = i + 1; j < m_Enemys.size(); j++)
+		{
+			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
 		}
 		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 		{
@@ -239,6 +241,10 @@ void CBattleScene::RenderDebug()
 	}
 
 	CGraphicsUtilities::RenderBox(m_Player->GetCollider(), Vector4(0, 1, 0, 0.2f));
+	if (m_Player->IsEscape())
+	{
+		CGraphicsUtilities::RenderBox(m_Player->GetEscapeCollider(), Vector4(0, 0, 1, 0.2f));
+	}
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -262,7 +268,7 @@ void CBattleScene::Render2D()
 		}
 	}
 
-	//HPバーの描画入れ替え
+	//敵HPバーの描画入れ替え
 	std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
 		[](Sample::EnemyHPRenderPtr& obj1,Sample::EnemyHPRenderPtr& obj2)
 	{
@@ -273,6 +279,7 @@ void CBattleScene::Render2D()
 		enemyHP->Render();
 	}
 
+	//プレイヤーのUI描画
 	m_PlayerUIRender->Render();
 
 
@@ -303,7 +310,6 @@ void CBattleScene::Release()
 {
 	m_Player->Release();
 	m_Player.reset();
-	//ServiceLocator<CPlayer>::SetService(nullptr);
 
 	ServiceLocator<CPlayer>::GetInstance().Release();
 

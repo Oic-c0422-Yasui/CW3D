@@ -350,9 +350,6 @@
     <ClInclude Include="Skill.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="SkillCreater.h">
-      <Filter>ヘッダー ファイル\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="JumpState.h">
       <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
@@ -649,6 +646,15 @@
     </ClInclude>
     <ClInclude Include="SkillUltGaugeRender.h">
       <Filter>ヘッダー ファイル\UI\Render\Skill\Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSkillCreater.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerParameterCreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackStateAI.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

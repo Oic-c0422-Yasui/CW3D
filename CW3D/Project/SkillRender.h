@@ -98,7 +98,7 @@ namespace Sample
 		virtual void Render() {
 
 			float percent = m_CT / m_MaxCT;
-			
+			percent = min(percent, 1.0f);
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
@@ -115,21 +115,22 @@ namespace Sample
 
 		void RenderStrCT(float ct)
 		{
-			if (ct > 0.0f)
+			if (ct <= 0.0f)
 			{
+				return;
+			}
 
-				if (ct > 1.0f)
-				{
-					CRectangle rect;
-					m_pFont->CalculateStringRect(0, 0, "0", rect);
-					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
-				}
-				else
-				{
-					CRectangle rect;
-					m_pFont->CalculateStringRect(0, 0, "0.0", rect);
-					m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", ct);
-				}
+			if (ct > 1.0f)
+			{
+				CRectangle rect;
+				m_pFont->CalculateStringRect(0, 0, "0", rect);
+				m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
+			}
+			else
+			{
+				CRectangle rect;
+				m_pFont->CalculateStringRect(0, 0, "0.0", rect);
+				m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", ct);
 			}
 		}
 

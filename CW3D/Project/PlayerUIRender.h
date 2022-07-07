@@ -1,8 +1,8 @@
 #pragma once
 
 #include "PlayerHPRender.h"
-#include "SkillControllerUIRender.h"
-#include "SkillsUIRender.h"
+#include "SkillControllerRender.h"
+#include "SkillRenderContainer.h"
 #include "UltimateGaugeRender.h"
 #include "UltGaugePresenter.h"
 
@@ -11,23 +11,23 @@ namespace Sample
 	/**
 	 * @brief		プレイヤーHPUI
 	 */
-	class PlayerUIRender
+	class CPlayerUIRender
 	{
 	private:
 		PlayerHPRenderPtr m_HPRender;
-		SkillControllerUIRenderPtr m_SkillControllerRender;
-		SkillsUIRenderPtr m_SkillsRender;
+		SkillControllerRenderPtr m_SkillControllerRender;
+		SkillRenderContainerPtr m_SkillsRender;
 		UltimateGaugeUIRenderPtr m_UltGaugeRender;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		PlayerUIRender()
-			: m_HPRender(std::make_shared<PlayerHPRender>())
-			, m_SkillControllerRender(std::make_shared<SkillControllerUIRender>())
-			, m_SkillsRender(std::make_shared<SkillsUIRender>())
-			, m_UltGaugeRender(std::make_shared<UltimateGaugeUIRender>())
+		CPlayerUIRender()
+			: m_HPRender(std::make_shared<CPlayerHPRender>())
+			, m_SkillControllerRender(std::make_shared<CSkillControllerRender>())
+			, m_SkillsRender(std::make_shared<CSkillRenderContainer>())
+			, m_UltGaugeRender(std::make_shared<CUltimateGaugeRender>())
 		{
 
 		}
@@ -35,7 +35,7 @@ namespace Sample
 		/**
 		 * @brief		デストラクタ
 		 */
-		~PlayerUIRender() {
+		~CPlayerUIRender() {
 			Release();
 		}
 
@@ -86,5 +86,5 @@ namespace Sample
 
 	};
 
-	using PlayerUIRenderPtr = std::shared_ptr<PlayerUIRender>;
+	using PlayerUIRenderPtr = std::shared_ptr<CPlayerUIRender>;
 }

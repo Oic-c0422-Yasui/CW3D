@@ -17,6 +17,8 @@ namespace Sample {
 		{
 			float ThroughStartTime;
 			float ThroughEndTime;
+			float EscapeStartTime;
+			float EscapeTime;
 		};
 	private:
 		Parameter m_Parameter;
@@ -25,7 +27,8 @@ namespace Sample {
 		EscapeActionPtr			m_EscapeAction;
 
 		bool m_ThroughFlg;
-
+		bool m_EscapeFlg;
+		float m_EscapeCurrentTime;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -34,10 +37,10 @@ namespace Sample {
 			: AttackBaseState()
 			, m_Parameter(param)
 			, m_ThroughFlg(false)
+			, m_EscapeCurrentTime(0.0f)
+			, m_EscapeFlg(false)
 		{
 		}
-
-		//const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
@@ -46,7 +49,10 @@ namespace Sample {
 			m_EscapeAction = Actor()->GetAction<EscapeAction>(GetKey());
 			AttackBaseState::Start();
 			m_ThroughFlg = false;
+			m_EscapeFlg = false;
+			m_EscapeCurrentTime = 0.0f;
 			m_EscapeAction->Start();
+			Actor()->SetArmorLevel(m_Parameter.armorLevel);
 
 			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
 				Input()->IsPress(INPUT_KEY_HORIZONTAL))
@@ -75,6 +81,26 @@ namespace Sample {
 			{
 				m_EscapeAction->StartThrough();
 				m_ThroughFlg = true;
+			}
+
+			//ジャスト回避時間
+			if (m_CurrentTime >= m_Parameter.EscapeStartTime)
+			{
+				
+				if (m_EscapeCurrentTime < m_Parameter.EscapeTime)
+				{
+					auto& isEscape = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+					if (!isEscape)
+					{
+						isEscape = true;
+					}
+					m_EscapeCurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(Actor()->GetType());
+					if (m_EscapeCurrentTime >= m_Parameter.EscapeTime)
+					{
+						isEscape = false;
+					}
+
+				}
 			}
 
 			if (Actor()->GetAnimationState()->IsEndMotion())
@@ -139,6 +165,8 @@ namespace Sample {
 		void End() override {
 			AttackBaseState::End();
 			m_EscapeAction->End();
+			auto& isEscape = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+			isEscape = false;
 		}
 
 		/**

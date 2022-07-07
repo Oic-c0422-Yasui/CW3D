@@ -42,7 +42,6 @@ namespace Sample {
 		void Start() override {
 			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-			//PLAYER_SPEED * 0.3
 			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 			Velocity()->SetGravity(m_Parameter.gravity);
 			float rotateY = Transform()->GetRotateY();

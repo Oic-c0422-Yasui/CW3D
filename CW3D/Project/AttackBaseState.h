@@ -24,6 +24,25 @@ namespace Sample {
 
 		std::vector<ShotPtr>			m_pShots;
 		std::vector<EffectPtr>			m_pEffects;
+
+		void ReleaseShot()
+		{
+			for (auto& shot : m_pShots)
+			{
+				shot->SetShow(false);
+				shot.reset();
+			}
+			m_pShots.clear();
+		}
+		void ReleaseEffect()
+		{
+			for (auto& effect : m_pEffects)
+			{
+				effect->SetStop(true);
+				effect.reset();
+			}
+			m_pEffects.clear();
+		}
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -139,7 +158,7 @@ namespace Sample {
 			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 			{
 				SKillPtr skill = Actor()->GetSkillController()->GetSkill(i);
-				if (!skill->GetCanUseFlg() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
+				if (!skill->IsCanUse() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
 				{
 					continue;
 				}
@@ -167,21 +186,13 @@ namespace Sample {
 		 * @brief		ステート内の終了処理
 		 */
 		virtual void End() override {
-			for (auto& shot : m_pShots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_pShots.clear();
-			for (auto& effect : m_pEffects)
-			{
-				effect->SetStop(true);
-				effect.reset();
-			}
-			m_pEffects.clear();
+			ReleaseShot();
+			ReleaseEffect();
 			Actor()->SetArmorLevel(DEFAULT_ARMORLEVEL);
 		}
 
+
+		
 	};
 
 }

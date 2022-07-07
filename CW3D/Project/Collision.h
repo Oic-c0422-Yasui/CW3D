@@ -1,5 +1,5 @@
 #pragma once
-#include "Common.h"
+#include "GameDefine.h"
 #include "ActorObject.h"
 
 namespace Sample

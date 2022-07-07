@@ -6,17 +6,12 @@ namespace Sample
 	class CAdditionalSkill : public CSkill
 	{
 	private:
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >	m_AdditionalCurrentTime;
-
-		int		m_AdditionalCount;
-
-		bool	m_AdditionalFlg;
+		float m_AddStartTime;
 
 	public:
 		CAdditionalSkill()
 			: CSkill()
-			, m_AdditionalCount(0)
-			, m_AdditionalFlg(false)
+
 		{
 		}
 		~CAdditionalSkill()
@@ -25,9 +20,16 @@ namespace Sample
 
 		void Start() override
 		{
-			CSkill::Start();
-			m_AdditionalCurrentTime = m_SkillData.AditionalTime.Get();
-			m_AdditionalFlg = true;
+			if (!m_AddFlg)
+			{
+				CSkill::Start();
+				m_AddStartTime = m_SkillData.AditionalStartTime;
+			}
+			else
+			{
+				m_DelayAddFlg = true;
+				AddInput();
+			}
 		}
 
 		void Update() override
@@ -36,49 +38,44 @@ namespace Sample
 			{
 				return;
 			}
-			if (m_AdditionalCurrentTime > 0.0f)
+			if (m_AddStartTime > 0.0f)
 			{
-				m_AdditionalCurrentTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_AddStartTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				if (m_AddStartTime <= 0.0f)
+				{
+					if (!m_AddFlg)
+					{
+						m_AddFlg = true;
+						m_AddCT = m_SkillData.AditionalTime.Get();
+						m_DelayAddFlg = false;
+					}
+				}
 			}
-			else
+			else if (m_AddCT > 0.0f)
 			{
-				m_AdditionalFlg = false;
+				m_AddCT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+			}
+			
+			if(m_AddCT <= 0.0f)
+			{
+				m_AddFlg = false;
 				CSkill::AddTimerAndResetFlg();
 			}
 		}
 
-		bool IsAdditional() const noexcept
+		
+		void SetAddCT(float time) noexcept
 		{
-			return m_AdditionalFlg;
+			m_AddCT = time;
 		}
-
-		float GetAdditionalTime() const noexcept
-		{
-			return m_AdditionalCurrentTime.Get();
-		}
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GettAdditionalTimeParam()
-		{
-			return m_AdditionalCurrentTime;
-		}
-
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetAdditionalCurrentTimeParam()
-		{
-			return m_SkillData.AditionalTime;
-		}
-
-		int GetAdditionalCount() const noexcept
-		{
-			return m_AdditionalCount;
-		}
-
-		void SetAdditionalTime(float time) noexcept
+		void SetAddMaxCT(float time) noexcept
 		{
 			m_SkillData.AditionalTime = time;
 		}
 
-		void SetAdditionalCount(float count) noexcept
+		void SetAddCount(float count) noexcept
 		{
-			m_AdditionalCount = count;
+			m_AddCount = count;
 		}
 
 		void SetSkillData(float damagePercent, float ct,float addTime,int addCount) noexcept
@@ -89,6 +86,16 @@ namespace Sample
 			m_SkillData.AditionalCount = addCount;
 		}
 
+		void AddInput() override
+		{
+			SetAddCT(0.0f);
+			m_AddFlg = false;
+		}
+
+		bool IsCanUse() override
+		{
+			return m_AddFlg | m_CanUseFlg.Get();
+		}
 
 	};
 

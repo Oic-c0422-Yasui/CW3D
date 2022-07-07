@@ -80,7 +80,7 @@ namespace Sample {
 					2
 					,GameFrameTime * 25.0f
 					,GameFrameTime * 42.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr ,2,2.0f,0,Vector3(0.8f, 1.5f, 1.0f) }
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr ,2,1.0f,0,Vector3(1.2f, 1.5f, 1.0f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
 
 				}));
@@ -88,17 +88,17 @@ namespace Sample {
 			stateMachine->AddState(State::Create<Attack2State>(actor, input,
 				Attack2State::Parameter{
 					2
-					,GameFrameTime * 25.0f
-					,GameFrameTime * 40.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,2.0f,0, Vector3(0.8f, 1.5f, 1.0f) }
+					,GameFrameTime * 20.0f
+					,GameFrameTime * 35.0f
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,1.0f,0, Vector3(1.2f, 1.5f, 1.0f) }
 
 				}));
 			stateMachine->AddState(State::Create<Attack3State>(actor, input,
 				Attack3State::Parameter{
 					2
-					,GameFrameTime * 25.0f
-					,GameFrameTime * 55.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,2,2.5f,0, Vector3(0.8f, 2.0f, 1.0f)}
+					,GameFrameTime * 15.0f
+					,GameFrameTime * 45.0f
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 0.3f, 0, Vector3(0.3f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,2,1.5f,0, Vector3(1.2f, 2.0f, 1.0f)}
 
 				}));
 			stateMachine->AddState(State::Create<RunAttack1State>(actor, input,
@@ -106,7 +106,7 @@ namespace Sample {
 					2
 					,GameFrameTime * 20.0f
 					,GameFrameTime * 40.0f
-					,ShotAABB{ Vector3(0.7f, 0.8f, 0), 0.5f, 0, Vector3(0.4f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,2.5f,0, Vector3(1.2f, 1.5f, 0.8f) }
+					,ShotAABB{ Vector3(0.7f, 0.8f, 0), 0.5f, 0, Vector3(0.4f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,1.5f,0, Vector3(1.2f, 1.5f, 0.8f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f, 1.0f, 0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360.0f), 0.0f),2.0f }
 
 				}));
@@ -114,7 +114,7 @@ namespace Sample {
 				JumpAttack1State::Parameter{
 					2
 					,GameFrameTime * 20.0f
-					,ShotAABB{ Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,2.0f,0, Vector3(1.0f, 1.2f, 1.0f) }
+					,ShotAABB{ Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.0f, 0.0f),false,CHARA_PLAYER, nullptr,2,1.0f,0, Vector3(1.0f, 1.2f, 1.0f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f,1.0f,0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),2.0f }
 
 				}));
@@ -124,7 +124,7 @@ namespace Sample {
 					2
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 22.0f
-					,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.3f, 0.15f, 0.0f),false,CHARA_PLAYER, nullptr,2,2.0f,0, Vector3(1.5f, 1.5f, 1.5f) }
+					,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,2,1.0f,0, Vector3(1.5f, 1.5f, 1.5f) }
 					,EffectCreateParameter{ "Effect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
 
 				}));
@@ -132,7 +132,7 @@ namespace Sample {
 				RunJumpAttack2State::Parameter{
 					2
 					,GameFrameTime * 20.0f
-					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.2f, 0.15f, 0.0f),true,CHARA_PLAYER, nullptr,2,2.0f,0, Vector3(1.5f, 1.5f, 1.5f) }
+					,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),true,CHARA_PLAYER, nullptr,2,1.0f,0, Vector3(1.5f, 1.5f, 1.5f) }
 
 				}));
 			stateMachine->AddState(State::Create<RunJumpAttack3State>(actor, input,
@@ -140,7 +140,7 @@ namespace Sample {
 					2
 					,GameFrameTime * 12.0f
 					,GameFrameTime * 40.0f
-					,ShotAABB{ Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.3f, 0.15f, 0.0f),true,CHARA_PLAYER, nullptr,2,2.5f,0, Vector3(1.5f, 2.0f, 1.5f) }
+					,ShotAABB{ Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.45f, 0.2f, 0.0f),true,CHARA_PLAYER, nullptr,2,1.5f,0, Vector3(1.5f, 2.0f, 1.5f) }
 
 				}));
 
@@ -149,7 +149,7 @@ namespace Sample {
 					4
 					,GameFrameTime * 40.0f
 					,GameFrameTime * 80.0f
-					,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,4,0.1f,0, Vector3(7.0f, 10.0f, 7.0f) }
+					,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,4,0.3f,0, Vector3(7.0f, 10.0f, 7.0f) }
 					,EffectCreateParameter{ "Effect3", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f }
 
 				}));
@@ -158,8 +158,8 @@ namespace Sample {
 					3
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 25.0f
-					,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,2.5f,0, Vector3(5.0f, 2.0f, 2.0f) }
-					,ShotSphere{ Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,2.0f }
+					,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f) }
+					,ShotSphere{ Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0,2.0f }
 					,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 				}));
@@ -168,8 +168,8 @@ namespace Sample {
 					3
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 25.0f
-					,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,2.5f,0, Vector3(5.0f, 2.0f, 2.0f) }
-					,ShotSphere{ Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,2.0f }
+					,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f) }
+					,ShotSphere{ Vector3(0.7f, 0.7f, 0), 0.1f, 0, Vector3(0.5f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0,2.0f }
 					,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 				}));
@@ -196,6 +196,8 @@ namespace Sample {
 					2
 					,GameFrameTime * 5.0f
 					,GameFrameTime * 35.0f
+					,GameFrameTime * 0.0f
+					,GameFrameTime * 10.0f
 				}));
 
 			return true;

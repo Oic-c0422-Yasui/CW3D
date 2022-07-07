@@ -14,7 +14,7 @@ namespace Sample
 	/**
 	 * @brief		スキルをまとめて表示する
 	 */
-	class SkillRenderContainer
+	class CSkillRenderContainer
 	{
 	private:
 
@@ -25,14 +25,14 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		SkillRenderContainer()
+		CSkillRenderContainer()
 		{
 		}
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~SkillRenderContainer() {
+		~CSkillRenderContainer() {
 
 		}
 
@@ -50,7 +50,7 @@ namespace Sample
 				{
 					//追加攻撃スキルならロード
 					auto addRender = std::make_shared<CAdditionalSkillRender>();
-					CSkillPresenter::Present(player, render, i);
+					CSkillPresenter::Present(player, addRender, i);
 					render = addRender;
 				}
 				else
@@ -65,7 +65,7 @@ namespace Sample
 				//必殺技ならロード
 				if (std::dynamic_pointer_cast<CUltimateSkill>(skillPtr) != nullptr)
 				{
-					auto gauge = std::make_shared<SkillUltGaugeRender>();
+					auto gauge = std::make_shared<CSkillUltGaugeRender>();
 					gauge->Load();
 					CSkillUltGaugePresenter::Present(player, gauge, i);
 					m_UltGaugeRender.push_back(gauge);
@@ -126,5 +126,5 @@ namespace Sample
 		}
 	};
 
-	using SkillRenderContainerPtr = std::shared_ptr<SkillRenderContainer>;
+	using SkillRenderContainerPtr = std::shared_ptr<CSkillRenderContainer>;
 }

@@ -134,6 +134,7 @@
     <ClInclude Include="Attack3State.h" />
     <ClInclude Include="AttackBaseState.h" />
     <ClInclude Include="AttackCollider.h" />
+    <ClInclude Include="AttackStateAI.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BattleUICreater.h" />
     <ClInclude Include="CameraBase.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="ParameterHandle.h" />
     <ClInclude Include="PlayerActionCreator.h" />
     <ClInclude Include="PlayerHPRender.h" />
+    <ClInclude Include="PlayerParameterCreator.h" />
     <ClInclude Include="PlayerStateCreator.h" />
     <ClInclude Include="PlayerUIRender.h" />
     <ClInclude Include="ReactiveParameter.h" />
@@ -248,7 +250,7 @@
     <ClInclude Include="Skill3_1Action.h" />
     <ClInclude Include="Skill3_1State.h" />
     <ClInclude Include="SkillControllerRender.h" />
-    <ClInclude Include="SkillCreater.h" />
+    <ClInclude Include="PlayerSkillCreater.h" />
     <ClInclude Include="SkillRenderContainer.h" />
     <ClInclude Include="SkillRender.h" />
     <ClInclude Include="SkillData.h" />

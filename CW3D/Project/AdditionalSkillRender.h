@@ -62,19 +62,32 @@ namespace Sample
 		void Render() {
 
 			float percent = m_CT / m_MaxCT;
-
+			percent = min(percent, 1.0f);
+			float addPercent = m_AddCT / m_AddMaxCT;
+			addPercent = min(addPercent, 1.0f);
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
 			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
 
-			RenderStrCT(m_AddCT);
 
+			if (m_AddCT > 0.0f)
+			{
+				CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * (1.0f - addPercent), m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
+				m_pSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
+			}
 			if (m_CanUseFlg)
 			{
 				m_pSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
 			}
 
-			RenderStrCT(m_CT);
+			if (m_AddCT > 0.0f)
+			{
+				RenderStrCT(m_AddCT);
+			}
+			else
+			{
+				RenderStrCT(m_CT);
+			}
 
 		}
 

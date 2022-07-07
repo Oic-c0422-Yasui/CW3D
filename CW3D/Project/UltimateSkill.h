@@ -40,7 +40,7 @@ namespace Sample
 			if (!m_CanUseFlg.Get() && !m_StartFlg)
 			{
 				auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-				if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CurrentTime <= 0.0f)
+				if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CT <= 0.0f)
 				{
 					m_CanUseFlg = true;
 				}
@@ -51,7 +51,7 @@ namespace Sample
 			}
 			CSkill::AddTimer();
 			auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-			if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CurrentTime <= 0.0f)
+			if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CT <= 0.0f)
 			{
 				CSkill::ResetFlg();
 			}

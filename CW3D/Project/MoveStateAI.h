@@ -15,13 +15,16 @@ namespace Sample {
 	private:
 		//見失った時間
 		int				currentLostTime;
+		bool			attackFlg;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		MoveStateAI()
 			: StateAI()
-			, currentLostTime(0) {
+			, currentLostTime(0)
+			, attackFlg(false)
+		{
 		}
 
 		/**
@@ -38,6 +41,7 @@ namespace Sample {
 		 */
 		void Start() override {
 			currentLostTime = 0;
+			attackFlg = false;
 		}
 
 		/**
@@ -50,12 +54,12 @@ namespace Sample {
 			//警戒ボックス
 			CAABB collider;
 			collider.SetPosition(transform->GetPosition());
-			collider.Size = Vector3(3, 3, 3);
+			collider.Size = Vector3(5, 3, 5);
 			//警戒範囲内にプレイヤーがいなくなるとカウントして一定後に停止
 			if (!CCollision::Collision(player->GetCollider(), collider))
 			{
 				currentLostTime++;
-				if (currentLostTime < 3)
+				if (currentLostTime < 5)
 				{
 					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, transform->IsReverse() ? -1.0f : 1.0f);
 				}
@@ -69,20 +73,23 @@ namespace Sample {
 			float sx = player->GetPosition().x - transform->GetPosition().x;
 			float sz = player->GetPosition().z - transform->GetPosition().z;
 			sx /= 300.0f;
-			sz /= 60.0f;
+			sz /= 10.0f;
 			sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
-			sz = ((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
+			sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
 			Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
 			Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
-			////攻撃ボックス
-			//const Vector3F atkpos = transform->GetPos() + (transform->IsReverse() ? Vector3F(-30, 20, 0) : Vector3F(30, 20, 0));
-			//const Vector3F atksize(25, 25, 15);
-			////攻撃範囲内に入ってきたら攻撃
-			//if (CollisionFunction::CollisionAABB(player->GetPos(), player->GetSize(), atkpos, atksize) &&
-			//	RandomUtility::Random(10) == 0)
-			//{
-			//	Input()->SetKeyValue(AttackKey, 1.0f);
+			//攻撃ボックス
+			collider.Size = Vector3(1.5f, 1, 1.0f);
+			//攻撃範囲内に入ってきたら攻撃
+			/*if (!attackFlg)
+			{*/
+				if (CCollision::Collision(player->GetCollider(), collider) && CUtilities::Random(15) == 0)
+				{
+					Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
+					attackFlg = true;
+				}
 			//}
+			
 		}
 
 		/**

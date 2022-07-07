@@ -81,7 +81,7 @@ namespace Sample {
 				CreateEffect();
 				collideStartFlg = true;
 			}
-
+			auto aaaa = Actor()->GetAnimationState()->IsEndMotion();
 			if (Actor()->GetAnimationState()->IsEndMotion())
 			{
 				ChangeState(STATE_KEY_IDLE);

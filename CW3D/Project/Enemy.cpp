@@ -21,7 +21,7 @@ CEnemy::~CEnemy()
 
 bool CEnemy::Load()
 {
-	auto stateInput = std::make_shared<Sample::StateInput>();
+	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
 	m_Collider = std::make_shared<Sample::CAttackCollider>();
 	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
@@ -93,7 +93,7 @@ void CEnemy::Update()
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
-		invincible -= CUtilities::GetFrameSecond();
+		invincible -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 	}
 	if (m_DeadFlg)
 	{

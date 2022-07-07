@@ -8,7 +8,7 @@ namespace Sample
 	/**
 	 * @brief		プレイヤーCTUI
 	 */
-	class SkillUltGaugeRender
+	class CSkillUltGaugeRender
 	{
 	private:
 
@@ -28,7 +28,7 @@ namespace Sample
 		/**
 		 * @brief		コンストラクタ
 		 */
-		SkillUltGaugeRender()
+		CSkillUltGaugeRender()
 			: m_Gauge(0.0f)
 			, m_MaxGauge(0.0f)
 			, m_Position(0, 0)
@@ -40,7 +40,7 @@ namespace Sample
 		/**
 		 * @brief		デストラクタ
 		 */
-		~SkillUltGaugeRender() {
+		~CSkillUltGaugeRender() {
 			Release();
 		}
 
@@ -108,5 +108,5 @@ namespace Sample
 		}
 	};
 
-	using SkillUltGaugeRenderPtr = std::shared_ptr<SkillUltGaugeRender>;
+	using SkillUltGaugeRenderPtr = std::shared_ptr<CSkillUltGaugeRender>;
 }

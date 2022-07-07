@@ -13,15 +13,18 @@ public:
 		player->GetMaxCTSubject(skillID)->Subscribe([view](float ct) { view->SetMaxCT(ct); });
 		player->GetCanUseSubject(skillID)->Subscribe([view](bool canUse) {view->SetCanUseFlg(canUse); });
 
-		view->SetCT(0);
-		view->SetCanUseFlg(player->GetSkillController()->GetSkill(skillID)->GetCanUseFlg());
-		view->SetMaxCT(player->GetSkillController()->GetSkill(skillID)->GetCT());
+		view->SetCT(0.0f);
+		view->SetCanUseFlg(player->GetSkillController()->GetSkill(skillID)->IsCanUse());
+		view->SetMaxCT(player->GetSkillController()->GetSkill(skillID)->GetMaxCT());
 	}
 
 	//’Ç‰ÁUŒ‚ƒXƒLƒ‹
 	static void Present(PlayerPtr& player, const Sample::AdditionalSkillRenderPtr& view, int skillID)
 	{
-		player->GetCTSubject(skillID)->Subscribe([view](float ct) { view->SetAddCT(ct); });
-		player->GetMaxCTSubject(skillID)->Subscribe([view](float ct) { view->SetAddMaxCT(ct); });
+		player->GetAddCTSubject(skillID)->Subscribe([view](float ct) { view->SetAddCT(ct); });
+		player->GetAddMaxCTSubject(skillID)->Subscribe([view](float ct) { view->SetAddMaxCT(ct); });
+
+		view->SetAddCT(0.0f);
+		view->SetAddMaxCT(player->GetSkillController()->GetSkill(skillID)->GetAddMaxCT());
 	}
 };

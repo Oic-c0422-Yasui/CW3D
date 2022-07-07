@@ -3,6 +3,7 @@
 
 #include	"Singleton.h"
 #include	"Skill.h"
+#include	"AdditionalSkill.h"
 
 
 namespace Sample
@@ -64,6 +65,17 @@ namespace Sample
 				{
 					return skill;
 				}
+			}
+			return nullptr;
+		}
+
+		AdditionalSKillPtr GetAddSkill(int id)
+		{
+			assert(m_Skills[id]);
+			auto skill = std::static_pointer_cast<CAdditionalSkill>(m_Skills[id]);
+			if (skill != nullptr)
+			{
+				return skill;
 			}
 			return nullptr;
 		}

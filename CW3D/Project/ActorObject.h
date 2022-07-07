@@ -59,7 +59,7 @@ namespace Sample
 		bool IsShow() const noexcept {
 			return m_ShowFlg;
 		}
-		const CAABB& GetCollider()
+		virtual const CAABB& GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
 			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);

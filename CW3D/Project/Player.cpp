@@ -1,6 +1,5 @@
 #include "Player.h"
-#include "AdditionalSkill.h"
-#include "UltimateSkill.h"
+
 
 
 
@@ -23,45 +22,25 @@ bool CPlayer::Load()
 	{
 		return false;
 	}
-
+	//モーション読み込み
 	m_Motion = m_pMesh->CreateMotionController();
 	m_Actor->SetAnimationState(m_Motion);
-
+	
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
-
-
+	//アクション作成
 	m_ActionCreator.Create(m_Actor);
+	//ステート作成
 	m_StateCreator.Create(m_StateMachine, m_Actor, m_pInput);
-
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 800);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 25);
-	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE, 0);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);
-
-	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
-	m_MaxUltGauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
-
-	Sample::SKillPtr skill;
-
-	Sample::SKillPtr additionalSkill = std::make_shared<Sample::CAdditionalSkill>();
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2,"Skill1", STATE_KEY_SKILL2_1, STATE_KEY_JUMPSKILL2_1, additionalSkill);
-	Sample::CSkillData skillData;
-	skillData.SetData(180, 3, 0.8f, 0);
-	skill->SetSkillData(skillData);
-
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, "Skill2", STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
-	skill->SetSkillData(125, 5);
-
-	Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>(m_Actor);
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, "Skill3", STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1,ultSkill);
-	skillData.SetData(550, 8, 50.0f);
-	skill->SetSkillData(skillData);
-
-	skill = m_Actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, "Escape", STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
-	skill->SetCT(1);
+	
+	//パラメーター作成
+	auto& param = m_Actor->GetParameterMap();
+	m_ParameterCreator.Create(param);
+	//パラメーター設定
+	m_MaxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	m_MaxUltGauge = param->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	//スキル設定
+	m_SkillCreator.Create(m_Actor);
+	
 	return true;
 }
 
@@ -71,10 +50,9 @@ void CPlayer::Initialize()
 	m_Actor->SetPosition(Vector3(0, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
-	m_ColliderSize.x = 0.5f;
-	m_ColliderSize.y = 0.8f;
-	m_ColliderSize.z = 0.5f;
+	m_ColliderSize = Vector3(0.5f, 0.8f, 0.5f);
 	m_ColliderOffset.y = 1.0f;
+	m_EscapeColliderSize = m_ColliderSize + Vector3(1.2f,0.5f,1.2f);
 
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 
@@ -88,6 +66,11 @@ void CPlayer::Update()
 	if (!m_ShowFlg)
 	{
 		return;
+	}
+	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	if (invincible > 0.0f)
+	{
+		invincible -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
 	}
 	Sample::CActorObject::Update();
 }
@@ -116,7 +99,6 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
-	//auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 
 	auto& transform = m_Actor->GetTransform();
@@ -125,7 +107,9 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
 
+	//必殺技ゲージ獲得
 	AddUltGauge(1.0f);
+
 	if (hp <= 0)
 	{
 		hp = 0;
@@ -140,4 +124,10 @@ void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE le
 		m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 	}
 
+}
+
+bool CPlayer::IsInvincible() const
+{
+	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }

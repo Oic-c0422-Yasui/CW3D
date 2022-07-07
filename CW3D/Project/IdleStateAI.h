@@ -12,12 +12,16 @@ namespace Sample {
 	 */
 	class IdleStateAI : public StateAI
 	{
+	private:
+		bool			attackFlg;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		IdleStateAI()
-			: StateAI() {
+			: StateAI()
+			, attackFlg(false)
+		{
 		}
 
 		/**
@@ -33,6 +37,7 @@ namespace Sample {
 		 * @brief		開始
 		 */
 		void Start() override {
+			attackFlg = false;
 		}
 
 		/**
@@ -45,7 +50,7 @@ namespace Sample {
 			//警戒ボックス
 			CAABB collider;
 			collider.SetPosition(transform->GetPosition());
-			collider.Size = Vector3(3, 1, 1.5);
+			collider.Size = Vector3(5, 1, 4.5);
 			
 			//警戒範囲内に入ってきたら移動
 			if (CCollision::Collision(player->GetCollider(), collider))
@@ -57,19 +62,26 @@ namespace Sample {
 				}
 			}
 			//停止中にランダムで適当に逆方向入力
-			else if (CUtilities::Random(100) == 0)
+			else if (CUtilities::Random(50) == 0)
 			{
 				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
 					transform->IsReverse() ? 1.0f : -1.0f);
 			}
 			//攻撃ボックス
 
-			collider.Size = Vector3(1.5, 1, 1);
+			collider.Size = Vector3(1.5f, 1, 1.0f);
 			//攻撃範囲内に入ってきたら攻撃
-			if (CCollision::Collision(player->GetCollider(), collider))
-			{
-				Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
-			}
+			/*if (!attackFlg)
+			{*/
+				if (CCollision::Collision(player->GetCollider(), collider) && CUtilities::Random(15) == 0)
+				{
+					if (!Input()->IsPush(INPUT_KEY_ATTACK))
+					{
+						Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
+						attackFlg = true;
+					}
+				}
+			//}
 		}
 
 		/**
