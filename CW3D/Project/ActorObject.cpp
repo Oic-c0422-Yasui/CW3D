@@ -37,6 +37,7 @@ void CActorObject::Update()
 	m_Actor->Update();
 
 	//ˆÚ“®§ŒÀ
+	m_Actor->GetTransform()->ClipX(-36.0f, 132.0f);
 	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
 	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
 

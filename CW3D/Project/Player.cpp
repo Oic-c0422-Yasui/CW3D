@@ -47,7 +47,7 @@ bool CPlayer::Load()
 void CPlayer::Initialize()
 {
 	m_ShowFlg = true;
-	m_Actor->SetPosition(Vector3(0, 0,0));
+	m_Actor->SetPosition(Vector3(-30, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
 	m_ColliderSize = Vector3(0.5f, 0.8f, 0.5f);
@@ -59,6 +59,9 @@ void CPlayer::Initialize()
 	matWorld = m_Actor->GetMatrix();
 	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
+	//ƒQ[ƒW‰Šú‰»
+	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	gauge = 0.0f;
 }
 
 void CPlayer::Update()

@@ -23,8 +23,8 @@ namespace Sample {
 		 */
 		bool Create(const AnyParameterMapPtr& param) {
 
-			param->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
-			param->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 800);
+			param->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 120);
+			param->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 120);
 			param->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 			param->Add<int>(PARAMETER_KEY_ATTACK, 25);
 			param->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);

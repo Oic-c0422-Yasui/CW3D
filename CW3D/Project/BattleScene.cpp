@@ -6,10 +6,12 @@
 #include	"CollisionPlayerEnemy.h"
 #include	"CollisionShotEnemy.h"
 #include	"CollisionShotPlayer.h"
+#include	"CollisionObjectPlayer.h"
+#include	"CollisionObjectEnemy.h"
 #include	"NomalCamera.h"
 #include	"StateInput.h"
 #include	"ActorObjectManager.h"
-
+#include	"Stage1.h"
 
 
 using namespace Sample;
@@ -80,6 +82,11 @@ bool CBattleScene::Load()
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/fire.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect6", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Track.efk");
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("ClosedEffect", effect);
+
+	StagePtr stage = std::make_shared<CStage1>();
+	m_StageManager.Load(stage);
 
 	//プレイヤー読み込み
 	m_Player->SetInput(input);
@@ -94,11 +101,30 @@ bool CBattleScene::Load()
 	m_PlayerUIRender = std::make_shared<CPlayerUIRender>();
 	m_PlayerUIRender->Load();
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
-	//ステージ読み込み
-	if (m_Stage.Load("Stage/stage.mom") != MOFMODEL_RESULT_SUCCEEDED)
+
+	auto stg = m_StageManager;
+	for (int i = 0; i < stg.GetDivCount(); i++)
 	{
-		return false;
+		for (int j = 0; j < stg.GetDivEnemyCount(i); j++)
+		{
+			auto& ene = stg.GetEnemy(i, j);
+			m_Enemys.push_back(ene);
+			ene->Load();
+		}
 	}
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		//敵をマネージャーに登録
+		ActorObjectManagerInstance.Add(m_Enemys[i]);
+
+		//敵のHPバー生成＆オブザーバーに登録
+		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
+		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
+	}
+
+	
+
+
 
 	//カメラ初期化
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
@@ -119,32 +145,16 @@ void CBattleScene::Initialize()
 	m_Player->Initialize();
 	m_PlayerUIRender->Initialize();
 
-	for (int i = 0; i < m_Enemys.size(); i++)
+	for (auto& enemy : m_Enemys)
 	{
-		m_Enemys[i].reset();
+		enemy->Initialize();
 	}
-	m_Enemys.clear();
-
-	CEnemyBuilder zb;
-	m_Enemys.push_back(zb.Create(Vector3(2, 0, 5)));
-	m_Enemys.push_back(zb.Create(Vector3(2, 0, 1)));
-	m_Enemys.push_back(zb.Create(Vector3(5, 0, 5)));
-	m_Enemys.push_back(zb.Create(Vector3(6, 0, 1)));
-	m_Enemys.push_back(zb.Create(Vector3(7, 0, 2)));
-	m_Enemys.push_back(zb.Create(Vector3(1, 0, 3)));
-	m_Enemys.push_back(zb.Create(Vector3(-3, 0, 6)));
-	m_Enemys.push_back(zb.Create(Vector3(-5, 0, 4)));
-	m_Enemys.push_back(zb.Create(Vector3(-6, 0, 2)));
-	m_Enemys.push_back(zb.Create(Vector3(-1, 0, 3)));
+	m_StageManager.Initialize();
+	
 	
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
-		//敵をマネージャーに登録
-		ActorObjectManagerInstance.Add(m_Enemys[i]);
-
-		//敵のHPバー生成＆オブザーバーに登録
-		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
-		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
+		
 		m_EnemysHPRender[i]->Initialize();
 	}
 
@@ -166,25 +176,44 @@ void CBattleScene::Update()
 	{
 		m_Enemys[i]->Update();
 	}
+	m_StageManager.Update();
 	ShotManagerInstance.Update();
 
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		CCollision::CollisionObj(m_Player, m_Enemys[i]);
-		if (m_Enemys[i]->IsInvincible())
+		
+		if (!m_Enemys[i]->IsInvincible())
 		{
-			continue;
+			for (int j = i + 1; j < m_Enemys.size(); j++)
+			{
+				CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
+			}
+			for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
+			{
+				auto& shot = ShotManagerInstance.GetShot(j);
+				CCollision::CollisionObj(shot, m_Enemys[i]);
+			}
 		}
-		for (int j = i + 1; j < m_Enemys.size(); j++)
+		for (int j = 0; j < m_StageManager.GetDivCount(); j++)
 		{
-			CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-		}
-		for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
-		{
-			auto& shot = ShotManagerInstance.GetShot(j);
-			CCollision::CollisionObj(shot, m_Enemys[i]);
+			for (int k = 0; k < m_StageManager.GetDivObjCount(j); k++)
+			{
+				ObjectPtr obj = m_StageManager.GetObj(j,k);
+				CCollision::CollisionObj(m_Enemys[i], obj);
+			}
 		}
 	}
+
+	for (int i = 0; i < m_StageManager.GetDivCount(); i++)
+	{
+		for (int j = 0; j < m_StageManager.GetDivObjCount(i); j++)
+		{
+			ObjectPtr obj = m_StageManager.GetObj(i, j);
+			CCollision::CollisionObj(m_Player, obj);
+		}
+	}
+
 	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
 		auto& shot = ShotManagerInstance.GetShot(i);
@@ -202,8 +231,7 @@ void CBattleScene::Update()
 
 void CBattleScene::Render()
 {
-	CMatrix44 stgMat;
-	m_Stage.Render(stgMat);
+	m_StageManager.Render();
 	m_Player->Render();
 	for (auto& enemy : m_Enemys)
 	{
@@ -216,7 +244,8 @@ void CBattleScene::Render()
 
 void CBattleScene::RenderDebug()
 {
-	
+	m_StageManager.RenderDebug();
+
 	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
 		if (!ShotManagerInstance.GetShot(i)->IsShow() || !ShotManagerInstance.GetShot(i)->GetCollideFlg())
@@ -308,13 +337,12 @@ void CBattleScene::Render2DDebug()
 
 void CBattleScene::Release()
 {
+	m_StageManager.Release();
 	m_Player->Release();
 	m_Player.reset();
 
 	ServiceLocator<CPlayer>::GetInstance().Release();
 
-
-	m_Stage.Release();
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		m_Enemys[i].reset();

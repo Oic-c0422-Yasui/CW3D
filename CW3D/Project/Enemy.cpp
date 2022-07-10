@@ -7,11 +7,14 @@
 
 using namespace Sample;
 
-CEnemy::CEnemy()
+CEnemy::CEnemy(const Vector3& pos)
 	: Sample::CActorObject()
 	,m_Input()
 	,m_AI()
+	, m_DeadFlg(false)
+	, m_DefaultPos(pos)
 {
+	SetType(CHARA_ENEMY);
 }
 
 CEnemy::~CEnemy()
@@ -52,6 +55,7 @@ bool CEnemy::Load()
 	m_Position = m_Actor->GetPosition();
 	m_HPShowFlg = true;
 
+
 	CharacterAICreatorPtr aiCreator = std::make_shared<CharacterAICreator>();
 
 	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
@@ -59,23 +63,23 @@ bool CEnemy::Load()
 	return true;
 }
 
-void CEnemy::Initialize(CVector3 pos)
+void CEnemy::Initialize()
 {
-	m_Actor->SetPosition(pos);
-	m_Actor->SetRotate(Vector3(0, 0, 0));
+	m_Actor->SetPosition(m_DefaultPos);
+	m_Actor->SetRotate(Vector3(0, MOF_ToDegree(90), 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
 	m_ColliderSize.x = 0.5f;
 	m_ColliderSize.y = 0.8f;
 	m_ColliderSize.z = 0.5f;
 	m_ColliderOffset.y = 1.0f;
 
-	m_Collider->SetPosition(pos + Vector3(0, 5.0f, 0));
+	m_Collider->SetPosition(m_DefaultPos + Vector3(0, 5.0f, 0));
 	m_Collider->SetRadius(0.6f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 	matWorld = m_Actor->GetMatrix();
 	m_ShowFlg = true;
 	m_DeadFlg = false;
-	SetType(CHARA_ENEMY);
+	m_HPShowFlg = true;
 
 	//‘Šè‚ªŠl“¾‚·‚é•KE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
@@ -147,7 +151,7 @@ void CEnemy::Release()
 	m_Collider.reset();
 }
 
-void CEnemy::Damage(const Vector3& direction,Vector3 power,int damage,BYTE level)
+void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE level)
 {
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);

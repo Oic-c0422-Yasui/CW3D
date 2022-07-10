@@ -165,7 +165,6 @@ namespace Sample
 			return from + (to - from) * t;
 		}
 
-		
 	};
 
 	using AnimV3Ptr = std::shared_ptr<MyUtilities::ANIMV3_DATA>;

@@ -1,0 +1,199 @@
+{
+  "Divisions": [
+    {
+      "Enemys": [
+        {
+          "PosX": 0,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": -13,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": -8,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": -5,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": -25,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": 1,
+          "PosY": 0,
+          "PosZ": 3
+        },
+        {
+          "PosX": -15,
+          "PosY": 0,
+          "PosZ": 6
+        },
+        {
+          "PosX": -6,
+          "PosY": 0,
+          "PosZ": 4
+        },
+        {
+          "PosX": -20,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": -24,
+          "PosY": 0,
+          "PosZ": 3
+        }
+      ],
+      "Objects": [
+        {
+          "PosX": 9,
+          "PosY": 1,
+          "PosZ": 0,
+          "SizeX": 1,
+          "SizeY": 30,
+          "SizeZ": 18
+        }
+      ]
+    },
+
+    {
+      "Enemys": [
+        {
+          "PosX": 40,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": 15,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": 17,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": 30,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": 35,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": 40,
+          "PosY": 0,
+          "PosZ": 8
+        },
+        {
+          "PosX": 22,
+          "PosY": 0,
+          "PosZ": 6
+        },
+        {
+          "PosX": 32,
+          "PosY": 0,
+          "PosZ": 4
+        },
+        {
+          "PosX": 27,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": 14,
+          "PosY": 0,
+          "PosZ": 3
+        }
+      ],
+      "Objects": [
+        {
+          "PosX": 59,
+          "PosY": 1,
+          "PosZ": 0,
+          "SizeX": 1,
+          "SizeY": 30,
+          "SizeZ": 18
+        }
+      ]
+    },
+
+
+    {
+      "Enemys": [
+        {
+          "PosX": 62,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": 90,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": 70,
+          "PosY": 0,
+          "PosZ": 5
+        },
+        {
+          "PosX": 72,
+          "PosY": 0,
+          "PosZ": 1
+        },
+        {
+          "PosX": 71,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": 67,
+          "PosY": 0,
+          "PosZ": 3
+        },
+        {
+          "PosX": 80,
+          "PosY": 0,
+          "PosZ": 6
+        },
+        {
+          "PosX": 85,
+          "PosY": 0,
+          "PosZ": 4
+        },
+        {
+          "PosX": 76,
+          "PosY": 0,
+          "PosZ": 2
+        },
+        {
+          "PosX": 92,
+          "PosY": 0,
+          "PosZ": 3
+        }
+      ],
+      "Objects": [
+        {
+          "PosX": 120,
+          "PosY": 1,
+          "PosZ": 0,
+          "SizeX": 1,
+          "SizeY": 30,
+          "SizeZ": 18
+        }
+      ]
+    }
+  ]
+}

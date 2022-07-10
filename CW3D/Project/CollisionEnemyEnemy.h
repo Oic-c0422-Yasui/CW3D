@@ -11,8 +11,11 @@ namespace Sample
 	inline void CCollision::CollisionObj<>(CEnemy& en1, CEnemy& en2) {
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!en1.IsShow() || !en2.IsShow()) { return; }
+
+		CVector3 sv = en1.GetPosition() - en2.GetPosition();
+
 		//–„‚Ü‚è–hŽ~”»’è
-		CollisionActorObject(en1, en2);
+		//CollisionActorObject(en1, en2);
 	}
 
 	/**

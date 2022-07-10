@@ -19,6 +19,7 @@
 
 #include	"Collision.h"
 #include	"PlayerUIRender.h"
+#include	"StageManager.h"
 
 class CBattleScene : public CSceneBase
 {
@@ -27,11 +28,7 @@ private:
 
 	std::vector<Sample::EnemyPtr> m_Enemys;
 
-	CMeshContainer	m_PlayerMesh;
-
 	CDirectionalLight m_Light;
-
-	CMeshContainer	m_Stage;
 
 	CFont m_Font;
 
@@ -39,6 +36,8 @@ private:
 	Sample::PlayerUIRenderPtr m_PlayerUIRender;
 
 	Sample::CBattleUICreater m_UICreater;
+
+	Sample::CStageManager m_StageManager;
 
 public:
 	CBattleScene();

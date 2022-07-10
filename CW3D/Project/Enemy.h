@@ -36,11 +36,13 @@ namespace Sample
 		ZombieActionCreator m_ActionCreator;
 		ZombieStateCreator	m_StateCreator;
 
+		CVector3 m_DefaultPos;
+
 	public:
-		CEnemy();
+		CEnemy(const Vector3& pos);
 		~CEnemy() override;
 		bool Load();
-		void Initialize(CVector3 pos);
+		void Initialize();
 		void Update() override;
 		void Render() override;
 		void RenderDebug();
@@ -48,31 +50,24 @@ namespace Sample
 		void Render2DDebug();
 		void Release() override;
 
-		void Damage(const Vector3& direction, Vector3 power, int damage,BYTE level);
+		void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
 
 		bool IsInvincible() const;
 
-		/*CSphere GetCollider() {
-			m_Collider->SetPosition(m_Position.Get() + Vector3(0, 0.7f, 0));
-			return m_Collider->GetCollider();
-		}*/
 
-		float GetSize()
-		{
-			return m_Collider->GetRadius();
-		}
 
-		bool IsShow()
+		bool IsShow() const noexcept
 		{
 			return m_ShowFlg;
 		}
 
-		void SetShow(bool isShow)
+		void SetShow(bool isShow) noexcept
 		{
+			m_HPShowFlg = isShow;
 			m_ShowFlg = isShow;
 		}
 
-		const Vector3& GetPosition()
+		const Vector3& GetPosition() const noexcept
 		{
 			return m_Position.Get();
 		}

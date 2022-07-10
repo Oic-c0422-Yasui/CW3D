@@ -7,11 +7,12 @@ namespace Sample
 	class CEnemyBuilder {
 	public:
 		EnemyPtr Create(Vector3 pos) {
-			EnemyPtr enemy = std::make_shared<CEnemy>();
+			EnemyPtr enemy = std::make_shared<CEnemy>(pos);
 			enemy->Load();
-			enemy->Initialize(pos);
 			return enemy;
 		}
+
+
 	};
 }
 

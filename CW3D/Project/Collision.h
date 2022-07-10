@@ -1,6 +1,7 @@
 #pragma once
 #include "GameDefine.h"
 #include "ActorObject.h"
+#include "Object.h"
 
 namespace Sample
 {
@@ -117,7 +118,7 @@ namespace Sample
 			return aabb1.CollisionAABB(aabb2);
 		}
 
-		//敵と敵との当たり判定
+		//アクターとアクターとの当たり判定
 		static void CollisionActorObject(CActorObject& obj1, CActorObject& obj2)
 		{
 			if (!obj1.IsShow() || !obj2.IsShow())
@@ -176,6 +177,28 @@ namespace Sample
 				//Vector3 
 				
 				
+
+			}
+		}
+
+		//オブジェクトとアクターとの当たり判定
+		static void CollisionObject(CActorObject& actor, CObject& obj)
+		{
+			if (!actor.IsShow() || !obj.IsShow())
+			{
+				return;
+			}
+			//埋まり防止判定
+			const Vector3& pos1 = actor.GetPosition();
+			const Vector3& pos2 = obj.GetPosition();
+			const CAABB& size1 = actor.GetCollider();
+			const CAABB& size2 = obj.GetCollider();
+			if (Collision(size1, size2))
+			{
+
+				Vector3 mv1 = pos1 - actor.GetPrevPos();
+
+				actor.SetPosition(Vector3(actor.GetPrevPos().x, pos1.y, pos1.z + mv1.z));
 
 			}
 		}

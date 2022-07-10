@@ -63,6 +63,19 @@ namespace Sample {
 				{
 					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, transform->IsReverse() ? -1.0f : 1.0f);
 				}
+				//ƒvƒŒƒCƒ„[‚Æ‚P‚Q‚ˆÈã—£‚ê‚Ä‚¢‚éê‡
+				else if (fabsf(player->GetPosition().x - transform->GetPosition().x) > 12.0f)
+				{
+					//ˆÚ“®“ü—Í
+					float sx = player->GetPosition().x - transform->GetPosition().x;
+					float sz = player->GetPosition().z - transform->GetPosition().z;
+					sx /= 300.0f;
+					sz /= 10.0f;
+					sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
+					sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
+					Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
+					Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
+				}
 				return;
 			}
 			else
@@ -76,18 +89,25 @@ namespace Sample {
 			sz /= 10.0f;
 			sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
 			sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
-			Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
-			Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
+			
 			//UŒ‚ƒ{ƒbƒNƒX
 			collider.Size = Vector3(1.5f, 1, 1.0f);
 			//UŒ‚”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
 			/*if (!attackFlg)
 			{*/
-				if (CCollision::Collision(player->GetCollider(), collider) && CUtilities::Random(15) == 0)
+			if (CCollision::Collision(player->GetCollider(), collider))
+			{
+				if (CUtilities::Random(5) == 0)
 				{
 					Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
 					attackFlg = true;
 				}
+			}
+			else
+			{
+				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
+				Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
+			}
 			//}
 			
 		}
