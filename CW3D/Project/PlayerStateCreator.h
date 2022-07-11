@@ -29,7 +29,7 @@
 #include "DownState.h"
 #include "DeadState.h"
 #include "EscapeState.h"
-
+#include "ClearPoseState.h"
 
 
 
@@ -199,6 +199,7 @@ namespace Sample {
 					,GameFrameTime * 0.0f
 					,GameFrameTime * 10.0f
 				}));
+			stateMachine->AddState(State::Create<ClearPoseState>(actor, input));
 
 			return true;
 		}

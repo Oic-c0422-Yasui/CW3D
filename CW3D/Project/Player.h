@@ -105,6 +105,8 @@ public:
 		m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
 		return m_Collider;
 	}
+
+	void SetClearPose();
 };
 
 using PlayerPtr = std::shared_ptr<CPlayer>;

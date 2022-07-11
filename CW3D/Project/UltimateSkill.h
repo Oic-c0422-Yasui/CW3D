@@ -35,6 +35,13 @@ namespace Sample
 			currentGauge -= m_SkillData.ExpendGauge.Get();
 		}
 
+		void Reset() override
+		{
+			CSkill::Reset();
+			m_CanUseFlg = false;
+			m_MaxGaugeFlg = false;
+		}
+
 		void Update() override
 		{
 			if (!m_CanUseFlg.Get() && !m_StartFlg)

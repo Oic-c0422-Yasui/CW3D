@@ -58,7 +58,6 @@ namespace Sample {
 			{
 				m_CurrentTime += CUtilities::GetFrameSecond();
 				auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-				//3
 				alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_Parameter.finishTime);
 			}
 		}

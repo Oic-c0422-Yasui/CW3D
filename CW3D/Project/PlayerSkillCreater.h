@@ -34,7 +34,7 @@ namespace Sample {
 			skill->SetSkillData(skillData);
 
 			skill = actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, "Skill2", STATE_KEY_SKILL3_1, STATE_KEY_JUMPSKILL3_1);
-			skill->SetSkillData(125, 5);
+			skill->SetSkillData(125, 8);
 
 			Sample::SKillPtr ultSkill = std::make_shared<Sample::CUltimateSkill>(actor);
 			skill = actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, "Skill3", STATE_KEY_SKILL1_1, STATE_KEY_SKILL1_1, ultSkill);

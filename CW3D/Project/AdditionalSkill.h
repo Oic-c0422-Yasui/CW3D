@@ -11,6 +11,7 @@ namespace Sample
 	public:
 		CAdditionalSkill()
 			: CSkill()
+			, m_AddStartTime(0.0f)
 
 		{
 		}
@@ -30,6 +31,12 @@ namespace Sample
 				m_DelayAddFlg = true;
 				AddInput();
 			}
+		}
+
+		void Reset() override
+		{
+			CSkill::Reset();
+			m_AddStartTime = 0.0f;
 		}
 
 		void Update() override

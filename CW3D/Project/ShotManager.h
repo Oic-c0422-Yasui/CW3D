@@ -46,6 +46,13 @@ namespace Sample
 			m_Shots.erase(removeIt, m_Shots.end());
 		}
 
+		void Reset()
+		{
+			for (auto& shot : m_Shots)
+			{
+				shot->SetShow(false);
+			}
+		}
 
 		void Update()
 		{

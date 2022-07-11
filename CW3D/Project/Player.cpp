@@ -3,9 +3,11 @@
 
 
 
-CPlayer::CPlayer():
-	Sample::CActorObject(),
-	m_pInput()
+CPlayer::CPlayer()
+	: Sample::CActorObject()
+	, m_pInput()
+
+
 {
 	SetType(CHARA_PLAYER);
 }
@@ -47,6 +49,7 @@ bool CPlayer::Load()
 void CPlayer::Initialize()
 {
 	m_ShowFlg = true;
+	m_DeadFlg = false;
 	m_Actor->SetPosition(Vector3(-30, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
@@ -62,6 +65,14 @@ void CPlayer::Initialize()
 	//ƒQ[ƒW‰Šú‰»
 	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
+	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	hp = m_MaxHP.Get();
+	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	alpha = 1.0f;
+	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	invincible = 0.0f;
+
+	m_Actor->GetSkillController()->Reset();
 }
 
 void CPlayer::Update()
@@ -74,6 +85,14 @@ void CPlayer::Update()
 	if (invincible > 0.0f)
 	{
 		invincible -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+	}
+	if (m_DeadFlg)
+	{
+		auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+		if (alpha <= 0)
+		{
+			m_ShowFlg = false;
+		}
 	}
 	Sample::CActorObject::Update();
 }
@@ -133,4 +152,12 @@ bool CPlayer::IsInvincible() const
 {
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
+}
+
+void CPlayer::SetClearPose()
+{
+	if (!m_StateMachine->IsState(STATE_KEY_CLEARPOSE))
+	{
+		m_StateMachine->ChangeState(STATE_KEY_CLEARPOSE);
+	}
 }

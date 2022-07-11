@@ -82,6 +82,10 @@ namespace Sample
 		{
 			return m_UltBoostMag;
 		}
+		bool IsDead() const noexcept
+		{
+			return m_DeadFlg;
+		}
 		/**
 		 * @brief		セッター
 		 */

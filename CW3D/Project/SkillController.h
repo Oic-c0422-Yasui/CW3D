@@ -46,6 +46,14 @@ namespace Sample
 			}
 		}
 
+		void Reset()
+		{
+			for (auto& skill : m_Skills)
+			{
+				skill->Reset();
+			}
+		}
+
 		size_t GetCount() const noexcept
 		{
 			return m_Skills.size();

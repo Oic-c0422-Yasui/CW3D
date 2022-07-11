@@ -16,8 +16,11 @@
 
 using namespace Sample;
 
+
 CBattleScene::CBattleScene()
 	: m_Player(std::make_shared<CPlayer>())
+	, m_GameClearFlg(false)
+	, m_GameOverFlg(false)
 {
 }
 
@@ -27,9 +30,10 @@ CBattleScene::~CBattleScene()
 
 bool CBattleScene::Load()
 {
+	//インプット読み込み
 	auto input = InputManagerInstance.AddInput<Sample::MofInput>();
 	InputManagerInstance.AddInput<Sample::StateInput>();
-	
+
 	//キーボード
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
@@ -39,10 +43,12 @@ bool CBattleScene::Load()
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
+	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	//パッド
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
+
 
 	//メッシュ読み込み
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
@@ -51,7 +57,6 @@ bool CBattleScene::Load()
 		return false;
 	}
 	ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
-
 	tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
@@ -85,6 +90,7 @@ bool CBattleScene::Load()
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Track.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("ClosedEffect", effect);
 
+	//ステージ読み込み
 	StagePtr stage = std::make_shared<CStage1>();
 	m_StageManager.Load(stage);
 
@@ -97,16 +103,19 @@ bool CBattleScene::Load()
 	//サービスロケーターの設定
 	ServiceLocator<CPlayer>::SetService(m_Player);
 
-	
+	//プレイヤーUI読み込み
 	m_PlayerUIRender = std::make_shared<CPlayerUIRender>();
 	m_PlayerUIRender->Load();
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 
+
+	//敵読み込み
 	auto stg = m_StageManager;
 	for (int i = 0; i < stg.GetDivCount(); i++)
 	{
 		for (int j = 0; j < stg.GetDivEnemyCount(i); j++)
 		{
+			//ステージから敵のポインターを受け取る
 			auto& ene = stg.GetEnemy(i, j);
 			m_Enemys.push_back(ene);
 			ene->Load();
@@ -123,9 +132,6 @@ bool CBattleScene::Load()
 	}
 
 	
-
-
-
 	//カメラ初期化
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
@@ -134,6 +140,7 @@ bool CBattleScene::Load()
 	ActorObjectManagerInstance.Add(m_Player);
 	
 
+	m_Font.Create(225, "MS gosikku");
 
 	tempMesh.reset();
 
@@ -142,6 +149,8 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
+	EffectControllerInstance.Reset();
+
 	m_Player->Initialize();
 	m_PlayerUIRender->Initialize();
 
@@ -164,61 +173,67 @@ void CBattleScene::Initialize()
 	m_Light.SetDiffuse(MOF_XRGB(220, 220, 220));
 	m_Light.SetSpeculer(MOF_XRGB(255, 255, 255));
 
-	m_Font.Create(225, "MS gosikku");
+	m_GameClearFlg = false;
+	m_GameOverFlg = false;
+
+	ShotManagerInstance.Reset();
+	CameraControllerInstance.SetDefault();
+	TimeControllerInstance.Reset();
+
 }
 
 void CBattleScene::Update()
 {
 	//入力更新
 	InputManagerInstance.Update();
+
+	if (m_GameClearFlg || m_GameOverFlg)
+	{
+		//ゲームオーバーORクリア時、リトライ可能
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+		{
+			Initialize();
+			return;
+		}
+	}
+
 	m_Player->Update();
+
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
 		m_Enemys[i]->Update();
 	}
+
 	m_StageManager.Update();
+
 	ShotManagerInstance.Update();
 
-	for (int i = 0; i < m_Enemys.size(); i++)
+	if (!m_GameClearFlg && !m_GameOverFlg)
 	{
-		CCollision::CollisionObj(m_Player, m_Enemys[i]);
-		
-		if (!m_Enemys[i]->IsInvincible())
+		Collision();
+	}
+	int count = 0;
+	for (auto enemy : m_Enemys)
+	{
+		if (!enemy->IsShow() && enemy->IsDead())
 		{
-			for (int j = i + 1; j < m_Enemys.size(); j++)
-			{
-				CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-			}
-			for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
-			{
-				auto& shot = ShotManagerInstance.GetShot(j);
-				CCollision::CollisionObj(shot, m_Enemys[i]);
-			}
+			count++;
 		}
-		for (int j = 0; j < m_StageManager.GetDivCount(); j++)
+	}
+	if (count >= m_Enemys.size())
+	{
+		if (!m_GameClearFlg)
 		{
-			for (int k = 0; k < m_StageManager.GetDivObjCount(j); k++)
-			{
-				ObjectPtr obj = m_StageManager.GetObj(j,k);
-				CCollision::CollisionObj(m_Enemys[i], obj);
-			}
+			m_Player->SetClearPose();
+			m_GameClearFlg = true;
 		}
+	}
+	if (!m_Player->IsShow() && m_Player->IsDead())
+	{
+		m_GameOverFlg = true;
 	}
 
-	for (int i = 0; i < m_StageManager.GetDivCount(); i++)
-	{
-		for (int j = 0; j < m_StageManager.GetDivObjCount(i); j++)
-		{
-			ObjectPtr obj = m_StageManager.GetObj(i, j);
-			CCollision::CollisionObj(m_Player, obj);
-		}
-	}
-
-	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
-	{
-		auto& shot = ShotManagerInstance.GetShot(i);
-		CCollision::CollisionObj(shot, m_Player);
-	}
+	
 	EffectManagerInstance.Update();
 	EffectControllerInstance.Update();
 	TimeControllerInstance.Update();
@@ -311,7 +326,10 @@ void CBattleScene::Render2D()
 	//プレイヤーのUI描画
 	m_PlayerUIRender->Render();
 
-
+	if (m_GameClearFlg || m_GameOverFlg)
+	{
+		CGraphicsUtilities::RenderString(20, 1000, "F2でリトライ");
+	}
 
 	if (count >= m_Enemys.size())
 	{
@@ -369,4 +387,58 @@ void CBattleScene::Release()
 	TimeControllerInstance.Release();
 	CameraControllerInstance.Release();
 	ActorObjectManagerInstance.Release();
+}
+
+void CBattleScene::Collision()
+{
+	//敵の当たり判定
+	for (int i = 0; i < m_Enemys.size(); i++)
+	{
+		//敵とプレイヤー
+		CCollision::CollisionObj(m_Player, m_Enemys[i]);
+
+		if (!m_Enemys[i]->IsInvincible())
+		{
+			for (int j = i + 1; j < m_Enemys.size(); j++)
+			{
+				//敵と敵
+				CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
+			}
+			for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
+			{
+				//敵と弾
+				auto& shot = ShotManagerInstance.GetShot(j);
+				CCollision::CollisionObj(shot, m_Enemys[i]);
+			}
+		}
+		for (int j = 0; j < m_StageManager.GetDivCount(); j++)
+		{
+			for (int k = 0; k < m_StageManager.GetDivObjCount(j); k++)
+			{
+				//敵とオブジェクト
+				ObjectPtr obj = m_StageManager.GetObj(j, k);
+				CCollision::CollisionObj(m_Enemys[i], obj);
+			}
+		}
+	}
+
+	//プレイヤーの当たり判定
+	for (int i = 0; i < m_StageManager.GetDivCount(); i++)
+	{
+		for (int j = 0; j < m_StageManager.GetDivObjCount(i); j++)
+		{
+			//プレイヤーとオブジェクト
+			ObjectPtr obj = m_StageManager.GetObj(i, j);
+			CCollision::CollisionObj(m_Player, obj);
+		}
+	}
+
+		for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+		{
+			//プレイヤーと弾
+			auto& shot = ShotManagerInstance.GetShot(i);
+			CCollision::CollisionObj(shot, m_Player);
+		}
+
+	
 }

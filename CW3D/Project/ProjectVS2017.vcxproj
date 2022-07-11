@@ -146,6 +146,8 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CharacterAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
+    <ClInclude Include="ClearPoseAction.h" />
+    <ClInclude Include="ClearPoseState.h" />
     <ClInclude Include="CollisionObjectEnemy.h" />
     <ClInclude Include="CollisionObjectPlayer.h" />
     <ClInclude Include="Division.h" />

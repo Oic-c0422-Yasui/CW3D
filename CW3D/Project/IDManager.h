@@ -6,7 +6,7 @@
 
 namespace Sample
 {
-
+	//アクターオブジェクトを識別するID
 	class CMyID
 	{
 	private:
@@ -36,6 +36,10 @@ namespace Sample
 			return CMyID(m_IDSeed++);
 		}
 
+		void Reset()
+		{
+			m_IDSeed = 0;
+		}
 	};
 }
 //簡易アクセス用

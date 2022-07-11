@@ -34,6 +34,7 @@
 #include	"DamageAction.h"
 #include	"DeadAction.h"
 #include	"EscapeAction.h"
+#include	"ClearPoseAction.h"
 
 
 namespace Sample {
@@ -368,14 +369,14 @@ namespace Sample {
 			actor->AddAction(Action::Create<DeadAction>(
 				DeadAction::Parameter{
 					AnimParam{
-						STATE_KEY_DAMAGE,
+						STATE_KEY_DOWN,
 						0.0f,
 						1.2f,
 						0.1f,
 						false
 					},
 					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
-					3.0f,
+					2.0f,
 				}));
 
 			//スキル
@@ -455,6 +456,27 @@ namespace Sample {
 					},
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
 					Vector3(PLAYER_MAXSPEED * 1.4f, 1.0f, PLAYER_MAXSPEED * 1.4f),
+				}));
+			//クリアポーズ
+			actor->AddAction(Action::Create<ClearPoseAction>(
+				ClearPoseAction::Parameter{
+					AnimParam{
+						STATE_KEY_CLEARPOSE,
+						0.0f,
+						1.0f,
+						0.0f,
+						true
+					},
+					AnimParam{
+						STATE_KEY_JUMP,
+						0.83f,
+						1.0f,
+						0.2f,
+						false
+					},
+					Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
+					GRAVITY,
+					GRAVITYMAX,
 				}));
 			return true;
 		}

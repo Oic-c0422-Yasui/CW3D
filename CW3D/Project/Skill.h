@@ -89,6 +89,17 @@ namespace Sample
 			m_StartFlg = false;
 		}
 
+		virtual void Reset()
+		{
+			m_StartFlg = false;
+			m_CanUseFlg = true;
+			m_CT = 0.0f;
+			m_AddCT = 0.0f;
+			m_AddCount = 0;
+			m_AddFlg = false;
+			m_DelayAddFlg = false;
+		}
+
 		virtual void Start()
 		{
 			m_CT = m_SkillData.CT.Get();

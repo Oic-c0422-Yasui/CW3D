@@ -150,7 +150,7 @@ namespace Sample {
 						false
 					},
 					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
-					3.0f,
+					1.5f,
 				}));
 			return true;
 		}

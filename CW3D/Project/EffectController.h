@@ -86,6 +86,14 @@ namespace Sample
 			m_Effects.erase(removeIt, m_Effects.end());
 		}
 
+		void Reset()
+		{
+			for (auto& effect : m_Effects)
+			{
+				effect->SetStop(true);
+			}
+		}
+
 	};
 	//簡易アクセス用
 	#define EffectControllerInstance 	Sample::CEffectController::GetInstance()

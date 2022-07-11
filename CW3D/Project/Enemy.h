@@ -2,7 +2,6 @@
 #include "GameDefine.h"
 #include	"InputManager.h"
 #include	"ResourceManager.h"
-#include	"AttackCollider.h"
 #include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
 #include	"Observer.h"
@@ -21,12 +20,7 @@ namespace Sample
 
 		InputPtr m_Input;
 
-
-		AttackColliderPtr m_Collider;
-
 		CharacterAIPtr	m_AI;
-
-		bool	m_DeadFlg;
 
 		ParameterHandle< ReactiveParameter<int> > m_HP;
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
@@ -53,7 +47,6 @@ namespace Sample
 		void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
 
 		bool IsInvincible() const;
-
 
 
 		bool IsShow() const noexcept

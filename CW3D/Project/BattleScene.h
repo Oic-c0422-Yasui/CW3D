@@ -39,6 +39,11 @@ private:
 
 	Sample::CStageManager m_StageManager;
 
+	bool m_GameClearFlg;
+	bool m_GameOverFlg;
+
+private:
+	void Collision();
 public:
 	CBattleScene();
 	~CBattleScene();
@@ -50,7 +55,6 @@ public:
 	void Render2D() override;
 	void Render2DDebug() override;
 	void Release();
-
 };
 
 

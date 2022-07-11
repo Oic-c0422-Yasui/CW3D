@@ -35,6 +35,7 @@ const std::string INPUT_KEY_SKILL1 = "Skill1";
 const std::string INPUT_KEY_SKILL2 = "Skill2";
 const std::string INPUT_KEY_SKILL3 = "Skill3";
 const std::string INPUT_KEY_ESCAPE = "Escape";
+const std::string INPUT_KEY_RETRY = "Retry";
 
 //ステートキーの名称
 constexpr char* STATE_KEY_MOVE = "Move";
@@ -65,6 +66,7 @@ constexpr char* STATE_KEY_JUMPSKILL2_1 = "JumpSkill2_1";
 constexpr char* STATE_KEY_SKILL3_1 = "Skill3_1";
 constexpr char* STATE_KEY_JUMPSKILL3_1 = "JumpSkill3_1";
 constexpr char* STATE_KEY_ESCAPE = "Escape";
+constexpr char* STATE_KEY_CLEARPOSE = "ClearPose";
 
 //パラメーターキーの名称
 const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";

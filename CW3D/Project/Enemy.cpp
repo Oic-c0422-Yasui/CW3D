@@ -11,7 +11,6 @@ CEnemy::CEnemy(const Vector3& pos)
 	: Sample::CActorObject()
 	,m_Input()
 	,m_AI()
-	, m_DeadFlg(false)
 	, m_DefaultPos(pos)
 {
 	SetType(CHARA_ENEMY);
@@ -26,7 +25,6 @@ bool CEnemy::Load()
 {
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
-	m_Collider = std::make_shared<Sample::CAttackCollider>();
 	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
 
 	if (m_pMesh == nullptr)
@@ -49,6 +47,8 @@ bool CEnemy::Load()
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 10);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE, 0.0f);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);
 
 	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
@@ -73,8 +73,6 @@ void CEnemy::Initialize()
 	m_ColliderSize.z = 0.5f;
 	m_ColliderOffset.y = 1.0f;
 
-	m_Collider->SetPosition(m_DefaultPos + Vector3(0, 5.0f, 0));
-	m_Collider->SetRadius(0.6f);
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 	matWorld = m_Actor->GetMatrix();
 	m_ShowFlg = true;
@@ -83,6 +81,15 @@ void CEnemy::Initialize()
 
 	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
+	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	gauge = 0.0f;
+	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	hp = m_MaxHP.Get();
+	m_HP = m_MaxHP.Get();
+	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	alpha = 1.0f;
+	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	invincible = 0.0f;
 }
 
 void CEnemy::Update()
@@ -148,7 +155,6 @@ void CEnemy::Render2DDebug()
 void CEnemy::Release()
 {
 	Sample::CActorObject::Release();
-	m_Collider.reset();
 }
 
 void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE level)
