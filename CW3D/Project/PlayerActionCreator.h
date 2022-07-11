@@ -35,6 +35,7 @@
 #include	"DeadAction.h"
 #include	"EscapeAction.h"
 #include	"ClearPoseAction.h"
+#include	"DropKickSkillAction.h"
 
 
 namespace Sample {
@@ -457,6 +458,23 @@ namespace Sample {
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
 					Vector3(PLAYER_MAXSPEED * 1.4f, 1.0f, PLAYER_MAXSPEED * 1.4f),
 				}));
+			//スキル
+			actor->AddAction(Action::Create<DropKickSkillAction>(
+				DropKickSkillAction::Parameter{
+					AnimParam{
+						STATE_KEY_DROPKICKSKILL,
+						0.0f,
+						1.0f,
+						0.0f,
+						false
+					},
+					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+					Vector3(PLAYER_MAXSPEED * 2.0f, 1.0f, 1.0f),
+					GRAVITY,
+					GRAVITYMAX,
+					PLAYER_JUMPPOWER * 0.5f,
+				}));
+
 			//クリアポーズ
 			actor->AddAction(Action::Create<ClearPoseAction>(
 				ClearPoseAction::Parameter{

@@ -73,6 +73,18 @@ namespace Sample
 			}
 			ResourceManager<CTexture>::GetInstance().AddResource("Skill3Mono", tempTex2D);
 			tempTex2D = std::make_shared<CTexture>();
+			if (!tempTex2D->Load("UI/DropKick.png"))
+			{
+				return false;
+			}
+			ResourceManager<CTexture>::GetInstance().AddResource("DropKick", tempTex2D);
+			tempTex2D = std::make_shared<CTexture>();
+			if (!tempTex2D->Load("UI/DropKickMono.png"))
+			{
+				return false;
+			}
+			ResourceManager<CTexture>::GetInstance().AddResource("DropKickMono", tempTex2D);
+			tempTex2D = std::make_shared<CTexture>();
 			if (!tempTex2D->Load("UI/Escape.png"))
 			{
 				return false;

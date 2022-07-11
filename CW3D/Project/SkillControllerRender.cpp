@@ -173,5 +173,5 @@ void CSkillControllerRender::SetName()
 	keyIndexs[INPUT_KEY_SKILL2] = 3;
 	keyIndexs[INPUT_KEY_SKILL3] = 5;
 	keyIndexs[INPUT_KEY_ESCAPE] = 1;
-
+	keyIndexs[INPUT_KEY_SKILL_DROPKICK] = 9;
 }

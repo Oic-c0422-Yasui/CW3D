@@ -152,6 +152,8 @@
     <ClInclude Include="CollisionObjectPlayer.h" />
     <ClInclude Include="Division.h" />
     <ClInclude Include="DivisionObject.h" />
+    <ClInclude Include="DropKickSkillAction.h" />
+    <ClInclude Include="DropKickSkillState.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonDivisionCreator.h" />
     <ClInclude Include="JsonEnemyCreator.h" />

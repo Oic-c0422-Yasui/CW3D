@@ -728,6 +728,12 @@
     <ClInclude Include="ClearPoseAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
+    <ClInclude Include="DropKickSkillAction.h">
+      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="DropKickSkillState.h">
+      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">

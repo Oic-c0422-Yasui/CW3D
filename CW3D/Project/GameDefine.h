@@ -34,6 +34,7 @@ const std::string INPUT_KEY_ATTACK = "Attack";
 const std::string INPUT_KEY_SKILL1 = "Skill1";
 const std::string INPUT_KEY_SKILL2 = "Skill2";
 const std::string INPUT_KEY_SKILL3 = "Skill3";
+const std::string INPUT_KEY_SKILL_DROPKICK = "Skill_DropKick";
 const std::string INPUT_KEY_ESCAPE = "Escape";
 const std::string INPUT_KEY_RETRY = "Retry";
 
@@ -65,6 +66,8 @@ constexpr char* STATE_KEY_SKILL2_1 = "Skill2_1";
 constexpr char* STATE_KEY_JUMPSKILL2_1 = "JumpSkill2_1";
 constexpr char* STATE_KEY_SKILL3_1 = "Skill3_1";
 constexpr char* STATE_KEY_JUMPSKILL3_1 = "JumpSkill3_1";
+constexpr char* STATE_KEY_DROPKICKSKILL = "DropKick";
+constexpr char* STATE_KEY_JUMPDROPKICKSKILL = "JumpDropKickSkill";
 constexpr char* STATE_KEY_ESCAPE = "Escape";
 constexpr char* STATE_KEY_CLEARPOSE = "ClearPose";
 
@@ -84,7 +87,7 @@ const std::string PARAMETER_KEY_ESCAPE = "Escape";
 const std::string SKILL_KEY_1 = "SkillKey1";
 const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";
-const std::string SKILL_KEY_4 = "SkillKey4";
+const std::string SKILL_KEY_DROPKICK = "SkillKey4";
 const std::string SKILL_KEY_ESCAPE = "EscapeKey";
 
 //åªç›ÇÃÉXÉLÉãêî

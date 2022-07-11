@@ -30,6 +30,7 @@
 #include "DeadState.h"
 #include "EscapeState.h"
 #include "ClearPoseState.h"
+#include "DropKickSkillState.h"
 
 
 
@@ -200,6 +201,15 @@ namespace Sample {
 					,GameFrameTime * 10.0f
 				}));
 			stateMachine->AddState(State::Create<ClearPoseState>(actor, input));
+			stateMachine->AddState(State::Create<DropKickSkillState>(actor, input,
+				DropKickSkillState::Parameter{
+					3
+					,GameFrameTime * 5.0f
+					,GameFrameTime * 30.0f
+					,ShotAABB{ Vector3(1.0f, 0.7f, 0), 2.0f, 0, Vector3(0.7f, 0.32f, 0.0f),false,CHARA_PLAYER, nullptr,4,3.5f,0, Vector3(4.0f, 3.0f, 3.0f) }
+					,EffectCreateParameter{ "Effect7", Vector3(5.5f, 1.2f, 0), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.0f, MOF_ToRadian(-90), 0.0f),1.8f }
+
+				}));
 
 			return true;
 		}

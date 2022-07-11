@@ -42,6 +42,7 @@ bool CBattleScene::Load()
 	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
+	input->AddKeyboardKey(INPUT_KEY_SKILL_DROPKICK, MOFKEY_F);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	//ƒpƒbƒh
@@ -87,6 +88,8 @@ bool CBattleScene::Load()
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/fire.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect6", effect);
+	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/drill.efk");
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect7", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Track.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("ClosedEffect", effect);
 
