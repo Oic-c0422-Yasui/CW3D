@@ -7,6 +7,7 @@
 
 namespace Sample
 {
+	//ショットパラメーター
 	struct ShotCreateParameter {
 		Vector3 offset;
 		float	nextHitTime;
@@ -19,20 +20,25 @@ namespace Sample
 		float getUltGauge;
 		unsigned int parentID;
 	};
+	//球体ショット
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
 	};
+	//立方体ショット
 	struct ShotAABB : public ShotCreateParameter{
 		Vector3 size;
 	};
 	class CShot
 	{
 	protected:
+
+		//ヒット判定用構造体
 		struct Hit
 		{
 			unsigned int ID;
 			float Time;
 		};
+		std::list<Hit>		m_HitIDs;
 
 		AttackColliderPtr	m_Collider;
 		CAABB				m_AABB;
@@ -43,134 +49,74 @@ namespace Sample
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
 		CHARACTER_TYPE		m_Type;
-		int					m_CollisionType;
 		float				m_Speed;
 		CVector3			m_KnockBack;
 		int					m_Damage;
-		std::list<Hit>		m_HitIDs;
 		float				m_NextHitTime;
 		KnockBackPtr		m_Direction;
 		BYTE				m_ArmorBreakLevel;
 		float				m_GetUltGauge;
 		unsigned int		m_ParentID;
 
-
+	private:
+		void UpdateTime()
+		{
+			for (auto& id : m_HitIDs)
+			{
+				if (id.Time > 0.0f)
+				{
+					id.Time -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
+				}
+			}
+		}
 	public:
-		CShot()
-			:m_Collider(std::make_shared<CAttackCollider>())
-			, m_Position(0,0,0)
-			, m_AABB()
-			, m_Radius(0.0f)
-			, m_ShowFlg(false)
-			, m_CollideFlg(false)
-			, m_Type()
-			, m_Speed(0.0f)
-			, m_KnockBack(0,0,0)
-			, m_Offset(0,0,0)
-			, m_Damage(0)
-			, m_NextHitTime(0.0f)
-			, m_CollisionType(COLLITION_AABB)
-			, m_ArmorBreakLevel(0)
-			, m_GetUltGauge(0.0f)
-			, m_ParentID(0)
+		CShot();
+		~CShot();
 
+		//球体の当たり判定作成
+		void Create(Vector3 pos, ShotSphere sphire);
+		
+		//立方体の当たり判定作成
+		void Create(Vector3 pos, ShotAABB aabb);
+		
+		void Update();
+
+		void Render();
+
+		//ヒットした相手のIDを追加
+		void AddHit(unsigned int hitId)
 		{
+			Hit hit = { hitId, m_NextHitTime };
+			m_HitIDs.push_back(hit);
 		}
 
-		~CShot() {
-
-		}
-
-		void Create(Vector3 pos, ShotSphere sphire)
+		//ヒット判定IDを削除
+		void DeleteHitId()
 		{
-			m_Position = pos;
-			m_Offset = sphire.offset;
-			m_Radius = sphire.Radius;
-			m_Type = sphire.type;
-			m_Damage = sphire.damage;
-			m_NextHitTime = sphire.nextHitTime;
-			m_Speed = 0.0f;
-			m_Collider->SetPosition(m_Position);
-			m_Collider->SetRadius(m_Radius);
-			m_ShowFlg = true;
-			m_CollideFlg = sphire.collideFlg;
-			m_CollisionType = COLLITION_SPHERE;
-			m_KnockBack = sphire.knockBack;
-			m_Direction = sphire.direction;
-			m_ArmorBreakLevel = sphire.armorBreakLevel;
-			m_GetUltGauge = sphire.getUltGauge;
-			m_ParentID = sphire.parentID;
+			auto removeIt = std::remove_if(m_HitIDs.begin(), m_HitIDs.end(), [&](const Hit& id) {
+				return id.Time <= 0.0f; });
+			m_HitIDs.erase(removeIt, m_HitIDs.end());
 		}
 
-		void Create(Vector3 pos, ShotAABB aabb)
+		void AddDamage(int val) noexcept
 		{
-			m_Size = aabb.size;
-			m_Position = pos;
-			m_Offset = aabb.offset;
-			m_Type = aabb.type;
-			m_Damage = aabb.damage;
-			m_NextHitTime = aabb.nextHitTime;
-			m_Speed = 0.0f;
-			m_AABB.SetPosition(m_Position);
-			m_AABB.Size = m_Size;
-			m_ShowFlg = true;
-			m_CollideFlg = aabb.collideFlg;
-			m_CollisionType = COLLITION_AABB;
-			m_KnockBack = aabb.knockBack;
-			m_Direction = aabb.direction;
-			m_ArmorBreakLevel = aabb.armorBreakLevel;
-			m_GetUltGauge = aabb.getUltGauge;
-			m_ParentID = aabb.parentID;
+			m_Damage += val;
 		}
 
-		void Update()
+		void AddPosition(const Vector3& pos) noexcept
 		{
-			if (!m_ShowFlg)
-			{
-				return;
-			}
-			
-			m_Position.x += m_Speed * TimeControllerInstance.GetTimeScale(m_Type);
-			switch (m_CollisionType)
-			{
-				case COLLITION_SPHERE:
-				{
-					m_Collider->SetPosition(m_Position);
-					break;
-				}
-				case COLLITION_AABB:
-				{
-					m_AABB.SetPosition(m_Position);
-					break;
-				}
-				default:
-				{
-					break;
-				}
-			}
-			UpdateTime();
-			DeleteHitId();
+			m_Position += pos;
 		}
 
-		void Render()
-		{
-			if (!m_ShowFlg)
-			{
-				return;
-			}
-		}
-
-
+		/**
+		 * @brief		ゲッター
+		 */
 		bool IsShow() const noexcept {
 			return m_ShowFlg;
 		}
 
 		bool GetCollideFlg() const noexcept {
 			return m_CollideFlg;
-		}
-
-		int GetColliderType() const noexcept {
-			return m_CollisionType;
 		}
 
 		float GetNextHitTime() const noexcept
@@ -193,6 +139,67 @@ namespace Sample
 			return m_ParentID;
 		}
 
+		const KnockBackPtr& GetDirection() const noexcept
+		{
+			return m_Direction;
+		}
+
+		const Vector3& GetPosition() const noexcept 
+		{
+			return m_Position;
+		}
+
+		const Vector3& GetOffset() const noexcept 
+		{
+			return m_Offset;
+		}
+
+		float GetRadius() const noexcept 
+		{
+			return m_Radius;
+		}
+
+		const CSphere& GetColliderSphere() const noexcept 
+		{
+			return m_Collider->GetCollider();
+		}
+
+		const CAABB& GetColliderAABB() const noexcept 
+		{
+				return m_AABB;
+		}
+
+		const Vector3& GetKnockBack() const noexcept {
+			return m_KnockBack;
+		}
+
+		float GetSpeed() const noexcept {
+			return m_Speed;
+		}
+
+		int GetDamage() const noexcept {
+			return m_Damage;
+		}
+
+		BYTE GetArmorBreakLevel() const noexcept{
+			return m_ArmorBreakLevel;
+		}
+
+		bool IsHitId(unsigned int hitId)
+		{
+			for (auto& id : m_HitIDs)
+			{
+				if (id.ID == hitId)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * @brief		セッター
+		 */
 		void SetCharaType(CHARACTER_TYPE type) noexcept
 		{
 			m_Type = type;
@@ -208,7 +215,7 @@ namespace Sample
 			m_CollideFlg = flg;
 		}
 
-		void SetKnockBack(Vector3 val) noexcept
+		void SetKnockBack(const Vector3& val) noexcept
 		{
 			m_KnockBack = val;
 		}
@@ -230,11 +237,6 @@ namespace Sample
 			m_Damage = val;
 		}
 
-		void AddDamage(int val) noexcept
-		{
-			m_Damage += val;
-		}
-
 		void SetNextHitTime(float val) noexcept
 		{
 			m_NextHitTime = val;
@@ -245,17 +247,17 @@ namespace Sample
 			m_Speed = val;
 		}
 
-		void SetPosition(Vector3 pos) noexcept
+		void SetPosition(const Vector3& pos) noexcept
 		{
 			m_Position = pos;
 		}
 
-		void SetOffset(Vector3 offset) noexcept
+		void SetOffset(const Vector3& offset) noexcept
 		{
 			m_Offset = offset;
 		}
 
-		void SetDirection(KnockBackPtr dir) noexcept
+		void SetDirection(const KnockBackPtr& dir) noexcept
 		{
 			m_Direction = dir;
 		}
@@ -275,90 +277,7 @@ namespace Sample
 			m_ParentID = id;
 		}
 
-		KnockBackPtr GetDirection() const noexcept
-		{
-			return m_Direction;
-		}
-
-		void AddPosition(Vector3 pos) noexcept
-		{
-			m_Position += pos;
-		}
-
-		Vector3 GetPosition() const noexcept {
-			return m_Position;
-		}
-
-		Vector3 GetOffset() const noexcept {
-			return m_Offset;
-		}
-
-		float GetRadius() const noexcept {
-			return m_Radius;
-		}
-
-		CSphere GetColliderSphere() const noexcept {
-			return m_Collider->GetCollider();
-		}
-
-		CAABB GetColliderAABB() const noexcept {
-				return m_AABB;
-		}
-
-
-		Vector3 GetKnockBack() const noexcept {
-			return m_KnockBack;
-		}
-
-		float GetSpeed() const noexcept {
-			return m_Speed;
-		}
-
-		int GetDamage() const noexcept {
-			return m_Damage;
-		}
-
-		const BYTE& GetArmorBreakLevel() const noexcept{
-			return m_ArmorBreakLevel;
-		}
-
-		bool IsHitId(unsigned int hitId)
-		{
-			for (auto& id : m_HitIDs)
-			{
-				if (id.ID == hitId)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
-		void UpdateTime()
-		{
-			for (auto& id : m_HitIDs)
-			{
-				if (id.Time > 0.0f)
-				{
-					id.Time -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
-				}
-			}
-		}
-
-		void AddHit(unsigned int hitId)
-		{
-
-			Hit hit = { hitId, m_NextHitTime };
-			m_HitIDs.push_back(hit);
-		}
-
-		void DeleteHitId()
-		{
-			auto removeIt = std::remove_if(m_HitIDs.begin(), m_HitIDs.end(), [&](const Hit& id) {
-				return id.Time <= 0.0f; });
-			m_HitIDs.erase(removeIt, m_HitIDs.end());
-		}
-
+		
 	};
 
 	//ポインタ置き換え

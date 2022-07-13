@@ -102,6 +102,7 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="DivisionObject.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Shot.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="FixedCamera.cpp" />
     <ClCompile Include="FollowFixedCamera.cpp" />

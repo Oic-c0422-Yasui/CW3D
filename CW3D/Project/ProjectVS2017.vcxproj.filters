@@ -133,6 +133,9 @@
     <Filter Include="ヘッダー ファイル\External">
       <UniqueIdentifier>{d6bdf76c-5f1c-4471-b49d-cb699d3444e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Shot">
+      <UniqueIdentifier>{78b18842-8489-40df-9bb0-b7c0e4a1ecf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -215,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="DivisionObject.cpp">
       <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="Shot.cpp">
+      <Filter>ソース ファイル\Shot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
