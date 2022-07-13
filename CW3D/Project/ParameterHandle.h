@@ -42,7 +42,10 @@ namespace Sample {
 			*value_ = v;
 			return *value_;
 		}
-		const T& operator * () {
+		T& operator * () {
+			return *value_;
+		}
+		const T& operator * () const {
 			return *value_;
 		}
 

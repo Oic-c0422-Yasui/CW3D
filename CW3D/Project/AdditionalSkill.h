@@ -7,12 +7,19 @@ namespace Sample
 	{
 	private:
 		float m_AddStartTime;
-
+		Sample::ParameterHandle< Sample::ReactiveParameter<float> >	m_AddCT;
+		int		m_AddCount;
+		bool	m_AddFlg;
+		bool	m_DelayAddFlg;
+		AdditionalSkillDataPtr m_AddSkillData;
 	public:
 		CAdditionalSkill()
 			: CSkill()
 			, m_AddStartTime(0.0f)
-
+			, m_AddCT(0.0f)
+			, m_AddCount(0)
+			, m_AddFlg(false)
+			, m_DelayAddFlg(false)
 		{
 		}
 		~CAdditionalSkill()
@@ -24,7 +31,7 @@ namespace Sample
 			if (!m_AddFlg)
 			{
 				CSkill::Start();
-				m_AddStartTime = m_SkillData.AditionalStartTime;
+				m_AddStartTime = m_AddSkillData->StartTime;
 			}
 			else
 			{
@@ -37,6 +44,10 @@ namespace Sample
 		{
 			CSkill::Reset();
 			m_AddStartTime = 0.0f;
+			m_AddCT = 0.0f;
+			m_AddCount = 0;
+			m_AddFlg = false;
+			m_DelayAddFlg = false;
 		}
 
 		void Update() override
@@ -53,7 +64,7 @@ namespace Sample
 					if (!m_AddFlg)
 					{
 						m_AddFlg = true;
-						m_AddCT = m_SkillData.AditionalTime.Get();
+						m_AddCT = m_AddSkillData->AddMaxCT.Get();
 						m_DelayAddFlg = false;
 					}
 				}
@@ -77,7 +88,7 @@ namespace Sample
 		}
 		void SetAddMaxCT(float time) noexcept
 		{
-			m_SkillData.AditionalTime = time;
+			m_AddSkillData->AddMaxCT = time;
 		}
 
 		void SetAddCount(float count) noexcept
@@ -85,24 +96,54 @@ namespace Sample
 			m_AddCount = count;
 		}
 
-		void SetSkillData(float damagePercent, float ct,float addTime,int addCount) noexcept
-		{
-			m_SkillData.CT = ct;
-			m_SkillData.DamagePercent = damagePercent;
-			m_SkillData.AditionalTime = addTime;
-			m_SkillData.AditionalCount = addCount;
-		}
-
-		void AddInput() override
+		void AddInput()
 		{
 			SetAddCT(0.0f);
 			m_AddFlg = false;
+		}
+
+		bool IsAdditional() const noexcept
+		{
+			return m_AddFlg;
+		}
+		virtual bool IsDelayAdditional()
+		{
+			return m_DelayAddFlg;
+		}
+
+		float GetAddCT() const noexcept
+		{
+			return m_AddCT.Get();
+		}
+		float GetAddMaxCT() const noexcept
+		{
+			return m_AddSkillData->AddMaxCT.Get();
+		}
+
+
+		int GetAddCount() const noexcept
+		{
+			return m_AddCount;
 		}
 
 		bool IsCanUse() override
 		{
 			return m_AddFlg | m_CanUseFlg.Get();
 		}
+
+
+		void SetSkillData(const SkillDataPtr& skill) override
+		{
+			CSkill::SetSkillData(skill);
+			m_AddSkillData = std::dynamic_pointer_cast<AdditionalSkillData>(m_SkillData);
+			if (m_AddSkillData == nullptr)
+			{
+				assert(m_AddSkillData);
+			}
+		}
+
+		Sample::IObservable<float>* GetAddCTSubject() { return &(m_AddCT.Get()); }
+		Sample::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
 
 	};
 

@@ -25,9 +25,6 @@ namespace Sample {
 		/** 移動アクション */
 		Skill2_1ActionPtr			m_SkillAction;
 
-		std::string m_Key;
-
-		SkillWeakPtr m_Skill;
 
 		bool collideStartFlg;
 		bool m_DelayInputFlg;
@@ -45,7 +42,6 @@ namespace Sample {
 			: AttackBaseState()
 			, m_Parameter(param)
 			, collideStartFlg(false)
-			, m_Key()
 			, m_DelayInputFlg(false)
 		{
 		}
@@ -54,23 +50,14 @@ namespace Sample {
 		const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
 		const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
 
+
 		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<Skill2_1Action>(GetKey());
-			m_Skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_1);
-			m_Key = m_Skill.lock()->GetButton();
+
 			Initialize();
-			if (m_Skill.lock()->IsDelayAdditional())
-			{
-				m_DelayInputFlg = true;
-				m_Skill.lock()->AddInput();
-			}
-			else
-			{
-				m_DelayInputFlg = false;
-			}
 		}
 
 		/**
@@ -135,19 +122,6 @@ namespace Sample {
 		 */
 		void InputExecution() override {
 
-			if (!m_DelayInputFlg)
-			{
-				if (Input()->IsPush(m_Key) && !m_NextInputFlg)
-				{
-					if (m_Skill.lock()->IsAdditional())
-					{
-						m_NextInputFlg = true;
-						m_Skill.lock()->AddInput();
-					}
-				}
-			}
-			
-
 			AttackBaseState::InputExecution();
 		}
 
@@ -159,8 +133,6 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
-			
-			m_Skill.reset();
 		}
 
 		/**

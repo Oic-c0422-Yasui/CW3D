@@ -4,8 +4,10 @@
 #include	"TimeController.h"
 
 
+
 namespace Sample
 {
+	
 	class CSkill
 	{
 	public:
@@ -16,17 +18,13 @@ namespace Sample
 		char*			m_State;
 		char*			m_FlyState;
 		bool			m_StartFlg;
-		CSkillData		m_SkillData;
+		SkillDataPtr	m_SkillData;
 		
 		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >	m_CanUseFlg;
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
 
-		//TODO:dynamic_castは重いため宣言だけ用意。拡張性的にはどうなの？
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >	m_AddCT;
-		int		m_AddCount;
-		bool	m_AddFlg;
-		bool	m_DelayAddFlg;
 
+	protected:
 		void AddTimerAndResetFlg()
 		{
 			if (m_CT > 0.0f)
@@ -61,16 +59,13 @@ namespace Sample
 		CSkill()
 			: m_Key()
 			, m_Button()
-			, m_State(NULL)
-			, m_FlyState(NULL)
+			, m_State(nullptr)
+			, m_FlyState(nullptr)
 			, m_CanUseFlg(false)
 			, m_CT(0.0f)
-			, m_SkillData()
 			, m_StartFlg(false)
-			, m_AddCT(0.0f)
-			, m_AddCount(0)
-			, m_AddFlg(false)
-			, m_DelayAddFlg(false)
+			, m_SkillData(std::make_shared<SkillData>())
+			
 		{
 		}
 
@@ -94,15 +89,11 @@ namespace Sample
 			m_StartFlg = false;
 			m_CanUseFlg = true;
 			m_CT = 0.0f;
-			m_AddCT = 0.0f;
-			m_AddCount = 0;
-			m_AddFlg = false;
-			m_DelayAddFlg = false;
 		}
 
 		virtual void Start()
 		{
-			m_CT = m_SkillData.CT.Get();
+			m_CT = m_SkillData->MaxCT.Get();
 			m_CanUseFlg = false;
 			m_StartFlg = true;
 		}
@@ -117,7 +108,9 @@ namespace Sample
 		}
 
 		
-
+		/**
+		* @brief		ゲッター
+		 */
 		const std::string& GetKey() const noexcept
 		{
 			return m_Key;
@@ -145,7 +138,7 @@ namespace Sample
 
 		float GetMaxCT() const noexcept
 		{
-			return m_SkillData.CT.Get();
+			return m_SkillData->MaxCT.Get();
 		}
 
 		float GetCT() const noexcept
@@ -156,12 +149,7 @@ namespace Sample
 		
 		int GetDamage() const noexcept
 		{
-			return m_SkillData.DamagePercent;
-		}
-
-		float GetUltGauge() const noexcept
-		{
-			return m_SkillData.ExpendGauge.Get();
+			return m_SkillData->DamagePercent;
 		}
 
 		virtual bool IsCanUse()
@@ -169,61 +157,18 @@ namespace Sample
 			return m_CanUseFlg.Get();
 		}
 
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetCTParam()
-		{
-			return m_CT;
-		}
 
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetMaxCTParam()
-		{
-			return m_SkillData.CT;
-		}
-
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetUltGaugeParam()
-		{
-			return m_SkillData.ExpendGauge;
-		}
-
-		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >& GetCanUseFlgParam()
-		{
-			return m_CanUseFlg;
-		}
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetAddCTParam()
-		{
-			return m_AddCT;
-		}
-
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GetAddMaxCTParam()
-		{
-			return m_SkillData.AditionalTime;
-		}
-
-		bool IsAdditional() const noexcept
-		{
-			return m_AddFlg;
-		}
-		virtual bool IsDelayAdditional()
-		{
-			return m_DelayAddFlg;
-		}
-
-		float GetAddCT() const noexcept
-		{
-			return m_AddCT.Get();
-		}
-		float GetAddMaxCT() const noexcept
-		{
-			return m_SkillData.AditionalTime.Get();
-		}
+		/**
+		* @brief		CT変化通知
+		*/
+		Sample::IObservable<float>* GetCTSubject()			{ return &(m_CT.Get()); }
+		Sample::IObservable<float>* GetMaxCTSubject()		{ return &(m_SkillData->MaxCT.Get()); }
+		Sample::IObservable<bool>* GetCanUseSubject()		{ return &(m_CanUseFlg.Get()); }
 
 
-		int GetAddCount() const noexcept
-		{
-			return m_AddCount;
-		}
-
-
-
+		/**
+		* @brief		セッター
+		 */
 		void SetKey(std::string key) noexcept
 		{
 			m_Key = key;
@@ -245,19 +190,19 @@ namespace Sample
 		{
 			m_CT = ct;
 		}
-		void SubCT(float ct)
+		void SubCT(float ct) noexcept
 		{
 			m_CT = max(m_CT.Get() - ct, 0.0f);
 		}
 
 		void SetMaxCT(float ct) noexcept
 		{
-			m_SkillData.CT = ct;
+			m_SkillData->MaxCT = ct;
 		}
 
 		void SetDamage(float damage) noexcept
 		{
-			m_SkillData.DamagePercent = damage;
+			m_SkillData->DamagePercent = damage;
 		}
 
 		void SetCanUseFlg(bool isCanUse) noexcept
@@ -265,18 +210,16 @@ namespace Sample
 			m_CanUseFlg = isCanUse;
 		}
 
-		void SetSkillData(const CSkillData& skill) noexcept
+		virtual void SetSkillData(const SkillDataPtr& skill)
 		{
 			m_SkillData = skill;
 		}
 
 		void SetSkillData(float damagePercent, float ct) noexcept
 		{
-			m_SkillData.CT = ct;
-			m_SkillData.DamagePercent = damagePercent;
+			m_SkillData->MaxCT = ct;
+			m_SkillData->DamagePercent = damagePercent;
 		}
-
-		virtual void AddInput() {}
 		
 
 	};

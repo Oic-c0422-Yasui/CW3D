@@ -141,10 +141,7 @@ void CEnemy::Render2D()
 	{
 		return;
 	}
-	if (!m_DeadFlg)
-	{
 
-	}
 	
 }
 

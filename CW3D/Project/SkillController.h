@@ -3,7 +3,7 @@
 
 #include	"Singleton.h"
 #include	"Skill.h"
-#include	"AdditionalSkill.h"
+
 
 
 namespace Sample
@@ -21,7 +21,7 @@ namespace Sample
 		{
 		}
 
-		SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName,char* state, char* flyState)
+		const SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName,char* state, char* flyState)
 		{
 			auto& add = std::make_shared<CSkill>();
 			m_Skills.push_back(add);
@@ -29,7 +29,7 @@ namespace Sample
 			add->Create(key, button, texName,state, flyState);
 			return add;
 		}
-		SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName, char* state, char* flyState,const SKillPtr& skill)
+		const SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName, char* state, char* flyState,const SKillPtr& skill)
 		{
 			auto& add = skill;
 			m_Skills.push_back(add);
@@ -59,13 +59,13 @@ namespace Sample
 			return m_Skills.size();
 		}
 
-		SKillPtr GetSkill(int id)
+		const SKillPtr& GetSkill(int id)
 		{
 			assert(m_Skills[id]);
 			return m_Skills[id];
 		}
 
-		SKillPtr GetSkill(std::string key)
+		const SKillPtr GetSkill(const std::string& key) const noexcept
 		{
 			for (auto& skill : m_Skills)
 			{
@@ -73,17 +73,6 @@ namespace Sample
 				{
 					return skill;
 				}
-			}
-			return nullptr;
-		}
-
-		AdditionalSKillPtr GetAddSkill(int id)
-		{
-			assert(m_Skills[id]);
-			auto skill = std::static_pointer_cast<CAdditionalSkill>(m_Skills[id]);
-			if (skill != nullptr)
-			{
-				return skill;
 			}
 			return nullptr;
 		}

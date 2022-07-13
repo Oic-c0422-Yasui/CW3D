@@ -1,17 +1,22 @@
 #pragma once
 #include "Player.h"
 #include "SkillUltGaugeRender.h"
-class CSkillUltGaugePresenter
+
+namespace Sample
 {
-public:
-
-	static void Present(PlayerPtr& player, const Sample::SkillUltGaugeRenderPtr& view,int skillID)
+	class CSkillUltGaugePresenter
 	{
-		player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
-		player->GetSkillUltSubject(skillID)->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
+	public:
 
-		view->SetGauge(0);
-		view->SetMaxGauge(player->GetSkillController()->GetSkill(skillID)->GetUltGauge());
-	}
+		static void Present(PlayerPtr& player, const SkillUltGaugeRenderPtr& view, int skillID)
+		{
+			player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
+			auto& skill = player->GetSkillT <CUltimateSkill>(skillID);
+			skill->GetSkillUltSubject(skillID)->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
 
-};
+			view->SetGauge(0);
+			view->SetMaxGauge(skill->GetUltGauge());
+		}
+
+	};
+}

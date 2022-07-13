@@ -11,6 +11,7 @@
 #include	"PlayerSkillCreater.h"
 #include	"PlayerParameterCreator.h"
 
+
 class CPlayer : public Sample::CActorObject
 {
 private:
@@ -41,14 +42,15 @@ public:
 	void RenderDebug2D();
 	void Release()override;
 
+	void Damage(const Vector3& direction, const Vector3& power, int damage, BYTE level);
+	
 	void SetInput(const Sample::InputPtr& ptr) noexcept
 	{
 		m_pInput = ptr;
 	}
 
-	void Damage(const Vector3& direction, Vector3 power, int damage, BYTE level);
 
-	int GetHP()
+	int GetHP() const noexcept
 	{
 		return m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	}
@@ -59,19 +61,23 @@ public:
 	*/
 	Sample::IObservable<int>& GetHPSubject() { return  m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
 	Sample::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
-	/**
-	 * @brief		CT変化通知
-	 */
-	Sample::IObservable<float>* GetCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCTParam().Get()); }
-	Sample::IObservable<float>* GetMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetMaxCTParam().Get()); }
-	Sample::IObservable<bool>* GetCanUseSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetCanUseFlgParam().Get()); }
-	Sample::IObservable<float>* GetAddCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetAddCTParam().Get()); }
-	Sample::IObservable<float>* GetAddMaxCTSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetAddMaxCTParam().Get()); }
 
+	//スキル取得
+
+	
+	const Sample::SKillPtr& GetSkill(int id) const noexcept {
+		return GetSkillController()->GetSkill(id);
+	}
+	template< typename T >
+	const std::shared_ptr<T> GetSkillT(int id) const noexcept {
+		auto& skill = GetSkillController()->GetSkill(id);
+		return  std::dynamic_pointer_cast<T>(skill);
+	}
 	//必殺技ゲージ
 	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }
 	Sample::IObservable<float>& GetUltSubject() { return m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
-	Sample::IObservable<float>* GetSkillUltSubject(int id) { return &(GetSkillController()->GetSkill(id)->GetUltGaugeParam().Get()); }
+
+	
 
 	float GetMaxUltGauge()
 	{
@@ -83,7 +89,7 @@ public:
 		return m_Actor->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
 	}
 
-	Sample::SkillControllerPtr GetSkillController()
+	const Sample::SkillControllerPtr& GetSkillController() const noexcept
 	{
 		return m_Actor->GetSkillController();
 	}
@@ -99,7 +105,7 @@ public:
 		return m_Collider;
 	}
 	
-	const CAABB& GetEscapeCollider()
+	const CAABB& GetEscapeCollider() noexcept
 	{
 		m_Collider.Size = m_EscapeColliderSize;
 		m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);

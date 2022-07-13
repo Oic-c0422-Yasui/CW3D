@@ -149,7 +149,6 @@ void CCameraController::Reset()
 
 void CCameraController::Render2DDebug()
 {
-	//CGraphicsUtilities::RenderString(300, 100, "CameraOff X:%.2f,Y:%.2f,Z:%.2f", m_OffsetPos.x, m_OffsetPos.y, m_OffsetPos.z);
 }
 
 void CCameraController::Quake(float power, float freq, float time)

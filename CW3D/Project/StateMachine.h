@@ -142,6 +142,17 @@ namespace Sample {
 			}
 			return nextState->second == currentState_;
 		}
+
+		/**
+		 * @brief		すべてのステートをセットアップする
+		 */
+		void SetUp() const override
+		{
+			for (auto& state : stateMap_)
+			{
+				state.second->SetUp();
+			}
+		}
 	};
 
 }

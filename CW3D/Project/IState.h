@@ -39,7 +39,10 @@ namespace Sample
 		 * @brief		デストラクタ
 		 */
 		virtual ~IState() = default;
-
+		/**
+		 * @brief		読み込み時の処理
+		 */
+		virtual void SetUp() = 0;
 		/**
 		 * @brief		アクション内の開始処理
 		 */

@@ -29,7 +29,7 @@ namespace Sample {
 		bool m_DelayInputFlg;
 		std::string m_Key;
 
-		SkillWeakPtr m_Skill;
+		AdditionalWeakSKillPtr m_Skill;
 
 	public:
 		/**
@@ -49,11 +49,23 @@ namespace Sample {
 		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 
 		/**
+		 * @brief		ステートの初期化時処理
+		 */
+		void SetUp() override
+		{
+			auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_DROPKICK);
+			m_Skill = std::dynamic_pointer_cast<CAdditionalSkill>(skill);
+			if (m_Skill.lock() == nullptr)
+			{
+				assert(m_Skill.lock());
+			}
+		}
+
+		/**
 		 * @brief		ステート内の開始処理
 		 */
 		void Start() override {
 			m_SkillAction = Actor()->GetAction<DropKickSkillAction>(GetKey());
-			m_Skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_DROPKICK);
 			m_Key = m_Skill.lock()->GetButton();
 			Initialize();
 			if (m_Skill.lock()->IsDelayAdditional())
@@ -199,7 +211,6 @@ namespace Sample {
 		void End() override {
 			m_SkillAction->End();
 			AttackBaseState::End();
-			m_Skill.reset();
 		}
 
 		/**

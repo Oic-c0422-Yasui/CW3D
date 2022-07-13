@@ -25,6 +25,7 @@ namespace Sample
 	public:
 		CActorObject();
 		virtual ~CActorObject();
+		virtual void Initialize();
 		virtual void Update();
 		virtual void Render();
 		virtual void Release();

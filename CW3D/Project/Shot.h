@@ -49,6 +49,7 @@ namespace Sample
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
 		CHARACTER_TYPE		m_Type;
+		int					m_CollisionType;
 		float				m_Speed;
 		CVector3			m_KnockBack;
 		int					m_Damage;
@@ -59,6 +60,7 @@ namespace Sample
 		unsigned int		m_ParentID;
 
 	private:
+		//削除時間までタイマーを進める
 		void UpdateTime()
 		{
 			for (auto& id : m_HitIDs)
@@ -168,6 +170,10 @@ namespace Sample
 		{
 				return m_AABB;
 		}
+		int GetColliderType() const noexcept
+		{
+			return m_CollisionType;
+		}
 
 		const Vector3& GetKnockBack() const noexcept {
 			return m_KnockBack;
@@ -185,7 +191,7 @@ namespace Sample
 			return m_ArmorBreakLevel;
 		}
 
-		bool IsHitId(unsigned int hitId)
+		bool IsHitId(unsigned int hitId) const noexcept
 		{
 			for (auto& id : m_HitIDs)
 			{

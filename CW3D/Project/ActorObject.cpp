@@ -21,6 +21,15 @@ CActorObject::~CActorObject()
 {
 }
 
+void Sample::CActorObject::Initialize()
+{
+	m_ShowFlg = true;
+	m_DeadFlg = false;
+	matWorld = m_Actor->GetMatrix();
+
+	m_StateMachine->SetUp();
+}
+
 void CActorObject::Update()
 {
 	if (!m_ShowFlg)

@@ -7,7 +7,6 @@ CPlayer::CPlayer()
 	: Sample::CActorObject()
 	, m_pInput()
 
-
 {
 	SetType(CHARA_PLAYER);
 }
@@ -48,8 +47,7 @@ bool CPlayer::Load()
 
 void CPlayer::Initialize()
 {
-	m_ShowFlg = true;
-	m_DeadFlg = false;
+	CActorObject::Initialize();
 	m_Actor->SetPosition(Vector3(-30, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
@@ -116,7 +114,7 @@ void CPlayer::Release()
 	Sample::CActorObject::Release();
 }
 
-void CPlayer::Damage(const Vector3& direction, Vector3 power, int damage,BYTE level)
+void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level)
 {
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);

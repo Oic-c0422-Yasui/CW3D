@@ -147,23 +147,6 @@ namespace Sample {
 		 * @brief		パラメーター
 		 */
 		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
-		///**
-		// * @brief		登録パラメーターの設定
-		// */
-		//template <typename T>
-		//void SetParameter(const std::string& key, const T& value)
-		//{
-		//	return GetParameterMap()->Set<T>(key, value);
-		//}
-
-		///**
-		// * @brief		登録パラメーターの取得
-		// */
-		//template <typename T>
-		//ParameterHandle<T>& GetParameter(const std::string& key)
-		//{
-		//	return GetParameterMap()->Get<T>(key);
-		//}
 
 		///**
 		// * @brief		アニメーション
@@ -173,7 +156,7 @@ namespace Sample {
 		///**
 		// * @brief		スキル
 		// */
-		virtual SkillControllerPtr GetSkillController() const = 0;
+		virtual const SkillControllerPtr& GetSkillController() const = 0;
 
 		//接触判定回避取得
 		virtual bool IsThrough() const = 0;

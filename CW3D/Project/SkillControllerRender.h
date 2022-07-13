@@ -56,7 +56,7 @@ namespace Sample
 
 		void Release(void);
 
-		Vector2 GetPosition()
+		const Vector2& GetPosition() noexcept
 		{
 			return m_Position;
 		}

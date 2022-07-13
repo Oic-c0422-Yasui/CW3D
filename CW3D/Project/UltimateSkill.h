@@ -11,7 +11,7 @@ namespace Sample
 		bool m_MaxGaugeFlg;
 
 		ActorWeakPtr m_Actor;
-
+		UltimateSkillDataPtr m_UltSkillData;
 	public:
 		CUltimateSkill(const ActorWeakPtr& actor)
 			: CSkill()
@@ -32,7 +32,7 @@ namespace Sample
 		{
 			CSkill::Start();
 			auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-			currentGauge -= m_SkillData.ExpendGauge.Get();
+			currentGauge -= m_UltSkillData->ExpendGauge.Get();
 		}
 
 		void Reset() override
@@ -47,7 +47,7 @@ namespace Sample
 			if (!m_CanUseFlg.Get() && !m_StartFlg)
 			{
 				auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-				if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CT <= 0.0f)
+				if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
 				{
 					m_CanUseFlg = true;
 				}
@@ -58,7 +58,7 @@ namespace Sample
 			}
 			CSkill::AddTimer();
 			auto& currentGauge = m_Actor.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-			if (currentGauge >= m_SkillData.ExpendGauge.Get() && m_CT <= 0.0f)
+			if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
 			{
 				CSkill::ResetFlg();
 			}
@@ -67,30 +67,33 @@ namespace Sample
 
 		float GetExpendGauge() const noexcept
 		{
-			return m_SkillData.ExpendGauge.Get();
+			return m_UltSkillData->ExpendGauge.Get();
 		}
 		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GettExpendGaugeParam()
 		{
-			return m_SkillData.ExpendGauge;
+			return m_UltSkillData->ExpendGauge;
 		}
 
-		void SetAdditionalTime(float time) noexcept
+		void SetSkillData(const SkillDataPtr& skill) override
 		{
-			m_SkillData.AditionalTime = time;
+			CSkill::SetSkillData(skill);
+			m_UltSkillData = std::dynamic_pointer_cast<UltimateSkillData>(m_SkillData);
+			if (m_UltSkillData == nullptr)
+			{
+				assert(m_UltSkillData);
+			}
 		}
 
-		void SetSkillData(float damagePercent, float ct, float ) noexcept
+		//必殺技ゲージ
+		float GetUltGauge() const noexcept
 		{
-			m_SkillData.CT = ct;
-			m_SkillData.DamagePercent = damagePercent;
+			return m_UltSkillData->ExpendGauge.Get();
 		}
-		void SetActor(const ActorPtr& actor)
-		{
-			m_Actor = actor;
-		}
+		//必殺技ゲージ通知
+		Sample::IObservable<float>* GetSkillUltSubject(int id) { return &(m_UltSkillData->ExpendGauge.Get()); }
 	};
 
 	//ポインタ置き換え
-	using UltimateSKillPtr = std::shared_ptr<CUltimateSkill>;
-	using UltimateWeakSKillPtr = std::weak_ptr<CUltimateSkill>;
+	using UltimateSkillPtr = std::shared_ptr<CUltimateSkill>;
+	using UltimateWeakSkillPtr = std::weak_ptr<CUltimateSkill>;
 }

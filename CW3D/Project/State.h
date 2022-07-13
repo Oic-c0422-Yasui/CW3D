@@ -52,6 +52,11 @@ namespace Sample {
 		const ActorPtr& Actor() { return actor_; }
 
 		/**
+		 * @brief		読み込み時の処理
+		 */
+		void SetUp()override {}
+
+		/**
 		 * @brief		ステートの変更
 		 * @param[in]	key			ステートキー
 		 * @return		true		成功

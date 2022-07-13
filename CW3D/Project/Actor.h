@@ -233,7 +233,7 @@ namespace Sample {
 		/**
 		 * @brief		ÉXÉLÉã
 		 */
-		SkillControllerPtr GetSkillController() const override {
+		const SkillControllerPtr& GetSkillController() const override {
 			return m_SkillController;
 		}
 

@@ -73,6 +73,10 @@ namespace Sample {
 		 *				false		違う
 		 */
 		virtual bool IsState(const StateKeyType& key) const = 0;
+		/**
+		 * @brief		すべてのステートをセットアップする
+		 */
+		virtual void SetUp() const = 0;
 	};
 	//ポインタ置き換え
 	using StateMachinePtr = std::shared_ptr<IStateMachine>;

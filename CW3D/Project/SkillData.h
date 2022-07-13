@@ -4,39 +4,67 @@
 
 namespace Sample
 {
-	class CSkillData
+
+	struct SkillData
 	{
-	public:
-		CSkillData()
-			: DamagePercent(0)
-			, CT(0.0f)
-			, AditionalTime(0.0f)
-			, AditionalCount(0)
-			, StuckCount(0)
-		{
-		}
 		int	DamagePercent;
-		float AditionalStartTime;
-		ParameterHandle< ReactiveParameter<float>>	CT;
-		ParameterHandle< ReactiveParameter<float>>	AditionalTime;
-		ParameterHandle< ReactiveParameter<int>>	StuckCount;
-		ParameterHandle< ReactiveParameter<float>>	ExpendGauge;
-		int	AditionalCount;
-		void SetData(float damage, float ct, float gauge) noexcept
+		ParameterHandle< ReactiveParameter<float>>	MaxCT;
+		SkillData()
+			: DamagePercent(0)
+			, MaxCT(0.0f)
+
 		{
-			DamagePercent = damage;
-			CT = ct;
-			ExpendGauge = gauge;
 		}
-		void SetData(float damage, float ct, float addTime, float addStartTime, int stuckCount) noexcept
+
+		SkillData(int dmg, float maxCT)
+			: DamagePercent(dmg)
+			, MaxCT(maxCT)
+
 		{
-			DamagePercent = damage;
-			CT = ct;
-			AditionalTime = addTime;
-			AditionalStartTime = addStartTime;
-			StuckCount = stuckCount;
+		}
+
+		virtual ~SkillData(){}
+	};
+	using SkillDataPtr = std::shared_ptr<SkillData>;
+
+	struct AdditionalSkillData : public SkillData
+	{
+		ParameterHandle< ReactiveParameter<float>>	AddMaxCT;
+		float StartTime;
+		int Count;
+		AdditionalSkillData()
+			: SkillData()
+			, AddMaxCT(0)
+			, StartTime(0)
+			, Count(0)
+		{
+		}
+
+		AdditionalSkillData(int dmg, float maxCT,float addmaxCT,float st,int cnt)
+			: SkillData(dmg, maxCT)
+			, AddMaxCT(addmaxCT)
+			, StartTime(st)
+			, Count(cnt)
+		{
 		}
 	};
+	using AdditionalSkillDataPtr = std::shared_ptr<AdditionalSkillData>;
+
+	struct UltimateSkillData : public SkillData
+	{
+		ParameterHandle< ReactiveParameter<float>>	ExpendGauge;
+		UltimateSkillData()
+			: SkillData()
+			, ExpendGauge(0)
+		{
+		}
+		UltimateSkillData(int dmg, float maxCT,float gauge)
+			: SkillData(dmg, maxCT)
+			, ExpendGauge(gauge)
+		{
+		}
+	};
+	using UltimateSkillDataPtr = std::shared_ptr<UltimateSkillData>;
 
 }
 
