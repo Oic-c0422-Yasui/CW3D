@@ -27,13 +27,13 @@ namespace Sample
 		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
 		ParameterHandle< ReactiveParameter<bool> > m_HPShowFlg;
 
-		ZombieActionCreator m_ActionCreator;
-		ZombieStateCreator	m_StateCreator;
+		std::shared_ptr<IActionCreator>	 m_ActionCreator;
+		std::shared_ptr<IStateCreator>	m_StateCreator;
 
 		CVector3 m_DefaultPos;
 
 	public:
-		CEnemy(const Vector3& pos);
+		CEnemy(const Vector3& pos, std::shared_ptr<IActionCreator>& actionCreator, std::shared_ptr<IStateCreator>& stateCreator);
 		~CEnemy() override;
 		bool Load();
 		void Initialize();

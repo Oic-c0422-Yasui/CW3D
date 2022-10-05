@@ -1,6 +1,9 @@
 {
+  "StageMesh": "",
+
   "Divisions": [
     {
+      "BGM": "",
       "Enemys": [
         {
           "PosX": 0,
@@ -66,6 +69,7 @@
     },
 
     {
+      "BGM": "",
       "Enemys": [
         {
           "PosX": 40,
@@ -132,6 +136,7 @@
 
 
     {
+      "BGM": "",
       "Enemys": [
         {
           "PosX": 62,

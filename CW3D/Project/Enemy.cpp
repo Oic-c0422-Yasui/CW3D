@@ -7,11 +7,13 @@
 
 using namespace Sample;
 
-CEnemy::CEnemy(const Vector3& pos)
+CEnemy::CEnemy(const Vector3& pos, std::shared_ptr<IActionCreator>& actionCreator, std::shared_ptr<IStateCreator>& stateCreator)
 	: Sample::CActorObject()
 	,m_Input()
 	,m_AI()
 	, m_DefaultPos(pos)
+	, m_ActionCreator(actionCreator)
+	, m_StateCreator(stateCreator)
 {
 	SetType(CHARA_ENEMY);
 }
@@ -37,8 +39,8 @@ bool CEnemy::Load()
 
 	m_StateMachine = std::make_shared<Sample::StateMachine>();
 
-	m_ActionCreator.Create(m_Actor);
-	m_StateCreator.Create(m_StateMachine, m_Actor, m_Input);
+	m_ActionCreator->Create(m_Actor);
+	m_StateCreator->Create(m_StateMachine, m_Actor, m_Input);
 
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);

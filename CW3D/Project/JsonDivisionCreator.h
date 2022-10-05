@@ -5,6 +5,7 @@
 #include	"StageBase.h"
 #include	"Division.h"
 #include	"DivisionObject.h"
+#include	"JsonEnemyCreator.h"
 
 namespace Sample {
 
@@ -45,17 +46,7 @@ namespace Sample {
 			for (auto& division : divisions)
 			{
 				CDivision::DIVISION_DATA data{};
-				auto& enemys = division["Enemys"];
-				for (auto& enemy : enemys)
-				{
-					EnemyPtr ene;
-					CVector3 pos;
-					enemy["PosX"].get_to(pos.x);
-					enemy["PosY"].get_to(pos.y);
-					enemy["PosZ"].get_to(pos.z);
-					ene = std::make_shared<CEnemy>(pos);
-					data.Enemys.push_back(ene);
-				}
+				data.Enemys = JsonEnemyCreator::Create(division["Enemys"]);
 				data.EnemyCount = data.Enemys.size();
 
 				auto& objects = division["Objects"];
