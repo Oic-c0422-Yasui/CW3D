@@ -3,15 +3,36 @@
 
 #include "Enemy.h"
 #include "Object.h"
+#include "IClearTerm.h"
 
 
 namespace Sample
 {
+	class IClearTerm
+	{
+	public:
+		virtual bool IsClear() = 0;
+	};
+	class ClearTermAllEnemyDead : public IClearTerm
+	{
+	protected:
+		std::vector<EnemyPtr>* en;
+	public:
+		ClearTermAllEnemyDead(std::vector<EnemyPtr>* en)
+			:en(en)
+		{
+		}
+		bool IsClear() override
+		{
+			return true;
+		}
+	};
 	class CDivision
 	{
 	public:
 		struct DIVISION_DATA
 		{
+			std::vector<ClearTermPtr>	ClearTerms;
 			std::vector<EnemyPtr>	Enemys;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;

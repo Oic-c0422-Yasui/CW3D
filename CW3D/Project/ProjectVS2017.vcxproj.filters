@@ -136,6 +136,9 @@
     <Filter Include="ソース ファイル\Shot">
       <UniqueIdentifier>{78b18842-8489-40df-9bb0-b7c0e4a1ecf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Creator">
+      <UniqueIdentifier>{83602f07-f68c-4f8e-a39a-848aa02588b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -221,6 +224,21 @@
     </ClCompile>
     <ClCompile Include="Shot.cpp">
       <Filter>ソース ファイル\Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonObjectCreator.cpp">
+      <Filter>ソース ファイル\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonEnemyCreator.cpp">
+      <Filter>ソース ファイル\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonDivisionCreator.cpp">
+      <Filter>ソース ファイル\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonClearTermCreator.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnemysAllDead.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -739,6 +757,21 @@
     </ClInclude>
     <ClInclude Include="DropKickSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjectCreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonClearTermCreator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IClearTerm.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnemysAllDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermProvider.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
