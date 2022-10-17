@@ -17,5 +17,34 @@ namespace Sample
 		{
 			
 		}
+		~ClearTermProvider() {}
+
+		/**
+		 * @brief		ƒNƒŠƒAŽžŠÔŽæ“¾
+		 */
+		float GetTime() const noexcept 
+		{
+			return m_ClearTime;
+		}
+
+		/**
+		 * @brief		“G‚Ì”Žæ“¾
+		 */
+		int GetEnemyCount() noexcept
+		{
+			int count = 0;
+			for (auto& enemy : m_pEnemys)
+			{
+				if (enemy->IsShow())
+				{
+					count++;
+				}
+			}
+			return count;
+		}
+
+		
 	};
+
+	using ClearTermProviderPtr = std::shared_ptr<ClearTermProvider>;
 }

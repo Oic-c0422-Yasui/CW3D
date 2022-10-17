@@ -6,9 +6,9 @@ namespace Sample
 	class ClearTermEnemysAllDead : public IClearTerm
 	{
 	public:
-		bool IsClear() override;
 		ClearTermEnemysAllDead();
 		~ClearTermEnemysAllDead() override = default;
+		bool IsClear(const ClearTermProviderPtr& provider) override;
 	};
 }
 

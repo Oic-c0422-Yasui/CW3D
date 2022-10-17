@@ -8,31 +8,12 @@
 
 namespace Sample
 {
-	class IClearTerm
-	{
-	public:
-		virtual bool IsClear() = 0;
-	};
-	class ClearTermAllEnemyDead : public IClearTerm
-	{
-	protected:
-		std::vector<EnemyPtr>* en;
-	public:
-		ClearTermAllEnemyDead(std::vector<EnemyPtr>* en)
-			:en(en)
-		{
-		}
-		bool IsClear() override
-		{
-			return true;
-		}
-	};
 	class CDivision
 	{
 	public:
 		struct DIVISION_DATA
 		{
-			std::vector<ClearTermPtr>	ClearTerms;
+			ClearTermPtr	ClearTerm;
 			std::vector<EnemyPtr>	Enemys;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
@@ -72,6 +53,10 @@ namespace Sample
 			return m_Data.EnemyCount;
 		}
 
+		const ClearTermPtr& GetClearTerm() const noexcept
+		{
+			return m_Data.ClearTerm;
+		}
 	};
 
 	using DivisionPtr = std::shared_ptr<CDivision>;

@@ -761,9 +761,6 @@
     <ClInclude Include="JsonObjectCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="JsonClearTermCreator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IClearTerm.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -772,6 +769,9 @@
     </ClInclude>
     <ClInclude Include="ClearTermProvider.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonClearTermCreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
