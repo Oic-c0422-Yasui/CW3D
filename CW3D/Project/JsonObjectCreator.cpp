@@ -4,19 +4,17 @@
 using namespace Sample;
 
 
-class JsonObjectCreator
-{
 	/**
 	 * @brief		コンストラクタ
 	 */
-	JsonObjectCreator()
+	JsonObjectCreator::JsonObjectCreator()
 	{
 
 	}
 	/**
 	 * @brief		JSonファイルからの生成
 	 */
-	static std::vector<ObjectPtr> Create(const std::string& name) {
+	std::vector<ObjectPtr> JsonObjectCreator::Create(const std::string& name) {
 		std::ifstream ifs(name);
 		if (ifs.fail())
 		{
@@ -28,7 +26,7 @@ class JsonObjectCreator
 	/**
 	 * @brief		生成
 	 */
-	static std::vector<ObjectPtr> Create(nlohmann::json& os) {
+	std::vector<ObjectPtr> JsonObjectCreator::Create(nlohmann::json& os) {
 		std::vector<ObjectPtr>	Objects;
 		for (auto& object : os)
 		{
@@ -46,5 +44,4 @@ class JsonObjectCreator
 		}
 		return Objects;
 	}
-};
 

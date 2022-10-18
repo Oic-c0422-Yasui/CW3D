@@ -2,9 +2,7 @@
 
 
 #include	"json.hpp"
-#include	"StageBase.h"
-#include	"Division.h"
-#include	"DivisionObject.h"
+#include	"Enemy.h"
 #include	"ZombieActionCreator.h"
 #include	"ZombieStateCreator.h"
 
@@ -12,22 +10,35 @@
 namespace Sample {
 	class EnemyDictionary
 	{
+	public:
 		struct Value
 		{
-			std::shared_ptr<IActionCreator> actionCreator;
-			std::shared_ptr<IStateCreator> stateCreator;
+			ActionCreatorPtr actionCreator;
+			StateCreatorPtr stateCreator;
 		};
-		std::map<std::string, Value> dic;
+	private:
+		std::map<std::string, Value> dictionary;
+	public:
+		
 		EnemyDictionary()
 		{
-			dic["Zombie"] = Value{ std::make_shared<ZombieActionCreator>, std::make_shared<ZombieStateCreator>() };
+
+			dictionary["Zombie"] = Value{ std::make_shared<ZombieActionCreator>(), std::make_shared<ZombieStateCreator>() };
+
+		}
+		Value& GetDictionary(std::string name)
+		{
+			assert(dictionary.find(name) != dictionary.end());
+			return dictionary[name];
 		}
 
 	};
+
+
 	class JsonEnemyCreator
 	{
 	private:
-
+		EnemyDictionary dictionary;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -36,11 +47,11 @@ namespace Sample {
 		/**
 		 * @brief		JSonファイルからの生成
 		 */
-		static std::vector<EnemyPtr> Create(const std::string& name);
+		std::vector<EnemyPtr> Create(const std::string& name);
 		/**
 		 * @brief		生成
 		 */
-		static std::vector<EnemyPtr> Create(nlohmann::json& os);
+		std::vector<EnemyPtr> Create(nlohmann::json& os);
 	};
 
 }

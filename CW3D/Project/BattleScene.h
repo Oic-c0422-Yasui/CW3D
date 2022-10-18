@@ -7,7 +7,6 @@
 #include "CameraController.h"
 
 #include	"Player.h"
-#include	"EnemyBuilder.h"
 #include	"ShotManager.h"
 #include	"EffectController.h"
 #include	"IDManager.h"

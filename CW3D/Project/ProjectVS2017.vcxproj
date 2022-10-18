@@ -205,7 +205,6 @@
     <ClInclude Include="EffectController.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="FallAction.h" />
     <ClInclude Include="FallState.h" />

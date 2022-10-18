@@ -3,7 +3,8 @@
 using namespace Sample;
 
 
-JsonEnemyCreator::JsonEnemyCreator()
+JsonEnemyCreator::JsonEnemyCreator():
+	dictionary()
 {
 }
 
@@ -25,10 +26,12 @@ std::vector<EnemyPtr> JsonEnemyCreator::Create(nlohmann::json& os)
 	{
 		EnemyPtr ene;
 		CVector3 pos;
+		std::string type;
 		enemy["PosX"].get_to(pos.x);
 		enemy["PosY"].get_to(pos.y);
 		enemy["PosZ"].get_to(pos.z);
-		auto& dicValue = dic[type];
+		enemy["Type"].get_to(type);
+		auto& dicValue = dictionary.GetDictionary(type);
 		ene = std::make_shared<CEnemy>(pos, dicValue.actionCreator, dicValue.stateCreator);
 		Enemys.push_back(ene);
 	}

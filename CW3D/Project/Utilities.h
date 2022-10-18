@@ -77,7 +77,7 @@ namespace Sample
 		}ANIMV3_DATA;
 
 
-		//保管アニメーション
+		//補間アニメーション
 		static float InterpolationAnim(float animTime, ANIM_DATA* animData, int count)
 		{
 			int phase;
@@ -121,7 +121,7 @@ namespace Sample
 			return from + (to - from) * t;
 		}
 
-		//保管アニメーション
+		//補間アニメーション
 		static Vector3 InterpolationAnim(float animTime, ANIMV3_DATA* animData, int count)
 		{
 			int phase;

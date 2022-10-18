@@ -42,11 +42,13 @@ using namespace Sample;
 			
 
 			//敵生成
-			data.Enemys = JsonEnemyCreator::Create(division["Enemys"]);
+			JsonEnemyCreator enemyCreator;
+			data.Enemys = enemyCreator.Create(division["Enemys"]);
 			data.EnemyCount = data.Enemys.size();
 
 			//オブジェクト生成
-			data.Objects = JsonObjectCreator::Create(division["Objects"]);
+			JsonObjectCreator objectCreator;
+			data.Objects = objectCreator.Create(division["Objects"]);
 			data.ObjectCount = data.Objects.size();
 
 			divArray.push_back(std::make_shared<CDivision>(data));

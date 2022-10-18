@@ -2,7 +2,6 @@
 
 
 #include	"json.hpp"
-#include	"StageBase.h"
 #include	"Division.h"
 #include	"JsonEnemyCreator.h"
 #include	"JsonObjectCreator.h"

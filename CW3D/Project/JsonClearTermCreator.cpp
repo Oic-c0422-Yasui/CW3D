@@ -19,6 +19,14 @@ std::vector<ClearTermPtr> JsonClearTermCreator::Create(const std::string& name)
 
 std::vector<ClearTermPtr> JsonClearTermCreator::Create(nlohmann::json& os)
 {
-
-	return std::vector<ClearTermPtr>();
+	std::vector<ClearTermPtr>	ClearTerms;
+	for (auto& clearTerm : os)
+	{
+		std::string type;
+		clearTerm["Type"].get_to(type);
+		auto& dicValue = dictionary.GetDictionary(type);
+		clearTerm = dicValue->Create(clearTerm);
+		ClearTerms.push_back(ene);
+	}
+	return ClearTerms;
 }

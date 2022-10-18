@@ -19,11 +19,11 @@ namespace Sample {
 		/**
 		 * @brief		JSonƒtƒ@ƒCƒ‹‚©‚ç‚Ì¶¬
 		 */
-		static std::vector<ObjectPtr> Create(const std::string& name);
+		std::vector<ObjectPtr> Create(const std::string& name);
 		/**
 		 * @brief		¶¬
 		 */
-		static std::vector<ObjectPtr> Create(nlohmann::json& os);
+		std::vector<ObjectPtr> Create(nlohmann::json& os);
 	};
 
 }
