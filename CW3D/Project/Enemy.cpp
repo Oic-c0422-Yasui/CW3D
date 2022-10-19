@@ -2,18 +2,19 @@
 
 
 #include	"CameraController.h"
-#include "CharacterAICreator.h"
 
 
 using namespace Sample;
 
-CEnemy::CEnemy(const Vector3& pos, std::shared_ptr<IActionCreator>& actionCreator, std::shared_ptr<IStateCreator>& stateCreator)
+CEnemy::CEnemy()
+
 	: Sample::CActorObject()
-	,m_Input()
-	,m_AI()
-	, m_DefaultPos(pos)
-	, m_ActionCreator(actionCreator)
-	, m_StateCreator(stateCreator)
+	, m_Input()
+	, m_AI()
+	, m_DefaultPos(0,0,0)
+	, m_ActionCreator()
+	, m_StateCreator()
+	, m_ParameterCreator()
 {
 	SetType(CHARA_ENEMY);
 }
@@ -23,8 +24,13 @@ CEnemy::~CEnemy()
 	Release();
 }
 
-bool CEnemy::Load()
+bool CEnemy::Load(const Vector3& pos, const ActionCreatorPtr& actionCreator,
+	const StateCreatorPtr& stateCreator,
+	const ParameterCreatorPtr& paramCreator,
+	const CharacterAICreatorPtr& aiCreator)
 {
+	m_DefaultPos = pos;
+
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
 	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
@@ -37,12 +43,19 @@ bool CEnemy::Load()
 	m_Motion = m_pMesh->CreateMotionController();
 	m_Actor->SetAnimationState(m_Motion);
 
-	m_StateMachine = std::make_shared<Sample::StateMachine>();
+	//アクション作成
+	actionCreator->Create(m_Actor);
+	//ステート作成
+	stateCreator->Create(m_StateMachine, m_Actor, m_Input);
+	//パラメーター作成
+	auto& param = m_Actor->GetParameterMap();
+	paramCreator->Create(param);
 
-	m_ActionCreator->Create(m_Actor);
-	m_StateCreator->Create(m_StateMachine, m_Actor, m_Input);
+	//パラメータ設定
+	m_HP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	m_MaxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
 
-	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
+	/*m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 800);
 	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
@@ -50,15 +63,13 @@ bool CEnemy::Load()
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
 	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE, 0.0f);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);
+	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);*/
 
-	m_HP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	m_MaxHP = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
-	m_Position = m_Actor->GetPosition();
+	m_Position = m_DefaultPos;
 	m_HPShowFlg = true;
 
 
-	CharacterAICreatorPtr aiCreator = std::make_shared<CharacterAICreator>();
+	//CharacterAICreatorPtr aiCreator = std::make_shared<ZombieAICreator>();
 
 	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
 

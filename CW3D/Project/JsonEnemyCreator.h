@@ -5,6 +5,8 @@
 #include	"Enemy.h"
 #include	"ZombieActionCreator.h"
 #include	"ZombieStateCreator.h"
+#include	"ZombieParameterCreator.h"
+#include	"ZombieAICreator.h"
 
 
 namespace Sample {
@@ -15,6 +17,8 @@ namespace Sample {
 		{
 			ActionCreatorPtr actionCreator;
 			StateCreatorPtr stateCreator;
+			ParameterCreatorPtr parameterCreator;
+			CharacterAICreatorPtr aiCreator;
 		};
 	private:
 		std::map<std::string, Value> dictionary;
@@ -23,7 +27,10 @@ namespace Sample {
 		EnemyDictionary()
 		{
 
-			dictionary["Zombie"] = Value{ std::make_shared<ZombieActionCreator>(), std::make_shared<ZombieStateCreator>() };
+			dictionary["Zombie"] = Value{	std::make_shared<ZombieActionCreator>(),
+											std::make_shared<ZombieStateCreator>(),
+											std::make_shared<ZombieParameterCreator>(),
+											std::make_shared<ZombieAICreator>()};
 
 		}
 		Value& GetDictionary(std::string name)
@@ -47,11 +54,11 @@ namespace Sample {
 		/**
 		 * @brief		JSonÉtÉ@ÉCÉãÇ©ÇÁÇÃê∂ê¨
 		 */
-		std::vector<EnemyPtr> Create(const std::string& name);
+		EnemyArrayPtr Create(const std::string& name);
 		/**
 		 * @brief		ê∂ê¨
 		 */
-		std::vector<EnemyPtr> Create(nlohmann::json& os);
+		EnemyArrayPtr Create(nlohmann::json& os);
 	};
 
 }

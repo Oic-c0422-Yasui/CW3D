@@ -2,12 +2,12 @@
 #include "GameDefine.h"
 #include	"InputManager.h"
 #include	"ResourceManager.h"
-#include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
 #include	"Observer.h"
-#include	"CharacterStateAI.h"
-#include	"ZombieActionCreator.h"
-#include	"ZombieStateCreator.h"
+#include	"IActionCreator.h"
+#include	"IStateCreator.h"
+#include	"IParameterCreator.h"
+#include	"ICharacterAICreator.h"
 
 #include	"ActorObject.h"
 
@@ -20,22 +20,27 @@ namespace Sample
 
 		InputPtr m_Input;
 
-		CharacterAIPtr	m_AI;
 
 		ParameterHandle< ReactiveParameter<int> > m_HP;
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
 		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
 		ParameterHandle< ReactiveParameter<bool> > m_HPShowFlg;
 
-		std::shared_ptr<IActionCreator>	 m_ActionCreator;
-		std::shared_ptr<IStateCreator>	m_StateCreator;
+		ActionCreatorPtr	 m_ActionCreator;
+		StateCreatorPtr	m_StateCreator;
+		ParameterCreatorPtr m_ParameterCreator;
+		CharacterAIPtr	m_AI;
 
 		CVector3 m_DefaultPos;
 
 	public:
-		CEnemy(const Vector3& pos, std::shared_ptr<IActionCreator>& actionCreator, std::shared_ptr<IStateCreator>& stateCreator);
+		CEnemy();
 		~CEnemy() override;
-		bool Load();
+		bool Load(const Vector3& pos, 
+			const ActionCreatorPtr& actionCreator,
+			const StateCreatorPtr& stateCreator,
+			const ParameterCreatorPtr& paramCreator,
+			const CharacterAICreatorPtr& aiCreator);
 		void Initialize();
 		void Update() override;
 		void Render() override;
@@ -101,8 +106,10 @@ namespace Sample
 
 	};
 
+	//ポインタ置き換え
 	using EnemyPtr = std::shared_ptr<CEnemy>;
-
+	using EnemyArray = std::vector<EnemyPtr>;
+	using EnemyArrayPtr = std::shared_ptr<EnemyArray>;
 }
 
 

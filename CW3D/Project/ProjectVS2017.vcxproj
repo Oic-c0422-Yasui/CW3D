@@ -100,12 +100,19 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="ClearTermEnemysAllDead.cpp" />
     <ClCompile Include="DivisionObject.cpp" />
+    <ClCompile Include="EnemyBuilderDictionary.cpp" />
+    <ClCompile Include="EnemyBuildParameter.cpp" />
     <ClCompile Include="JsonClearTermCreator.cpp" />
     <ClCompile Include="JsonDivisionCreator.cpp" />
     <ClCompile Include="JsonEnemyCreator.cpp" />
+    <ClCompile Include="JsonEnemyStatusCreator.cpp" />
+    <ClCompile Include="JsonEnemyStatusLoader.cpp" />
+    <ClCompile Include="JsonMeshResourceCreator.cpp" />
     <ClCompile Include="JsonObjectCreator.cpp" />
+    <ClCompile Include="JsonStageCreator.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Shot.cpp" />
     <ClCompile Include="Stage1.cpp" />
@@ -150,7 +157,10 @@
     <ClInclude Include="BattleUICreater.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
-    <ClInclude Include="CharacterAICreator.h" />
+    <ClInclude Include="EnemyBuilder.h" />
+    <ClInclude Include="EnemyBuilderDictionary.h" />
+    <ClInclude Include="EnemyBuildParameter.h" />
+    <ClInclude Include="ZombieAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="ClearPoseAction.h" />
     <ClInclude Include="ClearPoseState.h" />
@@ -163,11 +173,15 @@
     <ClInclude Include="DivisionObject.h" />
     <ClInclude Include="DropKickSkillAction.h" />
     <ClInclude Include="DropKickSkillState.h" />
+    <ClInclude Include="IParameterCreator.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonClearTermCreator.h" />
     <ClInclude Include="JsonDivisionCreator.h" />
     <ClInclude Include="JsonEnemyCreator.h" />
+    <ClInclude Include="JsonEnemyStatusLoader.h" />
+    <ClInclude Include="JsonMeshResourceCreator.h" />
     <ClInclude Include="JsonObjectCreator.h" />
+    <ClInclude Include="JsonStageCreator.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="CollisionShotPlayer.h" />
     <ClInclude Include="Stage1.h" />
@@ -306,6 +320,7 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
     <ClInclude Include="ZombieActionCreator.h" />
+    <ClInclude Include="ZombieParameterCreator.h" />
     <ClInclude Include="ZombieStateCreator.h" />
   </ItemGroup>
   <ItemGroup>

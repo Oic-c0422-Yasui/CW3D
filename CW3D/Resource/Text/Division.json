@@ -1,5 +1,7 @@
 {
-  "StageMesh": "",
+  "StageMesh": "Stage/stage.mom",
+
+  "EnemyStatusFile": "Text/EnemyStatus.json",
 
   "Divisions": [
     {
@@ -168,87 +170,83 @@
 
     {
       "BGM": "",
-      "ClearTerm": 
-      [
+      "ClearTerm": [
         {
-          "Type": "AllDead",
+          "Type": "AllDead"
         }
       ],
-        "Enemys":
-        [
-          {
-            "PosX": 62,
-            "PosY": 0,
-            "PosZ": 5,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 90,
-            "PosY": 0,
-            "PosZ": 1,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 70,
-            "PosY": 0,
-            "PosZ": 5,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 72,
-            "PosY": 0,
-            "PosZ": 1,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 71,
-            "PosY": 0,
-            "PosZ": 2,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 67,
-            "PosY": 0,
-            "PosZ": 3,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 80,
-            "PosY": 0,
-            "PosZ": 6,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 85,
-            "PosY": 0,
-            "PosZ": 4,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 76,
-            "PosY": 0,
-            "PosZ": 2,
-            "Type": "Zombie"
-          },
-          {
-            "PosX": 92,
-            "PosY": 0,
-            "PosZ": 3,
-            "Type": "Zombie"
-          }
-        ],
-        "Objects"
-        :
-        [
-          {
-            "PosX": 120,
-            "PosY": 1,
-            "PosZ": 0,
-            "SizeX": 1,
-            "SizeY": 30,
-            "SizeZ": 18
-          }
-        ]
+      "Enemys": [
+        {
+          "PosX": 62,
+          "PosY": 0,
+          "PosZ": 5,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 90,
+          "PosY": 0,
+          "PosZ": 1,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 70,
+          "PosY": 0,
+          "PosZ": 5,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 72,
+          "PosY": 0,
+          "PosZ": 1,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 71,
+          "PosY": 0,
+          "PosZ": 2,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 67,
+          "PosY": 0,
+          "PosZ": 3,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 80,
+          "PosY": 0,
+          "PosZ": 6,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 85,
+          "PosY": 0,
+          "PosZ": 4,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 76,
+          "PosY": 0,
+          "PosZ": 2,
+          "Type": "Zombie"
+        },
+        {
+          "PosX": 92,
+          "PosY": 0,
+          "PosZ": 3,
+          "Type": "Zombie"
+        }
+      ],
+      "Objects": [
+        {
+          "PosX": 120,
+          "PosY": 1,
+          "PosZ": 0,
+          "SizeX": 1,
+          "SizeY": 30,
+          "SizeZ": 18
+        }
+      ]
     }
   ]
 }

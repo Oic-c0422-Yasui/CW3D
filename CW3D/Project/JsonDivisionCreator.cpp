@@ -44,7 +44,7 @@ using namespace Sample;
 			//敵生成
 			JsonEnemyCreator enemyCreator;
 			data.Enemys = enemyCreator.Create(division["Enemys"]);
-			data.EnemyCount = data.Enemys.size();
+			data.EnemyCount = data.Enemys->size();
 
 			//オブジェクト生成
 			JsonObjectCreator objectCreator;

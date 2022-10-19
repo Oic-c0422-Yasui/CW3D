@@ -1,6 +1,7 @@
 #pragma once
 
 #include	"ICharacterAICreator.h"
+
 #include	"CharacterStateAI.h"
 #include	"IdleStateAI.h"
 #include	"MoveStateAI.h"
@@ -12,13 +13,13 @@ namespace Sample
 	/**
 	 * @brief		AI生成クラス
 	 */
-	class CharacterAICreator : public ICharacterAICreator
+	class ZombieAICreator : public ICharacterAICreator
 	{
 	public:
 		/**
 		 * @brief		デストラクタ
 		 */
-		virtual ~CharacterAICreator() = default;
+		virtual ~ZombieAICreator() = default;
 
 		/**
 		 * @brief		コンストラクタ

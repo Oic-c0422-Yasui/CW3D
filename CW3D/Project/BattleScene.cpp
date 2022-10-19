@@ -121,7 +121,6 @@ bool CBattleScene::Load()
 			//ステージから敵のポインターを受け取る
 			auto& ene = stg.GetEnemy(i, j);
 			m_Enemys.push_back(ene);
-			ene->Load();
 		}
 	}
 	for (int i = 0; i < m_Enemys.size(); i++)

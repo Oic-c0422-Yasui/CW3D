@@ -1,0 +1,20 @@
+{
+
+  "Status": [
+    {
+      "Zombie",
+      "HP": 100,
+      "UltGauge": 100.0,
+      "ATK": null,
+      "Mesh": "Zombie/Zombie.mom"
+    },
+    {
+      "Zombie2",
+      "HP": 100,
+      "UltGauge": 100.0,
+      "ATK": null,
+      "Mesh": "Zombie/Zombie.mom"
+    }
+  ]
+
+}

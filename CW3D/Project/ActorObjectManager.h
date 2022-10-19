@@ -60,7 +60,7 @@ namespace Sample
 
 
 
-		ActorObjectPtr GetActor(int id) {
+		const ActorObjectPtr& GetActor(int id) {
 			for (auto& map : m_Tags)
 			{
 				auto& it = map.second->find(id);
@@ -72,7 +72,7 @@ namespace Sample
 			return nullptr;
 		}
 
-		ActorObjectPtr GetActor(CHARACTER_TYPE type,int id) {
+		const ActorObjectPtr& GetActor(CHARACTER_TYPE type,int id) {
 			return (*m_Tags[type])[id].lock();
 		}
 

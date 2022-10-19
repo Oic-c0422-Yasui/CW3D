@@ -139,6 +139,12 @@
     <Filter Include="ソース ファイル\Creator">
       <UniqueIdentifier>{83602f07-f68c-4f8e-a39a-848aa02588b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Creator\Json">
+      <UniqueIdentifier>{e6b07ac1-5e51-4e33-8d5d-5d86a4fcc5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Creator\Json">
+      <UniqueIdentifier>{a66c26f7-806f-424f-9278-fd65845aa9da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -225,19 +231,40 @@
     <ClCompile Include="Shot.cpp">
       <Filter>ソース ファイル\Shot</Filter>
     </ClCompile>
-    <ClCompile Include="JsonObjectCreator.cpp">
-      <Filter>ソース ファイル\Creator</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonEnemyCreator.cpp">
-      <Filter>ソース ファイル\Creator</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonDivisionCreator.cpp">
-      <Filter>ソース ファイル\Creator</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonClearTermCreator.cpp">
+    <ClCompile Include="ClearTermEnemysAllDead.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermEnemysAllDead.cpp">
+    <ClCompile Include="JsonDivisionCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonEnemyCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonObjectCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonClearTermCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonEnemyStatusCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonMeshResourceCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonStageCreator.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuilder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuildParameter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuilderDictionary.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonEnemyStatusLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -581,12 +608,6 @@
     <ClInclude Include="MoveStateAI.h">
       <Filter>ヘッダー ファイル\AI</Filter>
     </ClInclude>
-    <ClInclude Include="ICharacterAICreator.h">
-      <Filter>ヘッダー ファイル\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterAICreator.h">
-      <Filter>ヘッダー ファイル\AI</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionShotPlayer.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
@@ -734,12 +755,6 @@
     <ClInclude Include="json.hpp">
       <Filter>ヘッダー ファイル\External</Filter>
     </ClInclude>
-    <ClInclude Include="JsonEnemyCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonDivisionCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="Division.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
@@ -755,9 +770,6 @@
     <ClInclude Include="DropKickSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JsonObjectCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="IClearTerm.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -768,7 +780,46 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="JsonClearTermCreator.h">
+      <Filter>ヘッダー ファイル\Creator\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonDivisionCreator.h">
+      <Filter>ヘッダー ファイル\Creator\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonEnemyCreator.h">
+      <Filter>ヘッダー ファイル\Creator\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonObjectCreator.h">
+      <Filter>ヘッダー ファイル\Creator\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonStageCreator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonMeshResourceCreator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonEnemyStatusLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IParameterCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieParameterCreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ICharacterAICreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieAICreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuilder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuildParameter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuilderDictionary.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

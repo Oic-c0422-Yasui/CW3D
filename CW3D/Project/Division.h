@@ -14,7 +14,7 @@ namespace Sample
 		struct DIVISION_DATA
 		{
 			ClearTermPtr	ClearTerm;
-			std::vector<EnemyPtr>	Enemys;
+			EnemyArrayPtr	Enemys;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
 			int ObjectCount;
@@ -27,7 +27,7 @@ namespace Sample
 		{ 
 		};
 		~CDivision() {
-			m_Data.Enemys.clear();
+			m_Data.Enemys->clear();
 			m_Data.Objects.clear();
 		};
 
@@ -42,11 +42,11 @@ namespace Sample
 			return m_Data.ObjectCount;
 		}
 
-		const EnemyPtr& GetEnemy(int id)
+		/*const EnemyPtr& GetEnemy(int id)
 		{
 			assert(m_Data.Enemys[id]);
 			return m_Data.Enemys[id];
-		}
+		}*/
 
 		int GetEnemyCount() const noexcept
 		{
