@@ -11,6 +11,8 @@ namespace Sample
 		virtual const EnemyPtr& Create(const EnemyBuildParameter& param) = 0;
 	};
 
+	using EnemyBuilderPtr = std::shared_ptr<EnemyBuilder>;
+
 }
 
 

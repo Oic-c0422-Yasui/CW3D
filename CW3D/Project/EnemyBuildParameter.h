@@ -8,32 +8,20 @@ namespace Sample
 	class EnemyBuildParameter
 	{
 	private:
-		int m_HP;
-		float m_UltGauge;
-		int m_Attack;
-		std::string m_MeshName;
+		std::string m_Type;
+		Vector3 m_Pos;
 	public:
-		EnemyBuildParameter(int hp,float ultGauge,int atk,std::string meshName);
+		EnemyBuildParameter(const std::string& typeName,const Vector3& pos);
 		~EnemyBuildParameter();
 
-		int GetHP() const noexcept
+		const std::string& GetType()const noexcept
 		{
-			return m_HP;
+			return m_Type;
 		}
 
-		float GetUltGauge()const noexcept
+		const Vector3& GetPos() const noexcept
 		{
-			return m_UltGauge;
-		}
-
-		int GetAttack()const noexcept
-		{
-			return m_Attack;
-		}
-
-		const std::string& GetMeshName()const noexcept
-		{
-			return m_MeshName;
+			return m_Pos;
 		}
 
 	};
