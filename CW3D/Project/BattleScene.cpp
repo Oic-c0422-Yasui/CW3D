@@ -51,6 +51,8 @@ bool CBattleScene::Load()
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
 
 
+
+
 	//メッシュ読み込み
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
@@ -58,12 +60,15 @@ bool CBattleScene::Load()
 		return false;
 	}
 	ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
-	tempMesh = std::make_shared<CMeshContainer>();
-	if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	if (!ResourceManager<CMeshContainer>::GetInstance().IsContain("Zombie"))
 	{
-		return false;
+		tempMesh = std::make_shared<CMeshContainer>();
+		if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
+		{
+			return false;
+		}
+		ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 	}
-	ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 
 	
 	//テクスチャ読み込み

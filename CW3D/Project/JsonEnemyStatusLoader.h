@@ -1,6 +1,7 @@
 #pragma once
 #include "json.hpp"
 #include "EnemyBuildParameter.h"
+#include "EnemyBuilderDictionary.h"
 #include "GameDefine.h"
 
 
@@ -19,11 +20,11 @@ namespace Sample
 		/**
 		 * @brief		JSonÉtÉ@ÉCÉãÇ©ÇÁÇÃê∂ê¨
 		 */
-		std::vector<EnemyBuildParameter> Load(const std::string& name);
+		EnemyStatusDictionary Load(const std::string& name);
 		/**
 		 * @brief		ê∂ê¨
 		 */
-		std::vector<EnemyBuildParameter> Load(nlohmann::json& os);
+		EnemyStatusDictionary Load(nlohmann::json& os);
 	};
 }
 

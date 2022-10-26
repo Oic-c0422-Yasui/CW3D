@@ -20,7 +20,7 @@ namespace Sample
 		bool								m_ShowFlg;
 		bool								m_DeadFlg;
 		CVector3							m_PrevPos;
-		float								m_UltBoostMag;
+		float								m_UltBoostMag;	//必殺技ブースト倍率
 
 	public:
 		CActorObject();

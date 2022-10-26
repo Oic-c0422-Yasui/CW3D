@@ -108,11 +108,12 @@
     <ClCompile Include="JsonClearTermCreator.cpp" />
     <ClCompile Include="JsonDivisionCreator.cpp" />
     <ClCompile Include="JsonEnemyCreator.cpp" />
-    <ClCompile Include="JsonEnemyStatusCreator.cpp" />
+    <ClCompile Include="JsonEnemyLoader.cpp" />
     <ClCompile Include="JsonEnemyStatusLoader.cpp" />
     <ClCompile Include="JsonMeshResourceCreator.cpp" />
     <ClCompile Include="JsonObjectCreator.cpp" />
     <ClCompile Include="JsonStageCreator.cpp" />
+    <ClCompile Include="JsonStageLoader.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Shot.cpp" />
     <ClCompile Include="Stage1.cpp" />
@@ -136,6 +137,8 @@
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="ZombieBuilder.cpp" />
+    <ClCompile Include="ZombieParameterCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -160,6 +163,8 @@
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyBuilderDictionary.h" />
     <ClInclude Include="EnemyBuildParameter.h" />
+    <ClInclude Include="JsonEnemyLoader.h" />
+    <ClInclude Include="JsonStageLoader.h" />
     <ClInclude Include="ZombieAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="ClearPoseAction.h" />
@@ -320,6 +325,7 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Velocity.h" />
     <ClInclude Include="ZombieActionCreator.h" />
+    <ClInclude Include="ZombieBuilder.h" />
     <ClInclude Include="ZombieParameterCreator.h" />
     <ClInclude Include="ZombieStateCreator.h" />
   </ItemGroup>

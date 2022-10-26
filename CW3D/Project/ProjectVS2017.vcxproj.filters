@@ -246,9 +246,6 @@
     <ClCompile Include="JsonClearTermCreator.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
     </ClCompile>
-    <ClCompile Include="JsonEnemyStatusCreator.cpp">
-      <Filter>ソース ファイル\Creator\Json</Filter>
-    </ClCompile>
     <ClCompile Include="JsonMeshResourceCreator.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
     </ClCompile>
@@ -265,6 +262,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="JsonEnemyStatusLoader.cpp">
+      <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieBuilder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieParameterCreator.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonEnemyLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonStageLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -819,6 +828,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBuilderDictionary.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieBuilder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonEnemyLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonStageLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

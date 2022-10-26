@@ -65,14 +65,28 @@ namespace Sample
 		//リソースを取得する
 		ResourcePtr& GetResource(const std::string& key)
 		{
-			return m_Resources[key];
+			if (IsContain)
+			{
+				return m_Resources[key];
+			}
+			return nullptr;
 		}
 
 		T& GetResourceT(const std::string& key)
 		{
-			return m_ResourcesT[key];
+			if (IsContain)
+			{
+				return m_ResourcesT[key];
+			}
+			return nullptr;
 		}
 
+		//リソースが存在するか？
+		bool IsContain(const std::string& key)
+		{
+			auto it = m_Resources.find(key);
+			return it != m_ResourcesT.end();
+		}
 	};
 }
 	

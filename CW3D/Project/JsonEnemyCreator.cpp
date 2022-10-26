@@ -49,50 +49,59 @@ EnemyArrayPtr JsonEnemyCreator::Create(nlohmann::json& os)
 	return Enemys;
 }
 
-class EnemyTest
-{
-public:
-};
-
-
-class EnemyBuildParameter
-{
-};
-
-class EnemyBuilder
-{
-public:
-	EnemyTest* Create(const EnemyBuildParameter& param);
-};
-
-class ZombiEnemyBuilder : public EnemyBuilder
-{
-public:
-	EnemyTest* Create(const EnemyBuildParameter& param);
-};
-
-class EnemyBuilderDictyonary
-{
-	std::map<EnemyBuilder> map;
-};
-class JsonEnemyLoader
-{
-public:
-	std::vector< EnemyBuildParameter> load();
-};
-
-class JsonEnemyStatusLoader
-{
-public:
-	EnemyBuilderDictyonary load();
-};
-gameSceneLoad()
-{
-	std::vector< EnemyBuildParameter> parameter = JsonEnemyLoader.load();
-	EnemyBuilderDictyonary dic = JsonEnemyStatusLoader.Load();
-}
-
-divisonCreate()
-{
-	enemys.push_back(dic[parameter[i].type].Create(parameter[i]));
-}
+//class EnemyTest
+//{
+//public:
+//};
+//
+//
+//class EnemyBuildParameter
+//{
+//};
+//
+//class EnemyBuilder
+//{
+//public:
+//	EnemyTest* Create(const EnemyBuildParameter& param);
+//};
+//
+//class ZombiEnemyBuilder : public EnemyBuilder
+//{
+//public:
+//	EnemyTest* Create(const EnemyBuildParameter& param);
+//};
+//
+//class EnemyBuilderDictyonary
+//{
+//	std::map<EnemyBuilder> map;
+//};
+//class JsonEnemyLoader
+//{
+// private:
+//		std::vector< EnemyBuildParameter> parameters;
+//		std::string statusFile;
+//public:
+//	std::vector< EnemyBuildParameter> load();
+// 
+// std::string& GetStatusFileName() const noexcept{return statusFile;}
+// std::vector< EnemyBuildParameter>& GetParameters() const noexcept {return parameters;}
+//};
+//
+//class JsonEnemyStatusLoader
+//{
+//public:
+//	EnemyBuilderDictyonary load();
+//};
+//gameSceneLoad()
+//{
+//	JsonEnemyLoader.load();
+//	EnemyBuilderDictyonary dic = JsonEnemyStatusLoader.Load(JsonEnemyLoader.GetStatusFileName());
+// for(auto& param : JsonEnemyLoader.GetParameters())
+//{
+// }
+//}
+//
+//divisonCreate()
+//{
+//	enemys.push_back(dic[parameter[i].type].Create(parameter[i]));
+//}

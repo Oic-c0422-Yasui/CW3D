@@ -2,6 +2,7 @@
 
 #include	"json.hpp"
 #include	"JsonDivisionCreator.h"
+#include	"JsonEnemyLoader.h"
 #include	"StageBase.h"
 
 namespace Sample 

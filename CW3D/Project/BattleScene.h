@@ -20,6 +20,9 @@
 #include	"PlayerUIRender.h"
 #include	"StageManager.h"
 
+#include	"EnemyBuilderDictionary.h"
+#include	"EnemyBuildParameter.h"
+
 class CBattleScene : public CSceneBase
 {
 private:

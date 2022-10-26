@@ -4,24 +4,68 @@
 
 namespace Sample
 {
+	class EnemyStatus
+	{
+	public:
+		int m_Hp;
+		float m_UltGauge;
+		int m_Atk;
+		std::string m_MeshName;
+		Vector3 m_ColliderSize;
+		float m_ColliderHeight;
+
+		EnemyStatus(int hp,float ultGauge,int atk,
+			const std::string& meshName,const Vector3& colliderSize,float colliderHeight);
+
+	};
+	using EnemyStatusPtr = std::shared_ptr<EnemyStatus>;
+
+	class EnemyStatusDictionary
+	{
+	private:
+		std::map<std::string, EnemyStatusPtr> map;
+	public:
+		EnemyStatusDictionary();
+
+		void Add(const std::string& name, const EnemyStatusPtr& status);
+
+		const std::map<std::string, EnemyStatusPtr> GetMap()
+		{
+			return map;
+		}
+
+		const EnemyStatusPtr& Get(const std::string& name);
+		bool Delete(const std::string& name);
+
+		bool IsContain(const std::string& name);
+	};
+
+	class EnemyParam
+	{
+	public:
+		std::string m_Type;
+		Vector3 m_Pos;
+
+		EnemyParam(const std::string& type,const Vector3& pos);
+	};
 
 	class EnemyBuildParameter
 	{
 	private:
-		std::string m_Type;
-		Vector3 m_Pos;
+		EnemyParam m_Param;
+		EnemyStatusPtr m_Status;
 	public:
-		EnemyBuildParameter(const std::string& typeName,const Vector3& pos);
+		EnemyBuildParameter(const EnemyParam& param,const EnemyStatusPtr& status);
 		~EnemyBuildParameter();
 
-		const std::string& GetType()const noexcept
+		const EnemyStatusPtr& GetStatus() const noexcept
 		{
-			return m_Type;
+			return m_Status;
 		}
 
-		const Vector3& GetPos() const noexcept
+		const EnemyParam& GetParam() const noexcept
 		{
-			return m_Pos;
+			return m_Param;
 		}
 
 	};

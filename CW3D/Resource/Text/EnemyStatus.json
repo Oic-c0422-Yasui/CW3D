@@ -2,18 +2,30 @@
 
   "Status": [
     {
-      "Zombie",
+      "Type": "Zombie",
       "HP": 100,
       "UltGauge": 100.0,
-      "ATK": null,
-      "Mesh": "Zombie/Zombie.mom"
+      "ATK": 10,
+      "Mesh": "Zombie/Zombie.mom",
+      "Collider": {
+        "SizeX": 0.5,
+        "SizeY": 0.8,
+        "SizeZ": 0.5,
+        "Height": 1.0,
+      }
     },
     {
-      "Zombie2",
+      "Type": "Zombie2",
       "HP": 100,
       "UltGauge": 100.0,
-      "ATK": null,
-      "Mesh": "Zombie/Zombie.mom"
+      "ATK": 10,
+      "Mesh": "Zombie/Zombie.mom",
+      "Collider": {
+        "SizeX": 0.5,
+        "SizeY": 0.8,
+        "SizeZ": 0.5,
+        "Height": 1.0
+      }
     }
   ]
 

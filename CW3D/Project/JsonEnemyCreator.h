@@ -7,6 +7,7 @@
 #include	"ZombieStateCreator.h"
 #include	"ZombieParameterCreator.h"
 #include	"ZombieAICreator.h"
+#include	"EnemyBuilder.h"
 
 
 namespace Sample {

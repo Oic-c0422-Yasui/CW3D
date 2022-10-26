@@ -42,7 +42,7 @@ using namespace Sample;
 			
 
 			//“G¶¬
-			JsonEnemyCreator enemyCreator;
+			JsonEnemyLoader enemyCreator;
 			data.Enemys = enemyCreator.Create(division["Enemys"]);
 			data.EnemyCount = data.Enemys->size();
 
