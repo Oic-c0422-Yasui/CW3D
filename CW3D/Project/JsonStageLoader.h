@@ -1,7 +1,6 @@
 #pragma once
 #include	"json.hpp"
 #include	"JsonDivisionCreator.h"
-#include	"JsonEnemyLoader.h"
 
 
 namespace Sample

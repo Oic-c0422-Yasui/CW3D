@@ -1,5 +1,4 @@
 #include "JsonStageCreator.h"
-#include	"ResourceManager.h"
 
 using namespace Sample;
 
@@ -26,13 +25,6 @@ StagePtr Sample::JsonStageCreator::Create(nlohmann::json& os)
 	auto& enemyStatusFile = os["EnemyStatusFile"];
 	JsonEnemyStatusLoader statusLoader;
 	auto& enemyStatusDictionary = statusLoader.Load(enemyStatusFile);
-
-
-
-
-	auto& divisions = os["Divisions"];
-	
-
 
 
 	DivisionArray divArray;

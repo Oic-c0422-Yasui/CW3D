@@ -29,20 +29,59 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 	JsonEnemyStatusLoader statusLoader;
 	auto& enemyStatusDictionary = statusLoader.Load(enemyStatusFile);
 
-	for (auto& enemyStatus : enemyStatusDictionary.GetMap())
+
+	JsonDivisionCreator jsonCreator;
+	DivisionArrayPtr divisionArray = jsonCreator.Create(os["Divisions"], enemyStatusDictionary);
+
+
+	//敵で使用するメッシュ名格納
+	std::vector<std::string> meshNames;
+	for (auto& division : *divisionArray)
 	{
-		if (!ResourceManager<CMeshContainer>::GetInstance().IsContain(enemyStatus.first))
+		for (auto& enemyParam : division->GetEnemysParam())
 		{
+			auto& typeName = enemyParam.GetParam().m_Type;
+
+			if (meshNames.size() <= 0)
+			{
+				meshNames.push_back(typeName);
+			}
+			for (int i = 0; i < meshNames.size(); i++)
+			{
+				if (typeName == meshNames[i])
+				{
+					break;
+				}
+				if (i == meshNames.size())
+				{
+					meshNames.push_back(typeName);
+				}
+			}
+			
+		}
+	}
+
+	//敵で使用するメッシュをロード
+	for (auto& meshName : meshNames)
+	{
+		if (!enemyStatusDictionary.IsContain(meshName))
+		{
+			continue;
+		}
+		if (!ResourceManager<CMeshContainer>::GetInstance().IsContain(meshName))
+		{
+			//敵の辞書を取得
+			auto& dictionary = enemyStatusDictionary.Get(meshName);
 			//メッシュを作成
 			tempMesh = std::make_shared<CMeshContainer>();
 			//メッシュの名前をChar*へ変換
-			const char* str = enemyStatus.second->m_MeshName.c_str();
+			const char* str = dictionary->m_MeshName.c_str();
 			if (tempMesh->Load(str) != MOFMODEL_RESULT_SUCCEEDED)
 			{
 				return false;
 			}
 			//リソースを追加
-			ResourceManager<CMeshContainer>::GetInstance().AddResource(enemyStatus.first, tempMesh);
+			ResourceManager<CMeshContainer>::GetInstance().AddResource(meshName, tempMesh);
 		}
 	}
 

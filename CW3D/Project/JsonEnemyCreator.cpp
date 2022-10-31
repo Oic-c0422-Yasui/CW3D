@@ -36,11 +36,8 @@ EnemyArrayPtr JsonEnemyCreator::Create(nlohmann::json& os)
 		enemy["PosZ"].get_to(pos.z);
 		enemy["Type"].get_to(type);
 
-
-
 		auto& dicValue = dictionary.GetDictionary(type);
 		
-
 		EnemyPtr ene;
 		ene = std::make_shared<CEnemy>();
 		ene->Load(pos, dicValue.actionCreator, dicValue.stateCreator,dicValue.parameterCreator,dicValue.aiCreator);

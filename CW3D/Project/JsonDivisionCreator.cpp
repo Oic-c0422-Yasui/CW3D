@@ -14,14 +14,14 @@ using namespace Sample;
 	/**
 	 * @brief		JSonファイルからの生成
 	 */
-	DivisionArrayPtr JsonDivisionCreator::Create(const std::string& name) {
+	DivisionArrayPtr JsonDivisionCreator::Create(const std::string& name, EnemyStatusDictionary status) {
 		std::ifstream ifs(name);
 		if (ifs.fail())
 		{
 			return DivisionArrayPtr();
 		}
 		nlohmann::json os = nlohmann::json::parse(ifs);
-		return Create(os);
+		return Create(os,status);
 	}
 
 
@@ -31,7 +31,7 @@ using namespace Sample;
 	/**
 	 * @brief		生成
 	 */
-	DivisionArrayPtr JsonDivisionCreator::Create(nlohmann::json& os) {
+	DivisionArrayPtr JsonDivisionCreator::Create(nlohmann::json& os, EnemyStatusDictionary status) {
 		DivisionArray divArray;
 		auto& divisions = os["Divisions"];
 		for (auto& division : divisions)
@@ -43,10 +43,9 @@ using namespace Sample;
 
 			//敵生成
 			JsonEnemyLoader enemyLoader;
-			enemyLoader.Load(division["Enemys"]);
 
-			data.Enemys = enemyLoader.Create(division["Enemys"],);
-			data.EnemyCount = data.Enemys->size();
+			data.EnemysParam = enemyLoader.Load(division["Enemys"], status);
+			data.EnemyCount = data.EnemysParam.size();
 
 			//オブジェクト生成
 			JsonObjectCreator objectCreator;

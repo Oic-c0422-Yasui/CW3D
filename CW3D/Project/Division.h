@@ -2,6 +2,7 @@
 #include "GameDefine.h"
 
 #include "Enemy.h"
+#include "EnemyBuildParameter.h"
 #include "Object.h"
 #include "IClearTerm.h"
 
@@ -14,6 +15,7 @@ namespace Sample
 		struct DIVISION_DATA
 		{
 			ClearTermPtr	ClearTerm;
+			std::vector<EnemyBuildParameter> EnemysParam;
 			EnemyArrayPtr	Enemys;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
@@ -30,6 +32,11 @@ namespace Sample
 			m_Data.Enemys->clear();
 			m_Data.Objects.clear();
 		};
+
+		const std::vector<EnemyBuildParameter>& GetEnemysParam()
+		{
+			return m_Data.EnemysParam;
+		}
 
 		const ObjectPtr& GetObj(int id)
 		{

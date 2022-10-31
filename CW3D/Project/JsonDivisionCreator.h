@@ -21,11 +21,11 @@ namespace Sample {
 		/**
 		 * @brief		JSonƒtƒ@ƒCƒ‹‚©‚ç‚Ì¶¬
 		 */
-		static DivisionArrayPtr Create(const std::string& name);
+		DivisionArrayPtr Create(const std::string& name,EnemyStatusDictionary status);
 		/**
 		 * @brief		¶¬
 		 */
-		static DivisionArrayPtr Create(nlohmann::json& os);
+		DivisionArrayPtr Create(nlohmann::json& os, EnemyStatusDictionary status);
 	};
 
 }
