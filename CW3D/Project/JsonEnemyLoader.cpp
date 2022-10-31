@@ -2,7 +2,7 @@
 
 using namespace Sample;
 
-std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(const std::string& name)
+std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
@@ -10,7 +10,7 @@ std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(const std::string
 		return std::vector<EnemyBuildParameter>();
 	}
 	nlohmann::json os = nlohmann::json::parse(ifs);
-	return Load(os);
+	return Load(os, statusDictionary);
 }
 
 std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
@@ -22,7 +22,6 @@ std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(nlohmann::json& o
 	for (auto& enemy : Enemys)
 	{
 		
-
 		Vector3 pos;
 		std::string type;
 

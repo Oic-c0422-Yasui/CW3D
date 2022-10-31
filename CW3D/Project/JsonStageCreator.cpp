@@ -21,7 +21,6 @@ StagePtr Sample::JsonStageCreator::Create(const std::string& name)
 StagePtr Sample::JsonStageCreator::Create(nlohmann::json& os)
 {
 
-	auto& stageMesh = os["StageMesh"];
 
 
 	auto& enemyStatusFile = os["EnemyStatusFile"];

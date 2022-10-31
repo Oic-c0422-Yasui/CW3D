@@ -8,8 +8,8 @@ namespace Sample
 	class JsonEnemyLoader
 	{
 	public:
-		std::vector<EnemyBuildParameter> Load(const std::string& name);
-		std::vector<EnemyBuildParameter> Load(nlohmann::json& os,EnemyStatusDictionary status);
+		std::vector<EnemyBuildParameter> Load(const std::string& name, EnemyStatusDictionary statusDictionary);
+		std::vector<EnemyBuildParameter> Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary);
 	};
 
 }

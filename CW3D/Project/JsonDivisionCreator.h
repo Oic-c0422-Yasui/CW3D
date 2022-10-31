@@ -3,7 +3,7 @@
 
 #include	"json.hpp"
 #include	"Division.h"
-#include	"JsonEnemyCreator.h"
+#include	"JsonEnemyLoader.h"
 #include	"JsonObjectCreator.h"
 
 

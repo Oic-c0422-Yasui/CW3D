@@ -31,13 +31,18 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 
 	for (auto& enemyStatus : enemyStatusDictionary.GetMap())
 	{
-		if (ResourceManager<CMeshContainer>::GetInstance().IsContain(enemyStatus.first))
+		if (!ResourceManager<CMeshContainer>::GetInstance().IsContain(enemyStatus.first))
 		{
+			//メッシュを作成
 			tempMesh = std::make_shared<CMeshContainer>();
-			if (tempMesh->Load(enemyStatus.second->m_MeshName) != MOFMODEL_RESULT_SUCCEEDED)
+			//メッシュの名前をChar*へ変換
+			const char* str = enemyStatus.second->m_MeshName.c_str();
+			if (tempMesh->Load(str) != MOFMODEL_RESULT_SUCCEEDED)
 			{
 				return false;
 			}
+			//リソースを追加
+			ResourceManager<CMeshContainer>::GetInstance().AddResource(enemyStatus.first, tempMesh);
 		}
 	}
 
