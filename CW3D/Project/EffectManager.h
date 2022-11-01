@@ -71,7 +71,7 @@ namespace Sample
 		Effekseer::Handle Play(const std::string& resouceName)
 		{
 			//リソースマネージャーから指定されたエフェクトを取り出し
-			Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResourceT(resouceName);
+			Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResource(resouceName);
 
 			return m_Manager->Play(effect, 0, 1.0f, 0);
 		}

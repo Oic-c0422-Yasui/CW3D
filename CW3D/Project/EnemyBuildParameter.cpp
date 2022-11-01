@@ -3,6 +3,8 @@
 using namespace Sample;
 
 Sample::EnemyBuildParameter::EnemyBuildParameter(const EnemyParam& param, const EnemyStatusPtr& status)
+	: m_Param(param)
+	, m_Status(status)
 {
 }
 

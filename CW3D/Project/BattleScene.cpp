@@ -59,15 +59,15 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
-	ResourceManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
-	if (!ResourceManager<CMeshContainer>::GetInstance().IsContain("Zombie"))
+	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", tempMesh);
+	if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContain("Zombie"))
 	{
 		tempMesh = std::make_shared<CMeshContainer>();
 		if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
 		{
 			return false;
 		}
-		ResourceManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
+		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Zombie", tempMesh);
 	}
 
 	
@@ -80,23 +80,23 @@ bool CBattleScene::Load()
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
 	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect1", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect1", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sword.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("DamageEffect1", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("DamageEffect1", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tuki.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect2", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect2", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/sandStome.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect3", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect3", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Laser01.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect4", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect4", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/tornade.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect5", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect5", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/fire.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect6", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect6", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/drill.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("Effect7", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect7", effect);
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Track.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResourceT("ClosedEffect", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("ClosedEffect", effect);
 
 	//ステージ読み込み
 	StagePtr stage = std::make_shared<CStage1>();
@@ -382,11 +382,11 @@ void CBattleScene::Release()
 	
 
 	InputManagerInstance.Release();
-	Sample::ResourceManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
-	Sample::ResourceManager<CSprite3D>::GetInstance().Release();
-	Sample::ResourceManager<CTexture>::GetInstance().Release();
-	ResourceManager<CFont>::GetInstance().Release();
+	Sample::ResourcePtrManager<CMeshContainer>::GetInstance().Release();
+	Sample::ResourcePtrManager<CSprite3D>::GetInstance().Release();
+	Sample::ResourcePtrManager<CTexture>::GetInstance().Release();
+	ResourcePtrManager<CFont>::GetInstance().Release();
 	ShotManagerInstance.Release();
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();

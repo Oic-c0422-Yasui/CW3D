@@ -10,7 +10,7 @@ namespace Sample
 	private:
 	public:
 		CStage1();
-		bool Load() override;
+		bool Load(const DivisionArrayPtr& divisionArray) override;
 		void Initialize() override;
 		void Update() override;
 		void Render() override;

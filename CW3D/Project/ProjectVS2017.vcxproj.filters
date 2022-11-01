@@ -249,9 +249,6 @@
     <ClCompile Include="JsonMeshResourceCreator.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
     </ClCompile>
-    <ClCompile Include="JsonStageCreator.cpp">
-      <Filter>ソース ファイル\Creator\Json</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyBuilder.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -275,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="JsonStageLoader.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="StageCreator.cpp">
+      <Filter>ソース ファイル\Creator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -836,8 +836,8 @@
     <ClInclude Include="JsonMeshResourceCreator.h">
       <Filter>ヘッダー ファイル\Creator\Json</Filter>
     </ClInclude>
-    <ClInclude Include="JsonStageCreator.h">
-      <Filter>ヘッダー ファイル\Creator\Json</Filter>
+    <ClInclude Include="StageCreator.h">
+      <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

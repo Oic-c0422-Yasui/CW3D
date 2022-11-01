@@ -6,57 +6,60 @@ namespace Sample
 {
 	//なにかの型（入れるまで決まっていない）
 	template<typename T>
-	class ResourceManager : public Singleton<ResourceManager<T>>
+	class ResourcePtrManager : public Singleton<ResourcePtrManager<T>>
 	{
-		friend class Singleton<ResourceManager<T>>;
+		friend class Singleton<ResourcePtrManager<T>>;
 	private:
 		//シェアポインタを使いやすいように名前を付ける
 		using ResourcePtr = std::shared_ptr<T>;
+
 		//辞書のようなもの
-		std::unordered_map<std::string, ResourcePtr> m_Resources;
+		using ResourceMap = std::unordered_map<std::string, ResourcePtr>;
+		ResourceMap m_Resources;
 
-		std::unordered_map<std::string, T> m_ResourcesT;
+		//タグ付き辞書
+		std::unordered_map<std::string,ResourceMap> m_ResourcesMap;
 
-		ResourceManager() :
-			Singleton<ResourceManager<T>>(),
-			m_Resources(),
-			m_ResourcesT()
+		ResourcePtrManager() 
+			: Singleton<ResourcePtrManager<T>>()
+			, m_ResourcesMap()
 		{
 
 		}
 	public:
 
 		//リソースを追加する
-		void AddResource(const std::string& key, const ResourcePtr& ptr)
+		void AddResource(const std::string& key, const ResourcePtr& resource)
 		{
-			m_Resources[key] = ptr;
+			m_ResourcesMap["default"][key] = resource;
 		}
-
-		//リソースを追加する
-		void AddResourceT(const std::string& key, const T& ptr)
+		//リソースを追加する＆タグ付け
+		void AddResource(const std::string& tag, const std::string& key, const ResourcePtr& resource)
 		{
-			m_ResourcesT[key] = ptr;
+			m_ResourcesMap[tag][key] = resource;
 		}
 
 		//リソースを削除する
 		bool DeleteResource(const std::string& key)
 		{
-			auto it = m_Resources.find(key);
-			if (it != m_Resources.end())
+			auto& map = m_ResourcesMap["default"];
+			auto it = map.find(key);
+			if (it != map.end())
 			{
-				m_Resources.erase(it);
+				map.erase(it);
 				return true;
 			}
 			return false;
 		}
 
-		//リソースを削除する
-		bool DeleteResourceT(const std::string& key)
+		//タグ内のリソースを削除する
+		bool DeleteResouce(const std::string& tag, const std::string& key)
 		{
-			auto it = m_ResourcesT.find(key);
-			if (it != m_ResourcesT.end())
+			auto& map = m_ResourcesMap[tag];
+			auto it = map.find(key);
+			if (it != map.end())
 			{
-				m_ResourcesT.erase(it);
+				map.erase(it);
 				return true;
 			}
 			return false;
@@ -65,28 +68,149 @@ namespace Sample
 		//リソースを取得する
 		ResourcePtr& GetResource(const std::string& key)
 		{
-			if (IsContain)
+			for (auto& map : m_ResourcesMap)
 			{
-				return m_Resources[key];
+				auto it = map.find(key);
+				if (it != map.end())
+				{
+					return map[key];
+				}
 			}
 			return nullptr;
 		}
-
-		T& GetResourceT(const std::string& key)
+		//リソースを取得する
+		const ResourcePtr& GetResource(const std::string& tag, const std::string& key)
 		{
-			if (IsContain)
+			if (IsContainTag(tag))
 			{
-				return m_ResourcesT[key];
+				return m_ResourcesMap[tag][key];
 			}
 			return nullptr;
 		}
 
 		//リソースが存在するか？
-		bool IsContain(const std::string& key)
+		bool IsContainResource(const std::string& key)
 		{
-			auto it = m_Resources.find(key);
-			return it != m_ResourcesT.end();
+			for (auto& map : m_ResourcesMap)
+			{
+				auto it = map.find(key);
+				if (it != map.end())
+				{
+					return true;
+				}
+			}
+			return false;
 		}
+
+		//タグが存在するか？
+		bool IsContainTag(const std::string& tag)
+		{
+			auto it = m_ResourcesMap.find(tag);
+			return it != m_ResourcesMap.end();
+		}
+	};
+
+	//なにかの型（入れるまで決まっていない）
+	template<typename T>
+	class ResourceManager : public Singleton<ResourceManager<T>>
+	{
+		friend class Singleton<ResourceManager<T>>;
+	private:
+		//辞書のようなもの
+		using ResourceMap = std::unordered_map<std::string, T>;
+		ResourceMap m_Resources;
+
+		//タグ付き辞書
+		std::unordered_map<std::string, ResourceMap> m_ResourcesMap;
+
+		ResourceManager()
+			: Singleton<ResourceManager<T>>()
+			, m_ResourcesMap()
+		{
+
+		}
+	public:
+		//リソースを追加する
+		void AddResource(const std::string& key, const T& resource)
+		{
+			m_ResourcesMap["default"][key] = resource;
+		}
+		//リソースを追加する＆タグ付け
+		void AddResource(const std::string& tag, const std::string& key, const T& resource)
+		{
+			m_ResourcesMap[tag][key] = ptr;
+		}
+
+		//リソースを削除する
+		bool DeleteResource(const std::string& key)
+		{
+			auto& map = m_ResourcesMap["default"];
+			auto it = map.find(key);
+			if (it != map.end())
+			{
+				map.erase(it);
+				return true;
+			}
+			return false;
+		}
+
+		//タグ内のリソースを削除する
+		bool DeleteResouce(const std::string& tag, const std::string& key)
+		{
+			auto& map = m_ResourcesMap[tag];
+			auto it = map.find(key);
+			if (it != map.end())
+			{
+				map.erase(it);
+				return true;
+			}
+			return false;
+		}
+
+		//リソースを取得する
+		const T& GetResource(const std::string& key)
+		{
+			for (auto& map : m_ResourcesMap)
+			{
+				auto it = map.find(key);
+				if (it != map.end())
+				{
+					return map[key];
+				}
+			}
+			return nullptr;
+		}
+		//リソースを取得する
+		const T& GetResource(const std::string& tag, const std::string& key)
+		{
+			if (IsContainTag(tag))
+			{
+				return m_ResourcesMap[tag][key];
+			}
+			return nullptr;
+		}
+
+		//リソースが存在するか？
+		bool IsContainResource(const std::string& key)
+		{
+			for (auto& map : m_ResourcesMap)
+			{
+				auto it = map.find(key);
+				if (it != map.end())
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		//タグが存在するか？
+		bool IsContainTag(const std::string& tag)
+		{
+			auto it = m_ResourcesMap.find(tag);
+			return it != m_ResourcesMap.end();
+		}
+	
 	};
 }
 	

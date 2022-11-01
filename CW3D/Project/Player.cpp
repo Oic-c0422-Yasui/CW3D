@@ -17,7 +17,7 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Load()
 {
-	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Player");
+	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player");
 
 	if (m_pMesh == nullptr)
 	{

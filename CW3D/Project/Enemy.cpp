@@ -33,7 +33,7 @@ bool CEnemy::Load(const Vector3& pos, const ActionCreatorPtr& actionCreator,
 
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
-	m_pMesh = Sample::ResourceManager<CMeshContainer>::GetInstance().GetResource("Zombie");
+	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Zombie");
 
 	if (m_pMesh == nullptr)
 	{

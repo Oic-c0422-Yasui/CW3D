@@ -8,7 +8,7 @@ namespace Sample
 	class JsonStageLoader
 	{
 	private:
-
+		DivisionArrayPtr m_DivisionArray;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -22,6 +22,11 @@ namespace Sample
 		 * @brief		生成
 		 */
 		bool Load(nlohmann::json& os);
+
+		const DivisionArrayPtr& GetDivisionArray() const noexcept
+		{
+			return m_DivisionArray;
+		}
 	};
 
 }

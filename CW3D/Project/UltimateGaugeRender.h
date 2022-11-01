@@ -51,8 +51,8 @@ namespace Sample
 		void Load()
 		{
 
-			m_pGaugeFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("UltGauge");
-			m_pFont = Sample::ResourceManager<CFont>::GetInstance().GetResource("SkillFont");
+			m_pGaugeFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UltGauge");
+			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("SkillFont");
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);

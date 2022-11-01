@@ -47,9 +47,9 @@ namespace Sample
 
 		void Load()
 		{
-			m_pSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("UltFrame");
-			m_pUsedSKillFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("UltFrameMono");
-			m_pGaugeFrame = Sample::ResourceManager<CTexture>::GetInstance().GetResource("UltSkillGaugeFrame");
+			m_pSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UltFrame");
+			m_pUsedSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UltFrameMono");
+			m_pGaugeFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UltSkillGaugeFrame");
 
 		}
 

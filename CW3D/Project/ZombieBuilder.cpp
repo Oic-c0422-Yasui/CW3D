@@ -18,7 +18,7 @@ const EnemyPtr& Sample::ZombieBuilder::Create(const EnemyBuildParameter& param)
     
     EnemyPtr enemy = std::make_shared<CEnemy>();
 
-    enemy->Load(param.GetPos(),
+    enemy->Load(param.GetParam().m_Pos,
         m_ActionCreator,
         m_StateCreator,
         m_ParameterCreator,

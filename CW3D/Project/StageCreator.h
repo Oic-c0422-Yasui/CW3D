@@ -11,7 +11,7 @@ namespace Sample
 
 
 
-class JsonStageCreator
+class StageCreator
 {
 private:
 
@@ -19,15 +19,9 @@ public:
 	/**
 		 * @brief		コンストラクタ
 		 */
-	JsonStageCreator();
-	/**
-	 * @brief		JSonファイルからの生成
-	 */
+	StageCreator();
+
 	static StagePtr Create(const std::string& name);
-	/**
-	 * @brief		生成
-	 */
-	static StagePtr Create(nlohmann::json& os);
 };
 
 }

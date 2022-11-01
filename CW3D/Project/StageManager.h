@@ -23,7 +23,7 @@ namespace Sample
 		}
 		int GetDivObjCount(int divCount) const noexcept
 		{
-			return m_pStage->GetDiv(divCount)->GetObjCount();
+			return m_pStage->GetDivision(divCount)->GetObjCount();
 		}
 
 		const EnemyPtr& GetEnemy(int divCount, int id)
@@ -38,7 +38,7 @@ namespace Sample
 
 		int GetDivEnemyCount(int divCount) const noexcept
 		{
-			return m_pStage->GetDiv(divCount)->GetEnemyCount();
+			return m_pStage->GetDivision(divCount)->GetEnemyCount();
 		}
 
 		int GetDivCount() const noexcept

@@ -112,7 +112,7 @@
     <ClCompile Include="JsonEnemyStatusLoader.cpp" />
     <ClCompile Include="JsonMeshResourceCreator.cpp" />
     <ClCompile Include="JsonObjectCreator.cpp" />
-    <ClCompile Include="JsonStageCreator.cpp" />
+    <ClCompile Include="StageCreator.cpp" />
     <ClCompile Include="JsonStageLoader.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Shot.cpp" />
@@ -186,7 +186,7 @@
     <ClInclude Include="JsonEnemyStatusLoader.h" />
     <ClInclude Include="JsonMeshResourceCreator.h" />
     <ClInclude Include="JsonObjectCreator.h" />
-    <ClInclude Include="JsonStageCreator.h" />
+    <ClInclude Include="StageCreator.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="CollisionShotPlayer.h" />
     <ClInclude Include="Stage1.h" />

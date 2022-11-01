@@ -4,6 +4,7 @@
 using namespace Sample;
 
 Sample::JsonStageLoader::JsonStageLoader()
+	: m_DivisionArray()
 {
 }
 
@@ -23,7 +24,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 	auto& stageMesh = os["StageMesh"];
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
 	
-	ResourceManager<CMeshContainer>::GetInstance().AddResource("StageMesh", tempMesh);
+	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Stage", "StageMesh", tempMesh);
 
 	auto& enemyStatusFile = os["EnemyStatusFile"];
 	JsonEnemyStatusLoader statusLoader;
@@ -32,7 +33,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 
 	JsonDivisionCreator jsonCreator;
 	DivisionArrayPtr divisionArray = jsonCreator.Create(os["Divisions"], enemyStatusDictionary);
-
+	m_DivisionArray = divisionArray;
 
 	//敵で使用するメッシュ名格納
 	std::vector<std::string> meshNames;
@@ -68,7 +69,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 		{
 			continue;
 		}
-		if (!ResourceManager<CMeshContainer>::GetInstance().IsContain(meshName))
+		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContain(meshName))
 		{
 			//敵の辞書を取得
 			auto& dictionary = enemyStatusDictionary.Get(meshName);
@@ -81,10 +82,11 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 				return false;
 			}
 			//リソースを追加
-			ResourceManager<CMeshContainer>::GetInstance().AddResource(meshName, tempMesh);
+			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource(meshName, tempMesh);
 		}
 	}
 
 
 	return true;
 }
+
