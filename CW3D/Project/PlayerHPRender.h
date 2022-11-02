@@ -53,9 +53,9 @@ namespace Sample
 
 		void Load()
 		{
-			m_pHPBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("PlayerHPBar");
-			m_pFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("PlayerHPFrame");
-			m_pDamageBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("PlayerHPBar");
+			m_pHPBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
+			m_pFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPFrame");
+			m_pDamageBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
 
 
 			m_Position = Vector2(763, 1045);

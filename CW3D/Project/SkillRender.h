@@ -50,9 +50,9 @@ namespace Sample
 
 		virtual void Load(const std::string& key)
 		{
-			m_pSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource(key);
-			m_pUsedSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource(key + "Mono");
-			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("CTFont");
+			m_pSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", key);
+			m_pUsedSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", key + "Mono");
+			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "CTFont");
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);

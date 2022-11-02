@@ -69,7 +69,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 		{
 			continue;
 		}
-		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContain(meshName))
+		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", meshName))
 		{
 			//“G‚Ì«‘‚ğæ“¾
 			auto& dictionary = enemyStatusDictionary.Get(meshName);
@@ -82,7 +82,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 				return false;
 			}
 			//ƒŠƒ\[ƒX‚ğ’Ç‰Á
-			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource(meshName, tempMesh);
+			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy",meshName, tempMesh);
 		}
 	}
 

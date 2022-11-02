@@ -18,8 +18,8 @@ CSkillControllerRender::~CSkillControllerRender()
 bool CSkillControllerRender::Load()
 {
 
-	m_pFrame = ResourcePtrManager<CTexture>::GetInstance().GetResource("SkillUI");
-	m_pFont = ResourcePtrManager<CFont>::GetInstance().GetResource("SkillFont");
+	m_pFrame = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "SkillUI");
+	m_pFont = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
 	m_Position = Vector2(582, 884);
 	auto& player = ServiceLocator< CPlayer >::GetService();
 

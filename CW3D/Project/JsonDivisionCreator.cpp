@@ -39,7 +39,7 @@ using namespace Sample;
 			CDivision::DIVISION_DATA data{};
 
 			//ƒNƒŠƒAğŒ¶¬
-			
+			JsonClearTermCreator 
 
 			//“G¶¬
 			JsonEnemyLoader enemyLoader;

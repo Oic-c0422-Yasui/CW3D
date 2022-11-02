@@ -56,9 +56,9 @@ namespace Sample
 
 		void Initialize()
 		{
-			m_pHPBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("DamageBar");
-			m_pFrame = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("HPFrame");
-			m_pDamageBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("HPBar");
+			m_pHPBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "DamageBar");
+			m_pFrame = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPFrame");
+			m_pDamageBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPBar");
 			
 
 			m_Offset = Vector3(0, 2, 0);

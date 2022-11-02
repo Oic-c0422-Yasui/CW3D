@@ -34,7 +34,7 @@ namespace Sample {
 											std::make_shared<ZombieAICreator>()};
 
 		}
-		Value& GetDictionary(std::string name)
+		const Value& GetDictionary(std::string name)
 		{
 			assert(dictionary.find(name) != dictionary.end());
 			return dictionary[name];

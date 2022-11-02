@@ -5,6 +5,7 @@
 #include	"Division.h"
 #include	"JsonEnemyLoader.h"
 #include	"JsonObjectCreator.h"
+#include	"JsonClearTermCreator.h"
 
 
 namespace Sample {

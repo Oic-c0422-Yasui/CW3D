@@ -101,6 +101,19 @@ namespace Sample
 			}
 			return false;
 		}
+		//リソースが存在するか？
+		bool IsContainResource(const std::string& tag,const std::string& key)
+		{
+			for (auto& map : m_ResourcesMap[tag])
+			{
+				auto it = map.find(key);
+				if (it != map.end())
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
 		//タグが存在するか？
 		bool IsContainTag(const std::string& tag)

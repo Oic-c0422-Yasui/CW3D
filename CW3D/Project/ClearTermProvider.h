@@ -8,10 +8,10 @@ namespace Sample
 	{
 	private:
 		float m_ClearTime;
-		std::vector<EnemyPtr> m_pEnemys;
+		EnemyArrayPtr m_pEnemys;
 	public:
 		//TODO:ƒ{ƒX‚ð’Ç‰Á‚·‚é
-		ClearTermProvider(std::vector<EnemyPtr> enemys, float time):
+		ClearTermProvider(const EnemyArrayPtr& enemys, float time):
 			m_ClearTime(time),
 			m_pEnemys(enemys)
 		{
@@ -33,7 +33,7 @@ namespace Sample
 		int GetEnemyCount() noexcept
 		{
 			int count = 0;
-			for (auto& enemy : m_pEnemys)
+			for (auto& enemy : *m_pEnemys)
 			{
 				if (enemy->IsShow())
 				{
