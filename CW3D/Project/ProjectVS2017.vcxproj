@@ -100,6 +100,12 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="ClearTermBuilder.cpp" />
+    <ClCompile Include="ClearTermBuilderDictionary.cpp" />
+    <ClCompile Include="ClearTermEnduranceTime.cpp" />
+    <ClCompile Include="ClearTermEnduranceTimeBuilder.cpp" />
+    <ClCompile Include="ClearTermEnemysAllDeadBuilder.cpp" />
+    <ClCompile Include="Division.cpp" />
     <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="ClearTermEnemysAllDead.cpp" />
     <ClCompile Include="DivisionObject.cpp" />
@@ -160,6 +166,11 @@
     <ClInclude Include="BattleUICreater.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="ClearTermBuilder.h" />
+    <ClInclude Include="ClearTermBuilderDictionary.h" />
+    <ClInclude Include="ClearTermEnduranceTime.h" />
+    <ClInclude Include="ClearTermEnduranceTimeBuilder.h" />
+    <ClInclude Include="ClearTermEnemysAllDeadBuilder.h" />
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyBuilderDictionary.h" />
     <ClInclude Include="EnemyBuildParameter.h" />

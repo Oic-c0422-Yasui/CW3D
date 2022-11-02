@@ -1,7 +1,7 @@
 #pragma once
 #include "GameDefine.h"
 
-#include "Enemy.h"
+
 #include "EnemyBuildParameter.h"
 #include "Object.h"
 #include "IClearTerm.h"
@@ -14,7 +14,7 @@ namespace Sample
 	public:
 		struct DIVISION_DATA
 		{
-			ClearTermPtr	ClearTerm;
+			ClearTermArray	ClearTerms;
 			std::vector<EnemyBuildParameter> EnemysParam;
 			EnemyArrayPtr	Enemys;
 			int EnemyCount;
@@ -23,15 +23,16 @@ namespace Sample
 		};
 	private:
 		DIVISION_DATA m_Data;
+		bool m_ClearFlg;
+		ClearTermProviderPtr m_ClearTermProvider;
 	public:
-		CDivision(DIVISION_DATA data) 
-			: m_Data(data)
-		{ 
-		};
-		~CDivision() {
-			m_Data.Enemys->clear();
-			m_Data.Objects.clear();
-		};
+		CDivision(DIVISION_DATA data);
+		~CDivision();
+
+
+		void Initialize();
+		void Update();
+		void Release();
 
 		const std::vector<EnemyBuildParameter>& GetEnemysParam()
 		{
@@ -49,20 +50,15 @@ namespace Sample
 			return m_Data.ObjectCount;
 		}
 
-		/*const EnemyPtr& GetEnemy(int id)
-		{
-			assert(m_Data.Enemys[id]);
-			return m_Data.Enemys[id];
-		}*/
-
 		int GetEnemyCount() const noexcept
 		{
 			return m_Data.EnemyCount;
 		}
 
-		const ClearTermPtr& GetClearTerm() const noexcept
+
+		bool IsClear() const noexcept
 		{
-			return m_Data.ClearTerm;
+			return m_ClearFlg;
 		}
 	};
 

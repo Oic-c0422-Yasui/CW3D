@@ -1,18 +1,17 @@
 #pragma once
 #include "IClearTerm.h"
-#include "Enemy.h"
 
 namespace Sample
 {
-	class ClearTermEnemysAllDead : public IClearTerm
+	class ClearTermEnduranceTime : public IClearTerm
 	{
 	private:
-		EnemyArrayPtr m_Enemys;
+		float m_EnduranceTime;
 	public:
-		ClearTermEnemysAllDead();
+		ClearTermEnduranceTime(float time);
 		bool IsClear(const ClearTermProviderPtr& provider) override;
+
 	};
 }
-
 
 

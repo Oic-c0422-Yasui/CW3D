@@ -3,29 +3,35 @@
 using namespace Sample;
 
 JsonClearTermCreator::JsonClearTermCreator()
+	:dictionary()
 {
 }
 
-std::vector<ClearTermPtr> JsonClearTermCreator::Create(const std::string& name)
+ClearTermArray JsonClearTermCreator::Create(const std::string& name)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
 	{
-		return std::vector<ClearTermPtr>();
+		return ClearTermArray();
 	}
 	nlohmann::json os = nlohmann::json::parse(ifs);
 	return Create(os);
 }
 
-std::vector<ClearTermPtr> JsonClearTermCreator::Create(nlohmann::json& os)
+ClearTermArray JsonClearTermCreator::Create(nlohmann::json& os)
 {
-	std::vector<ClearTermPtr>	ClearTerms;
-	for (auto& clearTerm : os)
+	ClearTermArray	ClearTerms;
+	for (auto& str : os)
 	{
-		std::string type;
-		clearTerm["Type"].get_to(type);
-		auto& dicValue = dictionary.GetDictionary(type);
-		clearTerm = dicValue->Create(clearTerm);
+		auto& type = str["Type"];
+
+		std::string typeName;
+		type["Name"].get_to(typeName);
+
+		auto& dicValue = dictionary.Get(typeName);
+
+		ClearTermPtr clearTerm;
+		clearTerm = dicValue->Create(type);
 		ClearTerms.push_back(clearTerm);
 	}
 	return ClearTerms;

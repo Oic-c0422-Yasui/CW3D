@@ -7,40 +7,32 @@ namespace Sample
 	class ClearTermProvider
 	{
 	private:
-		float m_ClearTime;
-		EnemyArrayPtr m_pEnemys;
+		float m_CurrentTime;
+		EnemyArrayPtr m_Enemys;
 	public:
 		//TODO:ƒ{ƒX‚ð’Ç‰Á‚·‚é
-		ClearTermProvider(const EnemyArrayPtr& enemys, float time):
-			m_ClearTime(time),
-			m_pEnemys(enemys)
+		ClearTermProvider(const EnemyArrayPtr& enemys):
+			m_CurrentTime(0.0f),
+			m_Enemys(enemys)
 		{
 			
 		}
 		~ClearTermProvider() {}
 
 		/**
-		 * @brief		ƒNƒŠƒAŽžŠÔŽæ“¾
+		 * @brief		Œ»ÝŽžŠÔŽæ“¾
 		 */
 		float GetTime() const noexcept 
 		{
-			return m_ClearTime;
+			return m_CurrentTime;
 		}
 
 		/**
-		 * @brief		“G‚Ì”Žæ“¾
+		 * @brief		“GŽæ“¾
 		 */
-		int GetEnemyCount() noexcept
+		const EnemyArrayPtr& GetEnemy()
 		{
-			int count = 0;
-			for (auto& enemy : *m_pEnemys)
-			{
-				if (enemy->IsShow())
-				{
-					count++;
-				}
-			}
-			return count;
+			return m_Enemys;
 		}
 
 		

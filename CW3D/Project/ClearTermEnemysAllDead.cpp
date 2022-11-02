@@ -1,17 +1,18 @@
 #include "ClearTermEnemysAllDead.h"
 
 
-using namespace Sample;
-
-ClearTermEnemysAllDead::ClearTermEnemysAllDead()
+Sample::ClearTermEnemysAllDead::ClearTermEnemysAllDead()
 {
 }
 
-bool ClearTermEnemysAllDead::IsClear(const ClearTermProviderPtr& provider)
+bool Sample::ClearTermEnemysAllDead::IsClear(const Sample::ClearTermProviderPtr& provider)
 {
-    if (provider->GetEnemyCount() <= 0)
+    for (auto enemy : *m_Enemys)
     {
-        return true;
+        if (enemy->IsShow())
+        {
+            return false;
+        }
     }
-    return false;
+    return true;
 }

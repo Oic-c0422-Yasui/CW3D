@@ -13,11 +13,11 @@ namespace Sample
 	public:
 		CDivisionObject(const Vector3& pos, const Vector3& size, const Vector3& offset);
 		~CDivisionObject() override;
-		bool Load() override;
+		bool Load();
 		void Initialize() override;
-		void Update() override;
-		void Render() override;
-		void Release() override;
+		void Update();
+		void Render();
+		void Release();
 
 	};
 	using DivisionObjectPtr = std::shared_ptr<CDivisionObject>;

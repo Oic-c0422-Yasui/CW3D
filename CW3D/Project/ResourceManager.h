@@ -70,15 +70,15 @@ namespace Sample
 		{
 			for (auto& map : m_ResourcesMap)
 			{
-				auto it = map.find(key);
-				if (it != map.end())
+				auto it = map.second.find(key);
+				if (it != map.second.end())
 				{
-					return map[key];
+					return map.second[key];
 				}
 			}
 			return nullptr;
 		}
-		//リソースを取得する
+		//タグ内のリソースを取得する
 		const ResourcePtr& GetResource(const std::string& tag, const std::string& key)
 		{
 			if (IsContainTag(tag))
@@ -185,10 +185,10 @@ namespace Sample
 		{
 			for (auto& map : m_ResourcesMap)
 			{
-				auto it = map.find(key);
-				if (it != map.end())
+				auto it = map.second.find(key);
+				if (it != map.second.end())
 				{
-					return map[key];
+					return map.second[key];
 				}
 			}
 			return nullptr;
@@ -208,8 +208,8 @@ namespace Sample
 		{
 			for (auto& map : m_ResourcesMap)
 			{
-				auto it = map.find(key);
-				if (it != map.end())
+				auto it = map.second.find(key);
+				if (it != map.second.end())
 				{
 					return true;
 				}

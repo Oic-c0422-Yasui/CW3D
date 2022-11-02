@@ -4,6 +4,7 @@
 #include	"json.hpp"
 
 #include	"IClearTerm.h"
+#include	"ClearTermBuilderDictionary.h"
 
 
 namespace Sample {
@@ -12,7 +13,7 @@ namespace Sample {
 	class JsonClearTermCreator
 	{
 	private:
-
+		ClearTermBuilderDictionary dictionary;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -21,10 +22,10 @@ namespace Sample {
 		/**
 		 * @brief		JSonファイルからの生成
 		 */
-		std::vector<ClearTermPtr> Create(const std::string& name);
+		ClearTermArray Create(const std::string& name);
 		/**
 		 * @brief		生成
 		 */
-		std::vector<ClearTermPtr> Create(nlohmann::json& os);
+		ClearTermArray Create(nlohmann::json& os);
 	};
 }

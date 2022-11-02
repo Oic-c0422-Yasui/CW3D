@@ -3,7 +3,6 @@
 #include	"json.hpp"
 #include	"JsonStageLoader.h"
 #include	"JsonDivisionCreator.h"
-#include	"JsonEnemyLoader.h"
 #include	"StageBase.h"
 
 namespace Sample 
@@ -21,7 +20,7 @@ public:
 		 */
 	StageCreator();
 
-	static StagePtr Create(const std::string& name);
+	static StagePtr Create(const DivisionArrayPtr& division);
 };
 
 }

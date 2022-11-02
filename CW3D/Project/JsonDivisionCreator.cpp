@@ -39,7 +39,9 @@ using namespace Sample;
 			CDivision::DIVISION_DATA data{};
 
 			//ƒNƒŠƒAğŒ¶¬
-			JsonClearTermCreator 
+			JsonClearTermCreator clearTermCreator;
+
+			data.ClearTerms = clearTermCreator.Create(division["ClearTerms"]);
 
 			//“G¶¬
 			JsonEnemyLoader enemyLoader;

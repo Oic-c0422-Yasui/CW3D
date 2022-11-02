@@ -20,7 +20,7 @@ namespace Sample
 			const ParameterCreatorPtr& parameterCreator,
 			const CharacterAICreatorPtr& aiCreator);
 
-        const EnemyPtr& Create(const EnemyBuildParameter& param) override;
+        EnemyPtr Create(const EnemyBuildParameter& param) override;
     };
 }
 

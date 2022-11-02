@@ -6,10 +6,28 @@
   "Divisions": [
     {
       "BGM": "",
-      "ClearTerm": [
+      "ClearTerms": [
         {
-          "Type": "AllDead"
+          "Type": 
+          {
+            "Name": "AllDead"
+          }
+        },
+        {
+          "Type":
+          {
+            "Name": "EnduranceTime",
+            "Time": 50
+          }
+        },
+        {
+          "Type":
+          {
+            "Name": "FixedDead",
+            "Count": 10
+          }
         }
+
       ],
       "Enemys": [
         {

@@ -12,18 +12,14 @@ namespace Sample
 		bool	 m_ShowFlg;
 	public:
 		CObject(const Vector3& pos, const Vector3& size, const Vector3& offset);
-		virtual ~CObject();
-		virtual bool Load();
+		virtual ~CObject() = default;
 		virtual void Initialize();
-		virtual void Update();
-		virtual void Render();
-		virtual void Release();
 
 		CAABB GetCollider()
 		{			
 			return CAABB(m_Position + m_Offset, m_Size);
 		}
-		const Vector3& GetPosition()
+		const Vector3& GetPosition() const noexcept
 		{
 			return m_Position;
 		}

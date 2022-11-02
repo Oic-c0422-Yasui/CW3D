@@ -16,4 +16,6 @@ CStageBase::~CStageBase()
 
 void Sample::CStageBase::Render()
 {
+	CMatrix44 matWorld;
+	m_pStage->Render(matWorld);
 }

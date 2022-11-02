@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "ClearTermProvider.h"
@@ -15,5 +14,6 @@ namespace Sample
 		virtual ~IClearTerm() = default;
 	};
 	using ClearTermPtr = std::shared_ptr<IClearTerm>;
+	using ClearTermArray = std::vector<ClearTermPtr>;
 }
 
