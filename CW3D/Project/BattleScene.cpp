@@ -166,7 +166,7 @@ void CBattleScene::Initialize()
 		enemy->Initialize();
 	}
 	m_StageManager.Initialize();
-	
+	m_ClearTermProvider = std::make_shared<ClearTermProvider>(m_Enemys);
 	
 	for (int i = 0; i < m_Enemys.size(); i++)
 	{
@@ -211,7 +211,7 @@ void CBattleScene::Update()
 		m_Enemys[i]->Update();
 	}
 
-	m_StageManager.Update();
+	m_StageManager.Update(m_ClearTermProvider);
 
 	ShotManagerInstance.Update();
 

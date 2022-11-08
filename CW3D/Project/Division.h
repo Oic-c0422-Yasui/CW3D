@@ -20,6 +20,8 @@ namespace Sample
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
 			int ObjectCount;
+
+			float width;
 		};
 	private:
 		DIVISION_DATA m_Data;
@@ -31,7 +33,7 @@ namespace Sample
 
 
 		void Initialize();
-		void Update();
+		void Update(const ClearTermProviderPtr& provider);
 		void Release();
 
 		const std::vector<EnemyBuildParameter>& GetEnemysParam()
@@ -55,6 +57,19 @@ namespace Sample
 			return m_Data.EnemyCount;
 		}
 
+		void Clear() noexcept
+		{
+			SetShowObjects(false);
+			m_ClearFlg = true;
+		}
+
+		void SetShowObjects(bool isShow) noexcept
+		{
+			for (auto& object : m_Data.Objects)
+			{
+				object->SetShow(isShow);
+			}
+		}
 
 		bool IsClear() const noexcept
 		{

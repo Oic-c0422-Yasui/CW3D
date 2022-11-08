@@ -13,12 +13,13 @@ namespace Sample
 		DivisionArrayPtr m_Divisions;
 		DivisionPtr m_CurrentDivision;
 		int m_Phase;
+		bool m_ClearFlg;
 	public:
 		CStageBase();
 		virtual ~CStageBase();
 		virtual bool Load(const DivisionArrayPtr& divisionArray) = 0;
 		virtual void Initialize() = 0;
-		virtual void Update() = 0;
+		virtual void Update(const ClearTermProviderPtr& provider) = 0;
 		virtual void Render() = 0;
 		virtual void RenderDebug() = 0;
 		virtual void Release() = 0;

@@ -21,55 +21,35 @@ bool Sample::CStage1::Load(const DivisionArrayPtr& divisionArray)
 void Sample::CStage1::Initialize()
 {
 
-	for (auto& obj : *m_Divisions)
-	{
-		for (int i = 0; i < obj->GetObjCount(); i++)
-		{
-			obj->GetObj(i)->Initialize();
-		}
-	}
+	m_ClearFlg = false;
 	m_Phase = 0;
+	for (auto& division : *m_Divisions)
+	{
+		division->Initialize();
+	}
 
 	m_CurrentDivision = GetDivision(m_Phase);
-	/*for (int i = 1; i < GetDivCount(); i++)
-	{
-		for (int j = 0; j < m_Divisions->at(i)->GetEnemyCount(); j++)
-		{
-			auto& enemy = m_Divisions->at(i)->GetEnemy(j);
-			enemy->SetShow(false);
-		}
-	}*/
 }
 
-void Sample::CStage1::Update()
+void Sample::CStage1::Update(const ClearTermProviderPtr& provider)
 {
-
-	for (int i = 0; i < m_CurrentDivision->GetObjCount(); i++)
+	if (m_ClearFlg)
 	{
-		m_CurrentDivision->GetObj(i)->Update();
+		return;
 	}
 
-
-	int cnt = 0;
-	auto currentDiv = m_Divisions->at(m_Phase);
-	for (int i = 0; i < currentDiv->GetEnemyCount(); i++)
+	m_CurrentDivision->Update(provider);
+	
+	if (m_CurrentDivision->IsClear())
 	{
-		if (!currentDiv->GetEnemy(i)->IsShow())
+		m_CurrentDivision->Clear();
+		if (m_Phase + 1 < m_Divisions->size())
 		{
-			cnt++;
+			m_CurrentDivision = GetDivision(m_Phase + 1);
 		}
-	}
-	if (cnt >= currentDiv->GetEnemyCount() && m_Phase < GetDivCount() - 1)
-	{
-		for (int i = 0; i < currentDiv->GetObjCount(); i++)
+		else
 		{
-			currentDiv->GetObj(i)->SetShow(false);
-		}
-		m_Phase++;
-		auto nextDiv = m_Divisions->at(m_Phase);
-		for (int i = 0; i < nextDiv->GetEnemyCount(); i++)
-		{
-			nextDiv->GetEnemy(i)->SetShow(true);
+			m_ClearFlg = true;
 		}
 	}
 
@@ -79,11 +59,6 @@ void Sample::CStage1::Render()
 {
 	CMatrix44 matWorld;
 	m_pStage->Render(matWorld);
-
-	for (int i = 0; i < m_CurrentDivision->GetObjCount(); i++)
-	{
-		m_CurrentDivision->GetObj(i)->Render();
-	}
 }
 
 void Sample::CStage1::RenderDebug()

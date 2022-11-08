@@ -14,13 +14,22 @@ Sample::CDivision::~CDivision()
 void Sample::CDivision::Initialize()
 {
 	m_ClearFlg = false;
+	for (auto& obj : m_Data.Objects)
+	{
+		obj->Initialize();
+	}
 }
 
-void Sample::CDivision::Update()
+void Sample::CDivision::Update(const ClearTermProviderPtr& provider)
 {
+	for (auto& obj : m_Data.Objects)
+	{
+		obj->Update();
+	}
+
 	for (auto& clearTerm : m_Data.ClearTerms)
 	{
-		bool isClear = clearTerm->IsClear(m_ClearTermProvider);
+		bool isClear = clearTerm->IsClear(provider);
 		if (!isClear)
 		{
 			break;

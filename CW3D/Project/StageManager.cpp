@@ -26,9 +26,9 @@ void Sample::CStageManager::Initialize()
 	m_pStage->Initialize();
 }
 
-void Sample::CStageManager::Update()
+void Sample::CStageManager::Update(const ClearTermProviderPtr& provider)
 {
-	m_pStage->Update();
+	m_pStage->Update(provider);
 }
 
 void Sample::CStageManager::Render()

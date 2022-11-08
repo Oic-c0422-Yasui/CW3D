@@ -20,8 +20,7 @@
 #include	"PlayerUIRender.h"
 #include	"StageManager.h"
 
-#include	"EnemyBuilderDictionary.h"
-#include	"EnemyBuildParameter.h"
+#include	"ClearTermProvider.h"
 
 class CBattleScene : public CSceneBase
 {
@@ -40,6 +39,8 @@ private:
 	Sample::CBattleUICreater m_UICreater;
 
 	Sample::CStageManager m_StageManager;
+
+	Sample::ClearTermProviderPtr m_ClearTermProvider;
 
 	bool m_GameClearFlg;
 	bool m_GameOverFlg;

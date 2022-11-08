@@ -12,7 +12,7 @@ namespace Sample
 		CStage1();
 		bool Load(const DivisionArrayPtr& divisionArray) override;
 		void Initialize() override;
-		void Update() override;
+		void Update(const ClearTermProviderPtr& provider) override;
 		void Render() override;
 		void RenderDebug() override;
 		void Release() override;

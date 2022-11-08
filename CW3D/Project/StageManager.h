@@ -12,7 +12,7 @@ namespace Sample
 		~CStageManager();
 		bool Load(const StagePtr& stage);
 		void Initialize();
-		void Update();
+		void Update(const ClearTermProviderPtr& provider);
 		void Render();
 		void RenderDebug();
 		void Release();
@@ -24,11 +24,6 @@ namespace Sample
 		int GetDivObjCount(int divCount) const noexcept
 		{
 			return m_pStage->GetDivision(divCount)->GetObjCount();
-		}
-
-		const EnemyPtr& GetEnemy(int divCount, int id)
-		{
-			return m_pStage->GetEnemy(divCount, id);
 		}
 
 		int GetAllEnemyCount() const noexcept

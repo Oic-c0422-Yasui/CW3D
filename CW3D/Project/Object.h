@@ -14,6 +14,7 @@ namespace Sample
 		CObject(const Vector3& pos, const Vector3& size, const Vector3& offset);
 		virtual ~CObject() = default;
 		virtual void Initialize();
+		virtual void Update() = 0;
 
 		CAABB GetCollider()
 		{			
