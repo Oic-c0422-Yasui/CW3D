@@ -1,10 +1,8 @@
 #include "Enemy.h"
-
-
 #include	"CameraController.h"
 
-
 using namespace Sample;
+
 
 CEnemy::CEnemy()
 
@@ -24,23 +22,29 @@ CEnemy::~CEnemy()
 	Release();
 }
 
-bool CEnemy::Load(const Vector3& pos, const ActionCreatorPtr& actionCreator,
+bool CEnemy::Load(const EnemyBuildParameter& eneParam,
+	const ActionCreatorPtr& actionCreator,
 	const StateCreatorPtr& stateCreator,
 	const ParameterCreatorPtr& paramCreator,
 	const CharacterAICreatorPtr& aiCreator)
 {
-	m_DefaultPos = pos;
+	//初期位置
+	m_DefaultPos = eneParam.GetParam().m_Pos;
 
+	//インプットキー
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
-	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", "Zombie");
 
+	//メッシュ読み込み
+	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam.GetParam().m_Type);
 	if (m_pMesh == nullptr)
 	{
 		return false;
 	}
 
+	//モーション作成
 	m_Motion = m_pMesh->CreateMotionController();
+	//モーション作成
 	m_Actor->SetAnimationState(m_Motion);
 
 	//アクション作成
@@ -52,24 +56,11 @@ bool CEnemy::Load(const Vector3& pos, const ActionCreatorPtr& actionCreator,
 	paramCreator->Create(param);
 
 	//パラメータ設定
-	m_HP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	m_MaxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	SettingParameter(param, eneParam.GetStatus());
 
-	/*m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0, 0, 0));
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP, 800);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP, 800);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_DAMAGE, 0);
-	m_Actor->GetParameterMap()->Add<int>(PARAMETER_KEY_ATTACK, 10);
-	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
-	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_INVINCIBLE, 0.0f);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE, 0.0f);
-	m_Actor->GetParameterMap()->Add<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE, 100.0f);*/
 
 	m_Position = m_DefaultPos;
 	m_HPShowFlg = true;
-
-
-	//CharacterAICreatorPtr aiCreator = std::make_shared<ZombieAICreator>();
 
 	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
 
@@ -81,10 +72,7 @@ void CEnemy::Initialize()
 	m_Actor->SetPosition(m_DefaultPos);
 	m_Actor->SetRotate(Vector3(0, MOF_ToDegree(90), 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
-	m_ColliderSize.x = 0.5f;
-	m_ColliderSize.y = 0.8f;
-	m_ColliderSize.z = 0.5f;
-	m_ColliderOffset.y = 1.0f;
+
 
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 	matWorld = m_Actor->GetMatrix();
@@ -204,4 +192,24 @@ bool CEnemy::IsInvincible() const
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 
+void Sample::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
+{
+	//HP
+	auto& maxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	maxHP = eneStatus->m_Hp;
+	auto& hp = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	hp = eneStatus->m_Hp;
+	m_HP = maxHP;
+	m_MaxHP = maxHP;
+	//攻撃力
+	auto& atk = param->Get<int>(PARAMETER_KEY_ATTACK);
+	atk = eneStatus->m_Atk;
+	//必殺技ゲージ
+	auto& maxUltGauge = param->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	maxUltGauge = eneStatus->m_UltGauge;
+	//当たり判定
+	m_ColliderSize = eneStatus->m_ColliderSize;
+	m_ColliderOffset = Vector3(0.0f,eneStatus->m_ColliderHeight, 0.0f);
+
+}
 

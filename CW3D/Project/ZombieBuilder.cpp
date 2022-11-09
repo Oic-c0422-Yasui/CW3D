@@ -1,24 +1,28 @@
 #include "ZombieBuilder.h"
+#include "ZombieActionCreator.h"
+#include "ZombieAICreator.h"
+#include "ZombieStateCreator.h"
+#include "ZombieParameterCreator.h"
 
 using namespace Sample;
 
-Sample::ZombieBuilder::ZombieBuilder(const ActionCreatorPtr&        actionCreator,
-                                     const StateCreatorPtr&         stateCreator,
-                                     const ParameterCreatorPtr&     parameterCreator,
-                                     const CharacterAICreatorPtr&   aiCreator)
-    : m_ActionCreator(actionCreator)
-    , m_StateCreator(stateCreator)
-    , m_ParameterCreator(parameterCreator)
-    , m_AiCreator(aiCreator)
+Sample::ZombieBuilder::ZombieBuilder()
+    : EnemyBuilder(std::make_shared<ZombieActionCreator>(),
+                    std::make_shared<ZombieStateCreator>(),
+                    std::make_shared<ZombieParameterCreator>(),
+                    std::make_shared<ZombieAICreator>())
+
 {
 }
+
+
 
 EnemyPtr Sample::ZombieBuilder::Create(const EnemyBuildParameter& param)
 {
     
     EnemyPtr enemy = std::make_shared<CEnemy>();
 
-    enemy->Load(param.GetParam().m_Pos,
+    enemy->Load(param,
         m_ActionCreator,
         m_StateCreator,
         m_ParameterCreator,

@@ -44,8 +44,7 @@ using namespace Sample;
 			data.ClearTerms = clearTermCreator.Create(division["ClearTerms"]);
 
 			//ìGê∂ê¨
-			JsonEnemyLoader enemyLoader;
-
+			JsonEnemyBuildParameterLoader enemyLoader;
 			data.EnemysParam = enemyLoader.Load(division["Enemys"], status);
 			data.EnemyCount = data.EnemysParam.size();
 

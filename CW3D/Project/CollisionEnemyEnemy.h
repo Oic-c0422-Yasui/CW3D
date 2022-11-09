@@ -15,7 +15,7 @@ namespace Sample
 		CVector3 sv = en1.GetPosition() - en2.GetPosition();
 
 		//–„‚Ü‚è–hŽ~”»’è
-		//CollisionActorObject(en1, en2);
+		CollisionActorObject(en1, en2);
 	}
 
 	/**

@@ -58,8 +58,6 @@ namespace Sample
 
 		}
 
-
-
 		const ActorObjectPtr& GetActor(int id) {
 			for (auto& map : m_Tags)
 			{

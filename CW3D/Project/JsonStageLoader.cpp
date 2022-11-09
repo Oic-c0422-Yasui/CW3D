@@ -21,41 +21,50 @@ bool Sample::JsonStageLoader::Load(const std::string& name)
 
 bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 {
+	//ステージメッシュの読み込み
 	auto& stageMesh = os["StageMesh"];
+	std::string stageMeshName;
+	stageMesh.get_to(stageMeshName);
 	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
-	
+	const char* meshName = stageMeshName.c_str();
+	if (!tempMesh->Load(meshName))
+	{
+		return false;
+	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Stage", "StageMesh", tempMesh);
 
+	//敵情報の読み込み
 	auto& enemyStatusFile = os["EnemyStatusFile"];
 	JsonEnemyStatusLoader statusLoader;
 	auto& enemyStatusDictionary = statusLoader.Load(enemyStatusFile);
-
-
-	JsonDivisionCreator jsonCreator;
-	DivisionArrayPtr divisionArray = jsonCreator.Create(os["Divisions"], enemyStatusDictionary);
+	
+	//区画の生成
+	JsonDivisionCreator divisionCreator;
+	DivisionArrayPtr divisionArray = divisionCreator.Create(os["Divisions"], enemyStatusDictionary);
 	m_DivisionArray = divisionArray;
 
+
 	//敵で使用するメッシュ名格納
-	std::vector<std::string> meshNames;
+	std::vector<std::string> typeNames;
 	for (auto& division : *divisionArray)
 	{
 		for (auto& enemyParam : division->GetEnemysParam())
 		{
-			auto& typeName = enemyParam.GetParam().m_Type;
+			auto& type = enemyParam.GetParam().m_Type;
 
-			if (meshNames.size() <= 0)
+			if (typeNames.size() <= 0)
 			{
-				meshNames.push_back(typeName);
+				typeNames.push_back(type);
 			}
-			for (int i = 0; i < meshNames.size(); i++)
+			for (int i = 0; i < typeNames.size(); i++)
 			{
-				if (typeName == meshNames[i])
+				if (type == typeNames[i])
 				{
 					break;
 				}
-				if (i == meshNames.size())
+				if (i == typeNames.size())
 				{
-					meshNames.push_back(typeName);
+					typeNames.push_back(type);
 				}
 			}
 			
@@ -63,16 +72,16 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 	}
 
 	//敵で使用するメッシュをロード
-	for (auto& meshName : meshNames)
+	for (auto& type : typeNames)
 	{
-		if (!enemyStatusDictionary.IsContain(meshName))
+		if (!enemyStatusDictionary.IsContain(type))
 		{
 			continue;
 		}
-		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", meshName))
+		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", type))
 		{
 			//敵の辞書を取得
-			auto& dictionary = enemyStatusDictionary.Get(meshName);
+			auto& dictionary = enemyStatusDictionary.Get(type);
 			//メッシュを作成
 			tempMesh = std::make_shared<CMeshContainer>();
 			//メッシュの名前をChar*へ変換
@@ -82,10 +91,9 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 				return false;
 			}
 			//リソースを追加
-			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy",meshName, tempMesh);
+			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", type, tempMesh);
 		}
 	}
-
 
 	return true;
 }

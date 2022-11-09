@@ -60,7 +60,6 @@ namespace Sample
 		void Clear() noexcept
 		{
 			SetShowObjects(false);
-			m_ClearFlg = true;
 		}
 
 		void SetShowObjects(bool isShow) noexcept

@@ -151,7 +151,7 @@ namespace Sample
 		//リソースを追加する＆タグ付け
 		void AddResource(const std::string& tag, const std::string& key, const T& resource)
 		{
-			m_ResourcesMap[tag][key] = ptr;
+			m_ResourcesMap[tag][key] = resource;
 		}
 
 		//リソースを削除する

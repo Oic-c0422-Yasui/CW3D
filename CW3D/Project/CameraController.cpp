@@ -3,6 +3,8 @@
 #include "TimeController.h"
 
 
+using namespace Sample;
+
 CCameraController::CCameraController()
 	: Singleton<CCameraController>()
 	, m_TimerStartFlg(false)

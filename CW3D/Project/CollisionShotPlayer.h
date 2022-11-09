@@ -21,7 +21,7 @@ namespace Sample
 		//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 		switch (shot->GetColliderType())
 		{
-		case COLLITION_SPHERE:
+		case COLLISION_SPHERE:
 		{
 			if (player->IsEscape())
 			{
@@ -36,7 +36,7 @@ namespace Sample
 			}
 			break;
 		}
-		case COLLITION_AABB:
+		case COLLISION_AABB:
 		{
 			if (player->IsEscape())
 			{

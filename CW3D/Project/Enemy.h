@@ -8,6 +8,7 @@
 #include	"IStateCreator.h"
 #include	"IParameterCreator.h"
 #include	"ICharacterAICreator.h"
+#include	"EnemyBuildParameter.h"
 
 #include	"ActorObject.h"
 
@@ -16,10 +17,7 @@ namespace Sample
 	class CEnemy : public CActorObject
 	{
 	protected:
-
-
 		InputPtr m_Input;
-
 
 		ParameterHandle< ReactiveParameter<int> > m_HP;
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
@@ -33,10 +31,14 @@ namespace Sample
 
 		CVector3 m_DefaultPos;
 
+	private:
+		//プライベート関数
+		void SettingParameter(const AnyParameterMapPtr& param,
+								const EnemyStatusPtr& eneStatus);
 	public:
 		CEnemy();
 		~CEnemy() override;
-		bool Load(const Vector3& pos, 
+		bool Load(const EnemyBuildParameter& eneParam,
 			const ActionCreatorPtr& actionCreator,
 			const StateCreatorPtr& stateCreator,
 			const ParameterCreatorPtr& paramCreator,
@@ -100,10 +102,6 @@ namespace Sample
 			m_Actor->SetPosition(pos);
 			m_Position = m_Actor->GetPosition();
 		}
-
-		
-
-
 	};
 
 	//ポインタ置き換え

@@ -51,8 +51,9 @@ namespace Sample {
 		virtual ~PlayerActionCreator() = default;
 
 
-		/*利用するアニメーションの名前
-		char* name;
+		/*
+		利用するアニメーションの名前
+		char*					name;
 		アニメ開始時間
 		float					startTime;
 		アニメ速度
@@ -60,7 +61,8 @@ namespace Sample {
 		アニメ補間時間
 		float					tTime;
 		アニメループフラグ
-		bool					loopFlg;*/
+		bool					loopFlg;
+		*/
 
 		/**
 		 * @brief		生成

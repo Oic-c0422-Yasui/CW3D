@@ -10,7 +10,7 @@ namespace Sample
 	public:
 		CStageManager();
 		~CStageManager();
-		bool Load(const StagePtr& stage);
+		bool Load(const StagePtr& stage, const DivisionArrayPtr& divisions);
 		void Initialize();
 		void Update(const ClearTermProviderPtr& provider);
 		void Render();
@@ -39,6 +39,26 @@ namespace Sample
 		int GetDivCount() const noexcept
 		{
 			return m_pStage->GetDivCount();
+		}
+
+		bool IsClear() const noexcept
+		{
+			return m_pStage->IsClear();
+		}
+
+		const DivisionPtr& GetDivision(size_t id)
+		{
+			return m_pStage->GetDivision(id);
+		}
+
+		const DivisionPtr& GetCurrentDivision()
+		{
+			return m_pStage->GetCurrentDivision();
+		}
+
+		void NextPhase()
+		{
+			m_pStage->NextPhase();
 		}
 	};
 }

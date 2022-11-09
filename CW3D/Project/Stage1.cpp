@@ -14,7 +14,7 @@ bool Sample::CStage1::Load(const DivisionArrayPtr& divisionArray)
 							::GetInstance().GetResource("Stage", "StageMesh");
 
 	 m_Divisions = divisionArray;
-
+	 m_CurrentDivision = GetDivision(0);
 	return true;
 }
 
@@ -43,11 +43,7 @@ void Sample::CStage1::Update(const ClearTermProviderPtr& provider)
 	if (m_CurrentDivision->IsClear())
 	{
 		m_CurrentDivision->Clear();
-		if (m_Phase + 1 < m_Divisions->size())
-		{
-			m_CurrentDivision = GetDivision(m_Phase + 1);
-		}
-		else
+		if (m_Phase + 1 >= m_Divisions->size())
 		{
 			m_ClearFlg = true;
 		}

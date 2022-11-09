@@ -1,8 +1,8 @@
-#include "JsonEnemyLoader.h"
+#include "JsonEnemyBuildParameterLoader.h"
 
 using namespace Sample;
 
-std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
+std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
@@ -13,7 +13,7 @@ std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(const std::string
 	return Load(os, statusDictionary);
 }
 
-std::vector<EnemyBuildParameter> Sample::JsonEnemyLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
+std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
 {
 	auto& Enemys = os["Enemys"];
 

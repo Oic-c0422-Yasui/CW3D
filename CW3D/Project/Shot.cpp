@@ -15,7 +15,7 @@ Sample::CShot::CShot()
 	, m_Offset(0, 0, 0)
 	, m_Damage(0)
 	, m_NextHitTime(0.0f)
-	, m_CollisionType(COLLITION_AABB)
+	, m_CollisionType(COLLISION_AABB)
 	, m_ArmorBreakLevel(0)
 	, m_GetUltGauge(0.0f)
 	, m_ParentID(0)
@@ -40,7 +40,7 @@ void Sample::CShot::Create(Vector3 pos, ShotSphere sphire)
 	m_Collider->SetRadius(m_Radius);
 	m_ShowFlg = true;
 	m_CollideFlg = sphire.collideFlg;
-	m_CollisionType = COLLITION_SPHERE;
+	m_CollisionType = COLLISION_SPHERE;
 	m_KnockBack = sphire.knockBack;
 	m_Direction = sphire.direction;
 	m_ArmorBreakLevel = sphire.armorBreakLevel;
@@ -61,7 +61,7 @@ void Sample::CShot::Create(Vector3 pos, ShotAABB aabb)
 	m_AABB.Size = m_Size;
 	m_ShowFlg = true;
 	m_CollideFlg = aabb.collideFlg;
-	m_CollisionType = COLLITION_AABB;
+	m_CollisionType = COLLISION_AABB;
 	m_KnockBack = aabb.knockBack;
 	m_Direction = aabb.direction;
 	m_ArmorBreakLevel = aabb.armorBreakLevel;
@@ -79,12 +79,12 @@ void Sample::CShot::Update()
 	m_Position.x += m_Speed * TimeControllerInstance.GetTimeScale(m_Type);
 	switch (m_CollisionType)
 	{
-	case COLLITION_SPHERE:
+	case COLLISION_SPHERE:
 	{
 		m_Collider->SetPosition(m_Position);
 		break;
 	}
-	case COLLITION_AABB:
+	case COLLISION_AABB:
 	{
 		m_AABB.SetPosition(m_Position);
 		break;

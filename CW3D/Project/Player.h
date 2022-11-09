@@ -16,20 +16,25 @@ class CPlayer : public Sample::CActorObject
 {
 private:
 
-
-#define TEMP_SPEED 0.20f
-
+	//インプットキー
 	Sample::InputPtr		m_pInput;
 
+	//オブザーバー最大HP
 	Sample::ParameterHandle< Sample::ReactiveParameter<int> > m_MaxHP;
 
+	//オブザーバー最大必殺技ゲージ
 	Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_MaxUltGauge;
 
+	//アクション生成
 	Sample::PlayerActionCreator m_ActionCreator;
+	//状態生成
 	Sample::PlayerStateCreator m_StateCreator;
+	//スキル生成
 	Sample::PlayerSkillCreator m_SkillCreator;
+	//パラメータ生成
 	Sample::PlayerParameterCreator m_ParameterCreator;
 
+	//回避時の当たり判定サイズ
 	CVector3 m_EscapeColliderSize;
 
 public:
@@ -42,14 +47,26 @@ public:
 	void RenderDebug2D();
 	void Release()override;
 
+	/*
+	* @bref ダメージ処理
+	* 
+	*/
 	void Damage(const Vector3& direction, const Vector3& power, int damage, BYTE level);
 	
+	/*
+	* @bref インプットキーの設定
+	*
+	*/
 	void SetInput(const Sample::InputPtr& ptr) noexcept
 	{
 		m_pInput = ptr;
 	}
 
-
+	/*
+	* @bref HPの取得
+	* @return HP
+	*
+	*/
 	int GetHP() const noexcept
 	{
 		return m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);

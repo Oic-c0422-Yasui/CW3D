@@ -72,7 +72,7 @@ namespace Sample
 
 
 
-		ShotPtr& GetShot(int id) {
+		const ShotPtr& GetShot(int id) {
 			assert(m_Shots[id]);
 			return m_Shots[id]; }
 

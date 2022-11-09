@@ -12,6 +12,7 @@
 #include	"StateInput.h"
 #include	"ActorObjectManager.h"
 #include	"Stage1.h"
+#include	"JsonStageLoader.h"	
 
 
 using namespace Sample;
@@ -60,15 +61,6 @@ bool CBattleScene::Load()
 		return false;
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", "Player", tempMesh);
-	if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", "Zombie"))
-	{
-		tempMesh = std::make_shared<CMeshContainer>();
-		if (tempMesh->Load("Enemy/Zombie/Zombie.mom") != MOFMODEL_RESULT_SUCCEEDED)
-		{
-			return false;
-		}
-		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", "Zombie", tempMesh);
-	}
 
 	
 	//テクスチャ読み込み
@@ -76,6 +68,8 @@ bool CBattleScene::Load()
 	{
 		return false;
 	}
+
+
 
 	//エフェクト読み込み
 	EffectManagerInstance.Set();
@@ -98,9 +92,13 @@ bool CBattleScene::Load()
 	effect = Effekseer::Effect::Create(EffectManagerInstance.GetManager(), u"Effect/Track.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "ClosedEffect", effect);
 
+	//ステージ情報読み込み
+	JsonStageLoader stageLoader;
+	stageLoader.Load("Text/Stage1.json");
 	//ステージ読み込み
 	StagePtr stage = std::make_shared<CStage1>();
-	m_StageManager.Load(stage);
+	m_StageManager.Load(stage, stageLoader.GetDivisionArray());
+
 
 	//プレイヤー読み込み
 	m_Player->SetInput(input);
@@ -117,28 +115,7 @@ bool CBattleScene::Load()
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 
 
-	//敵読み込み
-	auto stg = m_StageManager;
-	for (int i = 0; i < stg.GetDivCount(); i++)
-	{
-		for (int j = 0; j < stg.GetDivEnemyCount(i); j++)
-		{
-			//ステージから敵のポインターを受け取る
-			auto& ene = stg.GetEnemy(i, j);
-			m_Enemys.push_back(ene);
-		}
-	}
-	for (int i = 0; i < m_Enemys.size(); i++)
-	{
-		//敵をマネージャーに登録
-		ActorObjectManagerInstance.Add(m_Enemys[i]);
 
-		//敵のHPバー生成＆オブザーバーに登録
-		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
-		CHPPresenter::Present(m_Enemys[i], m_EnemysHPRender[i]);
-	}
-
-	
 	//カメラ初期化
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
@@ -156,24 +133,18 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
-	EffectControllerInstance.Reset();
 
 	m_Player->Initialize();
 	m_PlayerUIRender->Initialize();
 
-	for (auto& enemy : m_Enemys)
-	{
-		enemy->Initialize();
-	}
+	//敵生成
+	CreateEnemys();
+
 	m_StageManager.Initialize();
+
 	m_ClearTermProvider = std::make_shared<ClearTermProvider>(m_Enemys);
 	
-	for (int i = 0; i < m_Enemys.size(); i++)
-	{
-		
-		m_EnemysHPRender[i]->Initialize();
-	}
-
+	//ライト設定
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
 	CGraphicsUtilities::SetDirectionalLight(&m_Light);
 	m_Light.SetAmbient(MOF_XRGB(255, 255, 255));
@@ -183,6 +154,7 @@ void CBattleScene::Initialize()
 	m_GameClearFlg = false;
 	m_GameOverFlg = false;
 
+	EffectControllerInstance.Reset();
 	ShotManagerInstance.Reset();
 	CameraControllerInstance.SetDefault();
 	TimeControllerInstance.Reset();
@@ -206,28 +178,31 @@ void CBattleScene::Update()
 
 	m_Player->Update();
 
-	for (int i = 0; i < m_Enemys.size(); i++)
+	for (auto& enemy : *m_Enemys)
 	{
-		m_Enemys[i]->Update();
+		enemy->Update();
 	}
 
 	m_StageManager.Update(m_ClearTermProvider);
 
-	ShotManagerInstance.Update();
+	//ステージの区画をクリアしているなら
+	if (m_StageManager.GetCurrentDivision()->IsClear())
+	{
+		//次の区画へ
+		m_StageManager.NextPhase();
+		//敵を生成する
+		CreateEnemys();
+	}
 
+	
 	if (!m_GameClearFlg && !m_GameOverFlg)
 	{
+		//当たり判定
 		Collision();
 	}
-	int count = 0;
-	for (auto enemy : m_Enemys)
-	{
-		if (!enemy->IsShow() && enemy->IsDead())
-		{
-			count++;
-		}
-	}
-	if (count >= m_Enemys.size())
+
+	//クリア判定
+	if (m_StageManager.IsClear())
 	{
 		if (!m_GameClearFlg)
 		{
@@ -235,17 +210,26 @@ void CBattleScene::Update()
 			m_GameClearFlg = true;
 		}
 	}
+	
+	//死亡判定
 	if (!m_Player->IsShow() && m_Player->IsDead())
 	{
 		m_GameOverFlg = true;
 	}
 
-	
+
+	//エフェクトマネージャー更新
 	EffectManagerInstance.Update();
+	//エフェクト操作更新
 	EffectControllerInstance.Update();
+	//時間操作更新
 	TimeControllerInstance.Update();
+	//カメラ操作更新
 	CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
 
+	//ショットマネージャー更新
+	ShotManagerInstance.Update();
+	//ショット削除処理
 	ShotManagerInstance.Delete();
 	EffectControllerInstance.Delete();
 	ActorObjectManagerInstance.Delete();
@@ -255,69 +239,62 @@ void CBattleScene::Render()
 {
 	m_StageManager.Render();
 	m_Player->Render();
-	for (auto& enemy : m_Enemys)
+	for (auto& enemy : *m_Enemys)
 	{
 		enemy->Render();
 	}
 	ShotManagerInstance.Render();
 	EffectManagerInstance.Render();
-	
+
 }
 
 void CBattleScene::RenderDebug()
 {
+	//ステージデバッグ描画
 	m_StageManager.RenderDebug();
 
+	//ショットデバッグ描画
 	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
-		if (!ShotManagerInstance.GetShot(i)->IsShow() || !ShotManagerInstance.GetShot(i)->GetCollideFlg())
+		auto& shot = ShotManagerInstance.GetShot(i);
+
+		if (!shot->IsShow() || !shot->GetCollideFlg())
 		{
 			continue;
 		}
-		switch (ShotManagerInstance.GetShot(i)->GetColliderType())
+		switch (shot->GetColliderType())
 		{
-		case COLLITION_SPHERE:
+		case COLLISION_SPHERE:
 		{
-			CGraphicsUtilities::RenderSphere(ShotManagerInstance.GetShot(i)->GetColliderSphere(), Vector4(1, 0, 0, 0.2f));
+			CGraphicsUtilities::RenderLineSphere(shot->GetColliderSphere(), Vector4(1, 0, 0, 0.2f));
 			break;
 		}
-		case COLLITION_AABB:
+		case COLLISION_AABB:
 		{
-			CGraphicsUtilities::RenderBox(ShotManagerInstance.GetShot(i)->GetColliderAABB(), Vector4(1, 0, 0, 0.2f));
+			CGraphicsUtilities::RenderBox(shot->GetColliderAABB(), Vector4(1, 0, 0, 0.2f)); 
 			break;
 		}
 		default:
 			break;
 		}
 	}
-
+	//プレイヤー当たり判定デバッグ描画
 	CGraphicsUtilities::RenderBox(m_Player->GetCollider(), Vector4(0, 1, 0, 0.2f));
+	//プレイヤー回避時当たり判定デバッグ描画
 	if (m_Player->IsEscape())
 	{
 		CGraphicsUtilities::RenderBox(m_Player->GetEscapeCollider(), Vector4(0, 0, 1, 0.2f));
 	}
-
-	for (int i = 0; i < m_Enemys.size(); i++)
+	//敵当たり判定デバッグ描画
+	for (auto& enemy : *m_Enemys)
 	{
-		CGraphicsUtilities::RenderBox(m_Enemys[i]->GetCollider(), Vector4(0, 1, 0, 0.2f));
+		CGraphicsUtilities::RenderBox(enemy->GetCollider(), Vector4(0, 1, 0, 0.2f));
 	}
 	
 }
 
 void CBattleScene::Render2D()
 {
-	for (int i = 0; i < m_Enemys.size(); i++)
-	{
-		m_Enemys[i]->Render2D();
-	}
-	float count = 0;
-	for (int i = 0; i < m_Enemys.size(); i++)
-	{
-		if (!m_Enemys[i]->IsShow())
-		{
-			count++;
-		}
-	}
 
 	//敵HPバーの描画入れ替え
 	std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
@@ -325,6 +302,8 @@ void CBattleScene::Render2D()
 	{
 		return obj1->GetViewPosition().z > obj2->GetViewPosition().z;
 	});
+
+	//敵のHPバー描画
 	for (auto& enemyHP : m_EnemysHPRender)
 	{
 		enemyHP->Render();
@@ -333,12 +312,15 @@ void CBattleScene::Render2D()
 	//プレイヤーのUI描画
 	m_PlayerUIRender->Render();
 
+
+	//リトライ描画
 	if (m_GameClearFlg || m_GameOverFlg)
 	{
 		CGraphicsUtilities::RenderString(20, 1000, "F2でリトライ");
 	}
 
-	if (count >= m_Enemys.size())
+	//ゲームクリア描画
+	if (m_GameClearFlg)
 	{
 		CRectangle rect;
 		m_Font.CalculateStringRect(0, 0, "全部倒したあああああ", rect);
@@ -368,11 +350,8 @@ void CBattleScene::Release()
 
 	ServiceLocator<CPlayer>::GetInstance().Release();
 
-	for (int i = 0; i < m_Enemys.size(); i++)
-	{
-		m_Enemys[i].reset();
-	}
-	m_Enemys.clear();
+	m_Enemys->clear();
+	m_Enemys.reset();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
 	{
 		m_EnemysHPRender[i].reset();
@@ -399,53 +378,76 @@ void CBattleScene::Release()
 void CBattleScene::Collision()
 {
 	//敵の当たり判定
-	for (int i = 0; i < m_Enemys.size(); i++)
+	for (auto& enemy : *m_Enemys)
 	{
 		//敵とプレイヤー
-		CCollision::CollisionObj(m_Player, m_Enemys[i]);
+		CCollision::CollisionObj(m_Player, enemy);
 
-		if (!m_Enemys[i]->IsInvincible())
+		if (!enemy->IsInvincible())
 		{
-			for (int j = i + 1; j < m_Enemys.size(); j++)
-			{
-				//敵と敵
-				CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-			}
+			//for (int j = i + 1; j < m_Enemys.size(); j++)
+			//{
+			//	//敵と敵
+			//	CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
+			//}
+			//敵と弾
 			for (size_t j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 			{
-				//敵と弾
 				auto& shot = ShotManagerInstance.GetShot(j);
-				CCollision::CollisionObj(shot, m_Enemys[i]);
+				CCollision::CollisionObj(shot, enemy);
 			}
 		}
-		for (int j = 0; j < m_StageManager.GetDivCount(); j++)
+
+		//敵とオブジェクト
+		for (size_t j = 0; j < m_StageManager.GetCurrentDivision()->GetObjCount(); j++)
 		{
-			for (int k = 0; k < m_StageManager.GetDivObjCount(j); k++)
-			{
-				//敵とオブジェクト
-				ObjectPtr obj = m_StageManager.GetObj(j, k);
-				CCollision::CollisionObj(m_Enemys[i], obj);
-			}
+			auto& obj = m_StageManager.GetCurrentDivision()->GetObj(j);
+			CCollision::CollisionObj(enemy, obj);
 		}
 	}
 
-	//プレイヤーの当たり判定
-	for (int i = 0; i < m_StageManager.GetDivCount(); i++)
+	//プレイヤーとオブジェクトの当たり判定
+	for (size_t i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)
 	{
-		for (int j = 0; j < m_StageManager.GetDivObjCount(i); j++)
-		{
-			//プレイヤーとオブジェクト
-			ObjectPtr obj = m_StageManager.GetObj(i, j);
-			CCollision::CollisionObj(m_Player, obj);
-		}
+		auto& obj = m_StageManager.GetCurrentDivision()->GetObj(i);
+		CCollision::CollisionObj(m_Player, obj);
 	}
 
-		for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
-		{
-			//プレイヤーと弾
-			auto& shot = ShotManagerInstance.GetShot(i);
-			CCollision::CollisionObj(shot, m_Player);
-		}
+	//プレイヤーと弾の当たり判定
+	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	{
+		auto& shot = ShotManagerInstance.GetShot(i);
+		CCollision::CollisionObj(shot, m_Player);
+	}
 
 	
+}
+
+void CBattleScene::CreateEnemys()
+{
+	m_Enemys->clear();
+
+	//現在の区画から敵の情報を受け取る
+	auto division = m_StageManager.GetCurrentDivision();
+	auto enemysParam = division->GetEnemysParam();
+	int enemyCount = division->GetEnemyCount();
+
+	//敵のビルダーの辞書
+	EnemyBuilderDictionary dictionary;
+
+	for (int i = 0; i < enemyCount; i++)
+	{
+		//敵のタイプに合ったビルダーを取得
+		auto builder = dictionary.Get(enemysParam[i].GetParam().m_Type);
+
+
+		m_Enemys->push_back(builder->Create(enemysParam[i]));
+
+		//敵をマネージャーに登録
+		ActorObjectManagerInstance.Add(m_Enemys->at(i));
+		//敵のHPバー生成＆オブザーバーに登録
+		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
+		CHPPresenter::Present(m_Enemys->at(i), m_EnemysHPRender[i]);
+		m_EnemysHPRender[i]->Initialize();
+	}
 }

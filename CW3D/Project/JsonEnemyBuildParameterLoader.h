@@ -5,7 +5,7 @@
 
 namespace Sample
 {
-	class JsonEnemyLoader
+	class JsonEnemyBuildParameterLoader
 	{
 	public:
 		std::vector<EnemyBuildParameter> Load(const std::string& name, EnemyStatusDictionary statusDictionary);

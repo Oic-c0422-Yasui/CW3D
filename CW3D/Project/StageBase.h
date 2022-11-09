@@ -26,7 +26,7 @@ namespace Sample
 
 		const ObjectPtr& GetObj(int divCount, int id)
 		{
-			//int cnt = min(max(0, id), GetObjCount());
+			assert(m_Divisions->at(divCount));
 			return m_Divisions->at(divCount)->GetObj(id);
 		}
 
@@ -40,20 +40,28 @@ namespace Sample
 			return count;
 		}
 
-		/*const EnemyPtr& GetEnemy(int divCount,int id)
-		{
-			return m_Divisions->at(divCount)->GetEnemy(id);
-		}*/
-
-		int GetDivCount() const noexcept
+		size_t GetDivCount() const noexcept
 		{
 			return m_Divisions->size();
 		}
 
-		const DivisionPtr& GetDivision(int divCount)
+		const DivisionPtr& GetDivision(size_t divCount)
 		{
+			assert(m_Divisions->at(divCount));
 			return m_Divisions->at(divCount);
 		}
+
+		const DivisionPtr& GetCurrentDivision()
+		{
+			return m_CurrentDivision;
+		}
+
+		bool IsClear() const noexcept
+		{
+			return m_ClearFlg;
+		}
+
+		void NextPhase();
 	};
 
 	using StagePtr = std::shared_ptr<CStageBase>;

@@ -3,7 +3,8 @@
 #include "CameraBase.h"
 
 
-
+namespace Sample
+{
 
 	class CCameraController : public Singleton<CCameraController>
 	{
@@ -78,6 +79,9 @@
 
 	};
 
+}
+
+
 //簡易アクセス用
-#define CameraControllerInstance 	CCameraController::GetInstance()
+#define CameraControllerInstance 	Sample::CCameraController::GetInstance()
 

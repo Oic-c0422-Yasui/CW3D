@@ -26,6 +26,8 @@ namespace Sample
 		}
 
 	public:
+		~CTimeController() {}
+
 
 		void Update()
 		{

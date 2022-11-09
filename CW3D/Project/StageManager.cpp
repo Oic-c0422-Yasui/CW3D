@@ -11,10 +11,10 @@ CStageManager::~CStageManager()
 {
 }
 
-bool Sample::CStageManager::Load(const StagePtr& stage)
+bool Sample::CStageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
 {
 	m_pStage = stage;
-	if (!m_pStage->Load())
+	if (!m_pStage->Load(divisions))
 	{
 		return false;
 	}

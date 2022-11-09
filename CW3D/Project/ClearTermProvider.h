@@ -30,7 +30,7 @@ namespace Sample
 		/**
 		 * @brief		“GŽæ“¾
 		 */
-		const EnemyArrayPtr& GetEnemy()
+		const EnemyArrayPtr& GetEnemy() const noexcept
 		{
 			return m_Enemys;
 		}
