@@ -3,23 +3,23 @@
   "Status": [
     {
       "Type": "Zombie",
-      "HP": 100,
+      "HP": 300,
       "UltGauge": 100.0,
       "ATK": 10,
-      "Mesh": "Zombie/Zombie.mom",
+      "Mesh": "Enemy/Zombie/Zombie.mom",
       "Collider": {
         "SizeX": 0.5,
         "SizeY": 0.8,
         "SizeZ": 0.5,
-        "Height": 1.0,
+        "Height": 1.0
       }
     },
     {
       "Type": "Zombie2",
-      "HP": 100,
+      "HP": 2000,
       "UltGauge": 100.0,
       "ATK": 10,
-      "Mesh": "Zombie/Zombie.mom",
+      "Mesh": "Enemy/Zombie/Zombie.mom",
       "Collider": {
         "SizeX": 0.5,
         "SizeY": 0.8,

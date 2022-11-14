@@ -104,7 +104,14 @@ namespace Sample
 		//リソースが存在するか？
 		bool IsContainResource(const std::string& tag,const std::string& key)
 		{
-			for (auto& map : m_ResourcesMap[tag])
+			auto& map = m_ResourcesMap[tag];
+			auto it = map.find(key);
+			if (it != map.end())
+			{
+				return true;
+			}
+			return false;
+			/*for (auto& map : m_ResourcesMap[tag])
 			{
 				auto it = map.find(key);
 				if (it != map.end())
@@ -112,7 +119,7 @@ namespace Sample
 					return true;
 				}
 			}
-			return false;
+			return false;*/
 		}
 
 		//タグが存在するか？

@@ -35,8 +35,10 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 
 	//敵情報の読み込み
 	auto& enemyStatusFile = os["EnemyStatusFile"];
+	std::string fileName;
+	enemyStatusFile.get_to(fileName);
 	JsonEnemyStatusLoader statusLoader;
-	auto& enemyStatusDictionary = statusLoader.Load(enemyStatusFile);
+	auto& enemyStatusDictionary = statusLoader.Load(fileName);
 	
 	//区画の生成
 	JsonDivisionCreator divisionCreator;
@@ -62,7 +64,7 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 				{
 					break;
 				}
-				if (i == typeNames.size())
+				if (i == typeNames.size() - 1)
 				{
 					typeNames.push_back(type);
 				}
@@ -78,21 +80,18 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 		{
 			continue;
 		}
-		if (!ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", type))
+		//敵の辞書を取得
+		auto& dictionary = enemyStatusDictionary.Get(type);
+		//メッシュを作成
+		tempMesh = std::make_shared<CMeshContainer>();
+		//メッシュの名前をChar*へ変換
+		const char* str = dictionary->m_MeshName.c_str();
+		if (tempMesh->Load(str) != MOFMODEL_RESULT_SUCCEEDED)
 		{
-			//敵の辞書を取得
-			auto& dictionary = enemyStatusDictionary.Get(type);
-			//メッシュを作成
-			tempMesh = std::make_shared<CMeshContainer>();
-			//メッシュの名前をChar*へ変換
-			const char* str = dictionary->m_MeshName.c_str();
-			if (tempMesh->Load(str) != MOFMODEL_RESULT_SUCCEEDED)
-			{
-				return false;
-			}
-			//リソースを追加
-			ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", type, tempMesh);
+			return false;
 		}
+		//リソースを追加
+		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", type, tempMesh);
 	}
 
 	return true;

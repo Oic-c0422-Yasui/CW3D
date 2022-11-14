@@ -43,7 +43,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			collider["SizeX"].get_to(colliderSize.x);
 			collider["SizeY"].get_to(colliderSize.y);
 			collider["SizeZ"].get_to(colliderSize.z);
-			collider["height"].get_to(colliderHeight);
+			collider["Height"].get_to(colliderHeight);
 		}
 		EnemyStatusPtr enemyStateus = 
 			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge,atk,meshName,colliderSize,colliderHeight));

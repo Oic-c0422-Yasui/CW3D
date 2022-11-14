@@ -51,4 +51,9 @@ namespace Sample
 		auto& actor =  ActorObjectManagerInstance.GetActor(shot->GetCharaType(), shot->GetParentID());
 		actor->AddUltGauge(gauge);
 	}
+
+	template< >
+	inline void CCollision::CollisionObj<>(EnemyPtr& enemy, ShotPtr& shot) {
+		return CollisionObj(enemy, shot);
+	}
 }

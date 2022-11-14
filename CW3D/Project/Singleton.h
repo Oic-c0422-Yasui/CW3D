@@ -24,7 +24,7 @@
 		static void Create()
 		{
 			//エラー確認
-			assert(!instance);
+			//assert(!instance);
 
 			if (instance)
 			{

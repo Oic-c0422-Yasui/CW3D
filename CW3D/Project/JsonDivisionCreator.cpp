@@ -33,8 +33,7 @@ using namespace Sample;
 	 */
 	DivisionArrayPtr JsonDivisionCreator::Create(nlohmann::json& os, EnemyStatusDictionary status) {
 		DivisionArray divArray;
-		auto& divisions = os["Divisions"];
-		for (auto& division : divisions)
+		for (auto& division : os)
 		{
 			CDivision::DIVISION_DATA data{};
 

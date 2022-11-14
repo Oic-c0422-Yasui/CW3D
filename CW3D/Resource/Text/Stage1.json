@@ -12,22 +12,7 @@
           {
             "Name": "AllDead"
           }
-        },
-        {
-          "Type":
-          {
-            "Name": "EnduranceTime",
-            "Time": 50
-          }
-        },
-        {
-          "Type":
-          {
-            "Name": "FixedDead",
-            "Count": 10
-          }
         }
-
       ],
       "Enemys": [
         {
@@ -46,7 +31,7 @@
           "PosX": -8,
           "PosY": 0,
           "PosZ": 5,
-          "Type": "Zombie"
+          "Type": "Zombie2"
         },
         {
           "PosX": -5,
@@ -106,9 +91,12 @@
 
     {
       "BGM": "",
-      "ClearTerm": [
+      "ClearTerms": [
         {
-          "Type": "AllDead"
+          "Type": 
+          {
+            "Name": "AllDead"
+          }
         }
       ],
       "Enemys": [
@@ -188,9 +176,12 @@
 
     {
       "BGM": "",
-      "ClearTerm": [
+      "ClearTerms": [
         {
-          "Type": "AllDead"
+          "Type": 
+          {
+            "Name": "AllDead"
+          }
         }
       ],
       "Enemys": [

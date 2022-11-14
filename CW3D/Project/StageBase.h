@@ -40,7 +40,7 @@ namespace Sample
 			return count;
 		}
 
-		size_t GetDivCount() const noexcept
+		int GetDivCount() const noexcept
 		{
 			return m_Divisions->size();
 		}

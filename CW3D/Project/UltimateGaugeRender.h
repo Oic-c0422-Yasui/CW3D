@@ -52,7 +52,7 @@ namespace Sample
 		{
 
 			m_pGaugeFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGauge");
-			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("UI", "SkillFont");
+			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);

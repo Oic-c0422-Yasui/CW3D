@@ -24,9 +24,6 @@ namespace Sample
 		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
 		ParameterHandle< ReactiveParameter<bool> > m_HPShowFlg;
 
-		ActionCreatorPtr	 m_ActionCreator;
-		StateCreatorPtr	m_StateCreator;
-		ParameterCreatorPtr m_ParameterCreator;
 		CharacterAIPtr	m_AI;
 
 		CVector3 m_DefaultPos;

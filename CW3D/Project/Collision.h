@@ -9,7 +9,7 @@ namespace Sample
 	{
 	private:
 
-		static bool Calculate(const float boxX, const float boxY, const float boxZ, const Vector3& spherePos, const float sphereR)
+		static bool Calculate(float boxX, float boxY, float boxZ, const Vector3& spherePos, float sphereR)
 		{
 			return (boxX - spherePos.x) * (boxX - spherePos.x) +
 				(boxY - spherePos.y) * (boxY - spherePos.y) +
@@ -130,10 +130,10 @@ namespace Sample
 				return;
 			}
 			//–„‚Ü‚è–hŽ~”»’è
-			const Vector3& pos1 = obj1.GetPosition();
-			const Vector3& pos2 = obj2.GetPosition();
-			const CAABB& size1 = obj1.GetCollider();
-			const CAABB& size2 = obj2.GetCollider();
+			Vector3 pos1 = obj1.GetPosition();
+			Vector3 pos2 = obj2.GetPosition();
+			CAABB size1 = obj1.GetCollider();
+			CAABB size2 = obj2.GetCollider();
 			if (Collision(size1, size2))
 			{
 
@@ -189,10 +189,10 @@ namespace Sample
 				return;
 			}
 			//–„‚Ü‚è–hŽ~”»’è
-			const Vector3& pos1 = actor.GetPosition();
-			const Vector3& pos2 = obj.GetPosition();
-			const CAABB& size1 = actor.GetCollider();
-			const CAABB& size2 = obj.GetCollider();
+			Vector3 pos1 = actor.GetPosition();
+			Vector3 pos2 = obj.GetPosition();
+			CAABB size1 = actor.GetCollider();
+			CAABB size2 = obj.GetCollider();
 			if (Collision(size1, size2))
 			{
 

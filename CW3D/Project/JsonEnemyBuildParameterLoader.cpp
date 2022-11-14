@@ -15,11 +15,10 @@ std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(con
 
 std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
 {
-	auto& Enemys = os["Enemys"];
 
 	std::vector<EnemyBuildParameter> parameter;
 
-	for (auto& enemy : Enemys)
+	for (auto& enemy : os)
 	{
 		
 		Vector3 pos;

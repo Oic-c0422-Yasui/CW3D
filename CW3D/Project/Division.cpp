@@ -32,7 +32,7 @@ void Sample::CDivision::Update(const ClearTermProviderPtr& provider)
 		bool isClear = clearTerm->IsClear(provider);
 		if (!isClear)
 		{
-			break;
+			return;
 		}
 	}
 	m_ClearFlg = true;
@@ -40,7 +40,6 @@ void Sample::CDivision::Update(const ClearTermProviderPtr& provider)
 
 void Sample::CDivision::Release()
 {
-	m_Data.Enemys->clear();
 	m_Data.Objects.clear();
 	m_Data.ClearTerms.clear();
 }

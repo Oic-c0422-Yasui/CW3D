@@ -16,7 +16,6 @@ namespace Sample
 		{
 			ClearTermArray	ClearTerms;
 			std::vector<EnemyBuildParameter> EnemysParam;
-			EnemyArrayPtr	Enemys;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
 			int ObjectCount;

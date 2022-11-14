@@ -8,11 +8,7 @@ CEnemy::CEnemy()
 
 	: Sample::CActorObject()
 	, m_Input()
-	, m_AI()
 	, m_DefaultPos(0,0,0)
-	, m_ActionCreator()
-	, m_StateCreator()
-	, m_ParameterCreator()
 {
 	SetType(CHARA_ENEMY);
 }
@@ -35,6 +31,8 @@ bool CEnemy::Load(const EnemyBuildParameter& eneParam,
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
 
+	auto& enemy = eneParam.GetParam().m_Type;
+
 	//メッシュ読み込み
 	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam.GetParam().m_Type);
 	if (m_pMesh == nullptr)
@@ -44,7 +42,7 @@ bool CEnemy::Load(const EnemyBuildParameter& eneParam,
 
 	//モーション作成
 	m_Motion = m_pMesh->CreateMotionController();
-	//モーション作成
+	//モーション状態設定
 	m_Actor->SetAnimationState(m_Motion);
 
 	//アクション作成
@@ -117,6 +115,9 @@ void CEnemy::Update()
 	}
 	m_AI->Update();
 	Sample::CActorObject::Update();
+
+	Vector3 pos = m_Actor->GetPosition();
+
 	m_Position = m_Actor->GetPosition();
 }
 
