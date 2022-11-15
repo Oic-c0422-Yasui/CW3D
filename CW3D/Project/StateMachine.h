@@ -144,7 +144,7 @@ namespace Sample {
 		}
 
 		/**
-		 * @brief		すべてのステートをセットアップする
+		 * @brief		登録されているすべてのステートをセットアップする
 		 */
 		void SetUp() const override
 		{

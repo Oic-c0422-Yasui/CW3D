@@ -5,6 +5,7 @@
       "Type": "Zombie",
       "HP": 300,
       "UltGauge": 100.0,
+      "UltGaugeBoostMag": 1.0,
       "ATK": 10,
       "Mesh": "Enemy/Zombie/Zombie.mom",
       "Collider": {
@@ -18,7 +19,8 @@
       "Type": "Zombie2",
       "HP": 2000,
       "UltGauge": 100.0,
-      "ATK": 10,
+      "UltGaugeBoostMag": 1.5,
+      "ATK": 30,
       "Mesh": "Enemy/Zombie/Zombie.mom",
       "Collider": {
         "SizeX": 0.5,

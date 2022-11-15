@@ -28,6 +28,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		std::string typeName;
 		int hp;
 		float ultGauge;
+		float ultGaugeBoostMag;
 		int atk;
 		std::string meshName;
 		Vector3 colliderSize;
@@ -36,6 +37,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		state["Type"].get_to(typeName);
 		state["HP"].get_to(hp);
 		state["UltGauge"].get_to(ultGauge);
+		state["ultGaugeBoostMag"].get_to(ultGaugeBoostMag);
 		state["ATK"].get_to(atk);
 		state["Mesh"].get_to(meshName);
 		auto& collider = state["Collider"];
@@ -46,7 +48,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			collider["Height"].get_to(colliderHeight);
 		}
 		EnemyStatusPtr enemyStateus = 
-			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge,atk,meshName,colliderSize,colliderHeight));
+			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge, ultGaugeBoostMag,atk,meshName,colliderSize,colliderHeight));
 		dictionary.Add(typeName,enemyStateus);
 	}
 	

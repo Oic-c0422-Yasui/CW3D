@@ -80,6 +80,7 @@ void CEnemy::Initialize()
 
 	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
+
 	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
 	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);

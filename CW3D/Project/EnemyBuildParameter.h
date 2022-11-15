@@ -9,12 +9,13 @@ namespace Sample
 	public:
 		int m_Hp;
 		float m_UltGauge;
+		float m_UltGaugeBoostMag;
 		int m_Atk;
 		std::string m_MeshName;
 		Vector3 m_ColliderSize;
 		float m_ColliderHeight;
 
-		EnemyStatus(int hp,float ultGauge,int atk,
+		EnemyStatus(int hp,float ultGauge,float ultGaugeBoostMag,int atk,
 			const std::string& meshName,const Vector3& colliderSize,float colliderHeight);
 
 	};

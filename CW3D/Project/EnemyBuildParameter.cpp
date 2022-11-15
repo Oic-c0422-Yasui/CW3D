@@ -15,9 +15,10 @@ Sample::EnemyBuildParameter::~EnemyBuildParameter()
 
 
 
-Sample::EnemyStatus::EnemyStatus(int hp, float ultGauge, int atk, const std::string& meshName, const Vector3& colliderSize, float colliderHeight)
+Sample::EnemyStatus::EnemyStatus(int hp, float ultGauge, float ultGaugeBoostMag, int atk, const std::string& meshName, const Vector3& colliderSize, float colliderHeight)
 	: m_Hp(hp)
 	, m_UltGauge(ultGauge)
+	, m_UltGaugeBoostMag(ultGaugeBoostMag)
 	, m_Atk(atk)
 	, m_MeshName(meshName)
 	, m_ColliderSize(colliderSize)
