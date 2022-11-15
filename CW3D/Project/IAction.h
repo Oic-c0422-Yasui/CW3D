@@ -5,7 +5,7 @@
 #include "EffectController.h"
 #include "ParameterMap.h"
 #include "SkillController.h"
-#include "TimeController.h"
+#include "TimeScaleController.h"
 
 namespace Sample {
 

@@ -63,7 +63,7 @@ namespace Sample
 			//À•W‚ÌˆÚ“®
 			void MovePosition(const Vector3& movePos) noexcept
 			{
-				m_Position += movePos * TimeControllerInstance.GetTimeScale(m_Type);
+				m_Position += movePos * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				m_World.SetTranslation(m_Position);
 			}
 
@@ -71,12 +71,12 @@ namespace Sample
 			{
 				if (v->IsGravity())
 				{
-					m_Position += v->GetVelocity() * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Position += v->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 				else
 				{
-					m_Position.x += v->GetVelocityX() * TimeControllerInstance.GetTimeScale(m_Type);
-					m_Position.z += v->GetVelocityZ() * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Position.x += v->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+					m_Position.z += v->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 				m_World.SetTranslation(m_Position);
 			}

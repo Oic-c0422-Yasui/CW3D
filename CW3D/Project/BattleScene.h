@@ -12,7 +12,7 @@
 #include	"ShotManager.h"
 #include	"EffectController.h"
 #include	"IDManager.h"
-#include	"TimeController.h"
+#include	"TimeScaleController.h"
 
 #include	"EnemyHPRender.h"
 
@@ -23,6 +23,8 @@
 #include	"StageManager.h"
 
 #include	"ClearTermProvider.h"
+
+#include	"Timer.h"
 
 
 
@@ -52,6 +54,8 @@ private:
 	bool m_GameClearFlg;
 	//€–Sƒtƒ‰ƒO
 	bool m_GameOverFlg;
+
+	Sample::CTimer m_Timer;
 
 private:
 	//Õ“Ë”»’è‚ğ‚Ü‚Æ‚ß‚½ŠÖ”

@@ -1,7 +1,7 @@
 #pragma once
 
 #include	"SkillData.h"
-#include	"TimeController.h"
+#include	"TimeScaleController.h"
 
 
 
@@ -29,7 +29,7 @@ namespace Sample
 		{
 			if (m_CT > 0.0f)
 			{
-				m_CT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_CT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 			}
 			else
 			{
@@ -42,7 +42,7 @@ namespace Sample
 		{
 			if (m_CT > 0.0f)
 			{
-				m_CT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_CT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 			}
 		}
 

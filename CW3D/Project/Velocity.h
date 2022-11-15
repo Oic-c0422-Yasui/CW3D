@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Common.h"
-#include "TimeController.h"
+#include "TimeScaleController.h"
 
-extern float gameSpeed;
+
 
 namespace Sample
 {
@@ -69,7 +69,7 @@ namespace Sample
 			//重力の適用
 			if (m_UseGravity)
 			{
-				m_Velocity.y -= m_Gravity * TimeControllerInstance.GetTimeScale(m_Type);
+				m_Velocity.y -= m_Gravity * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				m_Velocity.y = ((m_Velocity.y < -m_MaxVelocity.y) ?
 					-m_MaxVelocity.y : m_Velocity.y);
 			}
@@ -81,7 +81,7 @@ namespace Sample
 				{
 					m_CurrentY = MyUtilities::RotateTimer(m_StartY, m_CurrentTime, m_TargetY, m_MoveTime);
 
-					m_CurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
+					m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 				else
 				{
@@ -93,25 +93,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.x) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type))
+				if (m_Velocity.x > m_MaxVelocity.x + m_Decelerate.x * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.x -= m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.x -= m_Decelerate.x * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.x < 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
+						m_Velocity.x += m_UpdateVelocity.x * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					}
 				}
-				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type))
+				else if (m_Velocity.x < -m_MaxVelocity.x - m_Decelerate.x * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.x += m_Decelerate.x * 2 * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.x += m_Decelerate.x * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.x > 0)
 					{
-						m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
+						m_Velocity.x += m_UpdateVelocity.x * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					}
 				}
 				else
 				{
-					m_Velocity.x += m_UpdateVelocity.x * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.x += m_UpdateVelocity.x * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					m_Velocity.x = ((m_Velocity.x > m_MaxVelocity.x) ?
 						m_MaxVelocity.x : ((m_Velocity.x < -m_MaxVelocity.x) ?
 							-m_MaxVelocity.x : m_Velocity.x));
@@ -126,25 +126,25 @@ namespace Sample
 			if (fabsf(m_UpdateVelocity.z) > 0)
 			{
 				//最大速度を超えるようなら倍速で減速
-				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type))
+				if (m_Velocity.z > m_MaxVelocity.z + m_Decelerate.z * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.z -= m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.z -= m_Decelerate.z * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.z < 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
+						m_Velocity.z += m_UpdateVelocity.z * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					}
 				}
-				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type))
+				else if (m_Velocity.z < -m_MaxVelocity.z - m_Decelerate.z * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type))
 				{
-					m_Velocity.z += m_Decelerate.z * 2 * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.z += m_Decelerate.z * 2 * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					if (m_UpdateVelocity.z > 0)
 					{
-						m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
+						m_Velocity.z += m_UpdateVelocity.z * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					}
 				}
 				else
 				{
-					m_Velocity.z += m_UpdateVelocity.z * TimeControllerInstance.GetTimeScale(m_Type);
+					m_Velocity.z += m_UpdateVelocity.z * TimeScaleControllerInstance.GetTimeScale(m_Type);
 					m_Velocity.z = ((m_Velocity.z > m_MaxVelocity.z) ?
 						m_MaxVelocity.z : ((m_Velocity.z < -m_MaxVelocity.z) ?
 							-m_MaxVelocity.z : m_Velocity.z));

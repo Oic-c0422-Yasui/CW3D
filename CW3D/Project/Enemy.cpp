@@ -103,7 +103,7 @@ void CEnemy::Update()
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
-		invincible -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+		invincible -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 	if (m_DeadFlg)
 	{

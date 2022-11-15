@@ -3,7 +3,7 @@
 #include "Common.h"
 #include "Effect.h"
 #include "ResourceManager.h"
-#include "TimeController.h"
+#include "TimeScaleController.h"
 #include "CameraController.h"
 
 
@@ -83,8 +83,8 @@ namespace Sample
 
 		void Update()
 		{
-			m_Manager->Update(1.0f * TimeControllerInstance.GetTimeScale());
-			m_Renderer->SetTime(currentTime / 60.0f * TimeControllerInstance.GetTimeScale());
+			m_Manager->Update(1.0f * TimeScaleControllerInstance.GetTimeScale());
+			m_Renderer->SetTime(currentTime / 60.0f * TimeScaleControllerInstance.GetTimeScale());
 		}
 
 		void Render()

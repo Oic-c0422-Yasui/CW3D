@@ -141,6 +141,7 @@
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="EnemyBuildParameter.h" />
     <ClInclude Include="JsonEnemyBuildParameterLoader.h" />
     <ClInclude Include="JsonStageLoader.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="ZombieAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="ClearPoseAction.h" />
@@ -324,7 +326,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Test.h" />
-    <ClInclude Include="TimeController.h" />
+    <ClInclude Include="TimeScaleController.h" />
     <ClInclude Include="TimeScale.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Action.h" />

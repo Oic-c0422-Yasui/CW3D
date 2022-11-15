@@ -11,6 +11,7 @@ namespace Sample
 		
 	public:
 		virtual bool IsClear(const ClearTermProviderPtr& provider) = 0;
+		virtual const std::string& GetDescription() = 0;
 		virtual ~IClearTerm() = default;
 	};
 	using ClearTermPtr = std::shared_ptr<IClearTerm>;

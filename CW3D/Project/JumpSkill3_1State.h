@@ -111,7 +111,7 @@ namespace Sample {
 			}
 			
 
-			m_AttackTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(Actor()->GetType());
+			m_AttackTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
 			if (m_CurrentTime > m_Parameter.FinishTime || !m_ContinueFlg)
 			{

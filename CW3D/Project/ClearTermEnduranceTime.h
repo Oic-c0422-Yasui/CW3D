@@ -11,6 +11,8 @@ namespace Sample
 		ClearTermEnduranceTime(float time);
 		bool IsClear(const ClearTermProviderPtr& provider) override;
 
+		const std::string& GetDescription() override { return "ˆê’èŽžŠÔ‘Ï‚¦”²‚¯"; }
+
 	};
 }
 

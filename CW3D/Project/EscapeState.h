@@ -94,7 +94,7 @@ namespace Sample {
 					{
 						isEscape = true;
 					}
-					m_EscapeCurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(Actor()->GetType());
+					m_EscapeCurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 					if (m_EscapeCurrentTime >= m_Parameter.EscapeTime)
 					{
 						isEscape = false;

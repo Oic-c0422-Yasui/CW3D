@@ -76,7 +76,7 @@ void Sample::CShot::Update()
 		return;
 	}
 
-	m_Position.x += m_Speed * TimeControllerInstance.GetTimeScale(m_Type);
+	m_Position.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_Type);
 	switch (m_CollisionType)
 	{
 	case COLLISION_SPHERE:

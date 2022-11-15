@@ -1,6 +1,6 @@
 #include "CameraController.h"
 #include "InterpolateCamera.h"
-#include "TimeController.h"
+#include "TimeScaleController.h"
 
 
 using namespace Sample;
@@ -101,7 +101,7 @@ void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 	{
 		if (m_Time > m_CurrentTime)
 		{
-			m_CurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+			m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 		}
 		else
 		{

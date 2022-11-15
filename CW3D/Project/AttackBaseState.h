@@ -145,7 +145,7 @@ namespace Sample {
 		 * @brief		ステート内の実行処理
 		 */
 		virtual void Execution() override {
-			m_CurrentTime += CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(Actor()->GetType());
+			m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
 		}
 

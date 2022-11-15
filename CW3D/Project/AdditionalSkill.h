@@ -58,7 +58,7 @@ namespace Sample
 			}
 			if (m_AddStartTime > 0.0f)
 			{
-				m_AddStartTime -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_AddStartTime -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 				if (m_AddStartTime <= 0.0f)
 				{
 					if (!m_AddFlg)
@@ -71,7 +71,7 @@ namespace Sample
 			}
 			else if (m_AddCT > 0.0f)
 			{
-				m_AddCT -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale();
+				m_AddCT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 			}
 			
 			if(m_AddCT <= 0.0f)

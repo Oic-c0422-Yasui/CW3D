@@ -132,6 +132,8 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
+	m_Timer.Start();
+
 	m_StageManager.Initialize();
 
 	m_Player->Initialize();
@@ -156,7 +158,7 @@ void CBattleScene::Initialize()
 	EffectControllerInstance.Reset();
 	ShotManagerInstance.Reset();
 	CameraControllerInstance.SetDefault();
-	TimeControllerInstance.Reset();
+	TimeScaleControllerInstance.Reset();
 
 }
 
@@ -175,12 +177,19 @@ void CBattleScene::Update()
 		}
 	}
 
+	m_Timer.Update();
+
+	m_ClearTermProvider->SetDivisionTime(m_Timer.GetTime());
+
+	//プレイヤー更新
 	m_Player->Update();
 
+	//敵更新
 	for (auto& enemy : *m_Enemys)
 	{
 		enemy->Update();
 	}
+
 	//ステージの区画をクリアしているなら
 	if (m_StageManager.GetCurrentDivision()->IsClear() && !m_GameClearFlg)
 	{
@@ -188,6 +197,8 @@ void CBattleScene::Update()
 		m_StageManager.NextPhase();
 		//敵を生成する
 		CreateEnemys();
+		//タイマーをリセット
+		m_Timer.Start();
 	}
 
 	m_StageManager.Update(m_ClearTermProvider);
@@ -221,7 +232,7 @@ void CBattleScene::Update()
 	//エフェクト操作更新
 	EffectControllerInstance.Update();
 	//時間操作更新
-	TimeControllerInstance.Update();
+	TimeScaleControllerInstance.Update();
 	//カメラ操作更新
 	CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
 
@@ -334,7 +345,7 @@ void CBattleScene::Render2DDebug()
 	CGraphicsUtilities::RenderString(0, 60, "%.2f", MOF_ToDegree(m_Player->GetRotate().y));
 	CGraphicsUtilities::RenderString(0, 90, "%d", m_Player->IsReverse());
 
-	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeControllerInstance.GetTimeScale());
+	CGraphicsUtilities::RenderString(400, 0, "%.2f", TimeScaleControllerInstance.GetTimeScale());
 	Vector2 pos;
 	g_pInput->GetMousePos(pos);
 	CGraphicsUtilities::RenderString(400, 30, "X:%.1f Y:%.1f", pos.x, pos.y);
@@ -369,7 +380,7 @@ void CBattleScene::Release()
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
 	IDManagerInstance.Release();
-	TimeControllerInstance.Release();
+	TimeScaleControllerInstance.Release();
 	CameraControllerInstance.Release();
 }
 

@@ -3,7 +3,7 @@
 #include "AttackCollider.h"
 #include "GameDefine.h"
 #include	"KnockBack.h"
-#include "TimeController.h"
+#include "TimeScaleController.h"
 
 namespace Sample
 {
@@ -67,7 +67,7 @@ namespace Sample
 			{
 				if (id.Time > 0.0f)
 				{
-					id.Time -= CUtilities::GetFrameSecond() * TimeControllerInstance.GetTimeScale(m_Type);
+					id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 			}
 		}

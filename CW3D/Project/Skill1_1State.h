@@ -64,7 +64,7 @@ namespace Sample {
 				{0.8f,0.0f},
 				{0.8f,1.0f},
 			};
-			TimeControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
+			TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
 
 
 			MyUtilities::ANIMV3_DATA animPos[] =

@@ -62,13 +62,13 @@ namespace Sample
 			invincible = 1.0f;
 			MyUtilities::ANIM_DATA anim[] =
 			{
-				{0.0f,TimeControllerInstance.GetTimeScale()},
-				{0.05f,TimeControllerInstance.GetTimeScale()},
+				{0.0f,TimeScaleControllerInstance.GetTimeScale()},
+				{0.05f,TimeScaleControllerInstance.GetTimeScale()},
 				{0.1f,0.0f},
 				{0.15f,0.0f},
-				{0.5f,TimeControllerInstance.GetTimeScale()}
+				{0.5f,TimeScaleControllerInstance.GetTimeScale()}
 			};
-			TimeControllerInstance.SetTimeScale(anim, _countof(anim));
+			TimeScaleControllerInstance.SetTimeScale(anim, _countof(anim));
 		}
 		else
 		{
