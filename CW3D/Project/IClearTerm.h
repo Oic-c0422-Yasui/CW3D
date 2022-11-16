@@ -5,11 +5,10 @@
 namespace Sample
 {
 	
-	class IClearTerm
+	class __declspec(novtable) IClearTerm
 	{
-	protected:
-		
 	public:
+
 		virtual bool IsClear(const ClearTermProviderPtr& provider) = 0;
 		virtual const std::string& GetDescription() = 0;
 		virtual ~IClearTerm() = default;

@@ -6,10 +6,8 @@
 
 namespace Sample
 {
-	class IClearTermBuilder
+	class __declspec(novtable) IClearTermBuilder
 	{
-	protected:
-
 	public:
 		virtual ~IClearTermBuilder() = default;
 

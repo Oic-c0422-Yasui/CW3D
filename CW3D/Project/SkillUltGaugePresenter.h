@@ -11,7 +11,7 @@ namespace Sample
 		static void Present(PlayerPtr& player, const SkillUltGaugeRenderPtr& view, int skillID)
 		{
 			player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
-			auto& skill = player->GetSkillT <CUltimateSkill>(skillID);
+			auto& skill = player->GetCastSkill <CUltimateSkill>(skillID);
 			skill->GetSkillUltSubject(skillID)->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
 
 			view->SetGauge(0);

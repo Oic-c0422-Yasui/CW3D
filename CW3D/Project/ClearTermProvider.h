@@ -8,16 +8,19 @@ namespace Sample
 	{
 	private:
 		float m_DivisionCurrentTime;
-		EnemyArrayPtr m_Enemys;
+		size_t m_EnemyCount;
+		size_t m_EnemyMaxCount;
 	public:
 		//TODO:ƒ{ƒX‚ğ’Ç‰Á‚·‚é
-		ClearTermProvider(const EnemyArrayPtr& enemys):
+		ClearTermProvider():
 			m_DivisionCurrentTime(0.0f),
-			m_Enemys(enemys)
+			m_EnemyCount(0),
+			m_EnemyMaxCount(0)
 		{
 			
 		}
-		~ClearTermProvider() {}
+		~ClearTermProvider() {
+		}
 
 		/**
 		 * @brief		Œ»İŠÔæ“¾
@@ -35,14 +38,31 @@ namespace Sample
 			m_DivisionCurrentTime = time;
 		}
 
+		void SetEnemyCount(size_t count) noexcept
+		{
+			m_EnemyCount = count;
+		}
+
+		void SetEnemyMaxCount(size_t count) noexcept
+		{
+			m_EnemyMaxCount = count;
+		}
+
 		/**
 		 * @brief		“Gæ“¾
 		 */
-		const EnemyArrayPtr& GetEnemys() const noexcept
+		size_t GetEnemyCount() const noexcept
 		{
-			return m_Enemys;
+			return m_EnemyCount;
 		}
 
+		/**
+		 * @brief		“Gæ“¾
+		 */
+		size_t GetEnemyMaxCount() const noexcept
+		{
+			return m_EnemyMaxCount;
+		}
 		
 	};
 

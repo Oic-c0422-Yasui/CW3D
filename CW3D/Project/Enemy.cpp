@@ -136,6 +136,7 @@ void CEnemy::Render()
 
 void CEnemy::RenderDebug()
 {
+	CGraphicsUtilities::RenderBox(GetCollider(), Vector4(0, 1, 0, 0.2f));
 }
 
 void CEnemy::Render2D()

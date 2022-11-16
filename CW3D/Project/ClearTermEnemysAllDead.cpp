@@ -7,12 +7,10 @@ Sample::ClearTermEnemysAllDead::ClearTermEnemysAllDead()
 
 bool Sample::ClearTermEnemysAllDead::IsClear(const Sample::ClearTermProviderPtr& provider)
 {
-    for (auto enemy : *provider->GetEnemys())
+    if (provider->GetEnemyCount() <= 0)
     {
-        if (enemy->IsShow())
-        {
-            return false;
-        }
+        auto count = provider->GetEnemyCount();
+        return true;
     }
-    return true;
+    return false;
 }

@@ -9,8 +9,10 @@ Sample::ClearTermEnduranceTime::ClearTermEnduranceTime(float time)
 bool Sample::ClearTermEnduranceTime::IsClear(const ClearTermProviderPtr& provider)
 {
 
-    if (provider->GetDivisionTime() <= m_EnduranceTime)
+    if (provider->GetDivisionTime() >= m_EnduranceTime)
     {
+        float t = provider->GetDivisionTime();
+
         return true;
     }
 

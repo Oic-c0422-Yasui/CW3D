@@ -37,7 +37,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		state["Type"].get_to(typeName);
 		state["HP"].get_to(hp);
 		state["UltGauge"].get_to(ultGauge);
-		state["ultGaugeBoostMag"].get_to(ultGaugeBoostMag);
+		state["UltGaugeBoostMag"].get_to(ultGaugeBoostMag);
 		state["ATK"].get_to(atk);
 		state["Mesh"].get_to(meshName);
 		auto& collider = state["Collider"];

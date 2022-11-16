@@ -79,16 +79,19 @@ public:
 	Sample::IObservable<int>& GetHPSubject() { return  m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
 	Sample::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
 
-	//スキル取得
 
-	
+	//スキル取得
 	const Sample::SKillPtr& GetSkill(int id) const noexcept {
 		return GetSkillController()->GetSkill(id);
 	}
+
+
 	template< typename T >
-	const std::shared_ptr<T> GetSkillT(int id) const noexcept {
+	const std::shared_ptr<T> GetCastSkill(int id) const noexcept {
 		auto& skill = GetSkillController()->GetSkill(id);
-		return  std::dynamic_pointer_cast<T>(skill);
+		auto& castSkill = std::dynamic_pointer_cast<T>(skill);
+		assert(castSkill);
+		return  castSkill;
 	}
 	//必殺技ゲージ
 	Sample::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }

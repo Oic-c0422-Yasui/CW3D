@@ -145,6 +145,9 @@
     <Filter Include="ヘッダー ファイル\Creator\Json">
       <UniqueIdentifier>{a66c26f7-806f-424f-9278-fd65845aa9da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\ClearTerm">
+      <UniqueIdentifier>{96235f23-8246-41be-81bf-d94829c35f5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -292,6 +295,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EnemyStatus.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHPRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnemyAllDeadRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -797,15 +812,6 @@
     <ClInclude Include="DropKickSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="IClearTerm.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnemysAllDead.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermProvider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="JsonClearTermCreator.h">
       <Filter>ヘッダー ファイル\Creator\Json</Filter>
     </ClInclude>
@@ -854,25 +860,46 @@
     <ClInclude Include="StageCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="ClearTermBuilderDictionary.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermBuilder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnemysAllDeadBuilder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnduranceTime.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnduranceTimeBuilder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>ヘッダー ファイル\Time</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStatus.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermBuilder.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermBuilderDictionary.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnduranceTime.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnduranceTimeBuilder.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnemysAllDead.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnemysAllDeadBuilder.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermProvider.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermRender.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="IClearTerm.h">
+      <Filter>ヘッダー ファイル\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnemyAllDeadRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermPresenter.h">
+      <Filter>ヘッダー ファイル\UI\Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

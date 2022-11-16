@@ -26,6 +26,8 @@
 
 #include	"Timer.h"
 
+#include	"EnemyManager.h"
+
 
 
 class CBattleScene : public CSceneBase
@@ -33,8 +35,9 @@ class CBattleScene : public CSceneBase
 private:
 	//プレイヤー
 	PlayerPtr m_Player;
-	//敵
-	Sample::EnemyArrayPtr m_Enemys;
+	//敵マネージャー
+	Sample::EnemyManager m_EnemyManager;
+
 	//ライト
 	CDirectionalLight m_Light;
 	//フォント

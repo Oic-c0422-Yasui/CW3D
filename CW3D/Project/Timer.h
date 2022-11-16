@@ -1,6 +1,9 @@
 #pragma once
 #include "Common.h"
 #include "TimeScaleController.h"
+#include "ReactiveParameter.h"
+#include "ParameterHandle.h"
+#include "Observer.h"
 
 namespace Sample
 {
@@ -8,7 +11,7 @@ namespace Sample
 	class CTimer
 	{
 	private:
-		float	m_CurrentTime;
+		Sample::ParameterHandle< Sample::ReactiveParameter<float>>	m_CurrentTime;
 		float	m_TargetTime;
 		bool	m_AchieveFlg;
 		bool	m_StopFlg;
@@ -49,12 +52,20 @@ namespace Sample
 		}
 
 		/**
+		 * @brief		現在時間のサブスクライブ
+		 */
+		Sample::IObservable<float>& GetTimeSubject()
+		{
+			return m_CurrentTime.Get();
+		}
+
+		/**
 		 * @brief		現在時間取得
 		 * @return		現在時間
 		 */
 		float GetTime() const noexcept
 		{
-			return m_CurrentTime;
+			return m_CurrentTime.Get();
 		}
 
 		/**

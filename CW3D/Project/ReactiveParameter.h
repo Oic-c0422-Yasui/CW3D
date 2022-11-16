@@ -57,6 +57,10 @@ namespace Sample {
 			this->Notify(value);
 			return *this;
 		}
+		void Set(const T& v) {
+			value = v;
+			this->Notify(value);
+		}
 
 		/** 算術演算子 +　-　* /　*/
 		T operator + (const ReactiveParameter< T >& v) const {
