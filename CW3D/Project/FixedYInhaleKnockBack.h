@@ -4,7 +4,8 @@
 
 namespace Sample
 {
-	class CFixedYInhaleKnockBack : public CKnockBack {
+	//Y軸のみ固定の吸引ノックバック
+	class CFixedYInhaleKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;
 	public:
@@ -19,5 +20,4 @@ namespace Sample
 			return n;
 		}
 	};
-	using FixedYInhaleKnockBackPtr = std::shared_ptr<CFixedYInhaleKnockBack>;
 }

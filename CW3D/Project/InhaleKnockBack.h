@@ -4,7 +4,8 @@
 
 namespace Sample
 {
-	class CInhaleKnockBack : public CKnockBack {
+	//吸引ノックバック
+	class CInhaleKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;
 	public:
@@ -18,5 +19,4 @@ namespace Sample
 			return n;
 		}
 	};
-	using InhaleKnockBackPtr = std::shared_ptr<CInhaleKnockBack>;
 }

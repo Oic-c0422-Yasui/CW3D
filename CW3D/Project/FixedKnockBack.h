@@ -4,7 +4,8 @@
 
 namespace Sample
 {
-	class CFixedKnockBack : public CKnockBack {
+	//固定ノックバック
+	class CFixedKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;
 	public:
@@ -17,5 +18,4 @@ namespace Sample
 			return actor->IsReverse() ? Vector3(-1, 1, 1) : Vector3(1, 1, 1);
 		}
 	};
-	using FixedKnockBackPtr = std::shared_ptr<CFixedKnockBack>;
 }
