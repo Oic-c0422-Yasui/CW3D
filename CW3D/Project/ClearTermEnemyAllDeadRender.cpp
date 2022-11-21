@@ -8,7 +8,7 @@ Sample::ClearTermEnemyAllDeadRender::ClearTermEnemyAllDeadRender()
 
 void Sample::ClearTermEnemyAllDeadRender::Initialize()
 {
-	m_Description = "“G‚Ì‚¹‚ñ–Å";
+	m_Description = "“G‚ð‚·‚×‚Ä“|‚¹";
 }
 
 void Sample::ClearTermEnemyAllDeadRender::Render()

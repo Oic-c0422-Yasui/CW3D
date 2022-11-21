@@ -103,9 +103,10 @@
     <ClCompile Include="ClearTermBuilderDictionary.cpp" />
     <ClCompile Include="ClearTermEnduranceTime.cpp" />
     <ClCompile Include="ClearTermEnduranceTimeBuilder.cpp" />
+    <ClCompile Include="ClearTermEnduranceTimeRender.cpp" />
     <ClCompile Include="ClearTermEnemysAllDeadBuilder.cpp" />
     <ClCompile Include="ClearTermEnemyAllDeadRender.cpp" />
-    <ClCompile Include="ClearTermRender.cpp" />
+    <ClCompile Include="ClearTermRenderCreator.cpp" />
     <ClCompile Include="Division.cpp" />
     <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="ClearTermEnemysAllDead.cpp" />
@@ -174,10 +175,12 @@
     <ClInclude Include="ClearTermBuilderDictionary.h" />
     <ClInclude Include="ClearTermEnduranceTime.h" />
     <ClInclude Include="ClearTermEnduranceTimeBuilder.h" />
+    <ClInclude Include="ClearTermEnduranceTimeRender.h" />
     <ClInclude Include="ClearTermEnemysAllDeadBuilder.h" />
     <ClInclude Include="ClearTermEnemyAllDeadRender.h" />
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermRender.h" />
+    <ClInclude Include="ClearTermRenderCreator.h" />
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyBuilderDictionary.h" />
     <ClInclude Include="EnemyBuildParameter.h" />

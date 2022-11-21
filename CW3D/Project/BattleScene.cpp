@@ -187,10 +187,6 @@ void CBattleScene::Update()
 	m_Player->Update();
 
 	//敵更新
-	/*for (auto& enemy : *m_Enemys)
-	{
-		enemy->Update();
-	}*/
 	m_EnemyManager.Update();
 
 	//ステージの区画をクリアしているなら
@@ -205,7 +201,6 @@ void CBattleScene::Update()
 	}
 
 	m_Timer.Update();
-	//m_ClearTermProvider->SetDivisionTime(m_Timer.GetTime());
 
 	m_StageManager.Update(m_ClearTermProvider);
 
@@ -254,10 +249,7 @@ void CBattleScene::Render()
 {
 	m_StageManager.Render();
 	m_Player->Render();
-	/*for (auto& enemy : *m_Enemys)
-	{
-		enemy->Render();
-	}*/
+
 	m_EnemyManager.Render();
 	ShotManagerInstance.Render();
 	EffectManagerInstance.Render();
@@ -422,33 +414,6 @@ void CBattleScene::Collision()
 			CCollision::CollisionObj(enemy, obj);
 		}
 	}
-	//for (auto& enemy : *m_Enemys)
-	//{
-	//	//敵とプレイヤー
-	//	CCollision::CollisionObj(m_Player, enemy);
-
-	//	if (!enemy->IsInvincible())
-	//	{
-	//		//for (int j = i + 1; j < m_Enemys.size(); j++)
-	//		//{
-	//		//	//敵と敵
-	//		//	CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-	//		//}
-	//		//敵と弾
-	//		for (int j = 0; j < ShotManagerInstance.GetShotSize(); j++)
-	//		{
-	//			ShotPtr shot = ShotManagerInstance.GetShot(j);
-	//			CCollision::CollisionObj(shot, enemy);
-	//		}
-	//	}
-
-	//	//敵とオブジェクト
-	//	for (int j = 0; j < m_StageManager.GetCurrentDivision()->GetObjCount(); j++)
-	//	{
-	//		ObjectPtr obj = m_StageManager.GetCurrentDivision()->GetObj(j);
-	//		CCollision::CollisionObj(enemy, obj);
-	//	}
-	//}
 
 	//プレイヤーとオブジェクトの当たり判定
 	for (int i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)

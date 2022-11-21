@@ -24,6 +24,8 @@ namespace Sample
         }
     };
 
+    using ClearTermEnemyAllDeadRenderPtr = std::shared_ptr<ClearTermEnemyAllDeadRender>;
+
 }
 
 

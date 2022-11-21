@@ -297,9 +297,6 @@
     <ClCompile Include="EnemyStatus.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyHPRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -307,6 +304,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermRenderCreator.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnduranceTimeRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -901,6 +904,12 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnduranceTimeRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermRenderCreator.h">
+      <Filter>ヘッダー ファイル\UI\Creator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace Sample
 	public:
 		ClearTermEnemysAllDead();
 		bool IsClear(const ClearTermProviderPtr& provider) override;
-		const std::string& GetDescription() override { return "“G‚ÌŸr–Å"; }
+		const std::string& GetType() override { return "AllDead"; }
 	};
 }
 

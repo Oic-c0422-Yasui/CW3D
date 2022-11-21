@@ -25,7 +25,6 @@ namespace Sample
 	private:
 		DIVISION_DATA m_Data;
 		bool m_ClearFlg;
-		ClearTermProviderPtr m_ClearTermProvider;
 	public:
 		CDivision(DIVISION_DATA data);
 		~CDivision();

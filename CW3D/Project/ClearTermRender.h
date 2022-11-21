@@ -9,8 +9,8 @@ namespace Sample
 		char* m_Description;
 
 	public:
-		ClearTermRender()
-			:m_Description()
+		ClearTermRender(char* description)
+			:m_Description(description)
 		{
 		}
 
