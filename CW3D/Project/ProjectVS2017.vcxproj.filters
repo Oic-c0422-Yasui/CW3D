@@ -148,6 +148,30 @@
     <Filter Include="ヘッダー ファイル\ClearTerm">
       <UniqueIdentifier>{96235f23-8246-41be-81bf-d94829c35f5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\ClearTerm">
+      <UniqueIdentifier>{f2c6705a-f569-4403-b951-d60625e964d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ClearTerm">
+      <UniqueIdentifier>{49a5ebd6-0848-4e56-9ce1-bbc47681c4df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Render\ClearTerm">
+      <UniqueIdentifier>{27a9ff07-ec50-4dc6-852c-82eabee421f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy">
+      <UniqueIdentifier>{1f969d68-f21e-4c96-a59d-bbfe7095dabe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Zombie">
+      <UniqueIdentifier>{dd43fcf0-62e2-43f4-975c-ae8af8f4c905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Zombie\Creator">
+      <UniqueIdentifier>{7a8e0a0e-c9e5-4485-bfdb-e7e897a34bcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Builder">
+      <UniqueIdentifier>{ebca2723-60be-4e34-92fe-9fd7b0146fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Player">
+      <UniqueIdentifier>{b1dd1dd3-fc7d-4782-ba42-f5587431cd91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -234,9 +258,6 @@
     <ClCompile Include="Shot.cpp">
       <Filter>ソース ファイル\Shot</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermEnemysAllDead.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="JsonDivisionCreator.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
     </ClCompile>
@@ -276,18 +297,6 @@
     <ClCompile Include="StageCreator.cpp">
       <Filter>ソース ファイル\Creator</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermBuilderDictionary.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ClearTermEnemysAllDeadBuilder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ClearTermEnduranceTime.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ClearTermEnduranceTimeBuilder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Division.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -300,17 +309,41 @@
     <ClCompile Include="EnemyHPRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermEnemyAllDeadRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermRenderCreator.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp">
+      <Filter>ソース ファイル\UI\ClearTerm</Filter>
     </ClCompile>
-    <ClCompile Include="ClearTermEnduranceTimeRender.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="ClearTermEnduranceTimeText.cpp">
+      <Filter>ソース ファイル\UI\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnemyAllDeadText.cpp">
+      <Filter>ソース ファイル\UI\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermBuilderDictionary.cpp">
+      <Filter>ソース ファイル\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnduranceTime.cpp">
+      <Filter>ソース ファイル\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnduranceTimeBuilder.cpp">
+      <Filter>ソース ファイル\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnemysAllDead.cpp">
+      <Filter>ソース ファイル\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermEnemysAllDeadBuilder.cpp">
+      <Filter>ソース ファイル\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermText.cpp">
+      <Filter>ソース ファイル\UI\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermRenderCreator.cpp">
+      <Filter>ソース ファイル\UI\ClearTerm</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateWindow.cpp">
+      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,12 +442,6 @@
     </ClInclude>
     <ClInclude Include="BattleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStatus.h">
       <Filter>ヘッダー ファイル\Character</Filter>
@@ -692,18 +719,6 @@
     <ClInclude Include="IActionCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerActionCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombieActionCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombieStateCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="EscapeAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
@@ -767,12 +782,6 @@
     <ClInclude Include="SkillUltGaugeRender.h">
       <Filter>ヘッダー ファイル\UI\Render\Skill\Ultimate</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerSkillCreater.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerParameterCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="AttackStateAI.h">
       <Filter>ヘッダー ファイル\AI</Filter>
     </ClInclude>
@@ -787,9 +796,6 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>ヘッダー ファイル\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="DivisionObject.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CollisionObjectPlayer.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
@@ -827,34 +833,10 @@
     <ClInclude Include="IParameterCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="ZombieParameterCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="ICharacterAICreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="ZombieAICreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBuilder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBuildParameter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBuilderDictionary.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombieBuilder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="JsonStageLoader.h">
-      <Filter>ヘッダー ファイル\Creator\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonEnemyBuildParameterLoader.h">
-      <Filter>ヘッダー ファイル\Creator\Json</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonEnemyStatusLoader.h">
       <Filter>ヘッダー ファイル\Creator\Json</Filter>
     </ClInclude>
     <ClInclude Include="JsonMeshResourceCreator.h">
@@ -865,9 +847,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>ヘッダー ファイル\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyStatus.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ClearTermBuilder.h">
       <Filter>ヘッダー ファイル\ClearTerm</Filter>
@@ -890,26 +869,86 @@
     <ClInclude Include="ClearTermProvider.h">
       <Filter>ヘッダー ファイル\ClearTerm</Filter>
     </ClInclude>
-    <ClInclude Include="ClearTermRender.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="IClearTerm.h">
       <Filter>ヘッダー ファイル\ClearTerm</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnemyAllDeadRender.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ClearTermPresenter.h">
       <Filter>ヘッダー ファイル\UI\Presenter</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearTermEnduranceTimeRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ClearTermRenderCreator.h">
       <Filter>ヘッダー ファイル\UI\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermAllDeadAndEnduranceText.h">
+      <Filter>ヘッダー ファイル\UI\Render\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnduranceTimeText.h">
+      <Filter>ヘッダー ファイル\UI\Render\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermEnemyAllDeadText.h">
+      <Filter>ヘッダー ファイル\UI\Render\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateWindow.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermText.h">
+      <Filter>ヘッダー ファイル\UI\Render\ClearTerm</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStatus.h">
+      <Filter>ヘッダー ファイル\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DivisionObject.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>ヘッダー ファイル\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieActionCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieAICreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieParameterCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieStateCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuilder.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuilderDictionary.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuildParameter.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieBuilder.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonEnemyBuildParameterLoader.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonEnemyStatusLoader.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActionCreator.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSkillCreater.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerParameterCreator.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateCreator.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

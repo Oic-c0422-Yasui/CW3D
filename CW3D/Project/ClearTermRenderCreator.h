@@ -8,28 +8,37 @@ namespace Sample
 	{
 	public:
 
-		static ClearTermRenderPtr Create(EnemyManager& manager,CTimer& timer,ClearTermArray& clearTermArray)
+		static ClearTermTextPtr Create(EnemyManager& manager,CTimer& timer,ClearTermArray& clearTermArray)
 		{
-			std::vector<ClearTermRenderPtr> tmpRenderers;
+			std::stringstream sstream;
 
 			for (auto& clearTerm : clearTermArray)
 			{
-				if (clearTerm->GetType() == "AllDead")
-				{
-					ClearTermEnemyAllDeadRenderPtr renderer = std::make_shared<ClearTermEnemyAllDeadRender>();
-					ClearTermPresenter::Present(manager, renderer);
-					tmpRenderers.push_back(renderer);
-				}
-				if (clearTerm->GetType() == "EnduranceTime")
-				{
-					ClearTermEnduranceTimeRenderPtr renderer = std::make_shared<ClearTermEnduranceTimeRender>();
-					ClearTermPresenter::Present(timer, renderer);
-					tmpRenderers.push_back(renderer);
-				}
+				sstream << clearTerm->GetType();
 			}
 
+			std::string termType = sstream.str();
 
-			return ClearTermRenderPtr();
+			if (termType == "AllDead")
+			{
+				ClearTermEnemyAllDeadTextPtr allDead = std::make_shared<ClearTermEnemyAllDeadText>();
+				ClearTermPresenter::Present(manager, allDead);
+				return allDead;
+			}
+			else if (termType == "EnduranceTime")
+			{
+				ClearTermEnduranceTimeTextPtr renderer = std::make_shared<ClearTermEnduranceTimeText>();
+				ClearTermPresenter::Present(timer, renderer);
+				return renderer;
+			}
+			else if (termType == "AllDead_EnduranceTime")
+			{
+				ClearTermAllDeadAndEnduranceTextPtr renderer = std::make_shared<ClearTermAllDeadAndEnduranceText>();
+				ClearTermPresenter::Present(manager,timer, renderer);
+				return renderer;
+			}
+
+			return ClearTermTextPtr();
 		}
 	};
 }
