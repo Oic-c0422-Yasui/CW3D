@@ -50,9 +50,9 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 	std::vector<std::string> typeNames;
 	for (auto& division : *divisionArray)
 	{
-		for (auto& enemyParam : division->GetEnemysParam())
+		for (auto& enemyParam : *division->GetEnemysParam())
 		{
-			auto& type = enemyParam.GetParam().m_Type;
+			auto& type = enemyParam->GetParam().m_Type;
 
 			if (typeNames.size() <= 0)
 			{
@@ -76,22 +76,31 @@ bool Sample::JsonStageLoader::Load(nlohmann::json& os)
 	//敵で使用するメッシュをロード
 	for (auto& type : typeNames)
 	{
+		//敵のタイプが存在しないなら次の配列へ
 		if (!enemyStatusDictionary.IsContain(type))
 		{
 			continue;
 		}
+
 		//敵の辞書を取得
 		auto& dictionary = enemyStatusDictionary.Get(type);
+		//メッシュがすでに登録されているなら次の配列へ
+		if (ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", dictionary->m_MeshName))
+		{
+			continue;
+		}
+
 		//メッシュを作成
 		tempMesh = std::make_shared<CMeshContainer>();
 		//メッシュの名前をChar*へ変換
-		const char* str = dictionary->m_MeshName.c_str();
-		if (tempMesh->Load(str) != MOFMODEL_RESULT_SUCCEEDED)
+		const char* meshName = dictionary->m_MeshName.c_str();
+		//メッシュのロード
+		if (tempMesh->Load(meshName) != MOFMODEL_RESULT_SUCCEEDED)
 		{
 			return false;
 		}
-		//リソースを追加
-		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", type, tempMesh);
+		//メッシュをリソースに追加
+		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", dictionary->m_MeshName, tempMesh);
 	}
 
 	return true;

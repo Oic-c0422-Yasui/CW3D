@@ -4,7 +4,7 @@
 
 
 CPlayer::CPlayer()
-	: Sample::CActorObject()
+	: Sample::ActorObject()
 	, m_pInput()
 
 {
@@ -47,7 +47,7 @@ bool CPlayer::Load()
 
 void CPlayer::Initialize()
 {
-	CActorObject::Initialize();
+	ActorObject::Initialize();
 	m_Actor->SetPosition(Vector3(-30, 0,0));
 	m_Actor->SetRotate(Vector3(0, 0, 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
@@ -92,7 +92,7 @@ void CPlayer::Update()
 			m_ShowFlg = false;
 		}
 	}
-	Sample::CActorObject::Update();
+	Sample::ActorObject::Update();
 }
 
 void CPlayer::Render()
@@ -101,7 +101,7 @@ void CPlayer::Render()
 	{
 		return;
 	}
-	Sample::CActorObject::Render();
+	Sample::ActorObject::Render();
 }
 
 void CPlayer::RenderDebug2D()
@@ -111,7 +111,7 @@ void CPlayer::RenderDebug2D()
 
 void CPlayer::Release()
 {
-	Sample::CActorObject::Release();
+	Sample::ActorObject::Release();
 }
 
 void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level)

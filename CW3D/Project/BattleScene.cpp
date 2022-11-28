@@ -23,6 +23,7 @@ CBattleScene::CBattleScene()
 	, m_EnemyManager()
 	, m_GameClearFlg(false)
 	, m_GameOverFlg(false)
+	, m_EnemySpawner()
 {
 }
 
@@ -51,8 +52,6 @@ bool CBattleScene::Load()
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
-
-
 
 
 	//メッシュ読み込み
@@ -114,7 +113,6 @@ bool CBattleScene::Load()
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 
 
-
 	//カメラ初期化
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
@@ -143,7 +141,6 @@ void CBattleScene::Initialize()
 	auto& provider = m_ClearTermProvider;
 	m_ClearTermProvider = std::make_shared<ClearTermProvider>();
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyCount(count); });
-	m_EnemyManager.GetEnemyMaxCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyMaxCount(count); });
 	
 	//敵生成
 	CreateEnemys();
@@ -241,17 +238,27 @@ void CBattleScene::Update()
 	ShotManagerInstance.Update();
 	//ショット削除処理
 	ShotManagerInstance.Delete();
+	//エフェクト削除処理
 	EffectControllerInstance.Delete();
+	//アクター削除処理
 	ActorObjectManagerInstance.Delete();
 }
 
 void CBattleScene::Render()
 {
+	//ステージ描画
 	m_StageManager.Render();
+	
+	//プレイヤー描画
 	m_Player->Render();
 
+	//敵描画
 	m_EnemyManager.Render();
+
+	//ショット描画
 	ShotManagerInstance.Render();
+
+	//エフェクト描画
 	EffectManagerInstance.Render();
 
 }
@@ -317,7 +324,6 @@ void CBattleScene::Render2D()
 	//プレイヤーのUI描画
 	m_PlayerUIRender->Render();
 
-
 	//リトライ描画
 	if (m_GameClearFlg || m_GameOverFlg)
 	{
@@ -349,33 +355,51 @@ void CBattleScene::Render2DDebug()
 
 void CBattleScene::Release()
 {
+	//アクターマネージャー解放
 	ActorObjectManagerInstance.Release();
+	//アクターID解放
+	IDManagerInstance.Release();
+
+
+	//ステージ解放
 	m_StageManager.Release();
+
+	//プレイヤー解放
 	m_Player->Release();
 	m_Player.reset();
-
 	ServiceLocator<CPlayer>::GetInstance().Release();
+	m_PlayerUIRender.reset();
 
+	//敵解放
 	m_EnemyManager.Release();
+	m_EnemySpawner.clear();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
 	{
 		m_EnemysHPRender[i].reset();
 	}
 	m_EnemysHPRender.clear();
-	m_PlayerUIRender.reset();
 	
-
-	InputManagerInstance.Release();
+	//メッシュ解放
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	Sample::ResourcePtrManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourcePtrManager<CSprite3D>::GetInstance().Release();
 	Sample::ResourcePtrManager<CTexture>::GetInstance().Release();
 	Sample::ResourcePtrManager<CFont>::GetInstance().Release();
+
+	//インプット解放(仮)
+	InputManagerInstance.Release();
+
+	//ショット解放
 	ShotManagerInstance.Release();
+
+	//エフェクト解放
 	EffectManagerInstance.Release();
 	EffectControllerInstance.Release();
-	IDManagerInstance.Release();
+
+	//タイムスケール解放
 	TimeScaleControllerInstance.Release();
+
+	//カメラ解放
 	CameraControllerInstance.Release();
 }
 
@@ -434,24 +458,40 @@ void CBattleScene::Collision()
 
 void CBattleScene::CreateEnemys()
 {
+	//配列初期化
 	m_EnemyManager.ClearEnemyArray();
 	m_EnemysHPRender.clear();
+	m_EnemySpawner.clear();
 
 	//現在の区画から敵の情報を受け取る
 	auto division = m_StageManager.GetCurrentDivision();
 	auto enemysParam = division->GetEnemysParam();
 	int enemyCount = division->GetEnemyCount();
 
+	//敵の数を設定
+	m_ClearTermProvider->SetEnemyMaxCount(enemyCount);
+
 	//敵のビルダーの辞書
 	EnemyBuilderDictionary dictionary;
+
+	//スポーン条件
+	Spawner::EnemySpawnConditionCountLimitPtr spawnCondition = std::make_shared<Spawner::EnemySpawnConditionCountLimit>(enemyCount);
+	m_EnemyManager.GetEnemyCountSubject().Subscribe([spawnCondition](size_t count) {spawnCondition->SetCount(count); });
+
+	//敵スポナーの作成
+	/*m_EnemySpawner.push_back(std::make_shared<Spawner::EnemySpawner>(
+		Spawner::SpawnConditionArray{ spawnCondition },
+		std::make_shared<Spawner::SpawnCycleFixedRange>(10),
+		std::make_shared<Spawner::EnemySpawnParameter>(enemysParam),
+		m_EnemyManager.));*/
 
 	for (int i = 0; i < enemyCount; i++)
 	{
 		//敵のタイプに合ったビルダーを取得
-		auto builder = dictionary.Get(enemysParam[i].GetParam().m_Type);
+		auto builder = dictionary.Get(enemysParam->at(i)->GetParam().m_Type);
 
 		//敵を追加する
-		m_EnemyManager.AddEnemy(builder->Create(enemysParam[i]));
+		m_EnemyManager.AddEnemy(builder->Create(enemysParam->at(i)));
 
 		//敵をマネージャーに登録
 		ActorObjectManagerInstance.Add(m_EnemyManager.GetEnemy(i));
@@ -460,4 +500,5 @@ void CBattleScene::CreateEnemys()
 		CHPPresenter::Present(m_EnemyManager.GetEnemy(i), m_EnemysHPRender[i]);
 		m_EnemysHPRender[i]->Initialize();
 	}
+
 }

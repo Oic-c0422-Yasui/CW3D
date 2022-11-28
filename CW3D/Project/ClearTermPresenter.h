@@ -16,7 +16,6 @@ namespace Sample
 		static void Present(EnemyManager& enemy,const ClearTermEnemyAllDeadTextPtr& view)
 		{
 			enemy.GetEnemyCountSubject().Subscribe([view](size_t count) {view->SetEnemyCount(count); });
-			enemy.GetEnemyMaxCountSubject().Subscribe([view](size_t count) {view->SetEnemyMaxCount(count); });
 		}
 
 		static void Present(CTimer& timer, const ClearTermEnduranceTimeTextPtr& view)

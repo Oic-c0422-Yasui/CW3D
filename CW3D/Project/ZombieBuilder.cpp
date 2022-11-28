@@ -17,7 +17,7 @@ Sample::ZombieBuilder::ZombieBuilder()
 
 
 
-EnemyPtr Sample::ZombieBuilder::Create(const EnemyBuildParameter& param)
+EnemyPtr Sample::ZombieBuilder::Create(const EnemyBuildParameterPtr& param)
 {
     
     EnemyPtr enemy = std::make_shared<CEnemy>();

@@ -15,7 +15,7 @@ namespace Sample
 		struct DIVISION_DATA
 		{
 			ClearTermArray	ClearTerms;
-			std::vector<EnemyBuildParameter> EnemysParam;
+			EnemyBuildParameterArrayPtr EnemysParam;
 			int EnemyCount;
 			std::vector<ObjectPtr> Objects;
 			int ObjectCount;
@@ -34,7 +34,7 @@ namespace Sample
 		void Update(const ClearTermProviderPtr& provider);
 		void Release();
 
-		const std::vector<EnemyBuildParameter>& GetEnemysParam()
+		const EnemyBuildParameterArrayPtr& GetEnemysParam()
 		{
 			return m_Data.EnemysParam;
 		}

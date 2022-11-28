@@ -12,7 +12,7 @@
 #include	"PlayerParameterCreator.h"
 
 
-class CPlayer : public Sample::CActorObject
+class CPlayer : public Sample::ActorObject
 {
 private:
 

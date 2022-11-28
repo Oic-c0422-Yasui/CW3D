@@ -2,21 +2,21 @@
 
 using namespace Sample;
 
-std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
+EnemyBuildParameterArrayPtr Sample::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
 	{
-		return std::vector<EnemyBuildParameter>();
+		return EnemyBuildParameterArrayPtr();
 	}
 	nlohmann::json os = nlohmann::json::parse(ifs);
 	return Load(os, statusDictionary);
 }
 
-std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
+EnemyBuildParameterArrayPtr Sample::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
 {
 
-	std::vector<EnemyBuildParameter> parameter;
+	EnemyBuildParameterArrayPtr parameter = std::make_shared<EnemyBuildParameterArray>();
 
 	for (auto& enemy : os)
 	{
@@ -33,7 +33,7 @@ std::vector<EnemyBuildParameter> Sample::JsonEnemyBuildParameterLoader::Load(nlo
 		
 		EnemyStatusPtr status = statusDictionary.Get(type);
 
-		parameter.push_back(EnemyBuildParameter(param,status));
+		parameter->push_back(std::make_shared<EnemyBuildParameter>(param,status));
 	}
 
 

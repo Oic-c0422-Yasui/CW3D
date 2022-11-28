@@ -3,7 +3,7 @@
 using namespace Sample;
 
 
-CActorObject::CActorObject()
+ActorObject::ActorObject()
 	: m_Actor(std::make_shared<Sample::Actor>())
 	, m_StateMachine(std::make_shared<Sample::StateMachine>())
 	, m_Motion()
@@ -17,11 +17,11 @@ CActorObject::CActorObject()
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
 }
 
-CActorObject::~CActorObject()
+ActorObject::~ActorObject()
 {
 }
 
-void Sample::CActorObject::Initialize()
+void Sample::ActorObject::Initialize()
 {
 	m_ShowFlg = true;
 	m_DeadFlg = false;
@@ -30,7 +30,7 @@ void Sample::CActorObject::Initialize()
 	m_StateMachine->SetUp();
 }
 
-void CActorObject::Update()
+void ActorObject::Update()
 {
 	if (!m_ShowFlg)
 	{
@@ -56,7 +56,7 @@ void CActorObject::Update()
 	m_Motion->AddTimer(CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Actor->GetType()));
 }
 
-void CActorObject::Render()
+void ActorObject::Render()
 {
 	if (!m_ShowFlg)
 	{
@@ -66,13 +66,13 @@ void CActorObject::Render()
 	m_pMesh->Render(m_Motion);
 }
 
-void CActorObject::Release()
+void ActorObject::Release()
 {
 	MOF_SAFE_DELETE(m_Motion);
 	m_pMesh.reset();
 }
 
-void Sample::CActorObject::AddUltGauge(float gauge)
+void Sample::ActorObject::AddUltGauge(float gauge)
 {
 	auto& ult = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	ult += gauge;

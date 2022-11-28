@@ -6,7 +6,7 @@ using namespace Sample;
 
 CEnemy::CEnemy()
 
-	: Sample::CActorObject()
+	: Sample::ActorObject()
 	, m_Input()
 	, m_DefaultPos(0,0,0)
 {
@@ -18,23 +18,23 @@ CEnemy::~CEnemy()
 	Release();
 }
 
-bool CEnemy::Load(const EnemyBuildParameter& eneParam,
+bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	const ActionCreatorPtr& actionCreator,
 	const StateCreatorPtr& stateCreator,
 	const ParameterCreatorPtr& paramCreator,
 	const CharacterAICreatorPtr& aiCreator)
 {
 	//初期位置
-	m_DefaultPos = eneParam.GetParam().m_Pos;
+	m_DefaultPos = eneParam->GetParam().m_Pos;
 
 	//インプットキー
 	auto& stateInput = std::make_shared<Sample::StateInput>();
 	m_Input = stateInput;
 
-	auto& enemy = eneParam.GetParam().m_Type;
+	auto& enemy = eneParam->GetParam().m_Type;
 
 	//メッシュ読み込み
-	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam.GetParam().m_Type);
+	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->m_MeshName);
 	if (m_pMesh == nullptr)
 	{
 		return false;
@@ -54,7 +54,7 @@ bool CEnemy::Load(const EnemyBuildParameter& eneParam,
 	paramCreator->Create(param);
 
 	//パラメータ設定
-	SettingParameter(param, eneParam.GetStatus());
+	SettingParameter(param, eneParam->GetStatus());
 
 
 	m_Position = m_DefaultPos;
@@ -115,7 +115,7 @@ void CEnemy::Update()
 		}
 	}
 	m_AI->Update();
-	Sample::CActorObject::Update();
+	Sample::ActorObject::Update();
 
 	Vector3 pos = m_Actor->GetPosition();
 
@@ -155,10 +155,10 @@ void CEnemy::Render2DDebug()
 
 void CEnemy::Release()
 {
-	Sample::CActorObject::Release();
+	Sample::ActorObject::Release();
 }
 
-void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE level)
+void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
 {
 	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
@@ -179,7 +179,7 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 	}
 	m_HP = hp;
 
-	if (m_Actor->GetArmorLevel() <= level)
+	if (m_Actor->GetArmorLevel() <= armorLevel)
 	{
 		knockBack = direction * power;
 

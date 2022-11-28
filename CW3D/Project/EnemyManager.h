@@ -8,7 +8,7 @@ namespace Sample
 	private:
 		EnemyArrayPtr m_Enemys;
 		Sample::ReactiveParameter<size_t> m_EnemyCount;
-		Sample::ReactiveParameter<size_t> m_EnemyMaxCount;
+		size_t m_EnemyMaxCount;
 	public:
 		EnemyManager();
 		~EnemyManager();
@@ -19,10 +19,7 @@ namespace Sample
 		void RenderDebug();
 		void Release();
 
-		Sample::IObservable<size_t>& GetEnemyMaxCountSubject()
-		{
-			return m_EnemyMaxCount;
-		}
+		
 		size_t GetMaxEnemyCount() const noexcept
 		{
 			return m_EnemyMaxCount;
@@ -54,7 +51,7 @@ namespace Sample
 		{
 			m_Enemys->clear();
 			m_EnemyCount.Set(0);
-			m_EnemyMaxCount.Set(0);
+			m_EnemyMaxCount = 0;
 		}
 	};
 }

@@ -27,7 +27,7 @@ namespace Sample
 		{
 		}
 		virtual ~EnemyBuilder() = default;
-		virtual EnemyPtr Create(const EnemyBuildParameter& param) = 0;
+		virtual EnemyPtr Create(const EnemyBuildParameterPtr& param) = 0;
 	};
 
 	using EnemyBuilderPtr = std::shared_ptr<EnemyBuilder>;

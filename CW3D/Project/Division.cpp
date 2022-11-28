@@ -42,4 +42,5 @@ void Sample::CDivision::Release()
 {
 	m_Data.Objects.clear();
 	m_Data.ClearTerms.clear();
+	m_Data.EnemysParam.reset();
 }

@@ -14,7 +14,7 @@
 
 namespace Sample
 {
-	class CEnemy : public CActorObject
+	class CEnemy : public ActorObject
 	{
 	protected:
 		InputPtr m_Input;
@@ -35,7 +35,7 @@ namespace Sample
 	public:
 		CEnemy();
 		~CEnemy() override;
-		bool Load(const EnemyBuildParameter& eneParam,
+		bool Load(const EnemyBuildParameterPtr& eneParam,
 			const ActionCreatorPtr& actionCreator,
 			const StateCreatorPtr& stateCreator,
 			const ParameterCreatorPtr& paramCreator,
@@ -48,7 +48,7 @@ namespace Sample
 		void Render2DDebug();
 		void Release() override;
 
-		void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
+		void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorLevel);
 
 		bool IsInvincible() const;
 

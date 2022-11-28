@@ -34,6 +34,10 @@ namespace Sample
 		}
 
 	};
+	using EnemyBuildParameterPtr = std::shared_ptr<EnemyBuildParameter>;
+	using EnemyBuildParameterArray = std::vector<EnemyBuildParameterPtr>;
+	using EnemyBuildParameterArrayPtr = std::shared_ptr<EnemyBuildParameterArray>;
+
 
 }
 

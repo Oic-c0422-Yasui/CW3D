@@ -8,7 +8,7 @@ namespace Sample
     public:
 		ZombieBuilder();
 
-        EnemyPtr Create(const EnemyBuildParameter& param) override;
+        EnemyPtr Create(const EnemyBuildParameterPtr& param) override;
     };
 }
 

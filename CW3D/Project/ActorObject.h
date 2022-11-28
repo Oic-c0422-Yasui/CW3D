@@ -6,7 +6,7 @@
 namespace Sample
 {
 
-	class CActorObject
+	class ActorObject
 	{
 	protected:
 		std::shared_ptr<CMeshContainer>		m_pMesh;
@@ -23,8 +23,8 @@ namespace Sample
 		float								m_UltBoostMag;	//必殺技ゲージのブースト倍率
 
 	public:
-		CActorObject();
-		virtual ~CActorObject();
+		ActorObject();
+		virtual ~ActorObject();
 		virtual void Initialize();
 		virtual void Update();
 		virtual void Render();
@@ -114,8 +114,8 @@ namespace Sample
 
 	};
 	//ポインタ置き換え
-	using ActorObjectPtr = std::shared_ptr<CActorObject>;
-	using ActorObjectWeakPtr = std::weak_ptr<CActorObject>;
+	using ActorObjectPtr = std::shared_ptr<ActorObject>;
+	using ActorObjectWeakPtr = std::weak_ptr<ActorObject>;
 	using ActorObjectList = std::list<ActorObjectPtr>;
 }
 

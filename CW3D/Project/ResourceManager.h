@@ -4,7 +4,11 @@
 
 namespace Sample
 {
-	//なにかの型（入れるまで決まっていない）
+	//template<typename T>なにかの型（入れるまで決まっていない）
+
+	/*
+	* @brief	リソースを管理する(ポインター)
+	*/
 	template<typename T>
 	class ResourcePtrManager : public Singleton<ResourcePtrManager<T>>
 	{
@@ -28,18 +32,31 @@ namespace Sample
 		}
 	public:
 
-		//リソースを追加する
+		/*
+		* @brief	リソースを追加する
+		* @param	key			リソースの名前
+		* @param	resource	リソース
+		*/
 		void AddResource(const std::string& key, const ResourcePtr& resource)
 		{
 			m_ResourcesMap["default"][key] = resource;
 		}
-		//リソースを追加する＆タグ付け
+
+		/*
+		* @brief	リソースを追加する＆タグ付け
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		* @param	resource	リソース
+		*/
 		void AddResource(const std::string& tag, const std::string& key, const ResourcePtr& resource)
 		{
 			m_ResourcesMap[tag][key] = resource;
 		}
 
-		//リソースを削除する
+		/*
+		* @brief	リソースを削除する
+		* @param	key			リソースの名前
+		*/
 		bool DeleteResource(const std::string& key)
 		{
 			auto& map = m_ResourcesMap["default"];
@@ -52,7 +69,11 @@ namespace Sample
 			return false;
 		}
 
-		//タグ内のリソースを削除する
+		/*
+		* @brief	タグ内のリソースを削除する
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		*/
 		bool DeleteResouce(const std::string& tag, const std::string& key)
 		{
 			auto& map = m_ResourcesMap[tag];
@@ -65,7 +86,10 @@ namespace Sample
 			return false;
 		}
 
-		//リソースを取得する
+		/*
+		* @brief	リソースを取得する
+		* @param	key			リソースの名前
+		*/
 		ResourcePtr& GetResource(const std::string& key)
 		{
 			for (auto& map : m_ResourcesMap)
@@ -78,7 +102,12 @@ namespace Sample
 			}
 			return nullptr;
 		}
-		//タグ内のリソースを取得する
+
+		/*
+		* @brief	タグ内のリソースを取得する
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		*/
 		const ResourcePtr& GetResource(const std::string& tag, const std::string& key)
 		{
 			if (IsContainTag(tag))
@@ -88,7 +117,11 @@ namespace Sample
 			return nullptr;
 		}
 
-		//リソースが存在するか？
+		/*
+		* @brief	リソースが存在するか？
+		* @param	key			リソースの名前
+		* @return	true なら存在する
+		*/
 		bool IsContainResource(const std::string& key)
 		{
 			for (auto& map : m_ResourcesMap)
@@ -101,7 +134,13 @@ namespace Sample
 			}
 			return false;
 		}
-		//リソースが存在するか？
+
+		/*
+		* @brief	タグ内のリソースが存在するか？
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		* @return	true なら存在する
+		*/
 		bool IsContainResource(const std::string& tag,const std::string& key)
 		{
 			auto& map = m_ResourcesMap[tag];
@@ -111,18 +150,13 @@ namespace Sample
 				return true;
 			}
 			return false;
-			/*for (auto& map : m_ResourcesMap[tag])
-			{
-				auto it = map.find(key);
-				if (it != map.end())
-				{
-					return true;
-				}
-			}
-			return false;*/
 		}
 
-		//タグが存在するか？
+		/*
+		* @brief	タグが存在するか？
+		* @param	tag			リソースのタグ
+		* @return	true なら存在する
+		*/
 		bool IsContainTag(const std::string& tag)
 		{
 			auto it = m_ResourcesMap.find(tag);
@@ -130,7 +164,9 @@ namespace Sample
 		}
 	};
 
-	//なにかの型（入れるまで決まっていない）
+	/*
+	* @brief	リソースを管理する
+	*/
 	template<typename T>
 	class ResourceManager : public Singleton<ResourceManager<T>>
 	{
@@ -150,18 +186,32 @@ namespace Sample
 
 		}
 	public:
-		//リソースを追加する
+
+		/*
+		* @brief	リソースを追加する
+		* @param	key			リソースの名前
+		* @param	resource	リソース
+		*/
 		void AddResource(const std::string& key, const T& resource)
 		{
 			m_ResourcesMap["default"][key] = resource;
 		}
-		//リソースを追加する＆タグ付け
+
+		/*
+		* @brief	リソースを追加する＆タグ付け
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		* @param	resource	リソース
+		*/
 		void AddResource(const std::string& tag, const std::string& key, const T& resource)
 		{
 			m_ResourcesMap[tag][key] = resource;
 		}
 
-		//リソースを削除する
+		/*
+		* @brief	リソースを削除する
+		* @param	key			リソースの名前
+		*/
 		bool DeleteResource(const std::string& key)
 		{
 			auto& map = m_ResourcesMap["default"];
@@ -174,7 +224,11 @@ namespace Sample
 			return false;
 		}
 
-		//タグ内のリソースを削除する
+		/*
+		* @brief	タグ内のリソースを削除する
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		*/
 		bool DeleteResouce(const std::string& tag, const std::string& key)
 		{
 			auto& map = m_ResourcesMap[tag];
@@ -187,7 +241,10 @@ namespace Sample
 			return false;
 		}
 
-		//リソースを取得する
+		/*
+		* @brief	リソースを取得する
+		* @param	key			リソースの名前
+		*/
 		const T& GetResource(const std::string& key)
 		{
 			for (auto& map : m_ResourcesMap)
@@ -200,7 +257,12 @@ namespace Sample
 			}
 			return nullptr;
 		}
-		//リソースを取得する
+
+		/*
+		* @brief	タグ内のリソースを取得する
+		* @param	tag			リソースのタグ
+		* @param	key			リソースの名前
+		*/
 		const T& GetResource(const std::string& tag, const std::string& key)
 		{
 			if (IsContainTag(tag))
@@ -210,7 +272,11 @@ namespace Sample
 			return nullptr;
 		}
 
-		//リソースが存在するか？
+		/*
+		* @brief	リソースが存在するか？
+		* @param	key			リソースの名前
+		* @return	true なら存在する
+		*/
 		bool IsContainResource(const std::string& key)
 		{
 			for (auto& map : m_ResourcesMap)
@@ -224,7 +290,11 @@ namespace Sample
 			return false;
 		}
 
-		//タグが存在するか？
+		/*
+		* @brief	タグが存在するか？
+		* @param	tag			リソースのタグ
+		* @return	true なら存在する
+		*/
 		bool IsContainTag(const std::string& tag)
 		{
 			auto it = m_ResourcesMap.find(tag);

@@ -28,7 +28,10 @@
 
 #include	"EnemyManager.h"
 
-
+#include	"EnemySpawner.h"
+#include	"EnemySpawnConditionCountLimit.h"
+#include	"SpawnCycleFixedRange.h"
+#include	"EnemySpawnParameter.h"
 
 class CBattleScene : public CSceneBase
 {
@@ -37,7 +40,8 @@ private:
 	PlayerPtr m_Player;
 	//敵マネージャー
 	Sample::EnemyManager m_EnemyManager;
-
+	//敵スポナー
+	Spawner::EnemySpawnerArray m_EnemySpawner;
 	//ライト
 	CDirectionalLight m_Light;
 	//フォント

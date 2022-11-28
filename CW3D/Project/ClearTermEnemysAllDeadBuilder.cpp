@@ -6,7 +6,6 @@ Sample::ClearTermEnemysAllDeadBuilder::ClearTermEnemysAllDeadBuilder()
 
 Sample::ClearTermPtr Sample::ClearTermEnemysAllDeadBuilder::Create(nlohmann::json& os)
 {
-	
 	return Create();
 }
 

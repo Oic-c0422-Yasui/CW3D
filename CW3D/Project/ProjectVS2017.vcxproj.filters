@@ -172,6 +172,15 @@
     <Filter Include="ヘッダー ファイル\Character\Player">
       <UniqueIdentifier>{b1dd1dd3-fc7d-4782-ba42-f5587431cd91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Spawner">
+      <UniqueIdentifier>{bb227144-259a-48e7-986f-41d334f79cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Spawner">
+      <UniqueIdentifier>{a4a7a7d4-a0ad-407c-957d-9f0b195b8461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Spawner">
+      <UniqueIdentifier>{9c14c98f-9d91-4d1f-a0ed-a95a032aa90a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -345,6 +354,21 @@
     <ClCompile Include="CreateWindow.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnParameter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnCycleRandonRange.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnCycleFixedRange.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -442,9 +466,6 @@
     </ClInclude>
     <ClInclude Include="BattleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStatus.h">
-      <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>ヘッダー ファイル\Resource</Filter>
@@ -949,6 +970,36 @@
     </ClInclude>
     <ClInclude Include="PlayerStateCreator.h">
       <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpawnObjectCreator.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpawnCycle.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpawnPoint.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpawnCondition.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <Filter>ヘッダー ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawnParameter.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawnConditionCountLimit.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnCycleRandonRange.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnCycleFixedRange.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

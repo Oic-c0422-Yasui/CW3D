@@ -15,8 +15,6 @@ Sample::EnemyBuildParameter::~EnemyBuildParameter()
 
 
 
-
-
 Sample::EnemyParam::EnemyParam(const std::string& type, const Vector3& pos)
 	: m_Type(type)
 	, m_Pos(pos)
