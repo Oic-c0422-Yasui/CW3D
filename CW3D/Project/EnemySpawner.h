@@ -3,8 +3,9 @@
 #include	<vector>
 #include	"ISpawnCondition.h"
 #include	"ISpawnCycle.h"
-#include	"EnemyBuilder.h"
 #include	"EnemySpawnParameter.h"
+#include	"EnemyManager.h"
+#include	"EnemyBuilderDictionary.h"
 
 
 namespace Spawner
@@ -20,8 +21,6 @@ namespace Spawner
 		//出現用サイクル
 		SpawnCyclePtr				m_Cycle;
 		EnemySpawnParameter			m_EnemyParam;
-		//出現オブジェクト生成
-		Sample::EnemyBuilderPtr		m_Builder;
 		//出現オブジェクトリスト
 		Sample::EnemyArrayPtr		m_Enemys;
 
@@ -30,65 +29,29 @@ namespace Spawner
 		 * @brief		コンストラクタ
 		 */
 		EnemySpawner(const SpawnConditionArray& conditions,
-			SpawnCyclePtr cycle, 
-			EnemySpawnParameter param,
-			Sample::EnemyBuilderPtr builder,
-			Sample::EnemyArrayPtr enemys)
-			: m_Conditions(conditions)
-			, m_Cycle(cycle)
-			, m_EnemyParam(param)
-			, m_Builder(builder)
-			, m_Enemys(enemys)
-		{
-		}
+					SpawnCyclePtr cycle,
+					EnemySpawnParameter param);
 
 		/**
 		 * @brief		更新
 		 */
-		void Update() {
-			//どれか一つでも条件を満たさないなら実行しない
-			if (!IsValid())
-			{
-				return;
-			}
-			while (m_Cycle->Update())
-			{
-				Spawn(m_EnemyParam.GetParameter());
-				m_EnemyParam.Next();
-			}
-		}
+		void Update(Sample::EnemyManager& manager);
 
 		/**
 		 * @brief		スポーン
+		 * @param		param 敵生成のパラメータ
 		 */
-		Sample::EnemyPtr Spawn(const Sample::EnemyBuildParameterPtr& param)
-		{
-			auto obj = m_Builder->Create(param);
-			m_Enemys->push_back(obj);
-
-			return obj;
-		}
+		Sample::EnemyPtr Spawn(const Sample::EnemyBuildParameterPtr& param);
 
 		/**
 		 * @brief		状態リセット
 		 */
-		void Reset() {
-			m_Cycle->Reset();
-		}
+		void Reset();
 
 		/**
 		 * @brief		有効判定
 		 */
-		bool IsValid() const {
-			for (auto& condition : m_Conditions)
-			{
-				if (!condition->IsValid())
-				{
-					return false;
-				}
-			}
-			return true;
-		}
+		bool IsValid() const;
 	};
 	//ポインタ置き換え
 	using EnemySpawnerPtr = std::shared_ptr<EnemySpawner>;

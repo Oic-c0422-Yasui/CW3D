@@ -3,6 +3,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	クリア条件ビルダーの辞書
+	*/
 	class ClearTermBuilderDictionary
 	{
 	private:

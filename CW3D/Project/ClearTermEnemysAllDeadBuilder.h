@@ -4,6 +4,9 @@
 
 namespace Sample
 {
+    /*
+    * @brief    クリア条件ビルダー(敵をすべて倒す)
+    */
     class ClearTermEnemysAllDeadBuilder : public IClearTermBuilder
     {
     private:

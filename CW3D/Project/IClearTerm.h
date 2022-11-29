@@ -4,7 +4,9 @@
 
 namespace Sample
 {
-	
+	/*
+	* @brief	ƒNƒŠƒAğŒ
+	*/
 	class __declspec(novtable) IClearTerm
 	{
 	public:

@@ -6,6 +6,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	クリア条件ビルダー
+	*/
 	class __declspec(novtable) IClearTermBuilder
 	{
 	public:

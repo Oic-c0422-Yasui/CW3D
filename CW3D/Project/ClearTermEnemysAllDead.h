@@ -4,6 +4,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	ƒNƒŠƒAğŒ(“G‚ğ‚·‚×‚Ä“|‚·)
+	*/
 	class ClearTermEnemysAllDead : public IClearTerm
 	{
 	private:

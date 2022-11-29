@@ -4,6 +4,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	クリア条件ビルダー(時間耐久)
+	*/
 	class ClearTermEnduranceTimeBuilder : public IClearTermBuilder
 	{
 	private:

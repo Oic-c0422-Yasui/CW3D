@@ -3,6 +3,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	ƒNƒŠƒAğŒ(ŠÔ‘Ï‹v)
+	*/
 	class ClearTermEnduranceTime : public IClearTerm
 	{
 	private:

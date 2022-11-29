@@ -4,6 +4,9 @@
 
 namespace Sample
 {
+	/*
+	* @brief	クリア条件に必要なパラメータを提供する
+	*/
 	class ClearTermProvider
 	{
 	private:

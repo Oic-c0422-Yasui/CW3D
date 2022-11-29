@@ -119,6 +119,7 @@
     <ClCompile Include="EnemyBuildParameter.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemySpawnParameter.cpp" />
     <ClCompile Include="EnemyStatus.cpp" />
     <ClCompile Include="JsonClearTermCreator.cpp" />
