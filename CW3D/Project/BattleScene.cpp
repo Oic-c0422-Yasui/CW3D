@@ -17,8 +17,8 @@
 
 using namespace Sample;
 
-std::thread enemyCreatThread;
-bool createFlag = false;
+using Task = std::function<void()>;
+//std::vector<Task> taskList;
 
 CBattleScene::CBattleScene()
 	: m_Player(std::make_shared<CPlayer>())
@@ -143,8 +143,8 @@ void CBattleScene::Initialize()
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyCount(count); });
 	
 	//敵生成
-	createFlag = true;
-	enemyCreatThread = std::thread([this]() { CreateEnemys(); });
+	m_EnemyCreateThread.Create([this]() { return CreateEnemys(); });
+
 
 	m_Timer.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
@@ -163,97 +163,93 @@ void CBattleScene::Initialize()
 	CameraControllerInstance.SetDefault();
 	TimeScaleControllerInstance.Reset();
 
+
+	//taskList.push_back(
+	//	[&]()
+	//	{
+	//		//敵のロードが完了しているなら
+	//		if (m_EnemyCreateThread.IsComplete())
+	//		{
+	//			//敵スポナー更新
+	//			for (auto spawner : m_EnemySpawner)
+	//			{
+	//				spawner.Update(m_EnemyManager);
+	//			}
+
+	//			//敵更新
+	//			m_EnemyManager.Update();
+	//			//ステージの区画をクリアしているなら
+	//			if (m_StageManager.GetCurrentDivision()->IsClear() && !m_GameClearFlg)
+	//			{
+	//				//次の区画へ
+	//				m_StageManager.NextPhase();
+	//				//敵を生成する
+	//				m_EnemyCreateThread.Create([this]() { return CreateEnemys(); });
+	//				//タイマーをリセット
+	//				m_Timer.Start();
+	//			}
+
+	//			//ステージ更新
+	//			m_StageManager.Update(m_ClearTermProvider);
+	//		}
+	//	}
+	//);
+	taskList.push_back(
+		[&]()
+		{
+			if (!m_GameClearFlg && !m_GameOverFlg)
+			{
+				//当たり判定
+				Collision();
+			}
+
+			//クリア判定
+			if (m_StageManager.IsClear())
+			{
+				if (!m_GameClearFlg)
+				{
+					m_Player->SetClearPose();
+					m_GameClearFlg = true;
+				}
+			}
+
+			//死亡判定
+			if (!m_Player->IsShow() && m_Player->IsDead())
+			{
+				m_GameOverFlg = true;
+			}
+
+
+			//エフェクトマネージャー更新
+			EffectManagerInstance.Update();
+			//エフェクト操作更新
+			EffectControllerInstance.Update();
+			//時間操作更新
+			TimeScaleControllerInstance.Update();
+			//カメラ操作更新
+			CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
+
+			//ショットマネージャー更新
+			ShotManagerInstance.Update();
+			//ショット削除処理
+			ShotManagerInstance.Delete();
+			//エフェクト削除処理
+			EffectControllerInstance.Delete();
+			//アクター削除処理
+			ActorObjectManagerInstance.Delete();
+		}
+	);
 }
 
 void CBattleScene::Update()
 {
-	//入力更新
-	InputManagerInstance.Update();
-
-	if (m_GameClearFlg || m_GameOverFlg)
+	/*for (auto& task : taskList)
 	{
-		//ゲームオーバーORクリア時、リトライ可能
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-		{
-			Initialize();
-			return;
-		}
-	}
+		task();
+	}*/
 
-	//プレイヤー更新
-	m_Player->Update();
-
-	if (!createFlag)
-	{
-		//敵スポナー更新
-		for (auto spawner : m_EnemySpawner)
-		{
-			spawner.Update(m_EnemyManager);
-		}
-
-		//敵更新
-		m_EnemyManager.Update();
-		//ステージの区画をクリアしているなら
-		if (m_StageManager.GetCurrentDivision()->IsClear() && !m_GameClearFlg)
-		{
-			//次の区画へ
-			m_StageManager.NextPhase();
-			//敵を生成する
-			enemyCreatThread.detach();
-			createFlag = true;
-			enemyCreatThread = std::thread([this]() { CreateEnemys(); });
-			//タイマーをリセット
-			m_Timer.Start();
-		}
-	}
-
-	m_Timer.Update();
-	if (!createFlag)
-	{
-		m_StageManager.Update(m_ClearTermProvider);
-	}
 
 	
-	if (!m_GameClearFlg && !m_GameOverFlg)
-	{
-		//当たり判定
-		Collision();
-	}
-
-	//クリア判定
-	if (m_StageManager.IsClear())
-	{
-		if (!m_GameClearFlg)
-		{
-			m_Player->SetClearPose();
-			m_GameClearFlg = true;
-		}
-	}
-	
-	//死亡判定
-	if (!m_Player->IsShow() && m_Player->IsDead())
-	{
-		m_GameOverFlg = true;
-	}
-
-
-	//エフェクトマネージャー更新
-	EffectManagerInstance.Update();
-	//エフェクト操作更新
-	EffectControllerInstance.Update();
-	//時間操作更新
-	TimeScaleControllerInstance.Update();
-	//カメラ操作更新
-	CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
-
-	//ショットマネージャー更新
-	ShotManagerInstance.Update();
-	//ショット削除処理
-	ShotManagerInstance.Delete();
-	//エフェクト削除処理
-	EffectControllerInstance.Delete();
-	//アクター削除処理
-	ActorObjectManagerInstance.Delete();
 }
 
 void CBattleScene::Render()
@@ -264,7 +260,7 @@ void CBattleScene::Render()
 	//プレイヤー描画
 	m_Player->Render();
 
-	if (!createFlag)
+	if (m_EnemyCreateThread.IsComplete())
 	{
 		//敵描画
 		m_EnemyManager.Render();
@@ -315,7 +311,7 @@ void CBattleScene::RenderDebug()
 	{
 		CGraphicsUtilities::RenderBox(m_Player->GetEscapeCollider(), Vector4(0, 0, 1, 0.2f));
 	}
-	if (!createFlag)
+	if (m_EnemyCreateThread.IsComplete())
 	{
 		//敵当たり判定デバッグ描画
 		m_EnemyManager.RenderDebug();
@@ -324,7 +320,7 @@ void CBattleScene::RenderDebug()
 
 void CBattleScene::Render2D()
 {
-	if (!createFlag)
+	if (m_EnemyCreateThread.IsComplete())
 	{
 		//敵HPバーの描画入れ替え
 		std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
@@ -370,6 +366,7 @@ void CBattleScene::Render2DDebug()
 	Vector2 pos;
 	g_pInput->GetMousePos(pos);
 	CGraphicsUtilities::RenderString(400, 30, "X:%.1f Y:%.1f", pos.x, pos.y);
+
 }
 
 void CBattleScene::Release()
@@ -389,7 +386,6 @@ void CBattleScene::Release()
 	m_PlayerUIRender.reset();
 
 	//敵解放
-	enemyCreatThread.detach();
 	m_EnemyManager.Release();
 	m_EnemySpawner.clear();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
@@ -398,7 +394,7 @@ void CBattleScene::Release()
 	}
 	m_EnemysHPRender.clear();
 	
-	//メッシュ解放
+	//リソース解放
 	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	Sample::ResourcePtrManager<CMeshContainer>::GetInstance().Release();
 	Sample::ResourcePtrManager<CSprite3D>::GetInstance().Release();
@@ -424,7 +420,7 @@ void CBattleScene::Release()
 
 void CBattleScene::Collision()
 {
-	if (!createFlag)
+	if (m_EnemyCreateThread.IsComplete())
 	{
 		//敵の当たり判定
 		for (size_t i = 0; i < m_EnemyManager.GetMaxEnemyCount(); i++)
@@ -447,37 +443,37 @@ void CBattleScene::Collision()
 				//敵と弾
 				for (int j = 0; j < ShotManagerInstance.GetShotSize(); j++)
 				{
-					ShotPtr shot = ShotManagerInstance.GetShot(j);
+					auto shot = ShotManagerInstance.GetShot(j);
 					CCollision::CollisionObj(shot, enemy);
 				}
 			}
 
 			//敵とオブジェクト
-			for (int j = 0; j < m_StageManager.GetCurrentDivision()->GetObjCount(); j++)
+			for (size_t j = 0; j < m_StageManager.GetCurrentDivision()->GetObjCount(); j++)
 			{
-				ObjectPtr obj = m_StageManager.GetCurrentDivision()->GetObj(j);
+				auto obj = m_StageManager.GetCurrentDivision()->GetObj(j);
 				CCollision::CollisionObj(enemy, obj);
 			}
 		}
 	}
 	//プレイヤーとオブジェクトの当たり判定
-	for (int i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)
+	for (size_t i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)
 	{
-		ObjectPtr obj = m_StageManager.GetCurrentDivision()->GetObj(i);
+		auto obj = m_StageManager.GetCurrentDivision()->GetObj(i);
 		CCollision::CollisionObj(m_Player, obj);
 	}
 
 	//プレイヤーと弾の当たり判定
-	for (int i = 0; i < ShotManagerInstance.GetShotSize(); i++)
+	for (size_t i = 0; i < ShotManagerInstance.GetShotSize(); i++)
 	{
-		ShotPtr shot = ShotManagerInstance.GetShot(i);
+		auto shot = ShotManagerInstance.GetShot(i);
 		CCollision::CollisionObj(shot, m_Player);
 	}
 
 	
 }
 
-void CBattleScene::CreateEnemys()
+bool CBattleScene::CreateEnemys()
 {
 	//配列初期化
 	m_EnemyManager.ClearEnemyArray();
@@ -522,5 +518,119 @@ void CBattleScene::CreateEnemys()
 		m_EnemysHPRender[i]->Initialize();
 	}
 
-	createFlag = false;
+	return true;
+}
+
+void CBattleScene::RegisterTask()
+{
+	m_UpdateTask.AddTask("FirstTask", 3,
+		[&]() {
+			//入力更新
+			InputManagerInstance.Update();
+
+			if (m_GameClearFlg || m_GameOverFlg)
+			{
+				//ゲームオーバーORクリア時、リトライ可能
+				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+				{
+					Initialize();
+					return;
+				}
+			}
+			//タイマー更新
+			m_Timer.Update();
+
+			//プレイヤー更新
+			m_Player->Update();
+		}
+		);
+
+
+	
+
+	m_UpdateTask.AddTask("Third", 1, 
+		[&]()
+		{
+			if (!m_GameClearFlg && !m_GameOverFlg)
+			{
+				//当たり判定
+				Collision();
+			}
+
+			//クリア判定
+			if (m_StageManager.IsClear())
+			{
+				if (!m_GameClearFlg)
+				{
+					m_Player->SetClearPose();
+					m_GameClearFlg = true;
+				}
+			}
+
+			//死亡判定
+			if (!m_Player->IsShow() && m_Player->IsDead())
+			{
+				m_GameOverFlg = true;
+			}
+
+
+			//エフェクトマネージャー更新
+			EffectManagerInstance.Update();
+			//エフェクト操作更新
+			EffectControllerInstance.Update();
+			//時間操作更新
+			TimeScaleControllerInstance.Update();
+			//カメラ操作更新
+			CameraControllerInstance.Update(m_Player->GetPosition(), m_Player->GetPosition());
+			//ショットマネージャー更新
+			ShotManagerInstance.Update();
+
+			//ショット削除処理
+			ShotManagerInstance.Delete();
+			//エフェクト削除処理
+			EffectControllerInstance.Delete();
+			//アクター削除処理
+			ActorObjectManagerInstance.Delete();
+		}
+		);
+	
+
+
+	
+}
+
+void CBattleScene::RegistarAfterSpawn()
+{
+	m_UpdateTask.AddTask("AfterSpawnUpdate", 2,
+			[&]()
+			{
+				//敵のロードが完了しているなら
+				if (m_EnemyCreateThread.IsComplete())
+				{
+					//敵スポナー更新
+					for (auto spawner : m_EnemySpawner)
+					{
+						spawner.Update(m_EnemyManager);
+					}
+
+					//敵更新
+					m_EnemyManager.Update();
+					//ステージの区画をクリアしているなら
+					if (m_StageManager.GetCurrentDivision()->IsClear() && !m_GameClearFlg)
+					{
+						//次の区画へ
+						m_StageManager.NextPhase();
+						//敵を生成する
+						m_EnemyCreateThread.Create([this]() { return CreateEnemys(); });
+						//タイマーをリセット
+						m_Timer.Start();
+					}
+
+					//ステージ更新
+					m_StageManager.Update(m_ClearTermProvider);
+				}
+			});
+	m_UpdateTask.AddTask("AfterSpawnCollision", 0,
+
+		);
 }

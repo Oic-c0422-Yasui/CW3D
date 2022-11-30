@@ -39,7 +39,7 @@ namespace Sample
 			return m_Data.EnemysParam;
 		}
 
-		const ObjectPtr& GetObj(int id)
+		const ObjectPtr& GetObj(size_t id)
 		{
 			assert(m_Data.Objects[id]);
 			return m_Data.Objects[id];

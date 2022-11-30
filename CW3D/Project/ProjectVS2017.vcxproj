@@ -110,6 +110,7 @@
     <ClCompile Include="ClearTermEnemyAllDeadText.cpp" />
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
+    <ClCompile Include="CreateThread.cpp" />
     <ClCompile Include="CreateWindow.cpp" />
     <ClCompile Include="Division.cpp" />
     <ClCompile Include="EnemyBuilder.cpp" />
@@ -155,6 +156,8 @@
     <ClCompile Include="SkillControllerRender.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -192,6 +195,7 @@
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
+    <ClInclude Include="CreateThread.h" />
     <ClInclude Include="CreateWindow.h" />
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyBuilderDictionary.h" />
@@ -209,6 +213,8 @@
     <ClInclude Include="EnemySpawnConditionCountLimit.h" />
     <ClInclude Include="SpawnCycleFixedRange.h" />
     <ClInclude Include="SpawnCycleRandonRange.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="TaskManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="ZombieAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />

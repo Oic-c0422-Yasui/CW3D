@@ -72,9 +72,11 @@ namespace Sample
 
 
 
-		const ShotPtr& GetShot(int id) {
+		const ShotPtr& GetShot(size_t id) 
+		{
 			assert(m_Shots[id]);
-			return m_Shots[id]; }
+			return m_Shots[id]; 
+		}
 
 		size_t GetShotSize()
 		{

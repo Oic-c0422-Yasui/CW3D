@@ -32,6 +32,8 @@
 #include	"EnemySpawnConditionCountLimit.h"
 #include	"SpawnCycleFixedRange.h"
 #include	"EnemySpawnParameter.h"
+#include	"CreateThread.h"
+#include	"TaskManager.h"
 
 class CBattleScene : public CSceneBase
 {
@@ -43,7 +45,13 @@ private:
 	//敵スポナー
 	Spawner::EnemySpawnerArray m_EnemySpawner;
 	//敵生成スレッド
-	std::thread	m_EnemyCreateThread;
+	ThreadCreator m_EnemyCreateThread;
+	//Updateタスク
+	Sample::TaskManager	m_UpdateTask;
+	//Render2Dタスク
+	Sample::TaskManager	m_Render2DTask;
+
+
 
 	//ライト
 	CDirectionalLight m_Light;
@@ -71,7 +79,12 @@ private:
 	//衝突判定をまとめた関数
 	void Collision();
 	//敵の生成
-	void CreateEnemys();
+	bool CreateEnemys();
+	//タスクの登録
+	void RegisterTask();
+
+	void RegistarAfterSpawn();
+
 public:
 	CBattleScene();
 	~CBattleScene();
