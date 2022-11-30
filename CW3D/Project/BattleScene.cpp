@@ -138,8 +138,8 @@ void CBattleScene::Initialize()
 	m_PlayerUIRender->Initialize();
 
 	//クリア条件のプロバイダーにオブザーバーを登録
-	auto& provider = m_ClearTermProvider;
 	m_ClearTermProvider = std::make_shared<ClearTermProvider>();
+	auto& provider = m_ClearTermProvider;
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyCount(count); });
 	
 	//敵生成

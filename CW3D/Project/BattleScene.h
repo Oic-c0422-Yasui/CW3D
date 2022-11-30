@@ -42,6 +42,9 @@ private:
 	Sample::EnemyManager m_EnemyManager;
 	//敵スポナー
 	Spawner::EnemySpawnerArray m_EnemySpawner;
+	//敵生成スレッド
+	std::thread	m_EnemyCreateThread;
+
 	//ライト
 	CDirectionalLight m_Light;
 	//フォント

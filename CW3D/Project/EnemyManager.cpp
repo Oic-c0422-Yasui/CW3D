@@ -26,7 +26,13 @@ void Sample::EnemyManager::Update()
 	{
 		enemy->Update();
 
+		//敵が表示されている時、もしくは非表示だが死んでいない時、敵の数をカウント
 		if (enemy->IsShow())
+		{
+			enemyCount++;
+			continue;
+		}
+		else if ((!enemy->IsDead() && !enemy->IsShow()))
 		{
 			enemyCount++;
 		}
