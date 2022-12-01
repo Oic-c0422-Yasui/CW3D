@@ -252,7 +252,7 @@
     <ClCompile Include="EffectController.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
+    <ClCompile Include="EffectRenderer.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
@@ -379,6 +379,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotManager.cpp">
+      <Filter>ソース ファイル\Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeScaleController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeScale.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -524,7 +533,7 @@
     <ClInclude Include="Effect.h">
       <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
+    <ClInclude Include="EffectRenderer.h">
       <Filter>ヘッダー ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectController.h">

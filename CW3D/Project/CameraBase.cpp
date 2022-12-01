@@ -43,17 +43,13 @@ void CCameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
 	UpdateCamera();
 }
 
-void CCameraBase::SetAnim(Sample::MyUtilities::ANIMV3_DATA* offsetPos, Sample::MyUtilities::ANIMV3_DATA* offsetLookPos, int size)
-{
-	m_AnimData.pos = new Sample::MyUtilities::ANIMV3_DATA[size];
-	m_AnimData.lookPos = new Sample::MyUtilities::ANIMV3_DATA[size];
 
-	for (int i = 0; i < size; i++)
-	{
-		m_AnimData.pos[i] = offsetPos[i];
-		m_AnimData.lookPos[i] = offsetLookPos[i];
-	}
-	m_AnimData.flg = true;
-	m_AnimData.currentTime = 0.0f;
-	m_AnimData.count = size;
+void CCameraBase::SetAnim(const MyUtilities::ANIM_V3_DATA_ARRAY& offsetPos, const MyUtilities::ANIM_V3_DATA_ARRAY& offsetLookPos)
+{
+	m_AnimData.Pos = offsetPos;
+	m_AnimData.LookPos = offsetLookPos;
+
+	m_AnimData.Flg = true;
+	m_AnimData.CurrentTime = 0.0f;
+	m_AnimData.Count = offsetPos.size();
 }

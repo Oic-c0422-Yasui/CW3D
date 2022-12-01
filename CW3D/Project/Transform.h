@@ -67,16 +67,16 @@ namespace Sample
 				m_World.SetTranslation(m_Position);
 			}
 
-			void MovePosition(const VelocityPtr& v) noexcept
+			void MovePosition(const VelocityPtr& vel) noexcept
 			{
-				if (v->IsGravity())
+				if (vel->IsGravity())
 				{
-					m_Position += v->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+					m_Position += vel->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 				else
 				{
-					m_Position.x += v->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-					m_Position.z += v->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+					m_Position.x += vel->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+					m_Position.z += vel->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(m_Type);
 				}
 				m_World.SetTranslation(m_Position);
 			}

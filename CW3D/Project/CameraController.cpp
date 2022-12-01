@@ -61,7 +61,7 @@ void CCameraController::SetCamera(const CameraPtr& camera, float tTime)
 	}
 }
 
-void CCameraController::SetCamera(const CameraPtr& camera, float tTime, Sample::MyUtilities::EASING_TYPE startEaseType, float leapStartTime, Sample::MyUtilities::EASING_TYPE endEaseType,float leapEndTime)
+void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtilities::EASING_TYPE startEaseType, float leapStartTime, MyUtilities::EASING_TYPE endEaseType,float leapEndTime)
 {
 	InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(m_Camera->GetTargetPos(), m_Camera->GetTargetLookPos(), m_Camera->GetOffsetPos(), m_Camera->GetOffsetLookPos());
 	pCamera->Set(leapStartTime,startEaseType, camera);

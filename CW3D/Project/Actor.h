@@ -226,7 +226,7 @@ namespace Sample {
 		/**
 		 * @brief		アニメーション
 		 */
-		AnimationStatePtr GetAnimationState() const override {
+		const AnimationStatePtr& GetAnimationState() const override {
 			return m_Motion;
 		}
 

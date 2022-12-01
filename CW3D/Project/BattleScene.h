@@ -11,6 +11,7 @@
 #include	"Enemy.h"
 #include	"ShotManager.h"
 #include	"EffectController.h"
+#include	"EffectRenderer.h"
 #include	"IDManager.h"
 #include	"TimeScaleController.h"
 
@@ -46,8 +47,10 @@ private:
 	Spawner::EnemySpawnerArray m_EnemySpawner;
 	//敵生成スレッド
 	ThreadCreator m_EnemyCreateThread;
-	//Updateタスク
+	//更新タスク
 	Sample::TaskManager	m_UpdateTask;
+	//描画タスク
+	Sample::TaskManager	m_RenderTask;
 	//Render2Dタスク
 	Sample::TaskManager	m_Render2DTask;
 
@@ -82,8 +85,12 @@ private:
 	bool CreateEnemys();
 	//タスクの登録
 	void RegisterTask();
+	void RegisterUpdateTask();
+	void RegisterCollisionTask();
+	void RegisterRenderTask();
+	void RegisterRender2DTask();
 
-	void RegistarAfterSpawn();
+	void RegisterAfterSpawn();
 
 public:
 	CBattleScene();

@@ -58,34 +58,40 @@ namespace Sample {
 				shot->SetDamage(damage);
 			}
 
-			MyUtilities::ANIM_DATA anim[] =
-			{
-				{0.0f,0.0f},
-				{0.8f,0.0f},
-				{0.8f,1.0f},
-			};
-			TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(),anim, _countof(anim));
+			MyUtilities::ANIM_DATA_ARRAY anims(
+				{
+					{0.0f,0.0f},
+					{0.8f,0.0f},
+					{0.8f,TimeScaleControllerInstance.GetTimeScale()},
+				}
+			);
+			TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(), anims);
 
 
-			MyUtilities::ANIMV3_DATA animPos[] =
-			{
-				{0.0f,Vector3(-7,2,-2)},
-				{0.25f,Vector3(-7,2,-2),MyUtilities::EASE_OUT_SINE},
-				{0.30f,Vector3(-25,2,-2),MyUtilities::EASE_OUT_SINE},
-			};
-			MyUtilities::ANIMV3_DATA animLookPos[] =
-			{
-				{0.0f,Vector3(2, 1, 2)},
-				{1.0f,Vector3(2, 1, 2)},
-				{1.0f,Vector3(2, 1, 2)},
-			};
+			MyUtilities::ANIM_V3_DATA_ARRAY animPos(
+				{
+					{0.0f,Vector3(-7,2,-2)},
+					{0.25f,Vector3(-7,2,-2),MyUtilities::EASE_OUT_SINE},
+					{0.30f,Vector3(-25,2,-2),MyUtilities::EASE_OUT_SINE},
+				}
+			);
+			MyUtilities::ANIM_V3_DATA_ARRAY animLookPos(
+				{
+					{0.0f,Vector3(2, 1, 2)},
+					{1.0f,Vector3(2, 1, 2)},
+					{1.0f,Vector3(2, 1, 2)},
+				}
+			);
 			Vector3 pos(-7, 2, -2);
 			Vector3 lookPos(2, 1, 2);
+
+			size_t animCount = animPos.size();
+			//”½“]ˆ—
 			if (Actor()->IsReverse())
 			{
 				pos.x *= -1;
 				lookPos.x *= -1;
-				for (int i = 0; i < _countof(animPos); i++)
+				for (size_t i = 0; i < animCount; i++)
 				{
 					animPos[i].Value.x *= -1;
 					animLookPos[i].Value.x *= -1;
@@ -93,7 +99,7 @@ namespace Sample {
 			}
 			CameraPtr camera;
 			camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-			camera->SetAnim(animPos, animLookPos, _countof(animPos));
+			camera->SetAnim(animPos, animLookPos);
 			CameraControllerInstance.SetCamera(camera,1,MyUtilities::EASE_IN_SINE,0.3f, MyUtilities::EASE_IN_SINE,0.15f);
 
 		}

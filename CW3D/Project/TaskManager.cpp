@@ -7,18 +7,16 @@ Sample::TaskManager::TaskManager()
 
 Sample::TaskManager::~TaskManager()
 {
+	ResetTask();
 }
 
 void Sample::TaskManager::Excution()
 {
-	for (auto it = m_TaskList.begin(); it != m_TaskList.end(); ++it)
+
+	for (auto task : m_TaskList)
 	{
-		it->second.get()->Execution();
+		task->Execution();
 	}
-	//for (auto task : m_TaskList)
-	//{
-	//	task->Execution();
-	//}
 }
 
 void Sample::TaskManager::Sort()
@@ -26,27 +24,35 @@ void Sample::TaskManager::Sort()
 	std::sort(m_TaskList.begin(), m_TaskList.end(),
 		[](Sample::TaskPtr& task1, Sample::TaskPtr& task2)
 		{
-			return task1->GetPriority() > task2->GetPriority();
+			return task1->GetPriority() < task2->GetPriority();
 		});
 }
 
-void Sample::TaskManager::AddTask(const std::string& key, int pri,Func func)
+void Sample::TaskManager::AddTask(const std::string& key, Task_Priority pri,Func func)
 {
-	auto task = std::make_shared<Task>(func, pri);
-	m_TaskList[key] = task;
+	auto task = std::make_shared<Task>(key, pri, func);
+
+	m_TaskList.push_back(task);
 	Sort();
 }
 
-bool Sample::TaskManager::DeleteTask(const std::string& key)
+void Sample::TaskManager::DeleteTask(const std::string& key)
 {
-	auto it = m_TaskList.find(key);
-	if (it != m_TaskList.end())
+	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
+		return task->GetName() == key; });
+	m_TaskList.erase(removeIt, m_TaskList.end());
+}
+
+const Sample::TaskPtr& Sample::TaskManager::GetTask(const std::string& key)
+{
+	for (auto& task : m_TaskList)
 	{
-		m_TaskList.erase(it);
-		Sort();
-		return true;
+		if (task->GetName() == key)
+		{
+			return task;
+		}
 	}
-	return false;
+	return nullptr;
 }
 
 

@@ -130,6 +130,7 @@
     <ClCompile Include="JsonMeshResourceCreator.cpp" />
     <ClCompile Include="JsonObjectCreator.cpp" />
     <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp" />
+    <ClCompile Include="ShotManager.cpp" />
     <ClCompile Include="SpawnCycleFixedRange.cpp" />
     <ClCompile Include="SpawnCycleRandonRange.cpp" />
     <ClCompile Include="Spawner.cpp" />
@@ -144,7 +145,7 @@
     <ClCompile Include="NomalCamera.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectController.cpp" />
-    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EffectRenderer.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="HPPresenter.cpp" />
@@ -160,6 +161,8 @@
     <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TimeScale.cpp" />
+    <ClCompile Include="TimeScaleController.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
@@ -272,7 +275,7 @@
     <ClInclude Include="DownState.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectController.h" />
-    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectRenderer.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="FallAction.h" />

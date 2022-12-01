@@ -8,7 +8,7 @@ namespace Sample
 {
 
 	/**
-	 * @brief		敵と敵のあたり判定
+	 * @brief		弾とプレイヤーのあたり判定
 	 */
 	template < >
 	inline void CCollision::CollisionObj<>(ShotPtr& shot, PlayerPtr& player) {
@@ -54,12 +54,23 @@ namespace Sample
 		default:
 			break;
 		}
-
+		//プレイヤーが回避状態なら
 		if (player->IsEscape())
 		{
 			player->AddUltGauge(20.0f);
 			auto& invincible = player->GetActor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 			invincible = 1.0f;
+
+			MyUtilities::ANIM_DATA_ARRAY anims(
+				{	
+					{0.0f,TimeScaleControllerInstance.GetTimeScale()},
+					{0.05f,TimeScaleControllerInstance.GetTimeScale()},
+					{0.1f,0.0f},
+					{0.15f,0.0f},
+					{0.5f,TimeScaleControllerInstance.GetTimeScale()}
+				}
+			);
+
 			MyUtilities::ANIM_DATA anim[] =
 			{
 				{0.0f,TimeScaleControllerInstance.GetTimeScale()},
@@ -68,7 +79,7 @@ namespace Sample
 				{0.15f,0.0f},
 				{0.5f,TimeScaleControllerInstance.GetTimeScale()}
 			};
-			TimeScaleControllerInstance.SetTimeScale(anim, _countof(anim));
+			TimeScaleControllerInstance.SetTimeScale(anims);
 		}
 		else
 		{

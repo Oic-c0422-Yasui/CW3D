@@ -1,7 +1,8 @@
 #include "Task.h"
 
-Sample::Task::Task(int pri,const Func& func)
+Sample::Task::Task(const std::string& name, Task_Priority pri,  const Func& func)
 	: m_Priority(pri)
+	, m_Name(name)
 	, m_Task(func)
 {
 }

@@ -151,7 +151,7 @@ namespace Sample {
 		///**
 		// * @brief		アニメーション
 		// */
-		virtual AnimationStatePtr GetAnimationState() const = 0;
+		virtual const AnimationStatePtr& GetAnimationState() const = 0;
 
 		///**
 		// * @brief		スキル

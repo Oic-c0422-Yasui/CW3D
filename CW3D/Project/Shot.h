@@ -61,16 +61,7 @@ namespace Sample
 
 	private:
 		//削除時間までタイマーを進める
-		void UpdateTime()
-		{
-			for (auto& id : m_HitIDs)
-			{
-				if (id.Time > 0.0f)
-				{
-					id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-				}
-			}
-		}
+		void UpdateTime();
 	public:
 		CShot();
 		~CShot();

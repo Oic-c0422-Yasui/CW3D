@@ -22,63 +22,57 @@ namespace Sample
 		}
 
 	public:
+		/*
+		* @brief	’e‚ğ¶¬‚·‚é(‹…‘Ì)
+		* @param	pos	¶¬À•W
+		* @param	sphere	‹…‘Ì‚Ì’e
+		* @return	¶¬‚³‚ê‚½’e
+		*/
+		ShotPtr Create(const Vector3& pos, const ShotSphere& sphere);
+		/*
+		* @brief	’e‚ğ¶¬‚·‚é(lŠp)
+		* @param	pos	¶¬À•W
+		* @param	aabb	lŠp‚Ì’e
+		* @return	¶¬‚³‚ê‚½’e
+		*/
+		ShotPtr Create(const Vector3& pos, const ShotAABB& aabb);
 
-		ShotPtr Create(Vector3 pos,ShotSphere sphere)
-		{
-			auto add = std::make_shared<CShot>();
-			m_Shots.push_back(add);
-			add->Create(pos, sphere);
-			return add;
-		}
+		/*
+		* @brief	”ñ•\¦‚Ì’e‚ğíœ‚·‚é
+		*/
+		void Delete();
 
-		ShotPtr Create(Vector3 pos, ShotAABB aabb)
-		{
-			auto add = std::make_shared<CShot>();
-			m_Shots.push_back(add);
-			add->Create(pos, aabb);
-			return add;
-		}
+		/*
+		* @brief	’e‚ğ”ñ•\¦‚É‚·‚é
+		*/
+		void Reset();
 
-		void Delete()
-		{
-			auto removeIt = std::remove_if(m_Shots.begin(), m_Shots.end(), [&](const ShotPtr& shot) {
-				return shot->IsShow() == false; });
-			m_Shots.erase(removeIt, m_Shots.end());
-		}
-
-		void Reset()
-		{
-			for (auto& shot : m_Shots)
-			{
-				shot->SetShow(false);
-			}
-		}
-
-		void Update()
-		{
-			for (auto& shot : m_Shots)
-			{
-				shot->Update();
-			}
-		}
-
-		void Render()
-		{
-			for (auto& shot : m_Shots)
-			{
-				shot->Render();
-			}
-		}
+		/*
+		* @brief	XV
+		*/
+		void Update();
+		/*
+		* @brief	•`‰æ
+		*/
+		void Render();
 
 
-
+		/*
+		* @brief	’e‚ğæ“¾‚·‚é
+		* @param	id ’e‚Ì”z—ñ”Ô†
+		* @return	’e
+		*/
 		const ShotPtr& GetShot(size_t id) 
 		{
 			assert(m_Shots[id]);
 			return m_Shots[id]; 
 		}
 
-		size_t GetShotSize()
+		/*
+		* @brief	’e‚ğ”‚ğæ“¾‚·‚é
+		* @param	’e‚Ì”
+		*/
+		size_t GetShotCount()
 		{
 			return m_Shots.size();
 		}

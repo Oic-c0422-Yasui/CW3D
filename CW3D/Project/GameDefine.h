@@ -3,6 +3,16 @@
 #include "Utilities.h"
 #include	"ServiceLocator.h"
 
+//タスクの優先順位（数字が低いほど優先される）
+enum Task_Priority
+{
+	TASK_EVENT,		//イベントタスク
+	TASK_MAIN1,		//メインタスク１
+	TASK_MAIN2,		//メインタスク２
+	TASK_MAIN3,		//メインタスク３
+	TASK_COLLISION,	//衝突タスク
+};
+
 enum tag_SCENENO
 {
 	SCENE_TITLE,
@@ -127,26 +137,28 @@ enum CHARACTER_TYPE
 
 
 
-/*利用するアニメーションの名前
-		char* name;
-		アニメ開始時間
-		float					startTime;
-		アニメ補間時間
-		float					tTime;
-		アニメ速度
-		float					speed;
-		アニメループフラグ
-		bool					loopFlg;*/
+/* アニメーションパラメータ
+* 
+*	name		アニメーションの名前
+* 
+*	startTime	アニメーション開始時間
+* 
+*	speed		アニメーション速度
+* 
+*	tTime		アニメーション補間時間
+* 
+*	loopFlg		アニメーションループフラグ
+*/
 struct AnimParam
 {
 	//利用するアニメーションの名前
 	char*					name;
-	//アニメ開始時間
+	//アニメーション開始時間
 	float					startTime;
-	//アニメ速度
+	//アニメーション速度
 	float					speed;
-	//アニメ補間時間
+	//アニメーション補間時間
 	float					tTime;
-	//アニメループフラグ
+	//アニメーションループフラグ
 	bool					loopFlg;
 };

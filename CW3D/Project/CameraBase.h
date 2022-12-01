@@ -16,32 +16,25 @@ protected:
 	//アニメーション用構造体
 	struct animData
 	{
-		Sample::MyUtilities::ANIMV3_DATA* pos;
-		Sample::MyUtilities::ANIMV3_DATA* lookPos;
-		bool		flg;
-		float		currentTime;
-		int			count;
+		MyUtilities::ANIM_V3_DATA_ARRAY Pos;
+		MyUtilities::ANIM_V3_DATA_ARRAY LookPos;
+
+		bool		Flg;
+		float		CurrentTime;
+		int			Count;
 
 		animData()
-			: pos(nullptr)
-			, lookPos(nullptr)
-			, flg(false)
-			, currentTime(0.0f)
-			, count(0)
+			: Pos()
+			, LookPos()
+			, Flg(false)
+			, CurrentTime(0.0f)
+			, Count(0)
 		{
 		}
 		void Release()
 		{
-			if (pos)
-			{
-				delete[] pos;
-				pos = nullptr;
-			}
-			if (lookPos)
-			{
-				delete[] lookPos;
-				lookPos = nullptr;
-			}
+			Pos.clear();
+			LookPos.clear();
 		}
 	};
 	animData m_AnimData;
@@ -54,7 +47,7 @@ public:
 	virtual void UpdateCamera();
 	virtual void Render2DDebug();
 	virtual void Enable(const Vector3& pos, const Vector3& lookPos);
-	virtual void SetAnim( Sample::MyUtilities::ANIMV3_DATA* offsetPos, Sample::MyUtilities::ANIMV3_DATA* offsetLookPos,int size);
+	virtual void SetAnim(const MyUtilities::ANIM_V3_DATA_ARRAY& offsetPos, const MyUtilities::ANIM_V3_DATA_ARRAY& offsetLookPos);
 
 	const CVector3& GetPos() const noexcept
 	{

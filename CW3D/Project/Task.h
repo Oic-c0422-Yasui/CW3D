@@ -1,20 +1,25 @@
 #pragma once
 #include <functional>
 #include <vector>
+#include "GameDefine.h"
 
 namespace Sample
 {
+	
+
+	using Func = std::function<void()>;
 	/*
 	* @brief	タスク処理を行う
 	*/
-	using Func = std::function<void()>;
 	class Task
 	{
 	private:
-		int m_Priority;
+		Task_Priority m_Priority;
 		Func m_Task;
+		std::string	m_Name;
 	public:
-		Task(int pri, const Func& func);
+
+		Task(const std::string& name, Task_Priority pri, const Func& func);
 		~Task();
 
 		/*
@@ -24,20 +29,29 @@ namespace Sample
 
 		/*
 		* @brief	優先順位取得
-		* @return	優先順位（数字が高いほど優先順位が高い）
+		* @return	優先順位（数字が低いほど優先順位が高い）
 		*/
-		int GetPriority() const noexcept
+		Task_Priority GetPriority() const noexcept
 		{
 			return m_Priority;
 		}
 
 		/*
 		* @brief	優先順位設定
-		* @param	pri	優先順位（数字が高いほど優先順位が高い）
+		* @param	pri	優先順位（数字が低いほど優先順位が高い）
 		*/
-		void SetPriority(int pri) noexcept
+		void SetPriority(Task_Priority pri) noexcept
 		{
 			m_Priority = pri;
+		}
+
+		/*
+		* @brief	タスク名取得
+		* @return	タスク名
+		*/
+		const std::string& GetName() const noexcept
+		{
+			return m_Name;
 		}
 
 	};

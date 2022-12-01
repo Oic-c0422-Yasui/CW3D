@@ -169,7 +169,7 @@ namespace Sample
 		/**
 		* @brief		セッター
 		 */
-		void SetKey(std::string key) noexcept
+		void SetKey(const std::string& key) noexcept
 		{
 			m_Key = key;
 			
@@ -181,7 +181,7 @@ namespace Sample
 			m_FlyState = flyState;
 		}
 
-		void SetButton(std::string button) noexcept
+		void SetButton(const std::string& button) noexcept
 		{
 			m_Button = button;
 		}

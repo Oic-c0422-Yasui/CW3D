@@ -1,28 +1,33 @@
 #include "Effect.h"
-#include "EffectManager.h"
+#include "EffectRenderer.h"
 
 namespace Sample
 {
-	
+	Effect::Effect(Effekseer::Handle handle)
+		: m_Effect()
+		, m_Handle(handle)
+		, m_StopFlg(false)
+	{
 
-	CEffect::~CEffect()
+	}
+	Effect::~Effect()
 	{
 	}
 
-	void CEffect::Initialize( const Vector3& offset)
+	void Effect::Initialize( const Vector3& offset)
 	{
 		m_Offset = offset;
 	}
 
-	void CEffect::Update()
+	void Effect::Update()
 	{
-		if (!EffectManagerInstance.GetManager()->Exists(m_Handle))
+		if (!EffectRendererInstance.GetManager()->Exists(m_Handle))
 		{
 			m_StopFlg = true;
 		}
 		if (m_StopFlg)
 		{
-			EffectManagerInstance.GetManager()->StopEffect(m_Handle);
+			EffectRendererInstance.GetManager()->StopEffect(m_Handle);
 		}
 	}
 }

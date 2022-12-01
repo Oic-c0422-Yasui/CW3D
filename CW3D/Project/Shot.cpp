@@ -2,6 +2,8 @@
 
 using namespace Sample;
 
+
+
 Sample::CShot::CShot()
 	: m_Collider(std::make_shared<CAttackCollider>())
 	, m_Position(0, 0, 0)
@@ -107,3 +109,13 @@ void Sample::CShot::Render()
 }
 
 
+void Sample::CShot::UpdateTime()
+{
+	for (auto& id : m_HitIDs)
+	{
+		if (id.Time > 0.0f)
+		{
+			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+		}
+	}
+}

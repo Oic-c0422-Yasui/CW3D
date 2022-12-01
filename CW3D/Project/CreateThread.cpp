@@ -25,7 +25,22 @@ void ThreadCreator::Create(const CreateFunc& func)
 
 	m_Thread = std::thread([=](){	func();
 									m_CompleteFlg = true; 
-								});
+									});
+}
+
+void ThreadCreator::Create(const CreateFunc& createFunc, const CompletedFunc& completedFunc)
+{
+	if (m_Thread.joinable())
+	{
+		m_Thread.detach();
+	}
+
+	m_CompleteFlg = false;
+
+	m_Thread = std::thread([=]() {	createFunc();
+									m_CompleteFlg = true;
+									completedFunc();
+									});
 }
 
 bool ThreadCreator::IsLoading()
