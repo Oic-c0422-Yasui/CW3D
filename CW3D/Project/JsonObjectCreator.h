@@ -6,7 +6,7 @@
 #include	"DivisionObject.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 	class JsonObjectCreator
 	{

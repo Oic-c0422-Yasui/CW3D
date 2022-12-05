@@ -1,13 +1,13 @@
 #pragma once
 #include	"Skill.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CAdditionalSkill : public CSkill
 	{
 	private:
 		float m_AddStartTime;
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >	m_AddCT;
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> >	m_AddCT;
 		int		m_AddCount;
 		bool	m_AddFlg;
 		bool	m_DelayAddFlg;
@@ -142,8 +142,8 @@ namespace Sample
 			}
 		}
 
-		Sample::IObservable<float>* GetAddCTSubject() { return &(m_AddCT.Get()); }
-		Sample::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
+		ActionGame::IObservable<float>* GetAddCTSubject() { return &(m_AddCT.Get()); }
+		ActionGame::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
 
 	};
 

@@ -4,7 +4,7 @@
 #include "IActor.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 
 	//ÉLÅ[

@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-Sample::CTimer::CTimer()
+ActionGame::CTimer::CTimer()
 	: m_CurrentTime(0.0f)
 	, m_TargetTime(0.0f)
 	, m_AchieveFlg(false)
@@ -8,11 +8,11 @@ Sample::CTimer::CTimer()
 {
 }
 
-Sample::CTimer::~CTimer()
+ActionGame::CTimer::~CTimer()
 {
 }
 
-void Sample::CTimer::Start()
+void ActionGame::CTimer::Start()
 {
 	m_CurrentTime = 0.0f;
 	m_TargetTime = 0.0f;
@@ -20,18 +20,18 @@ void Sample::CTimer::Start()
 	m_StopFlg = false;
 }
 
-void Sample::CTimer::Start(float targetTime)
+void ActionGame::CTimer::Start(float targetTime)
 {
 	Start();
 	m_TargetTime = targetTime;
 }
 
-void Sample::CTimer::Stop()
+void ActionGame::CTimer::Stop()
 {
 	m_StopFlg = true;
 }
 
-void Sample::CTimer::Update()
+void ActionGame::CTimer::Update()
 {
 	if (m_StopFlg)
 	{
@@ -47,7 +47,7 @@ void Sample::CTimer::Update()
 	}
 }
 
-void Sample::CTimer::Update(CHARACTER_TYPE timeScaleType)
+void ActionGame::CTimer::Update(CHARACTER_TYPE timeScaleType)
 {
 	if (m_StopFlg)
 	{

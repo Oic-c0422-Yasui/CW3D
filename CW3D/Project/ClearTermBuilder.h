@@ -4,7 +4,7 @@
 #include "json.hpp"
 
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	クリア条件ビルダー

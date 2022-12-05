@@ -4,13 +4,13 @@
 
 
 
-Sample::ClearTermBuilderDictionary::ClearTermBuilderDictionary()
+ActionGame::ClearTermBuilderDictionary::ClearTermBuilderDictionary()
 {
 	dictionary["AllDead"] = std::make_shared<ClearTermEnemysAllDeadBuilder>();
 	dictionary["EnduranceTime"] = std::make_shared<ClearTermEnduranceTimeBuilder>();
 	dictionary["FixedDead"] = std::make_shared<ClearTermEnemysAllDeadBuilder>();
 }
 
-Sample::ClearTermBuilderDictionary::~ClearTermBuilderDictionary()
+ActionGame::ClearTermBuilderDictionary::~ClearTermBuilderDictionary()
 {
 }

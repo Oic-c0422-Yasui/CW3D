@@ -3,7 +3,7 @@
 #include	"Actor.h"
 #include	"StateMachine.h"
 
-namespace Sample
+namespace ActionGame
 {
 
 	class ActorObject
@@ -31,35 +31,73 @@ namespace Sample
 		virtual void Release();
 
 		/**
-		 * @brief		ゲッター
+		 * @brief	必殺技ゲージを追加する
+		 * @param	必殺技ゲージ
+		 */
+		void AddUltGauge(float gauge);
+
+		////////////////////////////////////////////////////////
+		///				ゲッター
+		////////////////////////////////////////////////////////
+		/**
+		 * @brief		アクター取得
+		 * @return アクター
 		 */
 		const ActorPtr& GetActor() const noexcept
 		{
 			return m_Actor;
 		}
+		/**
+		 * @brief		キャラタイプ取得
+		 * @return キャラタイプ
+		 */
 		CHARACTER_TYPE GetType() const noexcept
 		{
 			return m_Actor->GetType();
 		}
+		/**
+		 * @brief		座標取得
+		 * @return		座標
+		 */
 		const CVector3& GetPosition() const noexcept 
 		{ 
 			return m_Actor->GetPosition(); 
 		}
+		/**
+		 * @brief		速度取得
+		 * @return		速度
+		 */
 		const CVector3& GetVelocity() const noexcept
 		{ 
 			return m_Actor->GetVelocity()->GetVelocity(); 
 		}
+		/**
+		 * @brief		反転しているか？
+		 * @return		true　なら反転
+		 */
 		bool IsReverse() const noexcept
 		{ 
 			return m_Actor->IsReverse(); 
 		}
+		/**
+		 * @brief		回転取得
+		 * @return		回転
+		 */
 		const CVector3& GetRotate() const noexcept
 		{ 
 			return m_Actor->GetRotate(); 
 		}
-		bool IsShow() const noexcept {
+		/**
+		 * @brief		表示しているか？
+		 * @return		true　なら表示
+		 */
+		virtual bool IsShow() const noexcept {
 			return m_ShowFlg;
 		}
+		/**
+		 * @brief		当たり判定取得
+		 * @return		当たり判定
+		 */
 		virtual const CAABB& GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
@@ -67,50 +105,84 @@ namespace Sample
 
 			return m_Collider;
 		}
+		/**
+		 * @brief		更新前座標取得
+		 * @return		更新前座標
+		 */
 		const CVector3& GetPrevPos() const noexcept
 		{
 			return m_PrevPos;
 		}
+		/**
+		 * @brief		アクターID取得
+		 * @return		アクターID
+		 */
 		unsigned int GetID() const noexcept
 		{
 			return m_Actor->GetID();
 		}
+		/**
+		 * @brief		当たり判定を無視するか？
+		 * @return		true なら無視
+		 */
 		bool IsThrough() const noexcept
 		{
 			return m_Actor->IsThrough();
 		}
+		/**
+		 * @brief		必殺技ゲージのブースト倍率取得
+		 * @return		必殺技ゲージのブースト倍率
+		 */
 		float GetUltBoostMag() const noexcept
 		{
 			return m_UltBoostMag;
 		}
+		/**
+		 * @brief		死亡しているか？
+		 * @return		true なら死亡
+		 */
 		bool IsDead() const noexcept
 		{
 			return m_DeadFlg;
 		}
+
+		////////////////////////////////////////////////////////
+		///				セッター
+		////////////////////////////////////////////////////////
 		/**
-		 * @brief		セッター
+		 * @brief		キャラタイプを設定
+		 * @param		type キャラタイプ
 		 */
 		void SetType(CHARACTER_TYPE type) noexcept
 		{
 			m_Actor->SetType(type);
 		}
-		void SetPosition(const Vector3& position) noexcept
+		/**
+		 * @brief		座標を設定
+		 * @param		pos 座標
+		 */
+		virtual void SetPosition(const Vector3& position) noexcept
 		{
 			m_Actor->SetPosition(position);
 		}
-		void SetShow(bool isShow)
+		/**
+		 * @brief		表示フラグを設定
+		 * @param		isShow 表示フラグ
+		 */
+		virtual void SetShow(bool isShow)
 		{
 			m_ShowFlg = isShow;
 		}
+		/**
+		 * @brief		表示フラグを設定
+		 * @param		isShow 表示フラグ
+		 */
 		void SetUltBoostMag(float magnification) noexcept
 		{
 			m_UltBoostMag = magnification;
 		}
 
-		/**
-		 * @brief	必殺技ゲージ
-		 */
-		void AddUltGauge(float gauge);
+		
 
 	};
 	//ポインタ置き換え

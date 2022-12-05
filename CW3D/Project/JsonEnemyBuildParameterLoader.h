@@ -3,7 +3,7 @@
 #include "EnemyBuildParameter.h"
 #include "JsonEnemyStatusLoader.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class JsonEnemyBuildParameterLoader
 	{

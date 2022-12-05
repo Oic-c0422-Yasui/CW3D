@@ -1,7 +1,7 @@
 #pragma once
 #include	"Common.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		パラメーター保存

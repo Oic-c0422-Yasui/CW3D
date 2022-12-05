@@ -181,6 +181,18 @@
     <Filter Include="ヘッダー ファイル\Character\Enemy\Spawner">
       <UniqueIdentifier>{9c14c98f-9d91-4d1f-a0ed-a95a032aa90a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy">
+      <UniqueIdentifier>{543bb78e-a32c-494a-ad0e-080246cad2b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Builder">
+      <UniqueIdentifier>{ce5a1e05-b9af-4e82-b49f-da74ee04e274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Zombie">
+      <UniqueIdentifier>{02fd5d5e-fd89-4d73-9a3a-bb2b77a5bef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Skill">
+      <UniqueIdentifier>{7a9f5e6c-ebf4-47b0-b1d3-dc993ffa9163}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -234,9 +246,6 @@
     <ClCompile Include="ActorObject.cpp">
       <Filter>ソース ファイル\Chara</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerUIRender.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
@@ -279,23 +288,8 @@
     <ClCompile Include="JsonMeshResourceCreator.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBuilder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBuildParameter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBuilderDictionary.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="JsonEnemyStatusLoader.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieBuilder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieParameterCreator.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="JsonEnemyBuildParameterLoader.cpp">
       <Filter>ソース ファイル\Creator\Json</Filter>
@@ -312,13 +306,7 @@
     <ClCompile Include="Timer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStatus.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyHPRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp">
@@ -357,21 +345,6 @@
     <ClCompile Include="Spawner.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawnParameter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnCycleRandonRange.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnCycleFixedRange.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemySpawner.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CreateThread.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -389,6 +362,225 @@
     </ClCompile>
     <ClCompile Include="TimeScale.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBaseState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>ソース ファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuilder.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuilderDictionary.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuildParameter.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieBuilder.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>ソース ファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatus.cpp">
+      <Filter>ソース ファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnParameter.cpp">
+      <Filter>ソース ファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieParameterCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnCycleRandonRange.cpp">
+      <Filter>ソース ファイル\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnCycleFixedRange.cpp">
+      <Filter>ソース ファイル\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp">
+      <Filter>ソース ファイル\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack1State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack2State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack3State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="DropKickSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpBeamSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearPoseState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="BeamSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="DownState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="FallState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyDamageState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleMotionState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpAttack1State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="LandingState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAttack1State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunFallState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack1State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack2State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack3State.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunLandingState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="RunState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="StormSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ShockWaveSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpStormSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadAction.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ShockWaveSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack2Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack3Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunLandingAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack1Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAttack1Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunFallAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="LandingAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpStormSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpBeamSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpAttack1Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleMotionAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyDamageAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="FallAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="DropKickSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="DownAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearPoseAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="BeamSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack3Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack2Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack1Action.cpp">
+      <Filter>ソース ファイル\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="StormSkillAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -725,34 +917,34 @@
     <ClInclude Include="CollisionShotPlayer.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="JumpSkill2_1Action.h">
+    <ClInclude Include="JumpBeamSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JumpSkill3_1Action.h">
+    <ClInclude Include="JumpStormSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill1_1Action.h">
+    <ClInclude Include="ShockWaveSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill2_1Action.h">
+    <ClInclude Include="BeamSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill3_1Action.h">
+    <ClInclude Include="StormSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JumpSkill2_1State.h">
+    <ClInclude Include="JumpBeamSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JumpSkill3_1State.h">
+    <ClInclude Include="JumpStormSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill1_1State.h">
+    <ClInclude Include="ShockWaveSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill2_1State.h">
+    <ClInclude Include="BeamSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Skill3_1State.h">
+    <ClInclude Include="StormSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Skill</Filter>
     </ClInclude>
     <ClInclude Include="IStateCreator.h">

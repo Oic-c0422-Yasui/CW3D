@@ -4,7 +4,7 @@
 #include "Effect.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	エフェクト描画クラス
@@ -60,5 +60,5 @@ namespace Sample
 	};
 }
 //簡易アクセス用
-#define EffectRendererInstance 	Sample::EffectRenderer::GetInstance()
+#define EffectRendererInstance 	ActionGame::EffectRenderer::GetInstance()
 

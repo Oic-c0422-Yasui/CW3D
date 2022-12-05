@@ -5,7 +5,7 @@
 #include "ResourceManager.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ÉvÉåÉCÉÑÅ[HPUI
@@ -53,9 +53,9 @@ namespace Sample
 
 		void Load()
 		{
-			m_pHPBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
-			m_pFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPFrame");
-			m_pDamageBar = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
+			m_pHPBar = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
+			m_pFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPFrame");
+			m_pDamageBar = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
 
 
 			m_Position = Vector2(763, 1045);

@@ -8,7 +8,7 @@
 #include	"JsonClearTermCreator.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 
 	class JsonDivisionCreator

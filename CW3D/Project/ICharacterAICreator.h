@@ -2,7 +2,7 @@
 
 #include	"ICharacterAI.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		AI生成インターフェイス

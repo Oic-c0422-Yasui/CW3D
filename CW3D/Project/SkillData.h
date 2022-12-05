@@ -2,7 +2,7 @@
 #include	"ReactiveParameter.h"
 #include	"ParameterHandle.h"
 
-namespace Sample
+namespace ActionGame
 {
 
 	struct SkillData

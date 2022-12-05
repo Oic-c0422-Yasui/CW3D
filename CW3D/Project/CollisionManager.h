@@ -1,5 +1,5 @@
 #pragma once
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		“–‚½‚è”»’è‚Ü‚Æ‚ß

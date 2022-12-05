@@ -4,7 +4,7 @@
 #include "Common.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	//アクターオブジェクトを識別するID
 	class CMyID
@@ -43,5 +43,5 @@ namespace Sample
 	};
 }
 //簡易アクセス用
-#define IDManagerInstance 	Sample::CIDManager::GetInstance()
+#define IDManagerInstance 	ActionGame::CIDManager::GetInstance()
 

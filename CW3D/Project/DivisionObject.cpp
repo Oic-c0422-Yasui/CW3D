@@ -1,29 +1,29 @@
 #include "DivisionObject.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::CDivisionObject::CDivisionObject(const Vector3& pos, const Vector3& size, const Vector3& offset)
+ActionGame::CDivisionObject::CDivisionObject(const Vector3& pos, const Vector3& size, const Vector3& offset)
 	: CObject(pos, size, offset)
 {
 }
 
-Sample::CDivisionObject::~CDivisionObject()
+ActionGame::CDivisionObject::~CDivisionObject()
 {
 	Release();
 }
 
-bool Sample::CDivisionObject::Load()
+bool ActionGame::CDivisionObject::Load()
 {
 	return true;
 }
 
-void Sample::CDivisionObject::Initialize()
+void ActionGame::CDivisionObject::Initialize()
 {
 	CObject::Initialize();
 	m_pEffect = EffectControllerInstance.Play(param.name, GetCollider().Position, param); 
 }
 
-void Sample::CDivisionObject::Update()
+void ActionGame::CDivisionObject::Update()
 {
 	if (!m_ShowFlg)
 	{
@@ -39,11 +39,11 @@ void Sample::CDivisionObject::Update()
 	}
 }
 
-void Sample::CDivisionObject::Render()
+void ActionGame::CDivisionObject::Render()
 {
 }
 
-void Sample::CDivisionObject::Release()
+void ActionGame::CDivisionObject::Release()
 {
 	m_pEffect.reset();
 }

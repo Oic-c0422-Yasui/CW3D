@@ -5,7 +5,7 @@
 
 
 
-namespace Sample
+namespace ActionGame
 {
 	
 	class CSkill
@@ -20,8 +20,8 @@ namespace Sample
 		bool			m_StartFlg;
 		SkillDataPtr	m_SkillData;
 		
-		Sample::ParameterHandle< Sample::ReactiveParameter<bool> >	m_CanUseFlg;
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> > m_CT;
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<bool> >	m_CanUseFlg;
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> > m_CT;
 
 
 	protected:
@@ -161,9 +161,9 @@ namespace Sample
 		/**
 		* @brief		CT•Ï‰»’Ê’m
 		*/
-		Sample::IObservable<float>* GetCTSubject()			{ return &(m_CT.Get()); }
-		Sample::IObservable<float>* GetMaxCTSubject()		{ return &(m_SkillData->MaxCT.Get()); }
-		Sample::IObservable<bool>* GetCanUseSubject()		{ return &(m_CanUseFlg.Get()); }
+		ActionGame::IObservable<float>* GetCTSubject()			{ return &(m_CT.Get()); }
+		ActionGame::IObservable<float>* GetMaxCTSubject()		{ return &(m_SkillData->MaxCT.Get()); }
+		ActionGame::IObservable<bool>* GetCanUseSubject()		{ return &(m_CanUseFlg.Get()); }
 
 
 		/**

@@ -1,15 +1,15 @@
 #include "ClearTermEnemysAllDeadBuilder.h"
 
-Sample::ClearTermEnemysAllDeadBuilder::ClearTermEnemysAllDeadBuilder()
+ActionGame::ClearTermEnemysAllDeadBuilder::ClearTermEnemysAllDeadBuilder()
 {
 }
 
-Sample::ClearTermPtr Sample::ClearTermEnemysAllDeadBuilder::Create(nlohmann::json& os)
+ActionGame::ClearTermPtr ActionGame::ClearTermEnemysAllDeadBuilder::Create(nlohmann::json& os)
 {
 	return Create();
 }
 
-Sample::ClearTermPtr Sample::ClearTermEnemysAllDeadBuilder::Create()
+ActionGame::ClearTermPtr ActionGame::ClearTermEnemysAllDeadBuilder::Create()
 {
 
 	ClearTermPtr result = std::make_shared<ClearTermEnemysAllDead>();

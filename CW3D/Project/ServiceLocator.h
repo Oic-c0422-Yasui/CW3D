@@ -3,7 +3,7 @@
 #include	<memory>
 #include	"Singleton.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		サービスロケーター

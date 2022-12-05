@@ -3,7 +3,7 @@
 #include	"ICharacterAI.h"
 #include	"IAICycle.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		AIˆ—

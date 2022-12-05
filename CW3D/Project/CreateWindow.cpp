@@ -1,6 +1,6 @@
 #include "CreateWindow.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 CCreateWindow::CCreateWindow():
 	m_Color(),

@@ -4,7 +4,7 @@
 #include "GameDefine.h"
 #include "ResourceManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ïKéEãZÉQÅ[ÉW
@@ -51,8 +51,8 @@ namespace Sample
 		void Load()
 		{
 
-			m_pGaugeFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGauge");
-			m_pFont = Sample::ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
+			m_pGaugeFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGauge");
+			m_pFont = ActionGame::ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
 
 			m_Offset = Vector2(0, 0);
 			m_Size = Vector2(1, 1);

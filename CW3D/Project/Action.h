@@ -3,7 +3,7 @@
 #include	"IAction.h"
 #include	"GameDefine.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	
 	/**
@@ -12,18 +12,19 @@ namespace Sample {
 	class Action : public IAction
 	{
 	private:
-		/** 姿勢クラス */
+		/* 姿勢クラス */
 		TransformPtr					m_Transform;
 
-		/** 速度クラス */
+		/* 速度クラス */
 		VelocityPtr						m_Velocity;
 
-		///** アニメーションクラス */
+		/* アニメーションクラス */
 		AnimationStatePtr				m_Animation;
 
-		//パラメーター情報
-		AnyParameterMapPtr				parameters;
+		/* パラメーター情報クラス */
+		AnyParameterMapPtr				m_Parameters;
 
+		/* スキル操作クラス */
 		SkillControllerPtr				m_SkillController;
 		
 
@@ -45,10 +46,10 @@ namespace Sample {
 		/**
 		 * @brief		パラメーター情報登録
 		 */
-		void SetParameterMap(const AnyParameterMapPtr& a) final { parameters = a; }
+		void SetParameterMap(const AnyParameterMapPtr& a) final { m_Parameters = a; }
 
 		/**
-		 * @brief		パラメーター情報登録
+		 * @brief		スキル操作登録
 		 */
 		void SetSkillController(const SkillControllerPtr & a) final { m_SkillController = a; }
 
@@ -57,7 +58,7 @@ namespace Sample {
 		TransformPtr Transform() { return m_Transform; }
 		VelocityPtr	 Velocity()	 { return m_Velocity; }
 		AnimationStatePtr AnimationState() { return m_Animation; }
-		const AnyParameterMapPtr& ParameterMap() { return parameters; }
+		const AnyParameterMapPtr& ParameterMap() { return m_Parameters; }
 		SkillControllerPtr SkillController() { return m_SkillController; }
 	public:
 		/**
@@ -67,7 +68,7 @@ namespace Sample {
 			: m_Transform()
 			, m_Velocity()
 			, m_Animation()
-			, parameters()
+			, m_Parameters()
 			, m_SkillController()
 		{
 		}

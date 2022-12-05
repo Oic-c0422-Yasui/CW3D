@@ -1,21 +1,21 @@
 #include "FixedCamera.h"
 
-CFixedCamera::CFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+FixedCamera::FixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
 	: CCameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
-CFixedCamera::~CFixedCamera()
+FixedCamera::~FixedCamera()
 {
 	m_AnimData.Release();
 }
 
-void CFixedCamera::Create()
+void FixedCamera::Create()
 {
 	CCameraBase::Create();
 }
 
-void CFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void FixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 
 	if (m_AnimData.Flg)

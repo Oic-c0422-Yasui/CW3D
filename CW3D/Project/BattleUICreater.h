@@ -2,7 +2,7 @@
 #include "GameDefine.h"
 #include "ResourceManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CBattleUICreater
 	{

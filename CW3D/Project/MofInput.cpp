@@ -3,7 +3,7 @@
 #ifdef __MOFLIB
 #include	<Mof.h>
 
-using namespace Sample;
+using namespace ActionGame;
 
 /**
  * @brief		キーボードキーの取得

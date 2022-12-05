@@ -1,6 +1,6 @@
 #include "EnemyHPRender.h"
 
-Sample::CEnemyHPRender::CEnemyHPRender()
+ActionGame::CEnemyHPRender::CEnemyHPRender()
 	: m_CurrentHP(1.0f)
 	, m_CurrentGauge(1.0f)
 	, m_HP(0)
@@ -12,16 +12,16 @@ Sample::CEnemyHPRender::CEnemyHPRender()
 
 }
 
-Sample::CEnemyHPRender::~CEnemyHPRender()
+ActionGame::CEnemyHPRender::~CEnemyHPRender()
 {
 	Release();
 }
 
-void Sample::CEnemyHPRender::Initialize()
+void ActionGame::CEnemyHPRender::Initialize()
 {
-	m_pHPBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "DamageBar");
-	m_pFrame = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPFrame");
-	m_pDamageBar = Sample::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPBar");
+	m_pHPBar = ActionGame::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "DamageBar");
+	m_pFrame = ActionGame::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPFrame");
+	m_pDamageBar = ActionGame::ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPBar");
 
 
 	m_Offset = Vector3(0, 2, 0);
@@ -39,7 +39,7 @@ void Sample::CEnemyHPRender::Initialize()
 
 }
 
-void Sample::CEnemyHPRender::Reset() noexcept
+void ActionGame::CEnemyHPRender::Reset() noexcept
 {
 
 	m_CurrentHP = 1.0f;
@@ -47,7 +47,7 @@ void Sample::CEnemyHPRender::Reset() noexcept
 
 }
 
-void Sample::CEnemyHPRender::Render()
+void ActionGame::CEnemyHPRender::Render()
 {
 
 	if (!IsShow())
@@ -91,7 +91,7 @@ void Sample::CEnemyHPRender::Render()
 
 }
 
-void Sample::CEnemyHPRender::Release(void)
+void ActionGame::CEnemyHPRender::Release(void)
 {
 
 	m_pHPBar.reset();

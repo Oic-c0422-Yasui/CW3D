@@ -2,7 +2,7 @@
 #include	"IStateMachine.h"
 #include	"StateInput.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		AI処理インターフェイス

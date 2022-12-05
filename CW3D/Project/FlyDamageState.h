@@ -3,7 +3,7 @@
 #include	"State.h"
 #include	"FlyDamageAction.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		ダメージステート
@@ -18,66 +18,39 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		FlyDamageState()
-			: State()
-		{
-		}
+		FlyDamageState();
+			
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		void Start() override {
-			m_DamageAction = Actor()->GetAction<FlyDamageAction>(GetKey());
-			m_DamageAction->Start();
-		}
+		void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution() override {
-			m_DamageAction->Execution();
-
-			if (Actor()->GetTransform()->GetPositionY() <= 0)
-			{
-				auto& hp = Actor()->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-				if (hp <= 0)
-				{
-					ChangeState(STATE_KEY_DEAD);
-				}
-				else
-				{
-					ChangeState(STATE_KEY_DOWN);
-				}
-				
-			}
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution() override {
-		}
+		void InputExecution() override;
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		void End() override {
-			m_DamageAction->End();
-		}
+		void End() override;
 
 		/**
 	 * @brief		ステート内の接触イベント
 	 * @param[in]	type		当たった相手のタイプ
 	 * @param[in]	obj			当たった相手のオブジェクト
 	 */
-		void CollisionEvent(unsigned int type, std::any obj) override {
-		}
+		void CollisionEvent(unsigned int type, std::any obj) override;
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const StateKeyType GetKey() const override {
-			return STATE_KEY_FLYDAMAGE;
-		}
+		const StateKeyType GetKey() const override;
 	};
 }

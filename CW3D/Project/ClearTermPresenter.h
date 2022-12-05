@@ -7,7 +7,7 @@
 #include "Timer.h"
 #include "EnemyManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class ClearTermPresenter
 	{

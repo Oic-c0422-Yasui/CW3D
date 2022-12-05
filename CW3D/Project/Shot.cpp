@@ -1,10 +1,10 @@
 #include "Shot.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 
 
-Sample::CShot::CShot()
+ActionGame::CShot::CShot()
 	: m_Collider(std::make_shared<CAttackCollider>())
 	, m_Position(0, 0, 0)
 	, m_AABB()
@@ -25,11 +25,11 @@ Sample::CShot::CShot()
 {
 }
 
-Sample::CShot::~CShot()
+ActionGame::CShot::~CShot()
 {
 }
 
-void Sample::CShot::Create(Vector3 pos, ShotSphere sphire)
+void ActionGame::CShot::Create(Vector3 pos, ShotSphere sphire)
 {
 	m_Position = pos;
 	m_Offset = sphire.offset;
@@ -50,7 +50,7 @@ void Sample::CShot::Create(Vector3 pos, ShotSphere sphire)
 	m_ParentID = sphire.parentID;
 }
 
-void Sample::CShot::Create(Vector3 pos, ShotAABB aabb)
+void ActionGame::CShot::Create(Vector3 pos, ShotAABB aabb)
 {
 	m_Size = aabb.size;
 	m_Position = pos;
@@ -71,7 +71,7 @@ void Sample::CShot::Create(Vector3 pos, ShotAABB aabb)
 	m_ParentID = aabb.parentID;
 }
 
-void Sample::CShot::Update()
+void ActionGame::CShot::Update()
 {
 	if (!m_ShowFlg)
 	{
@@ -100,7 +100,7 @@ void Sample::CShot::Update()
 	DeleteHitId();
 }
 
-void Sample::CShot::Render()
+void ActionGame::CShot::Render()
 {
 	if (!m_ShowFlg)
 	{
@@ -109,7 +109,7 @@ void Sample::CShot::Render()
 }
 
 
-void Sample::CShot::UpdateTime()
+void ActionGame::CShot::UpdateTime()
 {
 	for (auto& id : m_HitIDs)
 	{

@@ -1,6 +1,6 @@
 #include "StageBase.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 CStageBase::CStageBase()
 	: m_Phase(0)
@@ -15,13 +15,13 @@ CStageBase::~CStageBase()
 {
 }
 
-void Sample::CStageBase::Render()
+void ActionGame::CStageBase::Render()
 {
 	CMatrix44 matWorld;
 	m_pStage->Render(matWorld);
 }
 
-void Sample::CStageBase::NextPhase()
+void ActionGame::CStageBase::NextPhase()
 {
 	if (m_Phase + 1 < GetDivCount())
 	{

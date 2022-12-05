@@ -6,7 +6,7 @@
 
 
 
-namespace Sample
+namespace ActionGame
 {
 	class CSkillController
 	{

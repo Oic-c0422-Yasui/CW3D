@@ -1,7 +1,7 @@
 #include "SkillControllerRender.h"
 #include "Player.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 
 CSkillControllerRender::CSkillControllerRender()

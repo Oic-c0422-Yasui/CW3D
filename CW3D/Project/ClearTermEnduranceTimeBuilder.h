@@ -2,7 +2,7 @@
 #include "ClearTermBuilder.h"
 #include "ClearTermEnduranceTime.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	クリア条件ビルダー(時間耐久)

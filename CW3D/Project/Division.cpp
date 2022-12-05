@@ -1,17 +1,17 @@
 #include "Division.h"
 
-Sample::CDivision::CDivision(DIVISION_DATA data)
+ActionGame::CDivision::CDivision(DIVISION_DATA data)
 	: m_Data(data)
 	, m_ClearFlg(false)
 {
 }
 
-Sample::CDivision::~CDivision()
+ActionGame::CDivision::~CDivision()
 {
 	Release();
 }
 
-void Sample::CDivision::Initialize()
+void ActionGame::CDivision::Initialize()
 {
 	m_ClearFlg = false;
 	for (auto& obj : m_Data.Objects)
@@ -20,7 +20,7 @@ void Sample::CDivision::Initialize()
 	}
 }
 
-void Sample::CDivision::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CDivision::Update(const ClearTermProviderPtr& provider)
 {
 	for (auto& obj : m_Data.Objects)
 	{
@@ -38,7 +38,7 @@ void Sample::CDivision::Update(const ClearTermProviderPtr& provider)
 	m_ClearFlg = true;
 }
 
-void Sample::CDivision::Release()
+void ActionGame::CDivision::Release()
 {
 	m_Data.Objects.clear();
 	m_Data.ClearTerms.clear();

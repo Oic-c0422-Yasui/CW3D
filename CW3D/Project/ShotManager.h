@@ -5,7 +5,7 @@
 #include "Common.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	
 
@@ -80,5 +80,5 @@ namespace Sample
 	};
 }
 //簡易アクセス用
-#define ShotManagerInstance 	Sample::CShotManager::GetInstance()
+#define ShotManagerInstance 	ActionGame::CShotManager::GetInstance()
 

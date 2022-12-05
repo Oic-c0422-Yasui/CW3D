@@ -13,7 +13,7 @@ namespace Spawner
 		/**
 		 * @brief		ê∂ê¨
 		 */
-		virtual Sample::ActorObjectPtr Create() = 0;
+		virtual ActionGame::ActorObjectPtr Create() = 0;
 	};
 
 	template <typename T> using SpawnObjectCreatorPtr = std::shared_ptr<ISpawnObjectCreator<T>>;

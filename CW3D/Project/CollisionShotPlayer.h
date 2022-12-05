@@ -4,7 +4,7 @@
 #include "Shot.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 
 	/**

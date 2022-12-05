@@ -1,7 +1,7 @@
 #pragma once
 #include	"IState.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		ステートマシーンインターフェイス

@@ -1,14 +1,14 @@
 #include "StageCreator.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::StageCreator::StageCreator()
+ActionGame::StageCreator::StageCreator()
 {
 }
 
 
 
-Sample::StagePtr Sample::StageCreator::Create(const DivisionArrayPtr& division)
+ActionGame::StagePtr ActionGame::StageCreator::Create(const DivisionArrayPtr& division)
 {
 
 	

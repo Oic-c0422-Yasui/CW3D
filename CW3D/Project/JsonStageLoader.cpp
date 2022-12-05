@@ -1,14 +1,14 @@
 #include "JsonStageLoader.h"
 #include "ResourceManager.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::JsonStageLoader::JsonStageLoader()
+ActionGame::JsonStageLoader::JsonStageLoader()
 	: m_DivisionArray()
 {
 }
 
-bool Sample::JsonStageLoader::Load(const std::string& name)
+bool ActionGame::JsonStageLoader::Load(const std::string& name)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
@@ -19,7 +19,7 @@ bool Sample::JsonStageLoader::Load(const std::string& name)
 	return Load(os);
 }
 
-bool Sample::JsonStageLoader::Load(nlohmann::json& os)
+bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 {
 	//ステージメッシュの読み込み
 	auto& stageMesh = os["StageMesh"];

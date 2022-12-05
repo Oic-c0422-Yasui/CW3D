@@ -1,7 +1,7 @@
 #pragma once
 #include "StageBase.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CStageManager
 	{

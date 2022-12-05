@@ -3,7 +3,7 @@
 #include "Enemy.h"
 #include "Object.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		“G‚Æ“G‚Ì‚ ‚½‚è”»’è

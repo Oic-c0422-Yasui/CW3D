@@ -5,7 +5,7 @@
 #include	"JsonDivisionCreator.h"
 #include	"StageBase.h"
 
-namespace Sample 
+namespace ActionGame 
 {
 
 

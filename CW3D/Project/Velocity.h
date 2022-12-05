@@ -5,7 +5,7 @@
 
 
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		‘¬“xŠÇ—ƒNƒ‰ƒX

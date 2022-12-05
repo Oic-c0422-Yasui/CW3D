@@ -9,7 +9,7 @@
 #include "UltimateSkill.h"
 #include "AdditionalSkill.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ƒXƒLƒ‹‚ð‚Ü‚Æ‚ß‚Ä•\Ž¦‚·‚é
@@ -18,8 +18,8 @@ namespace Sample
 	{
 	private:
 
-		std::vector < Sample::SkillRenderPtr>	m_SkillRender;
-		std::vector < Sample::SkillUltGaugeRenderPtr> m_UltGaugeRender;
+		std::vector < ActionGame::SkillRenderPtr>	m_SkillRender;
+		std::vector < ActionGame::SkillUltGaugeRenderPtr> m_UltGaugeRender;
 
 	public:
 		/**

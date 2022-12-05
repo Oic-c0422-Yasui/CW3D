@@ -1,10 +1,10 @@
 #include "Player.h"
-
+#include	"EffectController.h"
 
 
 
 CPlayer::CPlayer()
-	: Sample::ActorObject()
+	: ActionGame::ActorObject()
 	, m_pInput()
 
 {
@@ -17,7 +17,7 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Load()
 {
-	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player", "Player");
+	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player", "Player");
 
 	if (m_pMesh == nullptr)
 	{
@@ -27,7 +27,7 @@ bool CPlayer::Load()
 	m_Motion = m_pMesh->CreateMotionController();
 	m_Actor->SetAnimationState(m_Motion);
 	
-	m_StateMachine = std::make_shared<Sample::StateMachine>();
+	m_StateMachine = std::make_shared<ActionGame::StateMachine>();
 	//アクション作成
 	m_ActionCreator.Create(m_Actor);
 	//ステート作成
@@ -37,8 +37,8 @@ bool CPlayer::Load()
 	auto& param = m_Actor->GetParameterMap();
 	m_ParameterCreator.Create(param);
 	//パラメーター設定
-	m_MaxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
-	m_MaxUltGauge = param->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	m_MaxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	m_MaxUltGauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
 	//スキル設定
 	m_SkillCreator.Create(m_Actor);
 	
@@ -61,9 +61,9 @@ void CPlayer::Initialize()
 	//相手が獲得する必殺技ゲージの倍率
 	SetUltBoostMag(1.0f);
 	//ゲージ初期化
-	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = m_MaxHP.Get();
 	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
@@ -92,7 +92,7 @@ void CPlayer::Update()
 			m_ShowFlg = false;
 		}
 	}
-	Sample::ActorObject::Update();
+	ActionGame::ActorObject::Update();
 }
 
 void CPlayer::Render()
@@ -101,7 +101,7 @@ void CPlayer::Render()
 	{
 		return;
 	}
-	Sample::ActorObject::Render();
+	ActionGame::ActorObject::Render();
 }
 
 void CPlayer::RenderDebug2D()
@@ -111,20 +111,21 @@ void CPlayer::RenderDebug2D()
 
 void CPlayer::Release()
 {
-	Sample::ActorObject::Release();
+	ActionGame::ActorObject::Release();
 }
 
 void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level)
 {
-	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
-	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
+	//ダメージエフェクト生成
+	ActionGame::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
+	ActionGame::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 
 	auto& transform = m_Actor->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
 
-	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
 
 	//必殺技ゲージ獲得

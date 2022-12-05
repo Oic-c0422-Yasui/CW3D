@@ -1,7 +1,7 @@
 #pragma once
 #include "EnemyBuilder.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class EnemyBuilderDictionary
 	{

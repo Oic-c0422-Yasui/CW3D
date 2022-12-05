@@ -1,6 +1,6 @@
 #include "ClearTermEnemyAllDeadText.h"
 
-Sample::ClearTermEnemyAllDeadText::ClearTermEnemyAllDeadText()
+ActionGame::ClearTermEnemyAllDeadText::ClearTermEnemyAllDeadText()
 	: ClearTermText("“G‚ð‚·‚×‚Ä“|‚¹")
 	, m_EnemyCount(0)
 	, m_EnemyMaxCount(0)
@@ -9,12 +9,12 @@ Sample::ClearTermEnemyAllDeadText::ClearTermEnemyAllDeadText()
 {
 }
 
-void Sample::ClearTermEnemyAllDeadText::Initialize()
+void ActionGame::ClearTermEnemyAllDeadText::Initialize()
 {
 	
 }
 
-void Sample::ClearTermEnemyAllDeadText::Render()
+void ActionGame::ClearTermEnemyAllDeadText::Render()
 {
 	
 	CGraphicsUtilities::RenderString(m_DescriptionPos.x, m_DescriptionPos.y,MOF_XRGB(255,255,255), m_Description);

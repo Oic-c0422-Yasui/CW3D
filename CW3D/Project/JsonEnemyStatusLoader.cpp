@@ -1,6 +1,6 @@
 #include "JsonEnemyStatusLoader.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 JsonEnemyStatusLoader::JsonEnemyStatusLoader()
 {

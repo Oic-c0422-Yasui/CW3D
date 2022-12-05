@@ -1,6 +1,6 @@
 #include "JsonClearTermCreator.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 JsonClearTermCreator::JsonClearTermCreator()
 	:dictionary()

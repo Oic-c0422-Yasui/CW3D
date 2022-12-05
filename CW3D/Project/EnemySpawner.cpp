@@ -7,7 +7,7 @@ Spawner::EnemySpawner::EnemySpawner(const SpawnConditionArray& conditions, Spawn
 	, m_EnemyParam(param)
 {
 }
-void Spawner::EnemySpawner::Update(Sample::EnemyManager& manager)
+void Spawner::EnemySpawner::Update(ActionGame::EnemyManager& manager)
 {
 	//どれか一つでも条件を満たさないなら実行しない
 	if (!IsValid())
@@ -21,9 +21,9 @@ void Spawner::EnemySpawner::Update(Sample::EnemyManager& manager)
 	}
 }
 
-Sample::EnemyPtr Spawner::EnemySpawner::Spawn(const Sample::EnemyBuildParameterPtr& param)
+ActionGame::EnemyPtr Spawner::EnemySpawner::Spawn(const ActionGame::EnemyBuildParameterPtr& param)
 {
-	Sample::EnemyBuilderDictionary dictionary;
+	ActionGame::EnemyBuilderDictionary dictionary;
 	 //ビルダー取得
 	auto builder = dictionary.Get(param->GetParam().m_Type);
 	//敵生成

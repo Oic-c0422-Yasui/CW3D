@@ -2,7 +2,7 @@
 
 #include	"IInput.h"
 
-namespace Sample {
+namespace ActionGame {
 	
 	/**
 	 * @brief		“ü—ÍƒNƒ‰ƒX

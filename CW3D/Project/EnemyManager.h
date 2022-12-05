@@ -1,13 +1,13 @@
 #pragma once
 #include "Enemy.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class EnemyManager
 	{
 	private:
 		EnemyArrayPtr m_Enemys;
-		Sample::ReactiveParameter<size_t> m_EnemyCount;
+		ActionGame::ReactiveParameter<size_t> m_EnemyCount;
 		size_t m_EnemyMaxCount;
 	public:
 		EnemyManager();
@@ -25,7 +25,7 @@ namespace Sample
 			return m_EnemyMaxCount;
 		}
 
-		Sample::IObservable<size_t>& GetEnemyCountSubject()
+		ActionGame::IObservable<size_t>& GetEnemyCountSubject()
 		{
 			return m_EnemyCount;
 		}

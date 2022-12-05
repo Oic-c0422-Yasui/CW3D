@@ -1,7 +1,7 @@
 #pragma once
 #include "ClearTermBuilder.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	クリア条件ビルダーの辞書

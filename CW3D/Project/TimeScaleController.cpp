@@ -1,13 +1,13 @@
 #include	"TimeScaleController.h"
 
-void Sample::TimeScaleController::Update()
+void ActionGame::TimeScaleController::Update()
 {
 	m_TimeScale.Update();
 	m_PlayerTimeScale.Update();
 	m_EnemyTimeScale.Update();
 }
 
-float Sample::TimeScaleController::GetTimeScale(CHARACTER_TYPE type) const noexcept
+float ActionGame::TimeScaleController::GetTimeScale(CHARACTER_TYPE type) const noexcept
 {
 	switch (type)
 	{

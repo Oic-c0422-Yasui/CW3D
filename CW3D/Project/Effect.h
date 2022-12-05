@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* エフェクトの作成パラーメータ
@@ -78,6 +78,7 @@ namespace Sample
 		{
 			return m_Offset;
 		}
+
 	
 	};
 

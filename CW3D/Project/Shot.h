@@ -5,7 +5,7 @@
 #include	"KnockBack.h"
 #include "TimeScaleController.h"
 
-namespace Sample
+namespace ActionGame
 {
 	//ショットパラメーター
 	struct ShotCreateParameter {

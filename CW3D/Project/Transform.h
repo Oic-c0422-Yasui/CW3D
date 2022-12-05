@@ -7,7 +7,7 @@
 
 extern float gameSpeed;
 
-namespace Sample
+namespace ActionGame
 {
 	//p¨•ÏŠ·ƒNƒ‰ƒX
 	class  Transform

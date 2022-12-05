@@ -1,6 +1,6 @@
 #include "ClearTermEnduranceTimeText.h"
 
-Sample::ClearTermEnduranceTimeText::ClearTermEnduranceTimeText()
+ActionGame::ClearTermEnduranceTimeText::ClearTermEnduranceTimeText()
 	: ClearTermText("‘Ï‹v")
 	, m_CurrentTime(0.0f)
 	, m_FinishTime(0.0f)
@@ -9,10 +9,10 @@ Sample::ClearTermEnduranceTimeText::ClearTermEnduranceTimeText()
 {
 }
 
-void Sample::ClearTermEnduranceTimeText::Initialize()
+void ActionGame::ClearTermEnduranceTimeText::Initialize()
 {
 }
 
-void Sample::ClearTermEnduranceTimeText::Render()
+void ActionGame::ClearTermEnduranceTimeText::Render()
 {
 }

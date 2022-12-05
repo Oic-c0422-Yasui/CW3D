@@ -1,14 +1,14 @@
 #include "Stage1.h"
 #include "ResourceManager.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::CStage1::CStage1()
+ActionGame::CStage1::CStage1()
 	:CStageBase()
 {
 }
 
-bool Sample::CStage1::Load(const DivisionArrayPtr& divisionArray)
+bool ActionGame::CStage1::Load(const DivisionArrayPtr& divisionArray)
 {
 	 m_pStage = ResourcePtrManager<CMeshContainer>
 							::GetInstance().GetResource("Stage", "StageMesh");
@@ -18,7 +18,7 @@ bool Sample::CStage1::Load(const DivisionArrayPtr& divisionArray)
 	return true;
 }
 
-void Sample::CStage1::Initialize()
+void ActionGame::CStage1::Initialize()
 {
 
 	m_ClearFlg = false;
@@ -31,7 +31,7 @@ void Sample::CStage1::Initialize()
 	m_CurrentDivision = GetDivision(m_Phase);
 }
 
-void Sample::CStage1::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CStage1::Update(const ClearTermProviderPtr& provider)
 {
 	if (m_ClearFlg)
 	{
@@ -51,17 +51,17 @@ void Sample::CStage1::Update(const ClearTermProviderPtr& provider)
 
 }
 
-void Sample::CStage1::Render()
+void ActionGame::CStage1::Render()
 {
 	CMatrix44 matWorld;
 	m_pStage->Render(matWorld);
 }
 
-void Sample::CStage1::RenderDebug()
+void ActionGame::CStage1::RenderDebug()
 {
 }
 
-void Sample::CStage1::Release()
+void ActionGame::CStage1::Release()
 {
 	m_pStage.reset();
 	m_Divisions.reset();

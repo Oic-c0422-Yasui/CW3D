@@ -1,11 +1,11 @@
 #include "ActorObject.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 
 ActorObject::ActorObject()
-	: m_Actor(std::make_shared<Sample::Actor>())
-	, m_StateMachine(std::make_shared<Sample::StateMachine>())
+	: m_Actor(std::make_shared<ActionGame::Actor>())
+	, m_StateMachine(std::make_shared<ActionGame::StateMachine>())
 	, m_Motion()
 	, m_ShowFlg(false)
 	, m_DeadFlg(false)
@@ -21,7 +21,7 @@ ActorObject::~ActorObject()
 {
 }
 
-void Sample::ActorObject::Initialize()
+void ActionGame::ActorObject::Initialize()
 {
 	m_ShowFlg = true;
 	m_DeadFlg = false;
@@ -72,10 +72,10 @@ void ActorObject::Release()
 	m_pMesh.reset();
 }
 
-void Sample::ActorObject::AddUltGauge(float gauge)
+void ActionGame::ActorObject::AddUltGauge(float gauge)
 {
-	auto& ult = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& ult = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	ult += gauge;
-	auto& maxUlt = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	auto& maxUlt = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
 	ult = min(ult, maxUlt);
 }

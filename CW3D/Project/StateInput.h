@@ -3,7 +3,7 @@
 #include	"IInput.h"
 #include	<unordered_map>
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		“ü—ÍƒNƒ‰ƒX

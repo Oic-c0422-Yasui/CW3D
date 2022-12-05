@@ -5,13 +5,13 @@
 #include "ParameterHandle.h"
 #include "Observer.h"
 
-namespace Sample
+namespace ActionGame
 {
 
 	class CTimer
 	{
 	private:
-		Sample::ParameterHandle< Sample::ReactiveParameter<float>>	m_CurrentTime;
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float>>	m_CurrentTime;
 		float	m_TargetTime;
 		bool	m_AchieveFlg;
 		bool	m_StopFlg;
@@ -54,7 +54,7 @@ namespace Sample
 		/**
 		 * @brief		現在時間のサブスクライブ
 		 */
-		Sample::IObservable<float>& GetTimeSubject()
+		ActionGame::IObservable<float>& GetTimeSubject()
 		{
 			return m_CurrentTime.Get();
 		}

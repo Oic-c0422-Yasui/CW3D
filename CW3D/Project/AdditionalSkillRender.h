@@ -4,7 +4,7 @@
 #include "ResourceManager.h"
 #include "SkillRender.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ƒvƒŒƒCƒ„[CTUI

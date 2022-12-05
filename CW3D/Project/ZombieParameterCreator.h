@@ -2,7 +2,7 @@
 #include "IParameterCreator.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		ƒpƒ‰ƒ[ƒ^¶¬

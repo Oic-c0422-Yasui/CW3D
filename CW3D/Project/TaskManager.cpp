@@ -1,16 +1,16 @@
 #include "TaskManager.h"
 
-Sample::TaskManager::TaskManager()
+ActionGame::TaskManager::TaskManager()
 	:m_TaskList()
 {
 }
 
-Sample::TaskManager::~TaskManager()
+ActionGame::TaskManager::~TaskManager()
 {
 	ResetTask();
 }
 
-void Sample::TaskManager::Excution()
+void ActionGame::TaskManager::Excution()
 {
 
 	for (auto task : m_TaskList)
@@ -19,16 +19,16 @@ void Sample::TaskManager::Excution()
 	}
 }
 
-void Sample::TaskManager::Sort()
+void ActionGame::TaskManager::Sort()
 {
 	std::sort(m_TaskList.begin(), m_TaskList.end(),
-		[](Sample::TaskPtr& task1, Sample::TaskPtr& task2)
+		[](ActionGame::TaskPtr& task1, ActionGame::TaskPtr& task2)
 		{
 			return task1->GetPriority() < task2->GetPriority();
 		});
 }
 
-void Sample::TaskManager::AddTask(const std::string& key, Task_Priority pri,Func func)
+void ActionGame::TaskManager::AddTask(const std::string& key, Task_Priority pri,Func func)
 {
 	auto task = std::make_shared<Task>(key, pri, func);
 
@@ -36,14 +36,14 @@ void Sample::TaskManager::AddTask(const std::string& key, Task_Priority pri,Func
 	Sort();
 }
 
-void Sample::TaskManager::DeleteTask(const std::string& key)
+void ActionGame::TaskManager::DeleteTask(const std::string& key)
 {
 	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
 		return task->GetName() == key; });
 	m_TaskList.erase(removeIt, m_TaskList.end());
 }
 
-const Sample::TaskPtr& Sample::TaskManager::GetTask(const std::string& key)
+const ActionGame::TaskPtr& ActionGame::TaskManager::GetTask(const std::string& key)
 {
 	for (auto& task : m_TaskList)
 	{

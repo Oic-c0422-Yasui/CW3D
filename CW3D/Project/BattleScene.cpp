@@ -15,7 +15,7 @@
 #include	"JsonStageLoader.h"	
 
 
-using namespace Sample;
+using namespace ActionGame;
 
 using Task = std::function<void()>;
 //std::vector<Task> taskList;
@@ -36,8 +36,8 @@ CBattleScene::~CBattleScene()
 bool CBattleScene::Load()
 {
 	//インプット読み込み
-	auto input = InputManagerInstance.AddInput<Sample::MofInput>();
-	InputManagerInstance.AddInput<Sample::StateInput>();
+	auto input = InputManagerInstance.AddInput<ActionGame::MofInput>();
+	InputManagerInstance.AddInput<ActionGame::StateInput>();
 
 	//キーボード
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
@@ -303,11 +303,11 @@ void CBattleScene::Release()
 	m_EnemysHPRender.clear();
 	
 	//リソース解放
-	Sample::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
-	Sample::ResourcePtrManager<CMeshContainer>::GetInstance().Release();
-	Sample::ResourcePtrManager<CSprite3D>::GetInstance().Release();
-	Sample::ResourcePtrManager<CTexture>::GetInstance().Release();
-	Sample::ResourcePtrManager<CFont>::GetInstance().Release();
+	ActionGame::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
+	ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().Release();
+	ActionGame::ResourcePtrManager<CSprite3D>::GetInstance().Release();
+	ActionGame::ResourcePtrManager<CTexture>::GetInstance().Release();
+	ActionGame::ResourcePtrManager<CFont>::GetInstance().Release();
 
 	//インプット解放(仮)
 	InputManagerInstance.Release();
@@ -690,7 +690,7 @@ void CBattleScene::RegisterAfterSpawn()
 	{
 		//敵HPバーの描画入れ替え
 		std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
-			[](Sample::EnemyHPRenderPtr& obj1, Sample::EnemyHPRenderPtr& obj2)
+			[](ActionGame::EnemyHPRenderPtr& obj1, ActionGame::EnemyHPRenderPtr& obj2)
 		{
 			return obj1->GetViewPosition().z > obj2->GetViewPosition().z;
 		});

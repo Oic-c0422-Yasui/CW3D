@@ -4,13 +4,13 @@
 #include "EnemyHPRender.h"
 #include "PlayerHPRender.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CHPPresenter
 	{
 	public:
 
-		static void Present(const EnemyPtr& enemy, const Sample::EnemyHPRenderPtr& view)
+		static void Present(const EnemyPtr& enemy, const ActionGame::EnemyHPRenderPtr& view)
 		{
 			enemy->GetHPSubject()->Subscribe([view](int hp) { view->SetHP(hp); });
 			enemy->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });
@@ -23,7 +23,7 @@ namespace Sample
 			view->SetShow(enemy->IsShow());
 		}
 
-		static void Present(const PlayerPtr& player, const Sample::PlayerHPRenderPtr& view)
+		static void Present(const PlayerPtr& player, const ActionGame::PlayerHPRenderPtr& view)
 		{
 			player->GetHPSubject().Subscribe([view](int hp) { view->SetHP(hp); });
 			player->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });

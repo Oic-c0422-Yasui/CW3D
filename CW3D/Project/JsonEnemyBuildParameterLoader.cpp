@@ -1,8 +1,8 @@
 #include "JsonEnemyBuildParameterLoader.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-EnemyBuildParameterArrayPtr Sample::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
+EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
@@ -13,7 +13,7 @@ EnemyBuildParameterArrayPtr Sample::JsonEnemyBuildParameterLoader::Load(const st
 	return Load(os, statusDictionary);
 }
 
-EnemyBuildParameterArrayPtr Sample::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
+EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
 {
 
 	EnemyBuildParameterArrayPtr parameter = std::make_shared<EnemyBuildParameterArray>();

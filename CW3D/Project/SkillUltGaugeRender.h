@@ -3,7 +3,7 @@
 #include "GameDefine.h"
 #include "ResourceManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ÉvÉåÉCÉÑÅ[CTUI
@@ -47,9 +47,9 @@ namespace Sample
 
 		void Load()
 		{
-			m_pSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrame");
-			m_pUsedSKillFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrameMono");
-			m_pGaugeFrame = Sample::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltSkillGaugeFrame");
+			m_pSKillFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrame");
+			m_pUsedSKillFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrameMono");
+			m_pGaugeFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltSkillGaugeFrame");
 
 		}
 

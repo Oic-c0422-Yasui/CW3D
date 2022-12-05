@@ -2,7 +2,7 @@
 #include "ClearTermBuilder.h"
 #include "ClearTermEnemysAllDead.h"
 
-namespace Sample
+namespace ActionGame
 {
     /*
     * @brief    クリア条件ビルダー(敵をすべて倒す)

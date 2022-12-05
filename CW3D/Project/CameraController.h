@@ -3,7 +3,7 @@
 #include "CameraBase.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 
 	class CCameraController : public Singleton<CCameraController>
@@ -65,41 +65,85 @@ namespace Sample
 		* @param	leapEndTime		デフォルトのカメラへ戻るのにかかる時間
 		*/
 		void SetCamera(const CameraPtr& camera, float tTime, MyUtilities::EASING_TYPE startEaseType, float leapStartTime, MyUtilities::EASING_TYPE endEaseType, float leapEndTime);
-		
+		/*
+		* @brief	カメラをデフォルトにする
+		*/
 		void SetDefault();
+		/*
+		* @brief	更新
+		* @param pos	座標
+		* @param lookPos	注視座標 
+		*/
+		void Update(const Vector3& pos, const Vector3& lookPos);
 
-		void Update(Vector3 pos, Vector3 lookPos);
-
+		/*
+		* @brief	２Dデバッグ描画
+		*/
 		void Render2DDebug();
 
+		/*
+		* @brief	座標取得
+		* @return	座標
+		*/
 		const Vector3& GetPosition() const noexcept
 		{
 			return m_Camera->GetPos();
 		}
+		/*
+		* @brief	注視座標取得
+		* @return	注視座標
+		*/
 		const Vector3& GetLookPosition() const noexcept
 		{
 			return m_Camera->GetLookPos();
 		}
-
+		/*
+		* @brief	目標座標設定
+		* @param	pos 目標座標
+		*/
 		void SetTargetPos(const Vector3& pos) noexcept
 		{
 			m_Camera->SetPos(pos);
 		}
+		/*
+		* @brief	目標注視座標設定
+		* @param	pos 目標注視座標
+		*/
 		void SetTargetLookPos(const Vector3& pos) noexcept
 		{
 			m_Camera->SetLookPos(pos);
 		}
+		/*
+		* @brief	ターゲット設定
+		* @param	pos 目標座標
+		* @param	lookPos 目標注視座標
+		*/
 		void SetTarget(const Vector3& pos, const Vector3& lookPos) noexcept
 		{
 			SetTargetPos(pos);
 			SetTargetLookPos(lookPos);
 		}
+		/*
+		* @brief	カメラ取得
+		* @return	カメラ
+		*/
 		const CCamera& GetCamera() const noexcept
 		{
 			return m_Camera->GetCamera();
 		}
 
+		/*
+		* @brief	カメラ振動
+		* @param	power	振動する幅
+		* @param	freq	振動する頻度
+		* @param	time	振動する時間 
+		*/
 		void Quake(float power, float freq, float time);
+		/*
+		* @brief	カメラ座標適用
+		* @param	pos	座標
+		* @param	lookPos	注視座標
+		*/
 		void Enable(const Vector3& pos, const Vector3& lookPos);
 
 	};
@@ -108,5 +152,5 @@ namespace Sample
 
 
 //簡易アクセス用
-#define CameraControllerInstance 	Sample::CCameraController::GetInstance()
+#define CameraControllerInstance 	ActionGame::CCameraController::GetInstance()
 

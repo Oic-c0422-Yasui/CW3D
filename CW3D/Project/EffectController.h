@@ -3,7 +3,7 @@
 
 #include "Singleton.h"
 
-namespace Sample 
+namespace ActionGame 
 {
 	/*
 	* エフェクト操作クラス
@@ -96,7 +96,7 @@ namespace Sample
 
 	};
 	//簡易アクセス用
-	#define EffectControllerInstance 	Sample::CEffectController::GetInstance()
+	#define EffectControllerInstance 	ActionGame::CEffectController::GetInstance()
 }
 
 

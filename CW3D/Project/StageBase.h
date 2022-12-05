@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "Division.h"
 
-namespace Sample
+namespace ActionGame
 {
 
 	class CStageBase

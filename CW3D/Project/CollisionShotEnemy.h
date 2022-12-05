@@ -4,7 +4,7 @@
 #include "Shot.h"
 #include "ActorObjectManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	
 	/**

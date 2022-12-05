@@ -4,7 +4,7 @@
 
 #ifdef __MOFLIB
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		“ü—ÍƒNƒ‰ƒX

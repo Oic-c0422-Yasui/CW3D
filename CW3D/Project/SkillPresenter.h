@@ -3,7 +3,7 @@
 #include "SkillRender.h"
 #include "AdditionalSkillRender.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CSkillPresenter
 	{

@@ -2,7 +2,7 @@
 
 #include	"Subject.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	template <typename T>
 	class ReactiveParameter : public Subject<T> {

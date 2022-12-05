@@ -3,13 +3,11 @@
 #include "IAction.h"
 
 #include "Common.h"
-#include "ShotManager.h"
 #include "ReactiveParameter.h"
-#include "CameraController.h"
 #include "ParameterHandle.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 	
 	//アニメーション用のシェアポインタ
@@ -77,15 +75,19 @@ namespace Sample {
 		 */
 		virtual void SetScale(const Vector3& scale) = 0;
 
-
+		/**
+		 * @brief		反転設定
+		 */
 		virtual void SetReverse(bool isReverse) = 0;
 
-		///**
-		// * @brief		アニメーション
-		// */
+		/**
+		 * @brief		アニメーション設定
+		 */
 		virtual void SetAnimationState(AnimationStatePtr animState) = 0;
 
-		//タイプ
+		/**
+		 * @brief		キャラタイプ設定
+		 */
 		virtual void SetType(CHARACTER_TYPE type) = 0;
 
 		/**
@@ -148,23 +150,34 @@ namespace Sample {
 		 */
 		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
 
-		///**
-		// * @brief		アニメーション
-		// */
+		/**
+		 * @brief		アニメーション
+		 */
 		virtual const AnimationStatePtr& GetAnimationState() const = 0;
 
-		///**
-		// * @brief		スキル
-		// */
+		/**
+		 * @brief		スキル
+		 */
 		virtual const SkillControllerPtr& GetSkillController() const = 0;
 
-		//接触判定回避取得
+		/*
+		* @brief	接触判定回避取得
+		*/
 		virtual bool IsThrough() const = 0;
 
+		/*
+		* @brief	接触判定回避設定
+		*/
 		virtual void SetThrough(bool isThrough) = 0;
 
+		/*
+		* @brief	アーマーレベル取得
+		*/
 		virtual BYTE GetArmorLevel() const = 0;
 
+		/*
+		* @brief	アーマーレベル設定
+		*/
 		virtual void SetArmorLevel(BYTE armor) = 0;
 
 

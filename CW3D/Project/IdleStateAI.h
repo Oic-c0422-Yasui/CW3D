@@ -5,7 +5,7 @@
 #include	"Collision.h"
 #include	"GameDefine.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		待機ステート

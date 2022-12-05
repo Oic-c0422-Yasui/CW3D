@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "SkillUltGaugeRender.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CSkillUltGaugePresenter
 	{

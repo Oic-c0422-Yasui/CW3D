@@ -3,7 +3,7 @@
 #include "TimeScaleController.h"
 
 
-using namespace Sample;
+using namespace ActionGame;
 
 CCameraController::CCameraController()
 	: Singleton<CCameraController>()
@@ -88,7 +88,7 @@ void CCameraController::SetDefault()
 	SetCamera(m_DefaultCamera);
 }
 
-void CCameraController::Update(Vector3 pos, Vector3 lookPos)
+void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	if (m_LeapStartFlg)
 	{
@@ -97,6 +97,7 @@ void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 			SetCamera(m_NextCamera, m_LeapTime);
 		}
 	}
+	//タイマー
 	if (m_TimerStartFlg)
 	{
 		if (m_Time > m_CurrentTime)
@@ -105,7 +106,10 @@ void CCameraController::Update(Vector3 pos, Vector3 lookPos)
 		}
 		else
 		{
+			//タイマー終了時
+			
 			m_TimerStartFlg = false;
+			//補間フラグがTrueなら
 			if (m_LeapFlg)
 			{
 				m_LeapFlg = false;

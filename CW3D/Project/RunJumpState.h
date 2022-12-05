@@ -3,7 +3,7 @@
 #include	"State.h"
 #include	"RunJumpAction.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		移動ステート
@@ -17,77 +17,29 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunJumpState()
-			: State()
-		{
-		}
+		RunJumpState();
+			
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		void Start() override {
-			m_JumpAction = Actor()->GetAction<RunJumpAction>(GetKey());
-			m_JumpAction->Start();
-
-		}
+		void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution() override {
-			m_JumpAction->Execution();
-			// 落下状態への移行
-			if (Actor()->GetVelocity()->GetVelocityY() <= 0.0f)
-			{
-				ChangeState(STATE_KEY_RUNFALL);
-			}
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution() override {
-			//左右で移動
-
-			if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-				Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-				Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
-				Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				m_JumpAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
-			}
-
-
-			if (Input()->IsPush(INPUT_KEY_ATTACK))
-			{
-				ChangeState(STATE_KEY_RUNJUMPATTACK1);
-			}
-
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->IsCanUse() || Actor()->GetSkillController()->GetSkill(i)->GetFlyState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
-					break;
-				}
-			}
-
-		}
+		void InputExecution() override;
 
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		void End() override {
-
-		}
+		void End() override;
 
 
 
@@ -96,15 +48,13 @@ namespace Sample {
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, std::any obj) override {
-		}
+		void CollisionEvent(unsigned int type, std::any obj) override;
+
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const StateKeyType GetKey() const override {
-			return STATE_KEY_RUNJUMP;
-		}
+		const StateKeyType GetKey() const override;
 	};
 
 }

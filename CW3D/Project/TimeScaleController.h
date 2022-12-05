@@ -6,7 +6,7 @@
 #include "GameDefine.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief　タイムスケール操作クラス
@@ -229,5 +229,5 @@ namespace Sample
 	};
 }
 //簡易アクセス用
-#define TimeScaleControllerInstance 	Sample::TimeScaleController::GetInstance()
+#define TimeScaleControllerInstance 	ActionGame::TimeScaleController::GetInstance()
 

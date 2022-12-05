@@ -1,6 +1,6 @@
 #include "Object.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 CObject::CObject(const Vector3& pos, const Vector3& size, const Vector3& offset)
 	: m_Position(pos)

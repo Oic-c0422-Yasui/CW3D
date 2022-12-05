@@ -3,7 +3,7 @@
 #include "DivisionObject.h"
 
 
-namespace Sample
+namespace ActionGame
 {
     class CStage1 : public CStageBase
     {

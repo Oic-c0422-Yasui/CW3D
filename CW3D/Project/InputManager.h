@@ -3,7 +3,7 @@
 #include	"Input.h"
 #include	"Singleton.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		インプットマネージャー
@@ -61,4 +61,4 @@ namespace Sample {
 	};
 }
 //簡易アクセス用
-#define InputManagerInstance	Sample::InputManager::GetInstance()
+#define InputManagerInstance	ActionGame::InputManager::GetInstance()

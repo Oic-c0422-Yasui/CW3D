@@ -3,7 +3,7 @@
 #include	"State.h"
 #include	"IdleAction.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		待機ステート
@@ -24,101 +24,40 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleState(Parameter param)
-			: State()
-			, m_Time(0.0f)
-			, m_Parameter(param)
-		{
-		}
+		IdleState(Parameter param);
+			
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		void Start() override {
-			m_IdleAction = Actor()->GetAction<IdleAction>(GetKey());
-			m_Time = 0.0f;
-			m_IdleAction->Start();
-		}
+		void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution() override {
-			if (m_Time < m_Parameter.idleTime)
-			{
-				m_Time += CUtilities::GetFrameSecond();
-			}
-			else
-			{
-				ChangeState(STATE_KEY_IDLEMOTION);
-				
-			}
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution() override {
-			if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) ||
-				Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
-			{
-				ChangeState(STATE_KEY_RUN);
-			}
-			//キーボードでの移動
-			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) || Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-				Input()->IsNegativePress(INPUT_KEY_VERTICAL) || Input()->IsPress(INPUT_KEY_VERTICAL))
-			{
-				ChangeState(STATE_KEY_MOVE);
-			}
-
-			if (Input()->IsPush(INPUT_KEY_JUMP))
-			{
-				ChangeState(STATE_KEY_JUMP, STATE_KEY_MOVE);
-			}
-
-			if (Input()->IsPush(INPUT_KEY_ATTACK))
-			{
-				ChangeState(STATE_KEY_ATTACK1, STATE_KEY_MOVE);
-			}
-
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				if (!Actor()->GetSkillController()->GetSkill(i)->IsCanUse() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-				{
-
-					Actor()->GetSkillController()->GetSkill(i)->Start();
-					ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(), STATE_KEY_MOVE);
-					break;
-				}
-			}
-			
-		}
+		void InputExecution() override;
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		void End() override {
-		}
+		void End() override;
 
 		/**
 		 * @brief		ステート内の接触イベント
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, std::any obj) override {
-		}
+		void CollisionEvent(unsigned int type, std::any obj) override;
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const StateKeyType GetKey() const override {
-			return STATE_KEY_IDLE;
-		}
+		const StateKeyType GetKey() const override;
 	};
 
 }

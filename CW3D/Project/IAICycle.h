@@ -2,7 +2,7 @@
 
 #include	<memory>
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		üŠúŒˆ’èˆ—

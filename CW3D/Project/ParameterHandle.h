@@ -2,7 +2,7 @@
 
 #include	"Common.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		パラメーター保持

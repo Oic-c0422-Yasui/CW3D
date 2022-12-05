@@ -4,36 +4,41 @@
 
 
 
-namespace Sample {
+namespace ActionGame {
 
 
 	/**
-	 * @brief		アクション基底クラス
+	 * @brief		アクタークラス
 	 */
 	class Actor : public IActor, public std::enable_shared_from_this<IActor>
 	{
 	protected:
-		/** 姿勢 */
+		/* 姿勢 */
 		TransformPtr			m_Transform;
 
+		/*　速度 */
 		VelocityPtr				m_Velocity;
 
-		/** アクション */
+		/* アクションマップ */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
 		ActionMap				m_ActionMap;
 
 		/*パラメーター情報*/
 		AnyParameterMapPtr		m_Parameters;
 
+		/*スキル操作*/
 		SkillControllerPtr		m_SkillController;
 
-		/** モーション */
+		/* モーション */
 		AnimationStatePtr		m_Motion;
 
+		/* アクターID　*/
 		CMyID					m_MyID;
 
+		/* キャラタイプ　*/
 		CHARACTER_TYPE			m_CharaType;
 
+		/* アーマーレベル　*/
 		BYTE					m_ArmorLevel;
 
 	public:

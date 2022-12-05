@@ -5,7 +5,7 @@
 #include "GameDefine.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 
 
@@ -77,5 +77,5 @@ namespace Sample
 	};
 }
 //簡易アクセス用
-#define ActorObjectManagerInstance 	Sample::CActorObjectManager::GetInstance()
+#define ActorObjectManagerInstance 	ActionGame::CActorObjectManager::GetInstance()
 

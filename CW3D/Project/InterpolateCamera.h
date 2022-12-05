@@ -1,5 +1,8 @@
 #pragma once
 #include "CameraBase.h"
+/*
+* @brief	•âŠÔ—pƒJƒƒ‰
+*/
 class CInterpolateCamera : public CCameraBase
 {
 private:

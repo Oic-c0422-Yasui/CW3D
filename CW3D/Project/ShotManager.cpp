@@ -1,8 +1,8 @@
 #include "ShotManager.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-ShotPtr Sample::CShotManager::Create(const Vector3& pos, const ShotSphere& sphere)
+ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotSphere& sphere)
 {
 	auto add = std::make_shared<CShot>();
 	m_Shots.push_back(add);
@@ -10,7 +10,7 @@ ShotPtr Sample::CShotManager::Create(const Vector3& pos, const ShotSphere& spher
 	return add;
 }
 
-ShotPtr Sample::CShotManager::Create(const Vector3& pos, const ShotAABB& aabb)
+ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotAABB& aabb)
 {
 	auto add = std::make_shared<CShot>();
 	m_Shots.push_back(add);
@@ -18,19 +18,19 @@ ShotPtr Sample::CShotManager::Create(const Vector3& pos, const ShotAABB& aabb)
 	return add;
 }
 
-void Sample::CShotManager::Delete()
+void ActionGame::CShotManager::Delete()
 {
 	auto removeIt = std::remove_if(m_Shots.begin(), m_Shots.end(), [&](const ShotPtr& shot) {
 		return shot->IsShow() == false; });
 	m_Shots.erase(removeIt, m_Shots.end());
 }
 
-void Sample::CShotManager::Reset()
+void ActionGame::CShotManager::Reset()
 {
 	m_Shots.clear();
 }
 
-void Sample::CShotManager::Update()
+void ActionGame::CShotManager::Update()
 {
 	for (auto& shot : m_Shots)
 	{
@@ -38,7 +38,7 @@ void Sample::CShotManager::Update()
 	}
 }
 
-void Sample::CShotManager::Render()
+void ActionGame::CShotManager::Render()
 {
 	for (auto& shot : m_Shots)
 	{

@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Transform.h"
-#include "ShotManager.h"
-#include "EffectController.h"
 #include "ParameterMap.h"
 #include "SkillController.h"
-#include "TimeScaleController.h"
 
-namespace Sample {
+
+namespace ActionGame {
 
 	//キー
 	using ActionKeyType = std::string;
@@ -42,7 +40,7 @@ namespace Sample {
 		virtual void SetParameterMap(const AnyParameterMapPtr& a) = 0;
 
 		/**
-		 * @brief		パラメーター情報登録
+		 * @brief		スキル操作登録
 		 */
 		virtual void SetSkillController(const SkillControllerPtr& a) = 0;
 

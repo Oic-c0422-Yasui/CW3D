@@ -8,7 +8,7 @@
 #include	"AttackStateAI.h"
 #include	"AICycleFixed.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		AIê∂ê¨ÉNÉâÉX

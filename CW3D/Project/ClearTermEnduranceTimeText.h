@@ -1,7 +1,7 @@
 #pragma once
 #include "ClearTermText.h"
 
-namespace Sample
+namespace ActionGame
 {
     class ClearTermEnduranceTimeText : public ClearTermText
     {

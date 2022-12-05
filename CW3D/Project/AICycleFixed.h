@@ -2,7 +2,7 @@
 
 #include	"IAICycle.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ŒÅ’èüŠúŒˆ’èˆ—

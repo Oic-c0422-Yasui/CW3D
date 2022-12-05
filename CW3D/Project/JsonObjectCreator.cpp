@@ -1,7 +1,7 @@
 #include	"JsonObjectCreator.h"
 
 
-using namespace Sample;
+using namespace ActionGame;
 
 
 	/**

@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "EnemyBuildParameter.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class EnemyBuilder
 	{

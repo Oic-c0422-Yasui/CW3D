@@ -3,7 +3,7 @@
 #include	"ParameterMap.h"
 #include "ReactiveParameter.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		パラメーター生成インターフェイス

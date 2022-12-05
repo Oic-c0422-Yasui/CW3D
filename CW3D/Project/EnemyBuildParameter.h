@@ -2,10 +2,10 @@
 #include "GameDefine.h"
 #include "EnemyStatus.h"
 
-namespace Sample
+namespace ActionGame
 {
 	
-	class EnemyParam
+	struct EnemyParam
 	{
 	public:
 		std::string m_Type;

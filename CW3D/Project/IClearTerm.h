@@ -2,7 +2,7 @@
 
 #include "ClearTermProvider.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	ƒNƒŠƒAğŒ

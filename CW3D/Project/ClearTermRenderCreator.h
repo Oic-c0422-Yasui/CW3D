@@ -2,7 +2,7 @@
 #include "IClearTerm.h"
 #include "ClearTermPresenter.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class ClearTermRenderCreator
 	{

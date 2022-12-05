@@ -4,9 +4,9 @@
 #include "ZombieStateCreator.h"
 #include "ZombieParameterCreator.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::ZombieBuilder::ZombieBuilder()
+ActionGame::ZombieBuilder::ZombieBuilder()
     : EnemyBuilder(std::make_shared<ZombieActionCreator>(),
                     std::make_shared<ZombieStateCreator>(),
                     std::make_shared<ZombieParameterCreator>(),
@@ -17,7 +17,7 @@ Sample::ZombieBuilder::ZombieBuilder()
 
 
 
-EnemyPtr Sample::ZombieBuilder::Create(const EnemyBuildParameterPtr& param)
+EnemyPtr ActionGame::ZombieBuilder::Create(const EnemyBuildParameterPtr& param)
 {
     
     EnemyPtr enemy = std::make_shared<CEnemy>();

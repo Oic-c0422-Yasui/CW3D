@@ -2,7 +2,7 @@
 
 #include	"Observer.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	template <class... Args>
 	class IObservable {

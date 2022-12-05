@@ -7,7 +7,7 @@
 #include "IClearTerm.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	class CDivision
 	{

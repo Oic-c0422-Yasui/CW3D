@@ -2,7 +2,7 @@
 #include "GameDefine.h"
 #include "Enemy.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	クリア条件に必要なパラメータを提供する

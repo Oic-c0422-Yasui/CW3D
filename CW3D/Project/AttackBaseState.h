@@ -3,9 +3,10 @@
 
 #include	"State.h"
 #include	"FixedKnockBack.h"
+#include	"EffectController.h"
+#include	"ShotManager.h"
 
-
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		移動ステート
@@ -25,173 +26,52 @@ namespace Sample {
 		std::vector<ShotPtr>			m_pShots;
 		std::vector<EffectPtr>			m_pEffects;
 
-		void ReleaseShot()
-		{
-			for (auto& shot : m_pShots)
-			{
-				shot->SetShow(false);
-				shot.reset();
-			}
-			m_pShots.clear();
-		}
-		void ReleaseEffect()
-		{
-			for (auto& effect : m_pEffects)
-			{
-				effect->SetStop(true);
-				effect.reset();
-			}
-			m_pEffects.clear();
-		}
+	protected:
+		/* メンバ関数 */
+
+		//ショット解放
+		void ReleaseShot();
+		//エフェクト解放
+		void ReleaseEffect();
+		//ノックバック取得
+		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<FixedKnockBack>(Actor()); }
+		//ショットのステータス作成（立方体）
+		virtual const ShotAABB& GetCreateShotStatusAABB();
+		//ショットのステータス作成（球体）
+		virtual const ShotSphere& GetCreateShotStatusSphere();
+		//エフェクトのステータス作成
+		virtual const EffectCreateParameter& GetCreateEffectStatus();
+		//立方体の弾を作成する
+		virtual void CreateShotAABB();
+		//球体の弾を作成する
+		virtual void CreateShotSphere();
+		//エフェクトを作成する
+		virtual void CreateEffect();
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		AttackBaseState()
-			: State()
-			, m_CurrentTime(0.0f)
-			, m_NextInputFlg(false)
-		{
-		}
-		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CFixedKnockBack>(Actor()); }
-		virtual const ShotAABB& GetCreateShotStatusAABB()
-		{
-			assert(false);
-			static const ShotAABB box = {};
-			return box;
-		}
-		virtual const ShotSphere& GetCreateShotStatusSphere()
-		{
-			assert(false);
-			static const ShotSphere sphere = {};
-			return sphere;
-		}
-		virtual const EffectCreateParameter& GetCreateEffectStatus()
-		{
-			assert(false);
-			static const EffectCreateParameter param = {};
-			return param;
-		}
-
-		//立方体の弾を作成する
-		virtual void CreateShotAABB()
-		{
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			ShotAABB status = GetCreateShotStatusAABB();
-			status.damage += attack;
-			status.type = Actor()->GetType();
-			status.parentID = Actor()->GetID();
-			if (Actor()->IsReverse())
-			{
-				status.offset.x *= -1;
-			}
-			status.direction = GetKnockBack();
-
-			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
-		}
-		//球体の弾を作成する
-		virtual void CreateShotSphere()
-		{
-			auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
-			ShotSphere status = GetCreateShotStatusSphere();
-			status.damage += attack;
-			status.type = Actor()->GetType();
-			status.parentID = Actor()->GetID();
-			if (Actor()->IsReverse())
-			{
-				status.offset.x *= -1;
-			}
-			status.direction = GetKnockBack();
-			m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
-		}
-
-		//エフェクトを作成する
-		virtual void CreateEffect()
-		{
-			EffectCreateParameter status = GetCreateEffectStatus();
-			
-			if (Actor()->IsReverse())
-			{
-				status.offset.x *= -1;
-				if (status.rotate.y == MOF_ToRadian(360))
-				{
-					status.rotate.y = MOF_ToRadian(180);
-				}
-				else
-				{
-					status.rotate.y *= -1;
-				}
-			}
-			m_pEffects.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(),status));
-		}
+		AttackBaseState();
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		virtual void Start() override {
-			m_CurrentTime = 0.0f;
-			m_NextInputFlg = false;
-			if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
-			{
-				Actor()->SetReverse(false);
-			}
-			else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL))
-			{
-				Actor()->SetReverse(true);
-			}
-		}
+		virtual void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		virtual void Execution() override {
-			m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
-
-		}
+		virtual void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		virtual void InputExecution() override {
-
-			//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-			for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-			{
-				SKillPtr skill = Actor()->GetSkillController()->GetSkill(i);
-				if (!skill->IsCanUse() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
-				{
-					continue;
-				}
-				if (Input()->IsPush(skill->GetButton()))
-				{
-
-					skill->Start();
-					if (Actor()->GetPositionY() > 0)
-					{
-						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
-					}
-					else
-					{
-						ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-					}
-					break;
-				}
-			}
-
-		}
-
-
+		virtual void InputExecution() override;
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		virtual void End() override {
-			ReleaseShot();
-			ReleaseEffect();
-			Actor()->SetArmorLevel(DEFAULT_ARMORLEVEL);
-		}
-
-
+		virtual void End() override;
 		
 	};
 

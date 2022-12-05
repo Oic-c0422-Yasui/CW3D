@@ -1,7 +1,7 @@
 #include "StageManager.h"
 
 
-using namespace Sample;
+using namespace ActionGame;
 
 CStageManager::CStageManager()
 {
@@ -11,7 +11,7 @@ CStageManager::~CStageManager()
 {
 }
 
-bool Sample::CStageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
+bool ActionGame::CStageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
 {
 	m_pStage = stage;
 	if (!m_pStage->Load(divisions))
@@ -21,27 +21,27 @@ bool Sample::CStageManager::Load(const StagePtr& stage,const DivisionArrayPtr& d
 	return true;
 }
 
-void Sample::CStageManager::Initialize()
+void ActionGame::CStageManager::Initialize()
 {
 	m_pStage->Initialize();
 }
 
-void Sample::CStageManager::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CStageManager::Update(const ClearTermProviderPtr& provider)
 {
 	m_pStage->Update(provider);
 }
 
-void Sample::CStageManager::Render()
+void ActionGame::CStageManager::Render()
 {
 	m_pStage->Render();
 }
 
-void Sample::CStageManager::RenderDebug()
+void ActionGame::CStageManager::RenderDebug()
 {
 	m_pStage->RenderDebug();
 }
 
-void Sample::CStageManager::Release()
+void ActionGame::CStageManager::Release()
 {
 	m_pStage->Release();
 }

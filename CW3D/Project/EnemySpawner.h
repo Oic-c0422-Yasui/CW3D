@@ -22,7 +22,7 @@ namespace Spawner
 		SpawnCyclePtr				m_Cycle;
 		EnemySpawnParameter			m_EnemyParam;
 		//出現オブジェクトリスト
-		Sample::EnemyArrayPtr		m_Enemys;
+		ActionGame::EnemyArrayPtr		m_Enemys;
 
 	public:
 		/**
@@ -35,13 +35,13 @@ namespace Spawner
 		/**
 		 * @brief		更新
 		 */
-		void Update(Sample::EnemyManager& manager);
+		void Update(ActionGame::EnemyManager& manager);
 
 		/**
 		 * @brief		スポーン
 		 * @param		param 敵生成のパラメータ
 		 */
-		Sample::EnemyPtr Spawn(const Sample::EnemyBuildParameterPtr& param);
+		ActionGame::EnemyPtr Spawn(const ActionGame::EnemyBuildParameterPtr& param);
 
 		/**
 		 * @brief		状態リセット

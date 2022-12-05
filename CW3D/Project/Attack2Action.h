@@ -3,7 +3,7 @@
 #include	"Action.h"
 #include	"GameDefine.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		攻撃アクション
@@ -31,55 +31,29 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Attack2Action(Parameter param)
-			: Action()
-			, m_Parameter(param)
-		{
-		}
+		Attack2Action(Parameter param);
+			
 
 		/**
 		 * @brief		アクション内の開始処理
 		 */
-		void Start() override {
-			
-			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-			float rotateY = Transform()->GetRotateY();
-			if (Transform()->IsReverse())
-			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-				//x:0.1f
-				Velocity()->SetVelocity(Vector3(-m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
-			}
-			else
-			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-				//x:0.1f
-				Velocity()->SetVelocity(Vector3(m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
-			}
-			//PLAYERSPEED * 0.3
-			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-		}
+		void Start() override;
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Execution() override {
-			
-		}
+		void Execution() override;
+
 
 		/**
 		 * @brief		アクション内の終了処理
 		 */
-		void End() override {
-		}
+		void End() override;
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const ActionKeyType GetKey() const override {
-			return STATE_KEY_ATTACK2;
-		}
+		const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
 	using Attack2ActionPtr = std::shared_ptr<Attack2Action>;

@@ -2,7 +2,7 @@
 
 #include	"IStateAI.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		AI処理インターフェイス

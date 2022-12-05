@@ -4,7 +4,7 @@
 #include	"AttackBaseState.h"
 #include	"RunJumpAttack2Action.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		移動ステート
@@ -22,92 +22,49 @@ namespace Sample {
 		/** 移動アクション */
 		RunJumpAttack2ActionPtr			m_Attack2Action;
 
+	protected:
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunJumpAttack2State(Parameter param)
-			: AttackBaseState()
-			, m_Parameter(param)
-		{
-		}
+		RunJumpAttack2State(Parameter param);
+			
 
-		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		void Start() override {
-			m_Attack2Action = Actor()->GetAction<RunJumpAttack2Action>(GetKey());
-			AttackBaseState::Start();
-			m_Attack2Action->Start();
-			//当たり判定用の弾作成
-			CreateShotAABB();
-		}
+		void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution() override {
-
-
-			for (auto& shot : m_pShots)
-			{
-				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-			}
-
-			if (Actor()->GetAnimationState()->IsEndMotion())
-			{
-				ChangeState(STATE_KEY_FALL);
-			}
-			if (m_NextInputFlg)
-			{
-				if (m_CurrentTime > m_Parameter.NextInputFrameTime)
-				{
-					ChangeState(STATE_KEY_RUNJUMPATTACK3);
-				}
-			}
-			AttackBaseState::Execution();
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution() override {
-
-			if (Input()->IsPush(INPUT_KEY_ATTACK))
-			{
-				m_NextInputFlg = true;
-			}
-
-			AttackBaseState::InputExecution();
-		}
+		void InputExecution() override;
 
 
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		void End() override {
-
-			AttackBaseState::End();
-			m_Attack2Action->End();
-		}
+		void End() override;
 
 		/**
 		 * @brief		ステート内の接触イベント
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, std::any obj) override {
-		}
+		void CollisionEvent(unsigned int type, std::any obj) override;
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const StateKeyType GetKey() const override {
-			return STATE_KEY_RUNJUMPATTACK2;
-		}
+		const StateKeyType GetKey() const override;
 	};
 
 }

@@ -1,5 +1,8 @@
 #pragma once
 #include "CameraBase.h"
+/*
+* @brief	’ÊíƒJƒƒ‰
+*/
 class CNomalCamera :public CCameraBase
 {
 private:

@@ -1,6 +1,6 @@
 #include "EnemySpawnParameter.h"
 
-Spawner::EnemySpawnParameter::EnemySpawnParameter(const Sample::EnemyBuildParameterArrayPtr& param)
+Spawner::EnemySpawnParameter::EnemySpawnParameter(const ActionGame::EnemyBuildParameterArrayPtr& param)
 	: m_Param(param)
 {
 }
@@ -19,7 +19,7 @@ void Spawner::EnemySpawnParameter::Reset()
 	m_Param.reset();
 }
 
-const Sample::EnemyBuildParameterPtr& Spawner::EnemySpawnParameter::GetParameter() const noexcept
+const ActionGame::EnemyBuildParameterPtr& Spawner::EnemySpawnParameter::GetParameter() const noexcept
 {
 	return m_Param->at(m_CurrentParameterNum);
 }

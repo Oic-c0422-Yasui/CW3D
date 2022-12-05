@@ -6,7 +6,7 @@
 #include "UltimateGaugeRender.h"
 #include "UltGaugePresenter.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/**
 	 * @brief		ƒvƒŒƒCƒ„[HPUI

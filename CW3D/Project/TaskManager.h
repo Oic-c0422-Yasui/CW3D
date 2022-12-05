@@ -2,7 +2,7 @@
 #include "Task.h"
 #include	<algorithm>
 
-namespace Sample
+namespace ActionGame
 {
 
 	class TaskManager

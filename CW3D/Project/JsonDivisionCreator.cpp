@@ -1,7 +1,7 @@
 #include	"JsonDivisionCreator.h"
 
 
-using namespace Sample;
+using namespace ActionGame;
 
 	/**
 	 * @brief		コンストラクタ

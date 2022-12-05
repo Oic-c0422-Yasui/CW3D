@@ -4,7 +4,7 @@
 #include	"Player.h"
 #include	"Enemy.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	template< >
 	inline void CCollision::CollisionObj<>(CPlayer& obj1, CEnemy& obj2) {

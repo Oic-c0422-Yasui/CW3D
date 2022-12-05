@@ -1,16 +1,16 @@
 #include "EnemyManager.h"
 
-Sample::EnemyManager::EnemyManager()
+ActionGame::EnemyManager::EnemyManager()
 	: m_Enemys(std::make_shared<EnemyArray>())
 {
 }
 
-Sample::EnemyManager::~EnemyManager()
+ActionGame::EnemyManager::~EnemyManager()
 {
 }
 
 
-void Sample::EnemyManager::Initialize()
+void ActionGame::EnemyManager::Initialize()
 {
 	for (auto& enemy : *m_Enemys)
 	{
@@ -18,7 +18,7 @@ void Sample::EnemyManager::Initialize()
 	}
 }
 
-void Sample::EnemyManager::Update()
+void ActionGame::EnemyManager::Update()
 {
 	size_t enemyCount = 0;
 
@@ -44,7 +44,7 @@ void Sample::EnemyManager::Update()
 	}
 }
 
-void Sample::EnemyManager::Render()
+void ActionGame::EnemyManager::Render()
 {
 	for (auto& enemy : *m_Enemys)
 	{
@@ -52,7 +52,7 @@ void Sample::EnemyManager::Render()
 	}
 }
 
-void Sample::EnemyManager::RenderDebug()
+void ActionGame::EnemyManager::RenderDebug()
 {
 	for (auto& enemy : *m_Enemys)
 	{
@@ -60,7 +60,7 @@ void Sample::EnemyManager::RenderDebug()
 	}
 }
 
-void Sample::EnemyManager::Release()
+void ActionGame::EnemyManager::Release()
 {
 	for (auto& enemy : *m_Enemys)
 	{

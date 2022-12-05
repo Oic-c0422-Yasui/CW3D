@@ -3,7 +3,7 @@
 #include	"Action.h"
 #include	"GameDefine.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		攻撃アクション
@@ -12,8 +12,8 @@ namespace Sample {
 	{
 	public:
 		/**
-			 * @brief		攻撃アクションの設定値
-			 */
+		* @brief		攻撃アクションの設定値
+		*/
 		struct Parameter
 		{
 			//アニメーションパラメーター
@@ -31,59 +31,33 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		ClearPoseAction(Parameter param)
-			: Action()
-			, m_Parameter(param)
-		{
-		}
+		ClearPoseAction(Parameter param);
+			
 
 		/**
 		 * @brief		アクション内の開始処理
 		 */
-		void Start() override {
-			if (Transform()->GetPositionY() > 0.0f)
-			{
-				AnimationState()->ChangeMotionByName(m_Parameter.fallAnim.name, m_Parameter.fallAnim.startTime, m_Parameter.fallAnim.speed,
-					m_Parameter.fallAnim.tTime, m_Parameter.fallAnim.loopFlg, MOTIONLOCK_OFF, TRUE);
-			}
-			else
-			{
-				StartAnim();
-			}
-
-			Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-			float rotateY = Transform()->GetRotateY();
-
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
-			Velocity()->SetGravity(m_Parameter.gravity);
-			Velocity()->SetMaxGravity(m_Parameter.maxGravity);
-		}
+		void Start() override;
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Execution() override {
-			
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		アクション内の終了処理
 		 */
-		void End() override {
-		}
+		void End() override;
 
-		void StartAnim()
-		{
-			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-		}
+		/*
+		* @brief		アニメーション開始
+		*/
+		void StartAnim();
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const ActionKeyType GetKey() const override {
-			return STATE_KEY_CLEARPOSE;
-		}
+		const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
 	using ClearPoseActionPtr = std::shared_ptr<ClearPoseAction>;

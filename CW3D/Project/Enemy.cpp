@@ -1,12 +1,13 @@
 #include "Enemy.h"
 #include	"CameraController.h"
+#include	"EffectController.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 
 CEnemy::CEnemy()
 
-	: Sample::ActorObject()
+	: ActionGame::ActorObject()
 	, m_Input()
 	, m_DefaultPos(0,0,0)
 {
@@ -28,13 +29,13 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	m_DefaultPos = eneParam->GetParam().m_Pos;
 
 	//インプットキー
-	auto& stateInput = std::make_shared<Sample::StateInput>();
+	auto& stateInput = std::make_shared<ActionGame::StateInput>();
 	m_Input = stateInput;
 
 	auto& enemy = eneParam->GetParam().m_Type;
 
 	//メッシュ読み込み
-	m_pMesh = Sample::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->m_MeshName);
+	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->m_MeshName);
 	if (m_pMesh == nullptr)
 	{
 		return false;
@@ -81,9 +82,9 @@ void CEnemy::Initialize()
 	//相手が獲得する必殺技ゲージの倍率
 	SetUltBoostMag(1.0f);
 
-	auto& gauge = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = m_MaxHP.Get();
 	m_HP = m_MaxHP.Get();
 	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
@@ -115,7 +116,7 @@ void CEnemy::Update()
 		}
 	}
 	m_AI->Update();
-	Sample::ActorObject::Update();
+	ActionGame::ActorObject::Update();
 
 	Vector3 pos = m_Actor->GetPosition();
 
@@ -155,15 +156,15 @@ void CEnemy::Render2DDebug()
 
 void CEnemy::Release()
 {
-	Sample::ActorObject::Release();
+	ActionGame::ActorObject::Release();
 }
 
 void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
 {
-	Sample::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
-	Sample::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
+	ActionGame::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
+	ActionGame::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
-	auto& hp = m_Actor->GetParameterMap()->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 
 	auto& transform = m_Actor->GetTransform();
@@ -195,12 +196,12 @@ bool CEnemy::IsInvincible() const
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 
-void Sample::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
+void ActionGame::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
 {
 	//HP
-	auto& maxHP = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
+	auto& maxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
 	maxHP = eneStatus->m_Hp;
-	auto& hp = param->Get<Sample::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = eneStatus->m_Hp;
 	m_HP = maxHP;
 	m_MaxHP = maxHP;

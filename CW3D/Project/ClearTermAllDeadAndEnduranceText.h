@@ -3,7 +3,7 @@
 #include "ClearTermEnduranceTimeText.h"
 #include "ClearTermEnemyAllDeadText.h"
 
-namespace Sample
+namespace ActionGame
 {
 
     class ClearTermAllDeadAndEnduranceText : public ClearTermText

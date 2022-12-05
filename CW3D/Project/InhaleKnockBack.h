@@ -2,14 +2,14 @@
 #include "KnockBack.h"
 #include "IActor.h"
 
-namespace Sample
+namespace ActionGame
 {
 	//吸引ノックバック
-	class CInhaleKnockBack : public IKnockBack {
+	class InhaleKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;
 	public:
-		CInhaleKnockBack(const ActorPtr& actor)
+		InhaleKnockBack(const ActorPtr& actor)
 			: actor(actor)
 		{
 		}

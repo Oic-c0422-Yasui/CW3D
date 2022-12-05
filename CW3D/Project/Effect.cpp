@@ -1,7 +1,7 @@
 #include "Effect.h"
 #include "EffectRenderer.h"
 
-namespace Sample
+namespace ActionGame
 {
 	Effect::Effect(Effekseer::Handle handle)
 		: m_Effect()

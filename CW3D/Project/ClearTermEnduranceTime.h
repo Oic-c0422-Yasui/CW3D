@@ -1,7 +1,7 @@
 #pragma once
 #include "IClearTerm.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	ƒNƒŠƒAğŒ(ŠÔ‘Ï‹v)

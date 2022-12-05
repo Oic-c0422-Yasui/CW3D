@@ -2,7 +2,7 @@
 #include "Common.h"
 #include	"Singleton.h"
 
-namespace Sample
+namespace ActionGame
 {
 	//template<typename T>‚È‚É‚©‚ÌŒ^i“ü‚ê‚é‚Ü‚ÅŒˆ‚Ü‚Á‚Ä‚¢‚È‚¢j
 

@@ -4,7 +4,7 @@
 
 #include "ResourceManager.h"
 
-namespace Sample
+namespace ActionGame
 {
 	struct SkillFrame
 	{

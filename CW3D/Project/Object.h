@@ -1,7 +1,7 @@
 #pragma once
 #include "GameDefine.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CObject
 	{

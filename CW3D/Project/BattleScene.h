@@ -42,17 +42,17 @@ private:
 	//プレイヤー
 	PlayerPtr m_Player;
 	//敵マネージャー
-	Sample::EnemyManager m_EnemyManager;
+	ActionGame::EnemyManager m_EnemyManager;
 	//敵スポナー
 	Spawner::EnemySpawnerArray m_EnemySpawner;
 	//敵生成スレッド
 	ThreadCreator m_EnemyCreateThread;
 	//更新タスク
-	Sample::TaskManager	m_UpdateTask;
+	ActionGame::TaskManager	m_UpdateTask;
 	//描画タスク
-	Sample::TaskManager	m_RenderTask;
+	ActionGame::TaskManager	m_RenderTask;
 	//Render2Dタスク
-	Sample::TaskManager	m_Render2DTask;
+	ActionGame::TaskManager	m_Render2DTask;
 
 
 
@@ -61,22 +61,22 @@ private:
 	//フォント
 	CFont m_Font;
 	//敵HPバー
-	std::vector<Sample::EnemyHPRenderPtr> m_EnemysHPRender;
+	std::vector<ActionGame::EnemyHPRenderPtr> m_EnemysHPRender;
 	//プレイヤーUI
-	Sample::PlayerUIRenderPtr m_PlayerUIRender;
+	ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
 	//UI作成
-	Sample::CBattleUICreater m_UICreater;
+	ActionGame::CBattleUICreater m_UICreater;
 	//ステージマネージャー
-	Sample::CStageManager m_StageManager;
+	ActionGame::CStageManager m_StageManager;
 	//クリア条件に必要なものを渡すプロバイダ
-	Sample::ClearTermProviderPtr m_ClearTermProvider;
+	ActionGame::ClearTermProviderPtr m_ClearTermProvider;
 
 	//クリアフラグ
 	bool m_GameClearFlg;
 	//死亡フラグ
 	bool m_GameOverFlg;
 
-	Sample::CTimer m_Timer;
+	ActionGame::CTimer m_Timer;
 
 private:
 	//衝突判定をまとめた関数

@@ -9,7 +9,7 @@
 #include "Attack2State.h"
 #include "Attack3State.h"
 #include "RunAttack1State.h"
-#include "Skill1_1State.h"
+#include "ShockWaveSkillState.h"
 #include "JumpState.h"
 #include "FallState.h"
 #include "LandingState.h"
@@ -20,10 +20,10 @@
 #include "RunJumpAttack2State.h"
 #include "RunJumpAttack3State.h"
 #include "JumpAttack1State.h"
-#include "Skill2_1State.h"
-#include "JumpSkill2_1State.h"
-#include "Skill3_1State.h"
-#include "JumpSkill3_1State.h"
+#include "BeamSkillState.h"
+#include "JumpBeamSkillState.h"
+#include "StormSkillState.h"
+#include "JumpStormSkillState.h"
 #include "DamageState.h"
 #include "FlyDamageState.h"
 #include "DownState.h"
@@ -34,7 +34,7 @@
 
 
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		ステート生成インターフェイス
@@ -145,8 +145,8 @@ namespace Sample {
 
 				}));
 
-			stateMachine->AddState(State::Create<Skill1_1State>(actor, input,
-				Skill1_1State::Parameter{
+			stateMachine->AddState(State::Create<ShockWaveSkillState>(actor, input,
+				ShockWaveSkillState::Parameter{
 					4
 					,GameFrameTime * 40.0f
 					,GameFrameTime * 80.0f
@@ -154,8 +154,8 @@ namespace Sample {
 					,EffectCreateParameter{ "Effect3", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f }
 
 				}));
-			stateMachine->AddState(State::Create<Skill2_1State>(actor, input,
-				Skill2_1State::Parameter{
+			stateMachine->AddState(State::Create<BeamSkillState>(actor, input,
+				BeamSkillState::Parameter{
 					3
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 25.0f
@@ -164,8 +164,8 @@ namespace Sample {
 					,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 				}));
-			stateMachine->AddState(State::Create<JumpSkill2_1State>(actor, input,
-				JumpSkill2_1State::Parameter{
+			stateMachine->AddState(State::Create<JumpBeamSkillState>(actor, input,
+				JumpBeamSkillState::Parameter{
 					3
 					,GameFrameTime * 15.0f
 					,GameFrameTime * 25.0f
@@ -174,8 +174,8 @@ namespace Sample {
 					,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 				}));
-			stateMachine->AddState(State::Create<Skill3_1State>(actor, input,
-				Skill3_1State::Parameter{
+			stateMachine->AddState(State::Create<StormSkillState>(actor, input,
+				StormSkillState::Parameter{
 					3
 					,GameFrameTime * 7.0f
 					,3.5f
@@ -183,8 +183,8 @@ namespace Sample {
 					,EffectCreateParameter{ "Effect5", Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f }
 
 				}));
-			stateMachine->AddState(State::Create<JumpSkill3_1State>(actor, input,
-				JumpSkill3_1State::Parameter{
+			stateMachine->AddState(State::Create<JumpStormSkillState>(actor, input,
+				JumpStormSkillState::Parameter{
 					3
 					,GameFrameTime * 7.0f
 					,3.5f

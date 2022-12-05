@@ -4,7 +4,7 @@
 
 
 
-namespace Sample {
+namespace ActionGame {
 	constexpr float DOUBLE_PUSH_TIME = 0.25f;
 	/**
 	 * @brief		入力インターフェイス

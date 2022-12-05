@@ -3,7 +3,7 @@
 #include	"JsonDivisionCreator.h"
 
 
-namespace Sample
+namespace ActionGame
 {
 	class JsonStageLoader
 	{

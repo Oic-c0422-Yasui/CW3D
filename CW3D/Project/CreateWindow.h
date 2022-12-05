@@ -2,7 +2,7 @@
 
 #include "GameDefine.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CCreateWindow
 	{

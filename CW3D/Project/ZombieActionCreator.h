@@ -14,7 +14,7 @@
 #include	"DeadAction.h"
 
 
-namespace Sample {
+namespace ActionGame {
 	/**
 	 * @brief		アクション生成インターフェイス
 	 */

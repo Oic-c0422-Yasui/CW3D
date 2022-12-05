@@ -2,7 +2,7 @@
 #include	"Skill.h"
 #include	"IActor.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class CUltimateSkill : public CSkill
 	{
@@ -69,7 +69,7 @@ namespace Sample
 		{
 			return m_UltSkillData->ExpendGauge.Get();
 		}
-		Sample::ParameterHandle< Sample::ReactiveParameter<float> >& GettExpendGaugeParam()
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> >& GettExpendGaugeParam()
 		{
 			return m_UltSkillData->ExpendGauge;
 		}
@@ -90,7 +90,7 @@ namespace Sample
 			return m_UltSkillData->ExpendGauge.Get();
 		}
 		//必殺技ゲージ通知
-		Sample::IObservable<float>* GetSkillUltSubject(int id) { return &(m_UltSkillData->ExpendGauge.Get()); }
+		ActionGame::IObservable<float>* GetSkillUltSubject(int id) { return &(m_UltSkillData->ExpendGauge.Get()); }
 	};
 
 	//ポインタ置き換え

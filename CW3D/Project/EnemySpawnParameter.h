@@ -9,13 +9,13 @@ namespace Spawner
 	class EnemySpawnParameter
 	{
 	private:
-		Sample::EnemyBuildParameterArrayPtr m_Param;
+		ActionGame::EnemyBuildParameterArrayPtr m_Param;
 		int m_CurrentParameterNum;
 	public:
 		/**
 		 *	@brief		コンストラクタ
 		 */
-		EnemySpawnParameter(const Sample::EnemyBuildParameterArrayPtr& param);
+		EnemySpawnParameter(const ActionGame::EnemyBuildParameterArrayPtr& param);
 
 		/**
 		 * @brief		次へ
@@ -27,7 +27,7 @@ namespace Spawner
 		 */
 		void Reset();
 
-		const Sample::EnemyBuildParameterPtr& GetParameter() const noexcept;
+		const ActionGame::EnemyBuildParameterPtr& GetParameter() const noexcept;
 	};
 
 	using EnemySpawnParameterPtr = std::shared_ptr<EnemySpawnParameter>;

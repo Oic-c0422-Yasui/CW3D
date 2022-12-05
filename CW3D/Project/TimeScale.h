@@ -3,7 +3,7 @@
 
 
 
-namespace Sample
+namespace ActionGame
 {
 
 	/*

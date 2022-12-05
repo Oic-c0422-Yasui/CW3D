@@ -2,7 +2,7 @@
 
 #include	<functional>
 
-namespace Sample {
+namespace ActionGame {
 
 	template <class... Args>
 	class IObserver {

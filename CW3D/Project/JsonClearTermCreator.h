@@ -7,7 +7,7 @@
 #include	"ClearTermBuilderDictionary.h"
 
 
-namespace Sample {
+namespace ActionGame {
 	
 
 	class JsonClearTermCreator

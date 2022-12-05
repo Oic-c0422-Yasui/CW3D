@@ -15,7 +15,7 @@
 #include	"IdleMotionAction.h"
 
 #include	"RunAttack1Action.h"
-#include	"Skill1_1Action.h"
+#include	"ShockWaveSkillAction.h"
 
 #include	"RunJumpAction.h"
 #include	"RunFallAction.h"
@@ -24,10 +24,10 @@
 #include	"RunJumpAttack2Action.h"
 #include	"RunJumpAttack3Action.h"
 #include	"JumpAttack1Action.h"
-#include	"Skill2_1Action.h"
-#include	"JumpSkill2_1Action.h"
-#include	"Skill3_1Action.h"
-#include	"JumpSkill3_1Action.h"
+#include	"BeamSkillAction.h"
+#include	"JumpBeamSkillAction.h"
+#include	"StormSkillAction.h"
+#include	"JumpStormSkillAction.h"
 #include	"FlyDamageAction.h"
 #include	"DownAction.h"
 
@@ -38,7 +38,7 @@
 #include	"DropKickSkillAction.h"
 
 
-namespace Sample {
+namespace ActionGame {
 	/**
 	 * @brief		アクション生成インターフェイス
 	 */
@@ -383,8 +383,8 @@ namespace Sample {
 				}));
 
 			//スキル
-			actor->AddAction(Action::Create<Skill1_1Action>(
-				Skill1_1Action::Parameter{
+			actor->AddAction(Action::Create<ShockWaveSkillAction>(
+				ShockWaveSkillAction::Parameter{
 					AnimParam{
 						STATE_KEY_ATTACK1,
 						0.0f,
@@ -396,10 +396,10 @@ namespace Sample {
 				}));
 
 			//スキル
-			actor->AddAction(Action::Create<Skill2_1Action>(
-				Skill2_1Action::Parameter{
+			actor->AddAction(Action::Create<BeamSkillAction>(
+				BeamSkillAction::Parameter{
 					AnimParam{
-						STATE_KEY_SKILL2_1,
+						STATE_KEY_BEAMSKILL,
 						0.7f,
 						2.0f,
 						0.1f,
@@ -408,10 +408,10 @@ namespace Sample {
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
 				}));
 			//スキル
-			actor->AddAction(Action::Create<Skill3_1Action>(
-				Skill3_1Action::Parameter{
+			actor->AddAction(Action::Create<StormSkillAction>(
+				StormSkillAction::Parameter{
 					AnimParam{
-						STATE_KEY_SKILL3_1,
+						STATE_KEY_STORMSKILL,
 						0.0f,
 						0.6f,
 						0.1f,
@@ -422,10 +422,10 @@ namespace Sample {
 					Vector3(PLAYER_MAXSPEED* PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED* PLAYER_WALKSPEED),
 				}));
 			//空中スキル
-			actor->AddAction(Action::Create<JumpSkill2_1Action>(
-				JumpSkill2_1Action::Parameter{
+			actor->AddAction(Action::Create<JumpBeamSkillAction>(
+				JumpBeamSkillAction::Parameter{
 					AnimParam{
-						STATE_KEY_SKILL2_1,
+						STATE_KEY_BEAMSKILL,
 						0.7f,
 						2.0f,
 						0.1f,
@@ -434,10 +434,10 @@ namespace Sample {
 					Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
 				}));
 			//空中スキル
-			actor->AddAction(Action::Create<JumpSkill3_1Action>(
-				JumpSkill3_1Action::Parameter{
+			actor->AddAction(Action::Create<JumpStormSkillAction>(
+				JumpStormSkillAction::Parameter{
 					AnimParam{
-						STATE_KEY_SKILL3_1,
+						STATE_KEY_STORMSKILL,
 						0.0f,
 						0.6f,
 						0.1f,

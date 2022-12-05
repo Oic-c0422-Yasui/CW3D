@@ -1,21 +1,21 @@
 #include "EnemyBuildParameter.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
-Sample::EnemyBuildParameter::EnemyBuildParameter(const EnemyParam& param, const EnemyStatusPtr& status)
+ActionGame::EnemyBuildParameter::EnemyBuildParameter(const EnemyParam& param, const EnemyStatusPtr& status)
 	: m_Param(param)
 	, m_Status(status)
 {
 }
 
 
-Sample::EnemyBuildParameter::~EnemyBuildParameter()
+ActionGame::EnemyBuildParameter::~EnemyBuildParameter()
 {
 }
 
 
 
-Sample::EnemyParam::EnemyParam(const std::string& type, const Vector3& pos)
+ActionGame::EnemyParam::EnemyParam(const std::string& type, const Vector3& pos)
 	: m_Type(type)
 	, m_Pos(pos)
 {

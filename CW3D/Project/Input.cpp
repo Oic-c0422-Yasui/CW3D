@@ -1,6 +1,6 @@
 #include	"Input.h"
 
-using namespace Sample;
+using namespace ActionGame;
 
 /**
  * @brief		XV

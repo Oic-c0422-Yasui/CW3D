@@ -2,14 +2,14 @@
 #include "KnockBack.h"
 #include "IActor.h"
 
-namespace Sample
+namespace ActionGame
 {
 	//Y軸のみ固定の吸引ノックバック
-	class CFixedYInhaleKnockBack : public IKnockBack {
+	class FixedYInhaleKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;
 	public:
-		CFixedYInhaleKnockBack(const ActorPtr& actor)
+		FixedYInhaleKnockBack(const ActorPtr& actor)
 			: actor(actor)
 		{
 		}

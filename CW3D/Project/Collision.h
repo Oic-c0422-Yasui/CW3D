@@ -3,7 +3,7 @@
 #include "ActorObject.h"
 #include "Object.h"
 
-namespace Sample
+namespace ActionGame
 {
 	class  CCollision
 	{

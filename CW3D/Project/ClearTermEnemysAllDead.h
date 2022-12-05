@@ -2,7 +2,7 @@
 #include "IClearTerm.h"
 #include "Enemy.h"
 
-namespace Sample
+namespace ActionGame
 {
 	/*
 	* @brief	ƒNƒŠƒAğŒ(“G‚ğ‚·‚×‚Ä“|‚·)

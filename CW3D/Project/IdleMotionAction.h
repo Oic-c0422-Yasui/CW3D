@@ -2,7 +2,7 @@
 #include "Action.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		移動アクション
@@ -29,69 +29,43 @@ namespace Sample {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleMotionAction(Parameter param)
-			: Action()
-			, m_Parameter(param)
-		{
-		}
+		IdleMotionAction(Parameter param);
+			
 
 		/**
 		 * @brief		アクション内の開始処理
 		 */
-		void Start() override {
-
-			AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-				m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-
-			float rotateY = Transform()->GetRotateY();
-			if (Transform()->IsReverse())
-			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(180), 0.2f);
-			}
-			else
-			{
-				Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.2f);
-			}
-		}
+		void Start() override;
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Execution() override {
-
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		アクション内の終了処理
 		 */
-		void End() override {
-		}
+		void End() override;
 
 		/**
 		 * @brief		加速
 		 * @param[in]	x		加速量
 		 * @param[in]	z		加速量
 		 */
-		void Acceleration(float x, float z) {
-			Velocity()->Acceleration(x * m_Parameter.velocity.x,
-				z * m_Parameter.velocity.z);
-		}
+		void Acceleration(float x, float z);
 
 		/**
 		 * @brief		速度リセット
 		 */
-		void Reset() {
-
-		}
+		void Reset();
 
 
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const ActionKeyType GetKey() const override {
-			return STATE_KEY_IDLEMOTION;
-		}
+		const ActionKeyType GetKey() const override;
+
 	};
 	//ポインタ置き換え
 	using IdleMotionActionPtr = std::shared_ptr<IdleMotionAction>;

@@ -2,7 +2,7 @@
 
 #include	"StateMachine.h"
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		ステート基底クラス

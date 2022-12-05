@@ -5,7 +5,7 @@
 #include	"JumpAttack1Action.h"
 
 
-namespace Sample {
+namespace ActionGame {
 
 	/**
 	 * @brief		移動ステート
@@ -28,93 +28,49 @@ namespace Sample {
 
 		bool collideStartFlg;
 
-
+	protected:
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpAttack1State(Parameter param)
-			: AttackBaseState()
-			, m_Parameter(param)
-			, collideStartFlg(false)
-		{
-		}
-		const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
-		const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		JumpAttack1State(Parameter param);
+			
 
 		/**
 		 * @brief		ステート内の開始処理
 		 */
-		void Start() override {
-			m_JumpAttack1Action = Actor()->GetAction<JumpAttack1Action>(GetKey());
-			AttackBaseState::Start();
-			m_JumpAttack1Action->Start();
-			collideStartFlg = false;
-
-			//当たり判定用の弾作成
-			CreateShotAABB();
-
-		}
+		void Start() override;
 
 		/**
 		 * @brief		ステート内の実行処理
 		 */
-		void Execution() override {
-
-			for (auto& shot : m_pShots)
-			{
-				shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-				if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
-				{
-					shot->SetCollideFlg(true);
-
-				}
-			}
-
-			if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
-			{
-				CreateEffect();
-				collideStartFlg = true;
-			}
-
-
-			if (Actor()->GetAnimationState()->IsEndMotion())
-			{
-				ChangeState(STATE_KEY_FALL);
-			}
-			AttackBaseState::Execution();
-		}
+		void Execution() override;
 
 		/**
 		 * @brief		ステート内の入力処理
 		 */
-		void InputExecution() override {
-			AttackBaseState::InputExecution();
-		}
+		void InputExecution() override;
 
 
 
 		/**
 		 * @brief		ステート内の終了処理
 		 */
-		void End() override {
-			AttackBaseState::End();
-		}
+		void End() override;
 
 		/**
 		 * @brief		ステート内の接触イベント
 		 * @param[in]	type		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
-		void CollisionEvent(unsigned int type, std::any obj) override {
-		}
+		void CollisionEvent(unsigned int type, std::any obj) override;
 
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const StateKeyType GetKey() const override {
-			return STATE_KEY_JUMPATTACK1;
-		}
+		const StateKeyType GetKey() const override;
 	};
 
 }
