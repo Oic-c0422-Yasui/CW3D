@@ -35,25 +35,7 @@ CBattleScene::~CBattleScene()
 
 bool CBattleScene::Load()
 {
-	//インプット読み込み
-	auto input = InputManagerInstance.AddInput<ActionGame::MofInput>();
-	InputManagerInstance.AddInput<ActionGame::StateInput>();
-
-	//キーボード
-	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
-	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
-	input->AddKeyboardKey(INPUT_KEY_JUMP,MOFKEY_X);
-	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
-	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
-	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
-	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
-	input->AddKeyboardKey(INPUT_KEY_SKILL_DROPKICK, MOFKEY_F);
-	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
-	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
-	//パッド
-	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
-	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
-	input->AddJoypadKey(INPUT_KEY_ATTACK, 0,0);
+	
 
 
 	//メッシュ読み込み
@@ -101,6 +83,7 @@ bool CBattleScene::Load()
 
 
 	//プレイヤー読み込み
+	auto input = InputManagerInstance.GetInput(0);
 	m_Player->SetInput(input);
 	if (!m_Player->Load())
 	{
@@ -177,9 +160,6 @@ void CBattleScene::Initialize()
 
 void CBattleScene::Update()
 {
-	//入力更新
-	InputManagerInstance.Update();
-
 	//更新タスク実行
 	m_UpdateTask.Excution();
 
@@ -216,6 +196,13 @@ void CBattleScene::RenderDebug()
 	//ステージデバッグ描画
 	m_StageManager.RenderDebug();
 
+	COBB obb;
+	obb.Position = Vector3(0, 0, 0);
+	obb.Size = Vector3(2, 15, 2);
+	obb.Angle = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
+
+	CGraphicsUtilities::RenderBox(obb, CVector4(1, 1, 0, 0.5f));
+
 	//ショットデバッグ描画
 	for (size_t i = 0; i < ShotManagerInstance.GetShotCount(); i++)
 	{
@@ -235,6 +222,11 @@ void CBattleScene::RenderDebug()
 		case COLLISION_AABB:
 		{
 			CGraphicsUtilities::RenderBox(shot->GetColliderAABB(), Vector4(1, 0, 0, 0.2f)); 
+			break;
+		}
+		case COLLISION_OBB:
+		{
+			CGraphicsUtilities::RenderBox(shot->GetColliderOBB(), Vector4(1, 0, 0, 0.2f));
 			break;
 		}
 		default:

@@ -12,6 +12,11 @@ namespace ActionGame {
 	class RunJumpAttack2State : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	NextInputFrameTime 　次の入力猶予時間
+		* @param	AABBShotStatus 　AABBのショットパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
 			float NextInputFrameTime;

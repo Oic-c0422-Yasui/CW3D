@@ -35,14 +35,19 @@ namespace ActionGame {
 		void ReleaseEffect();
 		//ノックバック取得
 		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<FixedKnockBack>(Actor()); }
-		//ショットのステータス作成（立方体）
+		//ショットのステータス作成（箱）
 		virtual const ShotAABB& GetCreateShotStatusAABB();
+		//ショットのステータス作成（回転を考慮した箱）
+		virtual const ShotOBB& GetCreateShotStatusOBB();
 		//ショットのステータス作成（球体）
 		virtual const ShotSphere& GetCreateShotStatusSphere();
+
 		//エフェクトのステータス作成
 		virtual const EffectCreateParameter& GetCreateEffectStatus();
-		//立方体の弾を作成する
+		//箱の弾を作成する
 		virtual void CreateShotAABB();
+		//回転を考慮した箱の弾を作成する
+		virtual void CreateShotOBB();
 		//球体の弾を作成する
 		virtual void CreateShotSphere();
 		//エフェクトを作成する

@@ -112,10 +112,46 @@ namespace ActionGame
 		{
 			return sphere1.CollisionSphere(sphere2);
 		}
-
+		
+		//箱と箱との当たり判定
 		static bool Collision(const CAABB& aabb1, const  CAABB& aabb2)
 		{
 			return aabb1.CollisionAABB(aabb2);
+		}
+
+		//回転を考慮した箱と回転を考慮した箱との当たり判定
+		static bool Collision(const COBB& obb1, const COBB& obb2)
+		{
+			CAABB aabb1;
+			CAABB aabb2;
+			obb1.CalculateAABB(aabb1);
+			obb2.CalculateAABB(aabb2);
+
+			//AABBの範囲に入っていないなら返す
+			if (!aabb1.CollisionAABB(aabb2))
+			{
+				return false;
+			}
+
+			return obb1.CollisionOBB(obb2);
+		}
+		//回転を考慮した箱と箱との当たり判定
+		static bool Collision(const COBB& obb1, const CAABB& aabb2)
+		{
+			CAABB aabb1;
+			obb1.CalculateAABB(aabb1);
+
+			//AABBの範囲に入っていないなら返す
+			if (!aabb1.CollisionAABB(aabb2))
+			{
+				return false;
+			}
+
+			COBB obb2;
+			obb2.Position = aabb2.Position;
+			obb2.Size = aabb2.Size;
+
+			return obb1.CollisionOBB(obb2);
 		}
 
 		//アクターとアクターとの当たり判定

@@ -68,6 +68,7 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 
 void CEnemy::Initialize()
 {
+	//À•W‰Šú‰»
 	m_Actor->SetPosition(m_DefaultPos);
 	m_Actor->SetRotate(Vector3(0, MOF_ToDegree(90), 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
@@ -82,6 +83,7 @@ void CEnemy::Initialize()
 	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
 
+	//ƒpƒ‰ƒ[ƒ^‰Šú‰»
 	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
 	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
@@ -102,6 +104,7 @@ void CEnemy::Update()
 	
 	m_Input->Update();
 
+	//–³“GŽžŠÔ
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
@@ -117,8 +120,6 @@ void CEnemy::Update()
 	}
 	m_AI->Update();
 	ActionGame::ActorObject::Update();
-
-	Vector3 pos = m_Actor->GetPosition();
 
 	m_Position = m_Actor->GetPosition();
 }

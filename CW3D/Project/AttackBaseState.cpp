@@ -37,6 +37,13 @@ const ShotAABB& ActionGame::AttackBaseState::GetCreateShotStatusAABB()
 	return box;
 }
 
+const ShotOBB& ActionGame::AttackBaseState::GetCreateShotStatusOBB()
+{
+	assert(false);
+	static const ShotOBB box = {};
+	return box;
+}
+
 const ShotSphere& ActionGame::AttackBaseState::GetCreateShotStatusSphere()
 {
 	assert(false);
@@ -63,6 +70,25 @@ void ActionGame::AttackBaseState::CreateShotAABB()
 	if (Actor()->IsReverse())
 	{
 		status.offset.x *= -1;
+	}
+	status.direction = GetKnockBack();
+
+	m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+}
+
+void ActionGame::AttackBaseState::CreateShotOBB()
+{
+	//UŒ‚—Íæ“¾
+	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
+	ShotOBB status = GetCreateShotStatusOBB();
+	status.damage += attack;
+	status.type = Actor()->GetType();
+	status.parentID = Actor()->GetID();
+	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ğ”½“]
+	if (Actor()->IsReverse())
+	{
+		status.offset.x *= -1;
+		status.angle.y *= -1;
 	}
 	status.direction = GetKnockBack();
 

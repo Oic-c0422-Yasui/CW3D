@@ -12,6 +12,12 @@ namespace ActionGame {
 	class Attack3State : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	ColliderStartFrameTime 最初の当たり判定開始時間
+		* @param	CollideSecondStartFrameTime 　２番目の当たり判定開始時間
+		* @param	AABBShotStatus 　AABBのショットパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
 			float CollideFirstStartFrameTime;

@@ -98,18 +98,11 @@ void ActionGame::BeamSkillState::Initialize()
 	collideStartFlg = false;
 	m_SkillAction->Start();
 	m_EffectStatus = m_Parameter.EffectStatus;
-	m_ShotStatusSphere = m_Parameter.SphereShotStatus;
+
 	if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 	{
-		float rad = MOF_ToRadian(-30);
-		Vector3 direction(cos(rad), sin(rad), 0);
-		int shotCount = 3;
-		for (int i = 0; i < shotCount; i++)
-		{
-			m_ShotStatusSphere.offset = Vector3(((2 + (4 * i)) * direction.x), 0.7f + -((2 + (4 * i)) * direction.y), 0);
-			CreateShotSphere();
-		}
-
+		
+		CreateShotOBB();
 		m_EffectStatus.offset = Vector3(1.7f, 1.8f, 0);
 		m_EffectStatus.rotate = Vector3(MOF_ToRadian(-30), MOF_ToRadian(90), 0);
 		CreateEffect();

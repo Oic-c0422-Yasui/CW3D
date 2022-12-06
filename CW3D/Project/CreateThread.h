@@ -2,6 +2,7 @@
 
 #include	<thread>
 #include	<functional>
+#include	<atomic>
 
 class ThreadCreator
 {
@@ -10,7 +11,7 @@ private:
 
 	using CreateFunc = std::function<bool()>;
 	using CompletedFunc = std::function<void()>;
-	bool m_CompleteFlg;
+	std::atomic<bool> m_CompleteFlg;
 
 public:
 	ThreadCreator();

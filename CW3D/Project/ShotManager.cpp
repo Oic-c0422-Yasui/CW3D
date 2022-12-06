@@ -18,6 +18,14 @@ ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotAABB& aab
 	return add;
 }
 
+ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotOBB& obb)
+{
+	auto add = std::make_shared<CShot>();
+	m_Shots.push_back(add);
+	add->Create(pos, obb);
+	return add;
+}
+
 void ActionGame::CShotManager::Delete()
 {
 	auto removeIt = std::remove_if(m_Shots.begin(), m_Shots.end(), [&](const ShotPtr& shot) {

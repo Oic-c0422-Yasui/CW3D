@@ -13,12 +13,20 @@ namespace ActionGame {
 	class JumpBeamSkillState : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	ColliderStartFrameTime 当たり判定開始時間
+		* @param	ColliderEndFrameTime 　当たり判定終了時間
+		* @param	AABBShotStatus 　AABBのショットパラメータ
+		* @param	OBBShotStatus 　OBBのショットパラメータ
+		* @param	EffectStatus 　	エフェクトのパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
 			float CollideStartFrameTime;
 			float CollideEndFrameTime;
 			ShotAABB AABBShotStatus;
-			ShotSphere SphereShotStatus;
+			ShotOBB	OBBShotStatus;
 			EffectCreateParameter EffectStatus;
 		};
 	private:
@@ -30,7 +38,6 @@ namespace ActionGame {
 
 		bool m_DelayInputFlg;
 
-		ShotSphere m_ShotStatusSphere;
 
 		EffectCreateParameter m_EffectStatus;
 
@@ -38,7 +45,7 @@ namespace ActionGame {
 		void Initialize();
 	protected:
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.AABBShotStatus; }
-		virtual const ShotSphere& GetCreateShotStatusSphere() override { return m_ShotStatusSphere; }
+		virtual const ShotOBB& GetCreateShotStatusOBB() override { return m_Parameter.OBBShotStatus; }
 		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
 	public:
 		/**

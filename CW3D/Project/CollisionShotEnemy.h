@@ -36,6 +36,14 @@ namespace ActionGame
 			}
 			break;
 		}
+		case COLLISION_OBB:
+		{
+			if (!CCollision::Collision(shot->GetColliderOBB(), enemy->GetCollider()))
+			{
+				return;
+			}
+			break;
+		}
 		default:
 			break;
 		}

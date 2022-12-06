@@ -12,6 +12,12 @@ namespace ActionGame {
 	class RunJumpAttack3State : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	ColliderStartFrameTime 最初の当たり判定開始時間
+		* @param	NextInputFrameTime 　最初の当たり判定開始時間
+		* @param	AABBShotStatus 　AABBのショットパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
 			float CollideFirstStartFrameTime;
@@ -49,7 +55,6 @@ namespace ActionGame {
 		 * @brief		ステート内の入力処理
 		 */
 		void InputExecution() override;
-
 
 
 		/**

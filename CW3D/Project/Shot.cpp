@@ -71,6 +71,29 @@ void ActionGame::CShot::Create(Vector3 pos, ShotAABB aabb)
 	m_ParentID = aabb.parentID;
 }
 
+void ActionGame::CShot::Create(Vector3 pos, ShotOBB obb)
+{
+	m_Size = obb.size;
+	m_Position = pos;
+	m_Offset = obb.offset;
+	m_Type = obb.type;
+	m_Damage = obb.damage;
+	m_NextHitTime = obb.nextHitTime;
+	m_Speed = 0.0f;
+	m_OBB.Position = m_Position;
+	m_OBB.Size = m_Size;
+	m_OBB.Angle = obb.angle;
+	m_OBB.CalculateAxis();
+	m_ShowFlg = true;
+	m_CollideFlg = obb.collideFlg;
+	m_CollisionType = COLLISION_OBB;
+	m_KnockBack = obb.knockBack;
+	m_Direction = obb.direction;
+	m_ArmorBreakLevel = obb.armorBreakLevel;
+	m_GetUltGauge = obb.getUltGauge;
+	m_ParentID = obb.parentID;
+}
+
 void ActionGame::CShot::Update()
 {
 	if (!m_ShowFlg)
@@ -89,6 +112,11 @@ void ActionGame::CShot::Update()
 	case COLLISION_AABB:
 	{
 		m_AABB.SetPosition(m_Position);
+		break;
+	}
+	case COLLISION_OBB:
+	{
+		m_OBB.Position = m_Position;
 		break;
 	}
 	default:

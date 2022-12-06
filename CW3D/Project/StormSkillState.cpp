@@ -50,7 +50,7 @@ void ActionGame::StormSkillState::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
+		if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
 		{
 			shot->SetCollideFlg(true);
 
@@ -61,7 +61,7 @@ void ActionGame::StormSkillState::Execution()
 		}
 
 	}
-	if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
+	if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
 	{
 		m_AttackTime = 0.0f;
 	}
@@ -74,7 +74,7 @@ void ActionGame::StormSkillState::Execution()
 
 	m_AttackTime += CUtilities::GetFrameSecond();
 
-	if (m_CurrentTime > m_Parameter.FinishTime || !m_ContinueFlg)
+	if (m_CurrentTime > m_Parameter.DurationTime || !m_ContinueFlg)
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
 		{

@@ -13,10 +13,17 @@ namespace ActionGame {
 	class JumpStormSkillState : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	AttackFrequencyFrameTime 当たり判定の発生頻度
+		* @param	DurationTime 　攻撃持続時間
+		* @param	AABBShotStatus 　AABBのショットパラメータ
+		* @param	EffectStatus 　	エフェクトのパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
-			float SkillActionFrameTime;
-			float FinishTime;
+			float AttackFrequencyFrameTime;
+			float DurationTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
 		};

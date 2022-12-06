@@ -30,12 +30,19 @@ namespace ActionGame
 		*/
 		ShotPtr Create(const Vector3& pos, const ShotSphere& sphere);
 		/*
-		* @brief	’e‚ğ¶¬‚·‚é(lŠp)
+		* @brief	’e‚ğ¶¬‚·‚é(” )
 		* @param	pos	¶¬À•W
-		* @param	aabb	lŠp‚Ì’e
+		* @param	aabb	” ‚Ì’e
 		* @return	¶¬‚³‚ê‚½’e
 		*/
 		ShotPtr Create(const Vector3& pos, const ShotAABB& aabb);
+		/*
+		* @brief	’e‚ğ¶¬‚·‚é(‰ñ“]‚ğl—¶‚µ‚½” )
+		* @param	pos	¶¬À•W
+		* @param	obb	‰ñ“]‚ğl—¶‚µ‚½” ‚Ì’e
+		* @return	¶¬‚³‚ê‚½’e
+		*/
+		ShotPtr Create(const Vector3& pos, const ShotOBB& obb);
 
 		/*
 		* @brief	”ñ•\¦‚Ì’e‚ğíœ‚·‚é

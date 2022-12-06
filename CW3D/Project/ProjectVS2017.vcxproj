@@ -170,6 +170,9 @@
     <ClCompile Include="LandingAction.cpp" />
     <ClCompile Include="LandingState.cpp" />
     <ClCompile Include="MoveState.cpp" />
+    <ClCompile Include="PlayerActionCreator.cpp" />
+    <ClCompile Include="PlayerSkillCreater.cpp" />
+    <ClCompile Include="PlayerStateCreator.cpp" />
     <ClCompile Include="RunAction.cpp" />
     <ClCompile Include="RunAttack1Action.cpp" />
     <ClCompile Include="RunAttack1State.cpp" />

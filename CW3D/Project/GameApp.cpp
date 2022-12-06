@@ -16,9 +16,7 @@ CSceneBase* gScene = NULL;
 
 bool debugFlg = false;
 
-float gameSpeed = 1.0f;
 
-CTexture	testUI;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -31,10 +29,28 @@ MofBool CGameApp::Initialize(void){
 	CUtilities::SetCurrentDirectory("Resource");
 	CUtilities::SetFPS(60);
 
+	//インプット読み込み
+	auto input = InputManagerInstance.AddInput<ActionGame::MofInput>();
+	InputManagerInstance.AddInput<ActionGame::StateInput>();
+	//キーボード
+	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
+	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
+	input->AddKeyboardKey(INPUT_KEY_JUMP, MOFKEY_X);
+	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
+	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
+	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
+	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
+	input->AddKeyboardKey(INPUT_KEY_SKILL_DROPKICK, MOFKEY_F);
+	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
+	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
+	//パッド
+	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
+	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
+	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
+
 	gScene = new CBattleScene;
 	gScene->Load();
 	gScene->Initialize();
-	testUI.Load("UI/UItest.png");
 	
 	return TRUE;
 }
@@ -49,16 +65,11 @@ MofBool CGameApp::Update(void){
 	//キーの更新
 	g_pInput->RefreshKey();
 
+	//入力更新
+	InputManagerInstance.Update();
+
 	gScene->Update();
 
-	if (g_pInput->IsKeyPush(MOFKEY_F2))
-	{
-		gameSpeed = 0.1f;
-	}
-	if (g_pInput->IsKeyPush(MOFKEY_F3))
-	{
-		gameSpeed = 1.0f;
-	}
 	if (g_pInput->IsKeyPush(MOFKEY_F1))
 	{
 		debugFlg = debugFlg ? false : true;
@@ -95,7 +106,6 @@ MofBool CGameApp::Render(void){
 	{
 		gScene->Render2DDebug();
 	}
-	//testUI.Render(0, 0);
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -115,6 +125,5 @@ MofBool CGameApp::Release(void){
 		delete gScene;
 		gScene = NULL;
 	}
-	testUI.Release();
 	return TRUE;
 }

@@ -24,10 +24,15 @@ namespace ActionGame
 	struct ShotSphere : public ShotCreateParameter {
 		float Radius;
 	};
-	//立方体ショット
+	//箱ショット
 	struct ShotAABB : public ShotCreateParameter{
 		Vector3 size;
 	};
+	//回転を考慮した箱ショット
+	struct ShotOBB : public ShotAABB {
+		Vector3 angle;
+	};
+
 	class CShot
 	{
 	protected:
@@ -42,6 +47,7 @@ namespace ActionGame
 
 		AttackColliderPtr	m_Collider;
 		CAABB				m_AABB;
+		COBB				m_OBB;
 		CVector3			m_Position;
 		float				m_Radius;
 		CVector3			m_Size;
@@ -69,8 +75,11 @@ namespace ActionGame
 		//球体の当たり判定作成
 		void Create(Vector3 pos, ShotSphere sphire);
 		
-		//立方体の当たり判定作成
+		//箱の当たり判定作成
 		void Create(Vector3 pos, ShotAABB aabb);
+
+		//回転を考慮した箱の当たり判定作成
+		void Create(Vector3 pos, ShotOBB obb);
 		
 		void Update();
 
@@ -159,8 +168,14 @@ namespace ActionGame
 
 		const CAABB& GetColliderAABB() const noexcept 
 		{
-				return m_AABB;
+			return m_AABB;
 		}
+
+		const COBB& GetColliderOBB() const noexcept
+		{
+			return	m_OBB;
+		}
+
 		int GetColliderType() const noexcept
 		{
 			return m_CollisionType;

@@ -51,7 +51,7 @@ void ActionGame::JumpStormSkillState::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
+		if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
 		{
 			shot->SetCollideFlg(true);
 
@@ -61,7 +61,7 @@ void ActionGame::JumpStormSkillState::Execution()
 			shot->SetCollideFlg(false);
 		}
 	}
-	if (m_AttackTime >= m_Parameter.SkillActionFrameTime)
+	if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
 	{
 		m_AttackTime = 0.0f;
 	}
@@ -73,7 +73,7 @@ void ActionGame::JumpStormSkillState::Execution()
 
 	m_AttackTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
-	if (m_CurrentTime > m_Parameter.FinishTime || !m_ContinueFlg)
+	if (m_CurrentTime > m_Parameter.DurationTime || !m_ContinueFlg)
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
 		{
