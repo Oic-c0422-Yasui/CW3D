@@ -130,9 +130,9 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
-	m_UpdateTask.ResetTask();
-	m_RenderTask.ResetTask();
-	m_Render2DTask.ResetTask();
+	m_UpdateTask.ClearTaskImmediate();
+	m_RenderTask.ClearTaskImmediate();
+	m_Render2DTask.ClearTaskImmediate();
 
 
 	m_Timer.Start();
@@ -379,7 +379,6 @@ void CBattleScene::Collision()
 	//	CCollision::CollisionObj(shot, m_Player);
 	//}
 
-	//
 }
 
 bool CBattleScene::CreateEnemys()

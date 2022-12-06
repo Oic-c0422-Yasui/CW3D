@@ -4,6 +4,7 @@ ActionGame::Task::Task(const std::string& name, Task_Priority pri,  const Func& 
 	: m_Priority(pri)
 	, m_Name(name)
 	, m_Task(func)
+	, m_EndFlg(false)
 {
 }
 

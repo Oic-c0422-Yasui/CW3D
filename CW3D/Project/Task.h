@@ -17,6 +17,7 @@ namespace ActionGame
 		Task_Priority m_Priority;
 		Func m_Task;
 		std::string	m_Name;
+		bool	m_EndFlg;
 	public:
 
 		Task(const std::string& name, Task_Priority pri, const Func& func);
@@ -52,6 +53,16 @@ namespace ActionGame
 		const std::string& GetName() const noexcept
 		{
 			return m_Name;
+		}
+
+		bool IsEnd() const noexcept
+		{
+			return m_EndFlg;
+		}
+
+		void Destroy()  noexcept
+		{
+			m_EndFlg = true;
 		}
 
 	};

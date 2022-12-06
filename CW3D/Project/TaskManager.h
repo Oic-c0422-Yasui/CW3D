@@ -9,6 +9,8 @@ namespace ActionGame
 	{
 	private:
 		TaskList m_TaskList;
+		std::mutex m_ListLock;
+
 	public:
 		TaskManager();
 		~TaskManager();
@@ -38,6 +40,12 @@ namespace ActionGame
 		void DeleteTask(const std::string& key);
 
 		/*
+		* @brief	タスクを即時削除する
+		* @param	key タスクの名前
+		*/
+		void DeleteTaskImmediate(const std::string& key);
+
+		/*
 		* @brief	タスクを取得する
 		* @param	key タスクの名前
 		* @return	タスククラス
@@ -45,12 +53,20 @@ namespace ActionGame
 		const TaskPtr& GetTask(const std::string& key);
 
 		/*
-		* @brief	タスクをすべて破棄する
+		* @brief	タスクを即時破棄する
 		*/
-		void ResetTask()
+		void ClearTaskImmediate()
 		{
+			std::lock_guard<std::mutex> guard(m_ListLock);
 			m_TaskList.clear();
 		}
+
+		/*
+		* @brief	タスクをすべて削除する
+		* @param	key タスクの名前
+		*/
+		void DeleteAllTask();
+
 	};
 
 }
