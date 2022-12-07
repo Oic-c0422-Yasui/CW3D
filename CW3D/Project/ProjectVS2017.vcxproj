@@ -121,7 +121,8 @@
     <ClCompile Include="ClearTermEnemyAllDeadText.cpp" />
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
-    <ClCompile Include="CreateThread.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
+    <ClCompile Include="ThreadCreator.cpp" />
     <ClCompile Include="CreateWindow.cpp" />
     <ClCompile Include="DamageAction.cpp" />
     <ClCompile Include="DamageState.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="IdleMotionAction.cpp" />
     <ClCompile Include="IdleMotionState.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="ISceneManager.cpp" />
     <ClCompile Include="JsonClearTermCreator.cpp" />
     <ClCompile Include="JsonDivisionCreator.cpp" />
     <ClCompile Include="JsonEnemyBuildParameterLoader.cpp" />
@@ -189,6 +191,9 @@
     <ClCompile Include="RunLandingAction.cpp" />
     <ClCompile Include="RunLandingState.cpp" />
     <ClCompile Include="RunState.cpp" />
+    <ClCompile Include="SceneChanger.cpp" />
+    <ClCompile Include="SceneCreator.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShockWaveSkillAction.cpp" />
     <ClCompile Include="ShockWaveSkillState.cpp" />
     <ClCompile Include="ShotManager.cpp" />
@@ -226,6 +231,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimeScale.cpp" />
     <ClCompile Include="TimeScaleController.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
@@ -261,7 +267,9 @@
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
-    <ClInclude Include="CreateThread.h" />
+    <ClInclude Include="LoadingScene.h" />
+    <ClInclude Include="SceneInitializer.h" />
+    <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />
     <ClInclude Include="EnemyBuilder.h" />
     <ClInclude Include="EnemyBuilderDictionary.h" />
@@ -269,6 +277,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemySpawnParameter.h" />
     <ClInclude Include="EnemyStatus.h" />
+    <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISpawnCondition.h" />
     <ClInclude Include="ISpawnCycle.h" />
     <ClInclude Include="ISpawnObjectCreator.h" />
@@ -277,11 +286,17 @@
     <ClInclude Include="JsonStageLoader.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EnemySpawnConditionCountLimit.h" />
+    <ClInclude Include="SceneChangeEffect.h" />
+    <ClInclude Include="SceneChanger.h" />
+    <ClInclude Include="SceneCreator.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneRegister.h" />
     <ClInclude Include="SpawnCycleFixedRange.h" />
     <ClInclude Include="SpawnCycleRandonRange.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="TaskManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ZombieAICreator.h" />
     <ClInclude Include="CharacterStateAI.h" />
     <ClInclude Include="ClearPoseAction.h" />

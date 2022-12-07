@@ -33,77 +33,82 @@
 #include	"EnemySpawnConditionCountLimit.h"
 #include	"SpawnCycleFixedRange.h"
 #include	"EnemySpawnParameter.h"
-#include	"CreateThread.h"
+#include	"ThreadCreator.h"
 #include	"TaskManager.h"
 
-class CBattleScene : public CSceneBase
+namespace ActionGame
 {
-private:
-	//プレイヤー
-	PlayerPtr m_Player;
-	//敵マネージャー
-	ActionGame::EnemyManager m_EnemyManager;
-	//敵スポナー
-	Spawner::EnemySpawnerArray m_EnemySpawner;
-	//敵生成スレッド
-	ThreadCreator m_EnemyCreateThread;
-	//更新タスク
-	ActionGame::TaskManager	m_UpdateTask;
-	//描画タスク
-	ActionGame::TaskManager	m_RenderTask;
-	//Render2Dタスク
-	ActionGame::TaskManager	m_Render2DTask;
+
+	class CBattleScene : public IScene
+	{
+	private:
+		//プレイヤー
+		PlayerPtr m_Player;
+		//敵マネージャー
+		ActionGame::EnemyManager m_EnemyManager;
+		//敵スポナー
+		Spawner::EnemySpawnerArray m_EnemySpawner;
+		//敵生成スレッド
+		ThreadCreator m_EnemyCreateThread;
+		//更新タスク
+		ActionGame::TaskManager	m_UpdateTask;
+		//描画タスク
+		ActionGame::TaskManager	m_RenderTask;
+		//Render2Dタスク
+		ActionGame::TaskManager	m_Render2DTask;
 
 
 
-	//ライト
-	CDirectionalLight m_Light;
-	//フォント
-	CFont m_Font;
-	//敵HPバー
-	std::vector<ActionGame::EnemyHPRenderPtr> m_EnemysHPRender;
-	//プレイヤーUI
-	ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
-	//UI作成
-	ActionGame::CBattleUICreater m_UICreater;
-	//ステージマネージャー
-	ActionGame::CStageManager m_StageManager;
-	//クリア条件に必要なものを渡すプロバイダ
-	ActionGame::ClearTermProviderPtr m_ClearTermProvider;
+		//ライト
+		CDirectionalLight m_Light;
+		//フォント
+		CFont m_Font;
+		//敵HPバー
+		std::vector<ActionGame::EnemyHPRenderPtr> m_EnemysHPRender;
+		//プレイヤーUI
+		ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
+		//UI作成
+		ActionGame::CBattleUICreater m_UICreater;
+		//ステージマネージャー
+		ActionGame::CStageManager m_StageManager;
+		//クリア条件に必要なものを渡すプロバイダ
+		ActionGame::ClearTermProviderPtr m_ClearTermProvider;
 
-	//クリアフラグ
-	bool m_GameClearFlg;
-	//死亡フラグ
-	bool m_GameOverFlg;
+		//クリアフラグ
+		bool m_GameClearFlg;
+		//死亡フラグ
+		bool m_GameOverFlg;
 
-	ActionGame::CTimer m_Timer;
+		ActionGame::CTimer m_Timer;
 
-private:
-	//衝突判定をまとめた関数
-	void Collision();
-	//敵の生成
-	bool CreateEnemys();
-	//タスクの登録
-	void RegisterTask();
-	void RegisterUpdateTask();
-	void RegisterCollisionTask();
-	void RegisterRenderTask();
-	void RegisterRender2DTask();
+	private:
+		//衝突判定をまとめた関数
+		void Collision();
+		//敵の生成
+		bool CreateEnemys();
+		//タスクの登録
+		void RegisterTask();
+		void RegisterUpdateTask();
+		void RegisterCollisionTask();
+		void RegisterRenderTask();
+		void RegisterRender2DTask();
 
-	void RegisterAfterSpawn();
+		void RegisterAfterSpawn();
 
-public:
-	CBattleScene();
-	~CBattleScene();
-	bool Load() override;
-	void Initialize() override;
-	void Update() override;
-	void Render() override;
-	void RenderDebug() override;
-	void Render2D() override;
-	void Render2DDebug() override;
-	void Release();
-};
+	public:
+		CBattleScene();
+		~CBattleScene();
+		bool Load() override;
+		void Initialize() override;
+		void Update() override;
+		void Render() override;
+		void RenderDebug() override;
+		void Render2D() override;
+		void Render2DDebug() override;
+		void Release() override;
+	};
+}
+
 
 
 

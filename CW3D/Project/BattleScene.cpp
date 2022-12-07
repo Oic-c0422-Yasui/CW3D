@@ -17,8 +17,7 @@
 
 using namespace ActionGame;
 
-using Task = std::function<void()>;
-//std::vector<Task> taskList;
+
 
 CBattleScene::CBattleScene()
 	: m_Player(std::make_shared<CPlayer>())
@@ -157,7 +156,6 @@ void CBattleScene::Initialize()
 	RegisterTask();
 
 }
-
 void CBattleScene::Update()
 {
 	//更新タスク実行
@@ -282,7 +280,7 @@ void CBattleScene::Release()
 	//プレイヤー解放
 	m_Player->Release();
 	m_Player.reset();
-	ServiceLocator<CPlayer>::GetInstance().Release();
+	ServiceLocator<CPlayer>::Release();
 	m_PlayerUIRender.reset();
 
 	//敵解放
@@ -301,8 +299,6 @@ void CBattleScene::Release()
 	ActionGame::ResourcePtrManager<CTexture>::GetInstance().Release();
 	ActionGame::ResourcePtrManager<CFont>::GetInstance().Release();
 
-	//インプット解放(仮)
-	InputManagerInstance.Release();
 
 	//ショット解放
 	ShotManagerInstance.Reset();

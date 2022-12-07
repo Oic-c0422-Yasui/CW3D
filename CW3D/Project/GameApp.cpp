@@ -11,12 +11,14 @@
 #include	"GameApp.h"
 #include	"SceneBase.h"
 #include	"BattleScene.h"
+#include	"SceneManager.h"
+#include	"TitleScene.h"
 
-CSceneBase* gScene = NULL;
 
 bool debugFlg = false;
 
-
+//シーンマネージャー
+ActionGame::SceneManagerPtr gSceneManager;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -48,9 +50,18 @@ MofBool CGameApp::Initialize(void){
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
 
-	gScene = new CBattleScene;
-	gScene->Load();
-	gScene->Initialize();
+	//シーン登録
+	auto manager = std::make_shared<ActionGame::SceneManager>();
+	manager->RegistScene<ActionGame::CBattleScene>(SCENE_GAME);
+	manager->RegistScene<ActionGame::CTitleScene>(SCENE_TITLE);
+
+	//画面遷移用のサービス登録
+	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::SetService(manager);
+	gSceneManager = manager;
+
+
+	gSceneManager->ChangeScene(SCENE_TITLE);
+
 	
 	return TRUE;
 }
@@ -68,7 +79,7 @@ MofBool CGameApp::Update(void){
 	//入力更新
 	InputManagerInstance.Update();
 
-	gScene->Update();
+	gSceneManager->Update();
 
 	if (g_pInput->IsKeyPush(MOFKEY_F1))
 	{
@@ -91,21 +102,8 @@ MofBool CGameApp::Render(void){
 
 	g_pGraphics->SetDepthEnable(TRUE);
 
-	gScene->Render();
+	gSceneManager->Render();
 
-	if (debugFlg)
-	{
-		gScene->RenderDebug();
-	}
-
-	g_pGraphics->SetDepthEnable(FALSE);
-
-	gScene->Render2D();
-
-	if (debugFlg)
-	{
-		gScene->Render2DDebug();
-	}
 
 	//描画の終了
 	g_pGraphics->RenderEnd();
@@ -119,11 +117,9 @@ MofBool CGameApp::Render(void){
 						それ以外	失敗、エラーコードが戻り値となる
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
-	if (gScene)
-	{
-		gScene->Release();
-		delete gScene;
-		gScene = NULL;
-	}
+	InputManagerInstance.Release();
+	gSceneManager->Release();
+	gSceneManager.reset();
+	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::Release();
 	return TRUE;
 }
