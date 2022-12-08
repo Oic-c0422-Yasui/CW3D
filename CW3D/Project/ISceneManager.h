@@ -2,11 +2,14 @@
 #include	"SceneRegister.h"
 #include	"SceneChanger.h"
 #include	"SceneInitializer.h"
+#include	"SceneChangeEffect.h"
 
 
 namespace ActionGame
 {
-
+	/*
+	* シーン管理用インタフェース
+	*/
 	class  ISceneManager : public ISceneChanger, public ISceneRegister, public ISceneInitializer
 	{
 	public:

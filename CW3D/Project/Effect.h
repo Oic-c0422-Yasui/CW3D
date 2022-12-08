@@ -3,11 +3,16 @@
 namespace ActionGame
 {
 	/*
-	* エフェクトの作成パラーメータ
+	* @brief エフェクトの作成パラーメータ
+	* @param	name	エフェクト名
+	* @param	offset	座標オフセット
+	* @param	scale	大きさ
+	* @param	rotate	回転値
+	* @param	speed	速度
 	*/
 	struct EffectCreateParameter
 	{
-		std::string name;
+		std::string name;	
 		Vector3 offset;
 		Vector3 scale;
 		Vector3 rotate;

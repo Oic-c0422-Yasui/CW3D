@@ -33,7 +33,7 @@ void ActionGame::CDivisionObject::Update()
 		}
 		return;
 	}
-	if (m_pEffect->IsStop())
+	if (m_pEffect->IsStop() || m_pEffect == nullptr)
 	{
 		m_pEffect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 	}

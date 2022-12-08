@@ -2,7 +2,6 @@
 #include "SceneBase.h"
 #include	"Common.h"
 
-#include	"MofInput.h"
 #include	"ResourceManager.h"
 #include	"GameDefine.h"
 #include	"CameraController.h"
@@ -35,6 +34,8 @@
 #include	"EnemySpawnParameter.h"
 #include	"ThreadCreator.h"
 #include	"TaskManager.h"
+#include	"SceneInitializer.h"
+#include	"SceneChangeFade.h"
 
 namespace ActionGame
 {
@@ -56,8 +57,6 @@ namespace ActionGame
 		ActionGame::TaskManager	m_RenderTask;
 		//Render2Dタスク
 		ActionGame::TaskManager	m_Render2DTask;
-
-
 
 		//ライト
 		CDirectionalLight m_Light;
@@ -88,11 +87,15 @@ namespace ActionGame
 		bool CreateEnemys();
 		//タスクの登録
 		void RegisterTask();
+		//更新タスク
 		void RegisterUpdateTask();
+		//当たり判定タスク
 		void RegisterCollisionTask();
+		//描画タスク
 		void RegisterRenderTask();
+		//２Dタスク
 		void RegisterRender2DTask();
-
+		//敵スポーン後タスク
 		void RegisterAfterSpawn();
 
 	public:

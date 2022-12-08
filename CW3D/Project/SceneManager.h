@@ -3,6 +3,7 @@
 #include "SceneCreator.h"
 #include <unordered_map>
 #include "ThreadCreator.h"
+#include "TaskManager.h"
 
 namespace ActionGame
 {
@@ -17,7 +18,21 @@ namespace ActionGame
 
 		std::unordered_map<tag_SCENENO, SceneCreatorPtr> m_SceneMap;
 
+		TaskManager m_UpdateTask;
+
 		bool m_DebugFlg;
+
+	private:
+		/* //プライベート関数 */
+		
+		//タスク登録
+		void RegisterTask();
+		//更新タスク登録
+		void RegisterUpdateTask();
+		//デバッグタスク登録
+		void RegisterDebugTask();
+		//デバッグタスク削除
+		void DeleteDebugTask();
 
 	public:
 		SceneManager();
@@ -27,6 +42,7 @@ namespace ActionGame
 		 * @brief		シーンの登録
 		 */
 		void RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator) override;
+
 		/*
 		 * @brief		シーンの登録
 		 */
@@ -35,6 +51,8 @@ namespace ActionGame
 		{
 			RegistScene(sceneNo, std::make_unique<SceneCreator<T>>());
 		}
+
+
 		/*
 		 * @brief		シーンの変更
 		 */
@@ -50,7 +68,11 @@ namespace ActionGame
 		 */
 		bool ChangeScene(const ScenePtr& scene) override;
 		
-		
+
+		/*
+		* @brief		現在のシーンを初期化
+		*/
+		void InitializeScene(SceneChangeEffectPtr effect) override;
 
 		/*
 		* @brief　読み込み

@@ -9,7 +9,7 @@
 #include	"CollisionObjectPlayer.h"
 #include	"CollisionObjectEnemy.h"
 #include	"NomalCamera.h"
-#include	"StateInput.h"
+
 #include	"ActorObjectManager.h"
 #include	"Stage1.h"
 #include	"JsonStageLoader.h"	
@@ -97,7 +97,7 @@ bool CBattleScene::Load()
 	CHPPresenter::Present(m_Player, m_PlayerUIRender->GetHPRender());
 
 
-	//カメラ初期化
+	//カメラ読み込み
 	CameraPtr camera = std::make_shared<CNomalCamera>(m_Player->GetPosition(), m_Player->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
 
@@ -112,15 +112,24 @@ bool CBattleScene::Load()
 
 void CBattleScene::Initialize()
 {
-	m_UpdateTask.ClearTaskImmediate();
-	m_RenderTask.ClearTaskImmediate();
-	m_Render2DTask.ClearTaskImmediate();
+	//インスタンスリセット
+	EffectControllerInstance.Reset();
+	ShotManagerInstance.Reset();
+	CameraControllerInstance.SetDefault();
+	TimeScaleControllerInstance.Reset();
+	
+	//タスクリセット
+	m_UpdateTask.DeleteAllTaskImmediate();
+	m_RenderTask.DeleteAllTaskImmediate();
+	m_Render2DTask.DeleteAllTaskImmediate();
 
-
+	//タイマー開始
 	m_Timer.Start();
 
+	//ステージマネージャー初期化
 	m_StageManager.Initialize();
 
+	//プレイヤー初期化
 	m_Player->Initialize();
 	m_PlayerUIRender->Initialize();
 
@@ -128,14 +137,12 @@ void CBattleScene::Initialize()
 	m_ClearTermProvider = std::make_shared<ClearTermProvider>();
 	auto& provider = m_ClearTermProvider;
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyCount(count); });
+	m_Timer.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
 	//敵生成
 	m_EnemyCreateThread.Create([this]() { return CreateEnemys(); },
 								[this]() {RegisterAfterSpawn(); }
 								);
-
-
-	m_Timer.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
 	//ライト設定
 	m_Light.SetDirection(Vector3(0.0f, -1.0f, 1.0f));
@@ -147,10 +154,6 @@ void CBattleScene::Initialize()
 	m_GameClearFlg = false;
 	m_GameOverFlg = false;
 
-	EffectControllerInstance.Reset();
-	ShotManagerInstance.Reset();
-	CameraControllerInstance.SetDefault();
-	TimeScaleControllerInstance.Reset();
 
 	//タスクの登録
 	RegisterTask();
@@ -162,7 +165,7 @@ void CBattleScene::Update()
 	m_UpdateTask.Excution();
 
 
-	//エフェクトマネージャー更新
+	//エフェクト描画更新
 	EffectRendererInstance.Update();
 	//エフェクト操作更新
 	EffectControllerInstance.Update();
@@ -450,6 +453,8 @@ void CBattleScene::RegisterUpdateTask()
 			//ゲームオーバーORクリア時、リトライ可能
 			if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
 			{
+				auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(3.0f);
+				ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
 				Initialize();
 				return;
 			}
@@ -473,16 +478,6 @@ void CBattleScene::RegisterUpdateTask()
 		[&]()
 	{
 
-		//クリア判定
-		if (m_StageManager.IsClear())
-		{
-			if (!m_GameClearFlg)
-			{
-				m_Player->SetClearPose();
-				m_GameClearFlg = true;
-			}
-		}
-
 		//死亡判定
 		if (!m_Player->IsShow() && m_Player->IsDead())
 		{
@@ -499,7 +494,7 @@ void CBattleScene::RegisterCollisionTask()
 {
 
 	////////////////////////////////////////////////
-	///		衝突タスク
+	///		当たり判定タスク
 	////////////////////////////////////////////////
 
 	m_UpdateTask.AddTask("CollisionTask1", TASK_COLLISION,
@@ -531,6 +526,7 @@ void CBattleScene::RegisterRenderTask()
 	////////////////////////////////////////////////
 	///		描画タスク
 	////////////////////////////////////////////////
+
 	m_RenderTask.AddTask("RenderTask1", TASK_MAIN1,
 		[&]()
 	{
@@ -558,6 +554,7 @@ void CBattleScene::RegisterRender2DTask()
 	////////////////////////////////////////////////
 	///		２D描画タスク
 	////////////////////////////////////////////////
+
 	m_Render2DTask.AddTask("Render2DTask1", TASK_MAIN2,
 		[&]()
 	{
@@ -584,13 +581,15 @@ void CBattleScene::RegisterRender2DTask()
 
 void CBattleScene::RegisterAfterSpawn()
 {
-	/*
-	* スポーン時に登録するタスク
-	*/
+	////////////////////////////////////////////////
+	///		スポーン時に登録するタスク
+	////////////////////////////////////////////////
 
 	m_UpdateTask.AddTask("AfterSpawnUpdate", TASK_MAIN1,
 		[&]()
 	{
+		
+
 		//敵スポナー更新
 		for (auto spawner : m_EnemySpawner)
 		{
@@ -599,8 +598,18 @@ void CBattleScene::RegisterAfterSpawn()
 
 		//敵更新
 		m_EnemyManager.Update();
+
+		//ステージクリア判定
+		if (m_StageManager.IsClear(m_ClearTermProvider))
+		{
+			if (!m_GameClearFlg)
+			{
+				m_Player->StartClearPose();
+				m_GameClearFlg = true;
+			}
+		}
 		//ステージの区画をクリアしているなら
-		if (m_StageManager.GetCurrentDivision()->IsClear() && !m_GameClearFlg)
+		else if (m_StageManager.GetCurrentDivision()->IsClear(m_ClearTermProvider) && !m_GameClearFlg)
 		{
 			m_UpdateTask.DeleteTask("AfterSpawnCollision");
 			m_UpdateTask.DeleteTask("AfterSpawnUpdate");
@@ -618,8 +627,9 @@ void CBattleScene::RegisterAfterSpawn()
 			m_Timer.Start();
 		}
 
+
 		//ステージ更新
-		m_StageManager.Update(m_ClearTermProvider);
+		m_StageManager.Update();
 	});
 
 	//敵の衝突判定

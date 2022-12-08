@@ -14,6 +14,8 @@ namespace ActionGame
 		ThreadCreator m_LoadThread;
 
 		std::shared_ptr<CTexture> m_BackTex;
+
+		std::shared_ptr<CFont> m_Font;
 	public:
 		LoadingScene(ScenePtr loadingScene);
 		~LoadingScene();

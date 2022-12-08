@@ -41,9 +41,10 @@ enum tag_COLLISIONTYPE
 //インプットキーの名称
 const std::string INPUT_KEY_HORIZONTAL = "Horizontal";
 const std::string INPUT_KEY_VERTICAL = "Vertical";
-const std::string INPUT_KEY_JUMP = "Jump";
-const std::string INPUT_KEY_ATTACK = "Attack";
-const std::string INPUT_KEY_ENTER = "Attack";
+const std::string INPUT_KEY_ENTER = "Enter";
+const std::string INPUT_KEY_ATTACK = INPUT_KEY_ENTER;
+const std::string INPUT_KEY_CANCEL = "Cancel";
+const std::string INPUT_KEY_JUMP = INPUT_KEY_CANCEL;
 const std::string INPUT_KEY_SKILL1 = "Skill1";
 const std::string INPUT_KEY_SKILL2 = "Skill2";
 const std::string INPUT_KEY_SKILL3 = "Skill3";

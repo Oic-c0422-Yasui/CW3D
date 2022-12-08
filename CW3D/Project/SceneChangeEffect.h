@@ -5,7 +5,7 @@
 namespace ActionGame
 {
 	/**
-	 * @brief		シーン変更用共通インターフェイス
+	 * @brief		シーン変更用インターフェイス
 	 */
 	class __declspec(novtable) ISceneChangeEffect
 	{

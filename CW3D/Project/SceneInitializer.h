@@ -18,7 +18,7 @@ namespace ActionGame
 		/**
 		 * @brief		Œ»İ‚ÌƒV[ƒ“‚ğ‰Šú‰»‚·‚é
 		 */
-		virtual bool InitializeScene(SceneChangeEffectPtr effect) = 0;
+		virtual void InitializeScene(SceneChangeEffectPtr effect) = 0;
 
 
 	};

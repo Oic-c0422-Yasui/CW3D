@@ -26,9 +26,9 @@ void ActionGame::CStageManager::Initialize()
 	m_pStage->Initialize();
 }
 
-void ActionGame::CStageManager::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CStageManager::Update()
 {
-	m_pStage->Update(provider);
+	m_pStage->Update();
 }
 
 void ActionGame::CStageManager::Render()
@@ -44,4 +44,9 @@ void ActionGame::CStageManager::RenderDebug()
 void ActionGame::CStageManager::Release()
 {
 	m_pStage->Release();
+}
+
+bool ActionGame::CStageManager::IsClear(const ClearTermProviderPtr& provider)
+{
+	return m_pStage->IsClear(provider);
 }

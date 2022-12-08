@@ -27,7 +27,7 @@ namespace ActionGame {
 		std::vector<EffectPtr>			m_pEffects;
 
 	protected:
-		/* メンバ関数 */
+		/* プライベート関数 */
 
 		//ショット解放
 		void ReleaseShot();

@@ -3,6 +3,8 @@
 
 using namespace ActionGame;
 
+
+
 SceneManager::SceneManager()
 	: m_DebugFlg(false)
 	, m_Scene()
@@ -11,6 +13,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
+
 }
 
 void ActionGame::SceneManager::RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator)
@@ -48,6 +51,10 @@ bool ActionGame::SceneManager::ChangeScene(const ScenePtr& scene)
 	return true;
 }
 
+void ActionGame::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
+{
+}
+
 bool ActionGame::SceneManager::ChangeScene(tag_SCENENO sceneNo, bool isLoading)
 {
 	//ロードを挟まないなら普通にシーン切り替え
@@ -78,53 +85,39 @@ bool ActionGame::SceneManager::ChangeScene(tag_SCENENO sceneNo, bool isLoading)
 
 bool SceneManager::Load()
 {
-	if (!m_Scene)
-	{
-		return false;
-	}
 
-	if (!m_Scene->Load())
-	{
-		return false;
-	}
-	
 	return true;
 }
 
 void SceneManager::Initialize()
 {
-	if (m_Scene)
-	{
-		m_Scene->Initialize();
-	}
+	m_UpdateTask.DeleteAllTaskImmediate();
+	//タスク登録
+	RegisterTask();
 }
 
 void SceneManager::Update()
 {
+	//デバッグ切り替え
 	if (g_pInput->IsKeyPush(MOFKEY_F1))
 	{
 		m_DebugFlg = m_DebugFlg ? false : true;
-	}
-
-	if (m_DebugFlg)
-	{
-		if (g_pInput->IsKeyHold(MOFKEY_LCONTROL))
+		if (m_DebugFlg)
 		{
-			if (g_pInput->IsKeyPush(MOFKEY_1))
-			{
-				ChangeScene(SCENE_TITLE);
-			}
-			else if (g_pInput->IsKeyPush(MOFKEY_2))
-			{
-				ChangeScene(SCENE_GAME);
-			}
+			//デバッグタスク登録
+			RegisterDebugTask();
+		}
+		else
+		{
+			//デバッグタスク削除
+			DeleteDebugTask();
 		}
 	}
 
-	if (m_Scene)
-	{
-		m_Scene->Update();
-	}
+	//更新タスク
+	m_UpdateTask.Excution();
+
+	
 }
 
 void SceneManager::Render()
@@ -160,4 +153,57 @@ void SceneManager::Release()
 		m_Scene->Release();
 		m_Scene.reset();
 	}
+}
+
+
+void ActionGame::SceneManager::RegisterTask()
+{
+	//更新タスク
+	RegisterUpdateTask();
+}
+
+void ActionGame::SceneManager::RegisterUpdateTask()
+{
+	/////////////////////////////////////////////////////
+	///			更新タスク
+	/////////////////////////////////////////////////////
+	m_UpdateTask.AddTask("UpdateScene", TASK_MAIN1,
+		[&]()
+			{
+				if (m_Scene)
+				{
+					m_Scene->Update();
+				}
+			}
+		);
+	
+}
+
+void ActionGame::SceneManager::RegisterDebugTask()
+{
+	/////////////////////////////////////////////////////
+	///			デバッグタスク
+	/////////////////////////////////////////////////////
+	m_UpdateTask.AddTask("UpdateDebug", TASK_MAIN1,
+		[&]()
+			{
+				//シーン遷移
+				if (g_pInput->IsKeyHold(MOFKEY_LCONTROL))
+				{
+					if (g_pInput->IsKeyPush(MOFKEY_1))
+					{
+						ChangeScene(SCENE_TITLE);
+					}
+					else if (g_pInput->IsKeyPush(MOFKEY_2))
+					{
+						ChangeScene(SCENE_GAME);
+					}
+				}
+			}
+		);
+}
+
+void ActionGame::SceneManager::DeleteDebugTask()
+{
+	m_UpdateTask.DeleteTask("UpdateDebug");
 }

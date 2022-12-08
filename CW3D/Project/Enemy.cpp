@@ -32,9 +32,7 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	auto& stateInput = std::make_shared<ActionGame::StateInput>();
 	m_Input = stateInput;
 
-	auto& enemy = eneParam->GetParam().m_Type;
-
-	//メッシュ読み込み
+	//メッシュ取得
 	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->m_MeshName);
 	if (m_pMesh == nullptr)
 	{
@@ -57,10 +55,11 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//パラメータ設定
 	SettingParameter(param, eneParam->GetStatus());
 
-
+	//初期位置設定
 	m_Position = m_DefaultPos;
 	m_HPShowFlg = true;
 
+	//AI作成
 	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
 
 	return true;
@@ -80,8 +79,6 @@ void CEnemy::Initialize()
 	m_DeadFlg = false;
 	m_HPShowFlg = true;
 
-	//相手が獲得する必殺技ゲージの倍率
-	SetUltBoostMag(1.0f);
 
 	//パラメータ初期化
 	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
@@ -102,23 +99,30 @@ void CEnemy::Update()
 		return;
 	}
 	
-	m_Input->Update();
 
-	//無敵時間
+	//無敵時間中なら時間を減らす
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
 		invincible -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
+
+	//死んだら
 	if (m_DeadFlg)
 	{
+		//完全に透明になったら表示しない
 		auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 		if (alpha <= 0)
 		{
 			m_ShowFlg = false;
 		}
 	}
+
+	//状態のインプット
+	m_Input->Update();
+	//AI更新
 	m_AI->Update();
+
 	ActionGame::ActorObject::Update();
 
 	m_Position = m_Actor->GetPosition();
@@ -162,16 +166,20 @@ void CEnemy::Release()
 
 void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
 {
+
+	//ダメージエフェクト生成
 	ActionGame::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
 	ActionGame::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
-	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
-
+	//ダメージを受けた方向に向く
 	auto& transform = m_Actor->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
 
+	//ダメージ
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
+
+	//HPが０以下なら死亡
 	if (hp <= 0)
 	{
 		hp = 0;
@@ -181,12 +189,17 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 	}
 	m_HP = hp;
 
+	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
 	if (m_Actor->GetArmorLevel() <= armorLevel)
 	{
+		//ノックバック設定
+		auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 		knockBack = direction * power;
 
+		//カメラを揺らす
 		CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
 
+		//ダメージステートへ遷移
 		m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
 	}
 }
@@ -212,6 +225,8 @@ void ActionGame::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const
 	//必殺技ゲージ
 	auto& maxUltGauge = param->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	maxUltGauge = eneStatus->m_UltGauge;
+	//相手が獲得する必殺技ゲージの倍率
+	SetUltBoostMag(eneStatus->m_UltGaugeBoostMag);
 	//当たり判定
 	m_ColliderSize = eneStatus->m_ColliderSize;
 	m_ColliderOffset = Vector3(0.0f,eneStatus->m_ColliderHeight, 0.0f);

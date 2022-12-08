@@ -20,22 +20,13 @@ void ActionGame::CDivision::Initialize()
 	}
 }
 
-void ActionGame::CDivision::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CDivision::Update()
 {
 	for (auto& obj : m_Data.Objects)
 	{
 		obj->Update();
 	}
 
-	for (auto& clearTerm : m_Data.ClearTerms)
-	{
-		bool isClear = clearTerm->IsClear(provider);
-		if (!isClear)
-		{
-			return;
-		}
-	}
-	m_ClearFlg = true;
 }
 
 void ActionGame::CDivision::Release()
@@ -43,4 +34,17 @@ void ActionGame::CDivision::Release()
 	m_Data.Objects.clear();
 	m_Data.ClearTerms.clear();
 	m_Data.EnemysParam.reset();
+}
+
+bool ActionGame::CDivision::IsClear(const ClearTermProviderPtr& provider)
+{
+	for (auto& clearTerm : m_Data.ClearTerms)
+	{
+		bool isClear = clearTerm->IsClear(provider);
+		if (!isClear)
+		{
+			return false;
+		}
+	}
+	return true;
 }

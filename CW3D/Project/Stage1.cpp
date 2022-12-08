@@ -31,23 +31,15 @@ void ActionGame::CStage1::Initialize()
 	m_CurrentDivision = GetDivision(m_Phase);
 }
 
-void ActionGame::CStage1::Update(const ClearTermProviderPtr& provider)
+void ActionGame::CStage1::Update()
 {
 	if (m_ClearFlg)
 	{
 		return;
 	}
 
-	m_CurrentDivision->Update(provider);
+	m_CurrentDivision->Update();
 	
-	if (m_CurrentDivision->IsClear())
-	{
-		m_CurrentDivision->Clear();
-		if (m_Phase + 1 >= m_Divisions->size())
-		{
-			m_ClearFlg = true;
-		}
-	}
 
 }
 
@@ -66,4 +58,19 @@ void ActionGame::CStage1::Release()
 	m_pStage.reset();
 	m_Divisions.reset();
 	m_CurrentDivision.reset();
+}
+
+bool ActionGame::CStage1::IsClear(const ClearTermProviderPtr& provider)
+{
+	if (m_CurrentDivision->IsClear(provider))
+	{
+		m_CurrentDivision->ClearObject();
+		//現在のフェーズが区画の数より大きいならクリア
+		if (m_Phase + 1 >= m_Divisions->size())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

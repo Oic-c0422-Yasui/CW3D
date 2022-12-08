@@ -12,11 +12,11 @@ namespace ActionGame
 		CStage1();
 		bool Load(const DivisionArrayPtr& divisionArray) override;
 		void Initialize() override;
-		void Update(const ClearTermProviderPtr& provider) override;
+		void Update() override;
 		void Render() override;
 		void RenderDebug() override;
 		void Release() override;
-
+		bool IsClear(const ClearTermProviderPtr& provider) override;
     };
     using Stage1Ptr = std::shared_ptr<CStage1>;
 }

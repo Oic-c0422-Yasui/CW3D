@@ -174,8 +174,8 @@ namespace ActionGame
 			m_ShowFlg = isShow;
 		}
 		/**
-		 * @brief		表示フラグを設定
-		 * @param		isShow 表示フラグ
+		 * @brief		相手が獲得する必殺技ゲージの倍率
+		 * @param		magnification 相手が獲得する必殺技ゲージの倍率
 		 */
 		void SetUltBoostMag(float magnification) noexcept
 		{

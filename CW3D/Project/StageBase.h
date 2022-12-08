@@ -19,10 +19,11 @@ namespace ActionGame
 		virtual ~CStageBase();
 		virtual bool Load(const DivisionArrayPtr& divisionArray) = 0;
 		virtual void Initialize() = 0;
-		virtual void Update(const ClearTermProviderPtr& provider) = 0;
+		virtual void Update() = 0;
 		virtual void Render() = 0;
 		virtual void RenderDebug() = 0;
 		virtual void Release() = 0;
+		virtual bool IsClear(const ClearTermProviderPtr& provider) = 0;
 
 		const ObjectPtr& GetObj(int divCount, int id)
 		{
@@ -54,11 +55,6 @@ namespace ActionGame
 		const DivisionPtr& GetCurrentDivision()
 		{
 			return m_CurrentDivision;
-		}
-
-		bool IsClear() const noexcept
-		{
-			return m_ClearFlg;
 		}
 
 		void NextPhase();

@@ -11,7 +11,8 @@ namespace ActionGame
 	{
 	private:
 		std::shared_ptr<CTexture> m_BackTexture;
-		std::shared_ptr<CFont> m_Font;
+		CFont m_TitleLogoFont;
+		CFont m_TextFont;
 	public:
 		CTitleScene();
 		~CTitleScene();

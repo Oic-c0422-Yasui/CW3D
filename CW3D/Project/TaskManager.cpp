@@ -8,7 +8,7 @@ ActionGame::TaskManager::TaskManager()
 
 ActionGame::TaskManager::~TaskManager()
 {
-	ClearTaskImmediate();
+	DeleteAllTaskImmediate();
 }
 
 void ActionGame::TaskManager::Excution()
@@ -80,6 +80,12 @@ void ActionGame::TaskManager::DeleteAllTask()
 	{
 		task->Destroy();
 	}
+}
+
+void ActionGame::TaskManager::DeleteAllTaskImmediate()
+{
+	std::lock_guard<std::mutex> guard(m_ListLock);
+	m_TaskList.clear();
 }
 
 

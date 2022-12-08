@@ -12,10 +12,11 @@ namespace ActionGame
 		~CStageManager();
 		bool Load(const StagePtr& stage, const DivisionArrayPtr& divisions);
 		void Initialize();
-		void Update(const ClearTermProviderPtr& provider);
+		void Update();
 		void Render();
 		void RenderDebug();
 		void Release();
+		bool IsClear(const ClearTermProviderPtr& provider);
 
 		const ObjectPtr& GetObj(int divCount, int id)
 		{
@@ -41,10 +42,6 @@ namespace ActionGame
 			return m_pStage->GetDivCount();
 		}
 
-		bool IsClear() const noexcept
-		{
-			return m_pStage->IsClear();
-		}
 
 		const DivisionPtr& GetDivision(size_t id)
 		{

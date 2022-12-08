@@ -13,9 +13,8 @@
 #include	"BattleScene.h"
 #include	"SceneManager.h"
 #include	"TitleScene.h"
-
-
-bool debugFlg = false;
+#include	"MofInput.h"
+#include	"StateInput.h"
 
 //シーンマネージャー
 ActionGame::SceneManagerPtr gSceneManager;
@@ -34,21 +33,21 @@ MofBool CGameApp::Initialize(void){
 	//インプット読み込み
 	auto input = InputManagerInstance.AddInput<ActionGame::MofInput>();
 	InputManagerInstance.AddInput<ActionGame::StateInput>();
-	//キーボード
+	//キーボード入力登録
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
-	input->AddKeyboardKey(INPUT_KEY_JUMP, MOFKEY_X);
-	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
+	input->AddKeyboardKey(INPUT_KEY_ENTER, MOFKEY_Z);
+	input->AddKeyboardKey(INPUT_KEY_CANCEL, MOFKEY_X);
 	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
 	input->AddKeyboardKey(INPUT_KEY_SKILL_DROPKICK, MOFKEY_F);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
-	//パッド
+	//パッド入力登録
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
-	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
+	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 0);
 
 	//シーン登録
 	auto manager = std::make_shared<ActionGame::SceneManager>();
@@ -57,9 +56,11 @@ MofBool CGameApp::Initialize(void){
 
 	//画面遷移用のサービス登録
 	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::SetService(manager);
+	ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::SetService(manager);
 	gSceneManager = manager;
 
-
+	gSceneManager->Initialize();
+	//タイトルへ遷移
 	gSceneManager->ChangeScene(SCENE_TITLE);
 
 	
@@ -81,10 +82,6 @@ MofBool CGameApp::Update(void){
 
 	gSceneManager->Update();
 
-	if (g_pInput->IsKeyPush(MOFKEY_F1))
-	{
-		debugFlg = debugFlg ? false : true;
-	}
 	return TRUE;
 }
 /*************************************************************************//*!
@@ -121,5 +118,6 @@ MofBool CGameApp::Release(void){
 	gSceneManager->Release();
 	gSceneManager.reset();
 	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::Release();
+	ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::Release();
 	return TRUE;
 }

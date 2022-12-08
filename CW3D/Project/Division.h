@@ -9,16 +9,20 @@
 
 namespace ActionGame
 {
+	/*
+	* @brief	ステージを区切るためのクラス
+	*/
 	class CDivision
 	{
 	public:
+		//区画データ
 		struct DIVISION_DATA
 		{
-			ClearTermArray	ClearTerms;
-			EnemyBuildParameterArrayPtr EnemysParam;
-			int EnemyCount;
-			std::vector<ObjectPtr> Objects;
-			int ObjectCount;
+			ClearTermArray	ClearTerms;		//クリア条件
+			EnemyBuildParameterArrayPtr EnemysParam;	//敵生成パラメータ
+			int EnemyCount;				//生成する敵の数
+			std::vector<ObjectPtr> Objects;		//区画オブジェクト
+			int ObjectCount;		//区画オブジェクトの数
 
 			float width;
 		};
@@ -29,37 +33,69 @@ namespace ActionGame
 		CDivision(DIVISION_DATA data);
 		~CDivision();
 
-
+		/*
+		* @brief	初期化
+		*/
 		void Initialize();
-		void Update(const ClearTermProviderPtr& provider);
+		/*
+		* @brief	更新
+		*/
+		void Update();
+		/*
+		* @brief	解放
+		*/
 		void Release();
-
+		
+		/*
+		* @brief	敵の生成パラメータ取得
+		* @return	敵の生成データ
+		*/
 		const EnemyBuildParameterArrayPtr& GetEnemysParam()
 		{
 			return m_Data.EnemysParam;
 		}
 
+		/*
+		* @brief	区画オブジェクト取得
+		* @param	id 配列番号
+		* @return	区画オブジェクト
+		*/
 		const ObjectPtr& GetObj(size_t id)
 		{
 			assert(m_Data.Objects[id]);
 			return m_Data.Objects[id];
 		}
 
+		/*
+		* @brief	区画オブジェクト数取得
+		* @return	区画オブジェクト数
+		*/
 		int GetObjCount() const noexcept
 		{
 			return m_Data.ObjectCount;
 		}
 
+		/*
+		* @brief	生成する敵の数取得
+		* @return	生成する敵の数
+		*/
 		int GetEnemyCount() const noexcept
 		{
 			return m_Data.EnemyCount;
 		}
 
-		void Clear() noexcept
+		/*
+		* @brief	区画オブジェクトをすべて破棄する
+		*/
+		void ClearObject() noexcept
 		{
 			SetShowObjects(false);
 		}
 
+		/*
+		* @brief	区画オブジェクトの表示設定
+		* @param	isShow 表示可否
+		*/
 		void SetShowObjects(bool isShow) noexcept
 		{
 			for (auto& object : m_Data.Objects)
@@ -68,10 +104,12 @@ namespace ActionGame
 			}
 		}
 
-		bool IsClear() const noexcept
-		{
-			return m_ClearFlg;
-		}
+		/*
+		* @brief	区画をクリアしているか？
+		* @param	provider	クリア条件に必要なパラメータを提供するプロバイダ
+		* @return	true　ならクリア
+		*/
+		bool IsClear(const ClearTermProviderPtr& provider);
 	};
 
 	using DivisionPtr = std::shared_ptr<CDivision>;

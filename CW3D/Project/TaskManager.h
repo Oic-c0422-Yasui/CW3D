@@ -44,6 +44,14 @@ namespace ActionGame
 		* @param	key タスクの名前
 		*/
 		void DeleteTaskImmediate(const std::string& key);
+		/*
+		* @brief	タスクをすべて削除する
+		*/
+		void DeleteAllTask();
+		/*
+		* @brief	タスクをすべて即時削除する
+		*/
+		void DeleteAllTaskImmediate();
 
 		/*
 		* @brief	タスクを取得する
@@ -52,20 +60,7 @@ namespace ActionGame
 		*/
 		const TaskPtr& GetTask(const std::string& key);
 
-		/*
-		* @brief	タスクを即時破棄する
-		*/
-		void ClearTaskImmediate()
-		{
-			std::lock_guard<std::mutex> guard(m_ListLock);
-			m_TaskList.clear();
-		}
 
-		/*
-		* @brief	タスクをすべて削除する
-		* @param	key タスクの名前
-		*/
-		void DeleteAllTask();
 
 	};
 
