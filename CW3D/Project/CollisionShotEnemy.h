@@ -56,7 +56,9 @@ namespace ActionGame
 		//Šl“¾•KE‹ZƒQ[ƒW
 		float gauge = shot->GetGetUltGauge() * enemy->GetUltBoostMag();
 
-		auto& actor =  ActorObjectManagerInstance.GetActor(shot->GetCharaType(), shot->GetParentID());
+		auto id = shot->GetParentID();
+
+		auto actor =  ActorObjectManagerInstance.GetActor(shot->GetCharaType(), shot->GetParentID());
 		actor->AddUltGauge(gauge);
 	}
 

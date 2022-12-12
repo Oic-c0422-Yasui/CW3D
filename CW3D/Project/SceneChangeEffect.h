@@ -30,6 +30,11 @@ namespace ActionGame
 		 * @brief		シーン変更効果終了判定
 		 */
 		virtual bool IsEnd() const noexcept = 0;
+
+		/*
+		* @brief	中間まで進んだか？
+		*/
+		virtual bool IsHalfPoint() const noexcept = 0;
 	};
 	using SceneChangeEffectPtr = std::shared_ptr<ISceneChangeEffect>;
 }

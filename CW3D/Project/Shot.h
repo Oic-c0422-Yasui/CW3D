@@ -33,6 +33,9 @@ namespace ActionGame
 		Vector3 angle;
 	};
 
+	/*
+	* @brief　ショットクラス
+	*/
 	class CShot
 	{
 	protected:

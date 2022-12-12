@@ -256,11 +256,17 @@ namespace ActionGame {
 			m_Transform->SetThrough(isThrough);
 		}
 
+		/*
+		* @brief		アーマーレベル取得
+		*/
 		BYTE GetArmorLevel() const override
 		{
 			return m_ArmorLevel;
 		}
 
+		/*
+		* @brief		アーマーレベル設定
+		*/
 		void SetArmorLevel(BYTE armor) override
 		{
 			m_ArmorLevel = armor;

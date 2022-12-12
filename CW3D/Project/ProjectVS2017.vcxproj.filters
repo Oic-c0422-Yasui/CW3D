@@ -193,15 +193,42 @@
     <Filter Include="ソース ファイル\State\Skill">
       <UniqueIdentifier>{7a9f5e6c-ebf4-47b0-b1d3-dc993ffa9163}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Task">
+      <UniqueIdentifier>{78b73a93-2e80-47f8-845c-bc0dbfc2435f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Time">
+      <UniqueIdentifier>{4e0a4bcd-ce02-4202-8991-7791f29a7607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Player">
+      <UniqueIdentifier>{874a7ff5-cf3e-414e-b0bb-6e2af29a1501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Render">
+      <UniqueIdentifier>{b1c4abed-29df-4ba9-a75a-651c8e91f38f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Presenter">
+      <UniqueIdentifier>{97098c3c-6b7a-4b08-8a84-12b4c01c568f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Spawner">
+      <UniqueIdentifier>{19d7c7a2-f76f-4a91-b318-b13cda8f263f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene\Base">
+      <UniqueIdentifier>{25f77b67-4f45-45c7-a161-6da44ed8d8fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Utility">
+      <UniqueIdentifier>{d6c7de73-394e-4cc6-a18a-335371573554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Task">
+      <UniqueIdentifier>{438c8b04-a0b5-4a7a-9832-706e06e21767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\Base">
+      <UniqueIdentifier>{766fb873-d1dc-464b-831f-4642f952990b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameApp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Test.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -231,9 +258,6 @@
     <ClCompile Include="FollowFixedCamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="SkillControllerRender.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
     <ClCompile Include="StageManager.cpp">
       <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
@@ -245,12 +269,6 @@
     </ClCompile>
     <ClCompile Include="ActorObject.cpp">
       <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerUIRender.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="HPPresenter.cpp">
-      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="BattleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -265,9 +283,6 @@
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Chara</Filter>
     </ClCompile>
     <ClCompile Include="DivisionObject.cpp">
@@ -299,15 +314,6 @@
     </ClCompile>
     <ClCompile Include="StageCreator.cpp">
       <Filter>ソース ファイル\Creator</Filter>
-    </ClCompile>
-    <ClCompile Include="Division.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyHPRender.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp">
       <Filter>ソース ファイル\UI\ClearTerm</Filter>
@@ -342,26 +348,11 @@
     <ClCompile Include="CreateWindow.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ThreadCreator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Task.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TaskManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ShotManager.cpp">
       <Filter>ソース ファイル\Shot</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeScaleController.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeScale.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="AttackBaseState.cpp">
       <Filter>ソース ファイル\State</Filter>
@@ -495,9 +486,6 @@
     <ClCompile Include="JumpStormSkillState.cpp">
       <Filter>ソース ファイル\State\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="DeadAction.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ShockWaveSkillAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
@@ -582,39 +570,69 @@
     <ClCompile Include="StormSkillAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerActionCreator.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Task.cpp">
+      <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerSkillCreater.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="TaskManager.cpp">
+      <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateCreator.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソース ファイル\Time</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="TimeScale.cpp">
+      <Filter>ソース ファイル\Time</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCreator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneChanger.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="TimeScaleController.cpp">
+      <Filter>ソース ファイル\Time</Filter>
     </ClCompile>
     <ClCompile Include="LoadingScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Chara\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHPRender.cpp">
+      <Filter>ソース ファイル\UI\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUIRender.cpp">
+      <Filter>ソース ファイル\UI\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillControllerRender.cpp">
+      <Filter>ソース ファイル\UI\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="HPPresenter.cpp">
+      <Filter>ソース ファイル\UI\Presenter</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActionCreator.cpp">
+      <Filter>ソース ファイル\Chara\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSkillCreater.cpp">
+      <Filter>ソース ファイル\Chara\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateCreator.cpp">
+      <Filter>ソース ファイル\Chara\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>ソース ファイル\Chara\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="Division.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadAction.cpp">
+      <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
     <ClCompile Include="SceneChangeFade.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\Scene\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Test.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -628,9 +646,6 @@
     </ClInclude>
     <ClInclude Include="MofInput.h">
       <Filter>Inputファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameDefine.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>ヘッダー ファイル\Common</Filter>
@@ -691,9 +706,6 @@
     </ClInclude>
     <ClInclude Include="Attack1Action.h">
       <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="RunAction.h">
       <Filter>ヘッダー ファイル\Action</Filter>
@@ -1238,37 +1250,7 @@
     <ClInclude Include="SpawnCycleRandonRange.h">
       <Filter>ヘッダー ファイル\Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="SpawnCycleFixedRange.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadCreator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TaskManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneCreator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ISceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRegister.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneChanger.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneChangeEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneInitializer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
@@ -1277,8 +1259,44 @@
     <ClInclude Include="LoadingScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SceneRegister.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneInitializer.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCreator.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChanger.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
     <ClInclude Include="SceneChangeFade.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChangeEffect.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneManager.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnCycleFixedRange.h">
+      <Filter>ヘッダー ファイル\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDefine.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>ヘッダー ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManager.h">
+      <Filter>ヘッダー ファイル\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

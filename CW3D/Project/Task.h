@@ -6,7 +6,7 @@
 namespace ActionGame
 {
 	
-
+	//関数
 	using Func = std::function<void()>;
 	/*
 	* @brief	タスク処理を行う
@@ -54,13 +54,18 @@ namespace ActionGame
 		{
 			return m_Name;
 		}
-
+		/*
+		* @brief	タスクが終了したか？
+		* @return	true　なら終了
+		*/
 		bool IsEnd() const noexcept
 		{
 			return m_EndFlg;
 		}
-
-		void Destroy()  noexcept
+		/*
+		* @brief	タスクを終了する
+		*/
+		void End()  noexcept
 		{
 			m_EndFlg = true;
 		}

@@ -1,5 +1,7 @@
 #include "TaskManager.h"
 
+
+
 ActionGame::TaskManager::TaskManager()
 	:m_TaskList()
 	, m_ListLock()
@@ -13,7 +15,7 @@ ActionGame::TaskManager::~TaskManager()
 
 void ActionGame::TaskManager::Excution()
 {
-	std::lock_guard<std::mutex> guard(m_ListLock);
+
 	for (auto task : m_TaskList)
 	{
 		if (!task->IsEnd())
@@ -21,13 +23,13 @@ void ActionGame::TaskManager::Excution()
 			task->Execution();
 		}
 	}
-	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
-		return task->IsEnd(); });
-	m_TaskList.erase(removeIt, m_TaskList.end());
+	//終了したタスクを削除する
+	DeleteTask();
 }
 
 void ActionGame::TaskManager::Sort()
 {
+	//タスクの優先度順にソート
 	std::sort(m_TaskList.begin(), m_TaskList.end(),
 		[](ActionGame::TaskPtr& task1, ActionGame::TaskPtr& task2)
 		{
@@ -39,8 +41,9 @@ void ActionGame::TaskManager::AddTask(const std::string& key, Task_Priority pri,
 {
 	std::lock_guard<std::mutex> guard(m_ListLock);
 	auto task = std::make_shared<Task>(key, pri, func);
-
 	m_TaskList.push_back(task);
+	
+	//タスクをソート
 	Sort();
 }
 
@@ -50,7 +53,7 @@ void ActionGame::TaskManager::DeleteTask(const std::string& key)
 		return task->GetName() == key; });
 	if (it != m_TaskList.end())
 	{
-		(*it)->Destroy();
+		(*it)->End();
 	}
 }
 
@@ -78,7 +81,7 @@ void ActionGame::TaskManager::DeleteAllTask()
 {
 	for (auto task : m_TaskList)
 	{
-		task->Destroy();
+		task->End();
 	}
 }
 
@@ -89,3 +92,10 @@ void ActionGame::TaskManager::DeleteAllTaskImmediate()
 }
 
 
+void ActionGame::TaskManager::DeleteTask()
+{
+	std::lock_guard<std::mutex> guard(m_ListLock);
+	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
+		return task->IsEnd(); });
+	m_TaskList.erase(removeIt, m_TaskList.end());
+}

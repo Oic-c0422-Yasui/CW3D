@@ -51,6 +51,7 @@ const std::string INPUT_KEY_SKILL3 = "Skill3";
 const std::string INPUT_KEY_SKILL_DROPKICK = "Skill_DropKick";
 const std::string INPUT_KEY_ESCAPE = "Escape";
 const std::string INPUT_KEY_RETRY = "Retry";
+const std::string INPUT_KEY_BACK = "Back";
 
 //ステートキーの名称
 constexpr char* STATE_KEY_MOVE = "Move";

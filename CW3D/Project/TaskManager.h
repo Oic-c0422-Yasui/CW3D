@@ -11,6 +11,11 @@ namespace ActionGame
 		TaskList m_TaskList;
 		std::mutex m_ListLock;
 
+	private:
+		/* プライベート関数　*/
+
+		//終了したタスクを削除する
+		void DeleteTask();
 	public:
 		TaskManager();
 		~TaskManager();

@@ -15,12 +15,16 @@ namespace ActionGame
 	private:
 
 		ScenePtr m_Scene;
-
 		std::unordered_map<tag_SCENENO, SceneCreatorPtr> m_SceneMap;
-
 		TaskManager m_UpdateTask;
+		TaskManager m_RenderTask;
+		TaskManager m_Render2DTask;
+
+		SceneChangeEffectPtr m_SceneEffect;
 
 		bool m_DebugFlg;
+
+		bool m_SceneInitFlg;
 
 	private:
 		/* //プライベート関数 */
@@ -29,11 +33,19 @@ namespace ActionGame
 		void RegisterTask();
 		//更新タスク登録
 		void RegisterUpdateTask();
+		//描画タスク登録
+		void RegisterRenderTask();
+		void RegisterRender2DTask();
+		//タスク削除
+		void DeleteTask();
 		//デバッグタスク登録
 		void RegisterDebugTask();
 		//デバッグタスク削除
 		void DeleteDebugTask();
-
+		//遷移エフェクトタスク登録
+		void RegisterSceneChangeEffectTask();
+		//遷移エフェクトタスク削除
+		void DeleteSceneChangeEffectTask();
 	public:
 		SceneManager();
 		~SceneManager();

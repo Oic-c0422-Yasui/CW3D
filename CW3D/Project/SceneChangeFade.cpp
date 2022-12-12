@@ -3,14 +3,25 @@
 ActionGame::SceneChangeFade::SceneChangeFade(float endTime)
 	: m_CurrentTime(0.0f)
 	, m_EndTime(endTime)
+	, m_HalfPointFlg(false)
+	, m_Alpha(0)
 {
 }
 
 void ActionGame::SceneChangeFade::Update()
 {
 	m_CurrentTime += CUtilities::GetFrameSecond();
-	float rate = m_CurrentTime / m_EndTime;
-	m_Alpha = (int)(255 * (1 - rate));
+	float rate = m_CurrentTime / (m_EndTime * 0.5f);
+	if (!IsHalfPoint())
+	{
+		//フェードイン
+		m_Alpha = (int)(255 * rate);
+	}
+	else
+	{
+		//フェードアウト
+		m_Alpha = (int)(255 * (1 - rate));
+	}
 }
 
 void ActionGame::SceneChangeFade::Render(ScenePtr& prev, ScenePtr& current)
@@ -22,4 +33,9 @@ void ActionGame::SceneChangeFade::Render(ScenePtr& prev, ScenePtr& current)
 bool ActionGame::SceneChangeFade::IsEnd() const noexcept
 {
 	return m_CurrentTime >= m_EndTime;
+}
+
+bool ActionGame::SceneChangeFade::IsHalfPoint() const noexcept
+{
+	return m_CurrentTime >= (m_EndTime * 0.5f);
 }

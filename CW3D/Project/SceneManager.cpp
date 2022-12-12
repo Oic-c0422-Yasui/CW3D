@@ -7,6 +7,7 @@ using namespace ActionGame;
 
 SceneManager::SceneManager()
 	: m_DebugFlg(false)
+	, m_SceneInitFlg(false)
 	, m_Scene()
 {
 }
@@ -53,6 +54,10 @@ bool ActionGame::SceneManager::ChangeScene(const ScenePtr& scene)
 
 void ActionGame::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
 {
+	m_SceneEffect = effect;
+	m_SceneInitFlg = false;
+	RegisterSceneChangeEffectTask();
+	
 }
 
 bool ActionGame::SceneManager::ChangeScene(tag_SCENENO sceneNo, bool isLoading)
@@ -92,6 +97,8 @@ bool SceneManager::Load()
 void SceneManager::Initialize()
 {
 	m_UpdateTask.DeleteAllTaskImmediate();
+	m_RenderTask.DeleteAllTaskImmediate();
+	m_Render2DTask.DeleteAllTaskImmediate();
 	//タスク登録
 	RegisterTask();
 }
@@ -117,33 +124,22 @@ void SceneManager::Update()
 	//更新タスク
 	m_UpdateTask.Excution();
 
-	
 }
 
 void SceneManager::Render()
 {
 	
-	if (m_Scene)
-	{
-		g_pGraphics->SetDepthEnable(TRUE);
-		m_Scene->Render();
+	//深度バッファ有効化
+	g_pGraphics->SetDepthEnable(TRUE);
 
+	//描画タスク
+	m_RenderTask.Excution();
 
-		if (m_DebugFlg)
-		{
-			m_Scene->RenderDebug();
-		}
+	//深度バッファ無効化
+	g_pGraphics->SetDepthEnable(FALSE);
 
-		g_pGraphics->SetDepthEnable(FALSE);
-
-		m_Scene->Render2D();
-
-		if (m_DebugFlg)
-		{
-			m_Scene->Render2DDebug();
-		}
-
-	}
+	//描画タスク
+	m_Render2DTask.Excution();
 }
 
 void SceneManager::Release()
@@ -160,6 +156,10 @@ void ActionGame::SceneManager::RegisterTask()
 {
 	//更新タスク
 	RegisterUpdateTask();
+	//描画タスク
+	RegisterRenderTask();
+	//2D描画タスク
+	RegisterRender2DTask();
 }
 
 void ActionGame::SceneManager::RegisterUpdateTask()
@@ -179,11 +179,54 @@ void ActionGame::SceneManager::RegisterUpdateTask()
 	
 }
 
+void ActionGame::SceneManager::RegisterRenderTask()
+{
+	/////////////////////////////////////////////////////
+	///			描画タスク
+	/////////////////////////////////////////////////////
+	m_RenderTask.AddTask("RenderScene", TASK_MAIN1,
+		[&]()
+	{
+		if (m_Scene)
+		{
+			m_Scene->Render();
+		}
+	}
+	);
+
+}
+
+void ActionGame::SceneManager::RegisterRender2DTask()
+{
+	/////////////////////////////////////////////////////
+	///			2D描画タスク
+	/////////////////////////////////////////////////////
+	m_Render2DTask.AddTask("Render2DScene", TASK_MAIN2,
+		[&]()
+	{
+		if (m_Scene)
+		{
+			m_Scene->Render2D();
+		}
+	}
+	);
+	
+}
+
+void ActionGame::SceneManager::DeleteTask()
+{
+	m_UpdateTask.DeleteTask("UpdateScene");
+	m_RenderTask.DeleteTask("RenderScene");
+	m_Render2DTask.DeleteTask("Render2DScene");
+}
+
 void ActionGame::SceneManager::RegisterDebugTask()
 {
 	/////////////////////////////////////////////////////
 	///			デバッグタスク
 	/////////////////////////////////////////////////////
+
+	//更新
 	m_UpdateTask.AddTask("UpdateDebug", TASK_MAIN1,
 		[&]()
 			{
@@ -201,9 +244,77 @@ void ActionGame::SceneManager::RegisterDebugTask()
 				}
 			}
 		);
+
+	//描画
+	m_RenderTask.AddTask("RenderDebug", TASK_MAIN1,
+		[&]()
+			{
+				if (m_Scene)
+				{
+					m_Scene->RenderDebug();
+				}
+				
+			}
+		);
+	//２D描画
+	m_Render2DTask.AddTask("RenderDebug2D", TASK_MAIN3,
+		[&]()
+	{
+		if (m_Scene)
+		{
+			m_Scene->Render2DDebug();
+		}
+	}
+	);
+
 }
 
 void ActionGame::SceneManager::DeleteDebugTask()
 {
 	m_UpdateTask.DeleteTask("UpdateDebug");
+	m_RenderTask.DeleteTask("RenderDebug");
+	m_Render2DTask.DeleteTask("RenderDebug2D");
+}
+
+void ActionGame::SceneManager::RegisterSceneChangeEffectTask()
+{
+	/////////////////////////////////////////////////////
+	///			シーン遷移エフェクトタスク
+	/////////////////////////////////////////////////////
+
+	//更新
+	m_UpdateTask.AddTask("SceneChangeEffectUpdate", TASK_MAIN1,
+		[&]()
+			{
+				m_SceneEffect->Update();
+				if (m_SceneEffect->IsHalfPoint() && !m_SceneInitFlg)
+				{
+					m_Scene->Initialize();
+					m_SceneInitFlg = true;
+				}
+				if (m_SceneEffect->IsEnd())
+				{
+					
+					DeleteSceneChangeEffectTask();
+				}
+			}
+	);
+
+	//２D描画
+	m_Render2DTask.AddTask("SceneChangeEffectRender", TASK_MAIN3,
+		[&]()
+	{
+		m_SceneEffect->Render(m_Scene, m_Scene);
+	}
+	);
+}
+
+void ActionGame::SceneManager::DeleteSceneChangeEffectTask()
+{
+	/////////////////////////////////////////////////////
+	///			2D描画タスク
+	/////////////////////////////////////////////////////
+	m_UpdateTask.DeleteTask("SceneChangeEffectUpdate");
+
+	m_Render2DTask.DeleteTask("SceneChangeEffectRender");
 }

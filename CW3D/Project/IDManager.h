@@ -6,7 +6,9 @@
 
 namespace ActionGame
 {
-	//アクターオブジェクトを識別するID
+	/*
+	* @brief	アクターを識別するID
+	*/
 	class CMyID
 	{
 	private:
@@ -16,6 +18,9 @@ namespace ActionGame
 		unsigned int GetID()const noexcept { return Id; }
 	};
 
+	/*
+	* @brief	アクターを識別するIDを生成するクラス
+	*/
 	class CIDManager : public Singleton<CIDManager>
 	{
 		friend class Singleton<CIDManager>;

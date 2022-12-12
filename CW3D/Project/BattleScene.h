@@ -36,6 +36,7 @@
 #include	"TaskManager.h"
 #include	"SceneInitializer.h"
 #include	"SceneChangeFade.h"
+#include	"SceneChanger.h"
 
 namespace ActionGame
 {
@@ -81,8 +82,6 @@ namespace ActionGame
 		ActionGame::CTimer m_Timer;
 
 	private:
-		//Õ“Ë”»’è‚ğ‚Ü‚Æ‚ß‚½ŠÖ”
-		void Collision();
 		//“G‚Ì¶¬
 		bool CreateEnemys();
 		//ƒ^ƒXƒN‚Ì“o˜^

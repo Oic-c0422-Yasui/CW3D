@@ -58,7 +58,7 @@ namespace ActionGame
 
 		}
 
-		const ActorObjectPtr& GetActor(int id) {
+		ActorObjectPtr GetActor(int id) {
 			for (auto& map : m_Tags)
 			{
 				auto& it = map.second->find(id);
@@ -70,7 +70,7 @@ namespace ActionGame
 			return nullptr;
 		}
 
-		const ActorObjectPtr& GetActor(CHARACTER_TYPE type,int id) {
+		ActorObjectPtr GetActor(CHARACTER_TYPE type,int id) {
 			return (*m_Tags[type])[id].lock();
 		}
 

@@ -141,7 +141,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 15.0f
 			,GameFrameTime * 25.0f
 			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f) }
-			,ShotOBB{ Vector3(1.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f), Vector3(0, 0, MOF_ToRadian(30))}
+			,ShotOBB{ Vector3(1.0f, 2.0f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f), Vector3(0, 0, MOF_ToRadian(30))}
 			,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 		}));
@@ -153,7 +153,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 15.0f
 			,GameFrameTime * 25.0f
 			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f) }
-			,ShotOBB{ Vector3(1.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f),Vector3(0, 0, MOF_ToRadian(30)) }
+			,ShotOBB{ Vector3(2.0f, 1.4f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,CHARA_PLAYER, nullptr,3,0.75f,0, Vector3(5.0f, 2.0f, 2.0f),Vector3(0, 0, MOF_ToRadian(-30)) }
 			,EffectCreateParameter{ "Effect4", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f }
 
 		}));

@@ -10,7 +10,11 @@ namespace ActionGame
         float   m_CurrentTime;
         float   m_EndTime;
         int     m_Alpha;
+        bool    m_HalfPointFlg;
     public:
+        /*
+        * @brief    コンストラクタ
+        */
         SceneChangeFade(float endTime);
         virtual ~SceneChangeFade() = default;
         /**
@@ -25,7 +29,12 @@ namespace ActionGame
         /**
          * @brief		シーン変更効果終了判定
          */
-        virtual bool IsEnd() const noexcept;
+        virtual bool IsEnd() const noexcept override;
+
+        /**
+         * @brief		中間まで進んだか？
+         */
+        virtual bool IsHalfPoint() const noexcept override;
     };    
 }
 

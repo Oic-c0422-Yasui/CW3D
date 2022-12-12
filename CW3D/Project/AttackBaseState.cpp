@@ -88,7 +88,7 @@ void ActionGame::AttackBaseState::CreateShotOBB()
 	if (Actor()->IsReverse())
 	{
 		status.offset.x *= -1;
-		status.angle.y *= -1;
+		status.angle.z *= -1;
 	}
 	status.direction = GetKnockBack();
 

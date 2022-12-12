@@ -35,7 +35,10 @@ void ActionGame::CShotManager::Delete()
 
 void ActionGame::CShotManager::Reset()
 {
-	m_Shots.clear();
+	for (auto& shot : m_Shots)
+	{
+		shot->SetShow(false);
+	}
 }
 
 void ActionGame::CShotManager::Update()

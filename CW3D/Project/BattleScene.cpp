@@ -161,6 +161,27 @@ void CBattleScene::Initialize()
 }
 void CBattleScene::Update()
 {
+
+	if (m_GameClearFlg || m_GameOverFlg)
+	{
+		//リトライ
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+		{
+			//フェード
+			auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
+			ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
+			return;
+		}
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
+		{
+			//タイトルへ遷移
+			ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(SCENE_TITLE);
+			return;
+		}
+
+	}
+
+
 	//更新タスク実行
 	m_UpdateTask.Excution();
 
@@ -318,60 +339,6 @@ void CBattleScene::Release()
 	CameraControllerInstance.Release();
 }
 
-void CBattleScene::Collision()
-{
-	//if (m_EnemyCreateThread.IsComplete())
-	//{
-	//	//敵の当たり判定
-	//	for (size_t i = 0; i < m_EnemyManager.GetMaxEnemyCount(); i++)
-	//	{
-	//		EnemyPtr enemy = m_EnemyManager.GetEnemy(i);
-	//		if (!enemy->IsShow())
-	//		{
-	//			continue;
-	//		}
-	//		//敵とプレイヤー
-	//		CCollision::CollisionObj(m_Player, enemy);
-
-	//		if (!enemy->IsInvincible())
-	//		{
-	//			//for (int j = i + 1; j < m_Enemys.size(); j++)
-	//			//{
-	//			//	//敵と敵
-	//			//	CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-	//			//}
-	//			//敵と弾
-	//			for (int j = 0; j < ShotManagerInstance.GetShotCount(); j++)
-	//			{
-	//				auto shot = ShotManagerInstance.GetShot(j);
-	//				CCollision::CollisionObj(shot, enemy);
-	//			}
-	//		}
-
-	//		//敵とオブジェクト
-	//		for (size_t j = 0; j < m_StageManager.GetCurrentDivision()->GetObjCount(); j++)
-	//		{
-	//			auto obj = m_StageManager.GetCurrentDivision()->GetObj(j);
-	//			CCollision::CollisionObj(enemy, obj);
-	//		}
-	//	}
-	//}
-	////プレイヤーとオブジェクトの当たり判定
-	//for (size_t i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)
-	//{
-	//	auto obj = m_StageManager.GetCurrentDivision()->GetObj(i);
-	//	CCollision::CollisionObj(m_Player, obj);
-	//}
-
-	////プレイヤーと弾の当たり判定
-	//for (size_t i = 0; i < ShotManagerInstance.GetShotCount(); i++)
-	//{
-	//	auto shot = ShotManagerInstance.GetShot(i);
-	//	CCollision::CollisionObj(shot, m_Player);
-	//}
-
-}
-
 bool CBattleScene::CreateEnemys()
 {
 	//配列初期化
@@ -394,7 +361,7 @@ bool CBattleScene::CreateEnemys()
 	Spawner::EnemySpawnConditionCountLimitPtr spawnCondition = std::make_shared<Spawner::EnemySpawnConditionCountLimit>(enemyCount);
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([spawnCondition](size_t count) {spawnCondition->SetCount(count); });
 
-	//敵スポナーの作成
+	//敵スポナーの作成（未完成）
 	/*m_EnemySpawner.push_back(std::make_shared<Spawner::EnemySpawner>(
 		Spawner::SpawnConditionArray{ spawnCondition },
 		std::make_shared<Spawner::SpawnCycleFixedRange>(10),
@@ -448,23 +415,14 @@ void CBattleScene::RegisterUpdateTask()
 		[&]()
 	{
 
-		if (m_GameClearFlg || m_GameOverFlg)
-		{
-			//ゲームオーバーORクリア時、リトライ可能
-			if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-			{
-				auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(3.0f);
-				ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
-				Initialize();
-				return;
-			}
-		}
+		
 	}
 	);
 	//更新タスク
 	m_UpdateTask.AddTask("UpdateTask1", TASK_MAIN1,
 		[&]()
 	{
+		
 		//タイマー更新
 		m_Timer.Update();
 
@@ -564,7 +522,8 @@ void CBattleScene::RegisterRender2DTask()
 		//リトライ描画
 		if (m_GameClearFlg || m_GameOverFlg)
 		{
-			CGraphicsUtilities::RenderString(20, 1000, "F2でリトライ");
+			CGraphicsUtilities::RenderString(20, 950, "F2でリトライ");
+			CGraphicsUtilities::RenderString(20, 1000, "F3でタイトルへ");
 		}
 
 		//ゲームクリア描画
@@ -611,8 +570,8 @@ void CBattleScene::RegisterAfterSpawn()
 		//ステージの区画をクリアしているなら
 		else if (m_StageManager.GetCurrentDivision()->IsClear(m_ClearTermProvider) && !m_GameClearFlg)
 		{
-			m_UpdateTask.DeleteTask("AfterSpawnCollision");
 			m_UpdateTask.DeleteTask("AfterSpawnUpdate");
+			m_UpdateTask.DeleteTask("AfterSpawnCollision");
 			m_RenderTask.DeleteTask("AfterSpawnRender");
 			m_Render2DTask.DeleteTask("AfterSpawnRender2D");
 
@@ -651,7 +610,7 @@ void CBattleScene::RegisterAfterSpawn()
 				{
 					//for (int j = i + 1; j < m_Enemys.size(); j++)
 					//{
-					//	//敵と敵
+					//	//敵と敵（多分使わないかも）
 					//	CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
 					//}
 					//敵と弾
