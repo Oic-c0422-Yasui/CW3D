@@ -188,7 +188,7 @@ public:
 	/*
 	* @brief	クリアポーズを開始する
 	*/
-	void StartClearPose();
+	void ClearPose();
 };
 
 using PlayerPtr = std::shared_ptr<CPlayer>;

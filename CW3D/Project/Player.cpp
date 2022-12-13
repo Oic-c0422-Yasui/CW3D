@@ -63,13 +63,13 @@ void CPlayer::Initialize()
 	SetUltBoostMag(1.0f);
 
 	//パラメータ初期化
-	auto gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = m_MaxHP.Get();
-	auto alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
-	auto invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = 0.0f;
 
 	//スキル初期化
@@ -170,7 +170,7 @@ bool CPlayer::IsInvincible() const
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 
-void CPlayer::StartClearPose()
+void CPlayer::ClearPose()
 {
 	if (!m_StateMachine->IsState(STATE_KEY_CLEARPOSE))
 	{

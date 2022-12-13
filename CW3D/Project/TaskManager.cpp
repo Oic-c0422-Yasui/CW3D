@@ -15,12 +15,11 @@ ActionGame::TaskManager::~TaskManager()
 
 void ActionGame::TaskManager::Excution()
 {
-
-	for (auto task : m_TaskList)
+	for (size_t i = 0; i < m_TaskList.size(); i++)
 	{
-		if (!task->IsEnd())
+		if (!m_TaskList[i]->IsEnd())
 		{
-			task->Execution();
+			m_TaskList[i]->Execution();
 		}
 	}
 	//終了したタスクを削除する

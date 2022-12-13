@@ -131,7 +131,11 @@ void SceneManager::Render()
 	
 	//深度バッファ有効化
 	g_pGraphics->SetDepthEnable(TRUE);
-
+	if (m_DebugFlg)
+	{
+		int a;
+		a = 1;
+	}
 	//描画タスク
 	m_RenderTask.Excution();
 

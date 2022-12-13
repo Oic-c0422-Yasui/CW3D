@@ -35,12 +35,12 @@ void ActionGame::RunAction::Start()
 
 void ActionGame::RunAction::Execution()
 {
-	//移動がない場合減速
 
 	auto& velocity = Velocity();
 	bool isReverse = Transform()->IsReverse();
 	float rotateY = Transform()->GetRotateY();
 
+	//左右向き変更
 	if (velocity->GetVelocityX() < 0 && !isReverse)
 	{
 		Transform()->SetReverse(true);
@@ -50,42 +50,51 @@ void ActionGame::RunAction::Execution()
 
 		Transform()->SetReverse(false);
 	}
-	if (velocity->GetVelocityX() < 0)
+
+	//進行方向に向きを回転させる
+	if (isReverse)
 	{
+		//左上
 		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
 			m_NowDirection = DIRECTION_LEFTUP;
 		}
+		//左下
 		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
 			m_NowDirection = DIRECTION_LEFTDOWN;
 		}
+		//左
 		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
 			m_NowDirection = DIRECTION_LEFT;
 		}
 	}
-	else if (velocity->GetVelocityX() > 0)
+	else
 	{
+		//右上
 		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
 			m_NowDirection = DIRECTION_RIGHTUP;
 		}
+		//右下
 		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
 			m_NowDirection = DIRECTION_RIGHTDOWN;
 		}
+		//右
 		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
 			m_NowDirection = DIRECTION_RIGHT;
 		}
 	}
+
 
 }
 

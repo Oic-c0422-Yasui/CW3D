@@ -36,52 +36,61 @@ void ActionGame::MoveAction::Start()
 void ActionGame::MoveAction::Execution()
 {
 
-	auto& vel = Velocity();
+	auto& velocity = Velocity();
 	bool isReverse = Transform()->IsReverse();
 	float rotateY = Transform()->GetRotateY();
 
-	if (vel->GetVelocityX() < 0 && !isReverse)
+	//左右向き変更
+	if (velocity->GetVelocityX() < 0 && !isReverse)
 	{
 		Transform()->SetReverse(true);
 
 
 	}
-	else if (vel->GetVelocityX() > 0 && isReverse)
+	else if (velocity->GetVelocityX() > 0 && isReverse)
 	{
 		Transform()->SetReverse(false);
 
 	}
-	if (vel->GetVelocityX() < 0)
+
+	//進行方向に向きを回転させる
+	if (isReverse)
 	{
-		if (vel->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+		//左上
+		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
 			m_NowDirection = DIRECTION_LEFTUP;
 		}
-		else if (vel->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+		//左下
+		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
 			m_NowDirection = DIRECTION_LEFTDOWN;
 		}
-		else if (vel->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+		//左
+		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
 			m_NowDirection = DIRECTION_LEFT;
 		}
 	}
-	else if (vel->GetVelocityX() > 0)
+	else
 	{
-		if (vel->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+		//右上
+		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
 			m_NowDirection = DIRECTION_RIGHTUP;
 		}
-		else if (vel->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+		//右下
+		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
 			m_NowDirection = DIRECTION_RIGHTDOWN;
 		}
-		else if (vel->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+		//右
+		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
 		{
 			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
 			m_NowDirection = DIRECTION_RIGHT;

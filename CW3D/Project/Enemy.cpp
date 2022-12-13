@@ -98,7 +98,6 @@ void CEnemy::Update()
 	{
 		return;
 	}
-	
 
 	//–³“GŽžŠÔ’†‚È‚çŽžŠÔ‚ðŒ¸‚ç‚·
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
@@ -135,9 +134,7 @@ void CEnemy::Render()
 		return;
 	}
 
-	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-	m_Motion->RefreshBoneMatrix(matWorld);
-	m_pMesh->Render(m_Motion, Vector4(1.0f, 1.0f, 1.0f, alpha));
+	ActionGame::ActorObject::Render();
 }
 
 void CEnemy::RenderDebug()

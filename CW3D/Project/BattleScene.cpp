@@ -162,25 +162,7 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 
-	if (m_GameClearFlg || m_GameOverFlg)
-	{
-		//リトライ
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-		{
-			//フェード
-			auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
-			ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
-			return;
-		}
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
-		{
-			//タイトルへ遷移
-			ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(SCENE_TITLE);
-			return;
-		}
-
-	}
-
+	
 
 	//更新タスク実行
 	m_UpdateTask.Excution();
@@ -414,6 +396,24 @@ void CBattleScene::RegisterUpdateTask()
 	m_UpdateTask.AddTask("RetryTask", TASK_EVENT,
 		[&]()
 	{
+			if (m_GameClearFlg || m_GameOverFlg)
+			{
+				//リトライ
+				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+				{
+					//フェード
+					auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
+					ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
+					return;
+				}
+				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
+				{
+					//タイトルへ遷移
+					ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(SCENE_TITLE);
+					return;
+				}
+
+			}
 
 		
 	}
@@ -563,7 +563,7 @@ void CBattleScene::RegisterAfterSpawn()
 		{
 			if (!m_GameClearFlg)
 			{
-				m_Player->StartClearPose();
+				m_Player->ClearPose();
 				m_GameClearFlg = true;
 			}
 		}
