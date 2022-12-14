@@ -266,6 +266,7 @@
     <ClInclude Include="ClearTermRenderCreator.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="SceneChangeFade.h" />
+    <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneInitializer.h" />
     <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />

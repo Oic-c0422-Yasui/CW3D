@@ -7,15 +7,18 @@
 
 namespace ActionGame
 {
-	class CTitleScene : public IScene
+	/*
+	* @brief	タイトルシーン
+	*/
+	class TitleScene : public IScene
 	{
 	private:
 		std::shared_ptr<CTexture> m_BackTexture;
 		CFont m_TitleLogoFont;
 		CFont m_TextFont;
 	public:
-		CTitleScene();
-		~CTitleScene();
+		TitleScene();
+		~TitleScene();
 		bool Load() override;
 		void Initialize() override;
 		void Update() override;

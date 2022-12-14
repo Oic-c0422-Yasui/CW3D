@@ -5,9 +5,19 @@
 
 namespace ActionGame
 {
-	
-	//関数
+	//タスクの優先順位（数字が低いほど優先される）
+	enum Task_Priority
+	{
+		TASK_EVENT,		//イベントタスク
+		TASK_MAIN1,		//メインタスク１
+		TASK_MAIN2,		//メインタスク２
+		TASK_MAIN3,		//メインタスク３
+		TASK_COLLISION,	//衝突タスク
+	};
+	//タスク関数
 	using Func = std::function<void()>;
+
+
 	/*
 	* @brief	タスク処理を行う
 	*/
@@ -19,7 +29,11 @@ namespace ActionGame
 		std::string	m_Name;
 		bool	m_EndFlg;
 	public:
-
+		/*
+		* @param	name	タスク名
+		* @param	pri		タスク優先順位（数字が低いほど優先順位が高い）
+		* @param	func	タスク関数
+		*/
 		Task(const std::string& name, Task_Priority pri, const Func& func);
 		~Task();
 

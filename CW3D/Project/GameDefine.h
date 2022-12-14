@@ -2,25 +2,11 @@
 #include "Mof.h"
 #include "Utilities.h"
 #include	"ServiceLocator.h"
+#include "SceneDefine.h"
+#include "SceneInitializer.h"
+#include "SceneChanger.h"
 
-//タスクの優先順位（数字が低いほど優先される）
-enum Task_Priority
-{
-	TASK_EVENT,		//イベントタスク
-	TASK_MAIN1,		//メインタスク１
-	TASK_MAIN2,		//メインタスク２
-	TASK_MAIN3,		//メインタスク３
-	TASK_COLLISION,	//衝突タスク
-};
 
-//シーン番号
-enum tag_SCENENO
-{
-	SCENE_TITLE,
-	SCENE_HOME,
-	SCENE_GAME,
-	SCENE_RESULT,
-};
 
 enum tag_COLLISIONTYPE
 {
@@ -140,8 +126,10 @@ enum CHARACTER_TYPE
 	CHARA_COUNT,
 };
 
-
-
+//画面遷移用サービス
+using SceneChangeService = ActionGame::ServiceLocator<ActionGame::ISceneChanger>;
+//画面初期化用サービス
+using SceneInitializeService = ActionGame::ServiceLocator<ActionGame::ISceneInitializer>;
 
 
 /* アニメーションパラメータ

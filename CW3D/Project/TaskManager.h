@@ -16,6 +16,7 @@ namespace ActionGame
 
 		//終了したタスクを削除する
 		void DeleteTask();
+
 	public:
 		TaskManager();
 		~TaskManager();
@@ -64,7 +65,6 @@ namespace ActionGame
 		* @return	タスククラス
 		*/
 		const TaskPtr& GetTask(const std::string& key);
-
 
 
 	};

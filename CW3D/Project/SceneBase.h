@@ -1,9 +1,13 @@
 #pragma once
 #include	<memory>
+#include	"SceneDefine.h"
 
 namespace ActionGame
 {
-
+	
+	/*
+	* @brief	シーン用インタフェース
+	*/
 	class IScene
 	{
 	public:

@@ -223,6 +223,9 @@
     <Filter Include="ソース ファイル\Scene\Base">
       <UniqueIdentifier>{766fb873-d1dc-464b-831f-4642f952990b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Utility\Defines">
+      <UniqueIdentifier>{aed1e408-ae82-4d3b-8e48-33c1731e9b4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -1286,9 +1289,6 @@
     <ClInclude Include="SpawnCycleFixedRange.h">
       <Filter>ヘッダー ファイル\Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="GameDefine.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
@@ -1297,6 +1297,12 @@
     </ClInclude>
     <ClInclude Include="TaskManager.h">
       <Filter>ヘッダー ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

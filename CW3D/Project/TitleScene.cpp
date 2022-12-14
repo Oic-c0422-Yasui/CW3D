@@ -2,18 +2,18 @@
 
 
 
-ActionGame::CTitleScene::CTitleScene()
+ActionGame::TitleScene::TitleScene()
 	: m_BackTexture(std::make_shared<CTexture>())
 	, m_TitleLogoFont()
 	, m_TextFont()
 {
 }
 
-ActionGame::CTitleScene::~CTitleScene()
+ActionGame::TitleScene::~TitleScene()
 {
 }
 
-bool ActionGame::CTitleScene::Load()
+bool ActionGame::TitleScene::Load()
 {
 	if (!m_BackTexture->Load("BackImage/TitleBack.png"))
 	{
@@ -24,11 +24,11 @@ bool ActionGame::CTitleScene::Load()
 	return true;
 }
 
-void ActionGame::CTitleScene::Initialize()
+void ActionGame::TitleScene::Initialize()
 {
 }
 
-void ActionGame::CTitleScene::Update()
+void ActionGame::TitleScene::Update()
 {
 	//キー入力
 	auto input = InputManagerInstance.GetInput(0);
@@ -36,7 +36,7 @@ void ActionGame::CTitleScene::Update()
 	if (input->IsPush(INPUT_KEY_ENTER))
 	{
 		//ゲームシーンへ遷移
-		ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(SCENE_GAME,true);
+		SceneChangeService::GetService()->ChangeScene(SCENE_GAME,true);
 	}
 	else if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_CANCEL))
 	{
@@ -45,15 +45,15 @@ void ActionGame::CTitleScene::Update()
 	}
 }
 
-void ActionGame::CTitleScene::Render()
+void ActionGame::TitleScene::Render()
 {
 }
 
-void ActionGame::CTitleScene::RenderDebug()
+void ActionGame::TitleScene::RenderDebug()
 {
 }
 
-void ActionGame::CTitleScene::Render2D()
+void ActionGame::TitleScene::Render2D()
 {
 	//画面のサイズ
 	float width = g_pGraphics->GetTargetWidth();
@@ -73,11 +73,11 @@ void ActionGame::CTitleScene::Render2D()
 	m_TextFont.RenderString(width * 0.5f - (rect.GetWidth() * 0.5f), height * 0.78f, MOF_XRGB(0, 0, 0), "End：X Key");
 }
 
-void ActionGame::CTitleScene::Render2DDebug()
+void ActionGame::TitleScene::Render2DDebug()
 {
 }
 
-void ActionGame::CTitleScene::Release()
+void ActionGame::TitleScene::Release()
 {
 	m_BackTexture.reset();
 	m_TitleLogoFont.Release();

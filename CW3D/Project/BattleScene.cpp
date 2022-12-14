@@ -403,13 +403,14 @@ void CBattleScene::RegisterUpdateTask()
 				{
 					//フェード
 					auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
-					ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::GetService()->InitializeScene(sceneEffect);
+					//初期化
+					SceneInitializeService::GetService()->InitializeScene(sceneEffect);
 					return;
 				}
 				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
 				{
 					//タイトルへ遷移
-					ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(SCENE_TITLE);
+					SceneChangeService::GetService()->ChangeScene(SCENE_TITLE);
 					return;
 				}
 

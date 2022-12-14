@@ -1,6 +1,5 @@
 #pragma once
 #include "SceneCreator.h"
-#include "GameDefine.h"
 
 namespace ActionGame
 {
@@ -17,6 +16,8 @@ namespace ActionGame
 
 		/**
 		 * @brief		シーン登録
+		 * @param		sceneNo	シーン番号
+		 * @param		creator	シーン生成クラス
 		 */
 		virtual void RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator) = 0;
 	};

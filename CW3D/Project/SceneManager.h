@@ -52,11 +52,14 @@ namespace ActionGame
 
 		/*
 		 * @brief		シーンの登録
+		 * @param		sceneNo	シーン番号
+		 * @param		creator	シーン生成クラス
 		 */
 		void RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator) override;
 
 		/*
 		 * @brief		シーンの登録
+		 * @param		sceneNo	シーン番号
 		 */
 		template < class T >
 		void RegistScene(tag_SCENENO sceneNo) 
@@ -67,8 +70,10 @@ namespace ActionGame
 
 		/*
 		 * @brief		シーンの変更
+		 * @param		sceneNo	シーン番号
 		 */
 		bool ChangeScene(tag_SCENENO sceneNo) override;
+
 		/**
 		 * @brief		シーン変更(ロード画面を挟む)
 		 * @param		sceneNo シーン番号
@@ -76,13 +81,15 @@ namespace ActionGame
 		 */
 		bool ChangeScene(tag_SCENENO sceneNo,bool isLoading) override;
 		/*
-		 * @brief		シーンの変更
+		 * @brief		シーンの変更（ロード、初期化は行わない）
+		 * @param		scene	ロード済みのシーン
 		 */
 		bool ChangeScene(const ScenePtr& scene) override;
 		
 
 		/*
 		* @brief		現在のシーンを初期化
+		* @param		effect	シーン変更中のエフェクト
 		*/
 		void InitializeScene(SceneChangeEffectPtr effect) override;
 
