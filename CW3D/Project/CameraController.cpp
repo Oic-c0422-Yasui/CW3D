@@ -5,8 +5,8 @@
 
 using namespace ActionGame;
 
-CCameraController::CCameraController()
-	: Singleton<CCameraController>()
+CameraController::CameraController()
+	: Singleton<CameraController>()
 	, m_TimerStartFlg(false)
 	, m_LeapFlg(false)
 	, m_LeapStartFlg(false)
@@ -27,24 +27,24 @@ CCameraController::CCameraController()
 
 
 
-CCameraController::~CCameraController()
+CameraController::~CameraController()
 {
 }
 
-void CCameraController::Load(const CameraPtr& camera)
+void CameraController::Load(const CameraPtr& camera)
 {
 	m_DefaultCamera = camera;
 	SetDefault();
 }
 
-void CCameraController::SetCamera(const CameraPtr& camera)
+void CameraController::SetCamera(const CameraPtr& camera)
 {
 	m_Camera = camera;
 	m_Camera->Create();
 	CGraphicsUtilities::SetCamera(&m_Camera->GetCamera());
 }
 
-void CCameraController::SetCamera(const CameraPtr& camera, float tTime)
+void CameraController::SetCamera(const CameraPtr& camera, float tTime)
 {
 	SetCamera(camera);
 	m_Time = tTime;
@@ -61,9 +61,9 @@ void CCameraController::SetCamera(const CameraPtr& camera, float tTime)
 	}
 }
 
-void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtilities::EASING_TYPE startEaseType, float leapStartTime, MyUtilities::EASING_TYPE endEaseType,float leapEndTime)
+void CameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtilities::EASING_TYPE startEaseType, float leapStartTime, MyUtilities::EASING_TYPE endEaseType,float leapEndTime)
 {
-	InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(m_Camera->GetTargetPos(), m_Camera->GetTargetLookPos(), m_Camera->GetOffsetPos(), m_Camera->GetOffsetLookPos());
+	InterpolateCameraPtr pCamera = std::make_shared<InterpolateCamera>(m_Camera->GetTargetPos(), m_Camera->GetTargetLookPos(), m_Camera->GetOffsetPos(), m_Camera->GetOffsetLookPos());
 	pCamera->Set(leapStartTime,startEaseType, camera);
 	m_Camera = pCamera;
 	SetCamera(m_Camera);
@@ -78,7 +78,7 @@ void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtilit
 	pCamera.reset();
 }
 
-void CCameraController::SetDefault()
+void CameraController::SetDefault()
 {
 	m_LeapStartFlg = false;
 	m_LeapFlg = false;
@@ -88,7 +88,7 @@ void CCameraController::SetDefault()
 	SetCamera(m_DefaultCamera);
 }
 
-void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
+void CameraController::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	if (m_LeapStartFlg)
 	{
@@ -114,7 +114,7 @@ void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
 			{
 				m_LeapFlg = false;
 				m_LeapEndFlg = true;
-				InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(m_Camera->GetTargetPos(), m_Camera->GetTargetLookPos(), m_Camera->GetOffsetPos(), m_Camera->GetOffsetLookPos());
+				InterpolateCameraPtr pCamera = std::make_shared<InterpolateCamera>(m_Camera->GetTargetPos(), m_Camera->GetTargetLookPos(), m_Camera->GetOffsetPos(), m_Camera->GetOffsetLookPos());
 				m_DefaultCamera->SetPos(pos + m_DefaultCamera->GetOffsetPos());
 				m_DefaultCamera->SetLookPos(lookPos + m_DefaultCamera->GetOffsetLookPos());
 				m_DefaultCamera->SetTargetPos(pos + m_DefaultCamera->GetOffsetPos());
@@ -148,16 +148,16 @@ void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
 }
 
 
-void CCameraController::Reset()
+void CameraController::Reset()
 {
 	
 }
 
-void CCameraController::Render2DDebug()
+void CameraController::Render2DDebug()
 {
 }
 
-void CCameraController::Quake(float power, float freq, float time)
+void CameraController::Quake(float power, float freq, float time)
 {
 	m_QuakePower = m_QuakePower > power ? m_QuakePower : power;
 	m_QuakeFrequent = m_QuakeFrequent > freq ? m_QuakeFrequent : freq;
@@ -167,7 +167,7 @@ void CCameraController::Quake(float power, float freq, float time)
 	}
 }
 
-void CCameraController::Enable(const Vector3& pos, const Vector3& lookPos)
+void CameraController::Enable(const Vector3& pos, const Vector3& lookPos)
 {
 	m_TargetPos = pos;
 	m_TargetLookPos = lookPos;

@@ -1,25 +1,27 @@
 #include "FollowFixedCamera.h"
 
-CFollowFixedCamera::CFollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
-	: CCameraBase(pos, lookPos, offsetPos, offsetLookPos)
+using namespace ActionGame;
+
+FollowFixedCamera::FollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
-CFollowFixedCamera::~CFollowFixedCamera()
+FollowFixedCamera::~FollowFixedCamera()
 {
 	m_AnimData.Release();
 }
 
-void CFollowFixedCamera::Create()
+void FollowFixedCamera::Create()
 {
-	CCameraBase::Create();
+	CameraBase::Create();
 }
 
-void CFollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void FollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	m_TargetPos = pos + m_OffsetPos;
 	m_TargetLookPos = lookPos + m_OffsetLookPos;
 	m_Position = m_TargetPos;
 	m_LookPos = m_TargetLookPos;
-	//CCameraBase::UpdateCamera();
+
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include	"GameDefine.h"
+
 #include	"AdditionalSkill.h"
 #include	"UltimateSkill.h"
 #include	"IActor.h"

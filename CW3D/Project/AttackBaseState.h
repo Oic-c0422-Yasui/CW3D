@@ -5,6 +5,7 @@
 #include	"FixedKnockBack.h"
 #include	"EffectController.h"
 #include	"ShotManager.h"
+#include	"SkillDefine.h"
 
 namespace ActionGame {
 

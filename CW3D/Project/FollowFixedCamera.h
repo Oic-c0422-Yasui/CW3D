@@ -1,12 +1,17 @@
 #pragma once
 #include "CameraBase.h"
-class CFollowFixedCamera : public CCameraBase
+
+namespace ActionGame
 {
-public:
-	CFollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
-	~CFollowFixedCamera();
-	void Create() override;
-	void Update(const Vector3& pos, const Vector3& lookPos) override;
-};
+	class FollowFixedCamera : public CameraBase
+	{
+	public:
+		FollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
+		~FollowFixedCamera();
+		void Create() override;
+		void Update(const Vector3& pos, const Vector3& lookPos) override;
+	};
+}
+
 
 

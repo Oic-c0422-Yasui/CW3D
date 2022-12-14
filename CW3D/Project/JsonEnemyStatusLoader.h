@@ -2,7 +2,7 @@
 #include "json.hpp"
 #include "EnemyBuildParameter.h"
 #include "EnemyBuilderDictionary.h"
-#include "GameDefine.h"
+
 
 
 namespace ActionGame

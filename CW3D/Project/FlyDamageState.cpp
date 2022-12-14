@@ -1,4 +1,5 @@
 #include "FlyDamageState.h"
+#include "ParameterDefine.h"
 
 ActionGame::FlyDamageState::FlyDamageState()
 	: State()

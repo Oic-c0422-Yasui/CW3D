@@ -1,4 +1,5 @@
 #include "DeadAction.h"
+#include "ParameterDefine.h"
 
 ActionGame::DeadAction::DeadAction(Parameter param)
 	: Action()

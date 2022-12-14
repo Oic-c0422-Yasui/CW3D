@@ -1,5 +1,5 @@
 #pragma once
-#include "GameDefine.h"
+
 #include	"ParameterMap.h"
 #include "ReactiveParameter.h"
 

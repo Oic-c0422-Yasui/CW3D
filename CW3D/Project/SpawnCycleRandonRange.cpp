@@ -1,5 +1,6 @@
 #include "SpawnCycleRandonRange.h"
 #include "TimeScaleController.h"
+#include "GameDefine.h"
 
 Spawner::SpawnCycleRandomRange::SpawnCycleRandomRange(int min, int max)
 	: m_IntervalMin(min)

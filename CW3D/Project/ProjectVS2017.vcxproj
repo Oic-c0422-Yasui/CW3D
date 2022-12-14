@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActorObject.cpp" />
+    <ClCompile Include="AdditionalSkill.cpp" />
     <ClCompile Include="Attack1Action.cpp" />
     <ClCompile Include="Attack1State.cpp" />
     <ClCompile Include="Attack2Action.cpp" />
@@ -123,6 +124,9 @@
     <ClCompile Include="ClearTermRenderCreator.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="SceneChangeFade.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="StartPoseAction.cpp" />
+    <ClCompile Include="StartPoseState.cpp" />
     <ClCompile Include="ThreadCreator.cpp" />
     <ClCompile Include="CreateWindow.cpp" />
     <ClCompile Include="DamageAction.cpp" />
@@ -229,9 +233,12 @@
     <ClCompile Include="TimeScale.cpp" />
     <ClCompile Include="TimeScaleController.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="UltimateSkill.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="ZombieActionCreator.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
+    <ClCompile Include="ZombieStateCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -240,6 +247,7 @@
     <ClInclude Include="AdditionalSkill.h" />
     <ClInclude Include="AdditionalSkillRender.h" />
     <ClInclude Include="AICycleFixed.h" />
+    <ClInclude Include="AnimationDefine.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
     <ClInclude Include="Attack2Action.h" />
@@ -253,6 +261,7 @@
     <ClInclude Include="BattleUICreater.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CharaTypeDefine.h" />
     <ClInclude Include="ClearTermAllDeadAndEnduranceText.h" />
     <ClInclude Include="ClearTermBuilder.h" />
     <ClInclude Include="ClearTermBuilderDictionary.h" />
@@ -264,10 +273,16 @@
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
+    <ClInclude Include="CollisionDefine.h" />
+    <ClInclude Include="InputDefine.h" />
     <ClInclude Include="LoadingScene.h" />
+    <ClInclude Include="ParameterDefine.h" />
     <ClInclude Include="SceneChangeFade.h" />
     <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneInitializer.h" />
+    <ClInclude Include="SkillDefine.h" />
+    <ClInclude Include="StartPoseAction.h" />
+    <ClInclude Include="StartPoseState.h" />
     <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />
     <ClInclude Include="EnemyBuilder.h" />
@@ -457,6 +472,7 @@
     <ClInclude Include="ZombieBuilder.h" />
     <ClInclude Include="ZombieParameterCreator.h" />
     <ClInclude Include="ZombieStateCreator.h" />
+    <ClInclude Include="StateDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

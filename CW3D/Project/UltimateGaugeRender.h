@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 
-#include "GameDefine.h"
+#include "Common.h"
 #include "ResourceManager.h"
 
 namespace ActionGame

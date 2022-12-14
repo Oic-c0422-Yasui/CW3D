@@ -131,8 +131,7 @@ namespace ActionGame {
 		/**
 		 * @brief		現在のステートが指定された名称のものか判断する
 		 * @param[in]	key			ステートキー
-		 * @return		true		指定されたステート
-		 *				false		違う
+		 * @return		true		なら指定されたステート
 		 */
 		bool IsState(const StateKeyType& key) const override {
 			auto& nextState = stateMap_.find(key);
@@ -144,7 +143,7 @@ namespace ActionGame {
 		}
 
 		/**
-		 * @brief		登録されているすべてのステートをセットアップする
+		 * @brief		登録されているすべてのステートのセットアップを行う
 		 */
 		void SetUp() const override
 		{

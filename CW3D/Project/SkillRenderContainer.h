@@ -46,7 +46,7 @@ namespace ActionGame
 				auto& skillPtr = skillController->GetSkill(i);
 
 				SkillRenderPtr render;
-				if (std::dynamic_pointer_cast<CAdditionalSkill>(skillPtr) != nullptr)
+				if (std::dynamic_pointer_cast<AdditionalSkill>(skillPtr) != nullptr)
 				{
 					//追加攻撃スキルならロード
 					auto addRender = std::make_shared<CAdditionalSkillRender>();
@@ -63,7 +63,7 @@ namespace ActionGame
 				m_SkillRender.push_back(render);
 
 				//必殺技ならロード
-				if (std::dynamic_pointer_cast<CUltimateSkill>(skillPtr) != nullptr)
+				if (std::dynamic_pointer_cast<UltimateSkill>(skillPtr) != nullptr)
 				{
 					auto gauge = std::make_shared<CSkillUltGaugeRender>();
 					gauge->Load();
@@ -83,7 +83,7 @@ namespace ActionGame
 				auto& skillPtr = skillController->GetSkill(i);
 				m_SkillRender[i]->Initialize(fn(skillPtr->GetButton()));
 
-				if (std::dynamic_pointer_cast<CUltimateSkill>(skillPtr) != nullptr)
+				if (std::dynamic_pointer_cast<UltimateSkill>(skillPtr) != nullptr)
 				{
 					m_UltGaugeRender[uindex++]->Initialize(m_SkillRender[i]->GetPosition());
 				}

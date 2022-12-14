@@ -1,4 +1,5 @@
 #include "DamageState.h"
+#include "ParameterDefine.h"
 
 ActionGame::DamageState::DamageState(Parameter param)
 	: State()

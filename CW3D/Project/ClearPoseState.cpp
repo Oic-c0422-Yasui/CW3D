@@ -11,6 +11,7 @@ ActionGame::ClearPoseState::ClearPoseState()
 
 void ActionGame::ClearPoseState::Start()
 {
+	m_CurrentTime = 0.0f;
 	m_ClearPoseAction = Actor()->GetAction<ClearPoseAction>(GetKey());
 	m_ClearPoseAction->Start();
 	m_AnimStartFlg = false;

@@ -1,5 +1,4 @@
 #pragma once
-#include "GameDefine.h"
 
 
 #include "EnemyBuildParameter.h"

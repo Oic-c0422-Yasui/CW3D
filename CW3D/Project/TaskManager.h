@@ -1,6 +1,7 @@
 #pragma once
 #include "Task.h"
 #include	<algorithm>
+#include	<mutex>
 
 namespace ActionGame
 {

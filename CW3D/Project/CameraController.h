@@ -6,9 +6,9 @@
 namespace ActionGame
 {
 
-	class CCameraController : public Singleton<CCameraController>
+	class CameraController : public Singleton<CameraController>
 	{
-		friend class Singleton<CCameraController>;
+		friend class Singleton<CameraController>;
 	private:
 
 		CameraPtr	m_Camera;
@@ -32,11 +32,11 @@ namespace ActionGame
 		Vector3		m_TargetPos;
 		Vector3		m_TargetLookPos;
 		
-		CCameraController();
+		CameraController();
 		void Reset();
 
 	public:
-		~CCameraController();
+		~CameraController();
 		
 		/*
 		* @brief	読み込み
@@ -152,5 +152,5 @@ namespace ActionGame
 
 
 //簡易アクセス用
-#define CameraControllerInstance 	ActionGame::CCameraController::GetInstance()
+#define CameraControllerInstance 	ActionGame::CameraController::GetInstance()
 

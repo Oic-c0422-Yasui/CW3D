@@ -2,7 +2,7 @@
 
 #include "ActorObject.h"
 #include "Singleton.h"
-#include "GameDefine.h"
+
 
 
 namespace ActionGame

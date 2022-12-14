@@ -30,8 +30,6 @@ namespace ActionGame {
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
 		JumpAttack1ActionPtr			m_JumpAttack1Action;
 
-		const float EffectStartFrameTime = GameFrameTime * 20.0f;
-
 		bool collideStartFlg;
 
 	protected:

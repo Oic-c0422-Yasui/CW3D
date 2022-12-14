@@ -1,7 +1,10 @@
 #include "FixedCamera.h"
+#include "TimeScaleController.h"
+
+using namespace ActionGame;
 
 FixedCamera::FixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
-	: CCameraBase(pos, lookPos, offsetPos, offsetLookPos)
+	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
@@ -12,7 +15,7 @@ FixedCamera::~FixedCamera()
 
 void FixedCamera::Create()
 {
-	CCameraBase::Create();
+	CameraBase::Create();
 }
 
 void FixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
@@ -28,5 +31,5 @@ void FixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 	m_Position	= m_TargetPos + m_OffsetPos;
 	m_LookPos	= m_TargetLookPos + m_OffsetLookPos;
 
-	CCameraBase::UpdateCamera();
+	CameraBase::UpdateCamera();
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include	"IAction.h"
-#include	"GameDefine.h"
+#include	"AnimationDefine.h"
+#include	"StateDefine.h"
 
 namespace ActionGame {
 

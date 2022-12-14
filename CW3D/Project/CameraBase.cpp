@@ -1,6 +1,9 @@
 #include "CameraBase.h"
 
-CCameraBase::CCameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+
+using namespace ActionGame;
+
+CameraBase::CameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
 	: m_Camera()
 	, m_LookPos(0,0,0)
 	, m_Position(0,0,0)
@@ -15,7 +18,7 @@ CCameraBase::CCameraBase(const Vector3& pos, const Vector3& lookPos, const Vecto
 	Create();
 }
 
-void CCameraBase::Create()
+void CameraBase::Create()
 {
 	m_Camera.SetViewPort();
 	m_Position = m_TargetPos + m_OffsetPos;
@@ -25,18 +28,18 @@ void CCameraBase::Create()
 	m_Camera.Update();
 }
 
-void CCameraBase::UpdateCamera()
+void CameraBase::UpdateCamera()
 {
 	m_Camera.LookAt(m_Position, m_LookPos, Vector3(0, 1, 0));
 	m_Camera.Update();
 }
 
 
-void CCameraBase::Render2DDebug()
+void CameraBase::Render2DDebug()
 {
 }
 
-void CCameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
+void CameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
 {
 	m_Position = pos;
 	m_LookPos = lookPos;
@@ -44,7 +47,7 @@ void CCameraBase::Enable(const Vector3& pos, const Vector3& lookPos)
 }
 
 
-void CCameraBase::SetAnim(const MyUtilities::ANIM_V3_DATA_ARRAY& offsetPos, const MyUtilities::ANIM_V3_DATA_ARRAY& offsetLookPos)
+void CameraBase::SetAnim(const MyUtilities::ANIM_V3_DATA_ARRAY& offsetPos, const MyUtilities::ANIM_V3_DATA_ARRAY& offsetLookPos)
 {
 	m_AnimData.Pos = offsetPos;
 	m_AnimData.LookPos = offsetLookPos;

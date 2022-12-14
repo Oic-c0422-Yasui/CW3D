@@ -1,4 +1,5 @@
 #include "PlayerStateCreator.h"
+#include "GameDefine.h"
 
 bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const InputPtr& input)
 {
@@ -192,6 +193,12 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 
 	//クリアポーズステート
 	stateMachine->AddState(State::Create<ClearPoseState>(actor, input));
+
+	//開始ポーズステート
+	stateMachine->AddState(State::Create<StartPoseState>(actor, input,
+		StartPoseState::Parameter{
+			5.0
+		}));
 	
 	//ドロップキックスキルステート
 	stateMachine->AddState(State::Create<DropKickSkillState>(actor, input,

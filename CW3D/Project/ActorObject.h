@@ -2,6 +2,8 @@
 
 #include	"Actor.h"
 #include	"StateMachine.h"
+#include	"ParameterDefine.h"
+#include	"StateDefine.h"
 
 namespace ActionGame
 {

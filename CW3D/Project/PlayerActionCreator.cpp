@@ -1,20 +1,10 @@
 #include "PlayerActionCreator.h"
+#include "GameDefine.h"
+
 
 
 bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 {
-		/*
-		利用するアニメーションの名前
-		char*					name;
-		アニメ開始時間
-		float					startTime;
-		アニメ速度
-		float					speed;
-		アニメ補間時間
-		float					tTime;
-		アニメループフラグ
-		bool					loopFlg;
-		*/
 
 
 	//待機
@@ -447,5 +437,21 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			GRAVITY,
 			GRAVITYMAX,
 		}));
+
+	//開始ポーズ
+	actor->AddAction(Action::Create<StartPoseAction>(
+		StartPoseAction::Parameter{
+			AnimParam{
+				STATE_KEY_CLEARPOSE,
+				0.0f,
+				1.0f,
+				0.0f,
+				false
+			},
+			Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
+			GRAVITY,
+			GRAVITYMAX,
+		}));
+
 	return true;
 }

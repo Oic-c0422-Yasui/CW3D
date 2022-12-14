@@ -1,9 +1,10 @@
 #pragma once
 
 #include "AttackCollider.h"
-#include "GameDefine.h"
-#include	"KnockBack.h"
+
+#include "KnockBack.h"
 #include "TimeScaleController.h"
+#include "CollisionDefine.h"
 
 namespace ActionGame
 {

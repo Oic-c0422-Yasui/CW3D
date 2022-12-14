@@ -1,5 +1,5 @@
 #pragma once
-#include "GameDefine.h"
+#include "Common.h"
 #include "ActorObject.h"
 #include "Object.h"
 

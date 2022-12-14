@@ -1,4 +1,5 @@
 #include "DownState.h"
+#include "ParameterDefine.h"
 
 ActionGame::DownState::DownState(Parameter param)
 	: State()

@@ -67,10 +67,9 @@ namespace ActionGame {
 		virtual const StatePtr& GetCurrentState() const = 0;
 
 		/**
-		 * @brief		現在のステートが指定された名将のものか判断する
+		 * @brief		現在のステートが指定された名称のものか判断する
 		 * @param[in]	key			ステートキー
-		 * @return		true		指定されたステート
-		 *				false		違う
+		 * @return		true		なら指定されたステート
 		 */
 		virtual bool IsState(const StateKeyType& key) const = 0;
 		/**

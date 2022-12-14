@@ -11,11 +11,11 @@ namespace ActionGame
 		static void Present(PlayerPtr& player, const SkillUltGaugeRenderPtr& view, int skillID)
 		{
 			player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
-			auto& skill = player->GetCastSkill <CUltimateSkill>(skillID);
+			auto& skill = player->GetCastSkill <UltimateSkill>(skillID);
 			skill->GetSkillUltSubject(skillID)->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
 
 			view->SetGauge(0);
-			view->SetMaxGauge(skill->GetUltGauge());
+			view->SetMaxGauge(skill->GetExpendGauge());
 		}
 
 	};

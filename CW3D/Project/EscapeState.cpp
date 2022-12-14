@@ -1,4 +1,5 @@
 #include "EscapeState.h"
+#include "ParameterDefine.h"
 
 ActionGame::EscapeState::EscapeState(Parameter param)
 	: AttackBaseState()

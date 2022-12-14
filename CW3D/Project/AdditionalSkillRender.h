@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameDefine.h"
+#include "Common.h"
 #include "ResourceManager.h"
 #include "SkillRender.h"
 

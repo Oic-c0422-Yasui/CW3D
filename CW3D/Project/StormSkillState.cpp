@@ -40,7 +40,7 @@ void ActionGame::StormSkillState::Start()
 		lookPos.x *= -1;
 	}
 	CameraPtr camera;
-	camera = std::make_shared<CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
+	camera = std::make_shared<ActionGame::FollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
 }
 

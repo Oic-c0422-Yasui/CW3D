@@ -16,7 +16,7 @@ void ActionGame::RunFallAction::Start()
 
 	auto& vel = Velocity();
 
-	vel->SetMaxVelocity(PLAYER_MAXSPEED, PLAYER_MAXSPEED);
+
 	//PLAYER_MAXSPEED
 	vel->SetMaxVelocity(m_Parameter.maxVelocty.x, m_Parameter.maxVelocty.z);
 	//GRAVITYMAX

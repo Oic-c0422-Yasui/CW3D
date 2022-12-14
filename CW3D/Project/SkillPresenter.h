@@ -25,7 +25,7 @@ namespace ActionGame
 		//’Ç‰ÁUŒ‚ƒXƒLƒ‹
 		static void Present(PlayerPtr& player, const AdditionalSkillRenderPtr& view, int skillID)
 		{
-			auto& skill = player->GetCastSkill<CAdditionalSkill>(skillID);
+			auto& skill = player->GetCastSkill<AdditionalSkill>(skillID);
 			skill->GetAddCTSubject()->Subscribe([view](float ct) { view->SetAddCT(ct); });
 			skill->GetAddMaxCTSubject()->Subscribe([view](float ct) { view->SetAddMaxCT(ct); });
 

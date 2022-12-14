@@ -1,4 +1,5 @@
 #include "DamageAction.h"
+#include "ParameterDefine.h"
 
 ActionGame::DamageAction::DamageAction(Parameter param)
 	: Action()

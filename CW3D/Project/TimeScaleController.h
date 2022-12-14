@@ -3,7 +3,7 @@
 #include "Singleton.h"
 
 #include "TimeScale.h"
-#include "GameDefine.h"
+#include "CharaTypeDefine.h"
 
 
 namespace ActionGame

@@ -1,5 +1,6 @@
 #include "SkillControllerRender.h"
-#include "Player.h"
+#include "InputDefine.h"
+
 
 using namespace ActionGame;
 
@@ -21,7 +22,6 @@ bool CSkillControllerRender::Load()
 	m_pFrame = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "SkillUI");
 	m_pFont = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
 	m_Position = Vector2(582, 884);
-	auto& player = ServiceLocator< CPlayer >::GetService();
 
 	FrameSetting();
 
@@ -115,63 +115,63 @@ void CSkillControllerRender::SetName()
 	//ÉLÅ[É{Å[Éhñºê›íË
 	int cnt = 0;
 
-	m_SkillFrame[cnt].str = "SHIFT";
+	m_SkillFrame[cnt].str = "SHIFT";	//0
 	
 	cnt++;
-	m_SkillFrame[cnt].str = "SPACE";
+	m_SkillFrame[cnt].str = "SPACE";	//1
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çp";
+	m_SkillFrame[cnt].str = "Çp";		//2
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Ç`";
+	m_SkillFrame[cnt].str = "Ç`";		//3
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çv";
+	m_SkillFrame[cnt].str = "Çv";		//4
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çr";
+	m_SkillFrame[cnt].str = "Çr";		//5
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çd";
+	m_SkillFrame[cnt].str = "Çd";		//6
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çc";
+	m_SkillFrame[cnt].str = "Çc";		//7
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çq";
+	m_SkillFrame[cnt].str = "Çq";		//8
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çe";
+	m_SkillFrame[cnt].str = "Çe";		//9
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çs";
+	m_SkillFrame[cnt].str = "Çs";		//10
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çb";
+	m_SkillFrame[cnt].str = "Çb";		//11
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çf";
+	m_SkillFrame[cnt].str = "Çf";		//12
 
 	cnt++;
-	m_SkillFrame[cnt].str = "Çu";
+	m_SkillFrame[cnt].str = "Çu";		//13
 
 	cnt++;
-	m_SkillFrame[cnt].str = "ÇP";
+	m_SkillFrame[cnt].str = "ÇP";		//14
 
 	cnt++;
-	m_SkillFrame[cnt].str = "ÇR";
+	m_SkillFrame[cnt].str = "ÇR";		//15
 
 	cnt++;
-	m_SkillFrame[cnt].str = "ÇQ";
+	m_SkillFrame[cnt].str = "ÇQ";		//16
 
 	cnt++;
-	m_SkillFrame[cnt].str = "ÇS";
+	m_SkillFrame[cnt].str = "ÇS";		//17
 
-	//ÉLÅ[ÇÃç¿ïW
+	//ÉLÅ[ÇÃç¿ïWê›íË
 	keyIndexs[INPUT_KEY_SKILL1] = 7;
 	keyIndexs[INPUT_KEY_SKILL2] = 3;
 	keyIndexs[INPUT_KEY_SKILL3] = 5;
 	keyIndexs[INPUT_KEY_ESCAPE] = 1;
-	keyIndexs[INPUT_KEY_SKILL_DROPKICK] = 9;
+	keyIndexs[INPUT_KEY_SKILL4] = 9;
 }

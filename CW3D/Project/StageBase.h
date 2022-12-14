@@ -1,5 +1,5 @@
 #pragma once
-#include "GameDefine.h"
+
 #include "ResourceManager.h"
 #include "Division.h"
 

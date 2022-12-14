@@ -11,23 +11,23 @@ ActionGame::DropKickSkillState::DropKickSkillState(Parameter param)
 
 void ActionGame::DropKickSkillState::SetUp()
 {
-	auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_DROPKICK);
-	m_Skill = std::dynamic_pointer_cast<CAdditionalSkill>(skill);
-	if (m_Skill.lock() == nullptr)
+	auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_4);
+	m_SkillRef = std::dynamic_pointer_cast<AdditionalSkill>(skill);
+	if (m_SkillRef.lock() == nullptr)
 	{
-		assert(m_Skill.lock());
+		assert(m_SkillRef.lock());
 	}
 }
 
 void ActionGame::DropKickSkillState::Start()
 {
 	m_SkillAction = Actor()->GetAction<DropKickSkillAction>(GetKey());
-	m_Key = m_Skill.lock()->GetButton();
+	m_Key = m_SkillRef.lock()->GetButton();
 	Initialize();
-	if (m_Skill.lock()->IsDelayAdditional())
+	if (m_SkillRef.lock()->IsDelayAdditional())
 	{
 		m_DelayInputFlg = true;
-		m_Skill.lock()->AddInput();
+		m_SkillRef.lock()->AddInput();
 	}
 	else
 	{
@@ -106,10 +106,10 @@ void ActionGame::DropKickSkillState::InputExecution()
 	{
 		if (Input()->IsPush(m_Key) && !m_NextInputFlg)
 		{
-			if (m_Skill.lock()->IsAdditional())
+			if (m_SkillRef.lock()->IsAdditional())
 			{
 				m_NextInputFlg = true;
-				m_Skill.lock()->AddInput();
+				m_SkillRef.lock()->AddInput();
 			}
 		}
 	}
@@ -166,7 +166,7 @@ void ActionGame::DropKickSkillState::Initialize()
 	CreateEffect();
 	for (auto& shot : m_pShots)
 	{
-		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_DROPKICK)->GetDamage() * 0.01f);
+		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_4)->GetDamage() * 0.01f);
 		shot->SetDamage(damage);
 	}
 	m_SkillAction->Move(Actor()->IsReverse() ? -1.0f : 1.0f);

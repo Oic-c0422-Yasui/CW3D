@@ -4,10 +4,18 @@
 
 namespace ActionGame
 {
+	/*
+	* スキルデータをまとめたクラス
+	*/
 
+	/*
+	* @brief	スキルデータ
+	*/
 	struct SkillData
 	{
-		int	DamagePercent;
+		//ダメージ量（％）
+		int	DamagePercent;	
+		//最大のクールタイム
 		ParameterHandle< ReactiveParameter<float>>	MaxCT;
 		SkillData()
 			: DamagePercent(0)
@@ -27,10 +35,16 @@ namespace ActionGame
 	};
 	using SkillDataPtr = std::shared_ptr<SkillData>;
 
+	/*
+	* @brief	追加スキルデータ
+	*/
 	struct AdditionalSkillData : public SkillData
 	{
+		//追加スキルの最大のクールタイム
 		ParameterHandle< ReactiveParameter<float>>	AddMaxCT;
+		//開始時間
 		float StartTime;
+		//追加する使用可能回数
 		int Count;
 		AdditionalSkillData()
 			: SkillData()
@@ -50,9 +64,14 @@ namespace ActionGame
 	};
 	using AdditionalSkillDataPtr = std::shared_ptr<AdditionalSkillData>;
 
+	/*
+	* @brief	必殺技スキルデータ
+	*/
 	struct UltimateSkillData : public SkillData
 	{
+		//使用するゲージ量
 		ParameterHandle< ReactiveParameter<float>>	ExpendGauge;
+
 		UltimateSkillData()
 			: SkillData()
 			, ExpendGauge(0)

@@ -1,4 +1,5 @@
 #include "FlyDamageAction.h"
+#include "ParameterDefine.h"
 
 ActionGame::FlyDamageAction::FlyDamageAction(Parameter param)
 	: Action()

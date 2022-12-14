@@ -3,7 +3,7 @@
 #include	"StateAI.h"
 #include	"Player.h"
 #include	"Collision.h"
-#include	"GameDefine.h"
+#include	"ServiceLocator.h"
 
 namespace ActionGame {
 

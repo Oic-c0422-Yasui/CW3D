@@ -1,9 +1,13 @@
 #pragma once
 #include	"Skill.h"
 
+
 namespace ActionGame
 {
-	class CAdditionalSkill : public CSkill
+	/*
+	* @brief	追加入力が可能なスキル
+	*/
+	class AdditionalSkill : public Skill
 	{
 	private:
 		float m_AddStartTime;
@@ -13,95 +17,62 @@ namespace ActionGame
 		bool	m_DelayAddFlg;
 		AdditionalSkillDataPtr m_AddSkillData;
 	public:
-		CAdditionalSkill()
-			: CSkill()
-			, m_AddStartTime(0.0f)
-			, m_AddCT(0.0f)
-			, m_AddCount(0)
-			, m_AddFlg(false)
-			, m_DelayAddFlg(false)
-		{
-		}
-		~CAdditionalSkill()
-		{
-		}
+		AdditionalSkill();
+		~AdditionalSkill();
 
-		void Start() override
-		{
-			if (!m_AddFlg)
-			{
-				CSkill::Start();
-				m_AddStartTime = m_AddSkillData->StartTime;
-			}
-			else
-			{
-				m_DelayAddFlg = true;
-				AddInput();
-			}
-		}
+		/*
+		* @brief	開始
+		*/
+		void Start() override;
 
-		void Reset() override
-		{
-			CSkill::Reset();
-			m_AddStartTime = 0.0f;
-			m_AddCT = 0.0f;
-			m_AddCount = 0;
-			m_AddFlg = false;
-			m_DelayAddFlg = false;
-		}
+		/*
+		* @brief	リセット
+		*/
+		void Reset() override;
 
-		void Update() override
-		{
-			if (!m_StartFlg)
-			{
-				return;
-			}
-			if (m_AddStartTime > 0.0f)
-			{
-				m_AddStartTime -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-				if (m_AddStartTime <= 0.0f)
-				{
-					if (!m_AddFlg)
-					{
-						m_AddFlg = true;
-						m_AddCT = m_AddSkillData->AddMaxCT.Get();
-						m_DelayAddFlg = false;
-					}
-				}
-			}
-			else if (m_AddCT > 0.0f)
-			{
-				m_AddCT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-			}
-			
-			if(m_AddCT <= 0.0f)
-			{
-				m_AddFlg = false;
-				CSkill::AddTimerAndResetFlg();
-			}
-		}
+		/*
+		* @brief	更新
+		*/
+		void Update() override;
 
-		
+		/*
+		* @brief	追加クールタイムを設定
+		* @param	time 追加クールタイム(秒)
+		*/
 		void SetAddCT(float time) noexcept
 		{
 			m_AddCT = time;
 		}
+
+		/*
+		* @brief	最大追加クールタイムを設定
+		* @param	time 最大追加クールタイム(秒)
+		*/
 		void SetAddMaxCT(float time) noexcept
 		{
 			m_AddSkillData->AddMaxCT = time;
 		}
 
+		/*
+		* @brief	使用回数を設定
+		*/
 		void SetAddCount(float count) noexcept
 		{
 			m_AddCount = count;
 		}
 
+		/*
+		* @brief	追加入力
+		*/
 		void AddInput()
 		{
 			SetAddCT(0.0f);
 			m_AddFlg = false;
 		}
 
+		/*
+		* @brief	追加入力
+		*/
 		bool IsAdditional() const noexcept
 		{
 			return m_AddFlg;
@@ -126,21 +97,20 @@ namespace ActionGame
 			return m_AddCount;
 		}
 
+		/*
+		* @brief	使用可能か？
+		* @return	true　なら使用可能
+		*/
 		bool IsCanUse() override
 		{
 			return m_AddFlg | m_CanUseFlg.Get();
 		}
 
-
-		void SetSkillData(const SkillDataPtr& skill) override
-		{
-			CSkill::SetSkillData(skill);
-			m_AddSkillData = std::dynamic_pointer_cast<AdditionalSkillData>(m_SkillData);
-			if (m_AddSkillData == nullptr)
-			{
-				assert(m_AddSkillData);
-			}
-		}
+		/*
+		* @brief	スキルデータ設定
+		*/
+		void SetSkillData(const SkillDataPtr& skill) override;
+		
 
 		ActionGame::IObservable<float>* GetAddCTSubject() { return &(m_AddCT.Get()); }
 		ActionGame::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
@@ -148,6 +118,6 @@ namespace ActionGame
 	};
 
 	//ポインタ置き換え
-	using AdditionalSKillPtr = std::shared_ptr<CAdditionalSkill>;
-	using AdditionalWeakSKillPtr = std::weak_ptr<CAdditionalSkill>;
+	using AdditionalSKillPtr = std::shared_ptr<AdditionalSkill>;
+	using AdditionalWeakSKillPtr = std::weak_ptr<AdditionalSkill>;
 }

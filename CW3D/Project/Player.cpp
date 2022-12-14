@@ -57,7 +57,7 @@ void CPlayer::Initialize()
 	m_EscapeColliderSize = m_ColliderSize + Vector3(1.2f,0.5f,1.2f);
 
 	//‰Šú‚Í‘Ò‹@ƒ‚[ƒVƒ‡ƒ“
-	m_StateMachine->ChangeState(STATE_KEY_IDLE);
+	m_StateMachine->ChangeState(STATE_KEY_STARTPOSE);
 
 	//‘ŠŽè‚ªŠl“¾‚·‚é•KŽE‹ZƒQ[ƒW‚Ì”{—¦
 	SetUltBoostMag(1.0f);
@@ -167,7 +167,8 @@ void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,
 bool CPlayer::IsInvincible() const
 {
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
+	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN
+							|| m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_STARTPOSE;
 }
 
 void CPlayer::ClearPose()

@@ -1,12 +1,11 @@
 #pragma once
 
 #include	"Action.h"
-#include	"GameDefine.h"
 
 namespace ActionGame {
 
 	/**
-	 * @brief		攻撃アクション
+	 * @brief		クリアポーズアクション
 	 */
 	class ClearPoseAction : public Action
 	{

@@ -180,9 +180,6 @@ namespace ActionGame {
 		*/
 		virtual void SetArmorLevel(BYTE armor) = 0;
 
-
-	protected:
-
 	};
 	//ポインタ置き換え
 	using ActorPtr = std::shared_ptr<IActor>;

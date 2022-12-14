@@ -1,6 +1,8 @@
 #pragma once
 
 #include	"StateMachine.h"
+#include	"StateDefine.h"
+#include	"InputDefine.h"
 
 namespace ActionGame {
 

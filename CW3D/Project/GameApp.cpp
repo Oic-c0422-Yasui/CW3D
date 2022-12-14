@@ -41,7 +41,7 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
-	input->AddKeyboardKey(INPUT_KEY_SKILL_DROPKICK, MOFKEY_F);
+	input->AddKeyboardKey(INPUT_KEY_SKILL4, MOFKEY_F);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	input->AddKeyboardKey(INPUT_KEY_BACK, MOFKEY_F3);

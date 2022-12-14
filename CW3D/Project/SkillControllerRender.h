@@ -1,6 +1,7 @@
 #pragma once
 
-#include "GameDefine.h"
+#include "Common.h"
+#include "SkillDefine.h"
 
 #include "ResourceManager.h"
 
@@ -29,6 +30,9 @@ namespace ActionGame
 		SkillFrame m_SkillFrame[SKILLMAX_COUNT];
 
 		std::map<std::string, int> keyIndexs;
+
+	private:
+		/*		プライベート関数		*/
 
 		void FrameSetting();
 
@@ -60,17 +64,21 @@ namespace ActionGame
 		{
 			return m_Position;
 		}
-		Vector2 GetSkillPosition(int id)
+		const Vector2& GetSkillPosition(int id)
 		{
+			//配列数よりidの値が大きいなら
+			assert(SKILLMAX_COUNT <= id);
 			return m_SkillFrame[id].position;
 		}
-		Vector2 GetSkillPosition(const std::string& key)
+		const Vector2& GetSkillPosition(const std::string& key)
 		{
 			return m_SkillFrame[keyIndexs[key]].position;
 		}
 
 		SkillFrame GetSkillFrame(int id)
 		{
+			//配列数よりidの値が大きいなら
+			assert(SKILLMAX_COUNT <= id);
 			return m_SkillFrame[id];
 		}
 

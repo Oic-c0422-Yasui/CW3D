@@ -1,4 +1,5 @@
 #include "AttackBaseState.h"
+#include "ParameterDefine.h"
 
 using namespace ActionGame;
 
@@ -184,5 +185,6 @@ void ActionGame::AttackBaseState::End()
 {
 	ReleaseShot();
 	ReleaseEffect();
-	Actor()->SetArmorLevel(DEFAULT_ARMORLEVEL);
+	static const BYTE defaultLevel = 1;
+	Actor()->SetArmorLevel(1);
 }

@@ -23,7 +23,7 @@ namespace ActionGame
 
 		const SKillPtr Create(const std::string& key, const std::string& button, const std::string& texName,char* state, char* flyState)
 		{
-			auto& add = std::make_shared<CSkill>();
+			auto& add = std::make_shared<Skill>();
 			m_Skills.push_back(add);
 
 			add->Create(key, button, texName,state, flyState);

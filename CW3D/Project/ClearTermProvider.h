@@ -1,5 +1,5 @@
 #pragma once
-#include "GameDefine.h"
+
 #include "Enemy.h"
 
 namespace ActionGame

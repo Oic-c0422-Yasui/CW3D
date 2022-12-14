@@ -1,9 +1,10 @@
 #include "InterpolateCamera.h"
 #include "TimeScaleController.h"
 
+using namespace ActionGame;
 
-CInterpolateCamera::CInterpolateCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
-	: CCameraBase(pos, lookPos, offsetPos, offsetLookPos)
+InterpolateCamera::InterpolateCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 	, m_NextOffsetLookPos(0, 0, 0)
 	, m_NextOffsetPos(0, 0, 0)
 	, m_PosAnim()
@@ -11,13 +12,13 @@ CInterpolateCamera::CInterpolateCamera(const Vector3& pos, const Vector3& lookPo
 {
 }
 
-CInterpolateCamera::~CInterpolateCamera()
+InterpolateCamera::~InterpolateCamera()
 {
 	m_PosAnim.clear();
 	m_LookPosAnim.clear();
 }
 
-void CInterpolateCamera::Set(float time, MyUtilities::EASING_TYPE ease, const CameraPtr& camera)
+void InterpolateCamera::Set(float time, MyUtilities::EASING_TYPE ease, const CameraPtr& camera)
 {
 	m_Time = time;
 	Create();
@@ -46,13 +47,13 @@ void CInterpolateCamera::Set(float time, MyUtilities::EASING_TYPE ease, const Ca
 
 
 
-void CInterpolateCamera::Create()
+void InterpolateCamera::Create()
 {
 	m_CurrentTime = 0.0f;
-	CCameraBase::Create();
+	CameraBase::Create();
 }
 
-void CInterpolateCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void InterpolateCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	//現在地から目的地までの補間アニメーションを作成
 	MyUtilities::ANIM_V3_DATA_ARRAY posAnim(
@@ -76,6 +77,6 @@ void CInterpolateCamera::Update(const Vector3& pos, const Vector3& lookPos)
 		m_AnimEndFlg = true;
 	}
 	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-	CCameraBase::UpdateCamera();
+	CameraBase::UpdateCamera();
 }
 

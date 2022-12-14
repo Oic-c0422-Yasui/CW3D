@@ -55,7 +55,7 @@ namespace ActionGame {
 			, m_SkillController(std::make_shared<CSkillController>())
 			, m_MyID(IDManagerInstance.GetId())
 			, m_CharaType()
-			, m_ArmorLevel(DEFAULT_ARMORLEVEL)
+			, m_ArmorLevel(1)
 		{
 		}
 

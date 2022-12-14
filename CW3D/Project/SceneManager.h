@@ -27,7 +27,7 @@ namespace ActionGame
 		bool m_SceneInitFlg;
 
 	private:
-		/* //プライベート関数 */
+		/* プライベート関数 */
 		
 		//タスク登録
 		void RegisterTask();
