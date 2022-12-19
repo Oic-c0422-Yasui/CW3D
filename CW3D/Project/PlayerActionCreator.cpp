@@ -442,7 +442,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<StartPoseAction>(
 		StartPoseAction::Parameter{
 			AnimParam{
-				STATE_KEY_CLEARPOSE,
+				STATE_KEY_STARTPOSE,
 				0.0f,
 				1.0f,
 				0.0f,

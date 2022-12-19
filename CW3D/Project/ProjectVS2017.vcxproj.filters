@@ -82,12 +82,6 @@
     <Filter Include="ヘッダー ファイル\AI">
       <UniqueIdentifier>{cb8d6fc2-6420-4818-8070-eb944fd269fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Action\Skill">
-      <UniqueIdentifier>{1cb35810-c5fd-49ed-8331-f042208058e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\State\State\Skill">
-      <UniqueIdentifier>{0fc67747-6d1d-4c7c-a86d-6a7819b09366}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Creator">
       <UniqueIdentifier>{c5d5961e-658c-42eb-b0c5-a52a1e4b3e1e}</UniqueIdentifier>
     </Filter>
@@ -228,6 +222,36 @@
     </Filter>
     <Filter Include="ソース ファイル\Skill">
       <UniqueIdentifier>{32368bd1-b2a3-4155-86f3-fe0de1126cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Attack">
+      <UniqueIdentifier>{90d3e79d-2268-4369-9994-6b92561333b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Attack\Skill">
+      <UniqueIdentifier>{1cb35810-c5fd-49ed-8331-f042208058e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Damage">
+      <UniqueIdentifier>{0c43ef51-e935-45de-a847-b08fe3e4c312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Pose">
+      <UniqueIdentifier>{27f9d7c1-a98a-444d-b0d5-9c4ac537eb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Move">
+      <UniqueIdentifier>{086589f7-f26e-4210-8660-304cb73a2b7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Attack">
+      <UniqueIdentifier>{cf15c195-76a3-4462-8273-e9935d912cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Attack\Skill">
+      <UniqueIdentifier>{0fc67747-6d1d-4c7c-a86d-6a7819b09366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Pose">
+      <UniqueIdentifier>{0456baf6-b41d-47b1-ae63-a60992413bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Move">
+      <UniqueIdentifier>{90fe06ce-630e-4d5f-b1de-4ade14018a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\State\State\Damage">
+      <UniqueIdentifier>{4850e218-b95e-4166-baaa-1f00f7b7aa3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -695,9 +719,6 @@
     <ClInclude Include="IAction.h">
       <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
     </ClInclude>
-    <ClInclude Include="MoveAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
     <ClInclude Include="IState.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
     </ClInclude>
@@ -710,35 +731,8 @@
     <ClInclude Include="StateMachine.h">
       <Filter>ヘッダー ファイル\State\StateBase</Filter>
     </ClInclude>
-    <ClInclude Include="IdleAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
     <ClInclude Include="Velocity.h">
       <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleMotionState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleMotionAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
     </ClInclude>
     <ClInclude Include="StateInput.h">
       <Filter>Inputファイル</Filter>
@@ -761,30 +755,6 @@
     <ClInclude Include="AttackCollider.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Attack2State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack2Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack3State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack3Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunAttack1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunAttack1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
@@ -803,92 +773,11 @@
     <ClInclude Include="Skill.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JumpState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="FallState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="LandingState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="FallAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="LandingAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunFallState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunFallAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunLandingState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunLandingAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpAttack1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack2Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack3Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack1Action.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpAttack1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack1State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack2State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="RunJumpAttack3State.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="FlyDamageAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="DownAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="DeadAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="FlyDamageState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DownState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DeadState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
     <ClInclude Include="SkillData.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
     </ClInclude>
     <ClInclude Include="IDManager.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackBaseState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>ヘッダー ファイル\Common</Filter>
@@ -984,46 +873,40 @@
       <Filter>ヘッダー ファイル\Collision</Filter>
     </ClInclude>
     <ClInclude Include="JumpBeamSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="JumpStormSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="ShockWaveSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="BeamSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="StormSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="JumpBeamSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="JumpStormSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="ShockWaveSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="BeamSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="StormSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="IStateCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
     <ClInclude Include="IActionCreator.h">
       <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="EscapeAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="EscapeState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
     </ClInclude>
     <ClInclude Include="FollowFixedCamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
@@ -1109,17 +992,11 @@
     <ClInclude Include="Division.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="ClearPoseState.h">
-      <Filter>ヘッダー ファイル\State\State</Filter>
-    </ClInclude>
-    <ClInclude Include="ClearPoseAction.h">
-      <Filter>ヘッダー ファイル\Action</Filter>
-    </ClInclude>
     <ClInclude Include="DropKickSkillAction.h">
-      <Filter>ヘッダー ファイル\Action\Skill</Filter>
+      <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="DropKickSkillState.h">
-      <Filter>ヘッダー ファイル\State\State\Skill</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="JsonClearTermCreator.h">
       <Filter>ヘッダー ファイル\Creator\Json</Filter>
@@ -1328,9 +1205,6 @@
     <ClInclude Include="SceneDefine.h">
       <Filter>ヘッダー ファイル\Utility\Defines</Filter>
     </ClInclude>
-    <ClInclude Include="StartPoseAction.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="StateDefine.h">
       <Filter>ヘッダー ファイル\Utility\Defines</Filter>
     </ClInclude>
@@ -1352,8 +1226,158 @@
     <ClInclude Include="CollisionDefine.h">
       <Filter>ヘッダー ファイル\Utility\Defines</Filter>
     </ClInclude>
+    <ClInclude Include="Attack1Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack2Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack3Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack3Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack1Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack2Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAttack1Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpAttack1Action.h">
+      <Filter>ヘッダー ファイル\Action\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearPoseAction.h">
+      <Filter>ヘッダー ファイル\Action\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleMotionAction.h">
+      <Filter>ヘッダー ファイル\Action\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="StartPoseAction.h">
+      <Filter>ヘッダー ファイル\Action\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageAction.h">
+      <Filter>ヘッダー ファイル\Action\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadAction.h">
+      <Filter>ヘッダー ファイル\Action\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="DownAction.h">
+      <Filter>ヘッダー ファイル\Action\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyDamageAction.h">
+      <Filter>ヘッダー ファイル\Action\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="EscapeAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="FallAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="LandingAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunFallAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunLandingAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack1State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack2State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack3State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBaseState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpAttack1State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAttack1State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack1State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack2State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpAttack3State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearPoseState.h">
+      <Filter>ヘッダー ファイル\State\State\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleMotionState.h">
+      <Filter>ヘッダー ファイル\State\State\Pose</Filter>
+    </ClInclude>
     <ClInclude Include="StartPoseState.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\State\State\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageState.h">
+      <Filter>ヘッダー ファイル\State\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>ヘッダー ファイル\State\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="DownState.h">
+      <Filter>ヘッダー ファイル\State\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyDamageState.h">
+      <Filter>ヘッダー ファイル\State\State\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="EscapeState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="FallState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="LandingState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunFallState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunJumpState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunLandingState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="RunState.h">
+      <Filter>ヘッダー ファイル\State\State\Move</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

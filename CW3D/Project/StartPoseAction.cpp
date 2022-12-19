@@ -17,6 +17,14 @@ void ActionGame::StartPoseAction::Start()
 	Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
 	Velocity()->SetGravity(m_Parameter.gravity);
 	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
+	if (Transform()->IsReverse())
+	{
+		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.0f);
+	}
+	else
+	{
+		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.0f);
+	}
 }
 
 void ActionGame::StartPoseAction::Execution()

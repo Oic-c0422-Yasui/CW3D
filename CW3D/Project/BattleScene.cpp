@@ -162,7 +162,16 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 
-	
+	if (m_GameClearFlg || m_GameOverFlg)
+	{
+		//遷移
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
+		{
+			//タイトルへ遷移
+			SceneChangeService::GetService()->ChangeScene(SCENE_TITLE);
+			return;
+		}
+	}
 
 	//更新タスク実行
 	m_UpdateTask.Excution();
@@ -396,26 +405,15 @@ void CBattleScene::RegisterUpdateTask()
 	m_UpdateTask.AddTask("RetryTask", TASK_EVENT,
 		[&]()
 	{
-			if (m_GameClearFlg || m_GameOverFlg)
-			{
-				//リトライ
-				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-				{
-					//フェード
-					auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
-					//初期化
-					SceneInitializeService::GetService()->InitializeScene(sceneEffect);
-					return;
-				}
-				if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
-				{
-					//タイトルへ遷移
-					SceneChangeService::GetService()->ChangeScene(SCENE_TITLE);
-					return;
-				}
-
-			}
-
+		//リトライ
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+		{
+			//フェード
+			auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
+			//初期化
+			SceneInitializeService::GetService()->InitializeScene(sceneEffect);
+			return;
+		}
 		
 	}
 	);

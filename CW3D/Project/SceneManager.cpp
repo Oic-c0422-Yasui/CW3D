@@ -106,9 +106,9 @@ void SceneManager::Initialize()
 void SceneManager::Update()
 {
 	//デバッグ切り替え
-	if (g_pInput->IsKeyPush(MOFKEY_F1))
+	if (g_pInput->IsKeyHold(MOFKEY_LCONTROL) && g_pInput->IsKeyPush(MOFKEY_F1))
 	{
-		m_DebugFlg = m_DebugFlg ? false : true;
+		m_DebugFlg = !m_DebugFlg;
 		if (m_DebugFlg)
 		{
 			//デバッグタスク登録
@@ -131,11 +131,7 @@ void SceneManager::Render()
 	
 	//深度バッファ有効化
 	g_pGraphics->SetDepthEnable(TRUE);
-	if (m_DebugFlg)
-	{
-		int a;
-		a = 1;
-	}
+
 	//描画タスク
 	m_RenderTask.Excution();
 

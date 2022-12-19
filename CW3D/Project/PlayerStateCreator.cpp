@@ -197,7 +197,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 	//開始ポーズステート
 	stateMachine->AddState(State::Create<StartPoseState>(actor, input,
 		StartPoseState::Parameter{
-			5.0
+			3.0
 		}));
 	
 	//ドロップキックスキルステート
