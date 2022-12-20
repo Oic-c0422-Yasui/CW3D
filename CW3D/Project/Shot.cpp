@@ -104,17 +104,17 @@ void ActionGame::CShot::Update()
 	m_Position.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_Type);
 	switch (m_CollisionType)
 	{
-	case COLLISION_SPHERE:
+	case COLLISION_TYPE::SPHERE:
 	{
 		m_Collider->SetPosition(m_Position);
 		break;
 	}
-	case COLLISION_AABB:
+	case COLLISION_TYPE::AABB:
 	{
 		m_AABB.SetPosition(m_Position);
 		break;
 	}
-	case COLLISION_OBB:
+	case COLLISION_TYPE::OBB:
 	{
 		m_OBB.Position = m_Position;
 		break;

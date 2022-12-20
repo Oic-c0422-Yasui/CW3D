@@ -235,11 +235,11 @@ void ActionGame::SceneManager::RegisterDebugTask()
 				{
 					if (g_pInput->IsKeyPush(MOFKEY_1))
 					{
-						ChangeScene(SCENE_TITLE);
+						ChangeScene(SCENENO::TITLE);
 					}
 					else if (g_pInput->IsKeyPush(MOFKEY_2))
 					{
-						ChangeScene(SCENE_GAME);
+						ChangeScene(SCENENO::GAME);
 					}
 				}
 			}

@@ -36,7 +36,7 @@ void ActionGame::TitleScene::Update()
 	if (input->IsPush(INPUT_KEY_ENTER))
 	{
 		//ƒQ[ƒ€ƒV[ƒ“‚Ö‘JˆÚ
-		SceneChangeService::GetService()->ChangeScene(SCENE_GAME,true);
+		SceneChangeService::GetService()->ChangeScene(SCENENO::GAME,true);
 	}
 	else if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_CANCEL))
 	{

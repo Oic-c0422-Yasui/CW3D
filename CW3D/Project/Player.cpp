@@ -8,7 +8,7 @@ CPlayer::CPlayer()
 	, m_pInput()
 
 {
-	SetType(CHARA_PLAYER);
+	SetType(CHARA_TYPE::PLAYER);
 }
 
 CPlayer::~CPlayer()

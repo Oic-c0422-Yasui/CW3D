@@ -11,15 +11,15 @@ float ActionGame::TimeScaleController::GetTimeScale(CHARA_TYPE type) const noexc
 {
 	switch (type)
 	{
-	case CHARA_PLAYER:
+	case CHARA_TYPE::PLAYER:
 	{
 		return min(m_PlayerTimeScale.GetScale(), m_TimeScale.GetScale());
 	}
-	case CHARA_ENEMY:
+	case CHARA_TYPE::ENEMY:
 	{
 		return min(m_EnemyTimeScale.GetScale(), m_TimeScale.GetScale());
 	}
-	case CHARA_OBJECT:
+	case CHARA_TYPE::OBJECT:
 	{
 		break;
 	}
