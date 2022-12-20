@@ -21,6 +21,7 @@ void ActionGame::EnemyManager::Initialize()
 void ActionGame::EnemyManager::Update()
 {
 	size_t enemyCount = 0;
+	size_t enemyShowCount = 0;
 
 	for (auto& enemy : *m_Enemys)
 	{
@@ -30,6 +31,7 @@ void ActionGame::EnemyManager::Update()
 		if (enemy->IsShow())
 		{
 			enemyCount++;
+			enemyShowCount++;
 			continue;
 		}
 		else if ((!enemy->IsDead() && !enemy->IsShow()))
@@ -41,6 +43,10 @@ void ActionGame::EnemyManager::Update()
 	if (m_EnemyCount != enemyCount)
 	{
 		m_EnemyCount.Set(enemyCount);
+	}
+	if (m_EnemyShowCount != enemyShowCount)
+	{
+		m_EnemyShowCount.Set(enemyShowCount);
 	}
 }
 

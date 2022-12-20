@@ -8,6 +8,7 @@ namespace ActionGame
 	private:
 		EnemyArrayPtr m_Enemys;
 		ActionGame::ReactiveParameter<size_t> m_EnemyCount;
+		ActionGame::ReactiveParameter<size_t> m_EnemyShowCount;
 		size_t m_EnemyMaxCount;
 	public:
 		EnemyManager();
@@ -32,6 +33,14 @@ namespace ActionGame
 		size_t GetEnemyCount() const noexcept
 		{
 			return m_EnemyCount;
+		}
+		ActionGame::IObservable<size_t>& GetEnemyShowCountSubject()
+		{
+			return m_EnemyShowCount;
+		}
+		size_t GetEnemyShowCount() const noexcept
+		{
+			return m_EnemyShowCount;
 		}
 
 		const EnemyPtr& GetEnemy(size_t num)

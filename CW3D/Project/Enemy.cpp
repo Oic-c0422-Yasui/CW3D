@@ -75,7 +75,7 @@ void CEnemy::Initialize()
 
 	m_StateMachine->ChangeState(STATE_KEY_IDLE);
 	matWorld = m_Actor->GetMatrix();
-	m_ShowFlg = true;
+	m_ShowFlg = false;
 	m_DeadFlg = false;
 	m_HPShowFlg = true;
 

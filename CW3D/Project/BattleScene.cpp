@@ -22,9 +22,8 @@ using namespace ActionGame;
 CBattleScene::CBattleScene()
 	: m_Player(std::make_shared<CPlayer>())
 	, m_EnemyManager()
-	, m_GameClearFlg(false)
-	, m_GameOverFlg(false)
 	, m_EnemySpawner()
+	, m_CurrentGameState(GAME_STATE::NOMAL)
 {
 }
 
@@ -140,7 +139,7 @@ void CBattleScene::Initialize()
 	m_Timer.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
 	//敵生成
-	m_EnemyCreateThread.Create([this]() { return CreateEnemys(); },
+	m_EnemyCreateThread.Create( [this]() { return CreateEnemys(); },
 								[this]() {RegisterAfterSpawn(); }
 								);
 	
@@ -151,8 +150,7 @@ void CBattleScene::Initialize()
 	m_Light.SetDiffuse(MOF_XRGB(220, 220, 220));
 	m_Light.SetSpeculer(MOF_XRGB(255, 255, 255));
 
-	m_GameClearFlg = false;
-	m_GameOverFlg = false;
+	m_CurrentGameState = GAME_STATE::NOMAL;
 
 
 	//タスクの登録
@@ -162,7 +160,7 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 
-	if (m_GameClearFlg || m_GameOverFlg)
+	if (m_CurrentGameState == GAME_STATE::CLEAR || m_CurrentGameState == GAME_STATE::OVER)
 	{
 		//遷移
 		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
@@ -208,13 +206,6 @@ void CBattleScene::RenderDebug()
 {
 	//ステージデバッグ描画
 	m_StageManager.RenderDebug();
-
-	COBB obb;
-	obb.Position = Vector3(0, 0, 0);
-	obb.Size = Vector3(2, 15, 2);
-	obb.Angle = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
-
-	CGraphicsUtilities::RenderBox(obb, CVector4(1, 1, 0, 0.5f));
 
 	//ショットデバッグ描画
 	for (size_t i = 0; i < ShotManagerInstance.GetShotCount(); i++)
@@ -350,14 +341,15 @@ bool CBattleScene::CreateEnemys()
 
 	//スポーン条件
 	Spawner::EnemySpawnConditionCountLimitPtr spawnCondition = std::make_shared<Spawner::EnemySpawnConditionCountLimit>(enemyCount);
-	m_EnemyManager.GetEnemyCountSubject().Subscribe([spawnCondition](size_t count) {spawnCondition->SetCount(count); });
+	m_EnemyManager.GetEnemyShowCountSubject().Subscribe([spawnCondition](size_t count) {spawnCondition->SetCount(count); });
 
 	//敵スポナーの作成（未完成）
-	/*m_EnemySpawner.push_back(std::make_shared<Spawner::EnemySpawner>(
+	auto spawner = std::make_shared<Spawner::EnemySpawner>(
 		Spawner::SpawnConditionArray{ spawnCondition },
-		std::make_shared<Spawner::SpawnCycleFixedRange>(10),
-		std::make_shared<Spawner::EnemySpawnParameter>(enemysParam),
-		m_EnemyManager.));*/
+		std::make_shared<Spawner::SpawnCycleFixedRange>(1.0f,CHARA_TYPE::ENEMY),
+		std::make_shared<Spawner::EnemySpawnParameter>(enemysParam)
+		);
+	m_EnemySpawner.push_back(spawner);
 
 	for (int i = 0; i < enemyCount; i++)
 	{
@@ -409,7 +401,7 @@ void CBattleScene::RegisterUpdateTask()
 		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
 		{
 			//フェード
-			auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(2.0f);
+			auto sceneEffect = std::make_shared<ActionGame::SceneChangeFade>(0.5f,0.5f,0.5f);
 			//初期化
 			SceneInitializeService::GetService()->InitializeScene(sceneEffect);
 			return;
@@ -438,7 +430,7 @@ void CBattleScene::RegisterUpdateTask()
 		//死亡判定
 		if (!m_Player->IsShow() && m_Player->IsDead())
 		{
-			m_GameOverFlg = true;
+			m_CurrentGameState = GAME_STATE::OVER;
 		}
 
 	}
@@ -457,7 +449,7 @@ void CBattleScene::RegisterCollisionTask()
 	m_UpdateTask.AddTask("CollisionTask1", TASK_COLLISION,
 		[&]()
 	{
-		if (!m_GameClearFlg && !m_GameOverFlg)
+		if (m_CurrentGameState == GAME_STATE::NOMAL)
 		{
 			//プレイヤーとオブジェクトの当たり判定
 			for (size_t i = 0; i < m_StageManager.GetCurrentDivision()->GetObjCount(); i++)
@@ -519,14 +511,14 @@ void CBattleScene::RegisterRender2DTask()
 		m_PlayerUIRender->Render();
 
 		//リトライ描画
-		if (m_GameClearFlg || m_GameOverFlg)
+		if (m_CurrentGameState == GAME_STATE::CLEAR || m_CurrentGameState == GAME_STATE::OVER)
 		{
 			CGraphicsUtilities::RenderString(20, 950, "F2でリトライ");
 			CGraphicsUtilities::RenderString(20, 1000, "F3でタイトルへ");
 		}
 
 		//ゲームクリア描画
-		if (m_GameClearFlg)
+		if (m_CurrentGameState == GAME_STATE::CLEAR)
 		{
 			CRectangle rect;
 			m_Font.CalculateStringRect(0, 0, "全部倒したあああああ", rect);
@@ -551,7 +543,7 @@ void CBattleScene::RegisterAfterSpawn()
 		//敵スポナー更新
 		for (auto spawner : m_EnemySpawner)
 		{
-			spawner.Update(m_EnemyManager);
+			spawner->Update(m_EnemyManager);
 		}
 
 		//敵更新
@@ -560,14 +552,15 @@ void CBattleScene::RegisterAfterSpawn()
 		//ステージクリア判定
 		if (m_StageManager.IsClear(m_ClearTermProvider))
 		{
-			if (!m_GameClearFlg)
+			if (m_CurrentGameState == GAME_STATE::NOMAL)
 			{
 				m_Player->ClearPose();
-				m_GameClearFlg = true;
+				m_CurrentGameState = GAME_STATE::CLEAR;
 			}
 		}
 		//ステージの区画をクリアしているなら
-		else if (m_StageManager.GetCurrentDivision()->IsClear(m_ClearTermProvider) && !m_GameClearFlg)
+		else if (m_StageManager.GetCurrentDivision()->IsClear(m_ClearTermProvider) && 
+				 m_CurrentGameState == GAME_STATE::NOMAL)
 		{
 			m_UpdateTask.DeleteTask("AfterSpawnUpdate");
 			m_UpdateTask.DeleteTask("AfterSpawnCollision");

@@ -40,6 +40,13 @@
 
 namespace ActionGame
 {
+	//ゲームの状態
+	enum class GAME_STATE
+	{
+		NOMAL,	//ゲーム中
+		CLEAR,	//ゲームクリア
+		OVER,	//ゲームオーバー
+	};
 
 	class CBattleScene : public IScene
 	{
@@ -74,10 +81,8 @@ namespace ActionGame
 		//クリア条件に必要なものを渡すプロバイダ
 		ActionGame::ClearTermProviderPtr m_ClearTermProvider;
 
-		//クリアフラグ
-		bool m_GameClearFlg;
-		//死亡フラグ
-		bool m_GameOverFlg;
+		//現在のゲームの状態
+		GAME_STATE m_CurrentGameState;
 
 		ActionGame::CTimer m_Timer;
 

@@ -20,7 +20,7 @@ namespace Spawner
 		SpawnConditionArray			m_Conditions;
 		//出現用サイクル
 		SpawnCyclePtr				m_Cycle;
-		EnemySpawnParameter			m_EnemyParam;
+		EnemySpawnParameterPtr			m_EnemyParam;
 		//出現オブジェクトリスト
 		ActionGame::EnemyArrayPtr		m_Enemys;
 
@@ -30,7 +30,7 @@ namespace Spawner
 		 */
 		EnemySpawner(const SpawnConditionArray& conditions,
 					SpawnCyclePtr cycle,
-					EnemySpawnParameter param);
+					EnemySpawnParameterPtr param);
 
 		/**
 		 * @brief		更新
@@ -55,5 +55,5 @@ namespace Spawner
 	};
 	//ポインタ置き換え
 	using EnemySpawnerPtr = std::shared_ptr<EnemySpawner>;
-	using EnemySpawnerArray = std::vector<EnemySpawner>;
+	using EnemySpawnerArray = std::vector<EnemySpawnerPtr>;
 }

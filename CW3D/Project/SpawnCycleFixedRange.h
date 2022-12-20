@@ -1,5 +1,6 @@
 #pragma once
 #include "ISpawnCycle.h"
+#include "CharaTypeDefine.h"
 
 namespace Spawner
 {
@@ -15,11 +16,13 @@ namespace Spawner
 
 		//待機時間
 		float			m_CurrentTime;
+
+		CHARA_TYPE		m_Type;
 	public:
 		/**
 		 *	@brief		コンストラクタ
 		 */
-		SpawnCycleFixedRange(int interval);
+		SpawnCycleFixedRange(int interval,CHARA_TYPE type);
 
 		/**
 		 * @brief		更新

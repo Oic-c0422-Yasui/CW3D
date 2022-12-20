@@ -294,7 +294,6 @@ void ActionGame::SceneManager::RegisterSceneChangeEffectTask()
 				}
 				if (m_SceneEffect->IsEnd())
 				{
-					
 					DeleteSceneChangeEffectTask();
 				}
 			}

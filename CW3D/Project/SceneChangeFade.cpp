@@ -1,24 +1,28 @@
 #include "SceneChangeFade.h"
 
-ActionGame::SceneChangeFade::SceneChangeFade(float endTime)
+ActionGame::SceneChangeFade::SceneChangeFade(float startTime, float durationTime, float endTime)
 	: m_CurrentTime(0.0f)
+	, m_StartTime(startTime)
+	, m_DurationTime(durationTime)
 	, m_EndTime(endTime)
 	, m_HalfPointFlg(false)
 	, m_Alpha(0)
 {
+	m_AllTime = m_StartTime + m_DurationTime + m_EndTime;
 }
 
 void ActionGame::SceneChangeFade::Update()
 {
 	m_CurrentTime += CUtilities::GetFrameSecond();
-	float rate = m_CurrentTime / (m_EndTime * 0.5f);
 	if (!IsHalfPoint())
 	{
+		float rate = m_CurrentTime / m_StartTime;
 		//フェードイン
 		m_Alpha = (int)(255 * rate);
 	}
-	else
+	else if(m_CurrentTime >= m_StartTime + m_DurationTime)
 	{
+		float rate = m_CurrentTime / m_AllTime;
 		//フェードアウト
 		m_Alpha = (int)(255 * (1 - rate));
 	}
@@ -32,10 +36,10 @@ void ActionGame::SceneChangeFade::Render(ScenePtr& prev, ScenePtr& current)
 
 bool ActionGame::SceneChangeFade::IsEnd() const noexcept
 {
-	return m_CurrentTime >= m_EndTime;
+	return m_CurrentTime >= m_AllTime;
 }
 
 bool ActionGame::SceneChangeFade::IsHalfPoint() const noexcept
 {
-	return m_CurrentTime >= (m_EndTime * 0.5f);
+	return m_CurrentTime >= m_StartTime;
 }

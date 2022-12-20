@@ -9,13 +9,16 @@ namespace ActionGame
     private:
         float   m_CurrentTime;
         float   m_EndTime;
+        float   m_StartTime;
+        float   m_DurationTime;
+        float   m_AllTime;
         int     m_Alpha;
         bool    m_HalfPointFlg;
     public:
         /*
         * @brief    コンストラクタ
         */
-        SceneChangeFade(float endTime);
+        SceneChangeFade(float startTime,float durationTime,float endTime);
         virtual ~SceneChangeFade() = default;
         /**
          * @brief		シーン変更効果更新
