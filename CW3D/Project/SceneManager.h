@@ -15,7 +15,7 @@ namespace ActionGame
 	private:
 
 		ScenePtr m_Scene;
-		std::unordered_map<tag_SCENENO, SceneCreatorPtr> m_SceneMap;
+		std::unordered_map<SCENENO, SceneCreatorPtr> m_SceneMap;
 		TaskManager m_UpdateTask;
 		TaskManager m_RenderTask;
 		TaskManager m_Render2DTask;
@@ -55,14 +55,14 @@ namespace ActionGame
 		 * @param		sceneNo	シーン番号
 		 * @param		creator	シーン生成クラス
 		 */
-		void RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator) override;
+		void RegistScene(SCENENO sceneNo, SceneCreatorPtr creator) override;
 
 		/*
 		 * @brief		シーンの登録
 		 * @param		sceneNo	シーン番号
 		 */
 		template < class T >
-		void RegistScene(tag_SCENENO sceneNo) 
+		void RegistScene(SCENENO sceneNo) 
 		{
 			RegistScene(sceneNo, std::make_unique<SceneCreator<T>>());
 		}
@@ -72,14 +72,14 @@ namespace ActionGame
 		 * @brief		シーンの変更
 		 * @param		sceneNo	シーン番号
 		 */
-		bool ChangeScene(tag_SCENENO sceneNo) override;
+		bool ChangeScene(SCENENO sceneNo) override;
 
 		/**
 		 * @brief		シーン変更(ロード画面を挟む)
 		 * @param		sceneNo シーン番号
 		 * @param		isLoading ロード画面を挟むか？
 		 */
-		bool ChangeScene(tag_SCENENO sceneNo,bool isLoading) override;
+		bool ChangeScene(SCENENO sceneNo,bool isLoading) override;
 		/*
 		 * @brief		シーンの変更（ロード、初期化は行わない）
 		 * @param		scene	ロード済みのシーン

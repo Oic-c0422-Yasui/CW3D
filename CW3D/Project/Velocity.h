@@ -31,7 +31,7 @@ namespace ActionGame
 		//èdóÕâ¡ë¨ìx
 		float					m_Gravity;
 
-		CHARACTER_TYPE			m_Type;
+		CHARA_TYPE			m_Type;
 
 		//âÒì]ópïœêî
 		bool					m_SetRotateFlg;
@@ -251,7 +251,7 @@ namespace ActionGame
 			m_UseGravity = isGravity;
 		}
 
-		void SetType(CHARACTER_TYPE type) noexcept
+		void SetType(CHARA_TYPE type) noexcept
 		{
 			m_Type = type;
 		}

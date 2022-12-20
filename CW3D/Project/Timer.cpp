@@ -47,7 +47,7 @@ void ActionGame::CTimer::Update()
 	}
 }
 
-void ActionGame::CTimer::Update(CHARACTER_TYPE timeScaleType)
+void ActionGame::CTimer::Update(CHARA_TYPE timeScaleType)
 {
 	if (m_StopFlg)
 	{

@@ -35,7 +35,7 @@ namespace ActionGame
 
 		void Update();
 
-		void Update(CHARACTER_TYPE timeScaleType);
+		void Update(CHARA_TYPE timeScaleType);
 
 		/**
 		 * @brief		–Ú•WŠÔ‚ğ’B¬‚µ‚Ä‚¢‚é‚©H

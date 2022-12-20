@@ -41,7 +41,7 @@ namespace ActionGame
 		* @param	type　キャラのタイプ
 		* @return	指定したキャラのタイムスケール
 		*/
-		float GetTimeScale(CHARACTER_TYPE type) const noexcept;
+		float GetTimeScale(CHARA_TYPE type) const noexcept;
 		/*
 		* @brief	全体のタイムスケールを取得
 		* @return	全体のタイムスケール
@@ -93,31 +93,21 @@ namespace ActionGame
 		* @param	changeTime	タイムスケールの変化にかかる時間
 		* @param	easeType	イージングタイプ
 		*/
-		void SetTimeScale(MyUtilities::ANIM_DATA* anim,int count) noexcept
-		{
-			m_TimeScale.SetScale(anim, count);
-		}
-		/*
-		* @brief	全体のタイムスケールを設定
-		* @param	anim アニメーションの構造体
-		* @param	changeTime	タイムスケールの変化にかかる時間
-		* @param	easeType	イージングタイプ
-		*/
 		void SetTimeScale(const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			m_TimeScale.SetScale(anim);
 		}
 
-		void SetTimeScale(CHARACTER_TYPE id,const float scale, const float changeTime, MyUtilities::EASING_TYPE easeType) noexcept
+		void SetTimeScale(CHARA_TYPE id,float scale, float changeTime, MyUtilities::EASING_TYPE easeType = MyUtilities::EASING_TYPE::LINER) noexcept
 		{
 			switch (id)
 			{
-			case CHARA_PLAYER:
+			case CHARA_TYPE::PLAYER:
 			{
 				m_PlayerTimeScale.SetScale(scale, changeTime, easeType);
 				break;
 			}
-			case CHARA_ENEMY:
+			case CHARA_TYPE::ENEMY:
 			{
 				m_EnemyTimeScale.SetScale(scale, changeTime, easeType);
 				break;
@@ -127,35 +117,17 @@ namespace ActionGame
 			}
 			
 		}
-		//animData,count
-		void SetTimeScale(CHARACTER_TYPE id, MyUtilities::ANIM_DATA* anim, int count) noexcept
+
+		void SetTimeScale(CHARA_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			switch (id)
 			{
-			case CHARA_PLAYER:
-			{
-				m_PlayerTimeScale.SetScale(anim,count);
-				break;
-			}
-			case CHARA_ENEMY:
-			{
-				m_EnemyTimeScale.SetScale(anim, count);
-				break;
-			}
-			default:
-				break;
-			}
-		}
-		void SetTimeScale(CHARACTER_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
-		{
-			switch (id)
-			{
-			case CHARA_PLAYER:
+			case CHARA_TYPE::PLAYER:
 			{
 				m_PlayerTimeScale.SetScale(anim);
 				break;
 			}
-			case CHARA_ENEMY:
+			case CHARA_TYPE::ENEMY:
 			{
 				m_EnemyTimeScale.SetScale(anim);
 				break;
@@ -167,17 +139,17 @@ namespace ActionGame
 
 
 		//ID以外のタイムスケールを変える
-		void SetOtherTimeScale(CHARACTER_TYPE id,float scale,float changeTime, MyUtilities::EASING_TYPE easeType) noexcept
+		void SetOtherTimeScale(CHARA_TYPE id,float scale,float changeTime, MyUtilities::EASING_TYPE easeType = MyUtilities::EASING_TYPE::LINER) noexcept
 		{
 			switch (id)
 			{
-			case CHARA_PLAYER:
+			case CHARA_TYPE::PLAYER:
 			{
 				m_EnemyTimeScale.SetScale(scale, changeTime, easeType);
 				
 				break;
 			}
-			case CHARA_ENEMY:
+			case CHARA_TYPE::ENEMY:
 			{
 				m_PlayerTimeScale.SetScale(scale, changeTime, easeType);
 				break;
@@ -187,36 +159,18 @@ namespace ActionGame
 			}
 
 		}
-		//animData,count
-		void SetOtherTimeScale(CHARACTER_TYPE id, MyUtilities::ANIM_DATA* anim, int count) noexcept
-		{
-			switch (id)
-			{
-			case CHARA_PLAYER:
-			{
-				m_EnemyTimeScale.SetScale(anim, count);
-				break;
-			}
-			case CHARA_ENEMY:
-			{
-				m_PlayerTimeScale.SetScale(anim, count);
-				break;
-			}
-			default:
-				break;
-			}
-		}
 
-		void SetOtherTimeScale(CHARACTER_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
+
+		void SetOtherTimeScale(CHARA_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			switch (id)
 			{
-			case CHARA_PLAYER:
+			case CHARA_TYPE::PLAYER:
 			{
 				m_EnemyTimeScale.SetScale(anim);
 				break;
 			}
-			case CHARA_ENEMY:
+			case CHARA_TYPE::ENEMY:
 			{
 				m_PlayerTimeScale.SetScale(anim);
 				break;

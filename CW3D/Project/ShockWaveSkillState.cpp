@@ -36,8 +36,8 @@ void ActionGame::ShockWaveSkillState::Start()
 	MyUtilities::ANIM_V3_DATA_ARRAY animPos(
 		{
 			{0.0f,Vector3(-7,2,-2)},
-			{0.25f,Vector3(-7,2,-2),MyUtilities::EASE_OUT_SINE},
-			{0.30f,Vector3(-25,2,-2),MyUtilities::EASE_OUT_SINE},
+			{0.25f,Vector3(-7,2,-2),MyUtilities::EASING_TYPE::OUT_SINE},
+			{0.30f,Vector3(-25,2,-2),MyUtilities::EASING_TYPE::OUT_SINE},
 		}
 	);
 	MyUtilities::ANIM_V3_DATA_ARRAY animLookPos(
@@ -65,7 +65,7 @@ void ActionGame::ShockWaveSkillState::Start()
 	CameraPtr camera;
 	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 	camera->SetAnim(animPos, animLookPos);
-	CameraControllerInstance.SetCamera(camera, 1, MyUtilities::EASE_IN_SINE, 0.3f, MyUtilities::EASE_IN_SINE, 0.15f);
+	CameraControllerInstance.SetCamera(camera, 1, MyUtilities::EASING_TYPE::IN_SINE, 0.3f, MyUtilities::EASING_TYPE::IN_SINE, 0.15f);
 
 }
 

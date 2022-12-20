@@ -41,7 +41,7 @@ void ActionGame::StormSkillState::Start()
 	}
 	CameraPtr camera;
 	camera = std::make_shared<ActionGame::FollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASE_IN_SINE, 0.7f, MyUtilities::EASE_IN_SINE, 0.5f);
+	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASING_TYPE::IN_SINE, 0.7f, MyUtilities::EASING_TYPE::IN_SINE, 0.5f);
 }
 
 void ActionGame::StormSkillState::Execution()

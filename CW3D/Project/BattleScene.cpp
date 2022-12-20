@@ -168,7 +168,7 @@ void CBattleScene::Update()
 		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
 		{
 			//ƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
-			SceneChangeService::GetService()->ChangeScene(SCENE_TITLE);
+			SceneChangeService::GetService()->ChangeScene(SCENENO::TITLE);
 			return;
 		}
 	}
@@ -227,17 +227,17 @@ void CBattleScene::RenderDebug()
 		}
 		switch (shot->GetColliderType())
 		{
-		case COLLISION_SPHERE:
+		case COLLISION_TYPE::SPHERE:
 		{
 			CGraphicsUtilities::RenderLineSphere(shot->GetColliderSphere(), Vector4(1, 0, 0, 0.2f));
 			break;
 		}
-		case COLLISION_AABB:
+		case COLLISION_TYPE::AABB:
 		{
 			CGraphicsUtilities::RenderBox(shot->GetColliderAABB(), Vector4(1, 0, 0, 0.2f)); 
 			break;
 		}
-		case COLLISION_OBB:
+		case COLLISION_TYPE::OBB:
 		{
 			CGraphicsUtilities::RenderBox(shot->GetColliderOBB(), Vector4(1, 0, 0, 0.2f));
 			break;

@@ -53,7 +53,7 @@ namespace ActionGame
 		 * @brief		キャラタイプ取得
 		 * @return キャラタイプ
 		 */
-		CHARACTER_TYPE GetType() const noexcept
+		CHARA_TYPE GetType() const noexcept
 		{
 			return m_Actor->GetType();
 		}
@@ -155,7 +155,7 @@ namespace ActionGame
 		 * @brief		キャラタイプを設定
 		 * @param		type キャラタイプ
 		 */
-		void SetType(CHARACTER_TYPE type) noexcept
+		void SetType(CHARA_TYPE type) noexcept
 		{
 			m_Actor->SetType(type);
 		}

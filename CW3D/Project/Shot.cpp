@@ -11,13 +11,13 @@ ActionGame::CShot::CShot()
 	, m_Radius(0.0f)
 	, m_ShowFlg(false)
 	, m_CollideFlg(false)
-	, m_Type(CHARA_PLAYER)
+	, m_Type(CHARA_TYPE::PLAYER)
 	, m_Speed(0.0f)
 	, m_KnockBack(0, 0, 0)
 	, m_Offset(0, 0, 0)
 	, m_Damage(0)
 	, m_NextHitTime(0.0f)
-	, m_CollisionType(COLLISION_AABB)
+	, m_CollisionType(COLLISION_TYPE::AABB)
 	, m_ArmorBreakLevel(0)
 	, m_GetUltGauge(0.0f)
 	, m_ParentID(0)
@@ -42,7 +42,7 @@ void ActionGame::CShot::Create(Vector3 pos, ShotSphere sphire)
 	m_Collider->SetRadius(m_Radius);
 	m_ShowFlg = true;
 	m_CollideFlg = sphire.collideFlg;
-	m_CollisionType = COLLISION_SPHERE;
+	m_CollisionType = COLLISION_TYPE::SPHERE;
 	m_KnockBack = sphire.knockBack;
 	m_Direction = sphire.direction;
 	m_ArmorBreakLevel = sphire.armorBreakLevel;
@@ -63,7 +63,7 @@ void ActionGame::CShot::Create(Vector3 pos, ShotAABB aabb)
 	m_AABB.Size = m_Size;
 	m_ShowFlg = true;
 	m_CollideFlg = aabb.collideFlg;
-	m_CollisionType = COLLISION_AABB;
+	m_CollisionType = COLLISION_TYPE::AABB;
 	m_KnockBack = aabb.knockBack;
 	m_Direction = aabb.direction;
 	m_ArmorBreakLevel = aabb.armorBreakLevel;
@@ -86,7 +86,7 @@ void ActionGame::CShot::Create(Vector3 pos, ShotOBB obb)
 	m_OBB.CalculateAxis();
 	m_ShowFlg = true;
 	m_CollideFlg = obb.collideFlg;
-	m_CollisionType = COLLISION_OBB;
+	m_CollisionType = COLLISION_TYPE::OBB;
 	m_KnockBack = obb.knockBack;
 	m_Direction = obb.direction;
 	m_ArmorBreakLevel = obb.armorBreakLevel;

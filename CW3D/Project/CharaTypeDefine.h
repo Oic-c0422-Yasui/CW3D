@@ -1,11 +1,11 @@
 #pragma once
 
 //キャラタイプ
-enum CHARACTER_TYPE
+enum class CHARA_TYPE
 {
-	CHARA_PLAYER,	//プレイヤー
-	CHARA_ENEMY,	//敵
-	CHARA_OBJECT,	//オブジェクト
+	PLAYER,	//プレイヤー
+	ENEMY,	//敵
+	OBJECT,	//オブジェクト
 
-	CHARA_COUNT,	//タイプの数
+	COUNT,	//タイプの数
 };

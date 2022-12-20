@@ -15,13 +15,13 @@ namespace ActionGame
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!shot->IsShow() || !player->IsShow()) { return; }
 		if (!shot->GetCollideFlg()) { return; }
-		if (shot->GetCharaType() == CHARA_PLAYER) { return; }
+		if (shot->GetCharaType() == CHARA_TYPE::PLAYER) { return; }
 		if (shot->IsHitId(player->GetID())) { return; }
 		if (player->IsInvincible()) { return; }
 		//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 		switch (shot->GetColliderType())
 		{
-		case COLLISION_SPHERE:
+		case COLLISION_TYPE::SPHERE:
 		{
 			if (player->IsEscape())
 			{
@@ -36,7 +36,7 @@ namespace ActionGame
 			}
 			break;
 		}
-		case COLLISION_AABB:
+		case COLLISION_TYPE::AABB:
 		{
 			if (player->IsEscape())
 			{
@@ -71,14 +71,6 @@ namespace ActionGame
 				}
 			);
 
-			MyUtilities::ANIM_DATA anim[] =
-			{
-				{0.0f,TimeScaleControllerInstance.GetTimeScale()},
-				{0.05f,TimeScaleControllerInstance.GetTimeScale()},
-				{0.1f,0.0f},
-				{0.15f,0.0f},
-				{0.5f,TimeScaleControllerInstance.GetTimeScale()}
-			};
 			TimeScaleControllerInstance.SetTimeScale(anims);
 		}
 		else

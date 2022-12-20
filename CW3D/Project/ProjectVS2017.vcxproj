@@ -234,6 +234,7 @@
     <ClCompile Include="TimeScaleController.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UltimateSkill.cpp" />
+    <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieActionCreator.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />

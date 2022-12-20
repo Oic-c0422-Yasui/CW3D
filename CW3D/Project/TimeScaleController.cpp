@@ -7,7 +7,7 @@ void ActionGame::TimeScaleController::Update()
 	m_EnemyTimeScale.Update();
 }
 
-float ActionGame::TimeScaleController::GetTimeScale(CHARACTER_TYPE type) const noexcept
+float ActionGame::TimeScaleController::GetTimeScale(CHARA_TYPE type) const noexcept
 {
 	switch (type)
 	{

@@ -17,7 +17,7 @@ namespace ActionGame
 		using ActorMap = std::unordered_map<unsigned int, ActorObjectWeakPtr>;
 		using ActorMapPtr = std::shared_ptr<ActorMap>;
 		
-		using TagMap = std::unordered_map<CHARACTER_TYPE, ActorMapPtr>;
+		using TagMap = std::unordered_map<CHARA_TYPE, ActorMapPtr>;
 
 		TagMap m_Tags;
 
@@ -70,7 +70,7 @@ namespace ActionGame
 			return nullptr;
 		}
 
-		ActorObjectPtr GetActor(CHARACTER_TYPE type,int id) {
+		ActorObjectPtr GetActor(CHARA_TYPE type,int id) {
 			return (*m_Tags[type])[id].lock();
 		}
 

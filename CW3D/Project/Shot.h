@@ -15,7 +15,7 @@ namespace ActionGame
 		int		damage;
 		Vector3	knockBack;
 		bool	collideFlg;
-		CHARACTER_TYPE type;
+		CHARA_TYPE type;
 		KnockBackPtr direction;
 		BYTE armorBreakLevel;
 		float getUltGauge;
@@ -58,7 +58,7 @@ namespace ActionGame
 		Vector3				m_Offset;
 		bool				m_ShowFlg;
 		bool				m_CollideFlg;
-		CHARACTER_TYPE		m_Type;
+		CHARA_TYPE		m_Type;
 		int					m_CollisionType;
 		float				m_Speed;
 		CVector3			m_KnockBack;
@@ -130,7 +130,7 @@ namespace ActionGame
 			return m_NextHitTime;
 		}
 
-		CHARACTER_TYPE GetCharaType() const noexcept
+		CHARA_TYPE GetCharaType() const noexcept
 		{
 			return m_Type;
 		}
@@ -216,7 +216,7 @@ namespace ActionGame
 		/**
 		 * @brief		セッター
 		 */
-		void SetCharaType(CHARACTER_TYPE type) noexcept
+		void SetCharaType(CHARA_TYPE type) noexcept
 		{
 			m_Type = type;
 		}

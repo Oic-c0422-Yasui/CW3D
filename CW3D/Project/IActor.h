@@ -88,7 +88,7 @@ namespace ActionGame {
 		/**
 		 * @brief		キャラタイプ設定
 		 */
-		virtual void SetType(CHARACTER_TYPE type) = 0;
+		virtual void SetType(CHARA_TYPE type) = 0;
 
 		/**
 		 * @brief		姿勢取得
@@ -143,7 +143,7 @@ namespace ActionGame {
 		/**
 		 * @brief		タイプ取得
 		 */
-		virtual CHARACTER_TYPE GetType() const = 0;
+		virtual CHARA_TYPE GetType() const = 0;
 
 		/**
 		 * @brief		パラメーター

@@ -11,7 +11,7 @@ CEnemy::CEnemy()
 	, m_Input()
 	, m_DefaultPos(0,0,0)
 {
-	SetType(CHARA_ENEMY);
+	SetType(CHARA_TYPE::ENEMY);
 }
 
 CEnemy::~CEnemy()

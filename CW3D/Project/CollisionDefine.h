@@ -1,9 +1,9 @@
 #pragma once
 
 //当たり判定のタイプ
-enum tag_COLLISIONTYPE
+enum COLLISION_TYPE
 {
-	COLLISION_SPHERE,	//球体
-	COLLISION_AABB,		//箱
-	COLLISION_OBB,		//回転を考慮した箱
+	SPHERE,	//球体
+	AABB,		//箱
+	OBB,		//回転を考慮した箱
 };

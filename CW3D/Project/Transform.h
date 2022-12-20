@@ -29,7 +29,7 @@ namespace ActionGame
 
 		bool		m_ThroughFlg;
 
-		CHARACTER_TYPE m_Type;
+		CHARA_TYPE m_Type;
 
 	public:
 		
@@ -301,7 +301,7 @@ namespace ActionGame
 				return m_ReverseFlg;
 			}
 
-			void SetType(CHARACTER_TYPE type) noexcept
+			void SetType(CHARA_TYPE type) noexcept
 			{
 				m_Type = type;
 			}

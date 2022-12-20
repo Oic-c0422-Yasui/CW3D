@@ -37,6 +37,7 @@ void ActionGame::StartPoseState::Start()
 	camera->SetAnim(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera);
 	m_Action->StartAnim();
+	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::ENEMY, 0.0f, 0.0f);
 }
 
 void ActionGame::StartPoseState::Execution()
@@ -62,6 +63,7 @@ void ActionGame::StartPoseState::End()
 	m_Action->End();
 	//カメラをデフォルトに戻す
 	CameraControllerInstance.SetDefault();
+	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::ENEMY, 1.0f, 0.0f);
 }
 
 void ActionGame::StartPoseState::CollisionEvent(unsigned int type, std::any obj)

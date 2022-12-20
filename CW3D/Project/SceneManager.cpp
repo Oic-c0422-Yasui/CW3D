@@ -17,12 +17,12 @@ SceneManager::~SceneManager()
 
 }
 
-void ActionGame::SceneManager::RegistScene(tag_SCENENO sceneNo, SceneCreatorPtr creator)
+void ActionGame::SceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
 {
 	m_SceneMap[sceneNo] = std::move(creator);
 }
 
-bool ActionGame::SceneManager::ChangeScene(tag_SCENENO sceneNo)
+bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo)
 {
 	//古いシーンを破棄
 	if (m_Scene)
@@ -60,7 +60,7 @@ void ActionGame::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
 	
 }
 
-bool ActionGame::SceneManager::ChangeScene(tag_SCENENO sceneNo, bool isLoading)
+bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo, bool isLoading)
 {
 	//ロードを挟まないなら普通にシーン切り替え
 	if (!isLoading)

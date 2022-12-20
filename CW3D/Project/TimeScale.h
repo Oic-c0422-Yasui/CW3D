@@ -13,7 +13,6 @@ namespace ActionGame
 	{
 	private:
 		float	m_Time;
-		MyUtilities::ANIM_DATA m_AnimData[10];
 		MyUtilities::ANIM_DATA_ARRAY m_AnimDataArray;
 		float	m_ChangeTime;
 		bool	m_ChangeFlg;
@@ -44,7 +43,6 @@ namespace ActionGame
 		*/
 		void SetScale(float scale, float changeTime, MyUtilities::EASING_TYPE easeType) noexcept;
 
-		void SetScale(MyUtilities::ANIM_DATA* anim, size_t count);
 
 		void SetScale(const MyUtilities::ANIM_DATA_ARRAY& anim);
 

@@ -15,12 +15,12 @@ namespace ActionGame
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!shot->IsShow() || !enemy->IsShow()) { return; }
 		if (!shot->GetCollideFlg()){ return; }
-		if (shot->GetCharaType() == CHARA_ENEMY) { return; }
+		if (shot->GetCharaType() == CHARA_TYPE::ENEMY) { return; }
 		if (shot->IsHitId(enemy->GetID())) { return; }
 		//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 		switch (shot->GetColliderType())
 		{
-		case COLLISION_SPHERE:
+		case COLLISION_TYPE::SPHERE:
 		{
 			if (!CCollision::Collision(shot->GetColliderSphere(), enemy->GetCollider()))
 			{
@@ -28,7 +28,7 @@ namespace ActionGame
 			}
 			break;
 		}
-		case COLLISION_AABB:
+		case COLLISION_TYPE::AABB:
 		{
 			if (!CCollision::Collision(shot->GetColliderAABB(), enemy->GetCollider()))
 			{
@@ -36,7 +36,7 @@ namespace ActionGame
 			}
 			break;
 		}
-		case COLLISION_OBB:
+		case COLLISION_TYPE::OBB:
 		{
 			if (!CCollision::Collision(shot->GetColliderOBB(), enemy->GetCollider()))
 			{

@@ -36,7 +36,7 @@ namespace ActionGame {
 		CMyID					m_MyID;
 
 		/* キャラタイプ　*/
-		CHARACTER_TYPE			m_CharaType;
+		CHARA_TYPE			m_CharaType;
 
 		/* アーマーレベル　*/
 		BYTE					m_ArmorLevel;
@@ -132,7 +132,7 @@ namespace ActionGame {
 		/**
 		 * @brief		タイプ設定
 		 */
-		void SetType(CHARACTER_TYPE type) override {
+		void SetType(CHARA_TYPE type) override {
 			m_CharaType = type;
 			m_Transform->SetType(type);
 			m_Velocity->SetType(type);
@@ -217,7 +217,7 @@ namespace ActionGame {
 			return m_MyID.GetID();
 		}
 
-		CHARACTER_TYPE GetType() const override {
+		CHARA_TYPE GetType() const override {
 			return m_CharaType;
 		}
 
