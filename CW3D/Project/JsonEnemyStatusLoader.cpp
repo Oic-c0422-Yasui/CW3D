@@ -1,4 +1,6 @@
 #include "JsonEnemyStatusLoader.h"
+#include "Utilities.h"
+
 
 using namespace ActionGame;
 
@@ -26,6 +28,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 	{
 		
 		std::string typeName;
+		std::string name;
 		int hp;
 		float ultGauge;
 		float ultGaugeBoostMag;
@@ -35,6 +38,11 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		float colliderHeight;
 
 		state["Type"].get_to(typeName);
+		
+		//“ú–{Œê‚Ì•\Ž¦‚às‚¤‚Ì‚Å utf-8 => ShiftJIS‚Ö•ÏŠ· 
+		state["Name"].get_to(name);
+		auto JISname = MyUtilities::UTF8toShiftJIS(name);
+
 		state["HP"].get_to(hp);
 		state["UltGauge"].get_to(ultGauge);
 		state["UltGaugeBoostMag"].get_to(ultGaugeBoostMag);
@@ -48,7 +56,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			collider["Height"].get_to(colliderHeight);
 		}
 		EnemyStatusPtr enemyStateus = 
-			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge, ultGaugeBoostMag,atk,meshName,colliderSize,colliderHeight));
+			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge, ultGaugeBoostMag,atk,meshName, JISname,colliderSize,colliderHeight));
 		dictionary.Add(typeName,enemyStateus);
 	}
 	

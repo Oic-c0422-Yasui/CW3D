@@ -1,6 +1,12 @@
 #include "JsonEnemyBuildParameterLoader.h"
 
+
 using namespace ActionGame;
+
+ActionGame::JsonEnemyBuildParameterLoader::JsonEnemyBuildParameterLoader()
+	: m_Spawners(std::make_shared<Spawner::EnemySpawnerArray>())
+{
+}
 
 EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(const std::string& name, EnemyStatusDictionary statusDictionary)
 {
@@ -29,13 +35,24 @@ EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nloh
 		enemy["PosZ"].get_to(pos.z);
 		enemy["Type"].get_to(type);
 		
+		//敵のスポナー取得
+		Spawner::JsonSpawnerCreator spawnerCreator;
+		auto spawner = spawnerCreator.Create(enemy["Spawner"]);
+		m_Spawners->push_back(spawner);
+		
 		EnemyParam param(type,pos);
 		
 		EnemyStatusPtr status = statusDictionary.Get(type);
+
 
 		parameter->push_back(std::make_shared<EnemyBuildParameter>(param,status));
 	}
 
 
 	return parameter;
+}
+
+const Spawner::EnemySpawnerArrayPtr& ActionGame::JsonEnemyBuildParameterLoader::GetSpawner()
+{
+	return m_Spawners;
 }

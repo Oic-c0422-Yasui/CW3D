@@ -56,7 +56,7 @@ namespace ActionGame
 		//敵マネージャー
 		ActionGame::EnemyManager m_EnemyManager;
 		//敵スポナー
-		Spawner::EnemySpawnerArray m_EnemySpawner;
+		Spawner::EnemySpawnerArrayPtr m_EnemySpawner;
 		//敵生成スレッド
 		ThreadCreator m_EnemyCreateThread;
 		//更新タスク

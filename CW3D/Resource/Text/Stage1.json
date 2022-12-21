@@ -8,72 +8,114 @@
       "BGM": "",
       "ClearTerms": [
         {
-          "Type": 
-          {
+          "Type": {
             "Name": "AllDead"
           }
         }
       ],
+      
       "Enemys": [
-        {
-          "PosX": 0,
-          "PosY": 0,
-          "PosZ": 5,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": -13,
-          "PosY": 0,
-          "PosZ": 1,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": -8,
-          "PosY": 0,
-          "PosZ": 5,
-          "Type": "Zombie2"
-        },
-        {
-          "PosX": -5,
-          "PosY": 0,
-          "PosZ": 1,
-          "Type": "Zombie"
-        },
         {
           "PosX": -25,
           "PosY": 0,
           "PosZ": 2,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": 1,
-          "PosY": 0,
-          "PosZ": 3,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": -15,
-          "PosY": 0,
-          "PosZ": 6,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": -6,
-          "PosY": 0,
-          "PosZ": 4,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": -20,
-          "PosY": 0,
-          "PosZ": 2,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner":
+            {
+              "Type": "Normal",
+              "Time": 1
+            }
         },
         {
           "PosX": -24,
           "PosY": 0,
           "PosZ": 3,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
+
+        },
+        {
+          "PosX": -20,
+          "PosY": 0,
+          "PosZ": 2,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
+        },
+        {
+          "PosX": -13,
+          "PosY": 0,
+          "PosZ": 1,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 4
+          }
+        },
+        {
+          "PosX": -15,
+          "PosY": 0,
+          "PosZ": 6,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 5
+          }
+        },
+        {
+          "PosX": -8,
+          "PosY": 0,
+          "PosZ": 5,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 5
+          }
+        },
+        {
+          "PosX": -5,
+          "PosY": 0,
+          "PosZ": 1,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 6
+          }
+        },
+        {
+          "PosX": -6,
+          "PosY": 0,
+          "PosZ": 4,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 6
+          }
+        },
+        {
+          "PosX": 0,
+          "PosY": 0,
+          "PosZ": 5,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 6
+          }
+        },
+        {
+          "PosX": 1,
+          "PosY": 0,
+          "PosZ": 3,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 6
+          }
         }
       ],
       "Objects": [
@@ -101,64 +143,104 @@
       ],
       "Enemys": [
         {
-          "PosX": 40,
+          "PosX": 14,
           "PosY": 0,
-          "PosZ": 5,
-          "Type": "Zombie"
+          "PosZ": 3,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 1
+          }
         },
         {
           "PosX": 15,
           "PosY": 0,
           "PosZ": 1,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
         },
         {
           "PosX": 17,
           "PosY": 0,
           "PosZ": 5,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": 30,
-          "PosY": 0,
-          "PosZ": 1,
-          "Type": "Zombie2"
-        },
-        {
-          "PosX": 35,
-          "PosY": 0,
-          "PosZ": 2,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": 40,
-          "PosY": 0,
-          "PosZ": 8,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
         },
         {
           "PosX": 22,
           "PosY": 0,
           "PosZ": 6,
-          "Type": "Zombie"
-        },
-        {
-          "PosX": 32,
-          "PosY": 0,
-          "PosZ": 4,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
         },
         {
           "PosX": 27,
           "PosY": 0,
           "PosZ": 2,
-          "Type": "Zombie2"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
         },
         {
-          "PosX": 14,
+          "PosX": 30,
           "PosY": 0,
-          "PosZ": 3,
-          "Type": "Zombie"
+          "PosZ": 1,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
+        },
+        {
+          "PosX": 32,
+          "PosY": 0,
+          "PosZ": 4,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
+        },
+        {
+          "PosX": 35,
+          "PosY": 0,
+          "PosZ": 2,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
+        },
+        {
+          "PosX": 40,
+          "PosY": 0,
+          "PosZ": 8,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 5
+          }
+        },
+        {
+          "PosX": 40,
+          "PosY": 0,
+          "PosZ": 5,
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 5
+          }
         }
       ],
       "Objects": [
@@ -189,61 +271,101 @@
           "PosX": 62,
           "PosY": 0,
           "PosZ": 5,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 1
+          }
         },
         {
           "PosX": 90,
           "PosY": 0,
           "PosZ": 1,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 1
+          }
         },
         {
           "PosX": 70,
           "PosY": 0,
           "PosZ": 5,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 1
+          }
         },
         {
           "PosX": 72,
           "PosY": 0,
           "PosZ": 1,
-          "Type": "Zombie2"
+          "Type": "Zombie2",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
         },
         {
           "PosX": 71,
           "PosY": 0,
           "PosZ": 2,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 2
+          }
         },
         {
           "PosX": 67,
           "PosY": 0,
           "PosZ": 3,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
         },
         {
           "PosX": 80,
           "PosY": 0,
           "PosZ": 6,
-          "Type": "Zombie2"
+          "Type": "Zombie2",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 3
+          }
         },
         {
           "PosX": 85,
           "PosY": 0,
           "PosZ": 4,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 4
+          }
         },
         {
           "PosX": 76,
           "PosY": 0,
           "PosZ": 2,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 4
+          }
         },
         {
           "PosX": 92,
           "PosY": 0,
           "PosZ": 3,
-          "Type": "Zombie"
+          "Type": "Zombie",
+          "Spawner": {
+            "Type": "Normal",
+            "Time": 4
+          }
         }
       ],
       "Objects": [

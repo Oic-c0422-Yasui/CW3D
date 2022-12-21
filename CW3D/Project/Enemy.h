@@ -27,6 +27,7 @@ namespace ActionGame
 		CharacterAIPtr	m_AI;
 
 		CVector3 m_DefaultPos;
+		std::string		m_Name;
 
 	private:
 		//プライベート関数
@@ -133,6 +134,11 @@ namespace ActionGame
 		{
 			m_HPShowFlg = isShow;
 			m_ShowFlg = isShow;
+		}
+
+		const std::string& GetName() const noexcept
+		{
+			return m_Name;
 		}
 
 	};

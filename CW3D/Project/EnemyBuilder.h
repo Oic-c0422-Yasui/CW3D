@@ -1,6 +1,7 @@
 #pragma once
-#include "Enemy.h"
+
 #include "EnemyBuildParameter.h"
+#include "Enemy.h"
 
 namespace ActionGame
 {

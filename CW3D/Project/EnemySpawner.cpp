@@ -1,13 +1,12 @@
 #include	"EnemySpawner.h"
-#include	"ActorObjectManager.h"
 
-Spawner::EnemySpawner::EnemySpawner(const SpawnConditionArray& conditions, SpawnCyclePtr cycle, EnemySpawnParameterPtr param)
+Spawner::EnemySpawner::EnemySpawner(const SpawnConditionArray& conditions, SpawnCyclePtr cycle)
 	: m_Conditions(conditions)
 	, m_Cycle(cycle)
-	, m_EnemyParam(param)
+
 {
 }
-void Spawner::EnemySpawner::Update(ActionGame::EnemyManager& manager)
+void Spawner::EnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
 {
 	//どれか一つでも条件を満たさないなら実行しない
 	if (!IsValid())
@@ -16,32 +15,13 @@ void Spawner::EnemySpawner::Update(ActionGame::EnemyManager& manager)
 	}
 	if(m_Cycle->Update())
 	{
-		for (size_t i = 0; i < manager.GetMaxEnemyCount(); i++)
+		if (!enemy->IsShow() && !enemy->IsDead())
 		{
-			auto enemy = manager.GetEnemy(i);
-			if (!enemy->IsShow() && !enemy->IsDead())
-			{
-				enemy->SetShow(true);
-				break;
-			}
-			
+			enemy->SetShow(true);
 		}
-		m_EnemyParam->Next();
 	}
 }
 
-ActionGame::EnemyPtr Spawner::EnemySpawner::Spawn(const ActionGame::EnemyBuildParameterPtr& param)
-{
-	ActionGame::EnemyBuilderDictionary dictionary;
-	 //ビルダー取得
-	auto builder = dictionary.Get(param->GetParam().m_Type);
-	//敵生成
-	auto obj = builder->Create(param);
-	//アクターマネージャーに登録
-	ActorObjectManagerInstance.Add(obj);
-
-	return obj;
-}
 
 void Spawner::EnemySpawner::Reset()
 {
@@ -50,6 +30,10 @@ void Spawner::EnemySpawner::Reset()
 
 bool Spawner::EnemySpawner::IsValid() const
 {
+	if (m_Conditions.size() <= 0)
+	{
+		return true;
+	}
 	for (auto& condition : m_Conditions)
 	{
 		if (!condition->IsValid())

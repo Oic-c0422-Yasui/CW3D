@@ -22,7 +22,7 @@ using namespace ActionGame;
 CBattleScene::CBattleScene()
 	: m_Player(std::make_shared<CPlayer>())
 	, m_EnemyManager()
-	, m_EnemySpawner()
+	, m_EnemySpawner(std::make_shared<Spawner::EnemySpawnerArray>())
 	, m_CurrentGameState(GAME_STATE::NOMAL)
 {
 }
@@ -270,6 +270,10 @@ void CBattleScene::Render2DDebug()
 	Vector2 pos;
 	g_pInput->GetMousePos(pos);
 	CGraphicsUtilities::RenderString(400, 30, "X:%.1f Y:%.1f", pos.x, pos.y);
+	if (m_EnemyCreateThread.IsComplete())
+	{
+		CGraphicsUtilities::RenderString(10, 180, m_EnemyManager.GetEnemy(0)->GetName().c_str());
+	}
 
 }
 
@@ -291,7 +295,7 @@ void CBattleScene::Release()
 
 	//敵解放
 	m_EnemyManager.Release();
-	m_EnemySpawner.clear();
+	m_EnemySpawner->clear();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
 	{
 		m_EnemysHPRender[i].reset();
@@ -326,30 +330,24 @@ bool CBattleScene::CreateEnemys()
 	//配列初期化
 	m_EnemyManager.ClearEnemyArray();
 	m_EnemysHPRender.clear();
-	m_EnemySpawner.clear();
+	m_EnemySpawner->clear();
 
 	//現在の区画から敵の情報を受け取る
 	auto division = m_StageManager.GetCurrentDivision();
 	auto enemysParam = division->GetEnemysParam();
 	int enemyCount = division->GetEnemyCount();
 
-	//敵の数を設定
+	//クリア条件に敵の数を設定
 	m_ClearTermProvider->SetEnemyMaxCount(enemyCount);
+	
+
+	//敵のスポナー取得
+	auto spawner = division->GetEnemySpawners();
+	m_EnemySpawner = spawner;
+
 
 	//敵のビルダーの辞書
 	EnemyBuilderDictionary dictionary;
-
-	//スポーン条件
-	Spawner::EnemySpawnConditionCountLimitPtr spawnCondition = std::make_shared<Spawner::EnemySpawnConditionCountLimit>(enemyCount);
-	m_EnemyManager.GetEnemyShowCountSubject().Subscribe([spawnCondition](size_t count) {spawnCondition->SetCount(count); });
-
-	//敵スポナーの作成（未完成）
-	auto spawner = std::make_shared<Spawner::EnemySpawner>(
-		Spawner::SpawnConditionArray{ spawnCondition },
-		std::make_shared<Spawner::SpawnCycleFixedRange>(1.0f,CHARA_TYPE::ENEMY),
-		std::make_shared<Spawner::EnemySpawnParameter>(enemysParam)
-		);
-	m_EnemySpawner.push_back(spawner);
 
 	for (int i = 0; i < enemyCount; i++)
 	{
@@ -365,6 +363,9 @@ bool CBattleScene::CreateEnemys()
 		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
 		CHPPresenter::Present(m_EnemyManager.GetEnemy(i), m_EnemysHPRender[i]);
 		m_EnemysHPRender[i]->Initialize();
+		//enemysParam->at(i)->GetParam().m_Spawner;
+		
+		
 	}
 
 	return true;
@@ -541,10 +542,11 @@ void CBattleScene::RegisterAfterSpawn()
 		
 
 		//敵スポナー更新
-		for (auto spawner : m_EnemySpawner)
+		for (size_t i = 0; i < m_EnemySpawner->size(); i++)
 		{
-			spawner->Update(m_EnemyManager);
+			m_EnemySpawner->at(i)->Update(m_EnemyManager.GetEnemy(i));
 		}
+		
 
 		//敵更新
 		m_EnemyManager.Update();

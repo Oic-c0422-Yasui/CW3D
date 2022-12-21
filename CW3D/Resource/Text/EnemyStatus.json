@@ -3,6 +3,7 @@
   "Status": [
     {
       "Type": "Zombie",
+      "Name": "ゾンビ委",
       "HP": 300,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 1.0,
@@ -17,6 +18,7 @@
     },
     {
       "Type": "Zombie2",
+      "Name": "Zombie",
       "HP": 2000,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 1.5,
@@ -30,5 +32,4 @@
       }
     }
   ]
-
 }

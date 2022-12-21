@@ -18,6 +18,7 @@ ActionGame::EnemyBuildParameter::~EnemyBuildParameter()
 ActionGame::EnemyParam::EnemyParam(const std::string& type, const Vector3& pos)
 	: m_Type(type)
 	, m_Pos(pos)
+
 {
 }
 

@@ -4,6 +4,7 @@
 #include "EnemyBuildParameter.h"
 #include "Object.h"
 #include "IClearTerm.h"
+#include "EnemySpawner.h"
 
 
 namespace ActionGame
@@ -17,11 +18,12 @@ namespace ActionGame
 		//区画データ
 		struct DIVISION_DATA
 		{
-			ClearTermArray	ClearTerms;		//クリア条件
+			ClearTermArray	ClearTerms;					//クリア条件
 			EnemyBuildParameterArrayPtr EnemysParam;	//敵生成パラメータ
-			int EnemyCount;				//生成する敵の数
-			std::vector<ObjectPtr> Objects;		//区画オブジェクト
-			int ObjectCount;		//区画オブジェクトの数
+			Spawner::EnemySpawnerArrayPtr EnemySpawners;	//敵スポナー
+			int EnemyCount;								//生成する敵の数
+			std::vector<ObjectPtr> Objects;				//区画オブジェクト
+			int ObjectCount;							//区画オブジェクトの数
 
 			float width;
 		};
@@ -52,6 +54,15 @@ namespace ActionGame
 		const EnemyBuildParameterArrayPtr& GetEnemysParam()
 		{
 			return m_Data.EnemysParam;
+		}
+
+		/*
+		* @brief	敵のスポナー取得
+		* @return	敵のスポナー
+		*/
+		const Spawner::EnemySpawnerArrayPtr& GetEnemySpawners()
+		{
+			return m_Data.EnemySpawners;
 		}
 
 		/*

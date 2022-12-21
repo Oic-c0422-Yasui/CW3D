@@ -12,11 +12,12 @@ namespace ActionGame
 		float m_UltGaugeBoostMag;
 		int m_Atk;
 		std::string m_MeshName;
+		std::string m_Name;
 		Vector3 m_ColliderSize;
 		float m_ColliderHeight;
 
 		EnemyStatus(int hp, float ultGauge, float ultGaugeBoostMag, int atk,
-			const std::string& meshName, const Vector3& colliderSize, float colliderHeight);
+			const std::string& meshName, const std::string& name, const Vector3& colliderSize, float colliderHeight);
 
 	};
 	using EnemyStatusPtr = std::shared_ptr<EnemyStatus>;

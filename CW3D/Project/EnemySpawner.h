@@ -1,11 +1,10 @@
 #pragma once
 
-#include	<vector>
+
 #include	"ISpawnCondition.h"
 #include	"ISpawnCycle.h"
-#include	"EnemySpawnParameter.h"
-#include	"EnemyManager.h"
-#include	"EnemyBuilderDictionary.h"
+
+#include	"Enemy.h"
 
 
 namespace Spawner
@@ -20,28 +19,18 @@ namespace Spawner
 		SpawnConditionArray			m_Conditions;
 		//出現用サイクル
 		SpawnCyclePtr				m_Cycle;
-		EnemySpawnParameterPtr			m_EnemyParam;
-		//出現オブジェクトリスト
-		ActionGame::EnemyArrayPtr		m_Enemys;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		EnemySpawner(const SpawnConditionArray& conditions,
-					SpawnCyclePtr cycle,
-					EnemySpawnParameterPtr param);
+					SpawnCyclePtr cycle);
 
 		/**
 		 * @brief		更新
 		 */
-		void Update(ActionGame::EnemyManager& manager);
-
-		/**
-		 * @brief		スポーン
-		 * @param		param 敵生成のパラメータ
-		 */
-		ActionGame::EnemyPtr Spawn(const ActionGame::EnemyBuildParameterPtr& param);
+		void Update(const ActionGame::EnemyPtr& enemy);
 
 		/**
 		 * @brief		状態リセット
@@ -56,4 +45,5 @@ namespace Spawner
 	//ポインタ置き換え
 	using EnemySpawnerPtr = std::shared_ptr<EnemySpawner>;
 	using EnemySpawnerArray = std::vector<EnemySpawnerPtr>;
+	using EnemySpawnerArrayPtr = std::shared_ptr<EnemySpawnerArray>;
 }

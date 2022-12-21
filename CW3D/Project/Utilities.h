@@ -40,18 +40,43 @@ namespace MyUtilities
 	}ANIM_V3_DATA;
 	using ANIM_V3_DATA_ARRAY = std::vector< ANIM_V3_DATA>;
 
-	//補間アニメーション
+
+	/*
+	* @brief	補間アニメーション
+	* @param	animTime	現在のアニメーション時間
+	* @param	animData	アニメーション構造体
+	*/
 	float InterpolationAnim(float animTime, const ANIM_DATA_ARRAY& animData);
 
-	//補間アニメーション
+	/*
+	* @brief	補間アニメーション
+	* @param	animTime	現在のアニメーション時間
+	* @param	animData	アニメーション構造体
+	* @param	count		アニメーション数
+	*/
 	float InterpolationAnim(float animTime, ANIM_DATA* animData, int count);
 
-	//補間アニメーション
+	/*
+	* @brief	補間アニメーション
+	* @param	animTime	現在のアニメーション時間
+	* @param	animData	アニメーション構造体
+	* @param	count		アニメーション数
+	*/
 	Vector3 InterpolationAnim(float animTime, ANIM_V3_DATA* animData, int count);
 
-	//補間アニメーション
+	/*
+	* @brief	補間アニメーション
+	* @param	animTime	現在のアニメーション時間
+	* @param	animData	アニメーション構造体
+	*/
 	Vector3 InterpolationAnim(float animTime, const ANIM_V3_DATA_ARRAY& animData);
 
+	/*
+	* @brief		UTF-8をShiftJISに変換
+	* @param[in]	utf8の文字
+	* @return		shiftJISに変換された文字
+	*/
+	std::string UTF8toShiftJIS(const std::string& utf8);
 }
 
 

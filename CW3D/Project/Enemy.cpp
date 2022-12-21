@@ -219,6 +219,8 @@ void ActionGame::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const
 	//UŒ‚—Í
 	auto& atk = param->Get<int>(PARAMETER_KEY_ATTACK);
 	atk = eneStatus->m_Atk;
+	//–¼‘O
+	m_Name = eneStatus->m_Name;
 	//•KE‹ZƒQ[ƒW
 	auto& maxUltGauge = param->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	maxUltGauge = eneStatus->m_UltGauge;

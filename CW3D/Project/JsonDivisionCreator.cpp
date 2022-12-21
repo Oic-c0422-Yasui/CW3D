@@ -42,10 +42,14 @@ using namespace ActionGame;
 
 			data.ClearTerms = clearTermCreator.Create(division["ClearTerms"]);
 
+
 			//敵生成
 			JsonEnemyBuildParameterLoader enemyLoader;
 			data.EnemysParam = enemyLoader.Load(division["Enemys"], status);
 			data.EnemyCount = data.EnemysParam->size();
+
+			//敵スポナー取得
+			data.EnemySpawners = enemyLoader.GetSpawner();
 
 			//オブジェクト生成
 			JsonObjectCreator objectCreator;

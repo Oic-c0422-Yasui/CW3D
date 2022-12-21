@@ -2,6 +2,7 @@
 
 #include "EnemyStatus.h"
 
+
 namespace ActionGame
 {
 	
@@ -10,6 +11,7 @@ namespace ActionGame
 	public:
 		std::string m_Type;
 		Vector3 m_Pos;
+		
 
 		EnemyParam(const std::string& type,const Vector3& pos);
 	};
