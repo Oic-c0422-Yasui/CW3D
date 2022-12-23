@@ -4,16 +4,17 @@ using namespace ActionGame;
 
 
 
-ActionGame::CShot::CShot()
+ActionGame::Shot::Shot()
 	: m_Collider(std::make_shared<CAttackCollider>())
 	, m_Position(0, 0, 0)
 	, m_AABB()
 	, m_Radius(0.0f)
 	, m_ShowFlg(false)
-	, m_CollideFlg(false)
-	, m_Type(CHARA_TYPE::PLAYER)
+	, m_EnableColliderFlg(false)
+	, m_ParentCharaType(CHARA_TYPE::PLAYER)
 	, m_Speed(0.0f)
-	, m_KnockBack(0, 0, 0)
+	, m_KnockBackPower(0, 0, 0)
+	, m_KnockBackDirection()
 	, m_Offset(0, 0, 0)
 	, m_Damage(0)
 	, m_NextHitTime(0.0f)
@@ -25,83 +26,69 @@ ActionGame::CShot::CShot()
 {
 }
 
-ActionGame::CShot::~CShot()
+ActionGame::Shot::~Shot()
 {
 }
 
-void ActionGame::CShot::Create(Vector3 pos, ShotSphere sphire)
+void ActionGame::Shot::CreateBase(const Vector3& pos, const ShotCreateParameter& shot)
 {
 	m_Position = pos;
-	m_Offset = sphire.offset;
-	m_Radius = sphire.Radius;
-	m_Type = sphire.type;
-	m_Damage = sphire.damage;
-	m_NextHitTime = sphire.nextHitTime;
+	m_Offset = shot.offset;
+	m_ParentCharaType = shot.type;
+	m_Damage = shot.damage;
+	m_NextHitTime = shot.nextHitTime;
 	m_Speed = 0.0f;
+	m_ShowFlg = true;
+	m_EnableColliderFlg = shot.collideFlg;
+	m_KnockBackPower = shot.knockBack;
+	m_KnockBackDirection = shot.direction;
+	m_ArmorBreakLevel = shot.armorBreakLevel;
+	m_GetUltGauge = shot.getUltGauge;
+	m_ParentID = shot.parentID;
+}
+
+
+
+void ActionGame::Shot::Create(const Vector3& pos, const ShotSphere& sphire)
+{
+	//ベースのパラメータ作成
+	CreateBase(pos, sphire);
+
+	//追加のパラメータ作成
+	m_Radius = sphire.Radius;
 	m_Collider->SetPosition(m_Position);
 	m_Collider->SetRadius(m_Radius);
-	m_ShowFlg = true;
-	m_CollideFlg = sphire.collideFlg;
 	m_CollisionType = COLLISION_TYPE::SPHERE;
-	m_KnockBack = sphire.knockBack;
-	m_Direction = sphire.direction;
-	m_ArmorBreakLevel = sphire.armorBreakLevel;
-	m_GetUltGauge = sphire.getUltGauge;
-	m_ParentID = sphire.parentID;
 }
 
-void ActionGame::CShot::Create(Vector3 pos, ShotAABB aabb)
+void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
 {
+	//ベースのパラメータ作成
+	CreateBase(pos, aabb);
+
+	//追加のパラメータ作成
 	m_Size = aabb.size;
-	m_Position = pos;
-	m_Offset = aabb.offset;
-	m_Type = aabb.type;
-	m_Damage = aabb.damage;
-	m_NextHitTime = aabb.nextHitTime;
-	m_Speed = 0.0f;
-	m_AABB.SetPosition(m_Position);
 	m_AABB.Size = m_Size;
-	m_ShowFlg = true;
-	m_CollideFlg = aabb.collideFlg;
+	m_AABB.SetPosition(m_Position);
 	m_CollisionType = COLLISION_TYPE::AABB;
-	m_KnockBack = aabb.knockBack;
-	m_Direction = aabb.direction;
-	m_ArmorBreakLevel = aabb.armorBreakLevel;
-	m_GetUltGauge = aabb.getUltGauge;
-	m_ParentID = aabb.parentID;
 }
 
-void ActionGame::CShot::Create(Vector3 pos, ShotOBB obb)
+void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
 {
+	//ベースのパラメータ作成
+	CreateBase(pos, obb);
+
+	//追加のパラメータ作成
 	m_Size = obb.size;
-	m_Position = pos;
-	m_Offset = obb.offset;
-	m_Type = obb.type;
-	m_Damage = obb.damage;
-	m_NextHitTime = obb.nextHitTime;
-	m_Speed = 0.0f;
 	m_OBB.Position = m_Position;
 	m_OBB.Size = m_Size;
 	m_OBB.Angle = obb.angle;
 	m_OBB.CalculateAxis();
-	m_ShowFlg = true;
-	m_CollideFlg = obb.collideFlg;
 	m_CollisionType = COLLISION_TYPE::OBB;
-	m_KnockBack = obb.knockBack;
-	m_Direction = obb.direction;
-	m_ArmorBreakLevel = obb.armorBreakLevel;
-	m_GetUltGauge = obb.getUltGauge;
-	m_ParentID = obb.parentID;
 }
 
-void ActionGame::CShot::Update()
+void ActionGame::Shot::ApplyColliderPosition()
 {
-	if (!m_ShowFlg)
-	{
-		return;
-	}
-
-	m_Position.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_Type);
 	switch (m_CollisionType)
 	{
 	case COLLISION_TYPE::SPHERE:
@@ -124,11 +111,27 @@ void ActionGame::CShot::Update()
 		break;
 	}
 	}
+}
+
+void ActionGame::Shot::Update()
+{
+	if (!m_ShowFlg)
+	{
+		return;
+	}
+
+	m_Position.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
+	
+	//コライダーの座標を現在の座標に合わせる
+	ApplyColliderPosition();
+
+	//タイマー更新
 	UpdateTime();
+	//ヒットID削除
 	DeleteHitId();
 }
 
-void ActionGame::CShot::Render()
+void ActionGame::Shot::Render()
 {
 	if (!m_ShowFlg)
 	{
@@ -137,13 +140,15 @@ void ActionGame::CShot::Render()
 }
 
 
-void ActionGame::CShot::UpdateTime()
+void ActionGame::Shot::UpdateTime()
 {
 	for (auto& id : m_HitIDs)
 	{
 		if (id.Time > 0.0f)
 		{
-			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
 		}
 	}
 }
+
+

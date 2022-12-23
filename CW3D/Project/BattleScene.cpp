@@ -212,11 +212,11 @@ void CBattleScene::RenderDebug()
 	{
 		auto& shot = ShotManagerInstance.GetShot(i);
 
-		if (!shot->IsShow() || !shot->GetCollideFlg())
+		if (!shot->IsShow() || !shot->IsEnableCollider())
 		{
 			continue;
 		}
-		switch (shot->GetColliderType())
+		switch (shot->GetCollisionType())
 		{
 		case COLLISION_TYPE::SPHERE:
 		{

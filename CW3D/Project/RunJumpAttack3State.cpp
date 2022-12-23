@@ -29,9 +29,9 @@ void ActionGame::RunJumpAttack3State::Execution()
 			m_Attack3Action->Jump();
 
 		}
-		else if (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && shot->GetCollideFlg())
+		else if (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && shot->IsEnableCollider())
 		{
-			shot->SetCollideFlg(false);
+			shot->SetEnableCollider(false);
 		}
 
 	}

@@ -23,13 +23,13 @@ void ActionGame::BeamSkillState::Execution()
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
-			shot->SetCollideFlg(true);
+			shot->SetEnableCollider(true);
 		}
 		if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
 		{
-			if (shot->GetCollideFlg())
+			if (shot->IsEnableCollider())
 			{
-				shot->SetCollideFlg(false);
+				shot->SetEnableCollider(false);
 			}
 		}
 	}

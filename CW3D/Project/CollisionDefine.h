@@ -1,7 +1,7 @@
 #pragma once
 
 //“–‚½‚è”»’è‚Ìƒ^ƒCƒv
-enum COLLISION_TYPE
+enum class COLLISION_TYPE
 {
 	SPHERE,	//‹…‘Ì
 	AABB,		//” 

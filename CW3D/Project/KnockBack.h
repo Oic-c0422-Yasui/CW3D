@@ -4,7 +4,11 @@
 
 namespace ActionGame
 {
-	class IKnockBack {
+	/*
+	* @brief	ノックバックの向きを設定するクラスのインタフェース
+	*/
+	class IKnockBack 
+	{
 	public:
 		virtual Vector3 Get(const CVector3& otherPos) const = 0;
 	};

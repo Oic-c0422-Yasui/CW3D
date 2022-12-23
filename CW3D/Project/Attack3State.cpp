@@ -31,7 +31,7 @@ void ActionGame::Attack3State::Execution()
 		if ((m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 			|| (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg))
 		{
-			shot->SetCollideFlg(true);
+			shot->SetEnableCollider(true);
 			if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 			{
 				m_Attack3Action->Execution();
@@ -39,9 +39,9 @@ void ActionGame::Attack3State::Execution()
 			}
 
 		}
-		else if (shot->GetCollideFlg())
+		else if (shot->IsEnableCollider())
 		{
-			shot->SetCollideFlg(false);
+			shot->SetEnableCollider(false);
 		}
 
 	}

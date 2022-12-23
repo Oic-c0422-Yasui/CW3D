@@ -52,12 +52,12 @@ void ActionGame::StormSkillState::Execution()
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 		if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
 		{
-			shot->SetCollideFlg(true);
+			shot->SetEnableCollider(true);
 
 		}
-		else if (shot->GetCollideFlg())
+		else if (shot->IsEnableCollider())
 		{
-			shot->SetCollideFlg(false);
+			shot->SetEnableCollider(false);
 		}
 
 	}

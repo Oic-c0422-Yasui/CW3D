@@ -14,11 +14,11 @@ namespace ActionGame
 	inline void CCollision::CollisionObj<>(ShotPtr& shot, EnemyPtr& enemy) {
 		//どちらかが非表示
 		if (!shot->IsShow() || !enemy->IsShow()) { return; }
-		if (!shot->GetCollideFlg()){ return; }
-		if (shot->GetCharaType() == CHARA_TYPE::ENEMY) { return; }
-		if (shot->IsHitId(enemy->GetID())) { return; }
+		if (!shot->IsEnableCollider()){ return; }
+		if (shot->GetParentCharaType() == CHARA_TYPE::ENEMY) { return; }
+		if (shot->IsHit(enemy->GetID())) { return; }
 		//弾の矩形ごとに判定
-		switch (shot->GetColliderType())
+		switch (shot->GetCollisionType())
 		{
 		case COLLISION_TYPE::SPHERE:
 		{
@@ -49,7 +49,7 @@ namespace ActionGame
 		}
 
 		//ノックバック値設定
-		Vector3 knockBack = shot->GetKnockBack();
+		Vector3 knockBack = shot->GetKnockBackPower();
 		shot->AddHit(enemy->GetID());
 		//ダメージ設定
 		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage(), shot->GetArmorBreakLevel());
@@ -58,7 +58,7 @@ namespace ActionGame
 
 		auto id = shot->GetParentID();
 
-		auto actor =  ActorObjectManagerInstance.GetActor(shot->GetCharaType(), shot->GetParentID());
+		auto actor =  ActorObjectManagerInstance.GetActor(shot->GetParentCharaType(), shot->GetParentID());
 		actor->AddUltGauge(gauge);
 	}
 

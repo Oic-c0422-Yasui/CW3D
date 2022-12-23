@@ -4,8 +4,11 @@
 
 namespace ActionGame
 {
-	//Y軸のみ固定の吸引ノックバック
-	class FixedYInhaleKnockBack : public IKnockBack {
+	/*
+	* @brief	Y軸のみ固定の吸引ノックバック
+	*/
+	class FixedYInhaleKnockBack : public IKnockBack 
+	{
 	private:
 		ActorPtr actor;
 	public:

@@ -4,7 +4,7 @@ using namespace ActionGame;
 
 ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotSphere& sphere)
 {
-	auto add = std::make_shared<CShot>();
+	auto add = std::make_shared<Shot>();
 	m_Shots.push_back(add);
 	add->Create(pos, sphere);
 	return add;
@@ -12,7 +12,7 @@ ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotSphere& s
 
 ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotAABB& aabb)
 {
-	auto add = std::make_shared<CShot>();
+	auto add = std::make_shared<Shot>();
 	m_Shots.push_back(add);
 	add->Create(pos, aabb);
 	return add;
@@ -20,7 +20,7 @@ ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotAABB& aab
 
 ShotPtr ActionGame::CShotManager::Create(const Vector3& pos, const ShotOBB& obb)
 {
-	auto add = std::make_shared<CShot>();
+	auto add = std::make_shared<Shot>();
 	m_Shots.push_back(add);
 	add->Create(pos, obb);
 	return add;

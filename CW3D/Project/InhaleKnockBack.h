@@ -4,8 +4,11 @@
 
 namespace ActionGame
 {
-	//吸引ノックバック
-	class InhaleKnockBack : public IKnockBack {
+	/*
+	* @brief	吸引ノックバック
+	*/
+	class InhaleKnockBack : public IKnockBack 
+	{
 	private:
 		ActorPtr actor;
 	public:

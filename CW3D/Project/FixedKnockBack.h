@@ -4,7 +4,9 @@
 
 namespace ActionGame
 {
-	//固定ノックバック
+	/*
+	* @brief	固定値ノックバック
+	*/
 	class FixedKnockBack : public IKnockBack {
 	private:
 		ActorPtr actor;

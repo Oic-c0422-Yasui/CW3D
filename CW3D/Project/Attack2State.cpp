@@ -30,13 +30,13 @@ void ActionGame::Attack2State::Execution()
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
-			shot->SetCollideFlg(true);
+			shot->SetEnableCollider(true);
 
 
 		}
-		else if (shot->GetCollideFlg())
+		else if (shot->IsEnableCollider())
 		{
-			shot->SetCollideFlg(false);
+			shot->SetEnableCollider(false);
 		}
 	}
 	if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)

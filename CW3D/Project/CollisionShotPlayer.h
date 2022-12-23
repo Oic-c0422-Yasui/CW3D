@@ -14,12 +14,12 @@ namespace ActionGame
 	inline void CCollision::CollisionObj<>(ShotPtr& shot, PlayerPtr& player) {
 		//どちらかが非表示
 		if (!shot->IsShow() || !player->IsShow()) { return; }
-		if (!shot->GetCollideFlg()) { return; }
-		if (shot->GetCharaType() == CHARA_TYPE::PLAYER) { return; }
-		if (shot->IsHitId(player->GetID())) { return; }
+		if (!shot->IsEnableCollider()) { return; }
+		if (shot->GetParentCharaType() == CHARA_TYPE::PLAYER) { return; }
+		if (shot->IsHit(player->GetID())) { return; }
 		if (player->IsInvincible()) { return; }
 		//弾の矩形ごとに判定
-		switch (shot->GetColliderType())
+		switch (shot->GetCollisionType())
 		{
 		case COLLISION_TYPE::SPHERE:
 		{
@@ -76,7 +76,7 @@ namespace ActionGame
 		else
 		{
 			//ノックバック値設定
-			Vector3 knockBack = shot->GetKnockBack();
+			Vector3 knockBack = shot->GetKnockBackPower();
 			shot->AddHit(player->GetID());
 			player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel());
 		}
