@@ -12,6 +12,8 @@ const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
 const std::string PARAMETER_KEY_HP = "HP";
 //最大HP
 const std::string PARAMETER_KEY_MAXHP = "MaxHP";
+//HP表示フラグ
+const std::string PARAMETER_KEY_SHOWHP = "ShowHP";
 //必殺技ゲージ
 const std::string PARAMETER_KEY_ULTGAUGE = "ULTGauge";
 //最大必殺技ゲージ

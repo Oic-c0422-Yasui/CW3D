@@ -10,6 +10,7 @@
 #include "FlyDamageState.h"
 #include "DownState.h"
 #include "DeadState.h"
+#include "NPCStartPoseState.h"
 
 
 

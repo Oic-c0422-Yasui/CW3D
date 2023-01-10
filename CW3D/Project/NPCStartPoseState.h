@@ -9,28 +9,16 @@ namespace ActionGame
     */
     class NPCStartPoseState : public State
     {
-	public:
-		/*
-		* @brief	ステートパラメータ
-		* @param	Time ポーズ時間
-		*/
-		struct Parameter
-		{
-			float Time;
-		};
 	private:
-		Parameter m_Parameter;
 
 		//ダウンステート
 		NPCStartPoseActionPtr			m_Action;
-		//現在時間
-		float						m_CurrentTime;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		NPCStartPoseState(Parameter param);
+		NPCStartPoseState();
 
 		/**
 		 * @brief		ステート内の開始処理

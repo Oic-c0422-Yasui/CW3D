@@ -1,6 +1,8 @@
 #include "ZombieStateCreator.h"
 #include "GameDefine.h"
 
+using namespace ActionGame;
+
 bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const InputPtr& input)
 {
 	stateMachine->AddState(State::Create<IdleState>(actor, input,
@@ -37,6 +39,7 @@ bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine,
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr,2,1.0f,0, Vector3(1.2f, 1.2f, 1.0f) }
 
 		}));
+	stateMachine->AddState(State::Create<NPCStartPoseState>(actor, input));
 
 	return true;
 }

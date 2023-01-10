@@ -21,7 +21,7 @@ void ActionGame::DeadAction::Execution()
 {
 	if (AnimationState()->IsEndMotion())
 	{
-		m_CurrentTime += CUtilities::GetFrameSecond();
+		m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 		auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 		alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_Parameter.finishTime);
 	}

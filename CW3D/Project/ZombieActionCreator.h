@@ -12,6 +12,7 @@
 
 #include	"DamageAction.h"
 #include	"DeadAction.h"
+#include	"NPCStartPoseAction.h"
 
 
 namespace ActionGame {

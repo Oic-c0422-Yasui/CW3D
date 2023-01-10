@@ -150,6 +150,7 @@ void CBattleScene::Initialize()
 	m_Light.SetDiffuse(MOF_XRGB(220, 220, 220));
 	m_Light.SetSpeculer(MOF_XRGB(255, 255, 255));
 
+	//ƒQ[ƒ€‚Ìó‘Ô‰Šú‰»
 	m_CurrentGameState = GAME_STATE::NOMAL;
 
 
@@ -331,7 +332,10 @@ bool CBattleScene::CreateEnemys()
 	//”z—ñ‰Šú‰»
 	m_EnemyManager.ClearEnemyArray();
 	m_EnemysHPRender.clear();
-
+	for (auto spawner : *m_EnemySpawner)
+	{
+		spawner->Reset();
+	}
 
 	//Œ»İ‚Ì‹æ‰æ‚©‚ç“G‚Ìî•ñ‚ğó‚¯æ‚é
 	auto division = m_StageManager.GetCurrentDivision();

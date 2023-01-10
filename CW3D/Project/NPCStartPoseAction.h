@@ -17,16 +17,18 @@ namespace ActionGame
 		{
 			//アニメーションパラメーター
 			AnimParam				anim;
-			//減速値
-			Vector3					decelerate;
-			float					gravity;
-			float					maxGravity;
 			//オフセット位置
 			Vector3					offsetPos;
+			//終了時間
+			float					finishTime;
 		};
 	private:
 		//パラメーター
 		Parameter					m_Parameter;
+
+		Vector3						m_TempOffsetPos;
+
+		float						m_CurrentTime;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -58,6 +60,11 @@ namespace ActionGame
 		 * @brief		ステートキーの取得
 		 */
 		const ActionKeyType GetKey() const override;
+
+		/*
+		* @brief		アニメーションが終了しているか
+		*/
+		bool IsEndAnim() const noexcept;
 	};
 	//ポインタ置き換え
     using NPCStartPoseActionPtr = std::shared_ptr<NPCStartPoseAction>;

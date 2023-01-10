@@ -57,7 +57,6 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 
 	//初期位置設定
 	m_Position = m_DefaultPos;
-	m_HPShowFlg = true;
 
 	//AI作成
 	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
@@ -67,18 +66,16 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 
 void CEnemy::Initialize()
 {
+	ActionGame::ActorObject::Initialize();
 	//座標初期化
 	m_Actor->SetPosition(m_DefaultPos);
-	m_Actor->SetRotate(Vector3(0, MOF_ToDegree(90), 0));
 	m_Actor->SetScale(Vector3(1, 1, 1));
+	m_Actor->SetReverse(true);
 
-
-	m_StateMachine->ChangeState(STATE_KEY_IDLE);
+	m_StateMachine->ChangeState(STATE_KEY_NPCSTARTPOSE);
 	matWorld = m_Actor->GetMatrix();
 	m_ShowFlg = false;
-	m_DeadFlg = false;
-	m_HPShowFlg = true;
-
+	
 
 	//パラメータ初期化
 	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
@@ -90,6 +87,9 @@ void CEnemy::Initialize()
 	alpha = 1.0f;
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = 0.0f;
+	auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+	HPShowFlg = false;
+
 }
 
 void CEnemy::Update()
@@ -98,6 +98,7 @@ void CEnemy::Update()
 	{
 		return;
 	}
+
 
 	//無敵時間中なら時間を減らす
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
@@ -182,7 +183,8 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 		hp = 0;
 
 		m_DeadFlg = true;
-		m_HPShowFlg = false;
+		auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+		HPShowFlg = false;
 	}
 	m_HP = hp;
 

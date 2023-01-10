@@ -22,7 +22,6 @@ namespace ActionGame
 		ParameterHandle< ReactiveParameter<int> > m_HP;
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
 		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
-		ParameterHandle< ReactiveParameter<bool> > m_HPShowFlg;
 
 		CharacterAIPtr	m_AI;
 
@@ -94,11 +93,6 @@ namespace ActionGame
 		*/
 		bool IsInvincible() const;
 
-		/*const Vector3& GetPosition() const noexcept
-		{
-			return m_Position.Get();
-		}*/
-
 		/**
 		 * @brief		HP変化通知
 		 */
@@ -113,11 +107,10 @@ namespace ActionGame
 		 * @brief		座標変化通知
 		 */
 		ActionGame::IObservable<Vector3>* GetPositionSubject() { return &(m_Position.Get()); }
-
 		/**
 		 * @brief		表示変化通知
 		 */
-		ActionGame::IObservable<bool>* GetShowSubject() { return &(m_HPShowFlg.Get()); }
+		ActionGame::IObservable<bool>& GetShowSubject() { return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP); }
 
 		int GetHP()
 		{
@@ -132,7 +125,11 @@ namespace ActionGame
 
 		void SetShow(bool isShow) noexcept override
 		{
-			m_HPShowFlg = isShow;
+			if (!isShow)
+			{
+				auto& showFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+				showFlg = isShow;
+			}
 			m_ShowFlg = isShow;
 		}
 
