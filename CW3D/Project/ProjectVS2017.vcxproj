@@ -125,6 +125,8 @@
     <ClCompile Include="JsonSpawnerCreator.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="NormalSpawnerBuilder.cpp" />
+    <ClCompile Include="NPCStartPoseAction.cpp" />
+    <ClCompile Include="NPCStartPoseState.cpp" />
     <ClCompile Include="SceneChangeFade.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SpawnerBuilder.cpp" />
@@ -283,6 +285,8 @@
     <ClInclude Include="JsonSpawnerCreator.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="NormalSpawnerBuilder.h" />
+    <ClInclude Include="NPCStartPoseAction.h" />
+    <ClInclude Include="NPCStartPoseState.h" />
     <ClInclude Include="ParameterDefine.h" />
     <ClInclude Include="SceneChangeFade.h" />
     <ClInclude Include="SceneDefine.h" />

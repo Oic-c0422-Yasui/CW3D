@@ -4,7 +4,7 @@
 namespace ActionGame
 {
 	/**
-	 * @brief		クリアポーズアクション
+	 * @brief		開始ポーズアクション
 	 */
 	class StartPoseAction : public Action
 	{

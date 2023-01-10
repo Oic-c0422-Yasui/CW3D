@@ -160,7 +160,8 @@ void CBattleScene::Initialize()
 void CBattleScene::Update()
 {
 
-	if (m_CurrentGameState == GAME_STATE::CLEAR || m_CurrentGameState == GAME_STATE::OVER)
+	if (m_CurrentGameState == GAME_STATE::CLEAR || 
+		m_CurrentGameState == GAME_STATE::OVER)
 	{
 		//‘JˆÚ
 		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
@@ -295,7 +296,7 @@ void CBattleScene::Release()
 
 	//“G‰ğ•ú
 	m_EnemyManager.Release();
-	m_EnemySpawner->clear();
+	m_EnemySpawner.reset();
 	for (int i = 0; i < m_EnemysHPRender.size(); i++)
 	{
 		m_EnemysHPRender[i].reset();
@@ -330,7 +331,7 @@ bool CBattleScene::CreateEnemys()
 	//”z—ñ‰Šú‰»
 	m_EnemyManager.ClearEnemyArray();
 	m_EnemysHPRender.clear();
-	m_EnemySpawner->clear();
+
 
 	//Œ»İ‚Ì‹æ‰æ‚©‚ç“G‚Ìî•ñ‚ğó‚¯æ‚é
 	auto division = m_StageManager.GetCurrentDivision();
@@ -363,8 +364,6 @@ bool CBattleScene::CreateEnemys()
 		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
 		CHPPresenter::Present(m_EnemyManager.GetEnemy(i), m_EnemysHPRender[i]);
 		m_EnemysHPRender[i]->Initialize();
-		//enemysParam->at(i)->GetParam().m_Spawner;
-		
 		
 	}
 

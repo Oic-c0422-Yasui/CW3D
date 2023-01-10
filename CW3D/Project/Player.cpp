@@ -55,6 +55,7 @@ void CPlayer::Initialize()
 	m_ColliderSize = Vector3(0.5f, 0.8f, 0.5f);
 	m_ColliderOffset.y = 1.0f;
 	m_EscapeColliderSize = m_ColliderSize + Vector3(1.2f,0.5f,1.2f);
+	m_Actor->SetReverse(false);
 
 	//‰Šú‚Í‘Ò‹@ƒ‚[ƒVƒ‡ƒ“
 	m_StateMachine->ChangeState(STATE_KEY_STARTPOSE);

@@ -36,7 +36,6 @@ void ActionGame::StartPoseState::Start()
 	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
 	camera->SetAnim(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera);
-	m_Action->StartAnim();
 	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::ENEMY, 0.0f, 0.0f);
 }
 
