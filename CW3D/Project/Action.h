@@ -59,7 +59,7 @@ namespace ActionGame {
 		TransformPtr Transform() { return m_Transform; }
 		VelocityPtr	 Velocity()	 { return m_Velocity; }
 		AnimationStatePtr AnimationState() { return m_Animation; }
-		const AnyParameterMapPtr& ParameterMap() { return m_Parameters; }
+		AnyParameterMapPtr ParameterMap() { return m_Parameters; }
 		SkillControllerPtr SkillController() { return m_SkillController; }
 	public:
 		/**

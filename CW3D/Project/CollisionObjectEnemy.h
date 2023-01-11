@@ -9,14 +9,14 @@ namespace ActionGame
 	 * @brief		“G‚Æ“G‚Ì‚ ‚½‚è”»’è
 	 */
 	template < >
-	inline void CCollision::CollisionObj<>(CEnemy& ene, CObject& obj) {
+	inline void CCollision::CollisionObj<>(Enemy& ene, CObject& obj) {
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!ene.IsShow() || !obj.IsShow()) { return; }
 		//–„‚Ü‚è–hŽ~”»’è
 		CollisionObject(ene, obj);
 	}
 	template< >
-	inline void CCollision::CollisionObj<>(CObject& obj, CEnemy& ene) {
+	inline void CCollision::CollisionObj<>(CObject& obj, Enemy& ene) {
 		return CollisionObj(obj, ene);
 	}
 

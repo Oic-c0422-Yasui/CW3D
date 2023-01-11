@@ -14,7 +14,7 @@
 
 namespace ActionGame
 {
-	class CEnemy : public ActorObject
+	class Enemy : public ActorObject
 	{
 	protected:
 		InputPtr m_Input;
@@ -27,17 +27,17 @@ namespace ActionGame
 
 		CVector3 m_DefaultPos;
 		std::string		m_Name;
-
-	private:
+		bool			m_BossFlg;
+	protected:
 		//プライベート関数
 		/*
 		* @brief	敵のパラメータ設定
 		*/
-		void SettingParameter(const AnyParameterMapPtr& param,
-								const EnemyStatusPtr& eneStatus);
+		virtual void SettingParameter(const AnyParameterMapPtr& param,
+										const EnemyStatusPtr& eneStatus);
 	public:
-		CEnemy();
-		~CEnemy() override;
+		Enemy();
+		~Enemy() override;
 		/*
 		* @brief	読み込み
 		* @param	eneParam 敵生成に使うパラメータ
@@ -46,39 +46,39 @@ namespace ActionGame
 		* @param	paramCreator パラメータの生成
 		* @param	aiCreator AIの生成
 		*/
-		bool Load(const EnemyBuildParameterPtr& eneParam,
-			const ActionCreatorPtr& actionCreator,
-			const StateCreatorPtr& stateCreator,
-			const ParameterCreatorPtr& paramCreator,
-			const CharacterAICreatorPtr& aiCreator);
+		virtual bool Load(const EnemyBuildParameterPtr& eneParam,
+				const ActionCreatorPtr& actionCreator,
+				const StateCreatorPtr& stateCreator,
+				const ParameterCreatorPtr& paramCreator,
+				const CharacterAICreatorPtr& aiCreator);
 		/*
 		* @brief	初期化
 		*/
-		void Initialize();
+		virtual void Initialize();
 		/*
 		* @brief	更新
 		*/
-		void Update() override;
+		virtual void Update() override;
 		/*
 		* @brief	描画
 		*/
-		void Render() override;
+		virtual void Render() override;
 		/*
 		* @brief	デバッグ描画
 		*/
-		void RenderDebug();
+		virtual void RenderDebug();
 		/*
 		* @brief	２D描画
 		*/
-		void Render2D();
+		virtual void Render2D();
 		/*
 		* @brief	２Dデバッグ描画
 		*/
-		void Render2DDebug();
+		virtual void Render2DDebug();
 		/*
 		* @brief	解放
 		*/
-		void Release() override;
+		virtual void Release() override;
 		/*
 		* @brief		ダメージ処理
 		* @param direction	ノックバックの方向
@@ -86,12 +86,12 @@ namespace ActionGame
 		* @param damage ダメージ量
 		* @param level	アーマー破壊レベル
 		*/
-		void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
+		virtual void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
 		/*
 		* @brief	無敵状態か？
 		* @return	true なら無敵状態
 		*/
-		bool IsInvincible() const;
+		virtual bool IsInvincible() const;
 
 		/**
 		 * @brief		HP変化通知
@@ -138,10 +138,14 @@ namespace ActionGame
 			return m_Name;
 		}
 
+		bool IsBoss() const noexcept
+		{
+			return m_BossFlg;
+		}
 	};
 
 	//ポインタ置き換え
-	using EnemyPtr = std::shared_ptr<CEnemy>;
+	using EnemyPtr = std::shared_ptr<Enemy>;
 	using EnemyArray = std::vector<EnemyPtr>;
 	using EnemyArrayPtr = std::shared_ptr<EnemyArray>;
 }

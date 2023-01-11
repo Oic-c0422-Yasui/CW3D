@@ -20,7 +20,7 @@ ActionGame::ZombieBuilder::ZombieBuilder()
 ActionGame::EnemyPtr ActionGame::ZombieBuilder::Create(const EnemyBuildParameterPtr& param)
 {
     
-    EnemyPtr enemy = std::make_shared<CEnemy>();
+    EnemyPtr enemy = std::make_shared<Enemy>();
 
     enemy->Load(param,
         m_ActionCreator,

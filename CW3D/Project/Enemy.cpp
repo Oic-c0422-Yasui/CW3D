@@ -5,21 +5,22 @@
 using namespace ActionGame;
 
 
-CEnemy::CEnemy()
+Enemy::Enemy()
 
 	: ActionGame::ActorObject()
 	, m_Input()
 	, m_DefaultPos(0,0,0)
+	, m_BossFlg(false)
 {
 	SetType(CHARA_TYPE::ENEMY);
 }
 
-CEnemy::~CEnemy()
+Enemy::~Enemy()
 {
 	Release();
 }
 
-bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
+bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 	const ActionCreatorPtr& actionCreator,
 	const StateCreatorPtr& stateCreator,
 	const ParameterCreatorPtr& paramCreator,
@@ -27,6 +28,9 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 {
 	//初期位置
 	m_DefaultPos = eneParam->GetParam().m_Pos;
+
+	//ボスか判断
+	m_BossFlg = eneParam->GetParam().m_IsBoss;
 
 	//インプットキー
 	auto& stateInput = std::make_shared<ActionGame::StateInput>();
@@ -55,6 +59,7 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//パラメータ設定
 	SettingParameter(param, eneParam->GetStatus());
 
+
 	//初期位置設定
 	m_Position = m_DefaultPos;
 
@@ -64,19 +69,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	return true;
 }
 
-void CEnemy::Initialize()
+void Enemy::Initialize()
 {
-	ActionGame::ActorObject::Initialize();
-	//座標初期化
-	m_Actor->SetPosition(m_DefaultPos);
-	m_Actor->SetScale(Vector3(1, 1, 1));
-	m_Actor->SetReverse(true);
-
-	m_StateMachine->ChangeState(STATE_KEY_NPCSTARTPOSE);
-	matWorld = m_Actor->GetMatrix();
-	m_ShowFlg = false;
-	
-
 	//パラメータ初期化
 	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
@@ -90,9 +84,21 @@ void CEnemy::Initialize()
 	auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
 	HPShowFlg = false;
 
+
+	ActionGame::ActorObject::Initialize();
+	//座標初期化
+	m_Actor->SetPosition(m_DefaultPos);
+	m_Actor->SetReverse(true);
+
+	m_StateMachine->ChangeState(STATE_KEY_NPCSTARTPOSE);
+	matWorld = m_Actor->GetMatrix();
+	m_ShowFlg = false;
+	
+
+
 }
 
-void CEnemy::Update()
+void Enemy::Update()
 {
 	if (!m_ShowFlg)
 	{
@@ -128,7 +134,7 @@ void CEnemy::Update()
 	m_Position = m_Actor->GetPosition();
 }
 
-void CEnemy::Render()
+void Enemy::Render()
 {
 	if (!m_ShowFlg)
 	{
@@ -138,12 +144,12 @@ void CEnemy::Render()
 	ActionGame::ActorObject::Render();
 }
 
-void CEnemy::RenderDebug()
+void Enemy::RenderDebug()
 {
 	CGraphicsUtilities::RenderBox(GetCollider(), Vector4(0, 1, 0, 0.2f));
 }
 
-void CEnemy::Render2D()
+void Enemy::Render2D()
 {
 	if (!m_ShowFlg)
 	{
@@ -153,16 +159,16 @@ void CEnemy::Render2D()
 	
 }
 
-void CEnemy::Render2DDebug()
+void Enemy::Render2DDebug()
 {
 }
 
-void CEnemy::Release()
+void Enemy::Release()
 {
 	ActionGame::ActorObject::Release();
 }
 
-void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
+void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
 {
 
 	//ダメージエフェクト生成
@@ -203,13 +209,13 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 	}
 }
 
-bool CEnemy::IsInvincible() const
+bool Enemy::IsInvincible() const
 {
 	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 
-void ActionGame::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
+void ActionGame::Enemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
 {
 	//HP
 	auto& maxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
@@ -228,6 +234,8 @@ void ActionGame::CEnemy::SettingParameter(const AnyParameterMapPtr& param, const
 	maxUltGauge = eneStatus->m_UltGauge;
 	//相手が獲得する必殺技ゲージの倍率
 	SetUltBoostMag(eneStatus->m_UltGaugeBoostMag);
+	//大きさ
+	m_Actor->SetScale(eneStatus->m_Scale);
 	//当たり判定
 	m_ColliderSize = eneStatus->m_ColliderSize;
 	m_ColliderOffset = Vector3(0.0f,eneStatus->m_ColliderHeight, 0.0f);

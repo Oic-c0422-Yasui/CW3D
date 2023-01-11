@@ -31,6 +31,7 @@ void ActionGame::NPCStartPoseAction::Start()
 	Transform()->MovePosition(m_TempOffsetPos);
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = m_Parameter.finishTime;
+
 	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
 	showHP = false;
 }
@@ -38,19 +39,19 @@ void ActionGame::NPCStartPoseAction::Start()
 void ActionGame::NPCStartPoseAction::Execution()
 {
 
+	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = MyUtilities::Timer(0.0f, m_CurrentTime, 1.0f, m_Parameter.finishTime);
-
 }
 
 void ActionGame::NPCStartPoseAction::End()
 {
 	Transform()->MovePosition(-m_TempOffsetPos);
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	invincible = 0.0f;
 	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
 	showHP = true;
+	invincible = 0.0f;
 }
 
 void ActionGame::NPCStartPoseAction::StartAnim()

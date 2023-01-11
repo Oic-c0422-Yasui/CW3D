@@ -8,8 +8,10 @@ namespace ActionGame
 	private:
 		EnemyArrayPtr m_Enemys;
 		ActionGame::ReactiveParameter<size_t> m_EnemyCount;
+		ActionGame::ReactiveParameter<size_t> m_BossCount;
 		ActionGame::ReactiveParameter<size_t> m_EnemyShowCount;
 		size_t m_EnemyMaxCount;
+		size_t m_BossMaxCount;
 	public:
 		EnemyManager();
 		~EnemyManager();
@@ -21,16 +23,29 @@ namespace ActionGame
 		void Release();
 
 		
-		size_t GetMaxEnemyCount() const noexcept
-		{
-			return m_EnemyMaxCount;
-		}
-
-		ActionGame::IObservable<size_t>& GetEnemyCountSubject()
+		size_t GetEnemyCount() const noexcept
 		{
 			return m_EnemyCount;
 		}
-		size_t GetEnemyCount() const noexcept
+		size_t GetEnemyMaxCount() const noexcept
+		{
+			return m_EnemyMaxCount;
+		}
+		size_t GetEnemyShowCount() const noexcept
+		{
+			return m_EnemyShowCount;
+		}
+		size_t GetBossCount() const noexcept
+		{
+			return m_BossCount;
+		}
+		size_t GetBossMaxCount() const noexcept
+		{
+			return m_BossMaxCount;
+		}
+
+
+		ActionGame::IObservable<size_t>& GetEnemyCountSubject()
 		{
 			return m_EnemyCount;
 		}
@@ -38,9 +53,9 @@ namespace ActionGame
 		{
 			return m_EnemyShowCount;
 		}
-		size_t GetEnemyShowCount() const noexcept
+		ActionGame::IObservable<size_t>& GetBossCountSubject()
 		{
-			return m_EnemyShowCount;
+			return m_BossCount;
 		}
 
 		const EnemyPtr& GetEnemy(size_t num)
@@ -49,12 +64,7 @@ namespace ActionGame
 			return m_Enemys->at(num);
 		}
 
-		void AddEnemy(const EnemyPtr& enemy)
-		{
-			m_Enemys->push_back(enemy);
-			m_EnemyCount = m_Enemys->size();
-			m_EnemyMaxCount = m_Enemys->size();
-		}
+		void AddEnemy(const EnemyPtr& enemy);
 
 		void ClearEnemyArray()
 		{

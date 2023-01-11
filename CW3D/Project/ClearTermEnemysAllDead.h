@@ -1,6 +1,5 @@
 #pragma once
 #include "IClearTerm.h"
-#include "Enemy.h"
 
 namespace ActionGame
 {
@@ -10,11 +9,11 @@ namespace ActionGame
 	class ClearTermEnemysAllDead : public IClearTerm
 	{
 	private:
-		EnemyArrayPtr m_Enemys;
+
 	public:
 		ClearTermEnemysAllDead();
 		bool IsClear(const ClearTermProviderPtr& provider) override;
-		const std::string& GetType() override { return "AllDead"; }
+		const std::string& GetType() const noexcept override { return "AllDead"; }
 	};
 }
 

@@ -14,7 +14,7 @@ namespace ActionGame
 		ClearTermEnduranceTime(float time);
 		bool IsClear(const ClearTermProviderPtr& provider) override;
 
-		const std::string& GetType() override { return "EnduranceTime"; }
+		const std::string& GetType() const noexcept override  { return "EnduranceTime"; }
 
 	};
 }

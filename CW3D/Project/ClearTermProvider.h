@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Enemy.h"
+#include <memory>
 
 namespace ActionGame
 {
@@ -13,12 +12,16 @@ namespace ActionGame
 		float m_DivisionCurrentTime;
 		size_t m_EnemyCount;
 		size_t m_EnemyMaxCount;
+		size_t m_BossCount;
+		size_t m_BossMaxCount;
 	public:
-		//TODO:ƒ{ƒX‚ğ’Ç‰Á‚·‚é
+
 		ClearTermProvider():
 			m_DivisionCurrentTime(0.0f),
 			m_EnemyCount(0),
-			m_EnemyMaxCount(0)
+			m_EnemyMaxCount(0),
+			m_BossCount(0),
+			m_BossMaxCount(0)
 		{
 			
 		}
@@ -46,13 +49,23 @@ namespace ActionGame
 			m_EnemyCount = count;
 		}
 
+		void SetBossCount(size_t count) noexcept
+		{
+			m_BossCount = count;
+		}
+
 		void SetEnemyMaxCount(size_t count) noexcept
 		{
 			m_EnemyMaxCount = count;
 		}
 
+		void SetBossMaxCount(size_t count) noexcept
+		{
+			m_BossMaxCount = count;
+		}
+
 		/**
-		 * @brief		“Gæ“¾
+		 * @brief		“G”æ“¾
 		 */
 		size_t GetEnemyCount() const noexcept
 		{
@@ -60,9 +73,25 @@ namespace ActionGame
 		}
 
 		/**
-		 * @brief		“Gæ“¾
+		 * @brief		“GÅ‘å”æ“¾
 		 */
 		size_t GetEnemyMaxCount() const noexcept
+		{
+			return m_EnemyMaxCount;
+		}
+
+		/**
+		 * @brief		ƒ{ƒX”æ“¾
+		 */
+		size_t GetBossCount() const noexcept
+		{
+			return m_EnemyMaxCount;
+		}
+
+		/**
+		 * @brief		ƒ{ƒXÅ‘å”æ“¾
+		 */
+		size_t GetBossMaxCount() const noexcept
 		{
 			return m_EnemyMaxCount;
 		}

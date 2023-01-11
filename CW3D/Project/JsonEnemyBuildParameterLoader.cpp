@@ -27,20 +27,31 @@ EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nloh
 	for (auto& enemy : os)
 	{
 		
-		Vector3 pos;
-		std::string type;
 
+		Vector3 pos;
 		enemy["PosX"].get_to(pos.x);
 		enemy["PosY"].get_to(pos.y);
 		enemy["PosZ"].get_to(pos.z);
+		
+		std::string type;
 		enemy["Type"].get_to(type);
 		
 		//敵のスポナー取得
 		Spawner::JsonSpawnerCreator spawnerCreator;
 		auto spawner = spawnerCreator.Create(enemy["Spawner"]);
 		m_Spawners->push_back(spawner);
+
+		//ボスか判断する
+		auto& boss = enemy["Boss"];
+		bool isBoss = false;
+		if (!boss.is_null())
+		{
+			boss.get_to(isBoss);
+		}
 		
-		EnemyParam param(type,pos);
+
+		
+		EnemyParam param(type,pos,isBoss);
 		
 		EnemyStatusPtr status = statusDictionary.Get(type);
 

@@ -2,49 +2,50 @@
 
 #include "Common.h"
 
-#include "ResourceManager.h"
-
 namespace ActionGame
 {
-	/**
-	 * @brief		プレイヤーHPUI
-	 */
-	class CEnemyHPRender
+	class EnemyHPRender
 	{
-	private:
+	protected:
 		//現在の描画HP
-		float				m_CurrentHP;
+		float				m_CurrentHPPercent;
 		//現在の描画ゲージ
-		float				m_CurrentGauge;
-		
-		std::shared_ptr<CSprite3D>			m_pHPBar;
-		std::shared_ptr<CSprite3D>			m_pFrame;
-		std::shared_ptr<CSprite3D>			m_pDamageBar;
+		float				m_CurrentHPGaugePercent;
 
 		int m_HP;
 		int m_MaxHP;
 
-		Vector3 m_Position;
-		Vector3 m_ViewPosition;
-
 		bool	m_ShowFlg;
-
-		Vector3								m_Offset;
-		Vector3								m_Size;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CEnemyHPRender();
+		EnemyHPRender();
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~CEnemyHPRender();
+		virtual ~EnemyHPRender() = default;
 
 
-		void Initialize();
+		/**
+		 * @brief		読み込み
+		 */
+		virtual bool Load() = 0;
+		/**
+		 * @brief		初期化
+		 */
+		virtual void Initialize() = 0;
+		/**
+		 * @brief		リセット
+		 */
+		virtual void Reset() noexcept = 0;
+
+		/**
+		 * @brief		描画
+		 */
+		virtual void Render() = 0;
 
 
 		void SetHP(int hp)
@@ -62,41 +63,16 @@ namespace ActionGame
 			return m_ShowFlg;
 		}
 
-		void SetPosition(Vector3 pos)
-		{
-			m_Position = pos;
-		}
-
 		void SetShow(bool isShow)
 		{
 			m_ShowFlg = isShow;
 		}
 
-		const Vector3& GetPosition()
-		{
-			return m_Position;
-		}
 
-		/**
-		 * @brief		管理HP初期化
-		 */
-		void Reset() noexcept;
 
-		/**
-		 * @brief		HP描画
-		 */
-		void Render();
-
-		void Release(void);
-
-		const Vector3& GetViewPosition()
-		{
-			LPCamera cam = CGraphicsUtilities::GetCamera();
-			m_ViewPosition = m_Position;
-			m_ViewPosition *= cam->GetViewMatrix();
-			return m_ViewPosition;
-		}
 	};
 
-	using EnemyHPRenderPtr = std::shared_ptr<CEnemyHPRender>;
+	using EnemyHPRenderPtr = std::shared_ptr<EnemyHPRender>;
 }
+
+

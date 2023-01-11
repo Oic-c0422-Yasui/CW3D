@@ -109,11 +109,14 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BeamSkillAction.cpp" />
     <ClCompile Include="BeamSkillState.cpp" />
+    <ClCompile Include="BossHPRender.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ClearPoseAction.cpp" />
     <ClCompile Include="ClearPoseState.cpp" />
     <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp" />
+    <ClCompile Include="ClearTermBossDead.cpp" />
+    <ClCompile Include="ClearTermBossDeadBuilder.cpp" />
     <ClCompile Include="ClearTermBuilderDictionary.cpp" />
     <ClCompile Include="ClearTermEnduranceTime.cpp" />
     <ClCompile Include="ClearTermEnduranceTimeBuilder.cpp" />
@@ -122,6 +125,8 @@
     <ClCompile Include="ClearTermEnemyAllDeadText.cpp" />
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
+    <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="NPCHPRenderManager.cpp" />
     <ClCompile Include="JsonSpawnerCreator.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="NormalSpawnerBuilder.cpp" />
@@ -149,7 +154,7 @@
     <ClCompile Include="DivisionObject.cpp" />
     <ClCompile Include="EnemyBuilderDictionary.cpp" />
     <ClCompile Include="EnemyBuildParameter.cpp" />
-    <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="NormalEnemyHPRender.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemySpawnParameter.cpp" />
@@ -266,10 +271,13 @@
     <ClInclude Include="AttackStateAI.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BattleUICreater.h" />
+    <ClInclude Include="BossHPRender.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CharaTypeDefine.h" />
     <ClInclude Include="ClearTermAllDeadAndEnduranceText.h" />
+    <ClInclude Include="ClearTermBossDead.h" />
+    <ClInclude Include="ClearTermBossDeadBuilder.h" />
     <ClInclude Include="ClearTermBuilder.h" />
     <ClInclude Include="ClearTermBuilderDictionary.h" />
     <ClInclude Include="ClearTermEnduranceTime.h" />
@@ -281,6 +289,8 @@
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
     <ClInclude Include="CollisionDefine.h" />
+    <ClInclude Include="EnemyHPRender.h" />
+    <ClInclude Include="NPCHPRenderManager.h" />
     <ClInclude Include="InputDefine.h" />
     <ClInclude Include="JsonSpawnerCreator.h" />
     <ClInclude Include="LoadingScene.h" />
@@ -382,7 +392,7 @@
     <ClInclude Include="EffectController.h" />
     <ClInclude Include="EffectRenderer.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyHPRender.h" />
+    <ClInclude Include="NormalEnemyHPRender.h" />
     <ClInclude Include="FallAction.h" />
     <ClInclude Include="FallState.h" />
     <ClInclude Include="FlyDamageAction.h" />

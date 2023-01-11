@@ -7,7 +7,7 @@
 namespace ActionGame {
 
 	template< >
-	inline void CCollision::CollisionObj<>(CPlayer& obj1, CEnemy& obj2) {
+	inline void CCollision::CollisionObj<>(CPlayer& obj1, Enemy& obj2) {
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!obj1.IsShow() || !obj2.IsShow()) { return; }
 		if (obj2.IsInvincible()) { return; }
@@ -16,7 +16,7 @@ namespace ActionGame {
 	}
 
 	template< >
-	inline void CCollision::CollisionObj<>(CEnemy& obj1, CPlayer& obj2) {
+	inline void CCollision::CollisionObj<>(Enemy& obj1, CPlayer& obj2) {
 		return CollisionObj(obj1, obj2);
 	}
 

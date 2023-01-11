@@ -38,6 +38,8 @@
 #include	"SceneChangeFade.h"
 #include	"SceneChanger.h"
 
+#include	"NPCHPRenderManager.h"
+
 namespace ActionGame
 {
 	//ゲームの状態
@@ -70,8 +72,9 @@ namespace ActionGame
 		CDirectionalLight m_Light;
 		//フォント
 		CFont m_Font;
-		//敵HPバー
-		std::vector<ActionGame::EnemyHPRenderPtr> m_EnemysHPRender;
+
+		//NPCのHPバー
+		ActionGame::NPCHPRenderManager m_NPCHPRender;
 		//プレイヤーUI
 		ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
 		//UI作成

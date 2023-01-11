@@ -624,7 +624,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Chara\Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyHPRender.cpp">
+    <ClCompile Include="NormalEnemyHPRender.cpp">
       <Filter>ソース ファイル\UI\Render</Filter>
     </ClCompile>
     <ClCompile Include="PlayerUIRender.cpp">
@@ -700,6 +700,21 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NPCStartPoseAction.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermBossDead.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearTermBossDeadBuilder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHPRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHPRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCHPRenderManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -962,7 +977,7 @@
     <ClInclude Include="ActorObjectManager.h">
       <Filter>ヘッダー ファイル\Character</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHPRender.h">
+    <ClInclude Include="NormalEnemyHPRender.h">
       <Filter>ヘッダー ファイル\UI\Render\HP</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHPRender.h">
@@ -1416,6 +1431,21 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NPCStartPoseAction.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermBossDead.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearTermBossDeadBuilder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHPRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHPRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCHPRenderManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

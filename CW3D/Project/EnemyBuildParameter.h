@@ -11,9 +11,9 @@ namespace ActionGame
 	public:
 		std::string m_Type;
 		Vector3 m_Pos;
-		
+		bool m_IsBoss;
 
-		EnemyParam(const std::string& type,const Vector3& pos);
+		EnemyParam(const std::string& type,const Vector3& pos,bool isBoss);
 	};
 
 	class EnemyBuildParameter

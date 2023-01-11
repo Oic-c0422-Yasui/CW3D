@@ -1,7 +1,8 @@
 #pragma once
 #include "Enemy.h"
 #include "Player.h"
-#include "EnemyHPRender.h"
+#include "NormalEnemyHPRender.h"
+#include "BossHPRender.h"
 #include "PlayerHPRender.h"
 
 namespace ActionGame
@@ -10,7 +11,7 @@ namespace ActionGame
 	{
 	public:
 
-		static void Present(const EnemyPtr& enemy, const ActionGame::EnemyHPRenderPtr& view)
+		static void Present(const EnemyPtr& enemy, const ActionGame::NormalEnemyHPRenderPtr& view)
 		{
 			enemy->GetHPSubject()->Subscribe([view](int hp) { view->SetHP(hp); });
 			enemy->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });
@@ -22,6 +23,17 @@ namespace ActionGame
 			view->SetPosition(enemy->GetPosition());
 			view->SetShow(enemy->IsShow());
 		}
+		static void Present(const EnemyPtr& enemy, const ActionGame::BossHPRenderPtr& view)
+		{
+			enemy->GetHPSubject()->Subscribe([view](int hp) { view->SetHP(hp); });
+			enemy->GetMaxHPSubject()->Subscribe([view](int hp) { view->SetMaxHP(hp); });
+			enemy->GetShowSubject().Subscribe([view](bool show) { view->SetShow(show); });
+
+			view->SetHP(enemy->GetHP());
+			view->SetMaxHP(enemy->GetHP());
+			view->SetShow(enemy->IsShow());
+		}
+
 
 		static void Present(const PlayerPtr& player, const ActionGame::PlayerHPRenderPtr& view)
 		{

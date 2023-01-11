@@ -361,11 +361,12 @@
           "PosX": 92,
           "PosY": 0,
           "PosZ": 3,
-          "Type": "Zombie",
+          "Type": "Mutant",
           "Spawner": {
             "Type": "Normal",
             "Time": 4
-          }
+          },
+          "Boss": true
         }
       ],
       "Objects": [

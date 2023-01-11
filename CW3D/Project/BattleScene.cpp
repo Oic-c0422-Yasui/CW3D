@@ -136,6 +136,7 @@ void CBattleScene::Initialize()
 	m_ClearTermProvider = std::make_shared<ClearTermProvider>();
 	auto& provider = m_ClearTermProvider;
 	m_EnemyManager.GetEnemyCountSubject().Subscribe([provider](size_t count) {provider->SetEnemyCount(count); });
+	m_EnemyManager.GetBossCountSubject().Subscribe([provider](size_t count) {provider->SetBossCount(count); });
 	m_Timer.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
 	//敵生成
@@ -298,11 +299,9 @@ void CBattleScene::Release()
 	//敵解放
 	m_EnemyManager.Release();
 	m_EnemySpawner.reset();
-	for (int i = 0; i < m_EnemysHPRender.size(); i++)
-	{
-		m_EnemysHPRender[i].reset();
-	}
-	m_EnemysHPRender.clear();
+
+	//HPバー解放
+	m_NPCHPRender.Release();
 	
 	//リソース解放
 	ActionGame::ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
@@ -331,7 +330,7 @@ bool CBattleScene::CreateEnemys()
 {
 	//配列初期化
 	m_EnemyManager.ClearEnemyArray();
-	m_EnemysHPRender.clear();
+	m_NPCHPRender.Reset();
 	for (auto spawner : *m_EnemySpawner)
 	{
 		spawner->Reset();
@@ -344,11 +343,24 @@ bool CBattleScene::CreateEnemys()
 
 	//クリア条件に敵の数を設定
 	m_ClearTermProvider->SetEnemyMaxCount(enemyCount);
-	
+
+	//ボス数取得
+	size_t bossCount = 0;
+	for (auto param : *enemysParam)
+	{
+		if (param->GetParam().m_IsBoss)
+		{
+			bossCount++;
+		}
+	}
+
+	//クリア条件にボスの数を設定
+	m_ClearTermProvider->SetBossMaxCount(enemyCount);
 
 	//敵のスポナー取得
 	auto spawner = division->GetEnemySpawners();
 	m_EnemySpawner = spawner;
+	
 
 
 	//敵のビルダーの辞書
@@ -365,11 +377,23 @@ bool CBattleScene::CreateEnemys()
 		//敵をマネージャーに登録
 		ActorObjectManagerInstance.Add(m_EnemyManager.GetEnemy(i));
 		//敵のHPバー生成＆オブザーバに登録
-		m_EnemysHPRender.push_back(std::make_shared<CEnemyHPRender>());
-		CHPPresenter::Present(m_EnemyManager.GetEnemy(i), m_EnemysHPRender[i]);
-		m_EnemysHPRender[i]->Initialize();
+		if (enemysParam->at(i)->GetParam().m_IsBoss)
+		{
+			auto bossHP = std::make_shared<BossHPRender>();
+			CHPPresenter::Present(m_EnemyManager.GetEnemy(i), bossHP);
+			m_NPCHPRender.Add(bossHP);
+		}
+		else
+		{
+			auto normalHP = std::make_shared<NormalEnemyHPRender>();
+			CHPPresenter::Present(m_EnemyManager.GetEnemy(i), normalHP);
+			m_NPCHPRender.Add(normalHP);
+		}
 		
 	}
+
+	m_NPCHPRender.Load();
+	m_NPCHPRender.Initialize();
 
 	return true;
 }
@@ -593,7 +617,7 @@ void CBattleScene::RegisterAfterSpawn()
 		[&]()
 		{
 			//敵の当たり判定
-			for (size_t i = 0; i < m_EnemyManager.GetMaxEnemyCount(); i++)
+			for (size_t i = 0; i < m_EnemyManager.GetEnemyMaxCount(); i++)
 			{
 				EnemyPtr enemy = m_EnemyManager.GetEnemy(i);
 				if (!enemy->IsShow())
@@ -605,11 +629,6 @@ void CBattleScene::RegisterAfterSpawn()
 
 				if (!enemy->IsInvincible())
 				{
-					//for (int j = i + 1; j < m_Enemys.size(); j++)
-					//{
-					//	//敵と敵（多分使わないかも）
-					//	CCollision::CollisionObj(m_Enemys[i], m_Enemys[j]);
-					//}
 					//敵と弾
 					for (int j = 0; j < ShotManagerInstance.GetShotCount(); j++)
 					{
@@ -641,18 +660,10 @@ void CBattleScene::RegisterAfterSpawn()
 	m_Render2DTask.AddTask("AfterSpawnRender2D", TASK_MAIN1,
 		[&]()
 	{
-		//敵HPバーの描画入れ替え
-		std::sort(m_EnemysHPRender.begin(), m_EnemysHPRender.end(),
-			[](ActionGame::EnemyHPRenderPtr& obj1, ActionGame::EnemyHPRenderPtr& obj2)
-		{
-			return obj1->GetViewPosition().z > obj2->GetViewPosition().z;
-		});
-
-		//敵のHPバー描画
-		for (auto& enemyHP : m_EnemysHPRender)
-		{
-			enemyHP->Render();
-		}
+		//HPバー描画
+		m_NPCHPRender.Render();
+		//2DHPバー描画
+		m_NPCHPRender.Render2D();
 	}
 	);
 }

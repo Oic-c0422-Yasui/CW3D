@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <fstream>
 #include	"json.hpp"
 
 #include	"IClearTerm.h"

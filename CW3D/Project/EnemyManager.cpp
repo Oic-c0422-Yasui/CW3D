@@ -22,6 +22,7 @@ void ActionGame::EnemyManager::Update()
 {
 	size_t enemyCount = 0;
 	size_t enemyShowCount = 0;
+	size_t bossCount = 0;
 
 	for (auto& enemy : *m_Enemys)
 	{
@@ -32,11 +33,23 @@ void ActionGame::EnemyManager::Update()
 		{
 			enemyCount++;
 			enemyShowCount++;
+
+			if (enemy->IsBoss())
+			{
+				bossCount++;
+			}
+
 			continue;
 		}
 		else if ((!enemy->IsDead() && !enemy->IsShow()))
 		{
 			enemyCount++;
+			if (enemy->IsBoss())
+			{
+				bossCount++;
+			}
+
+			continue;
 		}
 	}
 
@@ -47,6 +60,10 @@ void ActionGame::EnemyManager::Update()
 	if (m_EnemyShowCount != enemyShowCount)
 	{
 		m_EnemyShowCount.Set(enemyShowCount);
+	}
+	if (m_BossCount != bossCount)
+	{
+		m_BossCount.Set(bossCount);
 	}
 }
 
@@ -74,4 +91,16 @@ void ActionGame::EnemyManager::Release()
 	}
 	m_Enemys->clear();
 	m_Enemys.reset();
+}
+
+void ActionGame::EnemyManager::AddEnemy(const EnemyPtr& enemy)
+{
+	m_Enemys->push_back(enemy);
+	m_EnemyCount = m_Enemys->size();
+	m_EnemyMaxCount = m_Enemys->size();
+	if (enemy->IsBoss())
+	{
+		m_BossMaxCount ++;
+		m_BossCount = m_BossMaxCount;
+	}
 }
