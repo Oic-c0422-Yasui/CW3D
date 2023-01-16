@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="ActorObject.cpp" />
     <ClCompile Include="AdditionalSkill.cpp" />
+    <ClCompile Include="AICycleTension.cpp" />
     <ClCompile Include="Attack1Action.cpp" />
     <ClCompile Include="Attack1State.cpp" />
     <ClCompile Include="Attack2Action.cpp" />
@@ -126,6 +127,12 @@
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="MutantActionCreator.cpp" />
+    <ClCompile Include="MutantAICreator.cpp" />
+    <ClCompile Include="MutantBuilder.cpp" />
+    <ClCompile Include="MutantParameterCreator.cpp" />
+    <ClCompile Include="MutantStateCreator.cpp" />
+    <ClCompile Include="NPCCameraStartPoseState.cpp" />
     <ClCompile Include="NPCHPRenderManager.cpp" />
     <ClCompile Include="JsonSpawnerCreator.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
@@ -149,7 +156,6 @@
     <ClCompile Include="DownState.cpp" />
     <ClCompile Include="DropKickSkillAction.cpp" />
     <ClCompile Include="DropKickSkillState.cpp" />
-    <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="ClearTermEnemysAllDead.cpp" />
     <ClCompile Include="DivisionObject.cpp" />
     <ClCompile Include="EnemyBuilderDictionary.cpp" />
@@ -248,6 +254,7 @@
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieActionCreator.cpp" />
+    <ClCompile Include="ZombieAICreator.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
     <ClCompile Include="ZombieStateCreator.cpp" />
@@ -259,6 +266,7 @@
     <ClInclude Include="AdditionalSkill.h" />
     <ClInclude Include="AdditionalSkillRender.h" />
     <ClInclude Include="AICycleFixed.h" />
+    <ClInclude Include="AICycleTension.h" />
     <ClInclude Include="AnimationDefine.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
@@ -290,6 +298,12 @@
     <ClInclude Include="ClearTermRenderCreator.h" />
     <ClInclude Include="CollisionDefine.h" />
     <ClInclude Include="EnemyHPRender.h" />
+    <ClInclude Include="MutantActionCreator.h" />
+    <ClInclude Include="MutantAICreator.h" />
+    <ClInclude Include="MutantBuilder.h" />
+    <ClInclude Include="MutantParameterCreator.h" />
+    <ClInclude Include="MutantStateCreator.h" />
+    <ClInclude Include="NPCCameraStartPoseState.h" />
     <ClInclude Include="NPCHPRenderManager.h" />
     <ClInclude Include="InputDefine.h" />
     <ClInclude Include="JsonSpawnerCreator.h" />

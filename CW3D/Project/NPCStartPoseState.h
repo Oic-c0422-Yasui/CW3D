@@ -11,7 +11,7 @@ namespace ActionGame
     {
 	private:
 
-		//ダウンステート
+		//開始ポーズステート
 		NPCStartPoseActionPtr			m_Action;
 
 	public:

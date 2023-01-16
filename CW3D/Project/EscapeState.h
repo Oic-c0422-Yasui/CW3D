@@ -8,11 +8,19 @@
 namespace ActionGame {
 
 	/**
-	 * @brief		移動ステート
+	 * @brief		回避ステート
 	 */
 	class EscapeState : public AttackBaseState
 	{
 	public:
+		/*
+		* @brief	ステートパラメータ
+		* @param	ThroughStartTime　当たり判定開始時間
+		* @param	ThroughEndTime	　次の入力猶予時間
+		* @param	EscapeStartTime 　回避開始時間
+		* @param	EscapeTime 　	　回避時間
+		* @param	EffectStatus 　	　エフェクトのパラメータ
+		*/
 		struct Parameter : public BaseParam
 		{
 			float ThroughStartTime;
@@ -29,6 +37,8 @@ namespace ActionGame {
 		bool m_ThroughFlg;
 		bool m_EscapeFlg;
 		float m_EscapeCurrentTime;
+	protected:
+
 	public:
 		/**
 		 * @brief		コンストラクタ

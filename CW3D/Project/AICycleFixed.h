@@ -11,17 +11,17 @@ namespace ActionGame
 	{
 	private:
 		//間隔
-		int				interval;
+		int				m_Interval;
 
 		//待機時間
-		int				currentTime;
+		int				m_CurrentTime;
 	public:
 		/**
 		 *	@brief		コンストラクタ
 		 */
 		AICycleFixed(int wait)
-			: interval(wait)
-			, currentTime(0)
+			: m_Interval(wait)
+			, m_CurrentTime(0)
 		{
 		}
 
@@ -30,10 +30,10 @@ namespace ActionGame
 		 * @return		trueなら出現
 		 */
 		bool Update() override {
-			currentTime++;
-			if (currentTime > interval)
+			m_CurrentTime++;
+			if (m_CurrentTime > m_Interval)
 			{
-				currentTime -= interval;
+				m_CurrentTime -= m_Interval;
 				return true;
 			}
 			return false;
@@ -43,7 +43,7 @@ namespace ActionGame
 		 * @brief		状態リセット
 		 */
 		void Reset() override {
-			currentTime = 0;
+			m_CurrentTime = 0;
 		}
 	};
 }

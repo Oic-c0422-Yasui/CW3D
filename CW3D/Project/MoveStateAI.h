@@ -18,14 +18,19 @@ namespace ActionGame {
 		//見失った時間
 		int				currentLostTime;
 		bool			attackFlg;
+
+		Vector3			m_AttackRange;
+		Vector3			m_VigilangeRange;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		MoveStateAI()
+		MoveStateAI(Vector3 vigilangeRange , Vector3 attackRange)
 			: StateAI()
 			, currentLostTime(0)
 			, attackFlg(false)
+			, m_AttackRange(attackRange)
+			, m_VigilangeRange(vigilangeRange)
 		{
 		}
 
@@ -56,7 +61,7 @@ namespace ActionGame {
 			//警戒ボックス
 			CAABB collider;
 			collider.SetPosition(transform->GetPosition());
-			collider.Size = Vector3(5, 3, 5);
+			collider.Size = m_VigilangeRange;
 			//警戒範囲内にプレイヤーがいなくなるとカウントして一定後に停止
 			if (!CCollision::Collision(player->GetCollider(), collider))
 			{
@@ -93,7 +98,7 @@ namespace ActionGame {
 			sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
 			
 			//攻撃ボックス
-			collider.Size = Vector3(1.5f, 1, 1.0f);
+			collider.Size = m_AttackRange;
 			//攻撃範囲内に入ってきたら攻撃
 			/*if (!attackFlg)
 			{*/

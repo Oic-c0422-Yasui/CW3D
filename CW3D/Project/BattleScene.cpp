@@ -54,23 +54,27 @@ bool CBattleScene::Load()
 	//エフェクト読み込み
 	EffectRendererInstance.Initialize();
 	Effekseer::EffectRef effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/Laser01.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect1", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "AttackEffect1", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/sword.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "DamageEffect1", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/tuki.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect2", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "AttackEffect2", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/sandStome.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect3", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "SkillEffect1", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/Laser01.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect4", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "SkillEffect2", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/tornade.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect5", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "SkillEffect3", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/fire.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect6", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "SkillEffect4", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/drill.efk");
-	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "Effect7", effect);
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "SkillEffect5", effect);
 	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/Track.efk");
 	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "ClosedEffect", effect);
+	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/Clow1.efk");
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "AttackEffect3", effect);
+	effect = Effekseer::Effect::Create(EffectRendererInstance.GetManager(), u"Effect/A_Sylph2.efk");
+	ResourceManager<Effekseer::EffectRef>::GetInstance().AddResource("Effect", "EscapeEffect", effect);
 
 	//ステージ情報読み込み
 	JsonStageLoader stageLoader;

@@ -52,7 +52,7 @@ namespace ActionGame {
 			collider.SetPosition(transform->GetPosition());
 			collider.Size = Vector3(1.2f, 1, 1.0f);
 
-			//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çˆÚ“®
+			//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
 			if (CCollision::Collision(player->GetCollider(), collider))
 			{
 				Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);

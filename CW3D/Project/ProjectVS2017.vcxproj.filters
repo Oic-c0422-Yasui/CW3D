@@ -253,6 +253,33 @@
     <Filter Include="ヘッダー ファイル\State\State\Damage">
       <UniqueIdentifier>{4850e218-b95e-4166-baaa-1f00f7b7aa3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Mutant">
+      <UniqueIdentifier>{5884d1c9-d289-4ea8-a657-05300cee81d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Zombie\Builder">
+      <UniqueIdentifier>{dfa82a1f-1769-45e7-9d55-57aae99facc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Mutant\Creator">
+      <UniqueIdentifier>{127080df-1487-4b57-b5a6-b22006b2861e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Zombie\Creator">
+      <UniqueIdentifier>{2a0658ae-2bd4-424f-afec-6b7350ed6be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Zombie\Builder">
+      <UniqueIdentifier>{c56627d2-66f8-471c-8d9c-3f05da974c54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Mutant">
+      <UniqueIdentifier>{67820de1-276a-4168-91a5-f4288ccadc98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Mutant\Creator">
+      <UniqueIdentifier>{453350a4-2d85-4373-9359-cf47e0e4915e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Chara\Enemy\Mutant\Builder">
+      <UniqueIdentifier>{fc04afe1-8936-4144-a85c-0a13eb03f920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Character\Enemy\Mutant\Builder">
+      <UniqueIdentifier>{335187ae-ca6e-4f7e-909a-788bdf4a18b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -393,17 +420,11 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>ソース ファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBuilder.cpp">
-      <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyBuilderDictionary.cpp">
       <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBuildParameter.cpp">
       <Filter>ソース ファイル\Chara\Enemy\Builder</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieBuilder.cpp">
-      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>ソース ファイル\Chara\Enemy</Filter>
@@ -413,9 +434,6 @@
     </ClCompile>
     <ClCompile Include="EnemySpawnParameter.cpp">
       <Filter>ソース ファイル\Chara\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieParameterCreator.cpp">
-      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
     </ClCompile>
     <ClCompile Include="SpawnCycleRandonRange.cpp">
       <Filter>ソース ファイル\Spawner</Filter>
@@ -663,12 +681,6 @@
     <ClCompile Include="StartPoseAction.cpp">
       <Filter>ソース ファイル\Action</Filter>
     </ClCompile>
-    <ClCompile Include="ZombieActionCreator.cpp">
-      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
-    </ClCompile>
-    <ClCompile Include="ZombieStateCreator.cpp">
-      <Filter>ソース ファイル\Chara\Enemy\Zombie</Filter>
-    </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>ソース ファイル\Skill</Filter>
     </ClCompile>
@@ -715,6 +727,42 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NPCHPRenderManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieActionCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieParameterCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieStateCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieBuilder.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieAICreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantActionCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantAICreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantStateCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantParameterCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantBuilder.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCCameraStartPoseState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AICycleTension.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1124,9 +1172,6 @@
     <ClInclude Include="ZombieParameterCreator.h">
       <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="ZombieStateCreator.h">
-      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyBuilder.h">
       <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
     </ClInclude>
@@ -1135,9 +1180,6 @@
     </ClInclude>
     <ClInclude Include="EnemyBuildParameter.h">
       <Filter>ヘッダー ファイル\Character\Enemy\Builder</Filter>
-    </ClInclude>
-    <ClInclude Include="ZombieBuilder.h">
-      <Filter>ヘッダー ファイル\Character\Enemy\Zombie</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ヘッダー ファイル\Character\Enemy</Filter>
@@ -1446,6 +1488,33 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NPCHPRenderManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieBuilder.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantActionCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantStateCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieStateCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Zombie\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantAICreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantParameterCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Creator</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantBuilder.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCCameraStartPoseState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AICycleTension.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

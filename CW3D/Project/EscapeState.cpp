@@ -19,6 +19,7 @@ void ActionGame::EscapeState::Start()
 	m_EscapeCurrentTime = 0.0f;
 	m_EscapeAction->Start();
 	Actor()->SetArmorLevel(m_Parameter.armorLevel);
+	
 
 	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsPress(INPUT_KEY_HORIZONTAL))

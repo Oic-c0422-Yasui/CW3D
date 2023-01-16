@@ -18,15 +18,11 @@
 namespace ActionGame {
 
 	/**
-	 * @brief		ステート生成インターフェイス
+	 * @brief		ゾンビステート生成
 	 */
 	class ZombieStateCreator : public IStateCreator
 	{
 	public:
-		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~ZombieStateCreator() = default;
 
 		/**
 		 * @brief		生成

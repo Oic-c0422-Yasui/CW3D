@@ -16,13 +16,19 @@ namespace ActionGame {
 	{
 	private:
 		bool			attackFlg;
+
+		Vector3			m_VigilangeRange;
+
+		Vector3			m_AttackRange;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleStateAI()
+		IdleStateAI(Vector3 vigilanceRange, Vector3 attackRange)
 			: StateAI()
 			, attackFlg(false)
+			, m_VigilangeRange(vigilanceRange)
+			, m_AttackRange(attackRange)
 		{
 		}
 
@@ -52,12 +58,12 @@ namespace ActionGame {
 			//警戒ボックス
 			CAABB collider;
 			collider.SetPosition(transform->GetPosition());
-			collider.Size = Vector3(5, 1, 4.5);
+			collider.Size = m_VigilangeRange;//5 1 4.5
 			
 			//警戒範囲内に入ってきたら移動
 			if (CCollision::Collision(player->GetCollider(), collider) && CUtilities::Random(3) == 0)
 			{
-				collider.Size = Vector3(1.5f, 1, 1.0f);
+				collider.Size = m_AttackRange; Vector3(1.5f, 1, 1.0f); //1.5 1 1.0
 				//攻撃範囲内に入ってきたら攻撃
 				if (CCollision::Collision(player->GetCollider(), collider))
 				{

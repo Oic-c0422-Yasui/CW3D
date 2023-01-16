@@ -17,7 +17,7 @@
 
 namespace ActionGame {
 	/**
-	 * @brief		アクション生成インターフェイス
+	 * @brief		ゾンビアクション生成クラス
 	 */
 	class ZombieActionCreator : public IActionCreator
 	{

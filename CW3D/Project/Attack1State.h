@@ -8,7 +8,7 @@
 namespace ActionGame {
 
 	/**
-	 * @brief		移動ステート
+	 * @brief		攻撃ステート
 	 */
 	class Attack1State : public AttackBaseState
 	{

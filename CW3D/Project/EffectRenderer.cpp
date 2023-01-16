@@ -64,9 +64,9 @@ void ActionGame::EffectRenderer::Render()
 	Vector3 pos = CameraControllerInstance.GetPosition();
 	Vector3 look = CameraControllerInstance.GetLookPosition();
 	::Effekseer::Manager::DrawParameter param;
-	param.CameraPosition = ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
-	param.CameraFrontDirection = ::Effekseer::Vector3D(look.x, look.y, look.z) - ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
-	Effekseer::Vector3D::Normal(param.CameraFrontDirection, param.CameraFrontDirection);
+	/*param.CameraPosition = ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
+	param.CameraFrontDirection = ::Effekseer::Vector3D(look.x, look.y, look.z) - ::Effekseer::Vector3D(pos.x, pos.y, pos.z);*/
+	//Effekseer::Vector3D::Normal(param.CameraFrontDirection, param.CameraFrontDirection);
 	param.IsSortingEffectsEnabled = true;
 	// ƒJƒƒ‰s—ñ‚ðÝ’è
 	m_Renderer->SetCameraMatrix(
