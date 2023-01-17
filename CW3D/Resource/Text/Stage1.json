@@ -68,14 +68,15 @@
           }
         },
         {
-          "PosX": -8,
+          "PosX": -15,
           "PosY": 0,
-          "PosZ": 5,
-          "Type": "Zombie",
+          "PosZ": 3,
+          "Type": "Mutant",
           "Spawner": {
             "Type": "Normal",
-            "Time": 5
-          }
+            "Time": 4
+          },
+          "Boss": true
         },
         {
           "PosX": -5,

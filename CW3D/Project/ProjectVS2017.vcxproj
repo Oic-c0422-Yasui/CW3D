@@ -127,6 +127,7 @@
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="MoveStateAI.cpp" />
     <ClCompile Include="MutantActionCreator.cpp" />
     <ClCompile Include="MutantAICreator.cpp" />
     <ClCompile Include="MutantBuilder.cpp" />
