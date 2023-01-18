@@ -4,13 +4,13 @@
 
 namespace ActionGame
 {
-	class CBattleUICreater
+	class BattleUICreater
 	{
 	private:
 
 	public:
-		CBattleUICreater() {};
-		~CBattleUICreater() {};
+		BattleUICreater() {};
+		~BattleUICreater() {};
 
 		bool Create()
 		{

@@ -9,6 +9,8 @@
       "UltGaugeBoostMag": 1.0,
       "ATK": 10,
       "Mesh": "Enemy/Zombie/Zombie.mom",
+      "Weight": 1.0,
+      "ArmorLevel": 1,
       "Scale": {
         "SizeX": 1.0,
         "SizeY": 1.0,
@@ -29,6 +31,8 @@
       "UltGaugeBoostMag": 1.5,
       "ATK": 20,
       "Mesh": "Enemy/Zombie/Zombie.mom",
+      "Weight": 1.0,
+      "ArmorLevel": 1,
       "Scale": {
         "SizeX": 1.0,
         "SizeY": 1.0,
@@ -49,6 +53,8 @@
       "UltGaugeBoostMag": 4.5,
       "ATK": 50,
       "Mesh": "Enemy/Mutant/Mutant.mom",
+      "Weight": 5.0,
+      "ArmorLevel": 4,
       "Scale": {
         "SizeX": 2.0,
         "SizeY": 2.0,

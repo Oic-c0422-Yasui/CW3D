@@ -155,6 +155,13 @@ void ActionGame::AttackBaseState::Execution()
 
 void ActionGame::AttackBaseState::InputExecution() {
 
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
@@ -185,6 +192,7 @@ void ActionGame::AttackBaseState::End()
 {
 	ReleaseShot();
 	ReleaseEffect();
-	static const BYTE defaultLevel = 1;
-	Actor()->SetArmorLevel(1);
+	auto param = Actor()->GetParameterMap();
+	auto& armorLevel =  param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
 }

@@ -33,5 +33,5 @@ void ActionGame::FlyDamageAction::End()
 
 const ActionGame::ActionKeyType ActionGame::FlyDamageAction::GetKey() const
 {
-	return STATE_KEY_FLYDAMAGE;
+	return STATE_KEY_FLY_DAMAGE;
 }

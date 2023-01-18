@@ -31,7 +31,7 @@ void ActionGame::RunJumpAttack2State::Execution()
 	{
 		if (m_CurrentTime > m_Parameter.NextInputFrameTime)
 		{
-			ChangeState(STATE_KEY_RUNJUMPATTACK3);
+			ChangeState(STATE_KEY_RUN_JUMP_ATTACK3);
 		}
 	}
 	AttackBaseState::Execution();
@@ -39,7 +39,12 @@ void ActionGame::RunJumpAttack2State::Execution()
 
 void ActionGame::RunJumpAttack2State::InputExecution()
 {
-
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	if (Input()->IsPush(INPUT_KEY_ATTACK))
 	{
 		m_NextInputFlg = true;
@@ -60,5 +65,5 @@ void ActionGame::RunJumpAttack2State::CollisionEvent(unsigned int type, std::any
 
 const ActionGame::StateKeyType ActionGame::RunJumpAttack2State::GetKey() const
 {
-	return STATE_KEY_RUNJUMPATTACK2;
+	return STATE_KEY_RUN_JUMP_ATTACK2;
 }

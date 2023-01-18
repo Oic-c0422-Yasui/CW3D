@@ -12,6 +12,7 @@ ActorObject::ActorObject()
 	, m_ColliderOffset(0,0,0)
 	, m_ColliderSize(1, 1, 1)
 	, m_UltBoostMag(0.0f)
+	, m_Weight(50.0f)
 {
 	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
@@ -25,7 +26,7 @@ void ActionGame::ActorObject::Initialize()
 {
 	m_ShowFlg = true;
 	m_DeadFlg = false;
-	matWorld = m_Actor->GetMatrix();
+	m_MatWorld = m_Actor->GetMatrix();
 
 	m_StateMachine->SetUp();
 }
@@ -51,7 +52,7 @@ void ActorObject::Update()
 	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
 
 	//マトリクスを取得
-	matWorld = m_Actor->GetMatrix();
+	m_MatWorld = m_Actor->GetMatrix();
 
 	m_Motion->AddTimer(CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Actor->GetType()));
 }
@@ -63,7 +64,7 @@ void ActorObject::Render()
 		return;
 	}
 	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-	m_Motion->RefreshBoneMatrix(matWorld);
+	m_Motion->RefreshBoneMatrix(m_MatWorld);
 	m_pMesh->Render(m_Motion, Vector4(1.0f, 1.0f, 1.0f, alpha));
 }
 
@@ -77,6 +78,6 @@ void ActionGame::ActorObject::AddUltGauge(float gauge)
 {
 	auto& ult = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	ult += gauge;
-	auto& maxUlt = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	auto& maxUlt = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
 	ult = min(ult, maxUlt);
 }

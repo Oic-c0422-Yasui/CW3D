@@ -87,7 +87,7 @@ void ActionGame::BeamSkillState::CollisionEvent(unsigned int type, std::any obj)
 
 const ActionGame::StateKeyType ActionGame::BeamSkillState::GetKey() const
 {
-	return STATE_KEY_BEAMSKILL;
+	return STATE_KEY_BEAM_SKILL;
 }
 
 void ActionGame::BeamSkillState::Initialize()

@@ -42,5 +42,5 @@ void ActionGame::StormSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::StormSkillAction::GetKey() const
 {
-	return STATE_KEY_STORMSKILL;
+	return STATE_KEY_STORM_SKILL;
 }

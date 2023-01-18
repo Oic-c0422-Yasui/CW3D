@@ -27,6 +27,12 @@ void ActionGame::MoveState::Execution()
 
 void ActionGame::MoveState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	InputDash();
 	//左右で移動
 

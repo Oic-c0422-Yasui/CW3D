@@ -73,9 +73,9 @@ public:
 	* @param direction	ノックバックの方向
 	* @param power	ノックバックの力
 	* @param damage ダメージ量
-	* @param level	アーマー破壊レベル
+	* @param armorBrakeLevel アーマー破壊レベル
 	*/
-	void Damage(const Vector3& direction, const Vector3& power, int damage, BYTE level);
+	void Damage(const Vector3& direction, const Vector3& power, int damage, BYTE armorBrakeLevel);
 	
 	/*
 	* @brief		インプットキーの設定

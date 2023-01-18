@@ -64,5 +64,5 @@ void ActionGame::RunJumpAttack3State::CollisionEvent(unsigned int type, std::any
 
 const ActionGame::StateKeyType ActionGame::RunJumpAttack3State::GetKey() const
 {
-	return STATE_KEY_RUNJUMPATTACK3;
+	return STATE_KEY_RUN_JUMP_ATTACK3;
 }

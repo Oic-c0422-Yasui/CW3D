@@ -84,7 +84,7 @@ void ActionGame::JumpBeamSkillState::CollisionEvent(unsigned int type, std::any 
 
 const ActionGame::StateKeyType ActionGame::JumpBeamSkillState::GetKey() const
 {
-	return STATE_KEY_JUMPBEAMSKILL;
+	return STATE_KEY_JUMP_BEAM_SKILL;
 }
 
 void ActionGame::JumpBeamSkillState::Initialize()

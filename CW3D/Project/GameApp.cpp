@@ -15,6 +15,7 @@
 #include	"TitleScene.h"
 #include	"MofInput.h"
 #include	"StateInput.h"
+#include	"Messenger.h"
 
 //シーンマネージャー
 ActionGame::SceneManagerPtr gSceneManager;
@@ -59,6 +60,11 @@ MofBool CGameApp::Initialize(void){
 	SceneChangeService::SetService(manager);
 	SceneInitializeService::SetService(manager);
 	gSceneManager = manager;
+
+	//メッセンジャー登録
+	auto messenger = std::make_shared < ActionGame::Messenger>();
+	ActionGame::ServiceLocator<ActionGame::IMessenger>::SetService(messenger);
+
 
 	gSceneManager->Initialize();
 	//タイトルへ遷移
@@ -120,5 +126,6 @@ MofBool CGameApp::Release(void){
 	gSceneManager.reset();
 	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::Release();
 	ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::Release();
+	ActionGame::ServiceLocator<ActionGame::IMessenger>::Release();
 	return TRUE;
 }

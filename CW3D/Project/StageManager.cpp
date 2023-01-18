@@ -3,15 +3,15 @@
 
 using namespace ActionGame;
 
-CStageManager::CStageManager()
+StageManager::StageManager()
 {
 }
 
-CStageManager::~CStageManager()
+StageManager::~StageManager()
 {
 }
 
-bool ActionGame::CStageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
+bool ActionGame::StageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
 {
 	m_pStage = stage;
 	if (!m_pStage->Load(divisions))
@@ -21,32 +21,32 @@ bool ActionGame::CStageManager::Load(const StagePtr& stage,const DivisionArrayPt
 	return true;
 }
 
-void ActionGame::CStageManager::Initialize()
+void ActionGame::StageManager::Initialize()
 {
 	m_pStage->Initialize();
 }
 
-void ActionGame::CStageManager::Update()
+void ActionGame::StageManager::Update()
 {
 	m_pStage->Update();
 }
 
-void ActionGame::CStageManager::Render()
+void ActionGame::StageManager::Render()
 {
 	m_pStage->Render();
 }
 
-void ActionGame::CStageManager::RenderDebug()
+void ActionGame::StageManager::RenderDebug()
 {
 	m_pStage->RenderDebug();
 }
 
-void ActionGame::CStageManager::Release()
+void ActionGame::StageManager::Release()
 {
 	m_pStage->Release();
 }
 
-bool ActionGame::CStageManager::IsClear(const ClearTermProviderPtr& provider)
+bool ActionGame::StageManager::IsClear(const ClearTermProviderPtr& provider)
 {
 	return m_pStage->IsClear(provider);
 }

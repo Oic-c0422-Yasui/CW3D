@@ -84,9 +84,9 @@ namespace ActionGame
 		* @param direction	ノックバックの方向
 		* @param power	ノックバックの力
 		* @param damage ダメージ量
-		* @param level	アーマー破壊レベル
+		* @param armorBrekeLevel	アーマー破壊レベル
 		*/
-		virtual void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level);
+		virtual void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBrekeLevel);
 		/*
 		* @brief	無敵状態か？
 		* @return	true なら無敵状態
@@ -110,7 +110,7 @@ namespace ActionGame
 		/**
 		 * @brief		表示変化通知
 		 */
-		ActionGame::IObservable<bool>& GetShowSubject() { return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP); }
+		ActionGame::IObservable<bool>& GetShowSubject() { return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); }
 
 		int GetHP()
 		{
@@ -127,7 +127,7 @@ namespace ActionGame
 		{
 			if (!isShow)
 			{
-				auto& showFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+				auto& showFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 				showFlg = isShow;
 			}
 			m_ShowFlg = isShow;

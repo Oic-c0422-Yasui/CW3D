@@ -46,5 +46,5 @@ void ActionGame::JumpStormSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::JumpStormSkillAction::GetKey() const
 {
-	return STATE_KEY_JUMPSTORMSKILL;
+	return STATE_KEY_JUMP_STORM_SKILL;
 }

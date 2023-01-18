@@ -22,13 +22,20 @@ void ActionGame::IdleState::Execution()
 	}
 	else
 	{
-		ChangeState(STATE_KEY_IDLEMOTION);
+		ChangeState(STATE_KEY_IDLE_MOTION);
 
 	}
 }
 
 void ActionGame::IdleState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
+
 	if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))
 	{
@@ -51,6 +58,7 @@ void ActionGame::IdleState::InputExecution()
 		ChangeState(STATE_KEY_ATTACK1, STATE_KEY_MOVE);
 	}
 
+	
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{

@@ -18,8 +18,9 @@ void ActionGame::EscapeState::Start()
 	m_EscapeFlg = false;
 	m_EscapeCurrentTime = 0.0f;
 	m_EscapeAction->Start();
-	Actor()->SetArmorLevel(m_Parameter.armorLevel);
-	
+
+	auto& armorLevel = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = m_Parameter.armorLevel;
 
 	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsPress(INPUT_KEY_HORIZONTAL))
@@ -68,6 +69,19 @@ void ActionGame::EscapeState::Execution()
 		}
 	}
 
+	
+
+	AttackBaseState::Execution();
+}
+
+void ActionGame::EscapeState::InputExecution()
+{
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
@@ -90,7 +104,7 @@ void ActionGame::EscapeState::Execution()
 			{
 				if (GetKeepKey() == STATE_KEY_RUN)
 				{
-					ChangeState(STATE_KEY_RUNFALL);
+					ChangeState(STATE_KEY_RUN_FALL);
 				}
 				else
 				{
@@ -110,12 +124,6 @@ void ActionGame::EscapeState::Execution()
 			}
 		}
 	}
-
-	AttackBaseState::Execution();
-}
-
-void ActionGame::EscapeState::InputExecution()
-{
 	AttackBaseState::InputExecution();
 }
 

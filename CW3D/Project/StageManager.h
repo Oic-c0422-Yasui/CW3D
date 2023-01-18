@@ -3,13 +3,13 @@
 
 namespace ActionGame
 {
-	class CStageManager
+	class StageManager
 	{
 	private:
 		StagePtr m_pStage;
 	public:
-		CStageManager();
-		~CStageManager();
+		StageManager();
+		~StageManager();
 		bool Load(const StagePtr& stage, const DivisionArrayPtr& divisions);
 		void Initialize();
 		void Update();

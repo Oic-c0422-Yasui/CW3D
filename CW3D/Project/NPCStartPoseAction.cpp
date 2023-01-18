@@ -32,7 +32,7 @@ void ActionGame::NPCStartPoseAction::Start()
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = m_Parameter.finishTime;
 
-	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	showHP = false;
 }
 
@@ -49,7 +49,7 @@ void ActionGame::NPCStartPoseAction::End()
 {
 	Transform()->MovePosition(-m_TempOffsetPos);
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	showHP = true;
 	invincible = 0.0f;
 }
@@ -62,7 +62,7 @@ void ActionGame::NPCStartPoseAction::StartAnim()
 
 const ActionGame::ActionKeyType ActionGame::NPCStartPoseAction::GetKey() const
 {
-	return STATE_KEY_NPCSTARTPOSE;
+	return STATE_KEY_NPC_STARTPOSE;
 }
 
 bool ActionGame::NPCStartPoseAction::IsEndAnim() const noexcept

@@ -24,7 +24,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<IdleMotionAction>(
 		IdleMotionAction::Parameter{
 			AnimParam{
-				STATE_KEY_IDLEMOTION,
+				STATE_KEY_IDLE_MOTION,
 				0.0f,
 				1.0f,
 				0.3f,
@@ -196,7 +196,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<RunAttack1Action>(
 		RunAttack1Action::Parameter{
 			AnimParam{
-				STATE_KEY_RUNATTACK1,
+				STATE_KEY_RUN_ATTACK1,
 				0.0f,
 				1.2f,
 				0.1f,
@@ -209,7 +209,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<JumpAttack1Action>(
 		JumpAttack1Action::Parameter{
 			AnimParam{
-				STATE_KEY_RUNATTACK1,
+				STATE_KEY_RUN_ATTACK1,
 				0.0f,
 				1.2f,
 				0.1f,
@@ -283,7 +283,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<FlyDamageAction>(
 		FlyDamageAction::Parameter{
 			AnimParam{
-				STATE_KEY_FLYDAMAGE,
+				STATE_KEY_FLY_DAMAGE,
 				0.0f,
 				1.2f,
 				0.1f,
@@ -338,7 +338,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<BeamSkillAction>(
 		BeamSkillAction::Parameter{
 			AnimParam{
-				STATE_KEY_BEAMSKILL,
+				STATE_KEY_BEAM_SKILL,
 				0.7f,
 				2.0f,
 				0.1f,
@@ -350,7 +350,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<StormSkillAction>(
 		StormSkillAction::Parameter{
 			AnimParam{
-				STATE_KEY_STORMSKILL,
+				STATE_KEY_STORM_SKILL,
 				0.0f,
 				0.6f,
 				0.1f,
@@ -364,7 +364,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<JumpBeamSkillAction>(
 		JumpBeamSkillAction::Parameter{
 			AnimParam{
-				STATE_KEY_BEAMSKILL,
+				STATE_KEY_BEAM_SKILL,
 				0.7f,
 				2.0f,
 				0.1f,
@@ -376,7 +376,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<JumpStormSkillAction>(
 		JumpStormSkillAction::Parameter{
 			AnimParam{
-				STATE_KEY_STORMSKILL,
+				STATE_KEY_STORM_SKILL,
 				0.0f,
 				0.6f,
 				0.1f,
@@ -403,7 +403,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<DropKickSkillAction>(
 		DropKickSkillAction::Parameter{
 			AnimParam{
-				STATE_KEY_DROPKICKSKILL,
+				STATE_KEY_DROPKICK_SKILL,
 				0.0f,
 				1.0f,
 				0.0f,

@@ -76,7 +76,7 @@ bool ActionGame::ZombieActionCreator::Create(const ActorPtr& actor)
 	actor->AddAction(Action::Create<FlyDamageAction>(
 		FlyDamageAction::Parameter{
 			AnimParam{
-				STATE_KEY_FLYDAMAGE,
+				STATE_KEY_FLY_DAMAGE,
 				0.0f,
 				1.2f,
 				0.1f,

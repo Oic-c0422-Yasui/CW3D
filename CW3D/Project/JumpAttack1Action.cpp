@@ -33,5 +33,5 @@ void ActionGame::JumpAttack1Action::End()
 
 const ActionGame::ActionKeyType ActionGame::JumpAttack1Action::GetKey() const
 {
-	return STATE_KEY_JUMPATTACK1;
+	return STATE_KEY_JUMP_ATTACK1;
 }

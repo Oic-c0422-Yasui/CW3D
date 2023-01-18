@@ -15,7 +15,23 @@ namespace ActionGame
 		Vector2 m_Position;
 		Vector2 m_Offset;
 
+		struct HPBar
+		{
+			const int Limit = 100;
+			size_t Count;
+			Vector2 CountPos;
+			
+			size_t CurrentColorId;
+			size_t NextColorId;
+		};
 
+		HPBar m_HPBar;
+
+		MofU32 m_HPColors[3];
+
+	private:
+		/* プライベート関数　*/
+		void SettingNextColor();
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -40,10 +56,6 @@ namespace ActionGame
 
 		void Release();
 
-		Vector2 GetPosition()
-		{
-			return m_Position;
-		}
     };
 	using BossHPRenderPtr = std::shared_ptr<BossHPRender>;
 }

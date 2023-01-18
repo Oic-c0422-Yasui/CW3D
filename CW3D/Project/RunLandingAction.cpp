@@ -32,5 +32,5 @@ void ActionGame::RunLandingAction::End()
 
 const ActionGame::ActionKeyType ActionGame::RunLandingAction::GetKey() const
 {
-	return STATE_KEY_RUNLANDING;
+	return STATE_KEY_RUN_LANDING;
 }

@@ -39,5 +39,5 @@ void ActionGame::IdleMotionAction::Acceleration(float x, float z)
 
 const ActionGame::ActionKeyType ActionGame::IdleMotionAction::GetKey() const
 {
-	return STATE_KEY_IDLEMOTION;
+	return STATE_KEY_IDLE_MOTION;
 }

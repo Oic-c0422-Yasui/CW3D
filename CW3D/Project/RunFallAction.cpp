@@ -97,6 +97,6 @@ void ActionGame::RunFallAction::Reset()
 
 const ActionGame::ActionKeyType ActionGame::RunFallAction::GetKey() const
 {
-	return STATE_KEY_RUNFALL;
+	return STATE_KEY_RUN_FALL;
 }
 

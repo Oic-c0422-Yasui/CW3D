@@ -24,6 +24,12 @@ void ActionGame::JumpState::Execution()
 
 void ActionGame::JumpState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	//左右で移動
 
 	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
@@ -37,7 +43,7 @@ void ActionGame::JumpState::InputExecution()
 
 	if (Input()->IsPush(INPUT_KEY_ATTACK))
 	{
-		ChangeState(STATE_KEY_JUMPATTACK1);
+		ChangeState(STATE_KEY_JUMP_ATTACK1);
 	}
 
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動

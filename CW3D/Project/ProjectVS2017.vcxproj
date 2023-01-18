@@ -127,6 +127,7 @@
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="Messenger.cpp" />
     <ClCompile Include="MoveStateAI.cpp" />
     <ClCompile Include="MutantActionCreator.cpp" />
     <ClCompile Include="MutantAICreator.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="NormalSpawnerBuilder.cpp" />
     <ClCompile Include="NPCStartPoseAction.cpp" />
     <ClCompile Include="NPCStartPoseState.cpp" />
+    <ClCompile Include="PlayerParameterCreator.cpp" />
     <ClCompile Include="SceneChangeFade.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SpawnerBuilder.cpp" />
@@ -299,6 +301,9 @@
     <ClInclude Include="ClearTermRenderCreator.h" />
     <ClInclude Include="CollisionDefine.h" />
     <ClInclude Include="EnemyHPRender.h" />
+    <ClInclude Include="IMessenger.h" />
+    <ClInclude Include="MessageDefine.h" />
+    <ClInclude Include="Messenger.h" />
     <ClInclude Include="MutantActionCreator.h" />
     <ClInclude Include="MutantAICreator.h" />
     <ClInclude Include="MutantBuilder.h" />

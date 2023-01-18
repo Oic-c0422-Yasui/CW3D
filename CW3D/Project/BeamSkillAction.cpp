@@ -33,5 +33,5 @@ void ActionGame::BeamSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::BeamSkillAction::GetKey() const
 {
-	return STATE_KEY_BEAMSKILL;
+	return STATE_KEY_BEAM_SKILL;
 }

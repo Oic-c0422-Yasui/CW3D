@@ -170,16 +170,6 @@ namespace ActionGame {
 		*/
 		virtual void SetThrough(bool isThrough) = 0;
 
-		/*
-		* @brief	アーマーレベル取得
-		*/
-		virtual BYTE GetArmorLevel() const = 0;
-
-		/*
-		* @brief	アーマーレベル設定
-		*/
-		virtual void SetArmorLevel(BYTE armor) = 0;
-
 	};
 	//ポインタ置き換え
 	using ActorPtr = std::shared_ptr<IActor>;

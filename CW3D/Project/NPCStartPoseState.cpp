@@ -39,5 +39,5 @@ void ActionGame::NPCStartPoseState::CollisionEvent(unsigned int type, std::any o
 
 const ActionGame::StateKeyType ActionGame::NPCStartPoseState::GetKey() const
 {
-	return STATE_KEY_NPCSTARTPOSE;
+	return STATE_KEY_NPC_STARTPOSE;
 }

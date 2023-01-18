@@ -43,5 +43,5 @@ void ActionGame::DropKickSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::DropKickSkillAction::GetKey() const
 {
-	return STATE_KEY_DROPKICKSKILL;
+	return STATE_KEY_DROPKICK_SKILL;
 }

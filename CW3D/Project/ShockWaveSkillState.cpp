@@ -127,5 +127,5 @@ void ActionGame::ShockWaveSkillState::CollisionEvent(unsigned int type, std::any
 
 const ActionGame::StateKeyType ActionGame::ShockWaveSkillState::GetKey() const
 {
-	return STATE_KEY_SHOCKWAVESKILL;
+	return STATE_KEY_SHOCKWAVE_SKILL;
 }

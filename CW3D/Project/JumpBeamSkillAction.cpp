@@ -35,5 +35,5 @@ void ActionGame::JumpBeamSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::JumpBeamSkillAction::GetKey() const
 {
-	return STATE_KEY_JUMPBEAMSKILL;
+	return STATE_KEY_JUMP_BEAM_SKILL;
 }

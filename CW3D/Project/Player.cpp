@@ -38,8 +38,8 @@ bool CPlayer::Load()
 	auto& param = m_Actor->GetParameterMap();
 	m_ParameterCreator.Create(param);
 	//パラメーター設定
-	m_MaxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
-	m_MaxUltGauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAXULTGAUGE);
+	m_MaxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
+	m_MaxUltGauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
 	//スキル設定
 	m_SkillCreator.Create(m_Actor);
 	
@@ -64,14 +64,17 @@ void CPlayer::Initialize()
 	SetUltBoostMag(1.0f);
 
 	//パラメータ初期化
-	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto param = m_Actor->GetParameterMap();
+	auto& gauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = m_MaxHP.Get();
-	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	auto& alpha = param->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
-	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = 0.0f;
+	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
 
 	//スキル初期化
 	m_Actor->GetSkillController()->Reset();
@@ -117,7 +120,7 @@ void CPlayer::Render()
 
 void CPlayer::RenderDebug2D()
 {
-	CGraphicsUtilities::RenderString(400, 20, "ARMLv:", m_Actor->GetArmorLevel());
+
 }
 
 void CPlayer::Release()
@@ -125,7 +128,7 @@ void CPlayer::Release()
 	ActionGame::ActorObject::Release();
 }
 
-void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE level)
+void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBrakeLevel)
 {
 
 	//ダメージエフェクト生成
@@ -153,7 +156,8 @@ void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,
 	AddUltGauge(1.0f);
 
 	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
-	if (m_Actor->GetArmorLevel() <= level)
+	auto& armorLevel = m_Actor->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	if (armorLevel <= armorBrakeLevel)
 	{
 		//ノックバック設定
 		auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);

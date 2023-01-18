@@ -40,5 +40,5 @@ void ActionGame::RunJumpAttack1Action::End()
 
 const ActionGame::ActionKeyType ActionGame::RunJumpAttack1Action::GetKey() const
 {
-	return STATE_KEY_RUNJUMPATTACK1;
+	return STATE_KEY_RUN_JUMP_ATTACK1;
 }

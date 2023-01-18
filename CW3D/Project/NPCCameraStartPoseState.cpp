@@ -23,6 +23,7 @@ void ActionGame::NPCCameraStartPoseState::Start()
 
 void ActionGame::NPCCameraStartPoseState::Execution()
 {
+
 	if (!m_StartFlg)
 	{
 		SettingCamera();
@@ -58,7 +59,7 @@ void ActionGame::NPCCameraStartPoseState::CollisionEvent(unsigned int type, std:
 
 const ActionGame::StateKeyType ActionGame::NPCCameraStartPoseState::GetKey() const
 {
-	return STATE_KEY_NPCSTARTPOSE;
+	return STATE_KEY_NPC_STARTPOSE;
 }
 
 void ActionGame::NPCCameraStartPoseState::SettingCamera()

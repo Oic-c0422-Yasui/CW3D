@@ -102,6 +102,12 @@ void ActionGame::DropKickSkillState::Execution()
 
 void ActionGame::DropKickSkillState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	if (!m_DelayInputFlg)
 	{
 		if (Input()->IsPush(m_Key) && !m_NextInputFlg)
@@ -119,7 +125,7 @@ void ActionGame::DropKickSkillState::InputExecution()
 		{
 			if (Actor()->GetTransform()->GetPositionY() > 0.0f)
 			{
-				ChangeState(STATE_KEY_JUMPATTACK1);
+				ChangeState(STATE_KEY_JUMP_ATTACK1);
 			}
 			else
 			{
@@ -154,7 +160,7 @@ void ActionGame::DropKickSkillState::CollisionEvent(unsigned int type, std::any 
 
 const ActionGame::StateKeyType ActionGame::DropKickSkillState::GetKey() const
 {
-	return STATE_KEY_DROPKICKSKILL;
+	return STATE_KEY_DROPKICK_SKILL;
 }
 
 void ActionGame::DropKickSkillState::Initialize()

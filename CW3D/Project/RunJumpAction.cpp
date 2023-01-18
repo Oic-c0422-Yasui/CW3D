@@ -96,5 +96,5 @@ void ActionGame::RunJumpAction::Reset()
 
 const ActionGame::ActionKeyType ActionGame::RunJumpAction::GetKey() const
 {
-	return STATE_KEY_RUNJUMP;
+	return STATE_KEY_RUN_JUMP;
 }

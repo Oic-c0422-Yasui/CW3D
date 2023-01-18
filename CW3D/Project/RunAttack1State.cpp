@@ -47,20 +47,18 @@ void ActionGame::RunAttack1State::Execution()
 	{
 		ChangeState(STATE_KEY_IDLE);
 	}
-	/*else if (m_NextInputFlg)
-	{
-		if (Actor()->GetAnimationState()->GetTime() > 0.7f)
-		{
-			ChangeState(STATE_KEY_ATTACK2);
-		}
-	}*/
 
 	AttackBaseState::Execution();
 }
 
 void ActionGame::RunAttack1State::InputExecution()
 {
-
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	if (m_CurrentTime > m_Parameter.NextInputFrameTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
@@ -84,6 +82,6 @@ void ActionGame::RunAttack1State::CollisionEvent(unsigned int type, std::any obj
 
 const ActionGame::StateKeyType ActionGame::RunAttack1State::GetKey() const
 {
-	return STATE_KEY_RUNATTACK1;
+	return STATE_KEY_RUN_ATTACK1;
 }
 

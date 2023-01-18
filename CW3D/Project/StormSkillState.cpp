@@ -92,6 +92,12 @@ void ActionGame::StormSkillState::Execution()
 
 void ActionGame::StormSkillState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
 	if (m_CurrentTime > 0.5f)
 	{
 		if (Input()->IsPress(m_Key))
@@ -129,6 +135,6 @@ void ActionGame::StormSkillState::CollisionEvent(unsigned int type, std::any obj
 
 const ActionGame::StateKeyType ActionGame::StormSkillState::GetKey() const
 {
-	return STATE_KEY_STORMSKILL;
+	return STATE_KEY_STORM_SKILL;
 }
 

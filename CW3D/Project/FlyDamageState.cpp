@@ -46,5 +46,5 @@ void ActionGame::FlyDamageState::CollisionEvent(unsigned int type, std::any obj)
 
 const ActionGame::StateKeyType ActionGame::FlyDamageState::GetKey() const
 {
-	return STATE_KEY_FLYDAMAGE;
+	return STATE_KEY_FLY_DAMAGE;
 }

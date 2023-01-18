@@ -27,10 +27,11 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 	for (auto& state : Status)
 	{
 		
+
 		//タイプ名
 		std::string typeName;
 		state["Type"].get_to(typeName);
-		
+
 		//キャラの名前
 		std::string name;
 		state["Name"].get_to(name);
@@ -57,6 +58,14 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		std::string meshName;
 		state["Mesh"].get_to(meshName);
 
+		//重さ
+		float weight;
+		state["Weight"].get_to(weight);
+
+		//アーマーレベル
+		BYTE armorLevel;
+		state["ArmorLevel"].get_to(armorLevel);
+
 		//大きさ
 		Vector3 scaleSize;
 		auto& scale = state["Scale"];
@@ -77,8 +86,22 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			collider["Height"].get_to(colliderHeight);
 		}
 
-		EnemyStatusPtr enemyStateus = 
-			std::make_shared<EnemyStatus>(EnemyStatus(hp,ultGauge, ultGaugeBoostMag,atk,meshName, JISname,scaleSize,colliderSize,colliderHeight));
+
+		EnemyStatus enemyStatus{
+			hp,
+			ultGauge,
+			ultGaugeBoostMag,
+			atk,
+			meshName,
+			JISname,
+			weight,
+			armorLevel,
+			scaleSize,
+			colliderSize,
+			colliderHeight
+		};
+
+		EnemyStatusPtr enemyStateus = std::make_shared<EnemyStatus>(enemyStatus);
 		dictionary.Add(typeName,enemyStateus);
 	}
 	

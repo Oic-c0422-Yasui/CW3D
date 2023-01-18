@@ -78,9 +78,9 @@ namespace ActionGame
 		//プレイヤーUI
 		ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
 		//UI作成
-		ActionGame::CBattleUICreater m_UICreater;
+		ActionGame::BattleUICreater m_UICreater;
 		//ステージマネージャー
-		ActionGame::CStageManager m_StageManager;
+		ActionGame::StageManager m_StageManager;
 		//クリア条件に必要なものを渡すプロバイダ
 		ActionGame::ClearTermProviderPtr m_ClearTermProvider;
 

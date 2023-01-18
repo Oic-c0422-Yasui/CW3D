@@ -22,6 +22,13 @@ void ActionGame::IdleMotionState::Execution()
 
 void ActionGame::IdleMotionState::InputExecution()
 {
+	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	//タイムスケールが0以下の場合、入力を受け付けない
+	if (scale <= 0.0f)
+	{
+		return;
+	}
+
 	//キーボードでの移動
 	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
@@ -41,6 +48,7 @@ void ActionGame::IdleMotionState::InputExecution()
 		ChangeState(STATE_KEY_ATTACK1);
 	}
 
+	
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
@@ -68,5 +76,5 @@ void ActionGame::IdleMotionState::CollisionEvent(unsigned int type, std::any obj
 
 const ActionGame::StateKeyType ActionGame::IdleMotionState::GetKey() const
 {
-	return STATE_KEY_IDLEMOTION;
+	return STATE_KEY_IDLE_MOTION;
 }

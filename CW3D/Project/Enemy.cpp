@@ -37,7 +37,7 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 	m_Input = stateInput;
 
 	//メッシュ取得
-	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->m_MeshName);
+	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->MeshName);
 	if (m_pMesh == nullptr)
 	{
 		return false;
@@ -72,17 +72,20 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 void Enemy::Initialize()
 {
 	//パラメータ初期化
-	auto& gauge = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto param = m_Actor->GetParameterMap();
+	auto& gauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp = m_MaxHP.Get();
 	m_HP = m_MaxHP.Get();
-	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	auto& alpha = param->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
-	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = 0.0f;
-	auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+	auto& HPShowFlg = param->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	HPShowFlg = false;
+	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
 
 
 	ActionGame::ActorObject::Initialize();
@@ -90,8 +93,8 @@ void Enemy::Initialize()
 	m_Actor->SetPosition(m_DefaultPos);
 	m_Actor->SetReverse(true);
 
-	m_StateMachine->ChangeState(STATE_KEY_NPCSTARTPOSE);
-	matWorld = m_Actor->GetMatrix();
+	m_StateMachine->ChangeState(STATE_KEY_NPC_STARTPOSE);
+	m_MatWorld = m_Actor->GetMatrix();
 	m_ShowFlg = false;
 	
 
@@ -168,7 +171,7 @@ void Enemy::Release()
 	ActionGame::ActorObject::Release();
 }
 
-void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorLevel)
+void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYTE armorBrekeLevel)
 {
 
 	//ダメージエフェクト生成
@@ -189,13 +192,15 @@ void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYT
 		hp = 0;
 
 		m_DeadFlg = true;
-		auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOWHP);
+		auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 		HPShowFlg = false;
 	}
 	m_HP = hp;
 
 	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
-	if (m_Actor->GetArmorLevel() <= armorLevel)
+
+	auto& armorLevel = m_Actor->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	if (armorLevel <= armorBrekeLevel)
 	{
 		//ノックバック設定
 		auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
@@ -218,27 +223,34 @@ bool Enemy::IsInvincible() const
 void ActionGame::Enemy::SettingParameter(const AnyParameterMapPtr& param, const EnemyStatusPtr& eneStatus)
 {
 	//HP
-	auto& maxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAXHP);
-	maxHP = eneStatus->m_Hp;
+	auto& maxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
+	maxHP = eneStatus->HP;
 	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	hp = eneStatus->m_Hp;
+	hp = eneStatus->HP;
 	m_HP = maxHP;
 	m_MaxHP = maxHP;
 	//攻撃力
 	auto& atk = param->Get<int>(PARAMETER_KEY_ATTACK);
-	atk = eneStatus->m_Atk;
+	atk = eneStatus->Atk;
 	//名前
-	m_Name = eneStatus->m_Name;
+	m_Name = eneStatus->Name;
 	//必殺技ゲージ
 	auto& maxUltGauge = param->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-	maxUltGauge = eneStatus->m_UltGauge;
+	maxUltGauge = eneStatus->UltGauge;
 	//相手が獲得する必殺技ゲージの倍率
-	SetUltBoostMag(eneStatus->m_UltGaugeBoostMag);
+	SetUltBoostMag(eneStatus->UltGaugeBoostMag);
+	//重さ
+	m_Weight = eneStatus->Weight;
+	//アーマーレベル
+	auto& defaultArmorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
+	defaultArmorLevel = eneStatus->ArmorLevel;
+	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = eneStatus->ArmorLevel;
 	//大きさ
-	m_Actor->SetScale(eneStatus->m_Scale);
+	m_Actor->SetScale(eneStatus->Scale);
 	//当たり判定
-	m_ColliderSize = eneStatus->m_ColliderSize;
-	m_ColliderOffset = Vector3(0.0f,eneStatus->m_ColliderHeight, 0.0f);
+	m_ColliderSize = eneStatus->ColliderSize;
+	m_ColliderOffset = Vector3(0.0f,eneStatus->ColliderHeight, 0.0f);
 
 }
 

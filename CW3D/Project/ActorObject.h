@@ -7,7 +7,9 @@
 
 namespace ActionGame
 {
-
+	/*
+	* @brief	アクターのオブジェクトクラス
+	*/
 	class ActorObject
 	{
 	protected:
@@ -15,7 +17,7 @@ namespace ActionGame
 		StateMachinePtr						m_StateMachine;
 		AnimationStatePtr					m_Motion;
 		ActorPtr							m_Actor;
-		CMatrix44							matWorld;
+		CMatrix44							m_MatWorld;
 		CAABB								m_Collider;
 		CVector3							m_ColliderOffset;
 		CVector3							m_ColliderSize;
@@ -23,6 +25,8 @@ namespace ActionGame
 		bool								m_DeadFlg;
 		CVector3							m_PrevPos;
 		float								m_UltBoostMag;	//必殺技ゲージのブースト倍率
+		float								m_Weight;
+
 
 	public:
 		ActorObject();

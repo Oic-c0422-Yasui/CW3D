@@ -85,7 +85,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 		//敵の辞書を取得
 		auto& dictionary = enemyStatusDictionary.Get(type);
 		//メッシュがすでに登録されているなら次の配列へ
-		if (ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", dictionary->m_MeshName))
+		if (ResourcePtrManager<CMeshContainer>::GetInstance().IsContainResource("Enemy", dictionary->MeshName))
 		{
 			continue;
 		}
@@ -93,14 +93,14 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 		//メッシュを作成
 		tempMesh = std::make_shared<CMeshContainer>();
 		//メッシュの名前をChar*へ変換
-		const char* meshName = dictionary->m_MeshName.c_str();
+		const char* meshName = dictionary->MeshName.c_str();
 		//メッシュのロード
 		if (tempMesh->Load(meshName) != MOFMODEL_RESULT_SUCCEEDED)
 		{
 			return false;
 		}
 		//メッシュをリソースに追加
-		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", dictionary->m_MeshName, tempMesh);
+		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", dictionary->MeshName, tempMesh);
 	}
 
 	return true;

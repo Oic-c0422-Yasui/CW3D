@@ -34,5 +34,5 @@ void ActionGame::ShockWaveSkillAction::End()
 
 const ActionGame::ActionKeyType ActionGame::ShockWaveSkillAction::GetKey() const
 {
-	return STATE_KEY_SHOCKWAVESKILL;
+	return STATE_KEY_SHOCKWAVE_SKILL;
 }

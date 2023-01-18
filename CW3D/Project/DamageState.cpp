@@ -22,7 +22,7 @@ void ActionGame::DamageState::Execution()
 
 	if (Actor()->GetTransform()->GetPositionY() > 0)
 	{
-		ChangeState(STATE_KEY_FLYDAMAGE);
+		ChangeState(STATE_KEY_FLY_DAMAGE);
 	}
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
@@ -34,7 +34,7 @@ void ActionGame::DamageState::Execution()
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
 		{
-			ChangeState(STATE_KEY_FLYDAMAGE);
+			ChangeState(STATE_KEY_FLY_DAMAGE);
 		}
 		else
 		{

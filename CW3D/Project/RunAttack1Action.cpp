@@ -34,5 +34,5 @@ void ActionGame::RunAttack1Action::End()
 
 const ActionGame::ActionKeyType ActionGame::RunAttack1Action::GetKey() const
 {
-	return STATE_KEY_RUNATTACK1;
+	return STATE_KEY_RUN_ATTACK1;
 }

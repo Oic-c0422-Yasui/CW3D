@@ -48,12 +48,12 @@ namespace ActionGame
 		virtual void Render() = 0;
 
 
-		void SetHP(int hp)
+		virtual void SetHP(int hp)
 		{
 			m_HP = hp;
 		}
 
-		void SetMaxHP(int hp)
+		virtual void SetMaxHP(int hp)
 		{
 			m_MaxHP = hp;
 		}

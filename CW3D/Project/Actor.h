@@ -38,8 +38,6 @@ namespace ActionGame {
 		/* キャラタイプ　*/
 		CHARA_TYPE			m_CharaType;
 
-		/* アーマーレベル　*/
-		BYTE					m_ArmorLevel;
 
 	public:
 		/**
@@ -55,7 +53,6 @@ namespace ActionGame {
 			, m_SkillController(std::make_shared<CSkillController>())
 			, m_MyID(IDManagerInstance.GetId())
 			, m_CharaType()
-			, m_ArmorLevel(1)
 		{
 		}
 
@@ -256,20 +253,5 @@ namespace ActionGame {
 			m_Transform->SetThrough(isThrough);
 		}
 
-		/*
-		* @brief		アーマーレベル取得
-		*/
-		BYTE GetArmorLevel() const override
-		{
-			return m_ArmorLevel;
-		}
-
-		/*
-		* @brief		アーマーレベル設定
-		*/
-		void SetArmorLevel(BYTE armor) override
-		{
-			m_ArmorLevel = armor;
-		}
 	};
 }

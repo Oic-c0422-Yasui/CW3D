@@ -11,13 +11,13 @@ const std::string PARAMETER_KEY_KNOCKBACK = "KnockBack";
 //HP
 const std::string PARAMETER_KEY_HP = "HP";
 //最大HP
-const std::string PARAMETER_KEY_MAXHP = "MaxHP";
+const std::string PARAMETER_KEY_MAX_HP = "MaxHP";
 //HP表示フラグ
-const std::string PARAMETER_KEY_SHOWHP = "ShowHP";
+const std::string PARAMETER_KEY_SHOW_HP = "ShowHP";
 //必殺技ゲージ
 const std::string PARAMETER_KEY_ULTGAUGE = "ULTGauge";
 //最大必殺技ゲージ
-const std::string PARAMETER_KEY_MAXULTGAUGE = "MaxULTGauge";
+const std::string PARAMETER_KEY_MAX_ULTGAUGE = "MaxULTGauge";
 //ダメージ
 const std::string PARAMETER_KEY_DAMAGE = "Damage";
 //攻撃力
@@ -28,3 +28,7 @@ const std::string PARAMETER_KEY_ALPHA = "Alpha";
 const std::string PARAMETER_KEY_INVINCIBLE = "Invincible";
 //回避時間
 const std::string PARAMETER_KEY_ESCAPE = "Escape";
+//アーマーレベル
+const std::string PARAMETER_KEY_ARMORLEVEL = "ArmorLevel";
+//初期アーマーレベル
+const std::string PARAMETER_KEY_DEFAULT_ARMORLEVEL = "DefaultArmorLevel";
