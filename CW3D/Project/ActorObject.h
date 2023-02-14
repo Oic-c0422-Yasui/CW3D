@@ -123,7 +123,7 @@ namespace ActionGame
 		 * @brief		アクターID取得
 		 * @return		アクターID
 		 */
-		unsigned int GetID() const noexcept
+		size_t GetID() const noexcept
 		{
 			return m_Actor->GetID();
 		}
@@ -131,10 +131,7 @@ namespace ActionGame
 		 * @brief		当たり判定を無視するか？
 		 * @return		true なら無視
 		 */
-		bool IsThrough() const noexcept
-		{
-			return m_Actor->IsThrough();
-		}
+		bool IsThroughCollision() const noexcept;
 		/**
 		 * @brief		必殺技ゲージのブースト倍率取得
 		 * @return		必殺技ゲージのブースト倍率

@@ -26,8 +26,10 @@ const std::string PARAMETER_KEY_ATTACK = "Attack";
 const std::string PARAMETER_KEY_ALPHA = "Alpha";
 //無敵時間
 const std::string PARAMETER_KEY_INVINCIBLE = "Invincible";
-//回避時間
+//回避
 const std::string PARAMETER_KEY_ESCAPE = "Escape";
+//当たり判定回避
+const std::string PARAMETER_KEY_THROUGH_COLLISION = "ThroughCollision";
 //アーマーレベル
 const std::string PARAMETER_KEY_ARMORLEVEL = "ArmorLevel";
 //初期アーマーレベル

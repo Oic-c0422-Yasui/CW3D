@@ -253,8 +253,10 @@
     <ClCompile Include="TimeScale.cpp" />
     <ClCompile Include="TimeScaleController.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UltimateSkill.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="Velocity.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieActionCreator.cpp" />
     <ClCompile Include="ZombieAICreator.cpp" />

@@ -138,7 +138,7 @@ namespace ActionGame {
 		/**
 		 * @brief		ID取得
 		 */
-		virtual unsigned int GetID() const = 0;
+		virtual size_t GetID() const = 0;
 
 		/**
 		 * @brief		タイプ取得
@@ -159,16 +159,6 @@ namespace ActionGame {
 		 * @brief		スキル
 		 */
 		virtual const SkillControllerPtr& GetSkillController() const = 0;
-
-		/*
-		* @brief	接触判定回避取得
-		*/
-		virtual bool IsThrough() const = 0;
-
-		/*
-		* @brief	接触判定回避設定
-		*/
-		virtual void SetThrough(bool isThrough) = 0;
 
 	};
 	//ポインタ置き換え

@@ -81,3 +81,10 @@ void ActionGame::ActorObject::AddUltGauge(float gauge)
 	auto& maxUlt = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
 	ult = min(ult, maxUlt);
 }
+
+bool ActionGame::ActorObject::IsThroughCollision() const noexcept
+{
+	auto param = m_Actor->GetParameterMap();
+
+	return param->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+}

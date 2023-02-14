@@ -28,7 +28,7 @@ void ActionGame::NPCStartPoseAction::Start()
 		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.0f);
 		m_TempOffsetPos = -m_Parameter.offsetPos;
 	}
-	Transform()->MovePosition(m_TempOffsetPos);
+	Transform()->AddPosition(m_TempOffsetPos);
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = m_Parameter.finishTime;
 
@@ -47,7 +47,7 @@ void ActionGame::NPCStartPoseAction::Execution()
 
 void ActionGame::NPCStartPoseAction::End()
 {
-	Transform()->MovePosition(-m_TempOffsetPos);
+	Transform()->AddPosition(-m_TempOffsetPos);
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	auto& showHP = ParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	showHP = true;

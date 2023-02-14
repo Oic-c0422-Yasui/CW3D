@@ -161,7 +161,7 @@ namespace ActionGame
 			{
 				return;
 			}
-			if (obj1.IsThrough() || obj2.IsThrough())
+			if (obj1.IsThroughCollision() || obj2.IsThroughCollision())
 			{
 				return;
 			}

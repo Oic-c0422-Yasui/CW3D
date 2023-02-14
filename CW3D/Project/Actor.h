@@ -36,7 +36,7 @@ namespace ActionGame {
 		CMyID					m_MyID;
 
 		/* キャラタイプ　*/
-		CHARA_TYPE			m_CharaType;
+		CHARA_TYPE				m_CharaType;
 
 
 	public:
@@ -63,7 +63,7 @@ namespace ActionGame {
 			//速度更新
 			m_Velocity->Update();
 			//速度で座標移動
-			m_Transform->MovePosition(m_Velocity);
+			m_Transform->AddPosition(m_Velocity);
 
 			m_Transform->SetRotateY(m_Velocity->GetRotateY());
 
@@ -210,7 +210,7 @@ namespace ActionGame {
 		/**
 		 * @brief		ID取得
 		 */
-		unsigned int GetID() const override {
+		size_t GetID() const override {
 			return m_MyID.GetID();
 		}
 
@@ -237,20 +237,6 @@ namespace ActionGame {
 		 */
 		const SkillControllerPtr& GetSkillController() const override {
 			return m_SkillController;
-		}
-
-		/**
-		 * @brief		接触判定回避可否取得
-		 */
-		bool IsThrough() const override {
-			return m_Transform->IsThrough();
-		}
-
-		/**
-		 * @brief		接触判定回避可否設定
-		 */
-		void SetThrough(bool isThrough) override {
-			m_Transform->SetThrough(isThrough);
 		}
 
 	};

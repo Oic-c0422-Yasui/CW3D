@@ -14,6 +14,9 @@
 
 namespace ActionGame
 {
+	/*
+	* @brief	敵クラス
+	*/
 	class Enemy : public ActorObject
 	{
 	protected:
@@ -30,6 +33,7 @@ namespace ActionGame
 		bool			m_BossFlg;
 	protected:
 		//プライベート関数
+
 		/*
 		* @brief	敵のパラメータ設定
 		*/
@@ -96,33 +100,73 @@ namespace ActionGame
 		/**
 		 * @brief		HP変化通知
 		 */
-		ActionGame::IObservable<int>* GetHPSubject() { return &(m_HP.Get()); }
+		ActionGame::IObservable<int>* GetHPSubject() 
+		{ 
+			return &(m_HP.Get());
+		}
 
 		/**
-		 * @brief		HP変化通知
+		 * @brief		最大HP変化通知
 		 */
-		ActionGame::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
+		ActionGame::IObservable<int>* GetMaxHPSubject() 
+		{ 
+			return &(m_MaxHP.Get()); 
+		}
 
 		/**
 		 * @brief		座標変化通知
 		 */
-		ActionGame::IObservable<Vector3>* GetPositionSubject() { return &(m_Position.Get()); }
+		ActionGame::IObservable<Vector3>* GetPositionSubject() 
+		{ 
+			return &(m_Position.Get()); 
+		}
 		/**
-		 * @brief		表示変化通知
+		 * @brief		HPバー表示状態変化通知
 		 */
-		ActionGame::IObservable<bool>& GetShowSubject() { return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); }
+		ActionGame::IObservable<bool>& GetShowSubject() 
+		{ 
+			return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); 
+		}
 
+		/*
+		* @brief	HP取得
+		* @return	HP
+		*/
 		int GetHP()
 		{
 			return m_HP.Get();
 		}
 
+		/*
+		* @brief 表示用の名前取得
+		* @return 表示用の名前
+		*/
+		const std::string& GetName() const noexcept
+		{
+			return m_Name;
+		}
+		/*
+		* @brief	ボスか判断
+		* @return	true　ならボス
+		*/
+		bool IsBoss() const noexcept
+		{
+			return m_BossFlg;
+		}
+
+		/*
+		* @brief	座標設定
+		* @param	pos 座標
+		*/
 		void SetPosition(const Vector3& pos) noexcept override
 		{
 			m_Actor->SetPosition(pos);
 			m_Position = m_Actor->GetPosition();
 		}
-
+		/*
+		* @brief	表示設定
+		* @param	isShow 表示可否
+		*/
 		void SetShow(bool isShow) noexcept override
 		{
 			if (!isShow)
@@ -132,16 +176,7 @@ namespace ActionGame
 			}
 			m_ShowFlg = isShow;
 		}
-
-		const std::string& GetName() const noexcept
-		{
-			return m_Name;
-		}
-
-		bool IsBoss() const noexcept
-		{
-			return m_BossFlg;
-		}
+		
 	};
 
 	//ポインタ置き換え

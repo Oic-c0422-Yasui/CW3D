@@ -5,20 +5,20 @@
 #include	"Velocity.h"
 
 
-extern float gameSpeed;
-
 namespace ActionGame
 {
-	//姿勢変換クラス
+	/*
+	* @brief	姿勢変換クラス
+	*/
 	class  Transform
 	{
 	
 	protected:
-		//座標
+
 		CVector3	m_Position;
-		//大きさ
+
 		CVector3	m_Scale;
-		//回転
+
 		CVector3	m_Rotate;
 
 		CMatrix44	m_World;
@@ -27,25 +27,23 @@ namespace ActionGame
 
 		bool		m_ReverseFlg;
 
-		bool		m_ThroughFlg;
-
 		CHARA_TYPE m_Type;
+
+	private:
+		/* プライベート関数　*/
+
+		//マトリクス情報更新
+		void UpdateMatrix();
 
 	public:
 		
-		Transform()
-			: m_Position(0, 0, 0)
-			, m_Scale(1, 1, 1)
-			, m_Rotate(0, 0, 0)
-			, m_World()
-			, m_UpdateFlg(false)
-			, m_ReverseFlg(false)
-			, m_Type()
-			, m_ThroughFlg(false)
-		{
-		}
+		Transform();
 
 		//マトリクスを取得
+		/*
+		* @brief	マトリクスを取得
+		* @return	マトリクス
+		*/
 		const CMatrix44& GetWorld() {
 			if (m_UpdateFlg)
 			{
@@ -55,279 +53,333 @@ namespace ActionGame
 			return m_World;
 		}
 
+		/*
+		* @brief	反転設定
+		* @param	isReverse 反転可否
+		*/
+		void SetReverse(bool isReverse) noexcept
+		{
+			m_ReverseFlg = isReverse;
+		}
 
-		/**
-		 * @brief		座標系
-		 */
+		/*
+		* @brief	反転しているか？
+		* @return	true　なら反転
+		*/
+		bool IsReverse() const noexcept
+		{
+			return m_ReverseFlg;
+		}
+		/*
+		* @brief	反転しているか？
+		* @return	true　なら反転
+		*/
+		void SetType(CHARA_TYPE type) noexcept
+		{
+			m_Type = type;
+		}
 
-			//座標の移動
-			void MovePosition(const Vector3& movePos) noexcept
-			{
-				m_Position += movePos * TimeScaleControllerInstance.GetTimeScale(m_Type);
-				m_World.SetTranslation(m_Position);
-			}
+		////////////////////////////////////////////////////////////////
+		///			座標系
+		////////////////////////////////////////////////////////////////
 
-			void MovePosition(const VelocityPtr& vel) noexcept
-			{
-				if (vel->IsGravity())
-				{
-					m_Position += vel->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-				}
-				else
-				{
-					m_Position.x += vel->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-					m_Position.z += vel->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-				}
-				m_World.SetTranslation(m_Position);
-			}
+			/*
+			 * @brief		座標移動
+			 * @param		position 移動座標
+			 */
+			void AddPosition(const Vector3& position) noexcept;
 
-
-			void Clip(const Vector3& min, const  Vector3& max)
-			{
-				ClipX(min.x, max.x);
-				ClipY(min.y, max.y);
-				ClipZ(min.z, max.z);
-			}
-
-			void ClipX(float min, float max)
-			{
-				m_Position.x = ((m_Position.x > max) ?
-					max : ((m_Position.x < min) ? min : m_Position.x));
-			}
-
-			void ClipY(float min, float max)
-			{
-				m_Position.y = ((m_Position.y > max) ?
-					max : ((m_Position.y < min) ? min : m_Position.y));
-			}
-
-			void ClipZ(float min, float max)
-			{
-				m_Position.z = ((m_Position.z > max) ?
-					max : ((m_Position.z < min) ? min : m_Position.z));
-			}
-
+			/*
+			 * @brief		座標移動
+			 * @param		velocity 速度クラス
+			 */
+			void AddPosition(const VelocityPtr& velocity) noexcept;
 			
 
+			/*
+			* @brief	座標制限
+			* @param	min	最小座標
+			* @param	max	最大座標
+			*/
+			void Clip(const Vector3& min, const  Vector3& max);
+
+			/*
+			* @brief	X座標制限
+			* @param	min	最小座標
+			* @param	max	最大座標
+			*/
+			void ClipX(float min, float max);
+			
+
+			/*
+			* @brief	Y座標制限
+			* @param	min	最小座標
+			* @param	max	最大座標
+			*/
+			void ClipY(float min, float max);
+
+			/*
+			* @brief	X座標制限
+			* @param	min	最小座標
+			* @param	max	最大座標
+			*/
+			void ClipZ(float min, float max);
 
 
-			//座標の設定
-			void SetPosition(const Vector3& position) noexcept
-			{
-				m_Position = position;
-				m_World.SetTranslation(m_Position);
-			}
+			/*
+			* @brief	座標設定
+			* @param	position	座標
+			*/
+			void SetPosition(const Vector3& position) noexcept;
 
-			//座標の設定
+
+			/*
+			* @brief	X座標設定
+			* @param	position	X座標
+			*/
 			void SetPositionX(float position) noexcept
 			{
 				m_Position.x = position;
 				m_World.SetTranslation(m_Position);
 			}
 
-			//座標の設定
+			/*
+			* @brief	Y座標設定
+			* @param	position	Y座標
+			*/
 			void SetPositionY(float position) noexcept
 			{
 				m_Position.y = position;
 				m_World.SetTranslation(m_Position);
 			}
 
-			//座標の設定
+			/*
+			* @brief	Z座標設定
+			* @param	position	Z座標
+			*/
 			void SetPositionZ(float position) noexcept
 			{
 				m_Position.z = position;
 				m_World.SetTranslation(m_Position);
 			}
 
-			//座標の取得
+			/*
+			* @brief	座標取得
+			* @return	座標
+			*/
 			const CVector3& GetPosition() const noexcept
 			{
 				return m_Position;
 			}
 
-			//座標の取得
+			/*
+			* @brief	X座標取得
+			* @return	X座標
+			*/
 			float GetPositionX() const noexcept
 			{
 				return m_Position.x;
 			}
 
-			//座標の取得
+			/*
+			* @brief	Y座標取得
+			* @return	Y座標
+			*/
 			float GetPositionY() const noexcept
 			{
 				return m_Position.y;
 			}
 
-			//座標の取得
+			/*
+			* @brief	Z座標取得
+			* @return	Z座標
+			*/
 			float GetPositionZ() const noexcept
 			{
 				return m_Position.z;
 			}
 
-		/**
-		 * @brief		サイズ系
-		 */
+		////////////////////////////////////////////////////////////////
+		///			大きさ系
+		////////////////////////////////////////////////////////////////
 
-			 //サイズの変更
-			void MoveScale(const Vector3& changeScale) noexcept
+			/*
+			* @brief	大きさの変更
+			* @param	changeScale 大きさ
+			*/
+			void AddScale(const Vector3& changeScale) noexcept
 			{
 				m_Scale += changeScale;
 				m_UpdateFlg = true;
 			}
 
-			//サイズの設定
+			/*
+			* @brief	大きさの設定
+			* @param	scale 大きさ
+			*/
 			void SetScale(const Vector3& scale) noexcept
 			{
 				m_Scale = scale;
 				m_UpdateFlg = true;
 			}
 
-			//サイズの設定
+			/*
+			* @brief	Xの大きさ設定
+			* @param	scale Xの大きさ
+			*/
 			void SetScaleX(float scale) noexcept
 			{
 				m_Scale.x = scale;
 				m_UpdateFlg = true;
 			}
 
-			//サイズの設定
+			/*
+			* @brief	Xの大きさ設定
+			* @param	scale Yの大きさ
+			*/
 			void SetScaleY(float scale) noexcept
 			{
 				m_Scale.y = scale;
 				m_UpdateFlg = true;
 			}
 
-			//サイズの設定
+			/*
+			* @brief	Xの大きさ設定
+			* @param	scale Zの大きさ
+			*/
 			void SetScaleZ(float scale) noexcept
 			{
 				m_Scale.z = scale;
 				m_UpdateFlg = true;
 			}
 
-			//サイズの取得
+			/*
+			* @brief	大きさ取得
+			* @return	大きさ
+			*/
 			const CVector3& GetScale() const noexcept
 			{
 				return m_Scale;
 			}
 
-			//サイズの取得
+			/*
+			* @brief	Xの大きさ取得
+			* @return	Xの大きさ
+			*/
 			float GetScaleX() const noexcept
 			{
 				return m_Scale.x;
 			}
 
-			//サイズの取得
+			/*
+			* @brief	Yの大きさ取得
+			* @return	Yの大きさ
+			*/
 			float GetScaleY() const noexcept
 			{
 				return m_Scale.y;
 			}
 
-			//サイズの取得
+			/*
+			* @brief	Zの大きさ取得
+			* @return	Zの大きさ
+			*/
 			float GetScaleZ() const noexcept
 			{
 				return m_Scale.z;
 			}
 
-		/**
-		 * @brief		回転系
-		 */
+		////////////////////////////////////////////////////////////////
+		///			回転系
+		////////////////////////////////////////////////////////////////
 
-			//回転
-			void MoveRotate(const Vector3& rotate) noexcept
+			/*
+			* @brief	追加回転
+			* @param	rotate	回転値
+			*/
+			void AddRotate(const Vector3& rotate) noexcept
 			{
 				m_Rotate += rotate;
 				m_UpdateFlg = true;
 			}
 
-			//回転の設定
+			/*
+			* @brief	回転の設定
+			* @param	rotate	回転値
+			*/
 			void SetRotate(const Vector3& rotate) noexcept
 			{
 				m_Rotate = rotate;
 				m_UpdateFlg = true;
 			}
 
-			//回転の設定
+			/*
+			* @brief	X回転の設定
+			* @param	rotate	X回転値
+			*/
 			void SetRotateX(float rotate) noexcept
 			{
 				m_Rotate.x = rotate;
 				m_UpdateFlg = true;
 			}
 
-			//回転の設定
+			/*
+			* @brief	Y回転の設定
+			* @param	rotate	Y回転値
+			*/
 			void SetRotateY(float rotate) noexcept
 			{
 				m_Rotate.y = rotate;
 				m_UpdateFlg = true;
 			}
 
-			//回転の設定
+			/*
+			* @brief	Z回転の設定
+			* @param	rotate	Z回転値
+			*/
 			void SetRotateZ(float rotate) noexcept
 			{
 				m_Rotate.z = rotate;
 				m_UpdateFlg = true;
 			}
 
-			//回転の取得
+			/*
+			* @brief	回転の取得
+			* @return	回転値
+			*/
 			const CVector3& GetRotate() const noexcept
 			{
 				return m_Rotate;
 			}
 
-			//回転の取得
+			/*
+			* @brief	X回転の取得
+			* @return	X回転値
+			*/
 			float GetRotateX() const noexcept
 			{
 				return m_Rotate.x;
 			}
 
-			//回転の取得
+			/*
+			* @brief	Y回転の取得
+			* @return	Y回転値
+			*/
 			float GetRotateY() const noexcept
 			{
 				return m_Rotate.y;
 			}
 
-			//回転の取得
+			/*
+			* @brief	Z回転の取得
+			* @return	Z回転値
+			*/
 			float GetRotateZ() const noexcept
 			{
 				return m_Rotate.z;
 			}
 
-
-			/*反転*/
-			void SetReverse(bool isReverse) noexcept
-			{
-				m_ReverseFlg = isReverse;
-			}
-
-			bool IsReverse() const noexcept
-			{
-				return m_ReverseFlg;
-			}
-
-			void SetType(CHARA_TYPE type) noexcept
-			{
-				m_Type = type;
-			}
-
-			void SetThrough(bool isThrough) noexcept
-			{
-				m_ThroughFlg = isThrough;
-			}
-			bool IsThrough() const noexcept
-			{
-				return m_ThroughFlg;
-			}
-
-	private:
-		void UpdateMatrix()
-		{
-			CMatrix44 matScale;
-			CMatrix44 matRotate;
-			matScale.Scaling(m_Scale);
-			matRotate.RotationZXY(m_Rotate);
-			m_World = matScale * matRotate;
-
-			m_World.SetTranslation(m_Position);
-
-			//m_World *= parent->GetWorld();
-		}
+	
 	};
 	//ポインタ置き換え
 	using TransformPtr = std::shared_ptr<Transform>;

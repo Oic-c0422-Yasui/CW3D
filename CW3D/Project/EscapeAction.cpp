@@ -1,4 +1,5 @@
 #include "EscapeAction.h"
+#include "ParameterDefine.h"
 
 ActionGame::EscapeAction::EscapeAction(Parameter param)
 	: Action()
@@ -28,7 +29,7 @@ void ActionGame::EscapeAction::Execution()
 
 void ActionGame::EscapeAction::End()
 {
-	Transform()->SetThrough(false);
+	EndThrough();
 }
 
 void ActionGame::EscapeAction::Move(float x, float z)
@@ -39,12 +40,14 @@ void ActionGame::EscapeAction::Move(float x, float z)
 
 void ActionGame::EscapeAction::StartThrough()
 {
-	Transform()->SetThrough(true);
+	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+	isThroughCollision = true;
 }
 
 void ActionGame::EscapeAction::EndThrough()
 {
-	Transform()->SetThrough(false);
+	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+	isThroughCollision = false;
 }
 
 const ActionGame::ActionKeyType ActionGame::EscapeAction::GetKey() const

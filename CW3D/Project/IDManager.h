@@ -12,10 +12,10 @@ namespace ActionGame
 	class CMyID
 	{
 	private:
-		unsigned int Id;
+		size_t Id;
 	public:
-		CMyID(unsigned int id) : Id(id) {}
-		unsigned int GetID()const noexcept { return Id; }
+		CMyID(size_t id) : Id(id) {}
+		size_t GetID()const noexcept { return Id; }
 	};
 
 	/*
@@ -26,7 +26,7 @@ namespace ActionGame
 		friend class Singleton<CIDManager>;
 	private:
 
-		unsigned int m_IDSeed;
+		size_t m_IDSeed;
 
 		CIDManager()
 			: Singleton<CIDManager>()
