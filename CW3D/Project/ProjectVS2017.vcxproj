@@ -142,6 +142,7 @@
     <ClCompile Include="NPCStartPoseAction.cpp" />
     <ClCompile Include="NPCStartPoseState.cpp" />
     <ClCompile Include="PlayerParameterCreator.cpp" />
+    <ClCompile Include="Receiver.cpp" />
     <ClCompile Include="SceneChangeFade.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SpawnerBuilder.cpp" />
@@ -304,6 +305,7 @@
     <ClInclude Include="CollisionDefine.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="IMessenger.h" />
+    <ClInclude Include="IReceiver.h" />
     <ClInclude Include="MessageDefine.h" />
     <ClInclude Include="Messenger.h" />
     <ClInclude Include="MutantActionCreator.h" />
@@ -320,6 +322,7 @@
     <ClInclude Include="NPCStartPoseAction.h" />
     <ClInclude Include="NPCStartPoseState.h" />
     <ClInclude Include="ParameterDefine.h" />
+    <ClInclude Include="Receiver.h" />
     <ClInclude Include="SceneChangeFade.h" />
     <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneInitializer.h" />

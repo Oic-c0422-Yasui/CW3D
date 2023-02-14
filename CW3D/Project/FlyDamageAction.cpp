@@ -16,7 +16,8 @@ void ActionGame::FlyDamageAction::Start()
 	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
 
 	Velocity()->SetGravity(m_Parameter.gravity);
-	Transform()->SetThrough(true);
+	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+	isThroughCollision = true;
 	Velocity()->SetVelocity(knockBack);
 
 	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
@@ -28,7 +29,8 @@ void ActionGame::FlyDamageAction::Execution()
 
 void ActionGame::FlyDamageAction::End()
 {
-	Transform()->SetThrough(false);
+	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+	isThroughCollision = false;
 }
 
 const ActionGame::ActionKeyType ActionGame::FlyDamageAction::GetKey() const

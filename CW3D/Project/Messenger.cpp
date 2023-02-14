@@ -4,10 +4,10 @@ ActionGame::Messenger::Messenger()
 {
 }
 
-void ActionGame::Messenger::Send(GameMessageType message, std::any& value)
+void ActionGame::Messenger::Send(GameMessageType message)
 {
-	for (const auto& recv : receiverLists[message])
+	for (auto& recv : receiverLists[message])
 	{
-		recv->Exec(value);
+		recv->Exection();
 	}
 }
