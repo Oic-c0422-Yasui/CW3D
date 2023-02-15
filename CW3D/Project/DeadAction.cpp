@@ -2,7 +2,7 @@
 #include "ParameterDefine.h"
 
 ActionGame::DeadAction::DeadAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 	, m_CurrentTime(0.0f)
 {

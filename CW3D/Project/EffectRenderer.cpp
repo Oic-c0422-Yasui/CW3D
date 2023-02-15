@@ -36,11 +36,11 @@ void ActionGame::EffectRenderer::Initialize()
 	//m_Sound = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
 
 	//// 音再生用インスタンスから再生機能を指定
-	//m_Manager->SetSoundPlayer(sound->CreateSoundPlayer());
+	//m_Manager->SetSoundPlayer(m_Sound->CreateSoundPlayer());
 
 	//// サウンドデータの読込機能を設定する。
 	//// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
-	//m_Manager->SetSoundLoader(sound->CreateSoundLoader());
+	//m_Manager->SetSoundLoader(m_Sound->CreateSoundLoader());
 }
 
 Effekseer::Handle ActionGame::EffectRenderer::Play(const std::string& key)
@@ -64,9 +64,9 @@ void ActionGame::EffectRenderer::Render()
 	Vector3 pos = CameraControllerInstance.GetPosition();
 	Vector3 look = CameraControllerInstance.GetLookPosition();
 	::Effekseer::Manager::DrawParameter param;
-	/*param.CameraPosition = ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
-	param.CameraFrontDirection = ::Effekseer::Vector3D(look.x, look.y, look.z) - ::Effekseer::Vector3D(pos.x, pos.y, pos.z);*/
-	//Effekseer::Vector3D::Normal(param.CameraFrontDirection, param.CameraFrontDirection);
+	param.CameraPosition = ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
+	param.CameraFrontDirection = ::Effekseer::Vector3D(look.x, look.y, look.z) - ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
+	Effekseer::Vector3D::Normal(param.CameraFrontDirection, param.CameraFrontDirection);
 	param.IsSortingEffectsEnabled = true;
 	// カメラ行列を設定
 	m_Renderer->SetCameraMatrix(

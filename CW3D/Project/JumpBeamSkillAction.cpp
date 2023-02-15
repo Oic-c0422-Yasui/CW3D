@@ -1,7 +1,7 @@
 #include "JumpBeamSkillAction.h"
 
 ActionGame::JumpBeamSkillAction::JumpBeamSkillAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

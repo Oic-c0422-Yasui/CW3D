@@ -1,7 +1,7 @@
 #include "DropKickSkillAction.h"
 
 ActionGame::DropKickSkillAction::DropKickSkillAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

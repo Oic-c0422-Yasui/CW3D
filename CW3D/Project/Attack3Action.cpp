@@ -1,7 +1,7 @@
 #include "Attack3Action.h"
 
 ActionGame::Attack3Action::Attack3Action(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		クリアポーズアクション
 	 */
-	class ClearPoseAction : public Action
+	class ClearPoseAction : public CAction
 	{
 	public:
 		/**

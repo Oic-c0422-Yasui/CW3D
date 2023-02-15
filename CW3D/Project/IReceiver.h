@@ -17,7 +17,7 @@ namespace ActionGame
         virtual ~IReceiver() = default;
         virtual void Exection() = 0;
     };
-    using ReceiverFunc = std::function<void(std::any&)>;
+    using ReceiverFunc = std::function<void()>;
     using ReceiverPtr = std::shared_ptr<IReceiver>;
     using ReceiverList = std::vector<ReceiverPtr>;
 }

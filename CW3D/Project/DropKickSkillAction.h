@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		UŒ‚ƒAƒNƒVƒ‡ƒ“
 	 */
-	class DropKickSkillAction : public Action
+	class DropKickSkillAction : public CAction
 	{
 	public:
 		/**

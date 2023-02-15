@@ -62,7 +62,7 @@ MofBool CGameApp::Initialize(void){
 	gSceneManager = manager;
 
 	//メッセンジャー登録
-	auto messenger = std::make_shared < ActionGame::Messenger>();
+	auto messenger = std::make_shared < ActionGame::CMessenger>();
 	ActionGame::ServiceLocator<ActionGame::IMessenger>::SetService(messenger);
 
 

@@ -2,7 +2,7 @@
 #include "ParameterDefine.h"
 
 ActionGame::EscapeAction::EscapeAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

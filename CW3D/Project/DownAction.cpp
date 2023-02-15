@@ -1,7 +1,7 @@
 #include "DownAction.h"
 
 ActionGame::DownAction::DownAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

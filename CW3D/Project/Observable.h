@@ -22,4 +22,6 @@ namespace ActionGame {
 		 */
 		virtual void Dispose(std::shared_ptr < IObserver<Args...> > pobs) = 0;
 	};
+	template<typename... _Types>
+	using ObservablePtr = std::shared_ptr<IObservable<_Types...>>;
 }

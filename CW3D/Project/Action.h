@@ -10,7 +10,7 @@ namespace ActionGame {
 	/**
 	 * @brief		アクション基底クラス
 	 */
-	class Action : public IAction
+	class CAction : public IAction
 	{
 	private:
 		/* 姿勢クラス */
@@ -65,7 +65,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Action()
+		CAction()
 			: m_Transform()
 			, m_Velocity()
 			, m_Animation()
@@ -80,7 +80,7 @@ namespace ActionGame {
 		 */
 		template < typename T, typename... _Args >
 		static std::shared_ptr< T > Create(_Args&& ... args) {
-			if (!std::is_base_of<Action, T >::value)
+			if (!std::is_base_of<CAction, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}

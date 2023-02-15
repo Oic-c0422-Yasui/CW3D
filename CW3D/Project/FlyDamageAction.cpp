@@ -1,13 +1,13 @@
 #include "FlyDamageAction.h"
 #include "ParameterDefine.h"
 
-ActionGame::FlyDamageAction::FlyDamageAction(Parameter param)
-	: Action()
+ActionGame::CFlyDamageAction::CFlyDamageAction(Parameter param)
+	: CAction()
 	, m_Parameter(param)
 {
 }
 
-void ActionGame::FlyDamageAction::Start()
+void ActionGame::CFlyDamageAction::Start()
 {
 	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
 		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
@@ -23,17 +23,17 @@ void ActionGame::FlyDamageAction::Start()
 	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 }
 
-void ActionGame::FlyDamageAction::Execution()
+void ActionGame::CFlyDamageAction::Execution()
 {
 }
 
-void ActionGame::FlyDamageAction::End()
+void ActionGame::CFlyDamageAction::End()
 {
 	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = false;
 }
 
-const ActionGame::ActionKeyType ActionGame::FlyDamageAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CFlyDamageAction::GetKey() const
 {
 	return STATE_KEY_FLY_DAMAGE;
 }

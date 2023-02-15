@@ -1,7 +1,7 @@
 #include "IdleMotionAction.h"
 
 ActionGame::IdleMotionAction::IdleMotionAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージアクション
 	 */
-	class FlyDamageAction : public Action
+	class CFlyDamageAction : public CAction
 	{
 	public:
 		/**
@@ -31,7 +31,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		FlyDamageAction(Parameter param);
+		CFlyDamageAction(Parameter param);
 			
 		
 
@@ -59,5 +59,5 @@ namespace ActionGame {
 
 	};
 	//ポインタ置き換え
-	using FlyDamageActionPtr = std::shared_ptr<FlyDamageAction>;
+	using FlyDamageActionPtr = std::shared_ptr<CFlyDamageAction>;
 }

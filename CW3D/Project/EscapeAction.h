@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		UŒ‚ƒAƒNƒVƒ‡ƒ“
 	 */
-	class EscapeAction : public Action
+	class EscapeAction : public CAction
 	{
 	public:
 		/**

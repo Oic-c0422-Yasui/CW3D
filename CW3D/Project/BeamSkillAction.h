@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		UŒ‚ƒAƒNƒVƒ‡ƒ“
 	 */
-	class BeamSkillAction : public Action
+	class BeamSkillAction : public CAction
 	{
 	public:
 	/**

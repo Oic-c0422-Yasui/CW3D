@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ˆÚ“®ƒAƒNƒVƒ‡ƒ“
 	 */
-	class IdleMotionAction : public Action
+	class IdleMotionAction : public CAction
 	{
 	public:
 		/**

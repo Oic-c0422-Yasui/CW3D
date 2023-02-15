@@ -14,14 +14,11 @@ namespace ActionGame {
 	using AnimationStatePtr = LPMeshMotionController;
 
 	/**
-	 * @brief		アクターインターフェイス
+	 * @brief		アクターインタフェース
 	 */
 	class IActor
 	{
 	public:
-		/**
-		 * @brief		デストラクタ
-		 */
 		virtual ~IActor() = default;
 
 		/**
@@ -146,17 +143,17 @@ namespace ActionGame {
 		virtual CHARA_TYPE GetType() const = 0;
 
 		/**
-		 * @brief		パラメーター
+		 * @brief		パラメーター取得
 		 */
 		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
 
 		/**
-		 * @brief		アニメーション
+		 * @brief		アニメーション取得
 		 */
 		virtual const AnimationStatePtr& GetAnimationState() const = 0;
 
 		/**
-		 * @brief		スキル
+		 * @brief		スキル取得
 		 */
 		virtual const SkillControllerPtr& GetSkillController() const = 0;
 

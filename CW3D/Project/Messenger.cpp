@@ -1,12 +1,12 @@
 #include "Messenger.h"
 
-ActionGame::Messenger::Messenger()
+ActionGame::CMessenger::CMessenger()
 {
 }
 
-void ActionGame::Messenger::Send(GameMessageType message)
+void ActionGame::CMessenger::Send(GameMessageType message)
 {
-	for (auto& recv : receiverLists[message])
+	for (auto& recv : m_ReceiverLists[message])
 	{
 		recv->Exection();
 	}

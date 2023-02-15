@@ -1,7 +1,7 @@
 #include "FallAction.h"
 
 ActionGame::FallAction::FallAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

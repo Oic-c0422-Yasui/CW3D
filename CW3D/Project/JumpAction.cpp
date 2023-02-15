@@ -1,7 +1,7 @@
 #include "JumpAction.h"
 
 ActionGame::JumpAction::JumpAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

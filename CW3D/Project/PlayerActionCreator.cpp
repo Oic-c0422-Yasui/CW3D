@@ -280,8 +280,8 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			GRAVITYMAX,
 		}));
 	//‹ó’†ƒ_ƒ[ƒW
-	actor->AddAction(Action::Create<FlyDamageAction>(
-		FlyDamageAction::Parameter{
+	actor->AddAction(Action::Create<CFlyDamageAction>(
+		CFlyDamageAction::Parameter{
 			AnimParam{
 				STATE_KEY_FLY_DAMAGE,
 				0.0f,

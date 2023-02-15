@@ -7,5 +7,5 @@ ActionGame::Receiver::Receiver(ReceiverFunc param)
 
 void ActionGame::Receiver::Exection()
 {
-	m_Function;
+	m_Function();
 }

@@ -1,7 +1,7 @@
 #include "ClearPoseAction.h"
 
 ActionGame::ClearPoseAction::ClearPoseAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

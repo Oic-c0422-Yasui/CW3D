@@ -2,7 +2,7 @@
 #include "ParameterDefine.h"
 
 ActionGame::DamageAction::DamageAction(Parameter param)
-	: Action()
+	: CAction()
 	, m_Parameter(param)
 {
 }

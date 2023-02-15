@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージアクション
 	 */
-	class DownAction : public Action
+	class DownAction : public CAction
 	{
 	public:
 		/**

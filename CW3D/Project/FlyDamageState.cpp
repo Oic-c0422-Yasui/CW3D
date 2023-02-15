@@ -8,7 +8,7 @@ ActionGame::FlyDamageState::FlyDamageState()
 
 void ActionGame::FlyDamageState::Start()
 {
-	m_DamageAction = Actor()->GetAction<FlyDamageAction>(GetKey());
+	m_DamageAction = Actor()->GetAction<CFlyDamageAction>(GetKey());
 	m_DamageAction->Start();
 }
 

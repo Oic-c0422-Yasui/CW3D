@@ -13,6 +13,7 @@ namespace ActionGame {
 		 */
 		virtual void Notify(Args...) = 0;
 	};
+	
 
 	/**
 	 * ŠÖ”’P‘Ì‚Å‚Ì“o˜^—p
