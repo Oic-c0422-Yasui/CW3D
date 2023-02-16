@@ -1,23 +1,19 @@
 #pragma once
-#include "Common.h"
-#include "MessageDefine.h"
-#include "IReceiverRegister.h"
+#include <memory>
+#include "IMessageRegister.h"
+#include "IMessageSender.h"
 
-namespace ActionGame
+namespace Messenger
 {
 	/*
-	* @brief	メッセージを送るクラス用インタフェース
+	* @brief	メッセージを管理する用インタフェース
 	*/
-	class IMessenger : public IReceiverRegister
-	{
+	class IMessenger : public IRegister, public ISender
+ 	{
 	public:
 		virtual ~IMessenger() = default;
 		
-		/*
-		* @brief	メッセージを送る
-		* @param	message メッセージの種類
-		*/
-		virtual void Send(GameMessageType message) = 0;
+		
 	};
 	using MessengerPtr = std::shared_ptr<IMessenger>;
 }

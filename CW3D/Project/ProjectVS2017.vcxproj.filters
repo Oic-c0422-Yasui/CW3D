@@ -280,6 +280,9 @@
     <Filter Include="ヘッダー ファイル\Character\Enemy\Mutant\Builder">
       <UniqueIdentifier>{335187ae-ca6e-4f7e-909a-788bdf4a18b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Message">
+      <UniqueIdentifier>{7e034309-8244-4635-b652-59f95560f14d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -1538,20 +1541,20 @@
     <ClInclude Include="IMessenger.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Messenger.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageDefine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IReceiver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Receiver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IReceiverRegister.h">
+    <ClInclude Include="IMessageSender.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="Messenger.h">
+      <Filter>ヘッダー ファイル\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="IMessageRegister.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

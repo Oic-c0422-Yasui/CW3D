@@ -305,8 +305,8 @@
     <ClInclude Include="CollisionDefine.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="IMessenger.h" />
-    <ClInclude Include="IReceiver.h" />
-    <ClInclude Include="IReceiverRegister.h" />
+    <ClInclude Include="IMessageRegister.h" />
+    <ClInclude Include="IMessageSender.h" />
     <ClInclude Include="MessageDefine.h" />
     <ClInclude Include="Messenger.h" />
     <ClInclude Include="MutantActionCreator.h" />

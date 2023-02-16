@@ -4,7 +4,7 @@
 namespace ActionGame
 {
 	/**
-	 * @brief		シーン登録用共通インターフェイス
+	 * @brief		シーン登録用インターフェイス
 	 */
 	class __declspec(novtable) ISceneRegister
 	{
