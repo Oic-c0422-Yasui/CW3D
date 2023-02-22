@@ -25,12 +25,12 @@ namespace ActionGame
 	{
 	private:
 
-		Effekseer::EffectRef				m_Effect;
-		Effekseer::Handle					m_Handle;
-		CVector3							m_Position;
-		Vector3								m_Rotation;
-		bool								m_StopFlg;
-		Vector3								m_Offset;
+		Effekseer::EffectRef				effect_;
+		Effekseer::Handle					handle_;
+		CVector3							position_;
+		Vector3								rotation_;
+		bool								isStop_;
+		Vector3								offset_;
 
 	public:
 
@@ -54,7 +54,7 @@ namespace ActionGame
 		*/
 		bool IsStop() const noexcept
 		{
-			return  m_StopFlg;
+			return  isStop_;
 		}
 
 		/*
@@ -63,7 +63,7 @@ namespace ActionGame
 		*/
 		void SetStop(bool isStop) noexcept
 		{
-			m_StopFlg = isStop;
+			isStop_ = isStop;
 		}
 
 		/*
@@ -72,7 +72,7 @@ namespace ActionGame
 		*/
 		Effekseer::Handle GetHandle() const noexcept
 		{
-			return m_Handle;
+			return handle_;
 		}
 
 		/*
@@ -81,7 +81,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetOffset() const noexcept
 		{
-			return m_Offset;
+			return offset_;
 		}
 
 	

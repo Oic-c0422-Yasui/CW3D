@@ -52,10 +52,10 @@ namespace ActionGame
 		AttackColliderPtr	m_Collider;
 		CAABB				m_AABB;
 		COBB				m_OBB;
-		CVector3			m_Position;
+		CVector3			position_;
 		float				m_Radius;
 		CVector3			m_Size;
-		Vector3				m_Offset;
+		Vector3				offset_;
 		bool				m_ShowFlg;
 		bool				m_EnableColliderFlg;
 		CHARA_TYPE			m_ParentCharaType;
@@ -151,7 +151,7 @@ namespace ActionGame
 		*/
 		void AddPosition(const Vector3& pos) noexcept
 		{
-			m_Position += pos;
+			position_ += pos;
 		}
 
 
@@ -228,7 +228,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetPosition() const noexcept 
 		{
-			return m_Position;
+			return position_;
 		}
 
 		/*
@@ -237,7 +237,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetOffset() const noexcept 
 		{
-			return m_Offset;
+			return offset_;
 		}
 
 		/*
@@ -433,7 +433,7 @@ namespace ActionGame
 		*/
 		void SetPosition(const Vector3& pos) noexcept
 		{
-			m_Position = pos;
+			position_ = pos;
 		}
 
 		/*
@@ -442,7 +442,7 @@ namespace ActionGame
 		*/
 		void SetOffset(const Vector3& offset) noexcept
 		{
-			m_Offset = offset;
+			offset_ = offset;
 		}
 
 		/*

@@ -5,7 +5,7 @@ using namespace ActionGame;
 
 ActionGame::AttackBaseState::AttackBaseState()
 	: State()
-	, m_CurrentTime(0.0f)
+	, currentTime_(0.0f)
 	, m_NextInputFlg(false)
 {
 }
@@ -136,7 +136,7 @@ void ActionGame::AttackBaseState::CreateEffect()
 
 void ActionGame::AttackBaseState::Start()
 {
-	m_CurrentTime = 0.0f;
+	currentTime_ = 0.0f;
 	m_NextInputFlg = false;
 	if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
@@ -150,7 +150,7 @@ void ActionGame::AttackBaseState::Start()
 
 void ActionGame::AttackBaseState::Execution()
 {
-	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 }
 
 void ActionGame::AttackBaseState::InputExecution() {

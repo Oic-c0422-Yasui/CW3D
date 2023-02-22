@@ -20,9 +20,9 @@ namespace ActionGame
 		float								m_MaxCT;
 		bool								m_CanUseFlg;
 
-		Vector2								m_Offset;
+		Vector2								offset_;
 		Vector2								m_Size;
-		Vector2								m_Position;
+		Vector2								position_;
 
 
 	public:
@@ -32,9 +32,9 @@ namespace ActionGame
 		CSkillRender()
 			: m_CT(0.0f)
 			, m_MaxCT(0.0f)
-			, m_Offset(0,0)
+			, offset_(0,0)
 			, m_Size(0, 0)
-			, m_Position(0, 0)
+			, position_(0, 0)
 			, m_CanUseFlg(false)
 		{
 
@@ -54,20 +54,20 @@ namespace ActionGame
 			m_pUsedSKillFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", key + "Mono");
 			m_pFont = ActionGame::ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "CTFont");
 
-			m_Offset = Vector2(0, 0);
+			offset_ = Vector2(0, 0);
 			m_Size = Vector2(1, 1);
 		}
 
 		virtual void Initialize(const Vector2& pos )
 		{
-			m_Position = pos;
-			m_Position.y += m_pSKillFrame->GetHeight() * 0.5f;
+			position_ = pos;
+			position_.y += m_pSKillFrame->GetHeight() * 0.5f;
 		}
 
 
 		const Vector2& GetPosition()
 		{
-			return m_Position;
+			return position_;
 		}
 
 		void SetCT(float  ct)
@@ -99,13 +99,13 @@ namespace ActionGame
 
 			float percent = m_CT / m_MaxCT;
 			percent = min(percent, 1.0f);
-			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
+			m_pUsedSKillFrame->Render(position_.x, position_.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
 			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
-			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, rect, TEXALIGN_BOTTOMCENTER);
+			m_pUsedSKillFrame->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
 
 			if (m_CanUseFlg)
 			{
-				m_pSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
+				m_pSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 			}
 
 			
@@ -124,13 +124,13 @@ namespace ActionGame
 			{
 				CRectangle rect;
 				m_pFont->CalculateStringRect(0, 0, "0", rect);
-				m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
+				m_pFont->RenderFormatString(position_.x - (rect.GetWidth() * 0.5f), position_.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
 			}
 			else
 			{
 				CRectangle rect;
 				m_pFont->CalculateStringRect(0, 0, "0.0", rect);
-				m_pFont->RenderFormatString(m_Position.x - (rect.GetWidth() * 0.5f), m_Position.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", ct);
+				m_pFont->RenderFormatString(position_.x - (rect.GetWidth() * 0.5f), position_.y - m_pUsedSKillFrame->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.1f", ct);
 			}
 		}
 

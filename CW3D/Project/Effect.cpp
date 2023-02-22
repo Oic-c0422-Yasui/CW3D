@@ -4,9 +4,9 @@
 namespace ActionGame
 {
 	Effect::Effect(Effekseer::Handle handle)
-		: m_Effect()
-		, m_Handle(handle)
-		, m_StopFlg(false)
+		: effect_()
+		, handle_(handle)
+		, isStop_(false)
 	{
 
 	}
@@ -16,18 +16,18 @@ namespace ActionGame
 
 	void Effect::Initialize( const Vector3& offset)
 	{
-		m_Offset = offset;
+		offset_ = offset;
 	}
 
 	void Effect::Update()
 	{
-		if (!EffectRendererInstance.GetManager()->Exists(m_Handle))
+		if (!EffectRendererInstance.GetManager()->Exists(handle_))
 		{
-			m_StopFlg = true;
+			isStop_ = true;
 		}
-		if (m_StopFlg)
+		if (isStop_)
 		{
-			EffectRendererInstance.GetManager()->StopEffect(m_Handle);
+			EffectRendererInstance.GetManager()->StopEffect(handle_);
 		}
 	}
 }

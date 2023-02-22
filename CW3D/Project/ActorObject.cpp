@@ -4,7 +4,7 @@ using namespace ActionGame;
 
 
 ActorObject::ActorObject()
-	: m_Actor(std::make_shared<ActionGame::Actor>())
+	: actor_(std::make_shared<ActionGame::Actor>())
 	, m_StateMachine(std::make_shared<ActionGame::StateMachine>())
 	, m_Motion()
 	, m_ShowFlg(false)
@@ -14,8 +14,9 @@ ActorObject::ActorObject()
 	, m_UltBoostMag(0.0f)
 	, m_Weight(50.0f)
 {
-	m_Actor->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
-	m_Actor->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
+	actor_->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
+	actor_->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
+	actor_->GetParameterMap()->Add<bool>(PARAMETER_KEY_THROUGH_COLLISION, false);
 }
 
 ActorObject::~ActorObject()
@@ -26,7 +27,7 @@ void ActionGame::ActorObject::Initialize()
 {
 	m_ShowFlg = true;
 	m_DeadFlg = false;
-	m_MatWorld = m_Actor->GetMatrix();
+	m_MatWorld = actor_->GetMatrix();
 
 	m_StateMachine->SetUp();
 }
@@ -42,19 +43,19 @@ void ActorObject::Update()
 	m_StateMachine->InputExecution();
 	//ステートの実行
 	m_StateMachine->Execution();
-	m_PrevPos = m_Actor->GetPosition();
+	m_PrevPos = actor_->GetPosition();
 	//移動の実行
-	m_Actor->Update();
+	actor_->Update();
 
 	//移動制限
-	m_Actor->GetTransform()->ClipX(-36.0f, 132.0f);
-	m_Actor->GetTransform()->ClipZ(-9.0f, 9.0f);
-	m_Actor->GetTransform()->ClipY(0.0f, 50.0f);
+	actor_->GetTransform()->ClipX(-36.0f, 132.0f);
+	actor_->GetTransform()->ClipZ(-9.0f, 9.0f);
+	actor_->GetTransform()->ClipY(0.0f, 50.0f);
 
 	//マトリクスを取得
-	m_MatWorld = m_Actor->GetMatrix();
+	m_MatWorld = actor_->GetMatrix();
 
-	m_Motion->AddTimer(CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Actor->GetType()));
+	m_Motion->AddTimer(CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(actor_->GetType()));
 }
 
 void ActorObject::Render()
@@ -63,7 +64,7 @@ void ActorObject::Render()
 	{
 		return;
 	}
-	auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+	auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	m_Motion->RefreshBoneMatrix(m_MatWorld);
 	m_pMesh->Render(m_Motion, Vector4(1.0f, 1.0f, 1.0f, alpha));
 }
@@ -76,15 +77,15 @@ void ActorObject::Release()
 
 void ActionGame::ActorObject::AddUltGauge(float gauge)
 {
-	auto& ult = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& ult = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	ult += gauge;
-	auto& maxUlt = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
+	auto& maxUlt = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
 	ult = min(ult, maxUlt);
 }
 
 bool ActionGame::ActorObject::IsThroughCollision() const noexcept
 {
-	auto param = m_Actor->GetParameterMap();
+	auto param = actor_->GetParameterMap();
 
 	return param->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 }

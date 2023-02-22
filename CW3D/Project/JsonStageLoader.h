@@ -8,7 +8,7 @@ namespace ActionGame
 	class JsonStageLoader
 	{
 	private:
-		DivisionArrayPtr m_DivisionArray;
+		DivisionArrayPtr divisionArray_;
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -25,7 +25,7 @@ namespace ActionGame
 
 		const DivisionArrayPtr& GetDivisionArray() const noexcept
 		{
-			return m_DivisionArray;
+			return divisionArray_;
 		}
 	};
 

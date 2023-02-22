@@ -1,10 +1,10 @@
 #include "Timer.h"
 
 ActionGame::CTimer::CTimer()
-	: m_CurrentTime(0.0f)
+	: currentTime_(0.0f)
 	, m_TargetTime(0.0f)
 	, m_AchieveFlg(false)
-	, m_StopFlg(false)
+	, isStop_(false)
 {
 }
 
@@ -14,10 +14,10 @@ ActionGame::CTimer::~CTimer()
 
 void ActionGame::CTimer::Start()
 {
-	m_CurrentTime = 0.0f;
+	currentTime_ = 0.0f;
 	m_TargetTime = 0.0f;
 	m_AchieveFlg = false;
-	m_StopFlg = false;
+	isStop_ = false;
 }
 
 void ActionGame::CTimer::Start(float targetTime)
@@ -28,17 +28,17 @@ void ActionGame::CTimer::Start(float targetTime)
 
 void ActionGame::CTimer::Stop()
 {
-	m_StopFlg = true;
+	isStop_ = true;
 }
 
 void ActionGame::CTimer::Update()
 {
-	if (m_StopFlg)
+	if (isStop_)
 	{
 		return;
 	}
-	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-	if (m_CurrentTime >= m_TargetTime)
+	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+	if (currentTime_ >= m_TargetTime)
 	{
 		if (!m_AchieveFlg)
 		{
@@ -49,12 +49,12 @@ void ActionGame::CTimer::Update()
 
 void ActionGame::CTimer::Update(CHARA_TYPE timeScaleType)
 {
-	if (m_StopFlg)
+	if (isStop_)
 	{
 		return;
 	}
-	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(timeScaleType);
-	if (m_CurrentTime >= m_TargetTime)
+	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(timeScaleType);
+	if (currentTime_ >= m_TargetTime)
 	{
 		if (!m_AchieveFlg)
 		{

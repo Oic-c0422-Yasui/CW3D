@@ -12,7 +12,7 @@ void ActionGame::CEffectController::Create(const Effekseer::Handle& handle, cons
 ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& resouceName,const Vector3& position, EffectCreateParameter param)
 {
 	ActionGame::EffectPtr efc = std::make_shared<Effect>(EffectRendererInstance.Play(resouceName));
-	m_Effects.push_back(efc);
+	effectArray_.push_back(efc);
 	Create(efc->GetHandle(), position, param);
 	efc->Initialize(param.offset);
 	return efc;
@@ -20,7 +20,7 @@ ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& res
 
 void ActionGame::CEffectController::Update()
 {
-	for (auto& effect : m_Effects)
+	for (auto& effect : effectArray_)
 	{
 		effect->Update();
 	}
@@ -28,14 +28,14 @@ void ActionGame::CEffectController::Update()
 
 void ActionGame::CEffectController::Delete()
 {
-	auto removeIt = std::remove_if(m_Effects.begin(), m_Effects.end(), [&](const EffectPtr& effect) {
+	auto removeIt = std::remove_if(effectArray_.begin(), effectArray_.end(), [&](const EffectPtr& effect) {
 		return effect->IsStop() == true; });
-	m_Effects.erase(removeIt, m_Effects.end());
+	effectArray_.erase(removeIt, effectArray_.end());
 }
 
 void ActionGame::CEffectController::Reset()
 {
-	m_Effects.clear();
+	effectArray_.clear();
 }
 
 void ActionGame::CEffectController::SetRotate(const Effekseer::Handle& handle, const Vector3& rotate)

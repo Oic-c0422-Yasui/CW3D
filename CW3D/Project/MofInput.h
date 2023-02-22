@@ -4,12 +4,12 @@
 
 #ifdef __MOFLIB
 
-namespace ActionGame {
+namespace Input {
 
 	/**
 	 * @brief		入力クラス
 	 */
-	class MofInput : public Input
+	class CMofInput : public CInput
 	{
 	protected:
 		/**
@@ -54,8 +54,8 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		MofInput()
-			: Input()
+		CMofInput()
+			: CInput()
 		{ }
 	};
 

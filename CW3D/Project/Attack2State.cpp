@@ -28,7 +28,7 @@ void ActionGame::Attack2State::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
 			shot->SetEnableCollider(true);
 
@@ -39,7 +39,7 @@ void ActionGame::Attack2State::Execution()
 			shot->SetEnableCollider(false);
 		}
 	}
-	if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 	{
 		collideStartFlg = true;
 	}
@@ -50,7 +50,7 @@ void ActionGame::Attack2State::Execution()
 	}
 	else if (m_NextInputFlg)
 	{
-		if (m_CurrentTime > m_Parameter.NextInputFrameTime)
+		if (currentTime_ > m_Parameter.NextInputFrameTime)
 		{
 			ChangeState(STATE_KEY_ATTACK3);
 		}

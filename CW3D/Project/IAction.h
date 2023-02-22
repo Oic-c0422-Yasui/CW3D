@@ -22,27 +22,27 @@ namespace ActionGame {
 		/**
 		 * @brief		p¨“o˜^
 		 */
-		virtual void SetTransform(TransformPtr t) = 0;
+		virtual void SetTransform(TransformPtr transform) = 0;
 
 		/**
 		 * @brief		‘¬“x“o˜^
 		 */
-		virtual void SetVelocity(VelocityPtr t) = 0;
+		virtual void SetVelocity(VelocityPtr transform) = 0;
 
 		/**
 		 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ““o˜^
 		 */
-		virtual void SetAnimation(AnimationStatePtr a) = 0;
+		virtual void SetAnimation(AnimationStatePtr animation) = 0;
 
 		/**
 		 * @brief		ƒpƒ‰ƒ[ƒ^[î•ñ“o˜^
 		 */
-		virtual void SetParameterMap(const AnyParameterMapPtr& a) = 0;
+		virtual void SetParameterMap(const AnyParameterMapPtr& parameter) = 0;
 
 		/**
 		 * @brief		ƒXƒLƒ‹‘€ì“o˜^
 		 */
-		virtual void SetSkillController(const SkillControllerPtr& a) = 0;
+		virtual void SetSkillController(const SkillControllerPtr& skill) = 0;
 
 	public:
 		/**

@@ -28,7 +28,7 @@ namespace ActionGame
 
 		Vector3						m_TempOffsetPos;
 
-		float						m_CurrentTime;
+		float						currentTime_;
 	public:
 		/**
 		 * @brief		コンストラクタ

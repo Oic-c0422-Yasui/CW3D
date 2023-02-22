@@ -29,7 +29,7 @@ void ActionGame::RunJumpAttack2State::Execution()
 	}
 	if (m_NextInputFlg)
 	{
-		if (m_CurrentTime > m_Parameter.NextInputFrameTime)
+		if (currentTime_ > m_Parameter.NextInputFrameTime)
 		{
 			ChangeState(STATE_KEY_RUN_JUMP_ATTACK3);
 		}

@@ -11,10 +11,10 @@ namespace ActionGame
 	class CTimer
 	{
 	private:
-		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float>>	m_CurrentTime;
+		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float>>	currentTime_;
 		float	m_TargetTime;
 		bool	m_AchieveFlg;
-		bool	m_StopFlg;
+		bool	isStop_;
 	public:
 		CTimer();
 		~CTimer();
@@ -48,7 +48,7 @@ namespace ActionGame
 
 		bool IsTimerStop() const noexcept
 		{
-			return m_StopFlg;
+			return isStop_;
 		}
 
 		/**
@@ -56,7 +56,7 @@ namespace ActionGame
 		 */
 		ActionGame::IObservable<float>& GetTimeSubject()
 		{
-			return m_CurrentTime.Get();
+			return currentTime_.Get();
 		}
 
 		/**
@@ -65,7 +65,7 @@ namespace ActionGame
 		 */
 		float GetTime() const noexcept
 		{
-			return m_CurrentTime.Get();
+			return currentTime_.Get();
 		}
 
 		/**

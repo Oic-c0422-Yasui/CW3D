@@ -7,7 +7,7 @@
 
 ActionGame::NPCCameraStartPoseState::NPCCameraStartPoseState(Parameter param)
 	: State()
-	, m_CurrentTime(0)
+	, currentTime_(0)
 	, m_Parameter(param)
 	, m_StartFlg(false)
 {
@@ -15,7 +15,7 @@ ActionGame::NPCCameraStartPoseState::NPCCameraStartPoseState(Parameter param)
 
 void ActionGame::NPCCameraStartPoseState::Start()
 {
-	m_CurrentTime = 0.0f;
+	currentTime_ = 0.0f;
 	m_Action = Actor()->GetAction<NPCStartPoseAction>(GetKey());
 	m_Action->Start();
 	m_StartFlg = false;
@@ -29,10 +29,10 @@ void ActionGame::NPCCameraStartPoseState::Execution()
 		SettingCamera();
 		m_StartFlg = true;
 	}
-	if (m_Parameter.Time > m_CurrentTime)
+	if (m_Parameter.Time > currentTime_)
 	{
 		m_Action->Execution();
-		m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 	else
 	{
@@ -65,14 +65,14 @@ const ActionGame::StateKeyType ActionGame::NPCCameraStartPoseState::GetKey() con
 void ActionGame::NPCCameraStartPoseState::SettingCamera()
 {
 	//ÉJÉÅÉâê›íË
-	MyUtilities::ANIM_V3_DATA_ARRAY animPos(
+	MyUtil::ANIM_V3_DATA_ARRAY animPos(
 		{
 			{0.0f,Vector3(5,2,-3)},
 			{m_Parameter.Time * 0.5f,Vector3(-7,2,-3)},
 			{m_Parameter.Time * 0.5f,Vector3(-7,2,-3)},
 		}
 	);
-	MyUtilities::ANIM_V3_DATA_ARRAY animLookPos(
+	MyUtil::ANIM_V3_DATA_ARRAY animLookPos(
 		{
 			{0.0f,Vector3(0, 2, 0)},
 			{0.0f,Vector3(0, 2, 0)},
@@ -83,7 +83,7 @@ void ActionGame::NPCCameraStartPoseState::SettingCamera()
 	Vector3 offsetLookPos(0, 2, 0);
 	CameraPtr camera;
 	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
-	camera->SetAnim(animPos, animLookPos);
+	camera->SetAnimation(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera);
 	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::PLAYER, 0.0f, 0.0f);
 }

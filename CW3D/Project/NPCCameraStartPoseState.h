@@ -23,7 +23,7 @@ namespace ActionGame
 		//開始ポーズステート
 		NPCStartPoseActionPtr			m_Action;
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 
 		Parameter m_Parameter;
 		

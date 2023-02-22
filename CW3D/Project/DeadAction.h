@@ -27,7 +27,7 @@ namespace ActionGame {
 		Parameter					m_Parameter;
 
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 	public:
 		/**
 		 * @brief		コンストラクタ

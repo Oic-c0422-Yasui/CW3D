@@ -25,8 +25,8 @@ namespace ActionGame
 		int m_HP;
 		int m_MaxHP;
 
-		Vector2 m_Position;
-		Vector2 m_Offset;
+		Vector2 position_;
+		Vector2 offset_;
 
 
 	public:
@@ -38,8 +38,8 @@ namespace ActionGame
 			, m_CurrentGauge(1.0f)
 			, m_HP(0)
 			, m_MaxHP(0)
-			, m_Position(0, 0)
-			, m_Offset(0, 0)
+			, position_(0, 0)
+			, offset_(0, 0)
 		{
 			
 		}
@@ -58,8 +58,8 @@ namespace ActionGame
 			m_pDamageBar = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
 
 
-			m_Position = Vector2(763, 1045);
-			m_Offset = Vector2(58, 1);
+			position_ = Vector2(763, 1045);
+			offset_ = Vector2(58, 1);
 		}
 
 		void SetHP(int hp)
@@ -75,7 +75,7 @@ namespace ActionGame
 
 		Vector2 GetPosition()
 		{
-			return m_Position;
+			return position_;
 		}
 
 		/**
@@ -91,19 +91,19 @@ namespace ActionGame
 		 */
 		void Render() {
 
-			//g_pInput->GetMousePos(m_Offset);
+			//g_pInput->GetMousePos(offset_);
 			float parcent = (float)m_HP / (float)m_MaxHP;
 			parcent = min(parcent, 1.0f);
 			m_CurrentHP = parcent;
 			//ŽlŠp‚ÅHPƒQ[ƒW•`‰æ
-			m_pFrame->Render(m_Position.x, m_Position.y);
+			m_pFrame->Render(position_.x, position_.y);
 
 			//•\Ž¦ƒQ[ƒW‚ð™X‚É•Ï‰»‚³‚¹‚é
 			if (fabsf(m_CurrentGauge - m_CurrentHP) > 0.01f)
 			{
 				m_CurrentGauge += (m_CurrentHP - m_CurrentGauge) * 0.02f;
 				CRectangle rect(0, 0, m_pDamageBar->GetWidth() * m_CurrentGauge, m_pDamageBar->GetHeight());
-				m_pDamageBar->Render(m_Position.x + m_Offset.x,m_Position.y + m_Offset.y, rect,MOF_XRGB(218,93,98));
+				m_pDamageBar->Render(position_.x + offset_.x,position_.y + offset_.y, rect,MOF_XRGB(218,93,98));
 			}
 			else
 			{
@@ -111,7 +111,7 @@ namespace ActionGame
 			}
 			CRectangle rect(0, 0, m_pHPBar->GetWidth() * m_CurrentHP, m_pHPBar->GetHeight());
 
-			m_pHPBar->Render(m_Position.x + m_Offset.x, m_Position.y + m_Offset.y, rect);
+			m_pHPBar->Render(position_.x + offset_.x, position_.y + offset_.y, rect);
 		}
 
 		void Release(void) {

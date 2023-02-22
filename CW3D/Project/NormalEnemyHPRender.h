@@ -16,10 +16,10 @@ namespace ActionGame
 		std::shared_ptr<CSprite3D>			m_pFrame;
 		std::shared_ptr<CSprite3D>			m_pDamageBar;
 
-		Vector3 m_Position;
+		Vector3 position_;
 		Vector3 m_ViewPosition;
 
-		Vector3								m_Offset;
+		Vector3								offset_;
 		Vector3								m_Size;
 
 	public:
@@ -56,20 +56,20 @@ namespace ActionGame
 
 		void SetPosition(Vector3 pos)
 		{
-			m_Position = pos;
+			position_ = pos;
 		}
 
 
 		const Vector3& GetPosition()
 		{
-			return m_Position;
+			return position_;
 		}
 
 
 		const Vector3& GetViewPosition()
 		{
 			LPCamera cam = CGraphicsUtilities::GetCamera();
-			m_ViewPosition = m_Position;
+			m_ViewPosition = position_;
 			m_ViewPosition *= cam->GetViewMatrix();
 			return m_ViewPosition;
 		}

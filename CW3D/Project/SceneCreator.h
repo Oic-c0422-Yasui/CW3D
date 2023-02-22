@@ -1,7 +1,7 @@
 #pragma once
-#include "SceneBase.h"
+#include "IScene.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/*
 	* @brief	シーン生成用インタフェース

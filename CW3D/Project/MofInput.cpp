@@ -3,7 +3,7 @@
 #ifdef __MOFLIB
 #include	<Mof.h>
 
-using namespace ActionGame;
+using namespace Input;
 
 /**
  * @brief		キーボードキーの取得
@@ -11,7 +11,7 @@ using namespace ActionGame;
  * @param[in]	negative		－方向のキー
  * @return		キー入力の値
  */
-float MofInput::GetKeyboardKeyState(int positive, int negative) const {
+float CMofInput::GetKeyboardKeyState(int positive, int negative) const {
 	if (positive >= 0 && g_pInput->IsKeyHold(positive)) { return 1.0f; }
 	if (negative >= 0 && g_pInput->IsKeyHold(negative)) { return -1.0f; }
 	return 0;
@@ -24,7 +24,7 @@ float MofInput::GetKeyboardKeyState(int positive, int negative) const {
  * @param[in]	negative		－方向のキー
  * @return		キー入力の値
  */
-float MofInput::GetMouseKeyState(int positive, int negative) const {
+float CMofInput::GetMouseKeyState(int positive, int negative) const {
 	if (positive >= 0 && g_pInput->IsMouseKeyHold(positive)) { return 1.0f; }
 	if (negative >= 0 && g_pInput->IsMouseKeyHold(negative)) { return -1.0f; }
 	return 0;
@@ -37,7 +37,7 @@ float MofInput::GetMouseKeyState(int positive, int negative) const {
  * @param[in]	negative		－方向のキー
  * @return		キー入力の値
  */
-float MofInput::GetJoypadKeyState(int padNo, int positive, int negative) const {
+float CMofInput::GetJoypadKeyState(int padNo, int positive, int negative) const {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{
@@ -53,7 +53,7 @@ float MofInput::GetJoypadKeyState(int padNo, int positive, int negative) const {
  * @param[in]	padNo			パッド番号
  * @return		キー入力の値
  */
-float MofInput::GetJoypadStickHorizontal(int padNo) const {
+float CMofInput::GetJoypadStickHorizontal(int padNo) const {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{
@@ -67,7 +67,7 @@ float MofInput::GetJoypadStickHorizontal(int padNo) const {
  * @param[in]	padNo			パッド番号
  * @return		キー入力の値
  */
-float MofInput::GetJoypadStickVertical(int padNo) const {
+float CMofInput::GetJoypadStickVertical(int padNo) const {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{

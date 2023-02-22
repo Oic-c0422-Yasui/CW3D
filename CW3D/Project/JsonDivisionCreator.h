@@ -13,7 +13,6 @@ namespace ActionGame {
 
 	class JsonDivisionCreator
 	{
-	private:
 	public:
 		/**
 		 * @brief		コンストラクタ

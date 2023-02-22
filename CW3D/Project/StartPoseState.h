@@ -24,7 +24,7 @@ namespace ActionGame
 		//開始ポーズアクション
 		StartPoseActionPtr			m_Action;
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 
 	public:
 		/**

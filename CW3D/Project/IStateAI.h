@@ -23,7 +23,7 @@ namespace ActionGame
 		/**
 		 * @brief		入力登録
 		 */
-		virtual void SetInput(const StateInputPtr& input) = 0;
+		virtual void SetInput(const Input::StateInputPtr& input) = 0;
 	public:
 		/**
 		 * @brief		デストラクタ

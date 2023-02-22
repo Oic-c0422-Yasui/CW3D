@@ -2,13 +2,13 @@
 #include	<memory>
 #include	"SceneDefine.h"
 
-namespace ActionGame
+namespace Scene
 {
 	
 	/*
 	* @brief	シーン用インタフェース
 	*/
-	class IScene
+	class __declspec(novtable) IScene
 	{
 	public:
 

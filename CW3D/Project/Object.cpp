@@ -3,9 +3,9 @@
 using namespace ActionGame;
 
 CObject::CObject(const Vector3& pos, const Vector3& size, const Vector3& offset)
-	: m_Position(pos)
+	: position_(pos)
 	, m_Size(size)
-	, m_Offset(offset)
+	, offset_(offset)
 	, m_ShowFlg(false)
 {
 }

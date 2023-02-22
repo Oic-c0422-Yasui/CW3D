@@ -6,7 +6,7 @@ using namespace ActionGame;
 
 
 CSkillControllerRender::CSkillControllerRender()
-	: m_Position(0, 0)
+	: position_(0, 0)
 {
 }
 
@@ -21,7 +21,7 @@ bool CSkillControllerRender::Load()
 
 	m_pFrame = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "SkillUI");
 	m_pFont = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
-	m_Position = Vector2(582, 884);
+	position_ = Vector2(582, 884);
 
 	FrameSetting();
 
@@ -31,7 +31,7 @@ bool CSkillControllerRender::Load()
 
 void CSkillControllerRender::Render()
 {
-	m_pFrame->Render(m_Position.x, m_Position.y);
+	m_pFrame->Render(position_.x, position_.y);
 }
 
 void CSkillControllerRender::RenderDebug2D()

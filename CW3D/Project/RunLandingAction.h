@@ -5,9 +5,9 @@
 namespace ActionGame {
 
 	/**
-	 * @brief		移動アクション
+	 * @brief		ダッシュ着地アクション
 	 */
-	class RunLandingAction : public Action
+	class RunLandingAction : public CAction
 	{
 	public:
 		/**

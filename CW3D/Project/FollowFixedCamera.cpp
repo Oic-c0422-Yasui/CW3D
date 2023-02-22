@@ -9,7 +9,7 @@ FollowFixedCamera::FollowFixedCamera(const Vector3& pos, const Vector3& lookPos,
 
 FollowFixedCamera::~FollowFixedCamera()
 {
-	m_AnimData.Release();
+	animationData_.Release();
 }
 
 void FollowFixedCamera::Create()
@@ -19,9 +19,9 @@ void FollowFixedCamera::Create()
 
 void FollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
-	m_TargetPos = pos + m_OffsetPos;
-	m_TargetLookPos = lookPos + m_OffsetLookPos;
-	m_Position = m_TargetPos;
-	m_LookPos = m_TargetLookPos;
+	targetPos_ = pos + offsetPos_;
+	targetLookPos_ = lookPos + offsetLookPos_;
+	position_ = targetPos_;
+	lookPos_ = targetLookPos_;
 
 }

@@ -4,7 +4,7 @@
 ActionGame::DeadAction::DeadAction(Parameter param)
 	: CAction()
 	, m_Parameter(param)
-	, m_CurrentTime(0.0f)
+	, currentTime_(0.0f)
 {
 }
 
@@ -14,16 +14,16 @@ void ActionGame::DeadAction::Start()
 		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 	auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-	m_CurrentTime = 0;
+	currentTime_ = 0;
 }
 
 void ActionGame::DeadAction::Execution()
 {
 	if (AnimationState()->IsEndMotion())
 	{
-		m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 		auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-		alpha = MyUtilities::Timer(1.0f, m_CurrentTime, 0, m_Parameter.finishTime);
+		alpha = MyUtil::Timer(1.0f, currentTime_, 0, m_Parameter.finishTime);
 	}
 }
 

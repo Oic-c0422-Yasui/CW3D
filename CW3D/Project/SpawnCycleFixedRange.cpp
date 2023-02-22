@@ -4,17 +4,17 @@
 
 Spawner::SpawnCycleFixedRange::SpawnCycleFixedRange(int interval,CHARA_TYPE type)
 	: m_Interval(interval)
-	, m_CurrentTime(0.0f)
-	, m_Type(type)
+	, currentTime_(0.0f)
+	, type_(type)
 {
 }
 
 bool Spawner::SpawnCycleFixedRange::Update()
 {
-	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-	if (m_CurrentTime > m_Interval)
+	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(type_);
+	if (currentTime_ > m_Interval)
 	{
-		m_CurrentTime -= m_Interval;
+		currentTime_ -= m_Interval;
 		return true;
 	}
 	return false;

@@ -1,5 +1,5 @@
 #pragma once
-#include "SceneBase.h"
+#include "IScene.h"
 #include	"Common.h"
 
 #include	"ResourceManager.h"
@@ -40,7 +40,8 @@
 
 #include	"NPCHPRenderManager.h"
 
-namespace ActionGame
+
+namespace Scene
 {
 	//ゲームの状態
 	enum class GAME_STATE
@@ -54,40 +55,40 @@ namespace ActionGame
 	{
 	private:
 		//プレイヤー
-		PlayerPtr m_Player;
+		PlayerPtr player_;
 		//敵マネージャー
-		ActionGame::EnemyManager m_EnemyManager;
+		ActionGame::EnemyManager enemyManager_;
 		//敵スポナー
-		Spawner::EnemySpawnerArrayPtr m_EnemySpawner;
+		Spawner::EnemySpawnerArrayPtr enemySpawner_;
 		//敵生成スレッド
-		ThreadCreator m_EnemyCreateThread;
+		ThreadCreator enemyCreateThread_;
 		//更新タスク
-		ActionGame::TaskManager	m_UpdateTask;
+		ActionGame::TaskManager	updateTask_;
 		//描画タスク
-		ActionGame::TaskManager	m_RenderTask;
+		ActionGame::TaskManager	renderTask_;
 		//Render2Dタスク
-		ActionGame::TaskManager	m_Render2DTask;
+		ActionGame::TaskManager	render2DTask_;
 
 		//ライト
-		CDirectionalLight m_Light;
+		CDirectionalLight light_;
 		//フォント
-		CFont m_Font;
+		CFont font_;
 
 		//NPCのHPバー
-		ActionGame::NPCHPRenderManager m_NPCHPRender;
+		ActionGame::NPCHPRenderManager npcHpRender_;
 		//プレイヤーUI
-		ActionGame::PlayerUIRenderPtr m_PlayerUIRender;
+		ActionGame::PlayerUIRenderPtr playerUiRender_;
 		//UI作成
-		ActionGame::BattleUICreater m_UICreater;
+		ActionGame::BattleUICreater uiCreater_;
 		//ステージマネージャー
-		ActionGame::StageManager m_StageManager;
+		ActionGame::StageManager stageManager_;
 		//クリア条件に必要なものを渡すプロバイダ
-		ActionGame::ClearTermProviderPtr m_ClearTermProvider;
+		ActionGame::ClearTermProviderPtr clearTermProvider_;
 
 		//現在のゲームの状態
-		GAME_STATE m_CurrentGameState;
+		GAME_STATE currentGameState_;
 
-		ActionGame::CTimer m_Timer;
+		ActionGame::CTimer timer_;
 
 	private:
 		//敵の生成
@@ -118,6 +119,7 @@ namespace ActionGame
 		void Release() override;
 	};
 }
+
 
 
 

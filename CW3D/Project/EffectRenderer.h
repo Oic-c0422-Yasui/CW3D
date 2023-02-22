@@ -13,15 +13,15 @@ namespace ActionGame
 	{
 		friend class Singleton<EffectRenderer>;
 	private:
-		EffekseerRendererDX11::RendererRef m_Renderer;
-		Effekseer::ManagerRef m_Manager;
-		EffekseerSound::SoundRef m_Sound;
-		Effekseer::Handle m_Handle;
-		int currentTime;
+		EffekseerRendererDX11::RendererRef renderer_;
+		Effekseer::ManagerRef manager_;
+		EffekseerSound::SoundRef sound_;
+		Effekseer::Handle handle_;
+		int currentTime_;
 
 		EffectRenderer()
 			: Singleton<EffectRenderer>()
-			, currentTime(0)
+			, currentTime_(0)
 		{
 		}
 
@@ -53,7 +53,7 @@ namespace ActionGame
 		*/
 		 Effekseer::ManagerRef& GetManager()
 		{
-			return m_Manager;
+			return manager_;
 		}
 
 

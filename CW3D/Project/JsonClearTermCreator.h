@@ -13,7 +13,7 @@ namespace ActionGame {
 	class JsonClearTermCreator
 	{
 	private:
-		ClearTermBuilderDictionary dictionary;
+		ClearTermBuilderDictionary dictionary_;
 	public:
 		/**
 		 * @brief		コンストラクタ

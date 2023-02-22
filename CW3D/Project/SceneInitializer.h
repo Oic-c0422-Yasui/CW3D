@@ -1,8 +1,8 @@
 #pragma once
-#include "SceneBase.h"
+#include "IScene.h"
 #include "SceneChangeEffect.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/**
 	 * @brief		シーン初期化用インターフェイス

@@ -3,7 +3,7 @@
 using namespace ActionGame;
 
 ActionGame::EnemyParam::EnemyParam(const std::string& type, const Vector3& pos, bool isBoss)
-	: m_Type(type)
+	: type_(type)
 	, m_Pos(pos)
 	, m_IsBoss(isBoss)
 

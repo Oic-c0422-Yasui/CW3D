@@ -15,9 +15,9 @@ namespace Spawner
 		float			m_Interval;
 
 		//待機時間
-		float			m_CurrentTime;
+		float			currentTime_;
 
-		CHARA_TYPE		m_Type;
+		CHARA_TYPE		type_;
 	public:
 		/**
 		 *	@brief		コンストラクタ
@@ -34,7 +34,7 @@ namespace Spawner
 		 * @brief		状態リセット
 		 */
 		void Reset() override {
-			m_CurrentTime = 0;
+			currentTime_ = 0;
 		}
 	};
 

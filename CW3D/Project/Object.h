@@ -6,9 +6,9 @@ namespace ActionGame
 	class CObject
 	{
 	protected:
-		CVector3 m_Position;
+		CVector3 position_;
 		CVector3 m_Size;
-		CVector3 m_Offset;
+		CVector3 offset_;
 		bool	 m_ShowFlg;
 	public:
 		CObject(const Vector3& pos, const Vector3& size, const Vector3& offset);
@@ -18,11 +18,11 @@ namespace ActionGame
 
 		CAABB GetCollider()
 		{			
-			return CAABB(m_Position + m_Offset, m_Size);
+			return CAABB(position_ + offset_, m_Size);
 		}
 		const Vector3& GetPosition() const noexcept
 		{
-			return m_Position;
+			return position_;
 		}
 
 		bool IsShow() const noexcept

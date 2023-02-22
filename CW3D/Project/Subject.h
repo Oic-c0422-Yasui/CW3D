@@ -7,22 +7,22 @@
 namespace ActionGame {
 
 	template <class... Args>
-	class Subject : public IObservable<Args...> {
+	class CSubject : public IObservable<Args...> {
 	private:
 		/** 通知を受けるオブザーバーリスト */
-		std::vector<std::shared_ptr< IObserver<Args...> >> observerList;
+		std::vector<std::shared_ptr< IObserver<Args...> >> observerList_;
 	public:
 		/**
 		 * コンストラクタ
 		 */
-		Subject()
-			: observerList()
+		CSubject()
+			: observerList_()
 		{
 		}
 		/**
 		 * デストラクタ
 		 */
-		virtual ~Subject()
+		virtual ~CSubject()
 		{
 		}
 
@@ -30,7 +30,7 @@ namespace ActionGame {
 		 * @brief	通知を受けるオブザーバーの登録
 		 */
 		void Subscribe(std::shared_ptr < IObserver<Args...> > pobs) override {
-			observerList.push_back(pobs);
+			observerList_.push_back(pobs);
 		}
 
 		/**
@@ -38,7 +38,7 @@ namespace ActionGame {
 		 */
 		std::shared_ptr < ObserverFunction<Args...> > Subscribe(std::function<void(Args...)> f) override {
 			auto func = std::make_shared< ObserverFunction<Args...> >(f);
-			observerList.push_back(func);
+			observerList_.push_back(func);
 			return func;
 		}
 
@@ -46,17 +46,73 @@ namespace ActionGame {
 		 * @brief	通知を受けるオブザーバーの削除
 		 */
 		void Dispose(std::shared_ptr < IObserver<Args...> > pobs) override {
-			observerList.erase(std::remove_if(
-				observerList.begin(), observerList.end(),
+			observerList_.erase(std::remove_if(
+				observerList_.begin(), observerList_.end(),
 				[&](const std::shared_ptr < IObserver<Args...> >& o) {return o == pobs; }),
-				observerList.end());
+				observerList_.end());
 		}
 
 		/**
 		 * @brief	通知メソッド
 		 */
 		void Notify(Args... args) {
-			for (auto& obj : observerList) {
+			for (auto& obj : observerList_) {
+				obj->Notify(args...);
+			}
+		}
+	};
+
+	template <>
+	class CSubject<void> : public IObservable<void> {
+	private:
+		/** 通知を受けるオブザーバーリスト */
+		std::vector<std::shared_ptr< IObserver<void> >> observerList_;
+	public:
+		/**
+		 * コンストラクタ
+		 */
+		CSubject()
+			: observerList_()
+		{
+		}
+		/**
+		 * デストラクタ
+		 */
+		virtual ~CSubject()
+		{
+		}
+
+		/**
+		 * @brief	通知を受けるオブザーバーの登録
+		 */
+		void Subscribe(std::shared_ptr < IObserver<void> > pobs) override {
+			observerList_.push_back(pobs);
+		}
+
+		/**
+		 * @brief	通知を受けるオブザーバーの登録
+		 */
+		std::shared_ptr < ObserverFunction<void> > Subscribe(std::function<void()> f) override {
+			auto func = std::make_shared< ObserverFunction<void> >(f);
+			observerList_.push_back(func);
+			return func;
+		}
+
+		/**
+		 * @brief	通知を受けるオブザーバーの削除
+		 */
+		void Dispose(std::shared_ptr < IObserver<Args...> > pobs) override {
+			observerList_.erase(std::remove_if(
+				observerList_.begin(), observerList_.end(),
+				[&](const std::shared_ptr < IObserver<Args...> >& o) {return o == pobs; }),
+				observerList_.end());
+		}
+
+		/**
+		 * @brief	通知メソッド
+		 */
+		void Notify(Args... args) {
+			for (auto& obj : observerList_) {
 				obj->Notify(args...);
 			}
 		}

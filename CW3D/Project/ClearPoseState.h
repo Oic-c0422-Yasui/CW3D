@@ -17,7 +17,7 @@ namespace ActionGame {
 		//ダウンステート
 		ClearPoseActionPtr			m_ClearPoseAction;
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 
 		bool						m_AnimStartFlg;
 

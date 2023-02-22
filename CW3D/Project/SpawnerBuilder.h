@@ -5,6 +5,9 @@
 
 namespace Spawner
 {
+	/*
+	* @brief	スポナーのビルダー
+	*/
 	class SpawnerBuilder
 	{
 	private:

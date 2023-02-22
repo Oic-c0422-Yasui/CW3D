@@ -11,7 +11,6 @@ bool ActionGame::MutantParameterCreator::Create(const AnyParameterMapPtr& param)
 	param->Add<ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE, 100.0f);
 	param->Add<bool>(PARAMETER_KEY_ESCAPE, false);
 	param->Add<ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP, false);
-	param->Add<bool>(PARAMETER_KEY_THROUGH_COLLISION, false);
 	param->Add<BYTE>(PARAMETER_KEY_ARMORLEVEL, 1);
 	param->Add<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL, 1);
 

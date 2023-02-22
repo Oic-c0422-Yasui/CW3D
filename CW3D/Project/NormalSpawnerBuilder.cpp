@@ -18,7 +18,7 @@ EnemySpawnerPtr Spawner::NormalSpawnerBuilder::Create(nlohmann::json& os)
 
 EnemySpawnerPtr Spawner::NormalSpawnerBuilder::Create()
 {
-    auto spawner = std::make_shared<EnemySpawner>(
+    auto spawner = std::make_shared<CEnemySpawner>(
         Spawner::SpawnConditionArray{ },
         std::make_shared<Spawner::SpawnCycleFixedRange>(m_CycleTime, CHARA_TYPE::ENEMY)
         );

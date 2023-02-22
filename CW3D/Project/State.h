@@ -20,7 +20,7 @@ namespace ActionGame {
 		StateMachineWeakPtr			stateMachine_;
 
 		/** 入力クラス */
-		InputPtr					input_;
+		Input::InputPtr					input_;
 
 		StateKeyType				tempChangeKey_;
 
@@ -38,7 +38,7 @@ namespace ActionGame {
 		/**
 		 * @brief		入力登録
 		 */
-		void SetInput(InputPtr input) final { input_ = input; }
+		void SetInput(Input::InputPtr input) final { input_ = input; }
 	protected:
 		/**
 		 * @brief		コンストラクタ
@@ -50,7 +50,7 @@ namespace ActionGame {
 		}
 
 		/** privateメンバ取得専用 */
-		const InputPtr& Input() { return input_; }
+		const Input::InputPtr& Input() { return input_; }
 		const ActorPtr& Actor() { return actor_; }
 
 		/**
@@ -99,7 +99,7 @@ namespace ActionGame {
 		 * @return		生成したステート
 		 */
 		template < typename T, typename... _Args >
-		static std::shared_ptr< T > Create(ActorPtr actor, InputPtr input, _Args&& ... args) {
+		static std::shared_ptr< T > Create(ActorPtr actor, Input::InputPtr input, _Args&& ... args) {
 			if (!std::is_base_of<State, T >::value)
 			{
 				return std::shared_ptr<T>();

@@ -1,28 +1,28 @@
 #include "SceneManager.h"
 #include "LoadingScene.h"
 
-using namespace ActionGame;
+using namespace Scene;
 
 
 
-SceneManager::SceneManager()
+Scene::SceneManager::SceneManager()
 	: m_DebugFlg(false)
 	, m_SceneInitFlg(false)
 	, m_Scene()
 {
 }
 
-SceneManager::~SceneManager()
+Scene::SceneSceneManager::~SceneManager()
 {
 
 }
 
-void ActionGame::SceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
+void Scene::SceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
 {
 	m_SceneMap[sceneNo] = std::move(creator);
 }
 
-bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo)
+bool Scene::SceneManager::ChangeScene(SCENENO sceneNo)
 {
 	//古いシーンを破棄
 	if (m_Scene)
@@ -40,7 +40,7 @@ bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo)
 	return true;
 }
 
-bool ActionGame::SceneManager::ChangeScene(const ScenePtr& scene)
+bool Scene::SceneManager::ChangeScene(const ScenePtr& scene)
 {
 	auto temp = scene;
 	//古いシーンを破棄
@@ -52,7 +52,7 @@ bool ActionGame::SceneManager::ChangeScene(const ScenePtr& scene)
 	return true;
 }
 
-void ActionGame::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
+void Scene::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
 {
 	m_SceneEffect = effect;
 	m_SceneInitFlg = false;
@@ -60,7 +60,7 @@ void ActionGame::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
 	
 }
 
-bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo, bool isLoading)
+bool Scene::SceneManager::ChangeScene(SCENENO sceneNo, bool isLoading)
 {
 	//ロードを挟まないなら普通にシーン切り替え
 	if (!isLoading)
@@ -88,22 +88,22 @@ bool ActionGame::SceneManager::ChangeScene(SCENENO sceneNo, bool isLoading)
 }
 
 
-bool SceneManager::Load()
+bool Scene::SceneManager::Load()
 {
 
 	return true;
 }
 
-void SceneManager::Initialize()
+void Scene::SceneManager::Initialize()
 {
-	m_UpdateTask.DeleteAllTaskImmediate();
-	m_RenderTask.DeleteAllTaskImmediate();
-	m_Render2DTask.DeleteAllTaskImmediate();
+	updateTask_.DeleteAllTaskImmediate();
+	renderTask_.DeleteAllTaskImmediate();
+	render2DTask_.DeleteAllTaskImmediate();
 	//タスク登録
 	RegisterTask();
 }
 
-void SceneManager::Update()
+void Scene::SceneManager::Update()
 {
 	//デバッグ切り替え
 	if (g_pInput->IsKeyHold(MOFKEY_LCONTROL) && g_pInput->IsKeyPush(MOFKEY_F1))
@@ -122,27 +122,27 @@ void SceneManager::Update()
 	}
 
 	//更新タスク
-	m_UpdateTask.Excution();
+	updateTask_.Excution();
 
 }
 
-void SceneManager::Render()
+void Scene::SceneManager::Render()
 {
 	
 	//深度バッファ有効化
 	g_pGraphics->SetDepthEnable(TRUE);
 
 	//描画タスク
-	m_RenderTask.Excution();
+	renderTask_.Excution();
 
 	//深度バッファ無効化
 	g_pGraphics->SetDepthEnable(FALSE);
 
 	//描画タスク
-	m_Render2DTask.Excution();
+	render2DTask_.Excution();
 }
 
-void SceneManager::Release()
+void Scene::SceneManager::Release()
 {
 	if (m_Scene)
 	{
@@ -152,7 +152,7 @@ void SceneManager::Release()
 }
 
 
-void ActionGame::SceneManager::RegisterTask()
+voidScene::SceneManager::RegisterTask()
 {
 	//更新タスク
 	RegisterUpdateTask();
@@ -162,12 +162,12 @@ void ActionGame::SceneManager::RegisterTask()
 	RegisterRender2DTask();
 }
 
-void ActionGame::SceneManager::RegisterUpdateTask()
+void Scene::SceneManager::RegisterUpdateTask()
 {
 	/////////////////////////////////////////////////////
 	///			更新タスク
 	/////////////////////////////////////////////////////
-	m_UpdateTask.AddTask("UpdateScene", TASK_MAIN1,
+	updateTask_.AddTask("UpdateScene", TASK_MAIN1,
 		[&]()
 			{
 				if (m_Scene)
@@ -179,12 +179,12 @@ void ActionGame::SceneManager::RegisterUpdateTask()
 	
 }
 
-void ActionGame::SceneManager::RegisterRenderTask()
+void Scene::SceneManager::RegisterRenderTask()
 {
 	/////////////////////////////////////////////////////
 	///			描画タスク
 	/////////////////////////////////////////////////////
-	m_RenderTask.AddTask("RenderScene", TASK_MAIN1,
+	renderTask_.AddTask("RenderScene", TASK_MAIN1,
 		[&]()
 	{
 		if (m_Scene)
@@ -196,12 +196,12 @@ void ActionGame::SceneManager::RegisterRenderTask()
 
 }
 
-void ActionGame::SceneManager::RegisterRender2DTask()
+void Scene::SceneManager::RegisterRender2DTask()
 {
 	/////////////////////////////////////////////////////
 	///			2D描画タスク
 	/////////////////////////////////////////////////////
-	m_Render2DTask.AddTask("Render2DScene", TASK_MAIN2,
+	render2DTask_.AddTask("Render2DScene", TASK_MAIN2,
 		[&]()
 	{
 		if (m_Scene)
@@ -213,21 +213,21 @@ void ActionGame::SceneManager::RegisterRender2DTask()
 	
 }
 
-void ActionGame::SceneManager::DeleteTask()
+void Scene::SceneManager::DeleteTask()
 {
-	m_UpdateTask.DeleteTask("UpdateScene");
-	m_RenderTask.DeleteTask("RenderScene");
-	m_Render2DTask.DeleteTask("Render2DScene");
+	updateTask_.DeleteTask("UpdateScene");
+	renderTask_.DeleteTask("RenderScene");
+	render2DTask_.DeleteTask("Render2DScene");
 }
 
-void ActionGame::SceneManager::RegisterDebugTask()
+void Scene::SceneManager::RegisterDebugTask()
 {
 	/////////////////////////////////////////////////////
 	///			デバッグタスク
 	/////////////////////////////////////////////////////
 
 	//更新
-	m_UpdateTask.AddTask("UpdateDebug", TASK_MAIN1,
+	updateTask_.AddTask("UpdateDebug", TASK_MAIN1,
 		[&]()
 			{
 				//シーン遷移
@@ -246,7 +246,7 @@ void ActionGame::SceneManager::RegisterDebugTask()
 		);
 
 	//描画
-	m_RenderTask.AddTask("RenderDebug", TASK_MAIN1,
+	renderTask_.AddTask("RenderDebug", TASK_MAIN1,
 		[&]()
 			{
 				if (m_Scene)
@@ -257,7 +257,7 @@ void ActionGame::SceneManager::RegisterDebugTask()
 			}
 		);
 	//２D描画
-	m_Render2DTask.AddTask("RenderDebug2D", TASK_MAIN3,
+	render2DTask_.AddTask("RenderDebug2D", TASK_MAIN3,
 		[&]()
 	{
 		if (m_Scene)
@@ -269,21 +269,21 @@ void ActionGame::SceneManager::RegisterDebugTask()
 
 }
 
-void ActionGame::SceneManager::DeleteDebugTask()
+void Scene::SceneManager::DeleteDebugTask()
 {
-	m_UpdateTask.DeleteTask("UpdateDebug");
-	m_RenderTask.DeleteTask("RenderDebug");
-	m_Render2DTask.DeleteTask("RenderDebug2D");
+	updateTask_.DeleteTask("UpdateDebug");
+	renderTask_.DeleteTask("RenderDebug");
+	render2DTask_.DeleteTask("RenderDebug2D");
 }
 
-void ActionGame::SceneManager::RegisterSceneChangeEffectTask()
+void Scene::SceneManager::RegisterSceneChangeEffectTask()
 {
 	/////////////////////////////////////////////////////
 	///			シーン遷移エフェクトタスク
 	/////////////////////////////////////////////////////
 
 	//更新
-	m_UpdateTask.AddTask("SceneChangeEffectUpdate", TASK_MAIN1,
+	updateTask_.AddTask("SceneChangeEffectUpdate", TASK_MAIN1,
 		[&]()
 			{
 				m_SceneEffect->Update();
@@ -300,7 +300,7 @@ void ActionGame::SceneManager::RegisterSceneChangeEffectTask()
 	);
 
 	//２D描画
-	m_Render2DTask.AddTask("SceneChangeEffectRender", TASK_MAIN3,
+	render2DTask_.AddTask("SceneChangeEffectRender", TASK_MAIN3,
 		[&]()
 	{
 		m_SceneEffect->Render(m_Scene, m_Scene);
@@ -308,12 +308,12 @@ void ActionGame::SceneManager::RegisterSceneChangeEffectTask()
 	);
 }
 
-void ActionGame::SceneManager::DeleteSceneChangeEffectTask()
+void Scene::SceneManager::DeleteSceneChangeEffectTask()
 {
 	/////////////////////////////////////////////////////
 	///			2D描画タスク
 	/////////////////////////////////////////////////////
-	m_UpdateTask.DeleteTask("SceneChangeEffectUpdate");
+	updateTask_.DeleteTask("SceneChangeEffectUpdate");
 
-	m_Render2DTask.DeleteTask("SceneChangeEffectRender");
+	render2DTask_.DeleteTask("SceneChangeEffectRender");
 }

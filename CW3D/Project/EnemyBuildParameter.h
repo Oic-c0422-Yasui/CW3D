@@ -9,7 +9,7 @@ namespace ActionGame
 	struct EnemyParam
 	{
 	public:
-		std::string m_Type;
+		std::string type_;
 		Vector3 m_Pos;
 		bool m_IsBoss;
 

@@ -20,7 +20,7 @@ namespace ActionGame {
 		//ダメージステート
 		DamageActionPtr			m_DamageAction;
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 
 	public:
 		/**

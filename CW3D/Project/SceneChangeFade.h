@@ -2,18 +2,18 @@
 #include "SceneChangeEffect.h"
 #include "Common.h"
 
-namespace ActionGame
+namespace Scene
 {
     class SceneChangeFade : public ISceneChangeEffect
     {
     private:
-        float   m_CurrentTime;
-        float   m_EndTime;
-        float   m_StartTime;
-        float   m_DurationTime;
-        float   m_AllTime;
-        int     m_Alpha;
-        bool    m_HalfPointFlg;
+        float   currentTime_;
+        float   endTime_;
+        float   startTime_;
+        float   durationTime_;
+        float   totalTime_;
+        int     alpha_;
+        bool    isHalfPoint_;
     public:
         /*
         * @brief    コンストラクタ

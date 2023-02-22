@@ -1,11 +1,11 @@
 #pragma once
-#include "SceneBase.h"
+#include "IScene.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
 #include "GameDefine.h"
 #include "SceneChanger.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/*
 	* @brief	タイトルシーン

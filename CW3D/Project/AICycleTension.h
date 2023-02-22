@@ -12,19 +12,15 @@ namespace ActionGame
 	{
 	private:
 		//元のアクター
-		ActorPtr		m_Actor;
+		ActorPtr		actor_;
 
 		//待機時間
-		int			m_CurrentTime;
+		int			currentTime_;
 	public:
 		/**
 		 *	@brief		コンストラクタ
 		 */
-		AICycleTension(ActorPtr actor)
-			: m_Actor(actor)
-			, m_CurrentTime(0)
-		{
-		}
+		AICycleTension(ActorPtr actor);
 
 		/**
 		 * @brief		更新
@@ -36,7 +32,7 @@ namespace ActionGame
 		 * @brief		状態リセット
 		 */
 		void Reset() override {
-			m_CurrentTime = 0;
+			currentTime_ = 0;
 		}
 	};
 }

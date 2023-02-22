@@ -83,7 +83,7 @@ namespace ActionGame
 		* @param	changeTime	タイムスケールの変化にかかる時間
 		* @param	easeType	イージングタイプ
 		*/
-		void SetTimeScale(float scale, float changeTime, MyUtilities::EASING_TYPE easeType ) noexcept
+		void SetTimeScale(float scale, float changeTime, MyUtil::EASING_TYPE easeType ) noexcept
 		{
 			m_TimeScale.SetScale(scale,changeTime,easeType);
 		}
@@ -93,12 +93,12 @@ namespace ActionGame
 		* @param	changeTime	タイムスケールの変化にかかる時間
 		* @param	easeType	イージングタイプ
 		*/
-		void SetTimeScale(const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
+		void SetTimeScale(const MyUtil::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			m_TimeScale.SetScale(anim);
 		}
 
-		void SetTimeScale(CHARA_TYPE id,float scale, float changeTime, MyUtilities::EASING_TYPE easeType = MyUtilities::EASING_TYPE::LINER) noexcept
+		void SetTimeScale(CHARA_TYPE id,float scale, float changeTime, MyUtil::EASING_TYPE easeType = MyUtil::EASING_TYPE::LINER) noexcept
 		{
 			switch (id)
 			{
@@ -118,7 +118,7 @@ namespace ActionGame
 			
 		}
 
-		void SetTimeScale(CHARA_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
+		void SetTimeScale(CHARA_TYPE id,const MyUtil::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			switch (id)
 			{
@@ -139,7 +139,7 @@ namespace ActionGame
 
 
 		//ID以外のタイムスケールを変える
-		void SetOtherTimeScale(CHARA_TYPE id,float scale,float changeTime, MyUtilities::EASING_TYPE easeType = MyUtilities::EASING_TYPE::LINER) noexcept
+		void SetOtherTimeScale(CHARA_TYPE id,float scale,float changeTime, MyUtil::EASING_TYPE easeType = MyUtil::EASING_TYPE::LINER) noexcept
 		{
 			switch (id)
 			{
@@ -161,7 +161,7 @@ namespace ActionGame
 		}
 
 
-		void SetOtherTimeScale(CHARA_TYPE id,const MyUtilities::ANIM_DATA_ARRAY& anim) noexcept
+		void SetOtherTimeScale(CHARA_TYPE id,const MyUtil::ANIM_DATA_ARRAY& anim) noexcept
 		{
 			switch (id)
 			{

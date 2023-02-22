@@ -2,12 +2,12 @@
 
 #include	"IInput.h"
 
-namespace ActionGame {
+namespace Input {
 	
 	/**
 	 * @brief		ì¸óÕÉNÉâÉX
 	 */
-	class Input : public IInput
+	class CInput : public IInput
 	{
 	protected:
 		/** ÉLÅ[èÛë‘ */
@@ -26,28 +26,28 @@ namespace ActionGame {
 				int				m_PositiveNo;
 				int				m_NegativeNo;
 				int				m_PadNo;
-				Type			m_Type;
+				Type			type_;
 			};
 			std::vector<Key>	m_Key;
-			float				m_PreviousValue;
-			float				m_NowValue;
-			float				m_InputValue;
-			float				m_HoldTime;
-			float				m_PushTime;
+			float				previousValue_;
+			float				currentValue_;
+			float				inputValue_;
+			float				holdTime_;
+			float				pushTime_;
 			int					m_PushCount;
 			KeyData()
 				: m_Key()
-				, m_PreviousValue(0)
-				, m_NowValue(0)
-				, m_InputValue(0.5f)
-				, m_HoldTime(0.0f)
-				, m_PushTime(0.0f)
+				, previousValue_(0)
+				, currentValue_(0)
+				, inputValue_(0.5f)
+				, holdTime_(0.0f)
+				, pushTime_(0.0f)
 				, m_PushCount(0.0f)
 			{
 			}
 		};
 		using KeyMap = std::unordered_map<KeyType, KeyData >;
-		KeyMap					m_KeyMap;
+		KeyMap					keyMap_;
 
 		/**
 		 * @brief		ÉLÅ[É{Å[ÉhÉLÅ[ÇÃéÊìæ
@@ -91,117 +91,56 @@ namespace ActionGame {
 		/**
 		 * @brief		ÉRÉìÉXÉgÉâÉNÉ^
 		 */
-		Input()
-			: m_KeyMap()
-		{ }
+		CInput();
 		/**
 		 * @brief		ÉfÉXÉgÉâÉNÉ^
 		 */
-		~Input() override = default;
+		~CInput() override = default;
+
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn				ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName				ìoò^ÉLÅ[ñº
 		 * @param[in]	key				ìoò^ÉLÅ[
 		 */
-		void AddKeyboardKey(const KeyType& kn, int key) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
-			}
-		}
+		void AddKeyboardKey(const KeyType& keyName, int key);
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn				ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName				ìoò^ÉLÅ[ñº
 		 * @param[in]	positiveKey		+ï˚å¸ÇÃìoò^ÉLÅ[
 		 * @param[in]	negativeKey		-ï˚å¸ÇÃìoò^ÉLÅ[
 		 */
-		void AddKeyboardKey(const KeyType& kn, int positiveKey, int negativeKey) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
-			}
-		}
+		void AddKeyboardKey(const KeyType& keyName, int positiveKey, int negativeKey);
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @param[in]	Key		ìoò^ÉLÅ[
 		 */
-		void AddMouseKey(const KeyType& kn, int Key) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
-			}
-		}
+		void AddMouseKey(const KeyType& keyName, int Key);
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn				ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName				ìoò^ÉLÅ[ñº
 		 * @param[in]	pad				ìoò^ÉpÉbÉh
 		 * @param[in]	key				ìoò^ÉLÅ[
 		 */
-		void AddJoypadKey(const KeyType& kn, int pad, int key) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
-			}
-		}
+		void AddJoypadKey(const KeyType& keyName, int pad, int key);
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn				ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName				ìoò^ÉLÅ[ñº
 		 * @param[in]	pad				ìoò^ÉpÉbÉh
 		 */
-		void AddJoyStickHorizontal(const KeyType& kn, int pad) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
-			}
-		}
+		void AddJoyStickHorizontal(const KeyType& keyName, int pad);
 
 		/**
 		 * @brief		ìoò^ÉLÅ[ÇÃí«â¡
-		 * @param[in]	kn				ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName				ìoò^ÉLÅ[ñº
 		 * @param[in]	pad				ìoò^ÉpÉbÉh
 		 */
-		void AddJoyStickVertical(const KeyType& kn, int pad) {
-			auto km = m_KeyMap.find(kn);
-			if (km != m_KeyMap.end())
-			{
-				km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
-			}
-			else
-			{
-				m_KeyMap[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
-			}
-		}
+		void AddJoyStickVertical(const KeyType& keyName, int pad);
 
 		/**
 		 * @brief		çXêV
@@ -210,159 +149,96 @@ namespace ActionGame {
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[ÇÃì¸óÕílÇéÊìæ
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		ÉLÅ[ì¸óÕÇÃíl
 		 */
-		float GetAxis(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue;
-		}
+		float GetAxis(const KeyType & keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…âüÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕâüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsPush(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < kd.m_InputValue;
-		}
+		bool IsPush(const KeyType & keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…âüÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕâüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsDoublePush(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < kd.m_InputValue &&
-				kd.m_PushTime < DOUBLE_PUSH_TIME;
-		}
+		bool IsDoublePush(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…âüÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕâüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsNegativePush(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue < -kd.m_InputValue && kd.m_PreviousValue > -kd.m_InputValue;
-		}
+		bool IsNegativePush(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…âüÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕâüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsNegativeDoublePush(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue < -kd.m_InputValue && kd.m_PreviousValue > -kd.m_InputValue &&
-				kd.m_PushTime < DOUBLE_PUSH_TIME;
-		}
+		bool IsNegativeDoublePush(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…ó£Ç≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ó£Ç≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕó£Ç≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsPull(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue < kd.m_InputValue && kd.m_PreviousValue > kd.m_InputValue;
-		}
+		bool IsPull(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™Ç±ÇÃÉtÉåÅ[ÉÄÇ…ó£Ç≥ÇÍÇΩÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ó£Ç≥ÇÍÇΩ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈ÇÕó£Ç≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsNegativePull(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue > kd.m_InputValue && kd.m_PreviousValue < -kd.m_InputValue;
-		}
+		bool IsNegativePull(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢ÇÈ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsPress(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue > kd.m_InputValue;
-		}
+		bool IsPress(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™âΩïbâüÇ≥ÇÍÇƒÇ¢ÇÈÇ©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢ÇÈ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		float GetPressTime(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_HoldTime;
-		}
-		/**
-		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
-		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢ÇÈ
-		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
-		 */
-		float GetNegativePressTime(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_HoldTime;
-		}
+		float GetPressTime(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
-		 * @param[in]	kn		ìoò^ÉLÅ[ñº
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
 		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢ÇÈ
 		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
 		 */
-		bool IsNegativePress(const KeyType& kn) const override {
-			const auto& v = m_KeyMap.find(kn);
-			if (v == m_KeyMap.end()) { return 0; }
-			const KeyData& kd = v->second;
-			return kd.m_NowValue < -kd.m_InputValue;
-		}
+		float GetNegativePressTime(const KeyType& keyName) const override;
+
+		/**
+		 * @brief		éwíËñºèÃÇÃìoò^ÉLÅ[Ç™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
+		 * @param[in]	keyName		ìoò^ÉLÅ[ñº
+		 * @return		true	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢ÇÈ
+		 *				false	Ç±ÇÃÉtÉåÅ[ÉÄÇ≈âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢
+		 */
+		bool IsNegativePress(const KeyType& keyName) const override;
 
 		/**
 		 * @brief		ìoò^Ç≥ÇÍÇƒÇ¢ÇÈÉLÅ[îzóÒ
 		 * @return		ÉLÅ[ÇÃéØï îzóÒ
 		 */
-		std::vector<KeyType> GetKeyList() const override {
-			std::vector<KeyType> keys;
-			for (auto& key : m_KeyMap)
-			{
-				keys.push_back(key.first);
-			}
-			return keys;
-		}
+		std::vector<KeyType> GetKeyList() const override;
 	};
 
 }

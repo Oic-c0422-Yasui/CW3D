@@ -4,12 +4,12 @@
 ActionGame::DownState::DownState(Parameter param)
 	: State()
 	, m_Parameter(param)
-	, m_CurrentTime(0) {
+	, currentTime_(0) {
 }
 
 void ActionGame::DownState::Start()
 {
-	m_CurrentTime = 0;
+	currentTime_ = 0;
 	auto& invincible = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	invincible = m_Parameter.endTime;
 	m_DownAction = Actor()->GetAction<DownAction>(GetKey());
@@ -20,9 +20,9 @@ void ActionGame::DownState::Execution()
 {
 	m_DownAction->Execution();
 
-	if (m_CurrentTime < m_Parameter.endTime)
+	if (currentTime_ < m_Parameter.endTime)
 	{
-		m_CurrentTime += CUtilities::GetFrameSecond();
+		currentTime_ += CUtilities::GetFrameSecond();
 	}
 	else
 	{

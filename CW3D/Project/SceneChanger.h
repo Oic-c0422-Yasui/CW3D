@@ -1,8 +1,8 @@
 #pragma once
 
-#include	"SceneBase.h"
+#include	"IScene.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/**
 	 * @brief		シーン変更用インターフェイス

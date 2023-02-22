@@ -25,7 +25,7 @@ namespace ActionGame
 		std::shared_ptr<CTexture>			m_pSkill;
 		std::shared_ptr<CFont>				m_pFont;
 
-		Vector2 m_Position;
+		Vector2 position_;
 		
 		SkillFrame m_SkillFrame[SKILLMAX_COUNT];
 
@@ -62,7 +62,7 @@ namespace ActionGame
 
 		const Vector2& GetPosition() noexcept
 		{
-			return m_Position;
+			return position_;
 		}
 		const Vector2& GetSkillPosition(int id)
 		{

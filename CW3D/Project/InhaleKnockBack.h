@@ -7,17 +7,17 @@ namespace ActionGame
 	/*
 	* @brief	吸引ノックバック
 	*/
-	class InhaleKnockBack : public IKnockBack 
+	class CInhaleKnockBack : public IKnockBack 
 	{
 	private:
-		ActorPtr actor;
+		ActorPtr actor_;
 	public:
-		InhaleKnockBack(const ActorPtr& actor)
-			: actor(actor)
+		CInhaleKnockBack(const ActorPtr& actor)
+			: actor_(actor)
 		{
 		}
 		Vector3 Get(const CVector3& otherPos) const override {
-			CVector3 n = actor->GetPosition() - otherPos;
+			CVector3 n = actor_->GetPosition() - otherPos;
 			n.Normal(n);
 			return n;
 		}

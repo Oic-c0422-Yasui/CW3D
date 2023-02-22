@@ -10,24 +10,24 @@ namespace ActionGame
 	/*
 	* @brief	姿勢変換クラス
 	*/
-	class  Transform
+	class  CTransform
 	{
 	
 	protected:
 
-		CVector3	m_Position;
+		CVector3	position_;
 
-		CVector3	m_Scale;
+		CVector3	scale_;
 
-		CVector3	m_Rotate;
+		CVector3	rotate_;
 
-		CMatrix44	m_World;
+		CMatrix44	world_;
 
-		bool		m_UpdateFlg;
+		bool		isUpdate_;
 
-		bool		m_ReverseFlg;
+		bool		isReverse_;
 
-		CHARA_TYPE m_Type;
+		CHARA_TYPE type_;
 
 	private:
 		/* プライベート関数　*/
@@ -37,7 +37,7 @@ namespace ActionGame
 
 	public:
 		
-		Transform();
+		CTransform();
 
 		//マトリクスを取得
 		/*
@@ -45,12 +45,12 @@ namespace ActionGame
 		* @return	マトリクス
 		*/
 		const CMatrix44& GetWorld() {
-			if (m_UpdateFlg)
+			if (isUpdate_)
 			{
 				UpdateMatrix();
-				m_UpdateFlg = false;
+				isUpdate_ = false;
 			}
-			return m_World;
+			return world_;
 		}
 
 		/*
@@ -59,7 +59,7 @@ namespace ActionGame
 		*/
 		void SetReverse(bool isReverse) noexcept
 		{
-			m_ReverseFlg = isReverse;
+			isReverse_ = isReverse;
 		}
 
 		/*
@@ -68,7 +68,7 @@ namespace ActionGame
 		*/
 		bool IsReverse() const noexcept
 		{
-			return m_ReverseFlg;
+			return isReverse_;
 		}
 		/*
 		* @brief	反転しているか？
@@ -76,7 +76,7 @@ namespace ActionGame
 		*/
 		void SetType(CHARA_TYPE type) noexcept
 		{
-			m_Type = type;
+			type_ = type;
 		}
 
 		////////////////////////////////////////////////////////////////
@@ -139,8 +139,8 @@ namespace ActionGame
 			*/
 			void SetPositionX(float position) noexcept
 			{
-				m_Position.x = position;
-				m_World.SetTranslation(m_Position);
+				position_.x = position;
+				world_.SetTranslation(position_);
 			}
 
 			/*
@@ -149,8 +149,8 @@ namespace ActionGame
 			*/
 			void SetPositionY(float position) noexcept
 			{
-				m_Position.y = position;
-				m_World.SetTranslation(m_Position);
+				position_.y = position;
+				world_.SetTranslation(position_);
 			}
 
 			/*
@@ -159,8 +159,8 @@ namespace ActionGame
 			*/
 			void SetPositionZ(float position) noexcept
 			{
-				m_Position.z = position;
-				m_World.SetTranslation(m_Position);
+				position_.z = position;
+				world_.SetTranslation(position_);
 			}
 
 			/*
@@ -169,7 +169,7 @@ namespace ActionGame
 			*/
 			const CVector3& GetPosition() const noexcept
 			{
-				return m_Position;
+				return position_;
 			}
 
 			/*
@@ -178,7 +178,7 @@ namespace ActionGame
 			*/
 			float GetPositionX() const noexcept
 			{
-				return m_Position.x;
+				return position_.x;
 			}
 
 			/*
@@ -187,7 +187,7 @@ namespace ActionGame
 			*/
 			float GetPositionY() const noexcept
 			{
-				return m_Position.y;
+				return position_.y;
 			}
 
 			/*
@@ -196,7 +196,7 @@ namespace ActionGame
 			*/
 			float GetPositionZ() const noexcept
 			{
-				return m_Position.z;
+				return position_.z;
 			}
 
 		////////////////////////////////////////////////////////////////
@@ -209,8 +209,8 @@ namespace ActionGame
 			*/
 			void AddScale(const Vector3& changeScale) noexcept
 			{
-				m_Scale += changeScale;
-				m_UpdateFlg = true;
+				scale_ += changeScale;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -219,8 +219,8 @@ namespace ActionGame
 			*/
 			void SetScale(const Vector3& scale) noexcept
 			{
-				m_Scale = scale;
-				m_UpdateFlg = true;
+				scale_ = scale;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -229,8 +229,8 @@ namespace ActionGame
 			*/
 			void SetScaleX(float scale) noexcept
 			{
-				m_Scale.x = scale;
-				m_UpdateFlg = true;
+				scale_.x = scale;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -239,8 +239,8 @@ namespace ActionGame
 			*/
 			void SetScaleY(float scale) noexcept
 			{
-				m_Scale.y = scale;
-				m_UpdateFlg = true;
+				scale_.y = scale;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -249,8 +249,8 @@ namespace ActionGame
 			*/
 			void SetScaleZ(float scale) noexcept
 			{
-				m_Scale.z = scale;
-				m_UpdateFlg = true;
+				scale_.z = scale;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -259,7 +259,7 @@ namespace ActionGame
 			*/
 			const CVector3& GetScale() const noexcept
 			{
-				return m_Scale;
+				return scale_;
 			}
 
 			/*
@@ -268,7 +268,7 @@ namespace ActionGame
 			*/
 			float GetScaleX() const noexcept
 			{
-				return m_Scale.x;
+				return scale_.x;
 			}
 
 			/*
@@ -277,7 +277,7 @@ namespace ActionGame
 			*/
 			float GetScaleY() const noexcept
 			{
-				return m_Scale.y;
+				return scale_.y;
 			}
 
 			/*
@@ -286,7 +286,7 @@ namespace ActionGame
 			*/
 			float GetScaleZ() const noexcept
 			{
-				return m_Scale.z;
+				return scale_.z;
 			}
 
 		////////////////////////////////////////////////////////////////
@@ -299,8 +299,8 @@ namespace ActionGame
 			*/
 			void AddRotate(const Vector3& rotate) noexcept
 			{
-				m_Rotate += rotate;
-				m_UpdateFlg = true;
+				rotate_ += rotate;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -309,8 +309,8 @@ namespace ActionGame
 			*/
 			void SetRotate(const Vector3& rotate) noexcept
 			{
-				m_Rotate = rotate;
-				m_UpdateFlg = true;
+				rotate_ = rotate;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -319,8 +319,8 @@ namespace ActionGame
 			*/
 			void SetRotateX(float rotate) noexcept
 			{
-				m_Rotate.x = rotate;
-				m_UpdateFlg = true;
+				rotate_.x = rotate;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -329,8 +329,8 @@ namespace ActionGame
 			*/
 			void SetRotateY(float rotate) noexcept
 			{
-				m_Rotate.y = rotate;
-				m_UpdateFlg = true;
+				rotate_.y = rotate;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -339,8 +339,8 @@ namespace ActionGame
 			*/
 			void SetRotateZ(float rotate) noexcept
 			{
-				m_Rotate.z = rotate;
-				m_UpdateFlg = true;
+				rotate_.z = rotate;
+				isUpdate_ = true;
 			}
 
 			/*
@@ -349,7 +349,7 @@ namespace ActionGame
 			*/
 			const CVector3& GetRotate() const noexcept
 			{
-				return m_Rotate;
+				return rotate_;
 			}
 
 			/*
@@ -358,7 +358,7 @@ namespace ActionGame
 			*/
 			float GetRotateX() const noexcept
 			{
-				return m_Rotate.x;
+				return rotate_.x;
 			}
 
 			/*
@@ -367,7 +367,7 @@ namespace ActionGame
 			*/
 			float GetRotateY() const noexcept
 			{
-				return m_Rotate.y;
+				return rotate_.y;
 			}
 
 			/*
@@ -376,11 +376,11 @@ namespace ActionGame
 			*/
 			float GetRotateZ() const noexcept
 			{
-				return m_Rotate.z;
+				return rotate_.z;
 			}
 
 	
 	};
 	//ポインタ置き換え
-	using TransformPtr = std::shared_ptr<Transform>;
+	using TransformPtr = std::shared_ptr<CTransform>;
 }

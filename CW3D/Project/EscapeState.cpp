@@ -43,14 +43,14 @@ void ActionGame::EscapeState::Start()
 void ActionGame::EscapeState::Execution()
 {
 
-	if (m_CurrentTime > m_Parameter.ThroughStartTime && !m_ThroughFlg)
+	if (currentTime_ > m_Parameter.ThroughStartTime && !m_ThroughFlg)
 	{
 		m_EscapeAction->StartThrough();
 		m_ThroughFlg = true;
 	}
 
 	//ƒWƒƒƒXƒg‰ñ”ðŽžŠÔ
-	if (m_CurrentTime >= m_Parameter.EscapeStartTime)
+	if (currentTime_ >= m_Parameter.EscapeStartTime)
 	{
 
 		if (m_EscapeCurrentTime < m_Parameter.EscapeTime)
@@ -98,7 +98,7 @@ void ActionGame::EscapeState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		if (m_CurrentTime > m_Parameter.ThroughEndTime)
+		if (currentTime_ > m_Parameter.ThroughEndTime)
 		{
 			if (Actor()->GetTransform()->GetPositionY() > 0)
 			{

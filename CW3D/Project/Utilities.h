@@ -2,7 +2,7 @@
 
 #include "Common.h"
 
-namespace MyUtilities
+namespace MyUtil
 {
 
 	//ŽžŠÔ‚²‚Æ‚Ì’l‚ð•Ô‚·

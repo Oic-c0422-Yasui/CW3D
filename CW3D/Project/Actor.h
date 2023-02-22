@@ -17,7 +17,7 @@ namespace ActionGame {
 		TransformPtr			m_Transform;
 
 		/*　速度 */
-		VelocityPtr				m_Velocity;
+		VelocityPtr				velocity_;
 
 		/* アクションマップ */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
@@ -46,7 +46,7 @@ namespace ActionGame {
 		Actor()
 			: enable_shared_from_this()
 			, m_Transform(std::make_shared<Transform>())
-			, m_Velocity(std::make_shared<Velocity>())
+			, velocity_(std::make_shared<Velocity>())
 			, m_ActionMap()
 			, m_Parameters(std::make_shared<AnyParameterMap>())
 			, m_Motion()
@@ -61,11 +61,11 @@ namespace ActionGame {
 		 */
 		void Update() override {
 			//速度更新
-			m_Velocity->Update();
+			velocity_->Update();
 			//速度で座標移動
-			m_Transform->AddPosition(m_Velocity);
+			m_Transform->AddPosition(velocity_);
 
-			m_Transform->SetRotateY(m_Velocity->GetRotateY());
+			m_Transform->SetRotateY(velocity_->GetRotateY());
 
 			m_SkillController->Update();
 		}
@@ -88,7 +88,7 @@ namespace ActionGame {
 		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
 			m_ActionMap[key] = action;
 			action->SetTransform(m_Transform);
-			action->SetVelocity(m_Velocity);
+			action->SetVelocity(velocity_);
 			action->SetAnimation(m_Motion);
 			action->SetParameterMap(m_Parameters);
 			action->SetSkillController(m_SkillController);
@@ -132,7 +132,7 @@ namespace ActionGame {
 		void SetType(CHARA_TYPE type) override {
 			m_CharaType = type;
 			m_Transform->SetType(type);
-			m_Velocity->SetType(type);
+			velocity_->SetType(type);
 		}
 
 		/**
@@ -158,7 +158,7 @@ namespace ActionGame {
 		 * @brief		速度取得
 		 */
 		VelocityPtr GetVelocity() const override {
-			return m_Velocity;
+			return velocity_;
 		}
 
 		/**

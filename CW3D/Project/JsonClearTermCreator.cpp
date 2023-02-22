@@ -3,7 +3,7 @@
 using namespace ActionGame;
 
 JsonClearTermCreator::JsonClearTermCreator()
-	:dictionary()
+	:dictionary_()
 {
 }
 
@@ -28,7 +28,7 @@ ClearTermArray JsonClearTermCreator::Create(nlohmann::json& os)
 		std::string typeName;
 		type["Name"].get_to(typeName);
 
-		auto& dicValue = dictionary.Get(typeName);
+		auto& dicValue = dictionary_.Get(typeName);
 
 		ClearTermPtr clearTerm;
 		clearTerm = dicValue->Create(type);

@@ -27,6 +27,6 @@ namespace ActionGame {
 		/**
 		 * @brief		ê∂ê¨
 		 */
-		bool Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const InputPtr& input) override;
+		bool Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const Input::InputPtr& input) override;
 	};
 }

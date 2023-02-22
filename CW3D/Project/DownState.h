@@ -21,7 +21,7 @@ namespace ActionGame {
 		//ダウンステート
 		DownActionPtr				m_DownAction;
 		//現在時間
-		float						m_CurrentTime;
+		float						currentTime_;
 
 	public:
 		/**

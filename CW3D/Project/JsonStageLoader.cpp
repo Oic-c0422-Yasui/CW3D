@@ -4,7 +4,7 @@
 using namespace ActionGame;
 
 ActionGame::JsonStageLoader::JsonStageLoader()
-	: m_DivisionArray()
+	: divisionArray_()
 {
 }
 
@@ -43,7 +43,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 	//‹æ‰æ‚Ì¶¬
 	JsonDivisionCreator divisionCreator;
 	DivisionArrayPtr divisionArray = divisionCreator.Create(os["Divisions"], enemyStatusDictionary);
-	m_DivisionArray = divisionArray;
+	divisionArray_ = divisionArray;
 
 
 	//“G‚ÅŽg—p‚·‚éƒƒbƒVƒ…–¼Ši”[
@@ -52,7 +52,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 	{
 		for (auto& enemyParam : *division->GetEnemysParam())
 		{
-			auto& type = enemyParam->GetParam().m_Type;
+			auto& type = enemyParam->GetParam().type_;
 
 			if (typeNames.size() <= 0)
 			{

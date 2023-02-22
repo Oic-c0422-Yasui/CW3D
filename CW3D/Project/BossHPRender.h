@@ -12,8 +12,8 @@ namespace ActionGame
 		std::shared_ptr<CTexture>			m_pFrame;
 		std::shared_ptr<CTexture>			m_pDamageBar;
 
-		Vector2 m_Position;
-		Vector2 m_Offset;
+		Vector2 position_;
+		Vector2 offset_;
 
 		struct HPBar
 		{

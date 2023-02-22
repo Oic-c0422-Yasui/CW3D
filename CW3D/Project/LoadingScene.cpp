@@ -1,26 +1,26 @@
 #include "LoadingScene.h"
 #include "ServiceLocator.h"
 
-ActionGame::LoadingScene::LoadingScene(ScenePtr loadingScene)
+Scene::LoadingScene::LoadingScene(ScenePtr loadingScene)
 	: m_LoadingScene(loadingScene)
 	, m_LoadThread()
 	, m_BackTex(std::make_shared<CTexture>())
-	, m_Font(std::make_shared<CFont>())
+	, font_(std::make_shared<CFont>())
 {
 }
 
-ActionGame::LoadingScene::~LoadingScene()
+Scene::LoadingScene::~LoadingScene()
 {
 	Release();
 }
 
-bool ActionGame::LoadingScene::Load()
+bool Scene::LoadingScene::Load()
 {
 
 	//テクスチャがすでに読み込まれているなら、リソースを取り出す
-	if (ActionGame::ResourcePtrManager<CTexture>::GetInstance().IsContainResource("Texture", "LoadingTex"))
+	if (ResourcePtrManager<CTexture>::GetInstance().IsContainResource("Texture", "LoadingTex"))
 	{
-		m_BackTex = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("Texture", "LoadingTex");
+		m_BackTex = ResourcePtrManager<CTexture>::GetInstance().GetResource("Texture", "LoadingTex");
 	}
 	else
 	{
@@ -30,10 +30,10 @@ bool ActionGame::LoadingScene::Load()
 			return false;
 		}
 		//テクスチャを登録
-		ActionGame::ResourcePtrManager<CTexture>::GetInstance().AddResource("Texture", "LoadingTex", m_BackTex);
+		ResourcePtrManager<CTexture>::GetInstance().AddResource("Texture", "LoadingTex", m_BackTex);
 	}
 
-	m_Font->Create(50, "ＭＳ ゴシック");
+	font_->Create(50, "ＭＳ ゴシック");
 
 	//ロードするシーンがあるか確認
 	assert(m_LoadingScene);
@@ -51,30 +51,30 @@ bool ActionGame::LoadingScene::Load()
 	return true;
 }
 
-void ActionGame::LoadingScene::Initialize()
+void Scene::LoadingScene::Initialize()
 {
 }
 
-void ActionGame::LoadingScene::Update()
+void Scene::LoadingScene::Update()
 {
 	//シーンのロードが完了したら
 	if (m_LoadThread.IsComplete())
 	{
 		//ロードしたシーンへ遷移する
-		ActionGame::ServiceLocator<ActionGame::ISceneChanger>::GetService()->ChangeScene(m_LoadingScene);
+		ActionGame::ServiceLocator<Scene::ISceneChanger>::GetService()->ChangeScene(m_LoadingScene);
 	}
 }
 
-void ActionGame::LoadingScene::Render()
+void Scene::LoadingScene::Render()
 {
 	
 }
 
-void ActionGame::LoadingScene::RenderDebug()
+void Scene::LoadingScene::RenderDebug()
 {
 }
 
-void ActionGame::LoadingScene::Render2D()
+void Scene::LoadingScene::Render2D()
 {
 	//画面のサイズ
 	float width = g_pGraphics->GetTargetWidth();
@@ -84,23 +84,23 @@ void ActionGame::LoadingScene::Render2D()
 	m_BackTex->Render(rect);
 
 	//ローディングテキスト
-	m_Font->CalculateStringRect(0, 0, "NowLoading...", rect);
-	m_Font->RenderString(width - (rect.GetWidth() + 200), height * 0.9f, "NowLoading...");
+	font_->CalculateStringRect(0, 0, "NowLoading...", rect);
+	font_->RenderString(width - (rect.GetWidth() + 200), height * 0.9f, "NowLoading...");
 }
 
-void ActionGame::LoadingScene::Render2DDebug()
+void Scene::LoadingScene::Render2DDebug()
 {
 }
 
-void ActionGame::LoadingScene::Release()
+void Scene::LoadingScene::Release()
 {
 	if (m_BackTex)
 	{
 		m_BackTex.reset();
 	}
-	if (m_Font)
+	if (font_)
 	{
-		m_Font.reset();
+		font_.reset();
 	}
 	if (m_LoadingScene)
 	{

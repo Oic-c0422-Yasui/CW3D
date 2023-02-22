@@ -12,11 +12,11 @@ namespace ActionGame
 	class TimeScale
 	{
 	private:
-		float	m_Time;
-		MyUtilities::ANIM_DATA_ARRAY m_AnimDataArray;
+		float	time_;
+		MyUtil::ANIM_DATA_ARRAY m_AnimDataArray;
 		float	m_ChangeTime;
 		bool	m_ChangeFlg;
-		float	m_CurrentTime;
+		float	currentTime_;
 		int		m_Count;
 
 	public:
@@ -33,7 +33,7 @@ namespace ActionGame
 		*/
 		float GetScale() const noexcept
 		{
-			return m_Time;
+			return time_;
 		}
 		/*
 		* @brief	タイムスケール設定
@@ -41,10 +41,10 @@ namespace ActionGame
 		* @param	changeTime	変化にかかる時間
 		* @param	easeType	イージングタイプ
 		*/
-		void SetScale(float scale, float changeTime, MyUtilities::EASING_TYPE easeType) noexcept;
+		void SetScale(float scale, float changeTime, MyUtil::EASING_TYPE easeType) noexcept;
 
 
-		void SetScale(const MyUtilities::ANIM_DATA_ARRAY& anim);
+		void SetScale(const MyUtil::ANIM_DATA_ARRAY& anim);
 
 		void Reset() noexcept;
 

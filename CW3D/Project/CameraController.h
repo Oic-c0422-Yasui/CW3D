@@ -11,7 +11,7 @@ namespace ActionGame
 		friend class Singleton<CameraController>;
 	private:
 
-		CameraPtr	m_Camera;
+		CameraPtr	camera_;
 		CameraPtr	m_NextCamera;
 		CameraPtr	m_DefaultCamera;
 		bool		m_LeapFlg;
@@ -19,9 +19,9 @@ namespace ActionGame
 		float		m_LeapTime;
 		bool		m_LeapEndFlg;
 		float		m_TempLeapEndTime;
-		MyUtilities::EASING_TYPE m_EndEaseType;
-		float		m_Time;
-		float		m_CurrentTime;
+		MyUtil::EASING_TYPE m_EndEaseType;
+		float		time_;
+		float		currentTime_;
 		bool		m_TimerStartFlg;
 
 		float		m_QuakePower;
@@ -29,8 +29,8 @@ namespace ActionGame
 		float		m_QuakeTime;
 		float		m_QuakeCurrentTime;
 
-		Vector3		m_TargetPos;
-		Vector3		m_TargetLookPos;
+		Vector3		targetPos_;
+		Vector3		targetLookPos_;
 		
 		CameraController();
 		void Reset();
@@ -64,7 +64,7 @@ namespace ActionGame
 		* @param	endEaseType		デフォルトのカメラへ戻る時のイージングタイプ
 		* @param	leapEndTime		デフォルトのカメラへ戻るのにかかる時間
 		*/
-		void SetCamera(const CameraPtr& camera, float tTime, MyUtilities::EASING_TYPE startEaseType, float leapStartTime, MyUtilities::EASING_TYPE endEaseType, float leapEndTime);
+		void SetCamera(const CameraPtr& camera, float tTime, MyUtil::EASING_TYPE startEaseType, float leapStartTime, MyUtil::EASING_TYPE endEaseType, float leapEndTime);
 		/*
 		* @brief	カメラをデフォルトにする
 		*/
@@ -87,7 +87,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetPosition() const noexcept
 		{
-			return m_Camera->GetPos();
+			return camera_->GetPosition();
 		}
 		/*
 		* @brief	注視座標取得
@@ -95,7 +95,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetLookPosition() const noexcept
 		{
-			return m_Camera->GetLookPos();
+			return camera_->GetLookPos();
 		}
 		/*
 		* @brief	目標座標設定
@@ -103,7 +103,7 @@ namespace ActionGame
 		*/
 		void SetTargetPos(const Vector3& pos) noexcept
 		{
-			m_Camera->SetPos(pos);
+			camera_->SetPos(pos);
 		}
 		/*
 		* @brief	目標注視座標設定
@@ -111,7 +111,7 @@ namespace ActionGame
 		*/
 		void SetTargetLookPos(const Vector3& pos) noexcept
 		{
-			m_Camera->SetLookPos(pos);
+			camera_->SetLookPos(pos);
 		}
 		/*
 		* @brief	ターゲット設定
@@ -129,7 +129,7 @@ namespace ActionGame
 		*/
 		const CCamera& GetCamera() const noexcept
 		{
-			return m_Camera->GetCamera();
+			return camera_->GetCamera();
 		}
 
 		/*

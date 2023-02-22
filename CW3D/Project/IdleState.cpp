@@ -2,7 +2,7 @@
 
 ActionGame::IdleState::IdleState(Parameter param)
 	: State()
-	, m_Time(0.0f)
+	, time_(0.0f)
 	, m_Parameter(param)
 {
 }
@@ -10,15 +10,15 @@ ActionGame::IdleState::IdleState(Parameter param)
 void ActionGame::IdleState::Start()
 {
 	m_IdleAction = Actor()->GetAction<IdleAction>(GetKey());
-	m_Time = 0.0f;
+	time_ = 0.0f;
 	m_IdleAction->Start();
 }
 
 void ActionGame::IdleState::Execution()
 {
-	if (m_Time < m_Parameter.idleTime)
+	if (time_ < m_Parameter.idleTime)
 	{
-		m_Time += CUtilities::GetFrameSecond();
+		time_ += CUtilities::GetFrameSecond();
 	}
 	else
 	{

@@ -2,18 +2,18 @@
 
 
 
-ActionGame::TitleScene::TitleScene()
+Scene::TitleScene::TitleScene()
 	: m_BackTexture(std::make_shared<CTexture>())
 	, m_TitleLogoFont()
 	, m_TextFont()
 {
 }
 
-ActionGame::TitleScene::~TitleScene()
+Scene::TitleScene::~TitleScene()
 {
 }
 
-bool ActionGame::TitleScene::Load()
+bool Scene::TitleScene::Load()
 {
 	if (!m_BackTexture->Load("BackImage/TitleBack.png"))
 	{
@@ -24,11 +24,11 @@ bool ActionGame::TitleScene::Load()
 	return true;
 }
 
-void ActionGame::TitleScene::Initialize()
+void Scene::TitleScene::Initialize()
 {
 }
 
-void ActionGame::TitleScene::Update()
+void Scene::TitleScene::Update()
 {
 	//キー入力
 	auto input = InputManagerInstance.GetInput(0);
@@ -45,15 +45,15 @@ void ActionGame::TitleScene::Update()
 	}
 }
 
-void ActionGame::TitleScene::Render()
+void Scene::TitleScene::Render()
 {
 }
 
-void ActionGame::TitleScene::RenderDebug()
+void Scene::TitleScene::RenderDebug()
 {
 }
 
-void ActionGame::TitleScene::Render2D()
+void Scene::TitleScene::Render2D()
 {
 	//画面のサイズ
 	float width = g_pGraphics->GetTargetWidth();
@@ -73,11 +73,11 @@ void ActionGame::TitleScene::Render2D()
 	m_TextFont.RenderString(width * 0.5f - (rect.GetWidth() * 0.5f), height * 0.78f, MOF_XRGB(0, 0, 0), "End：X Key");
 }
 
-void ActionGame::TitleScene::Render2DDebug()
+void Scene::TitleScene::Render2DDebug()
 {
 }
 
-void ActionGame::TitleScene::Release()
+void Scene::TitleScene::Release()
 {
 	m_BackTexture.reset();
 	m_TitleLogoFont.Release();

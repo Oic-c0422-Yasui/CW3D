@@ -1,10 +1,10 @@
 #pragma once
-#include "SceneBase.h"
+#include "IScene.h"
 #include "ResourceManager.h"
 #include "ThreadCreator.h"
 #include "SceneChanger.h"
 
-namespace ActionGame
+namespace Scene
 {
 	class LoadingScene : public IScene
 	{
@@ -15,7 +15,7 @@ namespace ActionGame
 
 		std::shared_ptr<CTexture> m_BackTex;
 
-		std::shared_ptr<CFont> m_Font;
+		std::shared_ptr<CFont> font_;
 	public:
 		LoadingScene(ScenePtr loadingScene);
 		~LoadingScene();

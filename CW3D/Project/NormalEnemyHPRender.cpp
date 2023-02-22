@@ -3,8 +3,8 @@
 
 ActionGame::NormalEnemyHPRender::NormalEnemyHPRender()
 	: ActionGame::EnemyHPRender()
-	, m_Position(0, 0, 0)
-	, m_Offset(0, 0, 0)
+	, position_(0, 0, 0)
+	, offset_(0, 0, 0)
 	, m_Size(0, 0, 0)
 {
 
@@ -28,7 +28,7 @@ void ActionGame::NormalEnemyHPRender::Initialize()
 	Load();
 
 
-	m_Offset = Vector3(0, 2, 0);
+	offset_ = Vector3(0, 2, 0);
 	m_Size = Vector3(1, 0.85f, 1);
 	m_pHPBar->m_Angle.z = MOF_ToRadian(180);
 	m_pFrame->m_Angle.z = MOF_ToRadian(180);
@@ -36,9 +36,9 @@ void ActionGame::NormalEnemyHPRender::Initialize()
 	m_pHPBar->m_Angle.x = MOF_ToRadian(0);
 	m_pFrame->m_Angle.x = MOF_ToRadian(0);
 	m_pDamageBar->m_Angle.x = MOF_ToRadian(0);
-	m_pFrame->m_Scale = m_Size;
-	m_pHPBar->m_Scale = m_Size;
-	m_pDamageBar->m_Scale = m_Size;
+	m_pFrame->scale_ = m_Size;
+	m_pHPBar->scale_ = m_Size;
+	m_pDamageBar->scale_ = m_Size;
 	m_pFrame->m_Color = CVector4(1.0f, 1.0f, 1.0f, 0.75f);
 
 }
@@ -57,9 +57,9 @@ void ActionGame::NormalEnemyHPRender::Render()
 		return;
 	}
 
-	m_pFrame->m_Position = m_Position + m_Offset;
-	m_pHPBar->m_Position = m_Position + m_Offset;
-	m_pDamageBar->m_Position = m_Position + m_Offset;
+	m_pFrame->position_ = position_ + offset_;
+	m_pHPBar->position_ = position_ + offset_;
+	m_pDamageBar->position_ = position_ + offset_;
 
 	float parcent = (float)m_HP / (float)m_MaxHP;
 	parcent = min(parcent, 1.0f);
@@ -67,18 +67,18 @@ void ActionGame::NormalEnemyHPRender::Render()
 	//lŠp‚ÅHPƒQ[ƒW•`‰æ
 	LPCamera cam = CGraphicsUtilities::GetCamera();
 	m_pFrame->Update();
-	m_pFrame->m_World.Multiply3x3(cam->GetBillBoardMatrix());
+	m_pFrame->world_.Multiply3x3(cam->GetBillBoardMatrix());
 
 	m_pFrame->Render();
 	//•\¦ƒQ[ƒW‚ğ™X‚É•Ï‰»‚³‚¹‚é
 	if (fabsf(m_CurrentHPGaugePercent - m_CurrentHPPercent) > 0.01f)
 	{
 		m_CurrentHPGaugePercent += (m_CurrentHPPercent - m_CurrentHPGaugePercent) * 0.02f;
-		m_pDamageBar->m_Scale.x = m_Size.x * m_CurrentHPGaugePercent;
-		float offset = (m_Size.x - m_pDamageBar->m_Scale.x) * 0.5f;
-		m_pDamageBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
+		m_pDamageBar->scale_.x = m_Size.x * m_CurrentHPGaugePercent;
+		float offset = (m_Size.x - m_pDamageBar->scale_.x) * 0.5f;
+		m_pDamageBar->position_.x = (position_.x + offset_.x) - offset;
 		m_pDamageBar->Update();
-		m_pDamageBar->m_World.Multiply3x3(cam->GetBillBoardMatrix());
+		m_pDamageBar->world_.Multiply3x3(cam->GetBillBoardMatrix());
 		m_pDamageBar->Render();
 	}
 	else
@@ -86,11 +86,11 @@ void ActionGame::NormalEnemyHPRender::Render()
 		m_CurrentHPGaugePercent = m_CurrentHPPercent;
 	}
 
-	m_pHPBar->m_Scale.x = m_Size.x * m_CurrentHPPercent;
-	float offset = (m_Size.x - m_pHPBar->m_Scale.x) * 0.5f;
-	m_pHPBar->m_Position.x = (m_Position.x + m_Offset.x) - offset;
+	m_pHPBar->scale_.x = m_Size.x * m_CurrentHPPercent;
+	float offset = (m_Size.x - m_pHPBar->scale_.x) * 0.5f;
+	m_pHPBar->position_.x = (position_.x + offset_.x) - offset;
 	m_pHPBar->Update();
-	m_pHPBar->m_World.Multiply3x3(cam->GetBillBoardMatrix());
+	m_pHPBar->world_.Multiply3x3(cam->GetBillBoardMatrix());
 	m_pHPBar->Render();
 
 }

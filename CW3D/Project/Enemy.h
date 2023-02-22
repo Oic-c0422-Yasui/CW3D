@@ -24,7 +24,7 @@ namespace ActionGame
 
 		ParameterHandle< ReactiveParameter<int> > m_HP;
 		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
-		ParameterHandle< ReactiveParameter<Vector3> > m_Position;
+		ParameterHandle< ReactiveParameter<Vector3> > position_;
 
 		CharacterAIPtr	m_AI;
 
@@ -118,14 +118,14 @@ namespace ActionGame
 		 */
 		ActionGame::IObservable<Vector3>* GetPositionSubject() 
 		{ 
-			return &(m_Position.Get()); 
+			return &(position_.Get()); 
 		}
 		/**
 		 * @brief		HPバー表示状態変化通知
 		 */
 		ActionGame::IObservable<bool>& GetShowSubject() 
 		{ 
-			return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); 
+			return  actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); 
 		}
 
 		/*
@@ -160,8 +160,8 @@ namespace ActionGame
 		*/
 		void SetPosition(const Vector3& pos) noexcept override
 		{
-			m_Actor->SetPosition(pos);
-			m_Position = m_Actor->GetPosition();
+			actor_->SetPosition(pos);
+			position_ = actor_->GetPosition();
 		}
 		/*
 		* @brief	表示設定
@@ -171,7 +171,7 @@ namespace ActionGame
 		{
 			if (!isShow)
 			{
-				auto& showFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
+				auto& showFlg = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 				showFlg = isShow;
 			}
 			m_ShowFlg = isShow;

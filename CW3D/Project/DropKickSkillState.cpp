@@ -41,11 +41,11 @@ void ActionGame::DropKickSkillState::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > m_Parameter.CollideEndFrameTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -58,7 +58,7 @@ void ActionGame::DropKickSkillState::Execution()
 	for (auto& effect : m_pEffects)
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
-		if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > m_Parameter.CollideEndFrameTime)
 		{
 			if (!effect->IsStop())
 			{
@@ -68,11 +68,11 @@ void ActionGame::DropKickSkillState::Execution()
 		}
 	}
 
-	if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 	{
 		collideStartFlg = true;
 	}
-	if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
+	if (currentTime_ > m_Parameter.CollideEndFrameTime)
 	{
 		if (m_NextInputFlg)
 		{
@@ -119,7 +119,7 @@ void ActionGame::DropKickSkillState::InputExecution()
 			}
 		}
 	}
-	if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
+	if (currentTime_ > m_Parameter.CollideEndFrameTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{

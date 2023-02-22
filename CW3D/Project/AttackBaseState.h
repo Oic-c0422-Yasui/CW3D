@@ -21,7 +21,7 @@ namespace ActionGame {
 		}BaseParam;
 	protected:
 		
-		float							m_CurrentTime;
+		float							currentTime_;
 		bool							m_NextInputFlg;
 
 		std::vector<ShotPtr>			m_pShots;
@@ -35,7 +35,7 @@ namespace ActionGame {
 		//エフェクト解放
 		void ReleaseEffect();
 		//ノックバック取得
-		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<FixedKnockBack>(Actor()); }
+		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CFixedKnockBack>(Actor()); }
 		//ショットのステータス作成（箱）
 		virtual const ShotAABB& GetCreateShotStatusAABB();
 		//ショットのステータス作成（回転を考慮した箱）

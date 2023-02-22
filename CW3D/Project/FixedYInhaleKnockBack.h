@@ -7,17 +7,17 @@ namespace ActionGame
 	/*
 	* @brief	Y軸のみ固定の吸引ノックバック
 	*/
-	class FixedYInhaleKnockBack : public IKnockBack 
+	class CFixedYInhaleKnockBack : public IKnockBack 
 	{
 	private:
-		ActorPtr actor;
+		ActorPtr actor_;
 	public:
-		FixedYInhaleKnockBack(const ActorPtr& actor)
-			: actor(actor)
+		CFixedYInhaleKnockBack(const ActorPtr& actor)
+			: actor_(actor)
 		{
 		}
 		Vector3 Get(const CVector3& otherPos) const override {
-			CVector3 n = actor->GetPosition() - otherPos;
+			CVector3 n = actor_->GetPosition() - otherPos;
 			n.Normal(n);
 			n.y = 1;
 			return n;

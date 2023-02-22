@@ -5,7 +5,7 @@
 #include	"SceneChangeEffect.h"
 
 
-namespace ActionGame
+namespace Scene
 {
 	/*
 	* シーン管理用インタフェース

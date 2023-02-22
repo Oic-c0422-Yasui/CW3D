@@ -6,6 +6,7 @@
 
 namespace ActionGame
 {
+	
 
 	//キー
 	using StateKeyType = std::string;
@@ -24,7 +25,6 @@ namespace ActionGame
 		 * @brief		アクター登録
 		 */
 		virtual void SetActor(ActorPtr actor) = 0;
-
 		/**
 		 * @brief		ステートマシン登録
 		 */
@@ -33,7 +33,7 @@ namespace ActionGame
 		/**
 		 * @brief		入力登録
 		 */
-		virtual void SetInput(InputPtr input) = 0;
+		virtual void SetInput(Input::InputPtr input) = 0;
 	public:
 		/**
 		 * @brief		デストラクタ
@@ -57,7 +57,7 @@ namespace ActionGame
 		 * @brief		ステート内の入力処理
 		 */
 		virtual void InputExecution() = 0;
-
+		
 		/**
 		 * @brief		アクション内の終了処理
 		 */

@@ -12,7 +12,7 @@ namespace Spawner
 	/**
 	 * @brief		出現処理
 	 */
-	class EnemySpawner
+	class CEnemySpawner
 	{
 	private:
 		//出現条件
@@ -24,7 +24,7 @@ namespace Spawner
 		/**
 		 * @brief		コンストラクタ
 		 */
-		EnemySpawner(const SpawnConditionArray& conditions,
+		CEnemySpawner(const SpawnConditionArray& conditions,
 					SpawnCyclePtr cycle);
 
 		/**
@@ -43,7 +43,7 @@ namespace Spawner
 		bool IsValid() const;
 	};
 	//ポインタ置き換え
-	using EnemySpawnerPtr = std::shared_ptr<EnemySpawner>;
+	using EnemySpawnerPtr = std::shared_ptr<CEnemySpawner>;
 	using EnemySpawnerArray = std::vector<EnemySpawnerPtr>;
 	using EnemySpawnerArrayPtr = std::shared_ptr<EnemySpawnerArray>;
 }

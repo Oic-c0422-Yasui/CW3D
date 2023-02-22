@@ -12,7 +12,7 @@ namespace ActionGame
 	{
 		friend class Singleton<CEffectController>;
 	private:
-		std::vector<EffectPtr> m_Effects;
+		std::vector<EffectPtr> effectArray_;
 
 
 		CEffectController()
@@ -52,8 +52,8 @@ namespace ActionGame
 		*/
 		const EffectPtr& GetEffect(size_t id)
 		{
-			assert(m_Effects[id]);
-			return m_Effects[id];
+			assert(effectArray_[id]);
+			return effectArray_[id];
 		}
 
 		/*

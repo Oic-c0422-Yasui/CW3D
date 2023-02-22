@@ -10,42 +10,42 @@ namespace ActionGame
 	/**
 	 * @brief		速度管理クラス
 	 */
-	class Velocity
+	class CVelocity
 	{
 	protected:
 		//速度
-		CVector3				m_Velocity;
+		CVector3				velocity_;
 
 		//最大速度
-		CVector3				m_MaxVelocity;
+		CVector3				maxVelocity_;
 
 		//更新速度
-		CVector3				m_UpdateVelocity;
+		CVector3				updateVelocity_;
 
 		//減速値
-		CVector3				m_Decelerate;
+		CVector3				decelerate_;
 
 		//重力利用フラグ
-		bool					m_IsGravity;
+		bool					isUseGravity_;
 
 		//重力加速度
-		float					m_Gravity;
+		float					gravity_;
 
-		CHARA_TYPE				m_Type;
+		CHARA_TYPE				type_;
 
 		//回転用変数
-		bool					m_SetRotateFlg;
-		float					m_CurrentTime;
-		float					m_MoveTime;
-		float					m_TargetY;
-		float					m_StartY;
-		float					m_CurrentY;
+		bool					isSetRotate_;
+		float					currentTime_;
+		float					moveTime_;
+		float					targetY_;
+		float					startY_;
+		float					currentY_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Velocity();
+		CVelocity();
 			
 
 		/**
@@ -59,56 +59,56 @@ namespace ActionGame
 		 * @param[in]	z		加速量
 		 */
 		void Acceleration(float x, float z) {
-			m_UpdateVelocity.x += x;
-			m_UpdateVelocity.z += z;
+			updateVelocity_.x += x;
+			updateVelocity_.z += z;
 		}
 
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocity(const Vector3& v) noexcept {
-			m_Velocity = v;
+			velocity_ = v;
 		}
 
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocity(float x, float z) noexcept {
-			m_Velocity.x = x;
-			m_Velocity.z = z;
+			velocity_.x = x;
+			velocity_.z = z;
 		}
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocity(float x, float y, float z) noexcept {
-			m_Velocity.x = x;
-			m_Velocity.y = y;
-			m_Velocity.z = z;
+			velocity_.x = x;
+			velocity_.y = y;
+			velocity_.z = z;
 		}
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocityX(float x) noexcept {
-			m_Velocity.x = x;
+			velocity_.x = x;
 		}
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocityY(float y) noexcept {
-			m_Velocity.y = y;
+			velocity_.y = y;
 		}
 		/**
 		 * @brief		速度の設定
 		 */
 		void SetVelocityZ(float z) noexcept {
-			m_Velocity.z = z;
+			velocity_.z = z;
 		}
 		/**
 		 * @brief		最大速度の設定
 		 */
 		void SetMaxVelocity(float x, float z) noexcept {
-			m_MaxVelocity.x = x;
-			m_MaxVelocity.z = z;
+			maxVelocity_.x = x;
+			maxVelocity_.z = z;
 		}
 		/**
 		 * @brief		減速設定
@@ -116,75 +116,75 @@ namespace ActionGame
 		 * @param[in]	z		減速量
 		 */
 		void SetDecelerate(float x, float z) {
-			m_Decelerate.x = x;
-			m_Decelerate.z = z;
+			decelerate_.x = x;
+			decelerate_.z = z;
 		}
 		/**
 		 * @brief		重力加速設定
 		 * @param[in]	val		加速量
 		 */
 		void SetGravity(float val) {
-			m_Gravity = val;
+			gravity_ = val;
 		}
 		/**
 		 * @brief		最大速度の設定
 		 */
 		void SetMaxGravity(float v) noexcept {
-			m_MaxVelocity.y = v;
+			maxVelocity_.y = v;
 		}
 
 		void SetRotateY(float startRotate,float endRotate, float time) {
-			m_StartY = startRotate;
-			m_CurrentY = m_StartY;
-			m_TargetY = endRotate;
-			m_MoveTime = time;
-			m_CurrentTime = 0;
-			m_SetRotateFlg = true;
+			startY_ = startRotate;
+			currentY_ = startY_;
+			targetY_ = endRotate;
+			moveTime_ = time;
+			currentTime_ = 0;
+			isSetRotate_ = true;
 		}
 
 		void SetGravityFlg(bool isGravity) noexcept {
-			m_IsGravity = isGravity;
+			isUseGravity_ = isGravity;
 		}
 
 		void SetType(CHARA_TYPE type) noexcept
 		{
-			m_Type = type;
+			type_ = type;
 		}
 
 		/**
 		 * @brief		速度の取得
 		 */
 		const CVector3& GetVelocity() const noexcept {
-			return m_Velocity;
+			return velocity_;
 		}
 		/**
 		 * @brief		速度の取得
 		 */
 		float GetVelocityX() const noexcept {
-			return m_Velocity.x;
+			return velocity_.x;
 		}
 		/**
 		 * @brief		速度の取得
 		 */
 		float GetVelocityY() const noexcept {
-			return m_Velocity.y;
+			return velocity_.y;
 		}
 		/**
 		 * @brief		速度の取得
 		 */
 		float GetVelocityZ() const noexcept {
-			return m_Velocity.z;
+			return velocity_.z;
 		}
 
 		float GetRotateY() const noexcept {
-			return m_CurrentY;
+			return currentY_;
 		}
 
 		bool IsGravity() const noexcept {
-			return m_IsGravity;
+			return isUseGravity_;
 		}
 
 	};
 	//ポインタ置き換え
-	using VelocityPtr = std::shared_ptr<Velocity>;
+	using VelocityPtr = std::shared_ptr<CVelocity>;
 }

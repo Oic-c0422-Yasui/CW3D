@@ -1,8 +1,8 @@
 #include "Utilities.h"
 
-using namespace MyUtilities;
+using namespace MyUtil;
 
-float MyUtilities::Timer(float startValue, float currentTime, float endValue, float endTime)
+float MyUtil::Timer(float startValue, float currentTime, float endValue, float endTime)
 {
 	float result = 0;
 	if (endTime <= currentTime)
@@ -20,7 +20,7 @@ float MyUtilities::Timer(float startValue, float currentTime, float endValue, fl
 	return result;
 }
 
-float MyUtilities::RotateTimer(float startValue, float currentTime, float endValue, float endTime)
+float MyUtil::RotateTimer(float startValue, float currentTime, float endValue, float endTime)
 {
 	float result = 0;
 	//ˆÚ“®Šp“x
@@ -40,7 +40,7 @@ float MyUtilities::RotateTimer(float startValue, float currentTime, float endVal
 	return result;
 }
 
-float MyUtilities::InterpolationAnim(float animTime, const ANIM_DATA_ARRAY& animData)
+float MyUtil::InterpolationAnim(float animTime, const ANIM_DATA_ARRAY& animData)
 
 {
 	int phase;
@@ -89,7 +89,7 @@ float MyUtilities::InterpolationAnim(float animTime, const ANIM_DATA_ARRAY& anim
 	return from + (to - from) * t;
 }
 
-float MyUtilities::InterpolationAnim(float animTime, ANIM_DATA* animData, int count)
+float MyUtil::InterpolationAnim(float animTime, ANIM_DATA* animData, int count)
 
 {
 	int phase;
@@ -133,7 +133,7 @@ float MyUtilities::InterpolationAnim(float animTime, ANIM_DATA* animData, int co
 	return from + (to - from) * t;
 }
 
-Vector3 MyUtilities::InterpolationAnim(float animTime, ANIM_V3_DATA* animData, int count)
+Vector3 MyUtil::InterpolationAnim(float animTime, ANIM_V3_DATA* animData, int count)
 
 {
 	int phase;
@@ -177,7 +177,7 @@ Vector3 MyUtilities::InterpolationAnim(float animTime, ANIM_V3_DATA* animData, i
 	return from + (to - from) * t;
 }
 
-Vector3 MyUtilities::InterpolationAnim(float animTime, const ANIM_V3_DATA_ARRAY& animData)
+Vector3 MyUtil::InterpolationAnim(float animTime, const ANIM_V3_DATA_ARRAY& animData)
 
 {
 	int phase;
@@ -222,7 +222,7 @@ Vector3 MyUtilities::InterpolationAnim(float animTime, const ANIM_V3_DATA_ARRAY&
 	return from + (to - from) * t;
 }
 
-std::string MyUtilities::UTF8toShiftJIS(const std::string& utf8)
+std::string MyUtil::UTF8toShiftJIS(const std::string& utf8)
 {
 	{
 		//Unicode‚Ö•ÏŠ·Œã‚Ì•¶Žš—ñ’·‚ð“¾‚é

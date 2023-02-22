@@ -11,7 +11,7 @@
 		Singleton(const Singleton& obj) = delete;
 		Singleton(Singleton&& obj) = delete;
 
-		static T* instance;
+		static T* instance_;
 
 	protected:
 
@@ -26,11 +26,11 @@
 			//エラー確認
 			//assert(!instance);
 
-			if (instance)
+			if (instance_)
 			{
 				return;
 			}
-			instance = new T();
+			instance_ = new T();
 		}
 	public:
 		/**
@@ -39,11 +39,11 @@
 		 */
 		static constexpr T& GetInstance()
 		{
-			if (instance == nullptr)
+			if (instance_ == nullptr)
 			{
 				Create();
 			}
-			return *instance;
+			return *instance_;
 		}
 
 		/**
@@ -52,15 +52,15 @@
 		static void Release()
 		{
 			//エラー確認
-			assert(instance);
+			assert(instance_);
 
-			if (instance)
+			if (instance_)
 			{
-				delete instance;
-				instance = nullptr;
+				delete instance_;
+				instance_ = nullptr;
 				return;
 			}
 		}
 	};
-	template< typename T > T* Singleton<T>::instance = nullptr;
+	template< typename T > T* Singleton<T>::instance_ = nullptr;
 

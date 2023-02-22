@@ -23,7 +23,7 @@ void ActionGame::ShockWaveSkillState::Start()
 		shot->SetDamage(damage);
 	}
 
-	MyUtilities::ANIM_DATA_ARRAY anims(
+	MyUtil::ANIM_DATA_ARRAY anims(
 		{
 			{0.0f,0.0f},
 			{0.8f,0.0f},
@@ -33,14 +33,14 @@ void ActionGame::ShockWaveSkillState::Start()
 	TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(), anims);
 
 
-	MyUtilities::ANIM_V3_DATA_ARRAY animPos(
+	MyUtil::ANIM_V3_DATA_ARRAY animPos(
 		{
 			{0.0f,Vector3(-7,2,-2)},
-			{0.25f,Vector3(-7,2,-2),MyUtilities::EASING_TYPE::OUT_SINE},
-			{0.30f,Vector3(-25,2,-2),MyUtilities::EASING_TYPE::OUT_SINE},
+			{0.25f,Vector3(-7,2,-2),MyUtil::EASING_TYPE::OUT_SINE},
+			{0.30f,Vector3(-25,2,-2),MyUtil::EASING_TYPE::OUT_SINE},
 		}
 	);
-	MyUtilities::ANIM_V3_DATA_ARRAY animLookPos(
+	MyUtil::ANIM_V3_DATA_ARRAY animLookPos(
 		{
 			{0.0f,Vector3(2, 1, 2)},
 			{1.0f,Vector3(2, 1, 2)},
@@ -64,8 +64,8 @@ void ActionGame::ShockWaveSkillState::Start()
 	}
 	CameraPtr camera;
 	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-	camera->SetAnim(animPos, animLookPos);
-	CameraControllerInstance.SetCamera(camera, 1, MyUtilities::EASING_TYPE::IN_SINE, 0.3f, MyUtilities::EASING_TYPE::IN_SINE, 0.15f);
+	camera->SetAnimation(animPos, animLookPos);
+	CameraControllerInstance.SetCamera(camera, 1, MyUtil::EASING_TYPE::IN_SINE, 0.3f, MyUtil::EASING_TYPE::IN_SINE, 0.15f);
 
 }
 
@@ -75,11 +75,11 @@ void ActionGame::ShockWaveSkillState::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (m_CurrentTime > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > m_Parameter.CollideEndFrameTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -88,7 +88,7 @@ void ActionGame::ShockWaveSkillState::Execution()
 		}
 
 	}
-	if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 	{
 		collideStartFlg = true;
 	}

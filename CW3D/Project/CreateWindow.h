@@ -9,8 +9,8 @@ namespace ActionGame
 	#define TEXTURE_SLICE 9	//テクスチャの分割数
 	private:
 		CVector4 m_Color;
-		Vector2	m_Scale;
-		Vector2 m_Position[TEXTURE_SLICE];
+		Vector2	scale_;
+		Vector2 position_[TEXTURE_SLICE];
 		CTexture* m_Texture[TEXTURE_SLICE];
 		CRectangle m_TextureRect[TEXTURE_SLICE];
 		Vector2 m_TexSize;
@@ -26,9 +26,9 @@ namespace ActionGame
 		void SetColor(MofU32 color);
 		float GetWidth();
 		float GetHeight();
-		const Vector2& GetPos() { return m_Position[0]; }
+		const Vector2& GetPosition() { return position_[0]; }
 		void SetPos(const Vector2& pos);
-		void SetScale(const Vector2& scale) { m_Scale = scale; }
+		void SetScale(const Vector2& scale) { scale_ = scale; }
 		CRectangle GetRect() { return m_WindowRect; }
 
 	};

@@ -33,7 +33,7 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 	m_BossFlg = eneParam->GetParam().m_IsBoss;
 
 	//インプットキー
-	auto& stateInput = std::make_shared<ActionGame::StateInput>();
+	auto& stateInput = std::make_shared<ActionGame::CStateInput>();
 	m_Input = stateInput;
 
 	//メッシュ取得
@@ -46,14 +46,14 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//モーション作成
 	m_Motion = m_pMesh->CreateMotionController();
 	//モーション状態設定
-	m_Actor->SetAnimationState(m_Motion);
+	actor_->SetAnimationState(m_Motion);
 
 	//アクション作成
-	actionCreator->Create(m_Actor);
+	actionCreator->Create(actor_);
 	//ステート作成
-	stateCreator->Create(m_StateMachine, m_Actor, m_Input);
+	stateCreator->Create(m_StateMachine, actor_, m_Input);
 	//パラメーター作成
-	auto& param = m_Actor->GetParameterMap();
+	auto& param = actor_->GetParameterMap();
 	paramCreator->Create(param);
 
 	//パラメータ設定
@@ -61,10 +61,10 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 
 
 	//初期位置設定
-	m_Position = m_DefaultPos;
+	position_ = m_DefaultPos;
 
 	//AI作成
-	m_AI = aiCreator->Create(m_Actor, m_StateMachine, stateInput);
+	m_AI = aiCreator->Create(actor_, m_StateMachine, stateInput);
 
 	return true;
 }
@@ -72,7 +72,7 @@ bool Enemy::Load(const EnemyBuildParameterPtr& eneParam,
 void Enemy::Initialize()
 {
 	//パラメータ初期化
-	auto param = m_Actor->GetParameterMap();
+	auto param = actor_->GetParameterMap();
 	auto& gauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
 	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
@@ -90,11 +90,11 @@ void Enemy::Initialize()
 
 	ActionGame::ActorObject::Initialize();
 	//座標初期化
-	m_Actor->SetPosition(m_DefaultPos);
-	m_Actor->SetReverse(true);
+	actor_->SetPosition(m_DefaultPos);
+	actor_->SetReverse(true);
 
 	m_StateMachine->ChangeState(STATE_KEY_NPC_STARTPOSE);
-	m_MatWorld = m_Actor->GetMatrix();
+	m_MatWorld = actor_->GetMatrix();
 	m_ShowFlg = false;
 	
 
@@ -110,7 +110,7 @@ void Enemy::Update()
 
 
 	//無敵時間中なら時間を減らす
-	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	if (invincible > 0.0f)
 	{
 		invincible -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
@@ -120,7 +120,7 @@ void Enemy::Update()
 	if (m_DeadFlg)
 	{
 		//完全に透明になったら表示しない
-		auto& alpha = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
+		auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 		if (alpha <= 0)
 		{
 			m_ShowFlg = false;
@@ -134,7 +134,7 @@ void Enemy::Update()
 
 	ActionGame::ActorObject::Update();
 
-	m_Position = m_Actor->GetPosition();
+	position_ = actor_->GetPosition();
 }
 
 void Enemy::Render()
@@ -179,11 +179,11 @@ void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYT
 	ActionGame::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
 	//ダメージを受けた方向に向く
-	auto& transform = m_Actor->GetTransform();
+	auto& transform = actor_->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
 
 	//ダメージ
-	auto& hp = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
 
 	//HPが０以下なら死亡
@@ -192,18 +192,18 @@ void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYT
 		hp = 0;
 
 		m_DeadFlg = true;
-		auto& HPShowFlg = m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
+		auto& HPShowFlg = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 		HPShowFlg = false;
 	}
 	m_HP = hp;
 
 	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
 
-	auto& armorLevel = m_Actor->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	auto& armorLevel = actor_->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	if (armorLevel <= armorBrekeLevel)
 	{
 		//ノックバック設定
-		auto& knockBack = m_Actor->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
+		auto& knockBack = actor_->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 		knockBack = direction * power;
 
 		//カメラを揺らす
@@ -216,7 +216,7 @@ void Enemy::Damage(const Vector3& direction, const Vector3& power,int damage,BYT
 
 bool Enemy::IsInvincible() const
 {
-	auto& invincible = m_Actor->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
 	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 
@@ -247,7 +247,7 @@ void ActionGame::Enemy::SettingParameter(const AnyParameterMapPtr& param, const 
 	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	armorLevel = eneStatus->ArmorLevel;
 	//大きさ
-	m_Actor->SetScale(eneStatus->Scale);
+	actor_->SetScale(eneStatus->Scale);
 	//当たり判定
 	m_ColliderSize = eneStatus->ColliderSize;
 	m_ColliderOffset = Vector3(0.0f,eneStatus->ColliderHeight, 0.0f);

@@ -7,41 +7,41 @@ namespace ActionGame
 	class CameraBase
 	{
 	protected:
-		CCamera		m_Camera;
-		CVector3	m_OffsetPos;
-		CVector3	m_OffsetLookPos;
-		CVector3	m_LookPos;
-		CVector3	m_Position;
-		CVector3	m_TargetPos;
-		CVector3	m_TargetLookPos;
-		bool		m_AnimEndFlg;
-		bool		m_ResetFlg;
+		CCamera		camera_;
+		CVector3	offsetPos_;
+		CVector3	offsetLookPos_;
+		CVector3	lookPos_;
+		CVector3	position_;
+		CVector3	targetPos_;
+		CVector3	targetLookPos_;
+		bool		isEndAnimation_;
+		bool		isReset_;
 
 		//アニメーション用構造体
-		struct animData
+		struct AnimationData
 		{
-			MyUtilities::ANIM_V3_DATA_ARRAY Pos;
-			MyUtilities::ANIM_V3_DATA_ARRAY LookPos;
+			MyUtil::ANIM_V3_DATA_ARRAY posAnim;
+			MyUtil::ANIM_V3_DATA_ARRAY lookPosAnim;
 
-			bool		Flg;
-			float		CurrentTime;
-			int			Count;
+			bool		isAnimation;
+			float		currentTime;
+			int			count;
 
-			animData()
-				: Pos()
-				, LookPos()
-				, Flg(false)
-				, CurrentTime(0.0f)
-				, Count(0)
+			AnimationData()
+				: posAnim()
+				, lookPosAnim()
+				, isAnimation(false)
+				, currentTime(0.0f)
+				, count(0)
 			{
 			}
 			void Release()
 			{
-				Pos.clear();
-				LookPos.clear();
+				posAnim.clear();
+				lookPosAnim.clear();
 			}
 		};
-		animData m_AnimData;
+		AnimationData animationData_;
 
 	public:
 		CameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
@@ -72,18 +72,18 @@ namespace ActionGame
 		virtual void Enable(const Vector3& pos, const Vector3& lookPos);
 		/*
 		* @brief	アニメーション設定
-		* @param	offsetPos	オフセット座標アニメーション
-		* @param	offsetLookPos	オフセット注視座標アニメーション
+		* @param	posAnim	座標のアニメーション配列
+		* @param	lookPosAnim	注視座標のアニメーション配列
 		*/
-		virtual void SetAnim(const MyUtilities::ANIM_V3_DATA_ARRAY& offsetPos, const MyUtilities::ANIM_V3_DATA_ARRAY& offsetLookPos);
+		virtual void SetAnimation(const MyUtil::ANIM_V3_DATA_ARRAY& posAnim, const MyUtil::ANIM_V3_DATA_ARRAY& lookPosAnim);
 
 		/*
 		* @brief	座標取得
 		* @return	座標
 		*/
-		const CVector3& GetPos() const noexcept
+		const CVector3& GetPosition() const noexcept
 		{
-			return m_Position;
+			return position_;
 		}
 		/*
 		* @brief	注視座標取得
@@ -91,7 +91,7 @@ namespace ActionGame
 		*/
 		const CVector3& GetLookPos() const noexcept
 		{
-			return m_LookPos;
+			return lookPos_;
 		}
 		/*
 		* @brief	ターゲットの座標取得
@@ -99,7 +99,7 @@ namespace ActionGame
 		*/
 		const CVector3& GetTargetPos() const noexcept
 		{
-			return m_TargetPos;
+			return targetPos_;
 		}
 		/*
 		* @brief	ターゲットの注視座標取得
@@ -107,7 +107,7 @@ namespace ActionGame
 		*/
 		const CVector3& GetTargetLookPos() const noexcept
 		{
-			return m_TargetLookPos;
+			return targetLookPos_;
 		}
 		/*
 		* @brief	オフセット座標取得
@@ -115,7 +115,7 @@ namespace ActionGame
 		*/
 		const CVector3& GetOffsetPos() const noexcept
 		{
-			return m_OffsetPos;
+			return offsetPos_;
 		}
 		/*
 		* @brief	オフセット注視座標取得
@@ -123,7 +123,7 @@ namespace ActionGame
 		*/
 		const CVector3& GetOffsetLookPos() const noexcept
 		{
-			return m_OffsetLookPos;
+			return offsetLookPos_;
 		}
 		/*
 		* @brief	カメラ取得
@@ -131,7 +131,7 @@ namespace ActionGame
 		*/
 		CCamera& GetCamera() noexcept
 		{
-			return m_Camera;
+			return camera_;
 		}
 		/*
 		* @brief	アニメーションが終了したか？
@@ -139,7 +139,7 @@ namespace ActionGame
 		*/
 		bool IsEnd() const noexcept
 		{
-			return m_AnimEndFlg;
+			return isEndAnimation_;
 		}
 		/*
 		* @brief	座標設定
@@ -147,7 +147,7 @@ namespace ActionGame
 		*/
 		void SetPos(const Vector3& pos) noexcept
 		{
-			m_Position = pos;
+			position_ = pos;
 		}
 		/*
 		* @brief	注視座標設定
@@ -155,7 +155,7 @@ namespace ActionGame
 		*/
 		void SetLookPos(const Vector3& pos) noexcept
 		{
-			m_LookPos = pos;
+			lookPos_ = pos;
 		}
 		/*
 		* @brief	ターゲット座標設定
@@ -163,7 +163,7 @@ namespace ActionGame
 		*/
 		void SetTargetPos(const Vector3& pos) noexcept
 		{
-			m_TargetPos = pos;
+			targetPos_ = pos;
 		}
 		/*
 		* @brief	ターゲット注視座標設定
@@ -171,7 +171,7 @@ namespace ActionGame
 		*/
 		void SetTargetLookPos(const Vector3& pos) noexcept
 		{
-			m_TargetLookPos = pos;
+			targetLookPos_ = pos;
 		}
 		/*
 		* @brief	オフセット座標設定
@@ -179,7 +179,7 @@ namespace ActionGame
 		*/
 		void SetOffsetPos(const Vector3& pos) noexcept
 		{
-			m_OffsetPos = pos;
+			offsetPos_ = pos;
 		}
 		/*
 		* @brief	オフセット注視座標設定
@@ -187,23 +187,23 @@ namespace ActionGame
 		*/
 		void SetOffsetLookPos(const Vector3& pos) noexcept
 		{
-			m_OffsetLookPos = pos;
+			offsetLookPos_ = pos;
 		}
 		/*
 		* @brief	アニメーション終了設定
 		* @param	isEnd　アニメーション終了フラグ
 		*/
-		void SetEndAnimFlg(bool isEnd) noexcept
+		void SetIsEndAnimation(bool isEnd) noexcept
 		{
-			m_AnimEndFlg = isEnd;
+			isEndAnimation_ = isEnd;
 		}
 		/*
 		* @brief	リセット設定
 		* @param	isReset　リセットフラグ
 		*/
-		void SetResetFlg(bool isReset) noexcept
+		void SetIsReset(bool isReset) noexcept
 		{
-			m_ResetFlg = isReset;
+			isReset_ = isReset;
 		}
 	};
 

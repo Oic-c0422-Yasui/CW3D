@@ -1,78 +1,78 @@
 #include "Transform.h"
 
 
-ActionGame::Transform::Transform()
-	: m_Position(0, 0, 0)
-	, m_Scale(1, 1, 1)
-	, m_Rotate(0, 0, 0)
-	, m_World()
-	, m_UpdateFlg(false)
-	, m_ReverseFlg(false)
-	, m_Type()
+ActionGame::CTransform::CTransform()
+	: position_(0, 0, 0)
+	, scale_(1, 1, 1)
+	, rotate_(0, 0, 0)
+	, world_()
+	, isUpdate_(false)
+	, isReverse_(false)
+	, type_()
 {
 }
 
-void ActionGame::Transform::UpdateMatrix()
+void ActionGame::CTransform::UpdateMatrix()
 {
 	CMatrix44 matScale;
 	CMatrix44 matRotate;
-	matScale.Scaling(m_Scale);
-	matRotate.RotationZXY(m_Rotate);
-	m_World = matScale * matRotate;
+	matScale.Scaling(scale_);
+	matRotate.RotationZXY(rotate_);
+	world_ = matScale * matRotate;
 
-	m_World.SetTranslation(m_Position);
+	world_.SetTranslation(position_);
 
-	//m_World *= parent->GetWorld();
+	//world_ *= parent->GetWorld();
 }
 
 
-void ActionGame::Transform::AddPosition(const Vector3& position) noexcept
+void ActionGame::CTransform::AddPosition(const Vector3& position) noexcept
 {
-	m_Position += position * TimeScaleControllerInstance.GetTimeScale(m_Type);
-	m_World.SetTranslation(m_Position);
+	position_ += position * TimeScaleControllerInstance.GetTimeScale(type_);
+	world_.SetTranslation(position_);
 }
 
-void ActionGame::Transform::AddPosition(const VelocityPtr& velocity) noexcept
+void ActionGame::CTransform::AddPosition(const VelocityPtr& velocity) noexcept
 {
 	if (velocity->IsGravity())
 	{
-		m_Position += velocity->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+		position_ += velocity->GetVelocity() * TimeScaleControllerInstance.GetTimeScale(type_);
 	}
 	else
 	{
-		m_Position.x += velocity->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(m_Type);
-		m_Position.z += velocity->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(m_Type);
+		position_.x += velocity->GetVelocityX() * TimeScaleControllerInstance.GetTimeScale(type_);
+		position_.z += velocity->GetVelocityZ() * TimeScaleControllerInstance.GetTimeScale(type_);
 	}
-	m_World.SetTranslation(m_Position);
+	world_.SetTranslation(position_);
 }
 
-void ActionGame::Transform::Clip(const Vector3& min, const Vector3& max)
+void ActionGame::CTransform::Clip(const Vector3& min, const Vector3& max)
 {
 	ClipX(min.x, max.x);
 	ClipY(min.y, max.y);
 	ClipZ(min.z, max.z);
 }
 
-void ActionGame::Transform::ClipX(float min, float max)
+void ActionGame::CTransform::ClipX(float min, float max)
 {
-	m_Position.x = ((m_Position.x > max) ?
-		max : ((m_Position.x < min) ? min : m_Position.x));
+	position_.x = ((position_.x > max) ?
+		max : ((position_.x < min) ? min : position_.x));
 }
 
-void ActionGame::Transform::ClipY(float min, float max)
+void ActionGame::CTransform::ClipY(float min, float max)
 {
-	m_Position.y = ((m_Position.y > max) ?
-		max : ((m_Position.y < min) ? min : m_Position.y));
+	position_.y = ((position_.y > max) ?
+		max : ((position_.y < min) ? min : position_.y));
 }
 
-void ActionGame::Transform::ClipZ(float min, float max)
+void ActionGame::CTransform::ClipZ(float min, float max)
 {
-	m_Position.z = ((m_Position.z > max) ?
-		max : ((m_Position.z < min) ? min : m_Position.z));
+	position_.z = ((position_.z > max) ?
+		max : ((position_.z < min) ? min : position_.z));
 }
 
-void ActionGame::Transform::SetPosition(const Vector3& position) noexcept
+void ActionGame::CTransform::SetPosition(const Vector3& position) noexcept
 {
-	m_Position = position;
-	m_World.SetTranslation(m_Position);
+	position_ = position;
+	world_.SetTranslation(position_);
 }

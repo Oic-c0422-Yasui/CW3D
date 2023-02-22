@@ -10,7 +10,7 @@ FixedCamera::FixedCamera(const Vector3& pos, const Vector3& lookPos, const Vecto
 
 FixedCamera::~FixedCamera()
 {
-	m_AnimData.Release();
+	animationData_.Release();
 }
 
 void FixedCamera::Create()
@@ -21,15 +21,16 @@ void FixedCamera::Create()
 void FixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 
-	if (m_AnimData.Flg)
+	if (animationData_.isAnimation)
 	{
-		m_OffsetPos = MyUtilities::InterpolationAnim(m_AnimData.CurrentTime, m_AnimData.Pos);
-		m_OffsetLookPos = MyUtilities::InterpolationAnim(m_AnimData.CurrentTime, m_AnimData.LookPos);
-		m_AnimData.CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		auto& anim = animationData_;
+		offsetPos_ = MyUtil::InterpolationAnim(anim.currentTime, anim.posAnim);
+		offsetLookPos_ = MyUtil::InterpolationAnim(anim.currentTime, anim.lookPosAnim);
+		anim.currentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 
-	m_Position	= m_TargetPos + m_OffsetPos;
-	m_LookPos	= m_TargetLookPos + m_OffsetLookPos;
+	position_	= targetPos_ + offsetPos_;
+	lookPos_	= targetLookPos_ + offsetLookPos_;
 
 	CameraBase::UpdateCamera();
 }

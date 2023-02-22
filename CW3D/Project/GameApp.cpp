@@ -9,7 +9,7 @@
 
 //INCLUDE
 #include	"GameApp.h"
-#include	"SceneBase.h"
+#include	"IScene.h"
 #include	"BattleScene.h"
 #include	"SceneManager.h"
 #include	"TitleScene.h"
@@ -18,7 +18,7 @@
 #include	"Messenger.h"
 
 //シーンマネージャー
-ActionGame::SceneManagerPtr gSceneManager;
+Scene::SceneManagerPtr gSceneManager;
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -32,8 +32,8 @@ MofBool CGameApp::Initialize(void){
 	CUtilities::SetFPS(60);
 
 	//インプット読み込み
-	auto input = InputManagerInstance.AddInput<ActionGame::MofInput>();
-	InputManagerInstance.AddInput<ActionGame::StateInput>();
+	auto input = InputManagerInstance.AddInput<Input::CMofInput>();
+	InputManagerInstance.AddInput<Input::CStateInput>();
 	//キーボード入力登録
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
@@ -52,9 +52,9 @@ MofBool CGameApp::Initialize(void){
 	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 0);
 
 	//シーン登録
-	auto manager = std::make_shared<ActionGame::SceneManager>();
-	manager->RegistScene<ActionGame::CBattleScene>(SCENENO::GAME);
-	manager->RegistScene<ActionGame::TitleScene>(SCENENO::TITLE);
+	auto manager = std::make_shared<Scene::SceneManager>();
+	manager->RegistScene<Scene::CBattleScene>(SCENENO::GAME);
+	manager->RegistScene<Scene::TitleScene>(SCENENO::TITLE);
 
 	//画面遷移用のサービス登録
 	SceneChangeService::SetService(manager);
@@ -62,8 +62,8 @@ MofBool CGameApp::Initialize(void){
 	gSceneManager = manager;
 
 	//メッセンジャー登録
-	auto messenger = std::make_shared < ActionGame::CMessenger>();
-	ActionGame::ServiceLocator<ActionGame::IMessenger>::SetService(messenger);
+	auto messenger = std::make_shared < Messenger::CMessenger>();
+	ActionGame::ServiceLocator<Messenger::IMessenger>::SetService(messenger);
 
 
 	gSceneManager->Initialize();
@@ -124,8 +124,8 @@ MofBool CGameApp::Release(void){
 	InputManagerInstance.Release();
 	gSceneManager->Release();
 	gSceneManager.reset();
-	ActionGame::ServiceLocator<ActionGame::ISceneChanger>::Release();
-	ActionGame::ServiceLocator<ActionGame::ISceneInitializer>::Release();
-	ActionGame::ServiceLocator<ActionGame::IMessenger>::Release();
+	ActionGame::ServiceLocator<Scene::ISceneChanger>::Release();
+	ActionGame::ServiceLocator<Scene::ISceneInitializer>::Release();
+	ActionGame::ServiceLocator<Messenger::IMessenger>::Release();
 	return TRUE;
 }

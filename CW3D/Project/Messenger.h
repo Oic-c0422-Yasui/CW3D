@@ -2,7 +2,7 @@
 #include "IMessenger.h"
 #include    <map>
 #include    <cassert>
-#include "Observable.h"
+#include "Subject.h"
 
 namespace Messenger
 {
@@ -13,8 +13,7 @@ namespace Messenger
     class CMessenger : public IMessenger
     {
     private:
-        std::map<int, ActionGame::IObservable<void>> m_ObserveMap;
-        ActionGame::IObservable<void>& GetSubscribe(GameMessageType message);
+        std::map<int, ActionGame::CSubject<int>> m_ObserveMap;
     public:
         CMessenger();
         
@@ -35,10 +34,7 @@ namespace Messenger
         /*
         * @brief    メッセージを受け取る相手を削除
         */
-        void DeleteReceiver(GameMessageType message) override
-        {
-            m_ReceiverLists[message].clear();
-        }
+        void Delete(GameMessageType message) override;
     };
 }
 

@@ -92,14 +92,14 @@ public:
 	*/
 	int GetHP() const noexcept
 	{
-		return m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+		return actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
 	}
 
 
 	/**
 	* @brief		HP変化通知
 	*/
-	ActionGame::IObservable<int>& GetHPSubject() { return  m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
+	ActionGame::IObservable<int>& GetHPSubject() { return  actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
 	ActionGame::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
 
 
@@ -127,7 +127,7 @@ public:
 	}
 	//必殺技ゲージ
 	ActionGame::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }
-	ActionGame::IObservable<float>& GetUltSubject() { return m_Actor->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
+	ActionGame::IObservable<float>& GetUltSubject() { return actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
 
 	/*
 	* @brief	スキルコントローラーを取得
@@ -135,7 +135,7 @@ public:
 	*/
 	const ActionGame::SkillControllerPtr& GetSkillController() const noexcept
 	{
-		return m_Actor->GetSkillController();
+		return actor_->GetSkillController();
 	}
 	
 	/*
@@ -153,7 +153,7 @@ public:
 	*/
 	bool IsEscape() const
 	{
-		return m_Actor->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+		return actor_->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
 	}
 
 	/*
@@ -169,7 +169,7 @@ public:
 	const CAABB& GetCollider() override
 	{
 		m_Collider.Size = m_ColliderSize;
-		m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
+		m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
 
 		return m_Collider;
 	}
@@ -181,7 +181,7 @@ public:
 	const CAABB& GetEscapeCollider() noexcept
 	{
 		m_Collider.Size = m_EscapeColliderSize;
-		m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
+		m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
 		return m_Collider;
 	}
 

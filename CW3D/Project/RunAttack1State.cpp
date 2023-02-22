@@ -26,7 +26,7 @@ void ActionGame::RunAttack1State::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 		{
 			shot->SetEnableCollider(true);
 		}
@@ -36,7 +36,7 @@ void ActionGame::RunAttack1State::Execution()
 		}
 	}
 
-	if (m_CurrentTime >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
 	{
 		CreateEffect();
 		collideStartFlg = true;
@@ -59,7 +59,7 @@ void ActionGame::RunAttack1State::InputExecution()
 	{
 		return;
 	}
-	if (m_CurrentTime > m_Parameter.NextInputFrameTime)
+	if (currentTime_ > m_Parameter.NextInputFrameTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{

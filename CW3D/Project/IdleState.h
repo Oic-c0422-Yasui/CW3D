@@ -19,7 +19,7 @@ namespace ActionGame {
 		Parameter m_Parameter;
 		/** 移動アクション */
 		IdleActionPtr			m_IdleAction;
-		float					m_Time;
+		float					time_;
 	public:
 		/**
 		 * @brief		コンストラクタ

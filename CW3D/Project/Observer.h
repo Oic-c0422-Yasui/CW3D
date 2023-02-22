@@ -22,20 +22,20 @@ namespace ActionGame {
 	class ObserverFunction : public IObserver<Args...> {
 	private:
 		/** 通知時に実行する関数 */
-		std::function<void(Args...)>	func;
+		std::function<void(Args...)>	func_;
 	public:
 		/**
 		 * コンストラクタ
 		 */
 		ObserverFunction(std::function<void(Args...)>& f)
-			: func(f) {
+			: func_(f) {
 		}
 
 		/**
 		 * @brief	通知メソッド
 		 */
 		void Notify(Args... args) override {
-			func(args...);
+			func_(args...);
 		}
 	};
 }

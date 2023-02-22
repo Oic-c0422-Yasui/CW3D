@@ -35,7 +35,7 @@ namespace ActionGame {
 		bool							m_ContinueFlg;
 		std::string						m_Key;
 	protected:
-		virtual const KnockBackPtr GetKnockBack() override { return std::make_shared<FixedYInhaleKnockBack>(Actor()); }
+		virtual const KnockBackPtr GetKnockBack() override { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
 		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
 	public:

@@ -6,7 +6,7 @@ using namespace ActionGame;
 
 ActionGame::Shot::Shot()
 	: m_Collider(std::make_shared<CAttackCollider>())
-	, m_Position(0, 0, 0)
+	, position_(0, 0, 0)
 	, m_AABB()
 	, m_Radius(0.0f)
 	, m_ShowFlg(false)
@@ -15,7 +15,7 @@ ActionGame::Shot::Shot()
 	, m_Speed(0.0f)
 	, m_KnockBackPower(0, 0, 0)
 	, m_KnockBackDirection()
-	, m_Offset(0, 0, 0)
+	, offset_(0, 0, 0)
 	, m_Damage(0)
 	, m_NextHitTime(0.0f)
 	, m_CollisionType(COLLISION_TYPE::AABB)
@@ -32,8 +32,8 @@ ActionGame::Shot::~Shot()
 
 void ActionGame::Shot::CreateBase(const Vector3& pos, const ShotCreateParameter& shot)
 {
-	m_Position = pos;
-	m_Offset = shot.offset;
+	position_ = pos;
+	offset_ = shot.offset;
 	m_ParentCharaType = shot.type;
 	m_Damage = shot.damage;
 	m_NextHitTime = shot.nextHitTime;
@@ -56,7 +56,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotSphere& sphire)
 
 	//追加のパラメータ作成
 	m_Radius = sphire.Radius;
-	m_Collider->SetPosition(m_Position);
+	m_Collider->SetPosition(position_);
 	m_Collider->SetRadius(m_Radius);
 	m_CollisionType = COLLISION_TYPE::SPHERE;
 }
@@ -69,7 +69,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
 	//追加のパラメータ作成
 	m_Size = aabb.size;
 	m_AABB.Size = m_Size;
-	m_AABB.SetPosition(m_Position);
+	m_AABB.SetPosition(position_);
 	m_CollisionType = COLLISION_TYPE::AABB;
 }
 
@@ -80,7 +80,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
 
 	//追加のパラメータ作成
 	m_Size = obb.size;
-	m_OBB.Position = m_Position;
+	m_OBB.Position = position_;
 	m_OBB.Size = m_Size;
 	m_OBB.Angle = obb.angle;
 	m_OBB.CalculateAxis();
@@ -93,17 +93,17 @@ void ActionGame::Shot::ApplyColliderPosition()
 	{
 	case COLLISION_TYPE::SPHERE:
 	{
-		m_Collider->SetPosition(m_Position);
+		m_Collider->SetPosition(position_);
 		break;
 	}
 	case COLLISION_TYPE::AABB:
 	{
-		m_AABB.SetPosition(m_Position);
+		m_AABB.SetPosition(position_);
 		break;
 	}
 	case COLLISION_TYPE::OBB:
 	{
-		m_OBB.Position = m_Position;
+		m_OBB.Position = position_;
 		break;
 	}
 	default:
@@ -120,7 +120,7 @@ void ActionGame::Shot::Update()
 		return;
 	}
 
-	m_Position.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
+	position_.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
 	
 	//コライダーの座標を現在の座標に合わせる
 	ApplyColliderPosition();

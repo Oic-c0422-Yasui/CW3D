@@ -4,13 +4,13 @@
 ActionGame::DamageState::DamageState(Parameter param)
 	: State()
 	, m_Parameter(param)
-	, m_CurrentTime(0.0f)
+	, currentTime_(0.0f)
 {
 }
 
 void ActionGame::DamageState::Start()
 {
-	m_CurrentTime = 0.0f;
+	currentTime_ = 0.0f;
 	m_DamageAction = Actor()->GetAction<DamageAction>(GetKey());
 	m_DamageAction->Start();
 

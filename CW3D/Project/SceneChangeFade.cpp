@@ -1,45 +1,45 @@
 #include "SceneChangeFade.h"
 
-ActionGame::SceneChangeFade::SceneChangeFade(float startTime, float durationTime, float endTime)
-	: m_CurrentTime(0.0f)
-	, m_StartTime(startTime)
-	, m_DurationTime(durationTime)
-	, m_EndTime(endTime)
-	, m_HalfPointFlg(false)
-	, m_Alpha(0)
+Scene::SceneChangeFade::SceneChangeFade(float startTime, float durationTime, float endTime)
+	: currentTime_(0.0f)
+	, startTime_(startTime)
+	, durationTime_(durationTime)
+	, endTime_(endTime)
+	, isHalfPoint_(false)
+	, alpha_(0)
 {
-	m_AllTime = m_StartTime + m_DurationTime + m_EndTime;
+	totalTime_ = startTime_ + durationTime_ + endTime_;
 }
 
-void ActionGame::SceneChangeFade::Update()
+void Scene::SceneChangeFade::Update()
 {
-	m_CurrentTime += CUtilities::GetFrameSecond();
+	currentTime_ += CUtilities::GetFrameSecond();
 	if (!IsHalfPoint())
 	{
-		float rate = m_CurrentTime / m_StartTime;
+		float rate = currentTime_ / startTime_;
 		//フェードイン
-		m_Alpha = (int)(255 * rate);
+		alpha_ = (int)(255 * rate);
 	}
-	else if(m_CurrentTime >= m_StartTime + m_DurationTime)
+	else if(currentTime_ >= startTime_ + durationTime_)
 	{
-		float rate = m_CurrentTime / m_AllTime;
+		float rate = currentTime_ / totalTime_;
 		//フェードアウト
-		m_Alpha = (int)(255 * (1 - rate));
+		alpha_ = (int)(255 * (1 - rate));
 	}
 }
 
-void ActionGame::SceneChangeFade::Render(ScenePtr& prev, ScenePtr& current)
+void Scene::SceneChangeFade::Render(ScenePtr& prev, ScenePtr& current)
 {
 	CRectangle rect(0, 0, g_pGraphics->GetTargetWidth(), g_pGraphics->GetTargetHeight());
-	CGraphicsUtilities::RenderFillRect(rect, MOF_ARGB(m_Alpha, 0, 0, 0));
+	CGraphicsUtilities::RenderFillRect(rect, MOF_ARGB(alpha_, 0, 0, 0));
 }
 
-bool ActionGame::SceneChangeFade::IsEnd() const noexcept
+bool Scene::SceneChangeFade::IsEnd() const noexcept
 {
-	return m_CurrentTime >= m_AllTime;
+	return currentTime_ >= totalTime_;
 }
 
-bool ActionGame::SceneChangeFade::IsHalfPoint() const noexcept
+bool Scene::SceneChangeFade::IsHalfPoint() const noexcept
 {
-	return m_CurrentTime >= m_StartTime;
+	return currentTime_ >= startTime_;
 }

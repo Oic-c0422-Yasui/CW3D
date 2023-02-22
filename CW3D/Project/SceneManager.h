@@ -5,7 +5,7 @@
 #include "ThreadCreator.h"
 #include "TaskManager.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/**
 	 * シーンマネージャー
@@ -16,9 +16,9 @@ namespace ActionGame
 
 		ScenePtr m_Scene;
 		std::unordered_map<SCENENO, SceneCreatorPtr> m_SceneMap;
-		TaskManager m_UpdateTask;
-		TaskManager m_RenderTask;
-		TaskManager m_Render2DTask;
+		ActionGame::TaskManager updateTask_;
+		ActionGame::TaskManager renderTask_;
+		ActionGame::TaskManager render2DTask_;
 
 		SceneChangeEffectPtr m_SceneEffect;
 

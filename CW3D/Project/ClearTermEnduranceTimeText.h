@@ -6,7 +6,7 @@ namespace ActionGame
     class ClearTermEnduranceTimeText : public ClearTermText
     {
     private:
-        float m_CurrentTime;
+        float currentTime_;
         float m_FinishTime;
         Vector2 m_DescriptionPos;
         Vector2 m_ClearTermPos;
@@ -16,7 +16,7 @@ namespace ActionGame
         void Render() override;
         void SetCurrentTime(float time)
         {
-            m_CurrentTime = time;
+            currentTime_ = time;
         }
         void SetFinishTime(float time)
         {

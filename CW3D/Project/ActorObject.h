@@ -16,7 +16,7 @@ namespace ActionGame
 		std::shared_ptr<CMeshContainer>		m_pMesh;
 		StateMachinePtr						m_StateMachine;
 		AnimationStatePtr					m_Motion;
-		ActorPtr							m_Actor;
+		ActorPtr							actor_;
 		CMatrix44							m_MatWorld;
 		CAABB								m_Collider;
 		CVector3							m_ColliderOffset;
@@ -51,7 +51,7 @@ namespace ActionGame
 		 */
 		const ActorPtr& GetActor() const noexcept
 		{
-			return m_Actor;
+			return actor_;
 		}
 		/**
 		 * @brief		キャラタイプ取得
@@ -59,7 +59,7 @@ namespace ActionGame
 		 */
 		CHARA_TYPE GetType() const noexcept
 		{
-			return m_Actor->GetType();
+			return actor_->GetType();
 		}
 		/**
 		 * @brief		座標取得
@@ -67,7 +67,7 @@ namespace ActionGame
 		 */
 		const CVector3& GetPosition() const noexcept 
 		{ 
-			return m_Actor->GetPosition(); 
+			return actor_->GetPosition(); 
 		}
 		/**
 		 * @brief		速度取得
@@ -75,7 +75,7 @@ namespace ActionGame
 		 */
 		const CVector3& GetVelocity() const noexcept
 		{ 
-			return m_Actor->GetVelocity()->GetVelocity(); 
+			return actor_->GetVelocity()->GetVelocity(); 
 		}
 		/**
 		 * @brief		反転しているか？
@@ -83,7 +83,7 @@ namespace ActionGame
 		 */
 		bool IsReverse() const noexcept
 		{ 
-			return m_Actor->IsReverse(); 
+			return actor_->IsReverse(); 
 		}
 		/**
 		 * @brief		回転取得
@@ -91,7 +91,7 @@ namespace ActionGame
 		 */
 		const CVector3& GetRotate() const noexcept
 		{ 
-			return m_Actor->GetRotate(); 
+			return actor_->GetRotate(); 
 		}
 		/**
 		 * @brief		表示しているか？
@@ -107,7 +107,7 @@ namespace ActionGame
 		virtual const CAABB& GetCollider()
 		{
 			m_Collider.Size = m_ColliderSize;
-			m_Collider.SetPosition(m_Actor->GetPosition() + m_ColliderOffset);
+			m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
 
 			return m_Collider;
 		}
@@ -125,7 +125,7 @@ namespace ActionGame
 		 */
 		size_t GetID() const noexcept
 		{
-			return m_Actor->GetID();
+			return actor_->GetID();
 		}
 		/**
 		 * @brief		当たり判定を無視するか？
@@ -158,7 +158,7 @@ namespace ActionGame
 		 */
 		void SetType(CHARA_TYPE type) noexcept
 		{
-			m_Actor->SetType(type);
+			actor_->SetType(type);
 		}
 		/**
 		 * @brief		座標を設定
@@ -166,7 +166,7 @@ namespace ActionGame
 		 */
 		virtual void SetPosition(const Vector3& position) noexcept
 		{
-			m_Actor->SetPosition(position);
+			actor_->SetPosition(position);
 		}
 		/**
 		 * @brief		表示フラグを設定

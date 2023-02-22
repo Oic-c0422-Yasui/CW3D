@@ -20,7 +20,7 @@ namespace ActionGame
 		float								m_MaxGauge;
 
 
-		Vector2								m_Position;
+		Vector2								position_;
 		Vector2								m_GaugePosition;
 
 
@@ -31,7 +31,7 @@ namespace ActionGame
 		CSkillUltGaugeRender()
 			: m_Gauge(0.0f)
 			, m_MaxGauge(0.0f)
-			, m_Position(0, 0)
+			, position_(0, 0)
 			, m_GaugePosition(0,0)
 		{
 
@@ -55,9 +55,9 @@ namespace ActionGame
 
 		void Initialize(const Vector2& pos)
 		{
-			m_Position = pos;
-			//m_Position.y += m_pSKillFrame->GetHeight() * 0.5f;
-			m_GaugePosition = m_Position + Vector2(13,-24);
+			position_ = pos;
+			//position_.y += m_pSKillFrame->GetHeight() * 0.5f;
+			m_GaugePosition = position_ + Vector2(13,-24);
 		}
 
 
@@ -86,13 +86,13 @@ namespace ActionGame
 
 			float percent = m_Gauge / m_MaxGauge;
 			percent = min(percent, 1.0f);
-			m_pUsedSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
+			m_pUsedSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 
 
 
 			if (percent >= 1.0f)
 			{
-				m_pSKillFrame->Render(m_Position.x, m_Position.y, TEXALIGN_BOTTOMCENTER);
+				m_pSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 			}
 
 			CRectangle rect(0, m_pGaugeFrame->GetHeight() * (1.0 - percent), m_pGaugeFrame->GetWidth(), m_pGaugeFrame->GetHeight());

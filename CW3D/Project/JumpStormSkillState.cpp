@@ -40,7 +40,7 @@ void ActionGame::JumpStormSkillState::Start()
 	}
 	CameraPtr camera;
 	camera = std::make_shared<ActionGame::FollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtilities::EASING_TYPE::IN_SINE, 0.7f, MyUtilities::EASING_TYPE::IN_SINE, 0.5f);
+	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtil::EASING_TYPE::IN_SINE, 0.7f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
 
 }
 
@@ -73,7 +73,7 @@ void ActionGame::JumpStormSkillState::Execution()
 
 	m_AttackTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
-	if (m_CurrentTime > m_Parameter.DurationTime || !m_ContinueFlg)
+	if (currentTime_ > m_Parameter.DurationTime || !m_ContinueFlg)
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
 		{
@@ -97,7 +97,7 @@ void ActionGame::JumpStormSkillState::InputExecution()
 	{
 		return;
 	}
-	if (m_CurrentTime > 0.5f)
+	if (currentTime_ > 0.5f)
 	{
 		if (Input()->IsPress(m_Key))
 		{

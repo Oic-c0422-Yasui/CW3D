@@ -7,20 +7,15 @@
 
 namespace ActionGame 
 {
-
-
-
-class StageCreator
-{
-private:
-
-public:
-	/**
-		 * @brief		コンストラクタ
-		 */
-	StageCreator();
-
-	static StagePtr Create(const DivisionArrayPtr& division);
-};
+	class StageCreator
+	{
+	public:
+		/**
+			 * @brief		コンストラクタ
+			 */
+		StageCreator();
+	
+		static StagePtr Create(const DivisionArrayPtr& division);
+	};
 
 }

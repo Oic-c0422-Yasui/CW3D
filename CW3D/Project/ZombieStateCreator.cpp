@@ -3,7 +3,7 @@
 
 using namespace ActionGame;
 
-bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const InputPtr& input)
+bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const Input::InputPtr& input)
 {
 	stateMachine->AddState(State::Create<IdleState>(actor, input,
 		IdleState::Parameter{

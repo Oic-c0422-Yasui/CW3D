@@ -5,7 +5,7 @@ ActionGame::NPCStartPoseAction::NPCStartPoseAction(Parameter param)
 	: Action()
 	, m_Parameter(param)
 	, m_TempOffsetPos(0,0,0)
-	, m_CurrentTime(0.0f)
+	, currentTime_(0.0f)
 {
 }
 
@@ -16,7 +16,7 @@ void ActionGame::NPCStartPoseAction::Start()
 	float rotateY = Transform()->GetRotateY();
 	m_TempOffsetPos = Vector3(0, 0, 0);
 
-	m_CurrentTime = 0.0f;
+	currentTime_ = 0.0f;
 
 	if (Transform()->IsReverse())
 	{
@@ -40,9 +40,9 @@ void ActionGame::NPCStartPoseAction::Execution()
 {
 
 	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	m_CurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-	alpha = MyUtilities::Timer(0.0f, m_CurrentTime, 1.0f, m_Parameter.finishTime);
+	alpha = MyUtil::Timer(0.0f, currentTime_, 1.0f, m_Parameter.finishTime);
 }
 
 void ActionGame::NPCStartPoseAction::End()
@@ -67,5 +67,5 @@ const ActionGame::ActionKeyType ActionGame::NPCStartPoseAction::GetKey() const
 
 bool ActionGame::NPCStartPoseAction::IsEndAnim() const noexcept
 {
-	return m_CurrentTime >= m_Parameter.finishTime;
+	return currentTime_ >= m_Parameter.finishTime;
 }

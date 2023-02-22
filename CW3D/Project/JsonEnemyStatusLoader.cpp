@@ -36,7 +36,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 		std::string name;
 		state["Name"].get_to(name);
 		//“ú–{Œê‚Ì•\Ž¦‚às‚¤‚Ì‚Å utf-8 => ShiftJIS‚Ö•ÏŠ· 
-		auto JISname = MyUtilities::UTF8toShiftJIS(name);
+		auto JISname = MyUtil::UTF8toShiftJIS(name);
 
 		//HP
 		int hp;

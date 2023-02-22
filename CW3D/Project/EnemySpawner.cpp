@@ -1,12 +1,12 @@
 #include	"EnemySpawner.h"
 
-Spawner::EnemySpawner::EnemySpawner(const SpawnConditionArray& conditions, SpawnCyclePtr cycle)
+Spawner::CEnemySpawner::CEnemySpawner(const SpawnConditionArray& conditions, SpawnCyclePtr cycle)
 	: m_Conditions(conditions)
 	, m_Cycle(cycle)
 
 {
 }
-void Spawner::EnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
+void Spawner::CEnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
 {
 	//‚Ç‚ê‚©ˆê‚Â‚Å‚àðŒ‚ð–ž‚½‚³‚È‚¢‚È‚çŽÀs‚µ‚È‚¢
 	if (!IsValid())
@@ -23,12 +23,12 @@ void Spawner::EnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
 }
 
 
-void Spawner::EnemySpawner::Reset()
+void Spawner::CEnemySpawner::Reset()
 {
 	m_Cycle->Reset();
 }
 
-bool Spawner::EnemySpawner::IsValid() const
+bool Spawner::CEnemySpawner::IsValid() const
 {
 	if (m_Conditions.size() <= 0)
 	{

@@ -283,6 +283,15 @@
     <Filter Include="ヘッダー ファイル\Message">
       <UniqueIdentifier>{7e034309-8244-4635-b652-59f95560f14d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Messenger">
+      <UniqueIdentifier>{b3c6d017-5343-4785-be12-9a76168de567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Common">
+      <UniqueIdentifier>{43aeac10-816c-4211-a411-b6ce8d38f316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\AI">
+      <UniqueIdentifier>{d0604cc4-6f25-4e8f-9d95-10808855bdc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -693,12 +702,6 @@
     <ClCompile Include="AdditionalSkill.cpp">
       <Filter>ソース ファイル\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="StartPoseState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="JsonSpawnerCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -711,9 +714,6 @@
     <ClCompile Include="SpawnerBuilderDictionary.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="NPCStartPoseState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NPCStartPoseAction.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -724,9 +724,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EnemyHPRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BossHPRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NPCHPRenderManager.cpp">
@@ -762,28 +759,49 @@
     <ClCompile Include="MutantBuilder.cpp">
       <Filter>ソース ファイル\Chara\Enemy\Mutant\Builder</Filter>
     </ClCompile>
-    <ClCompile Include="NPCCameraStartPoseState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="AICycleTension.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveStateAI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerParameterCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Messenger.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Velocity.cpp">
+      <Filter>ソース ファイル\State\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>ソース ファイル\State\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>ソース ファイル\State\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCCameraStartPoseState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCStartPoseState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="StartPoseState.cpp">
+      <Filter>ソース ファイル\State</Filter>
+    </ClCompile>
+    <ClCompile Include="AICycleTension.cpp">
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveStateAI.cpp">
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHPRender.cpp">
+      <Filter>ソース ファイル\UI\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="StateInput.cpp">
+      <Filter>Inputファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleSceneTask.cpp">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Receiver.cpp">
+    <ClCompile Include="Collider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -847,9 +865,6 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>ヘッダー ファイル\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBase.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>ヘッダー ファイル\Collision</Filter>
@@ -1535,13 +1550,7 @@
     <ClInclude Include="NPCCameraStartPoseState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AICycleTension.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IMessenger.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Receiver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="IMessageSender.h">
@@ -1554,6 +1563,18 @@
       <Filter>ヘッダー ファイル\Message</Filter>
     </ClInclude>
     <ClInclude Include="IMessageRegister.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AICycleTension.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>ヘッダー ファイル\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

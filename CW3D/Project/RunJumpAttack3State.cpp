@@ -23,19 +23,19 @@ void ActionGame::RunJumpAttack3State::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideStartFlg)
 		{
 			m_Attack3Action->Execution();
 			m_Attack3Action->Jump();
 
 		}
-		else if (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && shot->IsEnableCollider())
+		else if (currentTime_ >= m_Parameter.CollideSecondStartFrameTime && shot->IsEnableCollider())
 		{
 			shot->SetEnableCollider(false);
 		}
 
 	}
-	if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideStartFlg)
 	{
 		collideStartFlg = true;
 	}

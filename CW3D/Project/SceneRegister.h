@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneCreator.h"
 
-namespace ActionGame
+namespace Scene
 {
 	/**
 	 * @brief		シーン登録用インターフェイス

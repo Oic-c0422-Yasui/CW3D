@@ -28,11 +28,11 @@ void ActionGame::Attack3State::Execution()
 	for (auto& shot : m_pShots)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if ((m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
-			|| (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg))
+		if ((currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
+			|| (currentTime_ >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg))
 		{
 			shot->SetEnableCollider(true);
-			if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
+			if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 			{
 				m_Attack3Action->Execution();
 
@@ -45,11 +45,11 @@ void ActionGame::Attack3State::Execution()
 		}
 
 	}
-	if (m_CurrentTime >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
+	if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
 	{
 		collideFirstStartFlg = true;
 	}
-	if (m_CurrentTime >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg)
+	if (currentTime_ >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg)
 	{
 		collideSecondStartFlg = true;
 	}
