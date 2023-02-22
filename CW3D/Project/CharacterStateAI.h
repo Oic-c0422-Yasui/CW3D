@@ -24,10 +24,10 @@ namespace ActionGame
 		StateMachinePtr				stateMachine_;
 
 		//入力クラス
-		StateInputPtr				input_;
+		Input::StateInputPtr				input_;
 
 		//入力状態保存
-		using KeyMap = std::unordered_map<IInput::KeyType, float >;
+		using KeyMap = std::unordered_map<Input::IInput::KeyType, float >;
 		KeyMap						currentKeyVelues_;
 
 		//判定周期
@@ -37,7 +37,7 @@ namespace ActionGame
 		 * @brief		コンストラクタ
 		 */
 		CharacterStateAI(const ActorPtr& actor, const StateMachinePtr& machine,
-			const StateInputPtr& input, const AICyclePtr& cycle)
+			const Input::StateInputPtr& input, const AICyclePtr& cycle)
 			: stateAIMap_()
 			, currentAI_()
 			, actor_(actor)

@@ -13,7 +13,7 @@ namespace Messenger
     class CMessenger : public IMessenger
     {
     private:
-        std::map<int, ActionGame::CSubject<int>> m_ObserveMap;
+        std::map<int, ActionGame::CSubject<void>> observeMap_;
     public:
         CMessenger();
         

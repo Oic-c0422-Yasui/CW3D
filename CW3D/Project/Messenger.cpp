@@ -2,22 +2,22 @@
 
 
 Messenger::CMessenger::CMessenger()
-	: m_ObserveMap()
+	: observeMap_()
 {
 }
 void Messenger::CMessenger::Send(GameMessageType message) const
 {
-	auto it = m_ObserveMap.find(message);
-	assert(it != m_ObserveMap.end());
+	auto it = observeMap_.find(message);
+	assert(it != observeMap_.end());
 	it->second.Notify();
 }
 
 void Messenger::CMessenger::Regist(GameMessageType message, const std::function<void>& func)
 {
-	m_ObserveMap[message].Subscribe([&](int a) {10; });
+	observeMap_[message].Subscribe(func);
 }
 
 void Messenger::CMessenger::Delete(GameMessageType message)
 {
-	m_ReceiverLists[message].clear();
+	observeMap_[message].clear();
 }
