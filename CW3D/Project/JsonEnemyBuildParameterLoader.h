@@ -9,7 +9,7 @@ namespace ActionGame
 	class JsonEnemyBuildParameterLoader
 	{
 	private:
-		Spawner::EnemySpawnerArrayPtr m_Spawners;
+		Spawner::EnemySpawnerArrayPtr spawners_;
 	public:
 		JsonEnemyBuildParameterLoader();
 		EnemyBuildParameterArrayPtr Load(const std::string& name, EnemyStatusDictionary statusDictionary);

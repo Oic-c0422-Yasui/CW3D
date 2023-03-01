@@ -11,26 +11,27 @@
 #include	"EnemyBuildParameter.h"
 
 #include	"ActorObject.h"
+#include	"EffectController.h"
 
 namespace ActionGame
 {
 	/*
 	* @brief	敵クラス
 	*/
-	class Enemy : public ActorObject
+	class CEnemy : public CActorObject
 	{
 	protected:
-		InputPtr m_Input;
+		Input::InputPtr input_;
 
-		ParameterHandle< ReactiveParameter<int> > m_HP;
-		ParameterHandle< ReactiveParameter<int> > m_MaxHP;
-		ParameterHandle< ReactiveParameter<Vector3> > position_;
+		ParameterHandle< CReactiveParameter<int> > HP_;
+		ParameterHandle< CReactiveParameter<int> > maxHP_;
+		ParameterHandle< CReactiveParameter<Vector3> > position_;
 
-		CharacterAIPtr	m_AI;
+		CharacterAIPtr	AI_;
 
-		CVector3 m_DefaultPos;
-		std::string		m_Name;
-		bool			m_BossFlg;
+		Vector3			defaultPos_;
+		std::string		name_;
+		bool			isBoss_;
 	protected:
 		//プライベート関数
 
@@ -40,8 +41,8 @@ namespace ActionGame
 		virtual void SettingParameter(const AnyParameterMapPtr& param,
 										const EnemyStatusPtr& eneStatus);
 	public:
-		Enemy();
-		~Enemy() override;
+		CEnemy();
+		~CEnemy() override;
 		/*
 		* @brief	読み込み
 		* @param	eneParam 敵生成に使うパラメータ
@@ -88,9 +89,25 @@ namespace ActionGame
 		* @param direction	ノックバックの方向
 		* @param power	ノックバックの力
 		* @param damage ダメージ量
-		* @param armorBrekeLevel	アーマー破壊レベル
+		* @param armorBrakeLevel アーマー破壊レベル
 		*/
-		virtual void Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBrekeLevel);
+		void Damage(const Vector3& direction,
+					const Vector3& power,
+					int damage,
+					BYTE armorBrakeLevel);
+		/*
+		* @brief		ダメージ処理(エフェクトを発生させる)
+		* @param direction	ノックバックの方向
+		* @param power	ノックバックの力
+		* @param damage ダメージ量
+		* @param armorBrakeLevel アーマー破壊レベル
+		* @param effect	ダメージエフェクト
+		*/
+		void Damage(const Vector3& direction,
+					const Vector3& power,
+					int damage,
+					BYTE armorBrakeLevel,
+					const EffectCreateParameterPtr& effect);
 		/*
 		* @brief	無敵状態か？
 		* @return	true なら無敵状態
@@ -102,7 +119,7 @@ namespace ActionGame
 		 */
 		ActionGame::IObservable<int>* GetHPSubject() 
 		{ 
-			return &(m_HP.Get());
+			return &(HP_.Get());
 		}
 
 		/**
@@ -110,7 +127,7 @@ namespace ActionGame
 		 */
 		ActionGame::IObservable<int>* GetMaxHPSubject() 
 		{ 
-			return &(m_MaxHP.Get()); 
+			return &(maxHP_.Get()); 
 		}
 
 		/**
@@ -125,7 +142,7 @@ namespace ActionGame
 		 */
 		ActionGame::IObservable<bool>& GetShowSubject() 
 		{ 
-			return  actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); 
+			return  actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP); 
 		}
 
 		/*
@@ -134,7 +151,7 @@ namespace ActionGame
 		*/
 		int GetHP()
 		{
-			return m_HP.Get();
+			return HP_.Get();
 		}
 
 		/*
@@ -143,7 +160,7 @@ namespace ActionGame
 		*/
 		const std::string& GetName() const noexcept
 		{
-			return m_Name;
+			return name_;
 		}
 		/*
 		* @brief	ボスか判断
@@ -151,7 +168,7 @@ namespace ActionGame
 		*/
 		bool IsBoss() const noexcept
 		{
-			return m_BossFlg;
+			return isBoss_;
 		}
 
 		/*
@@ -171,16 +188,16 @@ namespace ActionGame
 		{
 			if (!isShow)
 			{
-				auto& showFlg = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
+				auto& showFlg = actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 				showFlg = isShow;
 			}
-			m_ShowFlg = isShow;
+			isShow_ = isShow;
 		}
 		
 	};
 
 	//ポインタ置き換え
-	using EnemyPtr = std::shared_ptr<Enemy>;
+	using EnemyPtr = std::shared_ptr<CEnemy>;
 	using EnemyArray = std::vector<EnemyPtr>;
 	using EnemyArrayPtr = std::shared_ptr<EnemyArray>;
 }

@@ -1,35 +1,35 @@
 #include "DamageState.h"
 #include "ParameterDefine.h"
 
-ActionGame::DamageState::DamageState(Parameter param)
-	: State()
-	, m_Parameter(param)
+ActionGame::CDamageState::CDamageState(Parameter param)
+	: CState()
+	, parameter_(param)
 	, currentTime_(0.0f)
 {
 }
 
-void ActionGame::DamageState::Start()
+void ActionGame::CDamageState::Start()
 {
 	currentTime_ = 0.0f;
-	m_DamageAction = Actor()->GetAction<DamageAction>(GetKey());
-	m_DamageAction->Start();
+	action_ = Actor()->GetAction<CDamageAction>(GetKey());
+	action_->Start();
 
 }
 
-void ActionGame::DamageState::Execution()
+void ActionGame::CDamageState::Execution()
 {
-	m_DamageAction->Execution();
+	action_->Execution();
 
 	if (Actor()->GetTransform()->GetPositionY() > 0)
 	{
 		ChangeState(STATE_KEY_FLY_DAMAGE);
 	}
 
-	if (Actor()->GetAnimationState()->IsEndMotion())
+	if (Actor()->GetAnimationState()->IsEndMotion() && Actor()->GetTransform()->GetPositionY() <= 0)
 	{
 		ChangeState(STATE_KEY_IDLE);
 	}
-	auto& hp = Actor()->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = Actor()->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
 	if (hp <= 0)
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
@@ -43,20 +43,20 @@ void ActionGame::DamageState::Execution()
 	}
 }
 
-void ActionGame::DamageState::InputExecution()
+void ActionGame::CDamageState::InputExecution()
 {
 }
 
-void ActionGame::DamageState::End()
+void ActionGame::CDamageState::End()
 {
-	m_DamageAction->End();
+	action_->End();
 }
 
-void ActionGame::DamageState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CDamageState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::DamageState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CDamageState::GetKey() const
 {
 	return STATE_KEY_DAMAGE;
 }

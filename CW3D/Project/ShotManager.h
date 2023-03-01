@@ -13,11 +13,11 @@ namespace ActionGame
 	{
 		friend class Singleton<CShotManager>;
 	private:
-		std::vector<ShotPtr> m_Shots;
+		std::vector<ShotPtr> shotArray_;
 
 		CShotManager()
 			: Singleton<CShotManager>()
-			, m_Shots()
+			, shotArray_()
 		{
 		}
 
@@ -71,8 +71,8 @@ namespace ActionGame
 		*/
 		const ShotPtr& GetShot(size_t id) 
 		{
-			assert(m_Shots[id]);
-			return m_Shots[id]; 
+			assert(shotArray_[id]);
+			return shotArray_[id]; 
 		}
 
 		/*
@@ -81,7 +81,7 @@ namespace ActionGame
 		*/
 		size_t GetShotCount()
 		{
-			return m_Shots.size();
+			return shotArray_.size();
 		}
 
 	};

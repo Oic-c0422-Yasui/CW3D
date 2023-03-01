@@ -1,24 +1,24 @@
-#include "NomalCamera.h"
+#include "NormalCamera.h"
 
 using namespace ActionGame;
 
-NomalCamera::NomalCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+CNormalCamera::CNormalCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
 	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
-NomalCamera::~NomalCamera()
+CNormalCamera::~CNormalCamera()
 {
 }
 
-void NomalCamera::Create()
+void CNormalCamera::Create()
 {
 	offsetLookPos_ = Vector3(0.0f, 1.0f, 0.0f);
 	offsetPos_ = Vector3(0.0f, 5.0f, -15.0f);
 	CameraBase::Create();
 }
 
-void NomalCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void CNormalCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	//íxÇÍÇƒí«è]Ç∑ÇÈèàóù
 	targetPos_ = pos + offsetPos_;
@@ -38,7 +38,7 @@ void NomalCamera::Update(const Vector3& pos, const Vector3& lookPos)
 	}
 }
 
-void NomalCamera::Enable(const Vector3& pos, const Vector3& lookPos)
+void CNormalCamera::Enable(const Vector3& pos, const Vector3& lookPos)
 {
 	targetPos_ = pos;
 	lookPos_ = lookPos;

@@ -1,34 +1,33 @@
 #include "DamageAction.h"
 #include "ParameterDefine.h"
 
-ActionGame::DamageAction::DamageAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CDamageAction::CDamageAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::DamageAction::Start()
+void ActionGame::CDamageAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
+
+	auto& vel = Velocity();
 	auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
-
-	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
-	Velocity()->SetGravity(m_Parameter.gravity);
-	Velocity()->SetVelocity(knockBack);
-
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+	vel->SetVelocity(knockBack);
+	vel->SetMaxGravity(parameter_.maxGravity);
+	vel->SetGravity(parameter_.gravity);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 }
 
-void ActionGame::DamageAction::Execution()
+void ActionGame::CDamageAction::Execution()
 {
 }
 
-void ActionGame::DamageAction::End()
+void ActionGame::CDamageAction::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::DamageAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CDamageAction::GetKey() const
 {
 	return STATE_KEY_DAMAGE;
 }

@@ -2,17 +2,15 @@
 #include "ClearTermBuilder.h"
 #include "ClearTermEnemysAllDead.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
     /*
     * @brief    クリア条件ビルダー(敵をすべて倒す)
     */
-    class ClearTermEnemysAllDeadBuilder : public IClearTermBuilder
+    class CEnemysAllDeadBuilder : public IClearTermBuilder
     {
-    private:
-
     public:
-        ClearTermEnemysAllDeadBuilder();
+        CEnemysAllDeadBuilder();
 
         ClearTermPtr Create(nlohmann::json& os) override;
         ClearTermPtr Create() override;

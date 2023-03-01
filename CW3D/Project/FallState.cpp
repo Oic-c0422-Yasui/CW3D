@@ -1,20 +1,20 @@
 #include "FallState.h"
 
-ActionGame::FallState::FallState()
-	: State()
+ActionGame::CFallState::CFallState()
+	: CState()
 {
 }
 
-void ActionGame::FallState::Start() 
+void ActionGame::CFallState::Start() 
 {
-	m_FallAction = Actor()->GetAction<FallAction>(GetKey());
-	m_FallAction->Start();
+	action_ = Actor()->GetAction<CFallAction>(GetKey());
+	action_->Start();
 
 }
 
-void ActionGame::FallState::Execution()
+void ActionGame::CFallState::Execution()
 {
-	m_FallAction->Execution();
+	action_->Execution();
 	// 落下状態への移行
 	if (Actor()->GetVelocity()->GetVelocityY() <= 0.0f &&
 		Actor()->GetTransform()->GetPositionY() <= 0)
@@ -23,7 +23,7 @@ void ActionGame::FallState::Execution()
 	}
 }
 
-void ActionGame::FallState::InputExecution()
+void ActionGame::CFallState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -38,7 +38,7 @@ void ActionGame::FallState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		m_FallAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 
 
@@ -65,15 +65,15 @@ void ActionGame::FallState::InputExecution()
 
 }
 
-void ActionGame::FallState::End()
+void ActionGame::CFallState::End()
 {
 }
 
-void ActionGame::FallState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CFallState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::FallState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CFallState::GetKey() const
 {
 	return STATE_KEY_FALL;
 }

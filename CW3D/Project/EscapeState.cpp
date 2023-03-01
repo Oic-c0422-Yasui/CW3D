@@ -1,69 +1,69 @@
 #include "EscapeState.h"
 #include "ParameterDefine.h"
 
-ActionGame::EscapeState::EscapeState(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, m_ThroughFlg(false)
-	, m_EscapeCurrentTime(0.0f)
-	, m_EscapeFlg(false)
+ActionGame::CEscapeState::CEscapeState(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isThrough_(false)
+	, isEscapeCurrentTime_(0.0f)
+	, isEscape_(false)
 {
 }
 
-void ActionGame::EscapeState::Start()
+void ActionGame::CEscapeState::Start()
 {
-	m_EscapeAction = Actor()->GetAction<EscapeAction>(GetKey());
-	AttackBaseState::Start();
-	m_ThroughFlg = false;
-	m_EscapeFlg = false;
-	m_EscapeCurrentTime = 0.0f;
-	m_EscapeAction->Start();
+	action_ = Actor()->GetAction<CEscapeAction>(GetKey());
+	CAttackBaseState::Start();
+	isThrough_ = false;
+	isEscape_ = false;
+	isEscapeCurrentTime_ = 0.0f;
+	action_->Start();
 
 	auto& armorLevel = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
-	armorLevel = m_Parameter.armorLevel;
+	armorLevel = parameter_.armorLevel;
 
 	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
-		m_EscapeAction->Move(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Move(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 	else
 	{
 		if (Actor()->IsReverse())
 		{
-			m_EscapeAction->Move(1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+			action_->Move(1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 		}
 		else
 		{
-			m_EscapeAction->Move(-1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+			action_->Move(-1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 		}
 	}
 }
 
-void ActionGame::EscapeState::Execution()
+void ActionGame::CEscapeState::Execution()
 {
 
-	if (currentTime_ > m_Parameter.ThroughStartTime && !m_ThroughFlg)
+	if (currentTime_ > parameter_.ThroughStartTime && !isThrough_)
 	{
-		m_EscapeAction->StartThrough();
-		m_ThroughFlg = true;
+		action_->StartThrough();
+		isThrough_ = true;
 	}
 
 	//ジャスト回避時間
-	if (currentTime_ >= m_Parameter.EscapeStartTime)
+	if (currentTime_ >= parameter_.EscapeStartTime)
 	{
 
-		if (m_EscapeCurrentTime < m_Parameter.EscapeTime)
+		if (isEscapeCurrentTime_ < parameter_.EscapeTime)
 		{
-			auto& isEscape = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
-			if (!isEscape)
+			auto& isEscape_ = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+			if (!isEscape_)
 			{
-				isEscape = true;
+				isEscape_ = true;
 			}
-			m_EscapeCurrentTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
-			if (m_EscapeCurrentTime >= m_Parameter.EscapeTime)
+			isEscapeCurrentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+			if (isEscapeCurrentTime_ >= parameter_.EscapeTime)
 			{
-				isEscape = false;
+				isEscape_ = false;
 			}
 
 		}
@@ -71,10 +71,10 @@ void ActionGame::EscapeState::Execution()
 
 	
 
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::EscapeState::InputExecution()
+void ActionGame::CEscapeState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -98,7 +98,7 @@ void ActionGame::EscapeState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		if (currentTime_ > m_Parameter.ThroughEndTime)
+		if (currentTime_ > parameter_.ThroughEndTime)
 		{
 			if (Actor()->GetTransform()->GetPositionY() > 0)
 			{
@@ -124,22 +124,22 @@ void ActionGame::EscapeState::InputExecution()
 			}
 		}
 	}
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::EscapeState::End()
+void ActionGame::CEscapeState::End()
 {
-	AttackBaseState::End();
-	m_EscapeAction->End();
-	auto& isEscape = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
-	isEscape = false;
+	CAttackBaseState::End();
+	action_->End();
+	auto& isEscape_ = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+	isEscape_ = false;
 }
 
-void ActionGame::EscapeState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CEscapeState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::EscapeState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CEscapeState::GetKey() const
 {
 	return STATE_KEY_ESCAPE;
 }

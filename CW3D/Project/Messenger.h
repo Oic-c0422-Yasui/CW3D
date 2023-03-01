@@ -21,14 +21,14 @@ namespace Messenger
         * @brief    メッセージを送る
         * @param    message　メッセージの種類
         */
-        void Send(GameMessageType message) const override;
+        void Send(GameMessageType message) override;
 
         /*
          * @brief    メッセージを受け取った際の処理を追加
          * @param    message　メッセージの種類
          * @param    func    処理内容の関数
          */
-        void Regist(GameMessageType message, const std::function<void>& func) override;
+        void Regist(GameMessageType message,const std::function<void()>& func) override;
         
 
         /*

@@ -1,5 +1,5 @@
 #pragma once
-#include	"Action.h"
+#include	"BaseAction.h"
 
 
 namespace ActionGame {
@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージアクション
 	 */
-	class DeadAction : public CAction
+	class CDeadAction : public CBaseAction
 	{
 	public:
 		/**
@@ -15,8 +15,6 @@ namespace ActionGame {
 					 */
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
 			//終了時間
@@ -24,7 +22,7 @@ namespace ActionGame {
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 
 		//現在時間
 		float						currentTime_;
@@ -32,7 +30,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DeadAction(Parameter param);
+		CDeadAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -58,5 +56,5 @@ namespace ActionGame {
 		const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
-	using DeadActionPtr = std::shared_ptr<DeadAction>;
+	using DeadActionPtr = std::shared_ptr<CDeadAction>;
 }

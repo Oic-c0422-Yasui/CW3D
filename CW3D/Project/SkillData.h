@@ -16,7 +16,7 @@ namespace ActionGame
 		//ダメージ量（％）
 		int	DamagePercent;	
 		//最大のクールタイム
-		ParameterHandle< ReactiveParameter<float>>	MaxCT;
+		ParameterHandle< CReactiveParameter<float>>	MaxCT;
 		SkillData()
 			: DamagePercent(0)
 			, MaxCT(0.0f)
@@ -41,7 +41,7 @@ namespace ActionGame
 	struct AdditionalSkillData : public SkillData
 	{
 		//追加スキルの最大のクールタイム
-		ParameterHandle< ReactiveParameter<float>>	AddMaxCT;
+		ParameterHandle< CReactiveParameter<float>>	AddMaxCT;
 		//開始時間
 		float StartTime;
 		//追加する使用可能回数
@@ -70,7 +70,7 @@ namespace ActionGame
 	struct UltimateSkillData : public SkillData
 	{
 		//使用するゲージ量
-		ParameterHandle< ReactiveParameter<float>>	ExpendGauge;
+		ParameterHandle< CReactiveParameter<float>>	ExpendGauge;
 
 		UltimateSkillData()
 			: SkillData()

@@ -1,13 +1,13 @@
 #include "MoveState.h"
 
-ActionGame::MoveState::MoveState()
-	: State()
+ActionGame::CMoveState::CMoveState()
+	: CState()
 {
 }
 
-void ActionGame::MoveState::Start()
+void ActionGame::CMoveState::Start()
 {
-	m_MoveAction = Actor()->GetAction<MoveAction>(STATE_KEY_MOVE);
+	action_ = Actor()->GetAction<CMoveAction>(STATE_KEY_MOVE);
 	if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
 		Actor()->SetReverse(false);
@@ -16,16 +16,16 @@ void ActionGame::MoveState::Start()
 	{
 		Actor()->SetReverse(true);
 	}
-	m_MoveAction->Start();
+	action_->Start();
 
 }
 
-void ActionGame::MoveState::Execution()
+void ActionGame::CMoveState::Execution()
 {
-	m_MoveAction->Execution();
+	action_->Execution();
 }
 
-void ActionGame::MoveState::InputExecution()
+void ActionGame::CMoveState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -41,7 +41,7 @@ void ActionGame::MoveState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		m_MoveAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 	else
 	{
@@ -77,20 +77,20 @@ void ActionGame::MoveState::InputExecution()
 
 }
 
-void ActionGame::MoveState::End()
+void ActionGame::CMoveState::End()
 {
 }
 
-void ActionGame::MoveState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CMoveState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::MoveState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CMoveState::GetKey() const
 {
 	return STATE_KEY_MOVE;
 }
 
-void ActionGame::MoveState::InputDash()
+void ActionGame::CMoveState::InputDash()
 {
 	if (Input()->IsNegativeDoublePush(INPUT_KEY_HORIZONTAL) || Input()->IsDoublePush(INPUT_KEY_HORIZONTAL) ||
 		Input()->IsNegativeDoublePush(INPUT_KEY_VERTICAL) || Input()->IsDoublePush(INPUT_KEY_VERTICAL))

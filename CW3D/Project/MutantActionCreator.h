@@ -6,6 +6,7 @@
 #include "MoveAction.h"
 #include "DeadState.h"
 #include "DamageState.h"
+#include "FlyDamageState.h"
 #include "NPCStartPoseAction.h"
 
 namespace ActionGame

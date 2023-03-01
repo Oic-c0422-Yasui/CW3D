@@ -5,7 +5,7 @@
 namespace ActionGame {
 
 	template <typename T>
-	class ReactiveParameter : public CSubject<T> {
+	class CReactiveParameter : public CSubject<T> {
 	private:
 		/** パラメーター */
 		T		value_;
@@ -13,7 +13,7 @@ namespace ActionGame {
 		/**
 		 * コンストラクタ
 		 */
-		ReactiveParameter()
+		CReactiveParameter()
 			: CSubject<T>()
 			, value_()
 		{
@@ -22,7 +22,7 @@ namespace ActionGame {
 		/**
 		 * コンストラクタ
 		 */
-		ReactiveParameter(const T& v)
+		CReactiveParameter(const T& v)
 			: CSubject<T>()
 			, value_(v)
 		{
@@ -30,7 +30,7 @@ namespace ActionGame {
 		/**
 		 * コンストラクタ
 		 */
-		ReactiveParameter(const ReactiveParameter< T >& v)
+		CReactiveParameter(const CReactiveParameter< T >& v)
 			: CSubject<T>()
 			, value_(v.value_)
 		{
@@ -38,7 +38,7 @@ namespace ActionGame {
 		/**
 		 * デストラクタ
 		 */
-		virtual ~ReactiveParameter()
+		virtual ~CReactiveParameter()
 		{
 		}
 
@@ -47,12 +47,12 @@ namespace ActionGame {
 			return value_;
 		}
 		/** 代入 */
-		ReactiveParameter< T >& operator = (const ReactiveParameter< T >& v) {
+		CReactiveParameter< T >& operator = (const CReactiveParameter< T >& v) {
 			value_ = v.value_;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator = (const T& v) {
+		CReactiveParameter< T >& operator = (const T& v) {
 			value_ = v;
 			this->Notify(value_);
 			return *this;
@@ -63,25 +63,25 @@ namespace ActionGame {
 		}
 
 		/** 算術演算子 +　-　* /　*/
-		T operator + (const ReactiveParameter< T >& v) const {
+		T operator + (const CReactiveParameter< T >& v) const {
 			return value_ + v.value_;
 		}
 		T operator + (const T& v) const {
 			return value_ + v;
 		}
-		T operator - (const ReactiveParameter< T >& v) const {
+		T operator - (const CReactiveParameter< T >& v) const {
 			return value_ - v.value_;
 		}
 		T operator - (const T& v) const {
 			return value_ - v;
 		}
-		T operator * (const ReactiveParameter< T >& v) const {
+		T operator * (const CReactiveParameter< T >& v) const {
 			return value_ * v.value_;
 		}
 		T operator * (const T& v) const {
 			return value_ * v;
 		}
-		T operator / (const ReactiveParameter< T >& v) const {
+		T operator / (const CReactiveParameter< T >& v) const {
 			return value_ / v.value_;
 		}
 		T operator / (const T& v) const {
@@ -89,79 +89,79 @@ namespace ActionGame {
 		}
 
 		/** 複合代入演算子 +=　-=　*=　/= */
-		ReactiveParameter< T >& operator += (const ReactiveParameter< T >& v) {
+		CReactiveParameter< T >& operator += (const CReactiveParameter< T >& v) {
 			value_ += v.value_;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator += (const T& v) {
+		CReactiveParameter< T >& operator += (const T& v) {
 			value_ += v;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator -= (const ReactiveParameter< T >& v) {
+		CReactiveParameter< T >& operator -= (const CReactiveParameter< T >& v) {
 			value_ -= v.value_;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator -= (const T& v) {
+		CReactiveParameter< T >& operator -= (const T& v) {
 			value_ -= v;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator *= (const ReactiveParameter< T >& v) {
+		CReactiveParameter< T >& operator *= (const CReactiveParameter< T >& v) {
 			value_ *= v.value_;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator *= (const T& v) {
+		CReactiveParameter< T >& operator *= (const T& v) {
 			value_ *= v;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator /= (const ReactiveParameter< T >& v) {
+		CReactiveParameter< T >& operator /= (const CReactiveParameter< T >& v) {
 			value_ /= v.value_;
 			this->Notify(value_);
 			return *this;
 		}
-		ReactiveParameter< T >& operator /= (const T& v) {
+		CReactiveParameter< T >& operator /= (const T& v) {
 			value_ /= v;
 			this->Notify(value_);
 			return *this;
 		}
 
 		/** 比較演算子 == != */
-		bool operator == (const ReactiveParameter< T >& v) const {
+		bool operator == (const CReactiveParameter< T >& v) const {
 			return value_ == v.value_;
 		}
 		bool operator == (const T& v) const {
 			return value_ == v;
 		}
-		bool operator != (const ReactiveParameter< T >& v) const {
+		bool operator != (const CReactiveParameter< T >& v) const {
 			return value_ != v.value_;
 		}
 		bool operator != (const T& v) const {
 			return value_ != v;
 		}
-		bool operator <= (const ReactiveParameter< T >& v) const {
+		bool operator <= (const CReactiveParameter< T >& v) const {
 			return value_ <= v.value_;
 		}
 		bool operator <= (const T& v) const {
 			return value_ <= v;
 		}
-		bool operator < (const ReactiveParameter< T >& v) const {
+		bool operator < (const CReactiveParameter< T >& v) const {
 			return value_ < v.value_;
 		}
 		bool operator < (const T& v) const {
 			return value_ < v;
 		}
-		bool operator >= (const ReactiveParameter< T >& v) const {
+		bool operator >= (const CReactiveParameter< T >& v) const {
 			return value_ >= v.value_;
 		}
 		bool operator >= (const T& v) const {
 			return value_ >= v;
 		}
-		bool operator > (const ReactiveParameter< T >& v) const {
+		bool operator > (const CReactiveParameter< T >& v) const {
 			return value_ > v.value_;
 		}
 		bool operator > (const T& v) const {

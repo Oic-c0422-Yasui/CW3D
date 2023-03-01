@@ -1,11 +1,11 @@
 #include "ClearTermEnemysAllDead.h"
 
 
-ActionGame::ClearTermEnemysAllDead::ClearTermEnemysAllDead()
+ClearTerm::CEnemysAllDead::CEnemysAllDead()
 {
 }
 
-bool ActionGame::ClearTermEnemysAllDead::IsClear(const ActionGame::ClearTermProviderPtr& provider)
+bool ClearTerm::CEnemysAllDead::IsClear(const ClearTerm::ProviderPtr& provider)
 {
     if (provider->GetEnemyCount() <= 0)
     {

@@ -1,5 +1,5 @@
 #pragma once
-#include	"json.hpp"
+
 #include	"JsonDivisionCreator.h"
 
 
@@ -14,6 +14,10 @@ namespace ActionGame
 		 * @brief		コンストラクタ
 		 */
 		JsonStageLoader();
+		/*
+		* @brief		デストラクタ
+		*/
+		~JsonStageLoader();
 		/**
 		 * @brief		JSonファイルからの生成
 		 */

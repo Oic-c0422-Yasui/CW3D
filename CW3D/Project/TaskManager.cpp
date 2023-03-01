@@ -2,18 +2,18 @@
 
 
 
-ActionGame::TaskManager::TaskManager()
+Task::CTaskManager::CTaskManager()
 	:m_TaskList()
 	, m_ListLock()
 {
 }
 
-ActionGame::TaskManager::~TaskManager()
+Task::CTaskManager::~CTaskManager()
 {
 	DeleteAllTaskImmediate();
 }
 
-void ActionGame::TaskManager::Excution()
+void Task::CTaskManager::Excution()
 {
 	for (size_t i = 0; i < m_TaskList.size(); i++)
 	{
@@ -26,27 +26,27 @@ void ActionGame::TaskManager::Excution()
 	DeleteTask();
 }
 
-void ActionGame::TaskManager::Sort()
+void Task::CTaskManager::Sort()
 {
 	//タスクの優先度順にソート
 	std::sort(m_TaskList.begin(), m_TaskList.end(),
-		[](ActionGame::TaskPtr& task1, ActionGame::TaskPtr& task2)
+		[](TaskPtr& task1, TaskPtr& task2)
 		{
 			return task1->GetPriority() < task2->GetPriority();
 		});
 }
 
-void ActionGame::TaskManager::AddTask(const std::string& key, Task_Priority pri,Func func)
+void Task::CTaskManager::AddTask(const std::string& key, PRIORITY pri,Func func)
 {
 	std::lock_guard<std::mutex> guard(m_ListLock);
-	auto task = std::make_shared<Task>(key, pri, func);
+	auto task = std::make_shared<CTask>(key, pri, func);
 	m_TaskList.push_back(task);
 	
 	//タスクをソート
 	Sort();
 }
 
-void ActionGame::TaskManager::DeleteTask(const std::string& key)
+void Task::CTaskManager::DeleteTask(const std::string& key)
 {
 	auto it = std::find_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
 		return task->GetName() == key; });
@@ -56,7 +56,7 @@ void ActionGame::TaskManager::DeleteTask(const std::string& key)
 	}
 }
 
-void ActionGame::TaskManager::DeleteTaskImmediate(const std::string& key)
+void Task::CTaskManager::DeleteTaskImmediate(const std::string& key)
 {
 	std::lock_guard<std::mutex> guard(m_ListLock);
 	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {
@@ -64,7 +64,7 @@ void ActionGame::TaskManager::DeleteTaskImmediate(const std::string& key)
 	m_TaskList.erase(removeIt, m_TaskList.end());
 }
 
-const ActionGame::TaskPtr& ActionGame::TaskManager::GetTask(const std::string& key)
+const Task::TaskPtr& Task::CTaskManager::GetTask(const std::string& key)
 {
 	for (auto& task : m_TaskList)
 	{
@@ -76,7 +76,7 @@ const ActionGame::TaskPtr& ActionGame::TaskManager::GetTask(const std::string& k
 	return nullptr;
 }
 
-void ActionGame::TaskManager::DeleteAllTask()
+void Task::CTaskManager::DeleteAllTask()
 {
 	for (auto task : m_TaskList)
 	{
@@ -84,14 +84,14 @@ void ActionGame::TaskManager::DeleteAllTask()
 	}
 }
 
-void ActionGame::TaskManager::DeleteAllTaskImmediate()
+void Task::CTaskManager::DeleteAllTaskImmediate()
 {
 	std::lock_guard<std::mutex> guard(m_ListLock);
 	m_TaskList.clear();
 }
 
 
-void ActionGame::TaskManager::DeleteTask()
+void Task::CTaskManager::DeleteTask()
 {
 	std::lock_guard<std::mutex> guard(m_ListLock);
 	auto removeIt = std::remove_if(m_TaskList.begin(), m_TaskList.end(), [&](const TaskPtr& task) {

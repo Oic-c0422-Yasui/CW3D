@@ -10,185 +10,210 @@
 #include	"PlayerStateCreator.h"
 #include	"PlayerSkillCreater.h"
 #include	"PlayerParameterCreator.h"
+#include	"EffectController.h"
 
-/*
-* @brief	プレイヤー
-*/
-class CPlayer : public ActionGame::ActorObject
+namespace ActionGame
 {
-private:
-
-	//インプットキー
-	ActionGame::InputPtr		m_pInput;
-
-	//オブザーバー最大HP
-	ActionGame::ParameterHandle< ActionGame::ReactiveParameter<int> > m_MaxHP;
-
-	//オブザーバー最大必殺技ゲージ
-	ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> > m_MaxUltGauge;
-
-	//アクション生成
-	ActionGame::PlayerActionCreator m_ActionCreator;
-	//状態生成
-	ActionGame::PlayerStateCreator m_StateCreator;
-	//スキル生成
-	ActionGame::PlayerSkillCreator m_SkillCreator;
-	//パラメータ生成
-	ActionGame::PlayerParameterCreator m_ParameterCreator;
-
-	//回避時の当たり判定サイズ
-	CVector3 m_EscapeColliderSize;
-
-public:
-	CPlayer();
-	~CPlayer() override;
 	/*
-	* @brief	読み込み
-	* @return	true　なら読み込み成功
+	* @brief	プレイヤー
 	*/
-	bool Load();
-	/*
-	* @brief	初期化
-	*/
-	void Initialize();
-	/*
-	* @brief	更新
-	*/
-	void Update() override;
-	/*
-	* @brief	描画
-	*/
-	void Render() override;
-	/*
-	* @brief	２Dデバッグ描画
-	*/
-	void RenderDebug2D();
-	/*
-	* @brief	解放
-	*/
-	void Release()override;
-
-	/*
-	* @brief		ダメージ処理
-	* @param direction	ノックバックの方向
-	* @param power	ノックバックの力
-	* @param damage ダメージ量
-	* @param armorBrakeLevel アーマー破壊レベル
-	*/
-	void Damage(const Vector3& direction, const Vector3& power, int damage, BYTE armorBrakeLevel);
-	
-	/*
-	* @brief		インプットキーの設定
-	* @param ptr	インプット
-	*/
-	void SetInput(const ActionGame::InputPtr& ptr) noexcept
+	class CPlayer : public ActionGame::CActorObject
 	{
-		m_pInput = ptr;
-	}
+	private:
 
-	/*
-	* @brief		HPの取得
-	* @return HP
-	*/
-	int GetHP() const noexcept
-	{
-		return actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	}
+		//インプットキー
+		Input::InputPtr		input_;
+
+		//オブザーバー最大HP
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<int> > maxHP_;
+
+		//オブザーバー最大必殺技ゲージ
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> > maxUltGauge_;
+
+		//アクション生成
+		ActionGame::PlayerActionCreator actionCreator_;
+		//状態生成
+		ActionGame::PlayerStateCreator stateCreator_;
+		//スキル生成
+		ActionGame::PlayerSkillCreator skillCreator_;
+		//パラメータ生成
+		ActionGame::PlayerParameterCreator parameterCreator_;
+
+		//回避時の当たり判定サイズ
+		CVector3 escapeColliderSize_;
+
+	public:
+		CPlayer();
+		~CPlayer() override;
+		/*
+		* @brief	読み込み
+		* @return	true　なら読み込み成功
+		*/
+		bool Load();
+		/*
+		* @brief	初期化
+		*/
+		void Initialize();
+		/*
+		* @brief	更新
+		*/
+		void Update() override;
+		/*
+		* @brief	描画
+		*/
+		void Render() override;
+		/*
+		* @brief	２Dデバッグ描画
+		*/
+		void RenderDebug2D();
+		/*
+		* @brief	解放
+		*/
+		void Release()override;
+		
+		/*
+		* @brief		ダメージ処理
+		* @param direction	ノックバックの方向
+		* @param power	ノックバックの力
+		* @param damage ダメージ量
+		* @param armorBrakeLevel アーマー破壊レベル
+		*/
+		void Damage(const Vector3& direction,
+					const Vector3& power,
+					int damage,
+					BYTE armorBrakeLevel);
+
+		/*
+		* @brief		ダメージ処理(エフェクトを発生させる)
+		* @param direction	ノックバックの方向
+		* @param power	ノックバックの力
+		* @param damage ダメージ量
+		* @param armorBrakeLevel アーマー破壊レベル
+		* @param effect	ダメージエフェクト
+		*/
+		void Damage(const Vector3& direction,
+					const Vector3& power,
+					int damage,
+					BYTE armorBrakeLevel,
+					const EffectCreateParameterPtr& effect);
+
+		/*
+		* @brief		インプットキーの設定
+		* @param ptr	インプット
+		*/
+		void SetInput(const Input::InputPtr& input) noexcept
+		{
+			input_ = input;
+		}
+
+		/*
+		* @brief		HPの取得
+		* @return HP
+		*/
+		int GetHP() const noexcept
+		{
+			return actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
+		}
 
 
-	/**
-	* @brief		HP変化通知
-	*/
-	ActionGame::IObservable<int>& GetHPSubject() { return  actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP); }
-	ActionGame::IObservable<int>* GetMaxHPSubject() { return &(m_MaxHP.Get()); }
+		/**
+		* @brief		HP変化通知
+		*/
+		ActionGame::IObservable<int>& GetHPSubject() 
+		{ 
+			return  actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP); 
+		}
+		ActionGame::IObservable<int>* GetMaxHPSubject() { return &(maxHP_.Get()); }
 
 
-	/*
-	* @brief		スキル取得
-	* @param id	配列番号
-	* @return スキル
-	*/
-	const ActionGame::SKillPtr& GetSkill(int id) const noexcept {
-		return GetSkillController()->GetSkill(id);
-	}
+		/*
+		* @brief		スキル取得
+		* @param id	配列番号
+		* @return スキル
+		*/
+		const ActionGame::SKillPtr& GetSkill(int id) const noexcept {
+			return GetSkillController()->GetSkill(id);
+		}
 
 
-	/*
-	* @brief		アップキャストしたスキル取得
-	* @param id	配列番号
-	* @return スキル
-	*/
-	template< typename T >
-	const std::shared_ptr<T> GetCastSkill(int id) const noexcept {
-		auto& skill = GetSkillController()->GetSkill(id);
-		auto& castSkill = std::dynamic_pointer_cast<T>(skill);
-		assert(castSkill);
-		return  castSkill;
-	}
-	//必殺技ゲージ
-	ActionGame::IObservable<float>* GetMaxUltSubject() { return &(m_MaxUltGauge.Get()); }
-	ActionGame::IObservable<float>& GetUltSubject() { return actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
+		/*
+		* @brief		アップキャストしたスキル取得
+		* @param id	配列番号
+		* @return スキル
+		*/
+		template< typename T >
+		const std::shared_ptr<T> GetCastSkill(int id) const noexcept {
+			auto& skill = GetSkillController()->GetSkill(id);
+			auto& castSkill = std::dynamic_pointer_cast<T>(skill);
+			assert(castSkill);
+			return  castSkill;
+		}
+		//必殺技ゲージ
+		ActionGame::IObservable<float>* GetMaxUltSubject() { return &(maxUltGauge_.Get()); }
+		ActionGame::IObservable<float>& GetUltSubject() { return actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE); }
 
-	/*
-	* @brief	スキルコントローラーを取得
-	* @return	スキルコントローラー
-	*/
-	const ActionGame::SkillControllerPtr& GetSkillController() const noexcept
-	{
-		return actor_->GetSkillController();
-	}
-	
-	/*
-	* @brief	最大必殺技ゲージを取得する
-	* @return	最大必殺技ゲージ
-	*/
-	float GetMaxUltGauge() const noexcept
-	{
-		return m_MaxUltGauge.Get();
-	}
+		/*
+		* @brief	スキルコントローラーを取得
+		* @return	スキルコントローラー
+		*/
+		const ActionGame::SkillControllerPtr& GetSkillController() const noexcept
+		{
+			return actor_->GetSkillController();
+		}
 
-	/*
-	* @brief	回避状態か？
-	* @return	true　なら回避状態
-	*/
-	bool IsEscape() const
-	{
-		return actor_->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
-	}
+		/*
+		* @brief	最大必殺技ゲージを取得する
+		* @return	最大必殺技ゲージ
+		*/
+		float GetMaxUltGauge() const noexcept
+		{
+			return maxUltGauge_.Get();
+		}
 
-	/*
-	* @brief	無敵状態か？
-	* @return	true なら無敵状態
-	*/
-	bool IsInvincible() const;
+		/*
+		* @brief	回避状態か？
+		* @return	true　なら回避状態
+		*/
+		bool IsEscape() const
+		{
+			return actor_->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
+		}
 
-	/*
-	* @brief	当たり判定取得
-	* @return	AABBの当たり判定
-	*/
-	const CAABB& GetCollider() override
-	{
-		m_Collider.Size = m_ColliderSize;
-		m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
+		/*
+		* @brief	無敵状態か？
+		* @return	true なら無敵状態
+		*/
+		bool IsInvincible() const;
 
-		return m_Collider;
-	}
-	
-	/*
-	* @brief	回避時の当たり判定取得
-	* @return	AABBの当たり判定
-	*/
-	const CAABB& GetEscapeCollider() noexcept
-	{
-		m_Collider.Size = m_EscapeColliderSize;
-		m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
-		return m_Collider;
-	}
+		/*
+		* @brief	当たり判定取得
+		* @return	AABBの当たり判定
+		*/
+		const CAABB& GetCollider() override
+		{
+			collider_.Size = colliderSize_;
+			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
 
-	/*
-	* @brief	クリアポーズを開始する
-	*/
-	void ClearPose();
-};
+			return collider_;
+		}
 
-using PlayerPtr = std::shared_ptr<CPlayer>;
+		/*
+		* @brief	回避時の当たり判定取得
+		* @return	AABBの当たり判定
+		*/
+		const CAABB& GetEscapeCollider() noexcept
+		{
+			collider_.Size = escapeColliderSize_;
+			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
+			return collider_;
+		}
+
+		/*
+		* @brief	クリアポーズを開始する
+		*/
+		void ClearPose();
+	};
+
+	using PlayerPtr = std::shared_ptr<CPlayer>;
+}
+

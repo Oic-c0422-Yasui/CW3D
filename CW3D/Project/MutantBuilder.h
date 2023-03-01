@@ -7,8 +7,10 @@ namespace ActionGame
     class MutantBuilder : public EnemyBuilder
     {
     public:
+        /**
+         * @brief		コンストラクタ
+         */
         MutantBuilder();
-
         /*
         * @param    生成
         */

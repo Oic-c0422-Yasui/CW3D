@@ -9,7 +9,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class ShockWaveSkillState : public AttackBaseState
+	class CShockWaveSkillState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -27,20 +27,20 @@ namespace ActionGame {
 			EffectCreateParameter EffectStatus;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		ShockWaveSkillActionPtr			m_SkillAction;
+		ShockWaveSkillActionPtr			action_;
 
-		bool collideStartFlg;
+		bool isStartCollide_;
 	protected:
-		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		ShockWaveSkillState(Parameter param);
+		CShockWaveSkillState(Parameter param);
 
 
 

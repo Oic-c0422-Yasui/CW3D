@@ -3,63 +3,63 @@
 
 using namespace ActionGame;
 
-ActionGame::AttackBaseState::AttackBaseState()
-	: State()
+ActionGame::CAttackBaseState::CAttackBaseState()
+	: CState()
 	, currentTime_(0.0f)
-	, m_NextInputFlg(false)
+	, isNextInput_(false)
 {
 }
 
 
-void ActionGame::AttackBaseState::ReleaseShot()
+void ActionGame::CAttackBaseState::ReleaseShot()
 {
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetShow(false);
 		shot.reset();
 	}
-	m_pShots.clear();
+	shots_.clear();
 }
 
-void ActionGame::AttackBaseState::ReleaseEffect()
+void ActionGame::CAttackBaseState::ReleaseEffect()
 {
-	for (auto& effect : m_pEffects)
+	for (auto& effect : effects_)
 	{
 		effect->SetStop(true);
 		effect.reset();
 	}
-	m_pEffects.clear();
+	effects_.clear();
 }
 
-const ShotAABB& ActionGame::AttackBaseState::GetCreateShotStatusAABB()
+const ShotAABB& ActionGame::CAttackBaseState::GetCreateShotStatusAABB()
 {
 	assert(false);
 	static const ShotAABB box = {};
 	return box;
 }
 
-const ShotOBB& ActionGame::AttackBaseState::GetCreateShotStatusOBB()
+const ShotOBB& ActionGame::CAttackBaseState::GetCreateShotStatusOBB()
 {
 	assert(false);
 	static const ShotOBB box = {};
 	return box;
 }
 
-const ShotSphere& ActionGame::AttackBaseState::GetCreateShotStatusSphere()
+const ShotSphere& ActionGame::CAttackBaseState::GetCreateShotStatusSphere()
 {
 	assert(false);
 	static const ShotSphere sphere = {};
 	return sphere;
 }
 
-const EffectCreateParameter& ActionGame::AttackBaseState::GetCreateEffectStatus()
+const EffectCreateParameter& ActionGame::CAttackBaseState::GetCreateEffectStatus()
 {
 	assert(false);
 	static const EffectCreateParameter param = {};
 	return param;
 }
 
-void ActionGame::AttackBaseState::CreateShotAABB()
+void ActionGame::CAttackBaseState::CreateShotAABB()
 {
 	//UŒ‚—ÍŽæ“¾
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
@@ -74,10 +74,10 @@ void ActionGame::AttackBaseState::CreateShotAABB()
 	}
 	status.direction = GetKnockBack();
 
-	m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+	shots_.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 }
 
-void ActionGame::AttackBaseState::CreateShotOBB()
+void ActionGame::CAttackBaseState::CreateShotOBB()
 {
 	//UŒ‚—ÍŽæ“¾
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
@@ -93,10 +93,10 @@ void ActionGame::AttackBaseState::CreateShotOBB()
 	}
 	status.direction = GetKnockBack();
 
-	m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+	shots_.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 }
 
-void ActionGame::AttackBaseState::CreateShotSphere()
+void ActionGame::CAttackBaseState::CreateShotSphere()
 {
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 	ShotSphere status = GetCreateShotStatusSphere();
@@ -109,10 +109,10 @@ void ActionGame::AttackBaseState::CreateShotSphere()
 		status.offset.x *= -1;
 	}
 	status.direction = GetKnockBack();
-	m_pShots.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
+	shots_.push_back(ShotManagerInstance.Create(Actor()->GetPosition(), status));
 }
 
-void ActionGame::AttackBaseState::CreateEffect()
+void ActionGame::CAttackBaseState::CreateEffect()
 {
 	EffectCreateParameter status = GetCreateEffectStatus();
 
@@ -129,15 +129,15 @@ void ActionGame::AttackBaseState::CreateEffect()
 			status.rotate.y *= -1;
 		}
 	}
-	m_pEffects.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
+	effects_.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
 }
 
 
 
-void ActionGame::AttackBaseState::Start()
+void ActionGame::CAttackBaseState::Start()
 {
 	currentTime_ = 0.0f;
-	m_NextInputFlg = false;
+	isNextInput_ = false;
 	if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
 		Actor()->SetReverse(false);
@@ -148,12 +148,12 @@ void ActionGame::AttackBaseState::Start()
 	}
 }
 
-void ActionGame::AttackBaseState::Execution()
+void ActionGame::CAttackBaseState::Execution()
 {
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 }
 
-void ActionGame::AttackBaseState::InputExecution() {
+void ActionGame::CAttackBaseState::InputExecution() {
 
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	
@@ -188,7 +188,7 @@ void ActionGame::AttackBaseState::InputExecution() {
 
 }
 
-void ActionGame::AttackBaseState::End() 
+void ActionGame::CAttackBaseState::End() 
 {
 	ReleaseShot();
 	ReleaseEffect();

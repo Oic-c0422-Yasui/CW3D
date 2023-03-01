@@ -21,13 +21,12 @@ namespace ActionGame
 	{
 	private:
 
-		std::shared_ptr<CTexture>			m_pFrame;
-		std::shared_ptr<CTexture>			m_pSkill;
-		std::shared_ptr<CFont>				m_pFont;
+		std::shared_ptr<CTexture>			frame_;
+		std::shared_ptr<CFont>				font_;
 
 		Vector2 position_;
 		
-		SkillFrame m_SkillFrame[SKILLMAX_COUNT];
+		SkillFrame skillFrame_[SKILLMAX_COUNT];
 
 		std::map<std::string, int> keyIndexs;
 
@@ -68,18 +67,18 @@ namespace ActionGame
 		{
 			//配列数よりidの値が大きいなら
 			assert(SKILLMAX_COUNT <= id);
-			return m_SkillFrame[id].position;
+			return skillFrame_[id].position;
 		}
 		const Vector2& GetSkillPosition(const std::string& key)
 		{
-			return m_SkillFrame[keyIndexs[key]].position;
+			return skillFrame_[keyIndexs[key]].position;
 		}
 
 		SkillFrame GetSkillFrame(int id)
 		{
 			//配列数よりidの値が大きいなら
 			assert(SKILLMAX_COUNT <= id);
-			return m_SkillFrame[id];
+			return skillFrame_[id];
 		}
 
 		void RenderKeyName();

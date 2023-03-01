@@ -4,7 +4,8 @@
 
 using namespace ActionGame;
 
-JsonEnemyStatusLoader::JsonEnemyStatusLoader()
+
+ActionGame::JsonEnemyStatusLoader::JsonEnemyStatusLoader()
 {
 }
 
@@ -86,7 +87,7 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			collider["Height"].get_to(colliderHeight);
 		}
 
-
+		//敵ステータスの構造体作成
 		EnemyStatus enemyStatus{
 			hp,
 			ultGauge,
@@ -101,8 +102,8 @@ EnemyStatusDictionary JsonEnemyStatusLoader::Load(nlohmann::json& os)
 			colliderHeight
 		};
 
-		EnemyStatusPtr enemyStateus = std::make_shared<EnemyStatus>(enemyStatus);
-		dictionary.Add(typeName,enemyStateus);
+		auto statusPtr = std::make_shared<EnemyStatus>(enemyStatus);
+		dictionary.Add(typeName, statusPtr);
 	}
 	
 

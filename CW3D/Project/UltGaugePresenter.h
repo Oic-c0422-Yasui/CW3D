@@ -1,17 +1,21 @@
 #pragma once
 #include "Player.h"
 #include "UltimateGaugeRender.h"
-class CUltGaugePresenter
+
+namespace ActionGame
 {
-public:
-
-	static void Present(PlayerPtr& player, const ActionGame::UltimateGaugeUIRenderPtr& view)
+	class CUltGaugePresenter
 	{
-		player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
-		player->GetMaxUltSubject()->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
+	public:
+		static void Present(PlayerPtr& player, const ActionGame::UltimateGaugeUIRenderPtr& view)
+		{
+			player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
+			player->GetMaxUltSubject()->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });
 
-		view->SetGauge(0);
-		view->SetMaxGauge(player->GetMaxUltGauge());
-	}
+			view->SetGauge(0);
+			view->SetMaxGauge(player->GetMaxUltGauge());
+		}
 
-};
+	};
+}
+

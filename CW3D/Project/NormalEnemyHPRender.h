@@ -12,15 +12,15 @@ namespace ActionGame
 	{
 	private:
 		
-		std::shared_ptr<CSprite3D>			m_pHPBar;
-		std::shared_ptr<CSprite3D>			m_pFrame;
-		std::shared_ptr<CSprite3D>			m_pDamageBar;
+		std::shared_ptr<CSprite3D>			HPBar_;
+		std::shared_ptr<CSprite3D>			HPFrame_;
+		std::shared_ptr<CSprite3D>			DamageBar_;
 
 		Vector3 position_;
 		Vector3 m_ViewPosition;
 
 		Vector3								offset_;
-		Vector3								m_Size;
+		Vector3								size_;
 
 	public:
 		/**

@@ -1,38 +1,34 @@
 #include "ShockWaveSkillAction.h"
 
-ActionGame::ShockWaveSkillAction::ShockWaveSkillAction(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CShockWaveSkillAction::CShockWaveSkillAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::ShockWaveSkillAction::Start()
+void ActionGame::CShockWaveSkillAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	Velocity()->SetGravityFlg(false);
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	CBaseAction::Start();
+	
+	//d—ÍOFF
+	auto& vel = Velocity();
+	vel->SetIsGravity(false);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::ShockWaveSkillAction::Execution()
+void ActionGame::CShockWaveSkillAction::Execution()
 {
 }
 
-void ActionGame::ShockWaveSkillAction::End()
+void ActionGame::CShockWaveSkillAction::End()
 {
-	Velocity()->SetGravityFlg(true);
+	//d—ÍON
+	Velocity()->SetIsGravity(true);
 }
 
-const ActionGame::ActionKeyType ActionGame::ShockWaveSkillAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CShockWaveSkillAction::GetKey() const
 {
 	return STATE_KEY_SHOCKWAVE_SKILL;
 }

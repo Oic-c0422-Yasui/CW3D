@@ -6,16 +6,16 @@ namespace ActionGame
 	/*
 	* @brief	å≈íËÉJÉÅÉâ
 	*/
-	class FixedCamera :  public CameraBase
+	class CFixedCamera :  public CameraBase
 	{
 	public:
-		FixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
-		~FixedCamera();
+		CFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
+		~CFixedCamera();
 		void Create() override;
 		void Update(const Vector3& pos, const Vector3& lookPos) override;
 	};
 
-	using FixedCameraPtr = std::shared_ptr<FixedCamera>();
+	using FixedCameraPtr = std::shared_ptr<CFixedCamera>();
 }
 
 

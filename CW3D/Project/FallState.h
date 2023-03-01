@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class FallState : public State
+	class CFallState : public CState
 	{
 	public:
 		struct Parameter
@@ -16,14 +16,14 @@ namespace ActionGame {
 
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		FallActionPtr			m_FallAction;
+		FallActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		FallState();
+		CFallState();
 			
 
 		/**

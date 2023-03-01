@@ -1,115 +1,125 @@
 #include "MoveAction.h"
 
-ActionGame::MoveAction::MoveAction(Parameter param)
-	: Action()
-	, m_NowDirection(0)
-	, m_Parameter(param)
+
+
+ActionGame::CMoveAction::CMoveAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, currentDirection_(DIRECTION::RIGHT)
+	, parameter_(param)
 {
 }
 
-void ActionGame::MoveAction::Start()
+void ActionGame::CMoveAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
 	auto& vel = Velocity();
+	vel->SetMaxVelocity(parameter_.maxVelocity.x, parameter_.maxVelocity.z);
+	vel->SetMaxGravity(parameter_.maxGravity);
+	vel->SetGravity(parameter_.gravity);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 
-	vel->SetMaxVelocity(m_Parameter.maxVelocity.x, m_Parameter.maxVelocity.z);
+	//アクターの向きを初期化する
+	InitDirection();
 
-	vel->SetMaxGravity(m_Parameter.maxGravity);
+	CBaseAction::SetRotation();
+}
 
-	vel->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+void ActionGame::CMoveAction::Execution()
+{
 
-	float rotateY = Transform()->GetRotateY();
+	auto& vel = Velocity();
+	bool isReverse = Transform()->IsReverse();
+	//左右向き変更
+	if (vel->GetVelocityX() < 0 && !isReverse)
+	{
+		Transform()->SetReverse(true);
+	}
+	else if (vel->GetVelocityX() > 0 && isReverse)
+	{
+		Transform()->SetReverse(false);
+	}
+
+	//アクターの向きを変更する
+	ChangeDirection();
+	
+}
+
+void ActionGame::CMoveAction::End()
+{
+}
+
+void ActionGame::CMoveAction::Acceleration(float x, float z)
+{
+
+	Velocity()->Acceleration(x * parameter_.velocity.x,
+		z * parameter_.velocity.z);
+}
+
+const ActionGame::ActionKeyType ActionGame::CMoveAction::GetKey() const
+{
+	return STATE_KEY_MOVE;
+}
+
+void ActionGame::CMoveAction::InitDirection()
+{
 	if (Transform()->IsReverse())
 	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-		m_NowDirection = DIRECTION_RIGHT;
+		currentDirection_ = DIRECTION::RIGHT;
 	}
 	else
 	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-		m_NowDirection = DIRECTION_LEFT;
+		currentDirection_ = DIRECTION::LEFT;
 	}
 }
 
-void ActionGame::MoveAction::Execution()
+void ActionGame::CMoveAction::ChangeDirection()
 {
-
-	auto& velocity = Velocity();
+	auto& vel = Velocity();
 	bool isReverse = Transform()->IsReverse();
 	float rotateY = Transform()->GetRotateY();
-
-	//左右向き変更
-	if (velocity->GetVelocityX() < 0 && !isReverse)
-	{
-		Transform()->SetReverse(true);
-
-
-	}
-	else if (velocity->GetVelocityX() > 0 && isReverse)
-	{
-		Transform()->SetReverse(false);
-
-	}
-
+	
 	//進行方向に向きを回転させる
 	if (isReverse)
 	{
 		//左上
-		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_LEFTUP)
+		if (vel->GetVelocityZ() > 0 && currentDirection_ != DIRECTION::LEFT_UP)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
-			m_NowDirection = DIRECTION_LEFTUP;
+			vel->SetRotateY(rotateY, MOF_ToRadian(135), 0.15f);
+			currentDirection_ = DIRECTION::LEFT_UP;
 		}
 		//左下
-		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_LEFTDOWN)
+		else if (vel->GetVelocityZ() < 0 && currentDirection_ != DIRECTION::LEFT_DOWN)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
-			m_NowDirection = DIRECTION_LEFTDOWN;
+			vel->SetRotateY(rotateY, MOF_ToRadian(45), 0.15f);
+			currentDirection_ = DIRECTION::LEFT_DOWN;
 		}
 		//左
-		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_LEFT)
+		else if (vel->GetVelocityZ() == 0 && currentDirection_ != DIRECTION::LEFT)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
-			m_NowDirection = DIRECTION_LEFT;
+			vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.15f);
+			currentDirection_ = DIRECTION::LEFT;
 		}
 	}
 	else
 	{
 		//右上
-		if (velocity->GetVelocityZ() > 0 && m_NowDirection != DIRECTION_RIGHTUP)
+		if (vel->GetVelocityZ() > 0 && currentDirection_ != DIRECTION::RIGHT_UP)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
-			m_NowDirection = DIRECTION_RIGHTUP;
+			vel->SetRotateY(rotateY, MOF_ToRadian(-135), 0.15f);
+			currentDirection_ = DIRECTION::RIGHT_UP;
 		}
 		//右下
-		else if (velocity->GetVelocityZ() < 0 && m_NowDirection != DIRECTION_RIGHTDOWN)
+		else if (vel->GetVelocityZ() < 0 && currentDirection_ != DIRECTION::RIGHT_DOWN)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
-			m_NowDirection = DIRECTION_RIGHTDOWN;
+			vel->SetRotateY(rotateY, MOF_ToRadian(-45), 0.15f);
+			currentDirection_ = DIRECTION::RIGHT_DOWN;
 		}
 		//右
-		else if (velocity->GetVelocityZ() == 0 && m_NowDirection != DIRECTION_RIGHT)
+		else if (vel->GetVelocityZ() == 0 && currentDirection_ != DIRECTION::RIGHT)
 		{
-			Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
-			m_NowDirection = DIRECTION_RIGHT;
+			vel->SetRotateY(rotateY, MOF_ToRadian(-90), 0.15f);
+			currentDirection_ = DIRECTION::RIGHT;
 		}
 	}
-}
-
-void ActionGame::MoveAction::End()
-{
-}
-
-void ActionGame::MoveAction::Acceleration(float x, float z)
-{
-
-	Velocity()->Acceleration(x * m_Parameter.velocity.x,
-		z * m_Parameter.velocity.z);
-}
-
-const ActionGame::ActionKeyType ActionGame::MoveAction::GetKey() const
-{
-	return STATE_KEY_MOVE;
 }

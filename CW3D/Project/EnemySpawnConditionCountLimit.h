@@ -12,7 +12,7 @@ namespace Spawner
 		//限界数
 		size_t		m_MaxCount;
 		//現在数
-		size_t		m_Count;
+		size_t		count_;
 	public:
 		/**
 		 *	@brief		コンストラクタ
@@ -31,7 +31,7 @@ namespace Spawner
 		 */
 		void SetCount(size_t count) noexcept
 		{
-			m_Count = count;
+			count_ = count;
 		}
 	};
 	using EnemySpawnConditionCountLimitPtr = std::shared_ptr<EnemySpawnConditionCountLimit>;

@@ -1,8 +1,8 @@
 #include	"EnemySpawner.h"
 
 Spawner::CEnemySpawner::CEnemySpawner(const SpawnConditionArray& conditions, SpawnCyclePtr cycle)
-	: m_Conditions(conditions)
-	, m_Cycle(cycle)
+	: conditions_(conditions)
+	, cycle_(cycle)
 
 {
 }
@@ -13,7 +13,7 @@ void Spawner::CEnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
 	{
 		return;
 	}
-	if(m_Cycle->Update())
+	if(cycle_->Update())
 	{
 		if (!enemy->IsShow() && !enemy->IsDead())
 		{
@@ -25,16 +25,18 @@ void Spawner::CEnemySpawner::Update(const ActionGame::EnemyPtr& enemy)
 
 void Spawner::CEnemySpawner::Reset()
 {
-	m_Cycle->Reset();
+	cycle_->Reset();
 }
 
 bool Spawner::CEnemySpawner::IsValid() const
 {
-	if (m_Conditions.size() <= 0)
+	//oŒ»ðŒ‚ª–³‚¢ê‡‚Í—LŒø‰»
+	if (conditions_.size() <= 0)
 	{
 		return true;
 	}
-	for (auto& condition : m_Conditions)
+
+	for (auto& condition : conditions_)
 	{
 		if (!condition->IsValid())
 		{

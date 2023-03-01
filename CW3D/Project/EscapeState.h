@@ -10,7 +10,7 @@ namespace ActionGame {
 	/**
 	 * @brief		回避ステート
 	 */
-	class EscapeState : public AttackBaseState
+	class CEscapeState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -29,21 +29,21 @@ namespace ActionGame {
 			float EscapeTime;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 
 		/** 移動アクション */
-		EscapeActionPtr			m_EscapeAction;
+		EscapeActionPtr			action_;
 
-		bool m_ThroughFlg;
-		bool m_EscapeFlg;
-		float m_EscapeCurrentTime;
+		bool isThrough_;
+		bool isEscape_;
+		float isEscapeCurrentTime_;
 	protected:
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		EscapeState(Parameter param);
+		CEscapeState(Parameter param);
 			
 
 		/**

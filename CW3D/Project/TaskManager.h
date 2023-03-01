@@ -3,10 +3,12 @@
 #include	<algorithm>
 #include	<mutex>
 
-namespace ActionGame
+namespace Task
 {
-
-	class TaskManager
+	/*
+	* @brief	タスク管理を行うクラス
+	*/
+	class CTaskManager
 	{
 	private:
 		TaskList m_TaskList;
@@ -19,8 +21,8 @@ namespace ActionGame
 		void DeleteTask();
 
 	public:
-		TaskManager();
-		~TaskManager();
+		CTaskManager();
+		~CTaskManager();
 
 		/*
 		* @brief	タスクを実行する
@@ -38,7 +40,7 @@ namespace ActionGame
 		* @param	pri	タスクの優先順位（数字が低いほど優先される）
 		* @param	func 実行するタスク（void関数）
 		*/
-		void AddTask(const std::string& key, Task_Priority pri, Func func);
+		void AddTask(const std::string& key, PRIORITY pri, Func func);
 
 		/*
 		* @brief	タスクを削除する
@@ -66,7 +68,6 @@ namespace ActionGame
 		* @return	タスククラス
 		*/
 		const TaskPtr& GetTask(const std::string& key);
-
 
 	};
 

@@ -16,9 +16,9 @@ namespace Spawner
 	{
 	private:
 		//出現条件
-		SpawnConditionArray			m_Conditions;
+		SpawnConditionArray			conditions_;
 		//出現用サイクル
-		SpawnCyclePtr				m_Cycle;
+		SpawnCyclePtr				cycle_;
 
 	public:
 		/**

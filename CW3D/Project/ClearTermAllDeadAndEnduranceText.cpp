@@ -1,17 +1,17 @@
 #include "ClearTermAllDeadAndEnduranceText.h"
 
-ActionGame::ClearTermAllDeadAndEnduranceText::ClearTermAllDeadAndEnduranceText()
-	: ClearTermText("")
-	, allDead(std::make_shared<ClearTermEnemyAllDeadText>())
-	, enduranceTime(std::make_shared<ClearTermEnduranceTimeText>())
+ClearTerm::CAllDeadAndEnduranceText::CAllDeadAndEnduranceText()
+	: CClearTermText("")
+	, allDead(std::make_shared<CEnemyAllDeadText>())
+	, enduranceTime(std::make_shared<CEnduranceTimeText>())
 {
 }
 
-void ActionGame::ClearTermAllDeadAndEnduranceText::Initialize()
+void ClearTerm::CAllDeadAndEnduranceText::Initialize()
 {
 }
 
-void ActionGame::ClearTermAllDeadAndEnduranceText::Render()
+void ClearTerm::CAllDeadAndEnduranceText::Render()
 {
 	allDead->Render();
 	enduranceTime->Render();

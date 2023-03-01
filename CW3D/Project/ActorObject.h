@@ -10,27 +10,27 @@ namespace ActionGame
 	/*
 	* @brief	アクターのオブジェクトクラス
 	*/
-	class ActorObject
+	class CActorObject
 	{
 	protected:
-		std::shared_ptr<CMeshContainer>		m_pMesh;
-		StateMachinePtr						m_StateMachine;
-		AnimationStatePtr					m_Motion;
+		std::shared_ptr<CMeshContainer>		mesh_;
+		StateMachinePtr						stateMachine_;
+		AnimationStatePtr					motion_;
 		ActorPtr							actor_;
-		CMatrix44							m_MatWorld;
-		CAABB								m_Collider;
-		CVector3							m_ColliderOffset;
-		CVector3							m_ColliderSize;
-		bool								m_ShowFlg;
-		bool								m_DeadFlg;
-		CVector3							m_PrevPos;
-		float								m_UltBoostMag;	//必殺技ゲージのブースト倍率
-		float								m_Weight;
+		CMatrix44							matWorld_;
+		CAABB								collider_;
+		CVector3							colliderOffset_;
+		CVector3							colliderSize_;
+		bool								isShow_;
+		bool								isDead_;
+		CVector3							prevPosision_;
+		float								ultBoostMag_;	//必殺技ゲージのブースト倍率
+		float								weight_;
 
 
 	public:
-		ActorObject();
-		virtual ~ActorObject();
+		CActorObject();
+		virtual ~CActorObject();
 		virtual void Initialize();
 		virtual void Update();
 		virtual void Render();
@@ -98,7 +98,7 @@ namespace ActionGame
 		 * @return		true　なら表示
 		 */
 		virtual bool IsShow() const noexcept {
-			return m_ShowFlg;
+			return isShow_;
 		}
 		/**
 		 * @brief		当たり判定取得
@@ -106,10 +106,10 @@ namespace ActionGame
 		 */
 		virtual const CAABB& GetCollider()
 		{
-			m_Collider.Size = m_ColliderSize;
-			m_Collider.SetPosition(actor_->GetPosition() + m_ColliderOffset);
+			collider_.Size = colliderSize_;
+			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
 
-			return m_Collider;
+			return collider_;
 		}
 		/**
 		 * @brief		更新前座標取得
@@ -117,7 +117,7 @@ namespace ActionGame
 		 */
 		const CVector3& GetPrevPos() const noexcept
 		{
-			return m_PrevPos;
+			return prevPosision_;
 		}
 		/**
 		 * @brief		アクターID取得
@@ -138,7 +138,7 @@ namespace ActionGame
 		 */
 		float GetUltBoostMag() const noexcept
 		{
-			return m_UltBoostMag;
+			return ultBoostMag_;
 		}
 		/**
 		 * @brief		死亡しているか？
@@ -146,7 +146,7 @@ namespace ActionGame
 		 */
 		bool IsDead() const noexcept
 		{
-			return m_DeadFlg;
+			return isDead_;
 		}
 
 		////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ namespace ActionGame
 		 */
 		virtual void SetShow(bool isShow)
 		{
-			m_ShowFlg = isShow;
+			isShow_ = isShow;
 		}
 		/**
 		 * @brief		相手が獲得する必殺技ゲージの倍率
@@ -182,15 +182,15 @@ namespace ActionGame
 		 */
 		void SetUltBoostMag(float magnification) noexcept
 		{
-			m_UltBoostMag = magnification;
+			ultBoostMag_ = magnification;
 		}
 
 		
 
 	};
 	//ポインタ置き換え
-	using ActorObjectPtr = std::shared_ptr<ActorObject>;
-	using ActorObjectWeakPtr = std::weak_ptr<ActorObject>;
+	using ActorObjectPtr = std::shared_ptr<CActorObject>;
+	using ActorObjectWeakPtr = std::weak_ptr<CActorObject>;
 	using ActorObjectList = std::list<ActorObjectPtr>;
 }
 

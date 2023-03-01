@@ -2,29 +2,74 @@
 
 void ActionGame::TimeScaleController::Update()
 {
-	m_TimeScale.Update();
-	m_PlayerTimeScale.Update();
-	m_EnemyTimeScale.Update();
+	timeScale_.Update();
+	for (auto& chara : charaMap_)
+	{
+		chara.second.Update();
+	}
 }
 
-float ActionGame::TimeScaleController::GetTimeScale(CHARA_TYPE type) const noexcept
+float ActionGame::TimeScaleController::GetTimeScale(CHARA_TYPE type) noexcept
 {
-	switch (type)
+	auto it = charaMap_.find(type);
+	if (it != charaMap_.end())
 	{
-	case CHARA_TYPE::PLAYER:
+		return min(charaMap_[type].GetScale(), timeScale_.GetScale());
+	}
+
+	return timeScale_.GetScale();
+}
+
+void ActionGame::TimeScaleController::Reset() noexcept
+{
+	timeScale_.Reset();
+	for (auto& chara : charaMap_)
 	{
-		return min(m_PlayerTimeScale.GetScale(), m_TimeScale.GetScale());
+		chara.second.Reset();
 	}
-	case CHARA_TYPE::ENEMY:
+}
+
+void ActionGame::TimeScaleController::SetTimeScale(CHARA_TYPE type, float scale, float changeTime, MyUtil::EASING_TYPE easeType) noexcept
+{
+	auto it = charaMap_.find(type);
+	if (it != charaMap_.end())
 	{
-		return min(m_EnemyTimeScale.GetScale(), m_TimeScale.GetScale());
+		charaMap_[type].SetScale(scale, changeTime, easeType);
 	}
-	case CHARA_TYPE::OBJECT:
+}
+
+void ActionGame::TimeScaleController::SetTimeScale(CHARA_TYPE type, const MyUtil::ANIM_DATA_ARRAY& anim) noexcept
+{
+	auto it = charaMap_.find(type);
+	if (it != charaMap_.end())
 	{
-		break;
+		charaMap_[type].SetScale(anim);
 	}
-	default:
-		break;
+}
+
+void ActionGame::TimeScaleController::SetOtherTimeScale(CHARA_TYPE type, float scale, float changeTime, MyUtil::EASING_TYPE easeType) noexcept
+{
+	for (auto& chara : charaMap_)
+	{
+		if (chara.first == type)
+		{
+			continue;
+		}
+		//引数のtype以外のタイムスケールを変更する
+		chara.second.SetScale(scale, changeTime, easeType);
 	}
-	return m_TimeScale.GetScale();
+
+}
+
+void ActionGame::TimeScaleController::SetOtherTimeScale(CHARA_TYPE type, const MyUtil::ANIM_DATA_ARRAY& anim) noexcept
+{
+	for (auto& chara : charaMap_)
+	{
+		if (chara.first == type)
+		{
+			continue;
+		}
+		//引数のtype以外のタイムスケールを変更する
+		chara.second.SetScale(anim);
+	}
 }

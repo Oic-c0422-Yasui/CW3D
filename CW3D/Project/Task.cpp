@@ -1,18 +1,18 @@
 #include "Task.h"
 
-ActionGame::Task::Task(const std::string& name, Task_Priority pri,  const Func& func)
-	: m_Priority(pri)
-	, m_Name(name)
-	, m_Task(func)
-	, m_EndFlg(false)
+Task::CTask::CTask(const std::string& name, PRIORITY pri,  const Func& func)
+	: priority_(pri)
+	, name_(name)
+	, task_(func)
+	, isEnd_(false)
 {
 }
 
-ActionGame::Task::~Task()
+Task::CTask::~CTask()
 {
 }
 
-void ActionGame::Task::Execution()
+void Task::CTask::Execution()
 {
-	m_Task();
+	task_();
 }

@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		待機ステート
 	 */
-	class IdleState : public State
+	class CIdleState : public CState
 	{
 	public:
 		struct Parameter
@@ -16,15 +16,15 @@ namespace ActionGame {
 			float idleTime;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		IdleActionPtr			m_IdleAction;
-		float					time_;
+		IdleActionPtr			action_;
+		float					timeScale_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleState(Parameter param);
+		CIdleState(Parameter param);
 			
 
 		/**

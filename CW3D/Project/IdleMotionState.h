@@ -8,16 +8,16 @@ namespace ActionGame {
 	/**
 	 * @brief		待機モーションステート
 	 */
-	class IdleMotionState : public State
+	class CIdleMotionState : public CState
 	{
 	private:
 		/** 移動アクション */
-		IdleMotionActionPtr			m_IdleMotionAction;
+		IdleMotionActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleMotionState();
+		CIdleMotionState();
 			
 
 		/**

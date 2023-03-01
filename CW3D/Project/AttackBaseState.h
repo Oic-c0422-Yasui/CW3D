@@ -12,7 +12,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class AttackBaseState : public State
+	class CAttackBaseState : public CState
 	{
 	public:
 		typedef struct BASEPARAM
@@ -22,10 +22,10 @@ namespace ActionGame {
 	protected:
 		
 		float							currentTime_;
-		bool							m_NextInputFlg;
+		bool							isNextInput_;
 
-		std::vector<ShotPtr>			m_pShots;
-		std::vector<EffectPtr>			m_pEffects;
+		std::vector<ShotPtr>			shots_;
+		std::vector<EffectPtr>			effects_;
 
 	protected:
 		/* プライベート関数 */
@@ -42,7 +42,6 @@ namespace ActionGame {
 		virtual const ShotOBB& GetCreateShotStatusOBB();
 		//ショットのステータス作成（球体）
 		virtual const ShotSphere& GetCreateShotStatusSphere();
-
 		//エフェクトのステータス作成
 		virtual const EffectCreateParameter& GetCreateEffectStatus();
 		//箱の弾を作成する
@@ -57,7 +56,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		AttackBaseState();
+		CAttackBaseState();
 
 		/**
 		 * @brief		ステート内の開始処理

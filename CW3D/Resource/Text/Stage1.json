@@ -9,7 +9,7 @@
       "ClearTerms": [
         {
           "Type": {
-            "Name": "AllDead"
+            "Name": "BossDead"
           }
         }
       ],
@@ -263,7 +263,7 @@
         {
           "Type": 
           {
-            "Name": "AllDead"
+            "Name": "BossDead"
           }
         }
       ],

@@ -1,74 +1,73 @@
 #include "Player.h"
-#include	"EffectController.h"
 
+using namespace ActionGame;
 
-
-CPlayer::CPlayer()
-	: ActionGame::ActorObject()
-	, m_pInput()
+ActionGame::CPlayer::CPlayer()
+	: ActionGame::CActorObject()
+	, input_()
 
 {
 	SetType(CHARA_TYPE::PLAYER);
 }
 
-CPlayer::~CPlayer()
+ActionGame::CPlayer::~CPlayer()
 {
 }
 
-bool CPlayer::Load()
+bool ActionGame::CPlayer::Load()
 {
 	//メッシュ取得
-	m_pMesh = ActionGame::ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player", "Player");
+	mesh_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player", "Player");
 
-	if (m_pMesh == nullptr)
+	if (mesh_ == nullptr)
 	{
 		return false;
 	}
 	//モーション読み込み
-	m_Motion = m_pMesh->CreateMotionController();
-	actor_->SetAnimationState(m_Motion);
+	motion_ = mesh_->CreateMotionController();
+	actor_->SetAnimationState(motion_);
 	
-	m_StateMachine = std::make_shared<ActionGame::StateMachine>();
+	stateMachine_ = std::make_shared<ActionGame::StateMachine>();
 	//アクション作成
-	m_ActionCreator.Create(actor_);
+	actionCreator_.Create(actor_);
 	//ステート作成
-	m_StateCreator.Create(m_StateMachine, actor_, m_pInput);
+	stateCreator_.Create(stateMachine_, actor_, input_);
 	
 	//パラメーター作成
 	auto& param = actor_->GetParameterMap();
-	m_ParameterCreator.Create(param);
+	parameterCreator_.Create(param);
 	//パラメーター設定
-	m_MaxHP = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
-	m_MaxUltGauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
+	maxHP_ = param->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
+	maxUltGauge_ = param->Get<ActionGame::CReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
 	//スキル設定
-	m_SkillCreator.Create(actor_);
+	skillCreator_.Create(actor_);
 	
 	return true;
 }
 
-void CPlayer::Initialize()
+void ActionGame::CPlayer::Initialize()
 {
 	//座標設定
 	actor_->SetPosition(Vector3(-30, 0,0));
-	actor_->SetRotate(Vector3(0, 0, 0));
+	actor_->SetRotate(Vector3(0, MOF_ToRadian(-90), 0));
 	actor_->SetScale(Vector3(1, 1, 1));
-	m_ColliderSize = Vector3(0.5f, 0.8f, 0.5f);
-	m_ColliderOffset.y = 1.0f;
-	m_EscapeColliderSize = m_ColliderSize + Vector3(1.2f,0.5f,1.2f);
+	colliderSize_ = Vector3(0.5f, 0.8f, 0.5f);
+	colliderOffset_.y = 1.0f;
+	escapeColliderSize_ = colliderSize_ + Vector3(1.2f,0.5f,1.2f);
 	actor_->SetReverse(false);
 
 	//初期は待機モーション
-	m_StateMachine->ChangeState(STATE_KEY_STARTPOSE);
+	stateMachine_->ChangeState(STATE_KEY_STARTPOSE);
 
 	//相手が獲得する必殺技ゲージの倍率
 	SetUltBoostMag(1.0f);
 
 	//パラメータ初期化
 	auto param = actor_->GetParameterMap();
-	auto& gauge = param->Get<ActionGame::ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& gauge = param->Get<ActionGame::CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	gauge = 0.0f;
-	auto& hp = param->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
-	hp = m_MaxHP.Get();
+	auto& hp = param->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
+	hp = maxHP_.Get();
 	auto& alpha = param->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
 	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE);
@@ -79,12 +78,12 @@ void CPlayer::Initialize()
 	//スキル初期化
 	actor_->GetSkillController()->Reset();
 	
-	ActorObject::Initialize();
+	CActorObject::Initialize();
 }
 
-void CPlayer::Update()
+void ActionGame::CPlayer::Update()
 {
-	if (!m_ShowFlg)
+	if (!isShow_)
 	{
 		return;
 	}
@@ -97,43 +96,39 @@ void CPlayer::Update()
 	}
 
 	//死んだら
-	if (m_DeadFlg)
+	if (isDead_)
 	{
 		//完全に透明なら表示しない
 		auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 		if (alpha <= 0)
 		{
-			m_ShowFlg = false;
+			isShow_ = false;
 		}
 	}
-	ActionGame::ActorObject::Update();
+	ActionGame::CActorObject::Update();
 }
 
-void CPlayer::Render()
+void ActionGame::CPlayer::Render()
 {
-	if (!m_ShowFlg)
+	if (!isShow_)
 	{
 		return;
 	}
-	ActionGame::ActorObject::Render();
+	ActionGame::CActorObject::Render();
 }
 
-void CPlayer::RenderDebug2D()
+void ActionGame::CPlayer::RenderDebug2D()
 {
 
 }
 
-void CPlayer::Release()
+void ActionGame::CPlayer::Release()
 {
-	ActionGame::ActorObject::Release();
+	ActionGame::CActorObject::Release();
 }
 
-void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBrakeLevel)
+void ActionGame::CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBreakeLevel)
 {
-
-	//ダメージエフェクト生成
-	ActionGame::EffectCreateParameter param = { "DamageEffect1", Vector3(0, 1.0f, 0) , Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0.0f, 0.0f),1.0f };
-	ActionGame::EffectPtr effect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
 
 	//ダメージを受けた方向に向く
 	auto& transform = actor_->GetTransform();
@@ -141,45 +136,61 @@ void CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,
 
 
 	//ダメージ
-	auto& hp = actor_->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+	auto& hp = actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
-
-	//HPが０以下なら死亡
-	if (hp <= 0)
-	{
-		hp = 0;
-
-		m_DeadFlg = true;
-	}
 
 	//必殺技ゲージ獲得
 	AddUltGauge(1.0f);
 
 	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
 	auto& armorLevel = actor_->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
-	if (armorLevel <= armorBrakeLevel)
+	if (armorLevel <= armorBreakeLevel)
 	{
 		//ノックバック設定
 		auto& knockBack = actor_->GetParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
 		knockBack = direction * power;
 
 		//ダメージステートへ遷移
-		m_StateMachine->ChangeState(STATE_KEY_DAMAGE);
+		stateMachine_->ChangeState(STATE_KEY_DAMAGE);
+	}
+
+	//HPが０以下なら死亡
+	if (hp <= 0)
+	{
+		//死亡時のみ、アーマーレベルが相手より高くてもステートを遷移
+		if (armorLevel > armorBreakeLevel)
+		{
+			//ダメージステートへ遷移
+			stateMachine_->ChangeState(STATE_KEY_DAMAGE);
+		}
+		hp = 0;
+		isDead_ = true;
 	}
 
 }
 
-bool CPlayer::IsInvincible() const
+void ActionGame::CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage, BYTE armorBrakeLevel, const EffectCreateParameterPtr& effect)
 {
-	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	return invincible > 0.0f || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DEAD || m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_DOWN
-							|| m_StateMachine->GetCurrentState()->GetKey() == STATE_KEY_STARTPOSE;
+	if (effect != nullptr)
+	{
+		//ダメージエフェクト生成
+		EffectControllerInstance.Play(effect->name, GetCollider().Position, effect);
+	}
+
+	Damage(direction, power, damage, armorBrakeLevel);
 }
 
-void CPlayer::ClearPose()
+bool ActionGame::CPlayer::IsInvincible() const
 {
-	if (!m_StateMachine->IsState(STATE_KEY_CLEARPOSE))
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	return invincible > 0.0f || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DEAD || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DOWN
+							|| stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_STARTPOSE;
+}
+
+void ActionGame::CPlayer::ClearPose()
+{
+	if (!stateMachine_->IsState(STATE_KEY_CLEARPOSE))
 	{
-		m_StateMachine->ChangeState(STATE_KEY_CLEARPOSE);
+		stateMachine_->ChangeState(STATE_KEY_CLEARPOSE);
 	}
 }

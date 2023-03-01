@@ -9,19 +9,18 @@ namespace ActionGame
 	/*
 	* @brief	タイムスケールクラス
 	*/
-	class TimeScale
+	class CTimeScale
 	{
 	private:
-		float	time_;
-		MyUtil::ANIM_DATA_ARRAY m_AnimDataArray;
-		float	m_ChangeTime;
-		bool	m_ChangeFlg;
+		float	timeScale_;
+		MyUtil::ANIM_DATA_ARRAY animDataArray_;
+		float	changeTime_;
+		bool	isChange_;
 		float	currentTime_;
-		int		m_Count;
 
 	public:
-		TimeScale();
-		~TimeScale() {
+		CTimeScale();
+		~CTimeScale() {
 		}
 		/*
 		* @brief	更新
@@ -33,7 +32,7 @@ namespace ActionGame
 		*/
 		float GetScale() const noexcept
 		{
-			return time_;
+			return timeScale_;
 		}
 		/*
 		* @brief	タイムスケール設定

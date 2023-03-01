@@ -1,36 +1,27 @@
 #include "RunLandingAction.h"
 
-ActionGame::RunLandingAction::RunLandingAction(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CRunLandingAction::CRunLandingAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::RunLandingAction::Start()
+void ActionGame::CRunLandingAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::RunLandingAction::Execution()
+void ActionGame::CRunLandingAction::Execution()
 {
 }
 
-void ActionGame::RunLandingAction::End()
+void ActionGame::CRunLandingAction::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::RunLandingAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CRunLandingAction::GetKey() const
 {
 	return STATE_KEY_RUN_LANDING;
 }

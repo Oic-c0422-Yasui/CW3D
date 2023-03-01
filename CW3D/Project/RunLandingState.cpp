@@ -1,19 +1,19 @@
 #include "RunLandingState.h"
 
-ActionGame::RunLandingState::RunLandingState()
-	: State()
+ActionGame::CRunLandingState::CRunLandingState()
+	: CState()
 {
 }
 
-void ActionGame::RunLandingState::Start()
+void ActionGame::CRunLandingState::Start()
 {
-	m_LandingAction = Actor()->GetAction<RunLandingAction>(GetKey());
-	m_LandingAction->Start();
+	action_ = Actor()->GetAction<CRunLandingAction>(GetKey());
+	action_->Start();
 }
 
-void ActionGame::RunLandingState::Execution()
+void ActionGame::CRunLandingState::Execution()
 {
-	m_LandingAction->Execution();
+	action_->Execution();
 	// 落下状態への移行
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
@@ -21,7 +21,7 @@ void ActionGame::RunLandingState::Execution()
 	}
 }
 
-void ActionGame::RunLandingState::InputExecution()
+void ActionGame::CRunLandingState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -63,15 +63,15 @@ void ActionGame::RunLandingState::InputExecution()
 
 }
 
-void ActionGame::RunLandingState::End()
+void ActionGame::CRunLandingState::End()
 {
 }
 
-void ActionGame::RunLandingState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CRunLandingState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::RunLandingState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CRunLandingState::GetKey() const
 {
 	return STATE_KEY_RUN_LANDING;
 }

@@ -1,16 +1,16 @@
 #include "ClearTermBossDeadBuilder.h"
 
-ActionGame::ClearTermBossDeadBuilder::ClearTermBossDeadBuilder()
+ClearTerm::CBossDeadBuilder::CBossDeadBuilder()
 {
 }
 
-ActionGame::ClearTermPtr ActionGame::ClearTermBossDeadBuilder::Create(nlohmann::json& os)
+ClearTerm::ClearTermPtr ClearTerm::CBossDeadBuilder::Create(nlohmann::json& os)
 {
     return Create();
 }
 
-ActionGame::ClearTermPtr ActionGame::ClearTermBossDeadBuilder::Create()
+ClearTerm::ClearTermPtr ClearTerm::CBossDeadBuilder::Create()
 {
-    ClearTermPtr result = std::make_shared<ClearTermBossDead>();
+    ClearTermPtr result = std::make_shared<CBossDead>();
     return result;
 }

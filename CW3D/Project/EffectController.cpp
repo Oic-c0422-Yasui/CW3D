@@ -9,12 +9,29 @@ void ActionGame::CEffectController::Create(const Effekseer::Handle& handle, cons
 	SetSpeed(handle, param.speed);
 }
 
+void ActionGame::CEffectController::Create(const Effekseer::Handle& handle, const Vector3& position,const EffectCreateParameterPtr& param)
+{
+	SetPosition(handle, position + param->offset);
+	SetScale(handle, param->scale);
+	SetRotate(handle, param->rotate);
+	SetSpeed(handle, param->speed);
+}
+
 ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& resouceName,const Vector3& position, EffectCreateParameter param)
 {
-	ActionGame::EffectPtr efc = std::make_shared<Effect>(EffectRendererInstance.Play(resouceName));
+	ActionGame::EffectPtr efc = std::make_shared<CEffect>(EffectRendererInstance.Play(resouceName));
 	effectArray_.push_back(efc);
 	Create(efc->GetHandle(), position, param);
 	efc->Initialize(param.offset);
+	return efc;
+}
+
+ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& resouceName, const Vector3& position,const EffectCreateParameterPtr& param)
+{
+	ActionGame::EffectPtr efc = std::make_shared<CEffect>(EffectRendererInstance.Play(resouceName));
+	effectArray_.push_back(efc);
+	Create(efc->GetHandle(), position, param);
+	efc->Initialize(param->offset);
 	return efc;
 }
 

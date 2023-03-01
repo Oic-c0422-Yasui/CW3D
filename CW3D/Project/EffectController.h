@@ -21,7 +21,8 @@ namespace ActionGame
 		}
 
 
-		void Create(const Effekseer::Handle& handle,const Vector3& position, EffectCreateParameter param);
+		void Create(const Effekseer::Handle& handle, const Vector3& position, EffectCreateParameter param);
+		void Create(const Effekseer::Handle& handle, const Vector3& position, const EffectCreateParameterPtr& param);
 	public:
 
 		/*
@@ -31,6 +32,14 @@ namespace ActionGame
 		* @param	param	エフェクト作成パラメータ
 		*/
 		EffectPtr Play(const std::string& key,const Vector3& pos, EffectCreateParameter param);
+
+		/*
+		* @brief	エフェクト再生
+		* @param	key エフェクト名
+		* @param	pos	エフェクト座標
+		* @param	param	エフェクト作成パラメータ
+		*/
+		EffectPtr Play(const std::string& key, const Vector3& pos,const EffectCreateParameterPtr& param);
 
 		/*
 		* @brief	更新

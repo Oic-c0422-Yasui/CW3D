@@ -1,13 +1,13 @@
 #include "RunState.h"
 
-ActionGame::RunState::RunState()
-	: State() 
+ActionGame::CRunState::CRunState()
+	: CState() 
 {
 }
 
-void ActionGame::RunState::Start()
+void ActionGame::CRunState::Start()
 {
-	m_RunAction = Actor()->GetAction<RunAction>(STATE_KEY_RUN);
+	action_ = Actor()->GetAction<CMoveAction>(STATE_KEY_RUN);
 	if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
 		Actor()->SetReverse(false);
@@ -16,15 +16,15 @@ void ActionGame::RunState::Start()
 	{
 		Actor()->SetReverse(true);
 	}
-	m_RunAction->Start();
+	action_->Start();
 }
 
-void ActionGame::RunState::Execution()
+void ActionGame::CRunState::Execution()
 {
-	m_RunAction->Execution();
+	action_->Execution();
 }
 
-void ActionGame::RunState::InputExecution()
+void ActionGame::CRunState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -38,7 +38,8 @@ void ActionGame::RunState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		m_RunAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL),
+							-(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 	else
 	{
@@ -56,31 +57,31 @@ void ActionGame::RunState::InputExecution()
 	}
 
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
+	for (size_t i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
-		if (!Actor()->GetSkillController()->GetSkill(i)->IsCanUse() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
+		auto& skill = Actor()->GetSkillController()->GetSkill(i);
+		if (!skill->IsCanUse() || skill->GetState() == NULL)
 		{
 			continue;
 		}
-		if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
+		if (Input()->IsPush(skill->GetButton()))
 		{
-
-			Actor()->GetSkillController()->GetSkill(i)->Start();
-			ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(), GetKey());
+			skill->Start();
+			ChangeState(skill->GetState(), GetKey());
 			break;
 		}
 	}
 }
 
-void ActionGame::RunState::End()
+void ActionGame::CRunState::End()
 {
 }
 
-void ActionGame::RunState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CRunState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::RunState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CRunState::GetKey() const
 {
 	return STATE_KEY_RUN;
 }

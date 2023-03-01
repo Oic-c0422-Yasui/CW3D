@@ -6,7 +6,7 @@ namespace ActionGame
 	class StageManager
 	{
 	private:
-		StagePtr m_pStage;
+		StagePtr stage_;
 	public:
 		StageManager();
 		~StageManager();
@@ -16,46 +16,46 @@ namespace ActionGame
 		void Render();
 		void RenderDebug();
 		void Release();
-		bool IsClear(const ClearTermProviderPtr& provider);
+		bool IsClear(const ClearTerm::ProviderPtr& provider);
 
 		const ObjectPtr& GetObj(int divCount, int id)
 		{
-			return m_pStage->GetObj(divCount,id);
+			return stage_->GetObj(divCount,id);
 		}
-		int GetDivObjCount(int divCount) const noexcept
+		size_t GetDivitionObjCount(size_t divCount) const noexcept
 		{
-			return m_pStage->GetDivision(divCount)->GetObjCount();
-		}
-
-		int GetAllEnemyCount() const noexcept
-		{
-			return m_pStage->GetEnemyCount();
+			return stage_->GetDivision(divCount)->GetObjCount();
 		}
 
-		int GetDivEnemyCount(int divCount) const noexcept
+		size_t GetAllEnemyCount() const noexcept
 		{
-			return m_pStage->GetDivision(divCount)->GetEnemyCount();
+			return stage_->GetEnemyCount();
 		}
 
-		int GetDivCount() const noexcept
+		size_t GetDivisionEnemyCount(size_t divCount) const noexcept
 		{
-			return m_pStage->GetDivCount();
+			return stage_->GetDivision(divCount)->GetEnemyCount();
+		}
+
+		size_t GetDivisionCount() const noexcept
+		{
+			return stage_->GetDivisionCount();
 		}
 
 
 		const DivisionPtr& GetDivision(size_t id)
 		{
-			return m_pStage->GetDivision(id);
+			return stage_->GetDivision(id);
 		}
 
 		const DivisionPtr& GetCurrentDivision()
 		{
-			return m_pStage->GetCurrentDivision();
+			return stage_->GetCurrentDivision();
 		}
 
 		void NextPhase()
 		{
-			m_pStage->NextPhase();
+			stage_->NextPhase();
 		}
 	};
 }

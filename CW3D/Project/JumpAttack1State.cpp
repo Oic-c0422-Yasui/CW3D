@@ -1,41 +1,41 @@
 #include "JumpAttack1State.h"
 
-ActionGame::JumpAttack1State::JumpAttack1State(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideStartFlg(false)
+ActionGame::CJumpAttack1State::CJumpAttack1State(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isStartCollide_(false)
 {
 }
 
-void ActionGame::JumpAttack1State::Start()
+void ActionGame::CJumpAttack1State::Start()
 {
-	m_JumpAttack1Action = Actor()->GetAction<JumpAttack1Action>(GetKey());
-	AttackBaseState::Start();
-	m_JumpAttack1Action->Start();
-	collideStartFlg = false;
+	action_ = Actor()->GetAction<CJumpAttack1Action>(GetKey());
+	CAttackBaseState::Start();
+	action_->Start();
+	isStartCollide_ = false;
 
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 
 }
 
-void ActionGame::JumpAttack1State::Execution()
+void ActionGame::CJumpAttack1State::Execution()
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 
 		}
 	}
 
-	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 	{
 		CreateEffect();
-		collideStartFlg = true;
+		isStartCollide_ = true;
 	}
 
 
@@ -43,24 +43,24 @@ void ActionGame::JumpAttack1State::Execution()
 	{
 		ChangeState(STATE_KEY_FALL);
 	}
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::JumpAttack1State::InputExecution()
+void ActionGame::CJumpAttack1State::InputExecution()
 {
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::JumpAttack1State::End()
+void ActionGame::CJumpAttack1State::End()
 {
-	AttackBaseState::End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::JumpAttack1State::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CJumpAttack1State::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::JumpAttack1State::GetKey() const
+const ActionGame::StateKeyType ActionGame::CJumpAttack1State::GetKey() const
 {
 	return STATE_KEY_JUMP_ATTACK1;
 }

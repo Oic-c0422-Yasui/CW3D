@@ -13,7 +13,15 @@ namespace ActionGame {
 		 */
 		virtual void Notify(Args...) = 0;
 	};
-	
+	template <>
+	class IObserver<void> {
+	private:
+	public:
+		/**
+		 * @brief	通知メソッド
+		 */
+		virtual void Notify() = 0;
+	};
 
 	/**
 	 * 関数単体での登録用
@@ -38,4 +46,6 @@ namespace ActionGame {
 			func_(args...);
 		}
 	};
+
+
 }

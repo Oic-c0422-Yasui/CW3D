@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"Action.h"
+#include	"BaseAction.h"
 
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		攻撃アクション
 	 */
-	class RunAttack1Action : public Action
+	class CRunAttack1Action : public CBaseAction
 	{
 	public:
 		/**
@@ -16,20 +16,17 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
-
 			//減速値
 			Vector3					decelerate;
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunAttack1Action(Parameter param);
+		CRunAttack1Action(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -54,5 +51,5 @@ namespace ActionGame {
 
 	};
 	//ポインタ置き換え
-	using RunAttack1ActionPtr = std::shared_ptr<RunAttack1Action>;
+	using RunAttack1ActionPtr = std::shared_ptr<CRunAttack1Action>;
 }

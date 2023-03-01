@@ -1,31 +1,31 @@
 #pragma once
 #include <memory>
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	クリア条件に必要なパラメータを提供する
 	*/
-	class ClearTermProvider
+	class CProvider
 	{
 	private:
-		float m_DivisionCurrentTime;
-		size_t m_EnemyCount;
-		size_t m_EnemyMaxCount;
-		size_t m_BossCount;
-		size_t m_BossMaxCount;
+		float divisionCurrentTime_;
+		size_t enemyCount_;
+		size_t enemyMaxCount_;
+		size_t bossCount_;
+		size_t bossMaxCount_;
 	public:
 
-		ClearTermProvider():
-			m_DivisionCurrentTime(0.0f),
-			m_EnemyCount(0),
-			m_EnemyMaxCount(0),
-			m_BossCount(0),
-			m_BossMaxCount(0)
+		CProvider():
+			divisionCurrentTime_(0.0f),
+			enemyCount_(0),
+			enemyMaxCount_(0),
+			bossCount_(0),
+			bossMaxCount_(0)
 		{
 			
 		}
-		~ClearTermProvider() {
+		~CProvider() {
 		}
 
 		/**
@@ -33,7 +33,7 @@ namespace ActionGame
 		 */
 		float GetDivisionTime() const noexcept 
 		{
-			return m_DivisionCurrentTime;
+			return divisionCurrentTime_;
 		}
 
 		/**
@@ -41,27 +41,27 @@ namespace ActionGame
 		 */
 		void SetDivisionTime(float time) noexcept
 		{
-			m_DivisionCurrentTime = time;
+			divisionCurrentTime_ = time;
 		}
 
 		void SetEnemyCount(size_t count) noexcept
 		{
-			m_EnemyCount = count;
+			enemyCount_ = count;
 		}
 
 		void SetBossCount(size_t count) noexcept
 		{
-			m_BossCount = count;
+			bossCount_ = count;
 		}
 
 		void SetEnemyMaxCount(size_t count) noexcept
 		{
-			m_EnemyMaxCount = count;
+			enemyMaxCount_ = count;
 		}
 
 		void SetBossMaxCount(size_t count) noexcept
 		{
-			m_BossMaxCount = count;
+			bossMaxCount_ = count;
 		}
 
 		/**
@@ -69,7 +69,7 @@ namespace ActionGame
 		 */
 		size_t GetEnemyCount() const noexcept
 		{
-			return m_EnemyCount;
+			return enemyCount_;
 		}
 
 		/**
@@ -77,7 +77,7 @@ namespace ActionGame
 		 */
 		size_t GetEnemyMaxCount() const noexcept
 		{
-			return m_EnemyMaxCount;
+			return enemyMaxCount_;
 		}
 
 		/**
@@ -85,7 +85,7 @@ namespace ActionGame
 		 */
 		size_t GetBossCount() const noexcept
 		{
-			return m_EnemyMaxCount;
+			return bossCount_;
 		}
 
 		/**
@@ -93,10 +93,10 @@ namespace ActionGame
 		 */
 		size_t GetBossMaxCount() const noexcept
 		{
-			return m_EnemyMaxCount;
+			return bossMaxCount_;
 		}
 		
 	};
 
-	using ClearTermProviderPtr = std::shared_ptr<ClearTermProvider>;
+	using ProviderPtr = std::shared_ptr<CProvider>;
 }

@@ -2,25 +2,25 @@
 #include "CameraController.h"
 #include "FixedCamera.h"
 
-ActionGame::ClearPoseState::ClearPoseState()
-	: State()
+ActionGame::CClearPoseState::CClearPoseState()
+	: CState()
 	, currentTime_(0)
-	, m_AnimStartFlg(false)
+	, isAnimStart_(false)
 {
 }
 
-void ActionGame::ClearPoseState::Start()
+void ActionGame::CClearPoseState::Start()
 {
 	currentTime_ = 0.0f;
-	m_ClearPoseAction = Actor()->GetAction<ClearPoseAction>(GetKey());
-	m_ClearPoseAction->Start();
-	m_AnimStartFlg = false;
+	action_ = Actor()->GetAction<ClearPoseAction>(GetKey());
+	action_->Start();
+	isAnimStart_ = false;
 }
 
-void ActionGame::ClearPoseState::Execution()
+void ActionGame::CClearPoseState::Execution()
 {
-	m_ClearPoseAction->Execution();
-	if (Actor()->GetTransform()->GetPositionY() > 0.0f || m_AnimStartFlg)
+	action_->Execution();
+	if (Actor()->GetTransform()->GetPositionY() > 0.0f || isAnimStart_)
 	{
 		return;
 	}
@@ -44,25 +44,25 @@ void ActionGame::ClearPoseState::Execution()
 	Vector3 offsetPos(7, 2, -2);
 	Vector3 offsetLookPos(0, 0, 0);
 	CameraPtr camera;
-	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
+	camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
 	camera->SetAnimation(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera);
 
 
-	m_ClearPoseAction->StartAnim();
-	m_AnimStartFlg = true;
+	action_->PlayAnimation();
+	isAnimStart_ = true;
 }
 
-void ActionGame::ClearPoseState::End()
+void ActionGame::CClearPoseState::End()
 {
-	m_ClearPoseAction->End();
+	action_->End();
 }
 
-void ActionGame::ClearPoseState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CClearPoseState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::ClearPoseState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CClearPoseState::GetKey() const
 {
 	return STATE_KEY_CLEARPOSE;
 }

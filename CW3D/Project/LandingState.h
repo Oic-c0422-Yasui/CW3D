@@ -8,16 +8,16 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class LandingState : public State
+	class CLandingState : public CState
 	{
 	private:
 		/** 移動アクション */
-		LandingActionPtr			m_LandingAction;
+		LandingActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		LandingState();
+		CLandingState();
 			
 
 		/**

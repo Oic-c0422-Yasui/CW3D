@@ -122,10 +122,9 @@ MofBool CGameApp::Render(void){
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
 	InputManagerInstance.Release();
-	gSceneManager->Release();
-	gSceneManager.reset();
 	ActionGame::ServiceLocator<Scene::ISceneChanger>::Release();
 	ActionGame::ServiceLocator<Scene::ISceneInitializer>::Release();
 	ActionGame::ServiceLocator<Messenger::IMessenger>::Release();
+	gSceneManager->Release();
 	return TRUE;
 }

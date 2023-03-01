@@ -1,47 +1,39 @@
 #include "DropKickSkillAction.h"
 
-ActionGame::DropKickSkillAction::DropKickSkillAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CDropKickSkillAction::CDropKickSkillAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::DropKickSkillAction::Start()
+void ActionGame::CDropKickSkillAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
+
+
 	auto& vel = Velocity();
-
-	vel->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-
-	vel->SetMaxGravity(m_Parameter.maxGravity);
-	vel->SetVelocityY(m_Parameter.jumpPower);
-	vel->SetGravity(m_Parameter.gravity);
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+	vel->SetMaxGravity(parameter_.maxGravity);
+	vel->SetVelocityY(parameter_.jumpPower);
+	vel->SetGravity(parameter_.gravity);
+	
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::DropKickSkillAction::Execution()
+void ActionGame::CDropKickSkillAction::Execution()
 {
 }
 
-void ActionGame::DropKickSkillAction::Move(float x)
+void ActionGame::CDropKickSkillAction::Move(float x)
 {
-	Velocity()->SetVelocityX(x * m_Parameter.velocity.x);
+	Velocity()->SetVelocityX(x * parameter_.velocity.x);
 }
 
-void ActionGame::DropKickSkillAction::End()
+void ActionGame::CDropKickSkillAction::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::DropKickSkillAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CDropKickSkillAction::GetKey() const
 {
 	return STATE_KEY_DROPKICK_SKILL;
 }

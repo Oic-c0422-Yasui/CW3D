@@ -1,8 +1,8 @@
 #include "ClearPoseAction.h"
 
-ActionGame::ClearPoseAction::ClearPoseAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::ClearPoseAction::ClearPoseAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
@@ -10,20 +10,20 @@ void ActionGame::ClearPoseAction::Start()
 {
 	if (Transform()->GetPositionY() > 0.0f)
 	{
-		AnimationState()->ChangeMotionByName(m_Parameter.fallAnim.name, m_Parameter.fallAnim.startTime, m_Parameter.fallAnim.speed,
-			m_Parameter.fallAnim.tTime, m_Parameter.fallAnim.loopFlg, MOTIONLOCK_OFF, TRUE);
+		auto anim = parameter_.fallAnim;
+		CBaseAction::PlayAnimation(anim.name, anim.startTime, anim.speed, anim.tTime, anim.isLoop);
 	}
 	else
 	{
-		StartAnim();
+		CBaseAction::PlayAnimation();
 	}
 
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+	auto& vel = Velocity();
 	float rotateY = Transform()->GetRotateY();
-
-	Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
-	Velocity()->SetGravity(m_Parameter.gravity);
-	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
+	vel->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+	vel->SetGravity(parameter_.gravity);
+	vel->SetMaxGravity(parameter_.maxGravity);
 }
 
 void ActionGame::ClearPoseAction::Execution()
@@ -32,12 +32,6 @@ void ActionGame::ClearPoseAction::Execution()
 
 void ActionGame::ClearPoseAction::End()
 {
-}
-
-void ActionGame::ClearPoseAction::StartAnim()
-{
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
 }
 
 const ActionGame::ActionKeyType ActionGame::ClearPoseAction::GetKey() const

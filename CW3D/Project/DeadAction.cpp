@@ -1,37 +1,36 @@
 #include "DeadAction.h"
 #include "ParameterDefine.h"
 
-ActionGame::DeadAction::DeadAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CDeadAction::CDeadAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 	, currentTime_(0.0f)
 {
 }
 
-void ActionGame::DeadAction::Start()
+void ActionGame::CDeadAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-	currentTime_ = 0;
+	CBaseAction::Start();
+
+	Velocity()->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+	currentTime_ = 0.0f;
 }
 
-void ActionGame::DeadAction::Execution()
+void ActionGame::CDeadAction::Execution()
 {
 	if (AnimationState()->IsEndMotion())
 	{
 		currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 		auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
-		alpha = MyUtil::Timer(1.0f, currentTime_, 0, m_Parameter.finishTime);
+		alpha = MyUtil::Timer(1.0f, currentTime_, 0, parameter_.finishTime);
 	}
 }
 
-void ActionGame::DeadAction::End()
+void ActionGame::CDeadAction::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::DeadAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CDeadAction::GetKey() const
 {
 	return STATE_KEY_DEAD;
 }

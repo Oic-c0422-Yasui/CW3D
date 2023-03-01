@@ -14,29 +14,29 @@ namespace ActionGame {
 	{
 	protected:
 		/* 姿勢 */
-		TransformPtr			m_Transform;
+		TransformPtr			transform_;
 
 		/*　速度 */
 		VelocityPtr				velocity_;
 
 		/* アクションマップ */
 		using ActionMap = std::unordered_map< ActionKeyType, ActionPtr >;
-		ActionMap				m_ActionMap;
+		ActionMap				actionMap_;
 
 		/*パラメーター情報*/
-		AnyParameterMapPtr		m_Parameters;
+		AnyParameterMapPtr		parameters_;
 
 		/*スキル操作*/
-		SkillControllerPtr		m_SkillController;
+		SkillControllerPtr		skillController_;
 
 		/* モーション */
-		AnimationStatePtr		m_Motion;
+		AnimationStatePtr		motion_;
 
 		/* アクターID　*/
-		CMyID					m_MyID;
+		CMyID					myID_;
 
 		/* キャラタイプ　*/
-		CHARA_TYPE				m_CharaType;
+		CHARA_TYPE				charaType_;
 
 
 	public:
@@ -45,14 +45,14 @@ namespace ActionGame {
 		 */
 		Actor()
 			: enable_shared_from_this()
-			, m_Transform(std::make_shared<Transform>())
-			, velocity_(std::make_shared<Velocity>())
-			, m_ActionMap()
-			, m_Parameters(std::make_shared<AnyParameterMap>())
-			, m_Motion()
-			, m_SkillController(std::make_shared<CSkillController>())
-			, m_MyID(IDManagerInstance.GetId())
-			, m_CharaType()
+			, transform_(std::make_shared<CTransform>())
+			, velocity_(std::make_shared<CVelocity>())
+			, actionMap_()
+			, parameters_(std::make_shared<AnyParameterMap>())
+			, motion_()
+			, skillController_(std::make_shared<CSkillController>())
+			, myID_(IDManagerInstance.GetId())
+			, charaType_()
 		{
 		}
 
@@ -63,11 +63,11 @@ namespace ActionGame {
 			//速度更新
 			velocity_->Update();
 			//速度で座標移動
-			m_Transform->AddPosition(velocity_);
+			transform_->AddPosition(velocity_);
 
-			m_Transform->SetRotateY(velocity_->GetRotateY());
+			transform_->SetRotateY(velocity_->GetRotateY());
 
-			m_SkillController->Update();
+			skillController_->Update();
 		}
 
 
@@ -86,52 +86,52 @@ namespace ActionGame {
 		 * @param[in]	action		追加するアクション
 		 */
 		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
-			m_ActionMap[key] = action;
-			action->SetTransform(m_Transform);
+			actionMap_[key] = action;
+			action->SetTransform(transform_);
 			action->SetVelocity(velocity_);
-			action->SetAnimation(m_Motion);
-			action->SetParameterMap(m_Parameters);
-			action->SetSkillController(m_SkillController);
+			action->SetAnimation(motion_);
+			action->SetParameterMap(parameters_);
+			action->SetSkillController(skillController_);
 		}
 
 		/**
 		 * @brief		座標設定
 		 */
 		void SetPosition(const Vector3& position) override {
-			m_Transform->SetPosition(position);
+			transform_->SetPosition(position);
 		}
 
 		/**
 		 * @brief		回転設定
 		 */
 		void SetRotate(const  Vector3& rotate) override{
-			m_Transform->SetRotate(rotate);
+			transform_->SetRotate(rotate);
 		}
 
 		/**
 		 * @brief		サイズ設定
 		 */
 		void SetScale(const Vector3& scale) override {
-			m_Transform->SetScale(scale);
+			transform_->SetScale(scale);
 		}
 
 		void SetReverse(bool isReverse) override{
-			m_Transform->SetReverse(isReverse);
+			transform_->SetReverse(isReverse);
 		}
 
 		/**
 		 * @brief		アニメーション
 		 */
 		void SetAnimationState(AnimationStatePtr animState) override {
-			m_Motion = animState;
+			motion_ = animState;
 		}
 
 		/**
 		 * @brief		タイプ設定
 		 */
 		void SetType(CHARA_TYPE type) override {
-			m_CharaType = type;
-			m_Transform->SetType(type);
+			charaType_ = type;
+			transform_->SetType(type);
 			velocity_->SetType(type);
 		}
 
@@ -141,8 +141,8 @@ namespace ActionGame {
 		 * @return		アクション
 		 */
 		ActionPtr GetAction(const ActionKeyType& key) override {
-			auto& act = m_ActionMap.find(key);
-			assert(act != m_ActionMap.end());
+			auto& act = actionMap_.find(key);
+			assert(act != actionMap_.end());
 			return act->second;
 		}
 
@@ -151,7 +151,7 @@ namespace ActionGame {
 		 * @brief		姿勢取得
 		 */
 		TransformPtr GetTransform() const override {
-			return m_Transform;
+			return transform_;
 		}
 
 		/**
@@ -165,78 +165,78 @@ namespace ActionGame {
 		 * @brief		座標取得
 		 */
 		const CVector3& GetPosition() const override {
-			return m_Transform->GetPosition();
+			return transform_->GetPosition();
 		}
 
 		/**
 		 * @brief		回転取得
 		 */
 		const CVector3& GetRotate() const override {
-			return m_Transform->GetRotate();
+			return transform_->GetRotate();
 		}
 
 		/**
 		 * @brief		マトリクス取得
 		 */
 		const CMatrix44& GetMatrix() const override {
-			return m_Transform->GetWorld();
+			return transform_->GetWorld();
 		}
 
 		bool IsReverse() const{
-			return m_Transform->IsReverse();
+			return transform_->IsReverse();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionX() const override {
-			return m_Transform->GetPositionX();
+			return transform_->GetPositionX();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionY() const override {
-			return m_Transform->GetPositionY();
+			return transform_->GetPositionY();
 		}
 
 		/**
 		 * @brief		座標取得
 		 */
 		float GetPositionZ() const override {
-			return m_Transform->GetPositionZ();
+			return transform_->GetPositionZ();
 		}
 
 		/**
 		 * @brief		ID取得
 		 */
 		size_t GetID() const override {
-			return m_MyID.GetID();
+			return myID_.GetID();
 		}
 
 		CHARA_TYPE GetType() const override {
-			return m_CharaType;
+			return charaType_;
 		}
 
 		/**
 		 * @brief		パラメーター
 		 */
 		const AnyParameterMapPtr& GetParameterMap() const override {
-			return m_Parameters;
+			return parameters_;
 		}
 
 		/**
 		 * @brief		アニメーション
 		 */
 		const AnimationStatePtr& GetAnimationState() const override {
-			return m_Motion;
+			return motion_;
 		}
 
 		/**
 		 * @brief		スキル
 		 */
 		const SkillControllerPtr& GetSkillController() const override {
-			return m_SkillController;
+			return skillController_;
 		}
 
 	};

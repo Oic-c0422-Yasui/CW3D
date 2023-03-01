@@ -5,38 +5,46 @@
 
 namespace ActionGame
 {
-
-	class CameraController : public Singleton<CameraController>
+	/*
+	* @brief	カメラ操作クラス
+	*/
+	class CCameraController : public Singleton<CCameraController>
 	{
-		friend class Singleton<CameraController>;
+		friend class Singleton<CCameraController>;
 	private:
 
 		CameraPtr	camera_;
-		CameraPtr	m_NextCamera;
-		CameraPtr	m_DefaultCamera;
-		bool		m_LeapFlg;
-		bool		m_LeapStartFlg;
-		float		m_LeapTime;
-		bool		m_LeapEndFlg;
-		float		m_TempLeapEndTime;
-		MyUtil::EASING_TYPE m_EndEaseType;
-		float		time_;
+		CameraPtr	nextCamera_;
+		CameraPtr	defaultCamera_;
+		bool		isLeap_;
+		bool		isLeapStart_;
+		float		leapTime_;
+		bool		isLeapEnd_;
+		float		leapEndTime_;
+		MyUtil::EASING_TYPE endEaseType_;
+		float		timeScale_;
 		float		currentTime_;
-		bool		m_TimerStartFlg;
+		bool		isTimerStart_;
 
-		float		m_QuakePower;
-		float		m_QuakeFrequent;
-		float		m_QuakeTime;
-		float		m_QuakeCurrentTime;
+
+		//カメラ揺れ
+		struct QuakeState
+		{
+			float power;
+			float frequent;
+			float time;
+			float currentTime;
+		};
+		QuakeState quakeState_;
 
 		Vector3		targetPos_;
 		Vector3		targetLookPos_;
 		
-		CameraController();
+		CCameraController();
 		void Reset();
 
 	public:
-		~CameraController();
+		~CCameraController();
 		
 		/*
 		* @brief	読み込み
@@ -152,5 +160,5 @@ namespace ActionGame
 
 
 //簡易アクセス用
-#define CameraControllerInstance 	ActionGame::CameraController::GetInstance()
+#define CameraControllerInstance 	ActionGame::CCameraController::GetInstance()
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Action.h"
+#include "BaseAction.h"
 
 
 namespace ActionGame {
@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動アクション
 	 */
-	class IdleMotionAction : public CAction
+	class IdleMotionAction : public CBaseAction
 	{
 	public:
 		/**
@@ -15,21 +15,19 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 
 			//加速値
 			Vector3					velocity;
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		IdleMotionAction(Parameter param);
+		IdleMotionAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -53,11 +51,6 @@ namespace ActionGame {
 		 * @param[in]	z		加速量
 		 */
 		void Acceleration(float x, float z);
-
-		/**
-		 * @brief		速度リセット
-		 */
-		void Reset();
 
 
 

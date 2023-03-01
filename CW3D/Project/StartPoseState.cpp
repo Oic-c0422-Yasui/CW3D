@@ -3,47 +3,47 @@
 #include "CameraController.h"
 #include "TimeScaleController.h"
 
-ActionGame::StartPoseState::StartPoseState(Parameter param)
-	: State()
+ActionGame::CStartPoseState::CStartPoseState(Parameter param)
+	: CState()
 	, currentTime_(0)
-	, m_Parameter(param)
+	, parameter_(param)
 {
 }
 
-void ActionGame::StartPoseState::Start()
+void ActionGame::CStartPoseState::Start()
 {
 	currentTime_ = 0.0f;
-	m_Action = Actor()->GetAction<StartPoseAction>(GetKey());
-	m_Action->Start();
+	action_ = Actor()->GetAction<CStartPoseAction>(GetKey());
+	action_->Start();
 	//カメラ設定
 	MyUtil::ANIM_V3_DATA_ARRAY animPos(
 		{
 			{0.0f,Vector3(-5,2,-3)},
-			{m_Parameter.Time,Vector3(5,2,-3)},
-			{m_Parameter.Time,Vector3(0,2,-3)},
+			{parameter_.Time,Vector3(5,2,-3)},
+			{parameter_.Time,Vector3(0,2,-3)},
 		}
 	);
 	MyUtil::ANIM_V3_DATA_ARRAY animLookPos(
 		{
 			{0.0f,Vector3(0, 1, 0)},
 			{0.0f,Vector3(0, 1, 0)},
-			{m_Parameter.Time,Vector3(0, 1, 0)},
+			{parameter_.Time,Vector3(0, 1, 0)},
 		}
 	);
 	Vector3 offsetPos(7, 2, -2);
 	Vector3 offsetLookPos(0, 0, 0);
 	CameraPtr camera;
-	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
+	camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), offsetPos, offsetLookPos);
 	camera->SetAnimation(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera);
-	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::ENEMY, 0.0f, 0.0f);
+	TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType() , 0.0f, 0.0f);
 }
 
-void ActionGame::StartPoseState::Execution()
+void ActionGame::CStartPoseState::Execution()
 {
-	if (m_Parameter.Time > currentTime_)
+	if (parameter_.Time > currentTime_)
 	{
-		m_Action->Execution();
+		action_->Execution();
 		currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 	else
@@ -52,24 +52,24 @@ void ActionGame::StartPoseState::Execution()
 	}
 }
 
-void ActionGame::StartPoseState::InputExecution()
+void ActionGame::CStartPoseState::InputExecution()
 {
 
 }
 
-void ActionGame::StartPoseState::End()
+void ActionGame::CStartPoseState::End()
 {
-	m_Action->End();
+	action_->End();
 	//カメラをデフォルトに戻す
 	CameraControllerInstance.SetDefault();
-	TimeScaleControllerInstance.SetTimeScale(CHARA_TYPE::ENEMY, 1.0f, 0.0f);
+	TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(), 1.0f, 0.0f);
 }
 
-void ActionGame::StartPoseState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CStartPoseState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::StartPoseState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CStartPoseState::GetKey() const
 {
 	return STATE_KEY_STARTPOSE;
 }

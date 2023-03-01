@@ -16,7 +16,7 @@ namespace ActionGame
 		void Render() override;
 		void RenderDebug() override;
 		void Release() override;
-		bool IsClear(const ClearTermProviderPtr& provider) override;
+		bool IsClear(const ClearTerm::ProviderPtr& provider) override;
     };
     using Stage1Ptr = std::shared_ptr<CStage1>;
 }

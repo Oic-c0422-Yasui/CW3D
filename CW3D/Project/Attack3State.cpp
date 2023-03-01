@@ -1,40 +1,40 @@
 #include "Attack3State.h"
 
-ActionGame::Attack3State::Attack3State(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideFirstStartFlg(false)
-	, collideSecondStartFlg(false)
+ActionGame::CAttack3State::CAttack3State(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isCollideStartFirst(false)
+	, isCollideStartSecond(false)
 {
 }
 
-void ActionGame::Attack3State::Start() 
+void ActionGame::CAttack3State::Start() 
 {
-	m_Attack3Action = Actor()->GetAction<Attack3Action>(GetKey());
+	action_ = Actor()->GetAction<CAttack3Action>(GetKey());
 
-	AttackBaseState::Start();
+	CAttackBaseState::Start();
 
-	m_Attack3Action->Start();
-	collideFirstStartFlg = false;
-	collideSecondStartFlg = false;
+	action_->Start();
+	isCollideStartFirst = false;
+	isCollideStartSecond = false;
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 
 }
 
-void ActionGame::Attack3State::Execution() 
+void ActionGame::CAttack3State::Execution() 
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if ((currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
-			|| (currentTime_ >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg))
+		if ((currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
+			|| (currentTime_ >= parameter_.CollideSecondStartFrameTime && !isCollideStartSecond))
 		{
 			shot->SetEnableCollider(true);
-			if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
+			if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
 			{
-				m_Attack3Action->Execution();
+				action_->Execution();
 
 			}
 
@@ -45,13 +45,13 @@ void ActionGame::Attack3State::Execution()
 		}
 
 	}
-	if (currentTime_ >= m_Parameter.CollideFirstStartFrameTime && !collideFirstStartFlg)
+	if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
 	{
-		collideFirstStartFlg = true;
+		isCollideStartFirst = true;
 	}
-	if (currentTime_ >= m_Parameter.CollideSecondStartFrameTime && !collideSecondStartFlg)
+	if (currentTime_ >= parameter_.CollideSecondStartFrameTime && !isCollideStartSecond)
 	{
-		collideSecondStartFlg = true;
+		isCollideStartSecond = true;
 	}
 	;
 
@@ -59,24 +59,24 @@ void ActionGame::Attack3State::Execution()
 	{
 		ChangeState(STATE_KEY_IDLE);
 	}
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::Attack3State::InputExecution() 
+void ActionGame::CAttack3State::InputExecution() 
 {
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::Attack3State::End() 
+void ActionGame::CAttack3State::End() 
 {
-	AttackBaseState::End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::Attack3State::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CAttack3State::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::Attack3State::GetKey() const
+const ActionGame::StateKeyType ActionGame::CAttack3State::GetKey() const
 {
 	return STATE_KEY_ATTACK3;
 }

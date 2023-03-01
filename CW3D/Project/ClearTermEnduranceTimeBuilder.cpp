@@ -1,20 +1,20 @@
 #include "ClearTermEnduranceTimeBuilder.h"
 
-ActionGame::ClearTermEnduranceTimeBuilder::ClearTermEnduranceTimeBuilder()
-	: m_EnduranceTime(0.0f)
+ClearTerm::CEnduranceTimeBuilder::CEnduranceTimeBuilder()
+	: enduranceTime_(0.0f)
 {
 }
 
-ActionGame::ClearTermPtr ActionGame::ClearTermEnduranceTimeBuilder::Create(nlohmann::json& os)
+ClearTerm::ClearTermPtr ClearTerm::CEnduranceTimeBuilder::Create(nlohmann::json& os)
 {
-	os["Time"].get_to(m_EnduranceTime);
+	os["Time"].get_to(enduranceTime_);
 
 	return Create();
 }
 
-ActionGame::ClearTermPtr ActionGame::ClearTermEnduranceTimeBuilder::Create()
+ClearTerm::ClearTermPtr ClearTerm::CEnduranceTimeBuilder::Create()
 {
 	ClearTermPtr clearTerm;
-	clearTerm = std::make_shared<ClearTermEnduranceTime>(m_EnduranceTime);
+	clearTerm = std::make_shared<ClearTerm::CEnduranceTime>(enduranceTime_);
 	return clearTerm;
 }

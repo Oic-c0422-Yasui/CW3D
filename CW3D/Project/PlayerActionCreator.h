@@ -47,12 +47,6 @@ namespace ActionGame {
 	{
 	public:
 		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~PlayerActionCreator() = default;
-
-
-		/**
 		 * @brief		生成
 		 */
 		bool Create(const ActorPtr& actor) override;

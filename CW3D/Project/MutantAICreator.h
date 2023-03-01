@@ -11,17 +11,13 @@ namespace ActionGame
     class MutantAICreator : public ICharacterAICreator
     {
 	public:
-		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~MutantAICreator() = default;
 
 		/**
-		 * @brief		コンストラクタ
+		 * @brief		生成
 		 */
 		CharacterAIPtr Create(const ActorPtr & actor,
 			const StateMachinePtr & machine,
-			const StateInputPtr & input) override;
+			const Input::StateInputPtr & input) override;
     };
 }
 

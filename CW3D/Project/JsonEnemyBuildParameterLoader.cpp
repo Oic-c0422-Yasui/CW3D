@@ -4,7 +4,7 @@
 using namespace ActionGame;
 
 ActionGame::JsonEnemyBuildParameterLoader::JsonEnemyBuildParameterLoader()
-	: m_Spawners(std::make_shared<Spawner::EnemySpawnerArray>())
+	: spawners_(std::make_shared<Spawner::EnemySpawnerArray>())
 {
 }
 
@@ -22,7 +22,7 @@ EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(cons
 EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nlohmann::json& os,EnemyStatusDictionary statusDictionary)
 {
 
-	EnemyBuildParameterArrayPtr parameter = std::make_shared<EnemyBuildParameterArray>();
+	auto parameter = std::make_shared<EnemyBuildParameterArray>();
 
 	for (auto& enemy : os)
 	{
@@ -39,7 +39,7 @@ EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nloh
 		//敵のスポナー取得
 		Spawner::JsonSpawnerCreator spawnerCreator;
 		auto spawner = spawnerCreator.Create(enemy["Spawner"]);
-		m_Spawners->push_back(spawner);
+		spawners_->push_back(spawner);
 
 		//ボスか判断する
 		auto& boss = enemy["Boss"];
@@ -65,5 +65,5 @@ EnemyBuildParameterArrayPtr ActionGame::JsonEnemyBuildParameterLoader::Load(nloh
 
 const Spawner::EnemySpawnerArrayPtr& ActionGame::JsonEnemyBuildParameterLoader::GetSpawner()
 {
-	return m_Spawners;
+	return spawners_;
 }

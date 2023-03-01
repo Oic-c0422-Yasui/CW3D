@@ -3,22 +3,22 @@
 
 using namespace ActionGame;
 
-FixedCamera::FixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+CFixedCamera::CFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
 	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
-FixedCamera::~FixedCamera()
+CFixedCamera::~CFixedCamera()
 {
 	animationData_.Release();
 }
 
-void FixedCamera::Create()
+void CFixedCamera::Create()
 {
 	CameraBase::Create();
 }
 
-void FixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void CFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 
 	if (animationData_.isAnimation)

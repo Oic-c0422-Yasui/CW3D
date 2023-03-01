@@ -1,18 +1,18 @@
 #pragma once
 #include "IClearTerm.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	ƒNƒŠƒAğŒ(ŠÔ‘Ï‹v)
 	*/
-	class ClearTermEnduranceTime : public IClearTerm
+	class CEnduranceTime : public IClearTerm
 	{
 	private:
-		float m_EnduranceTime;
+		float enduranceTime_;
 	public:
-		ClearTermEnduranceTime(float time);
-		bool IsClear(const ClearTermProviderPtr& provider) override;
+		CEnduranceTime(float time);
+		bool IsClear(const ClearTerm::ProviderPtr& provider) override;
 
 		const std::string& GetType() const noexcept override  { return "EnduranceTime"; }
 

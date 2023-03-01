@@ -9,7 +9,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class RunAttack1State : public AttackBaseState
+	class CRunAttack1State : public CAttackBaseState
 	{
 	public:
 		/*
@@ -27,21 +27,21 @@ namespace ActionGame {
 			EffectCreateParameter EffectStatus;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		RunAttack1ActionPtr			m_RunAttack1Action;
+		RunAttack1ActionPtr			action_;
 
-		bool collideStartFlg;
+		bool isStartCollide_;
 
 	protected:
-		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunAttack1State(Parameter param);
+		CRunAttack1State(Parameter param);
 			
 
 

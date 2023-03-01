@@ -1,26 +1,26 @@
 #include "FlyDamageAction.h"
 #include "ParameterDefine.h"
 
-ActionGame::CFlyDamageAction::CFlyDamageAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CFlyDamageAction::CFlyDamageAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
 void ActionGame::CFlyDamageAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
+
+	auto& vel = Velocity();
 	auto& knockBack = ParameterMap()->Get<Vector3>(PARAMETER_KEY_KNOCKBACK);
+	vel->SetVelocity(knockBack);
+	vel->SetGravity(parameter_.gravity);
+	vel->SetMaxGravity(parameter_.maxGravity);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 
-	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
-
-	Velocity()->SetGravity(m_Parameter.gravity);
+	//Õ“Ë”»’è‰ñ”ðON
 	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = true;
-	Velocity()->SetVelocity(knockBack);
-
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 }
 
 void ActionGame::CFlyDamageAction::Execution()
@@ -29,6 +29,7 @@ void ActionGame::CFlyDamageAction::Execution()
 
 void ActionGame::CFlyDamageAction::End()
 {
+	//Õ“Ë”»’è‰ñ”ðOFF
 	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = false;
 }

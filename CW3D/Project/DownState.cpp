@@ -1,26 +1,26 @@
 #include "DownState.h"
 #include "ParameterDefine.h"
 
-ActionGame::DownState::DownState(Parameter param)
-	: State()
-	, m_Parameter(param)
+ActionGame::CDownState::CDownState(Parameter param)
+	: CState()
+	, parameter_(param)
 	, currentTime_(0) {
 }
 
-void ActionGame::DownState::Start()
+void ActionGame::CDownState::Start()
 {
 	currentTime_ = 0;
 	auto& invincible = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
-	invincible = m_Parameter.endTime;
-	m_DownAction = Actor()->GetAction<DownAction>(GetKey());
-	m_DownAction->Start();
+	invincible = parameter_.endTime;
+	action_ = Actor()->GetAction<CDownAction>(GetKey());
+	action_->Start();
 }
 
-void ActionGame::DownState::Execution()
+void ActionGame::CDownState::Execution()
 {
-	m_DownAction->Execution();
+	action_->Execution();
 
-	if (currentTime_ < m_Parameter.endTime)
+	if (currentTime_ < parameter_.endTime)
 	{
 		currentTime_ += CUtilities::GetFrameSecond();
 	}
@@ -30,20 +30,20 @@ void ActionGame::DownState::Execution()
 	}
 }
 
-void ActionGame::DownState::InputExecution()
+void ActionGame::CDownState::InputExecution()
 {
 }
 
-void ActionGame::DownState::End()
+void ActionGame::CDownState::End()
 {
-	m_DownAction->End();
+	action_->End();
 }
 
-void ActionGame::DownState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CDownState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::DownState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CDownState::GetKey() const
 {
 	return STATE_KEY_DOWN;
 }

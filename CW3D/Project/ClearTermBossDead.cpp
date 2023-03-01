@@ -1,11 +1,14 @@
 #include "ClearTermBossDead.h"
 
-ActionGame::ClearTermBossDead::ClearTermBossDead()
+ClearTerm::CBossDead::CBossDead()
 {
 }
 
-bool ActionGame::ClearTermBossDead::IsClear(const ClearTermProviderPtr& provider)
+bool ClearTerm::CBossDead::IsClear(const ClearTerm::ProviderPtr& provider)
 {
-	
-	return provider->GetBossCount() <= 0;
+	if (provider->GetBossCount() <= 0)
+	{
+		return true;
+	}
+	return false;
 }

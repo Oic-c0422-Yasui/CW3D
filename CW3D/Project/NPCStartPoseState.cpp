@@ -1,43 +1,43 @@
 #include "NPCStartPoseState.h"
 
-ActionGame::NPCStartPoseState::NPCStartPoseState()
-	: State()
+ActionGame::CNPCStartPoseState::CNPCStartPoseState()
+	: CState()
 {
 }
 
-void ActionGame::NPCStartPoseState::Start()
+void ActionGame::CNPCStartPoseState::Start()
 {
-	m_Action = Actor()->GetAction<NPCStartPoseAction>(GetKey());
-	m_Action->Start();
+	action_ = Actor()->GetAction<CNPCStartPoseAction>(GetKey());
+	action_->Start();
 	
 }
 
-void ActionGame::NPCStartPoseState::Execution()
+void ActionGame::CNPCStartPoseState::Execution()
 {
 
-	m_Action->Execution();
+	action_->Execution();
 	
-	if (m_Action->IsEndAnim())
+	if (action_->IsEndAnimation())
 	{
 		ChangeState(STATE_KEY_IDLE);
 	}
 	
 }
 
-void ActionGame::NPCStartPoseState::InputExecution()
+void ActionGame::CNPCStartPoseState::InputExecution()
 {
 }
 
-void ActionGame::NPCStartPoseState::End()
+void ActionGame::CNPCStartPoseState::End()
 {
-	m_Action->End();
+	action_->End();
 }
 
-void ActionGame::NPCStartPoseState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CNPCStartPoseState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::NPCStartPoseState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CNPCStartPoseState::GetKey() const
 {
 	return STATE_KEY_NPC_STARTPOSE;
 }

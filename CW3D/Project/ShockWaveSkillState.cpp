@@ -2,22 +2,22 @@
 #include "CameraController.h"
 #include "FixedCamera.h"
 
-ActionGame::ShockWaveSkillState::ShockWaveSkillState(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideStartFlg(false)
+ActionGame::CShockWaveSkillState::CShockWaveSkillState(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isStartCollide_(false)
 {
 }
 
-void ActionGame::ShockWaveSkillState::Start()
+void ActionGame::CShockWaveSkillState::Start()
 {
-	m_SkillAction = Actor()->GetAction<ShockWaveSkillAction>(GetKey());
-	collideStartFlg = false;
-	AttackBaseState::Start();
-	m_SkillAction->Start();
+	action_ = Actor()->GetAction<CShockWaveSkillAction>(GetKey());
+	isStartCollide_ = false;
+	CAttackBaseState::Start();
+	action_->Start();
 	CreateShotAABB();
 	CreateEffect();
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage() * 0.01f);
 		shot->SetDamage(damage);
@@ -63,23 +63,23 @@ void ActionGame::ShockWaveSkillState::Start()
 		}
 	}
 	CameraPtr camera;
-	camera = std::make_shared<FixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
+	camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 	camera->SetAnimation(animPos, animLookPos);
 	CameraControllerInstance.SetCamera(camera, 1, MyUtil::EASING_TYPE::IN_SINE, 0.3f, MyUtil::EASING_TYPE::IN_SINE, 0.15f);
 
 }
 
-void ActionGame::ShockWaveSkillState::Execution()
+void ActionGame::CShockWaveSkillState::Execution()
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndFrameTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -88,9 +88,9 @@ void ActionGame::ShockWaveSkillState::Execution()
 		}
 
 	}
-	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 	{
-		collideStartFlg = true;
+		isStartCollide_ = true;
 	}
 
 
@@ -107,25 +107,25 @@ void ActionGame::ShockWaveSkillState::Execution()
 
 	}
 
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::ShockWaveSkillState::InputExecution()
+void ActionGame::CShockWaveSkillState::InputExecution()
 {
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::ShockWaveSkillState::End()
+void ActionGame::CShockWaveSkillState::End()
 {
-	m_SkillAction->End();
-	AttackBaseState::End();
+	action_->End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::ShockWaveSkillState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CShockWaveSkillState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::ShockWaveSkillState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CShockWaveSkillState::GetKey() const
 {
 	return STATE_KEY_SHOCKWAVE_SKILL;
 }

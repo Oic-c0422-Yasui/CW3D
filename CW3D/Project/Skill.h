@@ -12,16 +12,16 @@ namespace ActionGame
 	{
 	public:
 	protected:
-		std::string		m_Key;
+		std::string		inputKey_;
 		std::string		m_TexName;
 		std::string		m_InputKey;
 		char*			m_State;
 		char*			m_FlyState;
-		bool			m_StartFlg;
+		bool			isStart_;
 		SkillDataPtr	m_SkillData;
 		
-		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<bool> >	m_CanUseFlg;
-		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> > m_CT;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<bool> >	m_CanUseFlg;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> > m_CT;
 
 
 	protected:
@@ -77,7 +77,7 @@ namespace ActionGame
 		*/
 		const std::string& GetKey() const noexcept
 		{
-			return m_Key;
+			return inputKey_;
 		}
 
 		/*
@@ -164,7 +164,7 @@ namespace ActionGame
 		*/
 		void SetKey(const std::string& key) noexcept
 		{
-			m_Key = key;
+			inputKey_ = key;
 			
 		}
 
@@ -226,7 +226,7 @@ namespace ActionGame
 		* @brief		使用可能可否を設定
 		* @param		true　なら使用可能
 		*/
-		void SetCanUseFlg(bool isCanUse) noexcept
+		void SetCanUse(bool isCanUse) noexcept
 		{
 			m_CanUseFlg = isCanUse;
 		}

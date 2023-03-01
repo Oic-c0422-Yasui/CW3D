@@ -2,14 +2,14 @@
 #include "ClearTermBuilder.h"
 #include "ClearTermBossDead.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
-	class ClearTermBossDeadBuilder : public IClearTermBuilder
+	class CBossDeadBuilder : public IClearTermBuilder
 	{
 	private:
 
 	public:
-		ClearTermBossDeadBuilder();
+		CBossDeadBuilder();
 		ClearTermPtr Create(nlohmann::json& os) override;
 		ClearTermPtr Create() override;
 	};

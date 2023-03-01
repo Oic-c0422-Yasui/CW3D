@@ -3,11 +3,11 @@
 using namespace ActionGame;
 
 CStageBase::CStageBase()
-	: m_Phase(0)
-	, m_ClearFlg(false)
-	, m_pStage(nullptr)
-	, m_Divisions(nullptr)
-	, m_CurrentDivision(nullptr)
+	: phase_(0)
+	, isClear_(false)
+	, stage_(nullptr)
+	, divisionArray_(nullptr)
+	, currentDivision_(nullptr)
 {
 }
 
@@ -18,15 +18,15 @@ CStageBase::~CStageBase()
 void ActionGame::CStageBase::Render()
 {
 	CMatrix44 matWorld;
-	m_pStage->Render(matWorld);
+	stage_->Render(matWorld);
 }
 
 void ActionGame::CStageBase::NextPhase()
 {
-	if (m_Phase + 1 < GetDivCount())
+	if (phase_ + 1 < GetDivisionCount())
 	{
-		m_Phase++;
-		m_CurrentDivision = GetDivision(m_Phase);
+		phase_++;
+		currentDivision_ = GetDivision(phase_);
 	}
 }
 

@@ -63,18 +63,21 @@ void ActionGame::EffectRenderer::Render()
 	//カメラコントローラーから座標を取得
 	Vector3 pos = CameraControllerInstance.GetPosition();
 	Vector3 look = CameraControllerInstance.GetLookPosition();
+
+	//エフェクトのソート
 	::Effekseer::Manager::DrawParameter param;
+	
 	param.CameraPosition = ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
 	param.CameraFrontDirection = ::Effekseer::Vector3D(look.x, look.y, look.z) - ::Effekseer::Vector3D(pos.x, pos.y, pos.z);
 	Effekseer::Vector3D::Normal(param.CameraFrontDirection, param.CameraFrontDirection);
 	param.IsSortingEffectsEnabled = true;
+	
 	// カメラ行列を設定
 	renderer_->SetCameraMatrix(
 		::Effekseer::Matrix44().LookAtLH(
 			::Effekseer::Vector3D(pos.x, pos.y, pos.z),
 			::Effekseer::Vector3D(look.x, look.y, look.z),
 			::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
-	
 	renderer_->BeginRendering();
 	manager_->Draw(param);
 	renderer_->EndRendering();

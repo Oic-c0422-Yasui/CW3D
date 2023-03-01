@@ -1,22 +1,22 @@
 #include "ClearTermEnemyAllDeadText.h"
 
-ActionGame::ClearTermEnemyAllDeadText::ClearTermEnemyAllDeadText()
-	: ClearTermText("“G‚ð‚·‚×‚Ä“|‚¹")
-	, m_EnemyCount(0)
-	, m_EnemyMaxCount(0)
-	, m_DescriptionPos(1800,600)
-	, m_ClearTermPos(1800,700)
+ClearTerm::CEnemyAllDeadText::CEnemyAllDeadText()
+	: CClearTermText("“G‚ð‚·‚×‚Ä“|‚¹")
+	, enemyCount_(0)
+	, enemyMaxCount_(0)
+	, descriptionPos_(1800,600)
+	, clearTermPos_(1800,700)
 {
 }
 
-void ActionGame::ClearTermEnemyAllDeadText::Initialize()
+void ClearTerm::CEnemyAllDeadText::Initialize()
 {
 	
 }
 
-void ActionGame::ClearTermEnemyAllDeadText::Render()
+void ClearTerm::CEnemyAllDeadText::Render()
 {
 	
-	CGraphicsUtilities::RenderString(m_DescriptionPos.x, m_DescriptionPos.y,MOF_XRGB(255,255,255), m_Description);
-	CGraphicsUtilities::RenderString(m_ClearTermPos.x, m_ClearTermPos.y, MOF_XRGB(255, 255, 255), "Žc‚è%d/%d", m_EnemyCount, m_EnemyMaxCount);
+	CGraphicsUtilities::RenderString(descriptionPos_.x, descriptionPos_.y,MOF_XRGB(255,255,255), description_);
+	CGraphicsUtilities::RenderString(clearTermPos_.x, clearTermPos_.y, MOF_XRGB(255, 255, 255), "Žc‚è%d/%d", enemyCount_, enemyMaxCount_);
 }

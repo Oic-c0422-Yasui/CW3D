@@ -18,7 +18,7 @@ namespace Messenger
         * @param    message　メッセージの種類
         * @param    func    処理内容の関数
         */
-        virtual void Regist(GameMessageType message,const std::function<void>& func) = 0;
+        virtual void Regist(GameMessageType message, const std::function<void()>& func) = 0;
 
         /*
         * @brief    メッセージを受け取った際の処理を削除

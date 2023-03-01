@@ -13,8 +13,8 @@ StageManager::~StageManager()
 
 bool ActionGame::StageManager::Load(const StagePtr& stage,const DivisionArrayPtr& divisions)
 {
-	m_pStage = stage;
-	if (!m_pStage->Load(divisions))
+	stage_ = stage;
+	if (!stage_->Load(divisions))
 	{
 		return false;
 	}
@@ -23,30 +23,30 @@ bool ActionGame::StageManager::Load(const StagePtr& stage,const DivisionArrayPtr
 
 void ActionGame::StageManager::Initialize()
 {
-	m_pStage->Initialize();
+	stage_->Initialize();
 }
 
 void ActionGame::StageManager::Update()
 {
-	m_pStage->Update();
+	stage_->Update();
 }
 
 void ActionGame::StageManager::Render()
 {
-	m_pStage->Render();
+	stage_->Render();
 }
 
 void ActionGame::StageManager::RenderDebug()
 {
-	m_pStage->RenderDebug();
+	stage_->RenderDebug();
 }
 
 void ActionGame::StageManager::Release()
 {
-	m_pStage->Release();
+	stage_->Release();
 }
 
-bool ActionGame::StageManager::IsClear(const ClearTermProviderPtr& provider)
+bool ActionGame::StageManager::IsClear(const ClearTerm::ProviderPtr& provider)
 {
-	return m_pStage->IsClear(provider);
+	return stage_->IsClear(provider);
 }

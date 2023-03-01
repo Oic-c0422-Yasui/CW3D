@@ -22,6 +22,11 @@ namespace ActionGame {
 		 * @brief	通知を受けるオブザーバーの削除
 		 */
 		virtual void Dispose(std::shared_ptr < IObserver<Args...> > pobs) = 0;
+
+		/**
+		 * @brief	通知を受けるすべてのオブザーバーの削除
+		 */
+		virtual void Dispose() = 0;
 	};
 
 	template< >
@@ -32,11 +37,11 @@ namespace ActionGame {
 		/**
 		 * @brief	通知を受けるオブザーバーの登録
 		 */
-		virtual void Subscribe(std::shared_ptr < IObserver<void> > pobs) = 0;
+		virtual void Subscribe(const NotifyFunc& pobs) = 0;
 
 		/**
-		 * @brief	通知を受けるオブザーバーの削除
+		 * @brief	通知を受けるすべてのオブザーバーの削除
 		 */
-		virtual void Dispose(std::shared_ptr < IObserver<void> > pobs) = 0;
+		virtual void Dispose() = 0;
 	};
 }

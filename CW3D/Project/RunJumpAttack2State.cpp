@@ -1,24 +1,24 @@
 #include "RunJumpAttack2State.h"
 
-ActionGame::RunJumpAttack2State::RunJumpAttack2State(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
+ActionGame::CRunJumpAttack2State::CRunJumpAttack2State(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
 {
 }
 
-void ActionGame::RunJumpAttack2State::Start()
+void ActionGame::CRunJumpAttack2State::Start()
 {
-	m_Attack2Action = Actor()->GetAction<RunJumpAttack2Action>(GetKey());
-	AttackBaseState::Start();
-	m_Attack2Action->Start();
+	action_ = Actor()->GetAction<CRunJumpAttack2Action>(GetKey());
+	CAttackBaseState::Start();
+	action_->Start();
 	//当たり判定用の弾作成
 	CreateShotAABB();
 }
 
-void ActionGame::RunJumpAttack2State::Execution()
+void ActionGame::CRunJumpAttack2State::Execution()
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
 	}
@@ -27,17 +27,17 @@ void ActionGame::RunJumpAttack2State::Execution()
 	{
 		ChangeState(STATE_KEY_FALL);
 	}
-	if (m_NextInputFlg)
+	if (isNextInput_)
 	{
-		if (currentTime_ > m_Parameter.NextInputFrameTime)
+		if (currentTime_ > parameter_.NextInputFrameTime)
 		{
 			ChangeState(STATE_KEY_RUN_JUMP_ATTACK3);
 		}
 	}
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::RunJumpAttack2State::InputExecution()
+void ActionGame::CRunJumpAttack2State::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -47,23 +47,23 @@ void ActionGame::RunJumpAttack2State::InputExecution()
 	}
 	if (Input()->IsPush(INPUT_KEY_ATTACK))
 	{
-		m_NextInputFlg = true;
+		isNextInput_ = true;
 	}
 
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::RunJumpAttack2State::End()
+void ActionGame::CRunJumpAttack2State::End()
 {
-	AttackBaseState::End();
-	m_Attack2Action->End();
+	CAttackBaseState::End();
+	action_->End();
 }
 
-void ActionGame::RunJumpAttack2State::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CRunJumpAttack2State::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::RunJumpAttack2State::GetKey() const
+const ActionGame::StateKeyType ActionGame::CRunJumpAttack2State::GetKey() const
 {
 	return STATE_KEY_RUN_JUMP_ATTACK2;
 }

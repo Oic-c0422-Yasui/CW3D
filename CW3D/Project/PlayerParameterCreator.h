@@ -13,11 +13,6 @@ namespace ActionGame {
 	{
 	public:
 		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~PlayerParameterCreator() = default;
-
-		/**
 		 * @brief		生成
 		 */
 		bool Create(const AnyParameterMapPtr& param) override;

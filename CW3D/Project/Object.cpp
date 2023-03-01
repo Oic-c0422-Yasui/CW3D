@@ -4,16 +4,16 @@ using namespace ActionGame;
 
 CObject::CObject(const Vector3& pos, const Vector3& size, const Vector3& offset)
 	: position_(pos)
-	, m_Size(size)
+	, size_(size)
 	, offset_(offset)
-	, m_ShowFlg(false)
+	, isShow_(false)
 {
 }
 
 
 void CObject::Initialize()
 {
-	m_ShowFlg = true;
+	isShow_ = true;
 
 }
 

@@ -18,8 +18,9 @@ namespace ActionGame
 		/**
 		 * @brief		コンストラクタ
 		 */
-		virtual CharacterAIPtr Create(const ActorPtr& actor, const StateMachinePtr& machine,
-			const Input::StateInputPtr& input) = 0;
+		virtual CharacterAIPtr Create(const ActorPtr& actor,
+									const StateMachinePtr& machine,
+									const Input::StateInputPtr& input) = 0;
 	};
 	//ポインタ置き換え
 	using CharacterAICreatorPtr = std::shared_ptr<ICharacterAICreator>;

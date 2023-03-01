@@ -9,11 +9,11 @@ namespace ActionGame
 	class CStageBase
 	{
 	protected:
-		std::shared_ptr<CMeshContainer> m_pStage;
-		DivisionArrayPtr m_Divisions;
-		DivisionPtr m_CurrentDivision;
-		int m_Phase;
-		bool m_ClearFlg;
+		std::shared_ptr<CMeshContainer> stage_;
+		DivisionArrayPtr divisionArray_;
+		DivisionPtr currentDivision_;
+		size_t phase_;
+		bool isClear_;
 	public:
 		CStageBase();
 		virtual ~CStageBase();
@@ -23,38 +23,38 @@ namespace ActionGame
 		virtual void Render() = 0;
 		virtual void RenderDebug() = 0;
 		virtual void Release() = 0;
-		virtual bool IsClear(const ClearTermProviderPtr& provider) = 0;
+		virtual bool IsClear(const ClearTerm::ProviderPtr& provider) = 0;
 
 		const ObjectPtr& GetObj(int divCount, int id)
 		{
-			assert(m_Divisions->at(divCount));
-			return m_Divisions->at(divCount)->GetObj(id);
+			assert(divisionArray_->at(divCount));
+			return divisionArray_->at(divCount)->GetObj(id);
 		}
 
-		int GetEnemyCount() noexcept
+		size_t GetEnemyCount() noexcept
 		{
-			int count = 0;
-			for (auto& divition : *m_Divisions)
+			size_t count = 0;
+			for (auto& divition : *divisionArray_)
 			{
 				count += divition->GetEnemyCount();
 			}
 			return count;
 		}
 
-		int GetDivCount() const noexcept
+		size_t GetDivisionCount() const noexcept
 		{
-			return m_Divisions->size();
+			return divisionArray_->size();
 		}
 
 		const DivisionPtr& GetDivision(size_t divCount)
 		{
-			assert(m_Divisions->at(divCount));
-			return m_Divisions->at(divCount);
+			assert(divisionArray_->at(divCount));
+			return divisionArray_->at(divCount);
 		}
 
 		const DivisionPtr& GetCurrentDivision()
 		{
-			return m_CurrentDivision;
+			return currentDivision_;
 		}
 
 		void NextPhase();

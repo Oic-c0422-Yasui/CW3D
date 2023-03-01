@@ -1,17 +1,17 @@
 #pragma once
 #include "ClearTermText.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
-    class ClearTermEnduranceTimeText : public ClearTermText
+    class CEnduranceTimeText : public CClearTermText
     {
     private:
         float currentTime_;
-        float m_FinishTime;
-        Vector2 m_DescriptionPos;
-        Vector2 m_ClearTermPos;
+        float finishTime_;
+        Vector2 descriptionPos_;
+        Vector2 clearTermPos_;
     public:
-        ClearTermEnduranceTimeText();
+        CEnduranceTimeText();
         void Initialize() override;
         void Render() override;
         void SetCurrentTime(float time)
@@ -20,25 +20,25 @@ namespace ActionGame
         }
         void SetFinishTime(float time)
         {
-            m_FinishTime = time;
+            finishTime_ = time;
         }
         /*
         * @brief    説明描画位置を設定
         */
         void SetDescriptionPos(const Vector2& pos)
         {
-            m_DescriptionPos = pos;
+            descriptionPos_ = pos;
         }
         /*
         * @brief    クリア条件描画位置を設定
         */
         void SetClearTermPos(const Vector2& pos)
         {
-            m_ClearTermPos = pos;
+            clearTermPos_ = pos;
         }
     };
 
-    using ClearTermEnduranceTimeTextPtr = std::shared_ptr<ClearTermEnduranceTimeText>;
+    using EnduranceTimeTextPtr = std::shared_ptr<CEnduranceTimeText>;
 }
 
 

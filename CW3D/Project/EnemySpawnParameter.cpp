@@ -1,25 +1,25 @@
 #include "EnemySpawnParameter.h"
 
 Spawner::EnemySpawnParameter::EnemySpawnParameter(const ActionGame::EnemyBuildParameterArrayPtr& param)
-	: m_Param(param)
+	: param_(param)
 {
 }
 
 void Spawner::EnemySpawnParameter::Next()
 {
-	m_CurrentParameterNum++;
-	if (m_Param->size() <= m_CurrentParameterNum)
+	CurrentParameterNum_++;
+	if (param_->size() <= CurrentParameterNum_)
 	{
-		m_CurrentParameterNum = 0;
+		CurrentParameterNum_ = 0;
 	}
 }
 
 void Spawner::EnemySpawnParameter::Reset()
 {
-	m_Param.reset();
+	param_.reset();
 }
 
 const ActionGame::EnemyBuildParameterPtr& Spawner::EnemySpawnParameter::GetParameter() const noexcept
 {
-	return m_Param->at(m_CurrentParameterNum);
+	return param_->at(CurrentParameterNum_);
 }

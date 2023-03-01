@@ -4,15 +4,15 @@
 
 namespace ActionGame
 {
-	class NPCHPRenderManager
+	class CNPCHPRenderManager
 	{
 	private:
-		std::vector<NormalEnemyHPRenderPtr> m_NormalHPRender;
-		std::vector<BossHPRenderPtr> m_BossHPRender;
+		std::vector<NormalEnemyHPRenderPtr> normalHPRender_;
+		std::vector<BossHPRenderPtr> bossHPRender_;
 
 	public:
-		NPCHPRenderManager();
-		~NPCHPRenderManager();
+		CNPCHPRenderManager();
+		~CNPCHPRenderManager();
 		/*
 		* @brief	読み込み
 		*/
@@ -39,7 +39,7 @@ namespace ActionGame
 		void Reset();
 
 		/*
-		* @brief	HPバーの描画順序入れ替え
+		* @brief	通常HPバーの描画順序入れ替え
 		*/
 		void Sort();
 

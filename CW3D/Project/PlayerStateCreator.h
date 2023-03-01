@@ -44,14 +44,11 @@ namespace ActionGame {
 	{
 	public:
 		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~PlayerStateCreator() = default;
-
-		/**
 		 * @brief		生成
 		 */
-		bool Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const InputPtr& input) override;
+		bool Create(const StateMachinePtr& stateMachine,
+					const ActorPtr& actor,
+					const Input::InputPtr& input) override;
 			
 	};
 }

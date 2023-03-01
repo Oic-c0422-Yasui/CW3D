@@ -1,14 +1,14 @@
 #pragma once
-#include "State.h"
-#include "NPCStartPoseAction.h"
 
+#include "NPCStartPoseAction.h"
+#include "AttackBaseState.h"
 
 namespace ActionGame
 {
 	/*
 	* @brief	NPC開始ポーズステート
 	*/
-	class NPCCameraStartPoseState : public State
+	class CNPCFollowCameraStartPoseState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -18,24 +18,29 @@ namespace ActionGame
 		struct Parameter
 		{
 			float Time;
+			EffectCreateParameter EffectStatus;
+			float EffectStartTime;
 		};
 	private:
 		//開始ポーズステート
-		NPCStartPoseActionPtr			m_Action;
-		//現在時間
-		float						currentTime_;
+		NPCStartPoseActionPtr			action_;
 
-		Parameter m_Parameter;
+		Parameter parameter_;
 		
-		bool m_StartFlg;
+		bool isStart_;
+		bool isEffectStart_;
 
 		//カメラ設定
 		void SettingCamera();
+	protected:
+
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
+
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		NPCCameraStartPoseState(Parameter param);
+		CNPCFollowCameraStartPoseState(Parameter param);
 
 		/**
 		 * @brief		ステート内の開始処理

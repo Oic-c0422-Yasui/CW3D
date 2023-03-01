@@ -6,13 +6,7 @@ ActionGame::StageCreator::StageCreator()
 {
 }
 
-
-
 ActionGame::StagePtr ActionGame::StageCreator::Create(const DivisionArrayPtr& division)
 {
-
-	
-
-	
 	return StagePtr();
 }

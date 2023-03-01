@@ -9,8 +9,8 @@ namespace Spawner
 	class EnemySpawnParameter
 	{
 	private:
-		ActionGame::EnemyBuildParameterArrayPtr m_Param;
-		int m_CurrentParameterNum;
+		ActionGame::EnemyBuildParameterArrayPtr param_;
+		size_t CurrentParameterNum_;
 	public:
 		/**
 		 *	@brief		コンストラクタ

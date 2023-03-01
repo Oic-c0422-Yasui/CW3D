@@ -1,39 +1,38 @@
 #include "Attack1Action.h"
 
-ActionGame::Attack1Action::Attack1Action(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CAttack1Action::CAttack1Action(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::Attack1Action::Start()
+void ActionGame::CAttack1Action::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-
-	float rotateY = Transform()->GetRotateY();
+	CBaseAction::Start();
+	
+	auto& vel = Velocity();
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 	if (Transform()->IsReverse())
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-		Velocity()->SetVelocityX(-m_Parameter.velocity.x);
+		vel->SetVelocityX(-parameter_.velocity.x);
 	}
 	else
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-		Velocity()->SetVelocityX(m_Parameter.velocity.x);
+		vel->SetVelocityX(parameter_.velocity.x);
 	}
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::Attack1Action::Execution()
+void ActionGame::CAttack1Action::Execution()
 {
 }
 
-void ActionGame::Attack1Action::End()
+void ActionGame::CAttack1Action::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::Attack1Action::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CAttack1Action::GetKey() const
 {
 	return STATE_KEY_ATTACK1;
 }

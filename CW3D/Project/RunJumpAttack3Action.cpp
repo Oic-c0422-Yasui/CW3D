@@ -1,32 +1,30 @@
 #include "RunJumpAttack3Action.h"
 
-ActionGame::RunJumpAttack3Action::RunJumpAttack3Action(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CRunJumpAttack3Action::CRunJumpAttack3Action(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::RunJumpAttack3Action::Start()
+void ActionGame::CRunJumpAttack3Action::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
 	auto& vel = Velocity();
-	vel->SetVelocityY(m_Parameter.jumpPower);
-	float rotateY = Transform()->GetRotateY();
+	vel->SetVelocityY(parameter_.jumpPower);
 	if (Transform()->IsReverse())
 	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-		vel->SetVelocityX(-m_Parameter.velocity.x);
+		vel->SetVelocityX(-parameter_.velocity.x);
 	}
 	else
 	{
-		vel->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-		vel->SetVelocityX(m_Parameter.velocity.x);
+		vel->SetVelocityX(parameter_.velocity.x);
 	}
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::RunJumpAttack3Action::Execution()
+void ActionGame::CRunJumpAttack3Action::Execution()
 {
 	if (Transform()->IsReverse())
 	{
@@ -38,17 +36,17 @@ void ActionGame::RunJumpAttack3Action::Execution()
 	}
 }
 
-void ActionGame::RunJumpAttack3Action::End()
+void ActionGame::CRunJumpAttack3Action::End()
 {
-	Velocity()->SetGravity(m_Parameter.defaultGravity);
+	Velocity()->SetGravity(parameter_.defaultGravity);
 }
 
-void ActionGame::RunJumpAttack3Action::Jump()
+void ActionGame::CRunJumpAttack3Action::Jump()
 {
-	Velocity()->SetVelocityY(m_Parameter.jumpPower);
+	Velocity()->SetVelocityY(parameter_.jumpPower);
 }
 
-const ActionGame::ActionKeyType ActionGame::RunJumpAttack3Action::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CRunJumpAttack3Action::GetKey() const
 {
 	return STATE_KEY_RUN_JUMP_ATTACK3;
 }

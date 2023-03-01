@@ -79,7 +79,7 @@ namespace ActionGame
 			//ノックバック値設定
 			Vector3 knockBack = shot->GetKnockBackPower();
 			shot->AddHit(player->GetID());
-			player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel());
+			player->Damage(shot->GetDirection()->Get(player->GetPosition()), knockBack, shot->GetDamage(),shot->GetArmorBreakLevel(), shot->GetDamageEffect());
 		}
 	}
 

@@ -8,6 +8,11 @@ ActionGame::JsonStageLoader::JsonStageLoader()
 {
 }
 
+ActionGame::JsonStageLoader::~JsonStageLoader()
+{
+	divisionArray_.reset();
+}
+
 bool ActionGame::JsonStageLoader::Load(const std::string& name)
 {
 	std::ifstream ifs(name);
@@ -25,8 +30,11 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 	auto& stageMesh = os["StageMesh"];
 	std::string stageMeshName;
 	stageMesh.get_to(stageMeshName);
-	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
+	//string¨char*‚É•ÏŠ·
 	const char* meshName = stageMeshName.c_str();
+	
+	//ƒƒbƒVƒ…“Ç‚İ‚İ
+	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
 	if (!tempMesh->Load(meshName))
 	{
 		return false;

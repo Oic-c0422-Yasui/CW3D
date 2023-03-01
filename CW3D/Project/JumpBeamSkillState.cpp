@@ -1,30 +1,30 @@
 #include "JumpBeamSkillState.h"
 
-ActionGame::JumpBeamSkillState::JumpBeamSkillState(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideStartFlg(false)
-	, m_DelayInputFlg(false)
+ActionGame::CJumpBeamSkillState::CJumpBeamSkillState(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isStartCollide_(false)
+	, isDelayInput_(false)
 {
 }
 
-void ActionGame::JumpBeamSkillState::Start() 
+void ActionGame::CJumpBeamSkillState::Start() 
 {
-	m_SkillAction = Actor()->GetAction<JumpBeamSkillAction>(GetKey());
+	action_ = Actor()->GetAction<CJumpBeamSkillAction>(GetKey());
 	Initialize();
 }
 
-void ActionGame::JumpBeamSkillState::Execution()
+void ActionGame::CJumpBeamSkillState::Execution()
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndFrameTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -33,20 +33,20 @@ void ActionGame::JumpBeamSkillState::Execution()
 		}
 
 	}
-	for (auto& effect : m_pEffects)
+	for (auto& effect : effects_)
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
 	}
-	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 	{
-		collideStartFlg = true;
+		isStartCollide_ = true;
 	}
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
-		if (m_NextInputFlg)
+		if (isNextInput_)
 		{
-			for (auto& shot : m_pShots)
+			for (auto& shot : shots_)
 			{
 				shot->SetShow(false);
 			}
@@ -64,43 +64,43 @@ void ActionGame::JumpBeamSkillState::Execution()
 			}
 		}
 	}
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::JumpBeamSkillState::InputExecution()
+void ActionGame::CJumpBeamSkillState::InputExecution()
 {
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::JumpBeamSkillState::End()
+void ActionGame::CJumpBeamSkillState::End()
 {
-	m_SkillAction->End();
-	AttackBaseState::End();
+	action_->End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::JumpBeamSkillState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CJumpBeamSkillState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::JumpBeamSkillState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CJumpBeamSkillState::GetKey() const
 {
 	return STATE_KEY_JUMP_BEAM_SKILL;
 }
 
-void ActionGame::JumpBeamSkillState::Initialize()
+void ActionGame::CJumpBeamSkillState::Initialize()
 
 {
 
-	AttackBaseState::Start();
-	m_SkillAction->Start();
-	collideStartFlg = false;
-	m_EffectStatus = m_Parameter.EffectStatus;
+	CAttackBaseState::Start();
+	action_->Start();
+	isStartCollide_ = false;
+	effectStatus_ = parameter_.EffectStatus;
 
 	if (Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
 		CreateShotOBB();
-		m_EffectStatus.offset = Vector3(1.7f, 0.7f, 0);
-		m_EffectStatus.rotate = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
+		effectStatus_.offset = Vector3(1.7f, 0.7f, 0);
+		effectStatus_.rotate = Vector3(MOF_ToRadian(30), MOF_ToRadian(90), 0);
 		CreateEffect();
 
 	}
@@ -110,7 +110,7 @@ void ActionGame::JumpBeamSkillState::Initialize()
 		CreateEffect();
 
 	}
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
 		shot->SetDamage(damage);

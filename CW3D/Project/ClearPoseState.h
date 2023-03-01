@@ -8,24 +8,24 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class ClearPoseState : public State
+	class CClearPoseState : public CState
 	{
 	public:
 
 	private:
 
 		//ダウンステート
-		ClearPoseActionPtr			m_ClearPoseAction;
+		ClearPoseActionPtr			action_;
 		//現在時間
 		float						currentTime_;
 
-		bool						m_AnimStartFlg;
+		bool						isAnimStart_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		ClearPoseState();
+		CClearPoseState();
 			
 
 		/**

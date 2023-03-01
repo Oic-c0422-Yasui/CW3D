@@ -1,44 +1,40 @@
 #include "RunJumpAttack1Action.h"
 
-ActionGame::RunJumpAttack1Action::RunJumpAttack1Action(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CRunJumpAttack1Action::CRunJumpAttack1Action(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::RunJumpAttack1Action::Start()
+void ActionGame::CRunJumpAttack1Action::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
+	
 	auto& vel = Velocity();
-
-	vel->SetVelocityY(m_Parameter.jumpPower);
-	vel->SetGravity(m_Parameter.gravity);
-
-	float rotateY = Transform()->GetRotateY();
+	vel->SetVelocityY(parameter_.jumpPower);
+	vel->SetGravity(parameter_.gravity);
 	if (Transform()->IsReverse())
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-
-		Velocity()->SetVelocityX(-m_Parameter.velocity.x);
+		vel->SetVelocityX(-parameter_.velocity.x);
 	}
 	else
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-		Velocity()->SetVelocityX(m_Parameter.velocity.x);
+		vel->SetVelocityX(parameter_.velocity.x);
 	}
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::RunJumpAttack1Action::Execution()
+void ActionGame::CRunJumpAttack1Action::Execution()
 {
 }
 
-void ActionGame::RunJumpAttack1Action::End()
+void ActionGame::CRunJumpAttack1Action::End()
 {
-	Velocity()->SetGravity(m_Parameter.defaultGravity);
+	Velocity()->SetGravity(parameter_.defaultGravity);
 }
 
-const ActionGame::ActionKeyType ActionGame::RunJumpAttack1Action::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CRunJumpAttack1Action::GetKey() const
 {
 	return STATE_KEY_RUN_JUMP_ATTACK1;
 }

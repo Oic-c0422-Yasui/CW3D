@@ -4,17 +4,23 @@
 #include <vector>
 #include <string>
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
-	* @brief	クリア条件
+	* @brief	クリア条件のインタフェース
 	*/
 	class __declspec(novtable) IClearTerm
 	{
 	public:
 		virtual ~IClearTerm() = default;
-
-		virtual bool IsClear(const ClearTermProviderPtr& provider) = 0;
+		/*
+		* @brief	クリア条件を満たしているか？
+		* @param	provider クリア判定に必要な情報のプロバイダ
+		*/
+		virtual bool IsClear(const ProviderPtr& provider) = 0;
+		/*
+		* @brief	クリア条件の種類
+		*/
 		virtual const std::string& GetType() const noexcept = 0;
 	};
 	using ClearTermPtr = std::shared_ptr<IClearTerm>;

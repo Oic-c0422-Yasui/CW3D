@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"Action.h"
+#include	"BaseAction.h"
 
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		攻撃アクション
 	 */
-	class ShockWaveSkillAction : public Action
+	class CShockWaveSkillAction : public CBaseAction
 	{
 	public:
 		/**
@@ -16,19 +16,17 @@ namespace ActionGame {
 			 */
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		ShockWaveSkillAction(Parameter param);
+		CShockWaveSkillAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -53,5 +51,5 @@ namespace ActionGame {
 
 	};
 	//ポインタ置き換え
-	using ShockWaveSkillActionPtr = std::shared_ptr<ShockWaveSkillAction>;
+	using ShockWaveSkillActionPtr = std::shared_ptr<CShockWaveSkillAction>;
 }

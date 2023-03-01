@@ -11,7 +11,7 @@ namespace ActionGame
 	class CTimer
 	{
 	private:
-		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float>>	currentTime_;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float>>	currentTime_;
 		float	m_TargetTime;
 		bool	m_AchieveFlg;
 		bool	isStop_;

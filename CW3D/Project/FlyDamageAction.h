@@ -1,5 +1,5 @@
 #pragma once
-#include	"Action.h"
+#include	"BaseAction.h"
 
 
 namespace ActionGame {
@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージアクション
 	 */
-	class CFlyDamageAction : public CAction
+	class CFlyDamageAction : public CBaseAction
 	{
 	public:
 		/**
@@ -15,8 +15,6 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 
 			//減速値
 			Vector3					decelerate;
@@ -26,12 +24,12 @@ namespace ActionGame {
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CFlyDamageAction(Parameter param);
+		CFlyDamageAction(BaseParameter baseParam, Parameter param);
 			
 		
 

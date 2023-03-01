@@ -1,12 +1,12 @@
 #include "SpawnerBuilderDictionary.h"
 #include "NormalSpawnerBuilder.h"
 
-Spawner::SpawnerBuilderDictionary::SpawnerBuilderDictionary()
+Spawner::CBuilderDictionary::CBuilderDictionary()
 {
-	dictionary["Normal"] = std::make_shared<Spawner::NormalSpawnerBuilder>();
+	dictionary_["Normal"] = std::make_shared<Spawner::NormalSpawnerBuilder>();
 }
 
-Spawner::SpawnerBuilderDictionary::~SpawnerBuilderDictionary()
+Spawner::CBuilderDictionary::~CBuilderDictionary()
 {
-	dictionary.clear();
+	dictionary_.clear();
 }

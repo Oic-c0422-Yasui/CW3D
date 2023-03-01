@@ -1,24 +1,24 @@
 #pragma once
 #include "Common.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
-	class ClearTermText
+	class CClearTermText
 	{
 	protected:
-		char* m_Description;
+		char* description_;
 
 	public:
-		ClearTermText(char* description)
-			:m_Description(description)
+		CClearTermText(char* description)
+			:description_(description)
 		{
 		}
 
-		virtual ~ClearTermText() = default;
+		virtual ~CClearTermText() = default;
 		virtual void Initialize() = 0;
 		virtual void Render();
 		
 	};
 
-	using ClearTermTextPtr = std::shared_ptr<ClearTermText>;
+	using ClearTermTextPtr = std::shared_ptr<CClearTermText>;
 }

@@ -2,34 +2,34 @@
 #include "FollowFixedCamera.h"
 #include "CameraController.h"
 
-ActionGame::JumpStormSkillState::JumpStormSkillState(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, m_ContinueFlg(false)
-	, m_AttackTime(0.0f)
-	, m_Key()
+ActionGame::CJumpStormSkillState::CJumpStormSkillState(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isContinue_(false)
+	, attackTime_(0.0f)
+	, inputKey_()
 {
 }
 
-void ActionGame::JumpStormSkillState::Start()
+void ActionGame::CJumpStormSkillState::Start()
 {
-	m_SkillAction = Actor()->GetAction<JumpStormSkillAction>(GetKey());
+	action_ = Actor()->GetAction<CJumpStormSkillAction>(GetKey());
 
-	m_AttackTime = 0.0f;
-	m_ContinueFlg = true;
+	attackTime_ = 0.0f;
+	isContinue_ = true;
 
-	AttackBaseState::Start();
-	m_SkillAction->Start();
+	CAttackBaseState::Start();
+	action_->Start();
 
 
 	CreateShotAABB();
 	CreateEffect();
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
 		shot->SetDamage(damage);
 	}
-	m_Key = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();
+	inputKey_ = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();
 
 	Vector3 pos(0, 10, -20);
 	Vector3 lookPos(0, 3, 0);
@@ -39,19 +39,19 @@ void ActionGame::JumpStormSkillState::Start()
 		lookPos.x *= -1;
 	}
 	CameraPtr camera;
-	camera = std::make_shared<ActionGame::FollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
+	camera = std::make_shared<ActionGame::CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtil::EASING_TYPE::IN_SINE, 0.7f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
 
 }
 
-void ActionGame::JumpStormSkillState::Execution() 
+void ActionGame::CJumpStormSkillState::Execution() 
 {
 
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
+		if (attackTime_ >= parameter_.AttackFrequencyFrameTime)
 		{
 			shot->SetEnableCollider(true);
 
@@ -61,19 +61,19 @@ void ActionGame::JumpStormSkillState::Execution()
 			shot->SetEnableCollider(false);
 		}
 	}
-	if (m_AttackTime >= m_Parameter.AttackFrequencyFrameTime)
+	if (attackTime_ >= parameter_.AttackFrequencyFrameTime)
 	{
-		m_AttackTime = 0.0f;
+		attackTime_ = 0.0f;
 	}
-	for (auto& effect : m_pEffects)
+	for (auto& effect : effects_)
 	{
-		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + m_Parameter.EffectStatus.offset);
+		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + parameter_.EffectStatus.offset);
 	}
 
 
-	m_AttackTime += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+	attackTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
-	if (currentTime_ > m_Parameter.DurationTime || !m_ContinueFlg)
+	if (currentTime_ > parameter_.DurationTime || !isContinue_)
 	{
 		if (Actor()->GetTransform()->GetPositionY() > 0)
 		{
@@ -85,11 +85,11 @@ void ActionGame::JumpStormSkillState::Execution()
 		}
 	}
 
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 
 }
 
-void ActionGame::JumpStormSkillState::InputExecution()
+void ActionGame::CJumpStormSkillState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -99,13 +99,13 @@ void ActionGame::JumpStormSkillState::InputExecution()
 	}
 	if (currentTime_ > 0.5f)
 	{
-		if (Input()->IsPress(m_Key))
+		if (Input()->IsPress(inputKey_))
 		{
-			m_ContinueFlg = true;
+			isContinue_ = true;
 		}
 		else
 		{
-			m_ContinueFlg = false;
+			isContinue_ = false;
 		}
 	}
 
@@ -114,24 +114,24 @@ void ActionGame::JumpStormSkillState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		m_SkillAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::JumpStormSkillState::End()
+void ActionGame::CJumpStormSkillState::End()
 {
-	m_SkillAction->End();
-	AttackBaseState::End();
+	action_->End();
+	CAttackBaseState::End();
 	CameraControllerInstance.SetDefault();
 }
 
-void ActionGame::JumpStormSkillState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CJumpStormSkillState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::JumpStormSkillState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CJumpStormSkillState::GetKey() const
 {
 	return STATE_KEY_JUMP_STORM_SKILL;
 }

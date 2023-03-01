@@ -1,16 +1,16 @@
 #include "NPCHPRenderManager.h"
 
-ActionGame::NPCHPRenderManager::NPCHPRenderManager()
+ActionGame::CNPCHPRenderManager::CNPCHPRenderManager()
 {
 }
 
-ActionGame::NPCHPRenderManager::~NPCHPRenderManager()
+ActionGame::CNPCHPRenderManager::~CNPCHPRenderManager()
 {
 }
 
-bool ActionGame::NPCHPRenderManager::Load()
+bool ActionGame::CNPCHPRenderManager::Load()
 {
-	for (auto normal : m_NormalHPRender)
+	for (auto normal : normalHPRender_)
 	{
 		if (!normal->Load())
 		{
@@ -18,7 +18,7 @@ bool ActionGame::NPCHPRenderManager::Load()
 		}
 		
 	}
-	for (auto boss : m_BossHPRender)
+	for (auto boss : bossHPRender_)
 	{
 		if (!boss->Load())
 		{
@@ -28,75 +28,75 @@ bool ActionGame::NPCHPRenderManager::Load()
 	return true;
 }
 
-void ActionGame::NPCHPRenderManager::Initialize()
+void ActionGame::CNPCHPRenderManager::Initialize()
 {
-	for (auto normal : m_NormalHPRender)
+	for (auto normal : normalHPRender_)
 	{
 		normal->Initialize();
 	}
-	for (auto boss : m_BossHPRender)
+	for (auto boss : bossHPRender_)
 	{
 		boss->Initialize();
 	}
 
 }
 
-void ActionGame::NPCHPRenderManager::Render()
+void ActionGame::CNPCHPRenderManager::Render()
 {
 	//“GHPƒo[‚Ì•`‰æ“ü‚ê‘Ö‚¦
 	Sort();
 
-	for (auto normal : m_NormalHPRender)
+	for (auto normal : normalHPRender_)
 	{
 		normal->Render();
 	}
 	
 }
 
-void ActionGame::NPCHPRenderManager::Render2D()
+void ActionGame::CNPCHPRenderManager::Render2D()
 {
-	for (auto boss : m_BossHPRender)
+	for (auto boss : bossHPRender_)
 	{
 		boss->Render();
 	}
 }
 
-void ActionGame::NPCHPRenderManager::Release()
+void ActionGame::CNPCHPRenderManager::Release()
 {
-	for (auto normal : m_NormalHPRender)
+	for (auto normal : normalHPRender_)
 	{
 		normal->Release();
 	}
-	for (auto boss : m_BossHPRender)
+	for (auto boss : bossHPRender_)
 	{
 		boss->Release();
 	}
-	m_NormalHPRender.clear();
-	m_BossHPRender.clear();
+	normalHPRender_.clear();
+	bossHPRender_.clear();
 }
 
-void ActionGame::NPCHPRenderManager::Reset()
+void ActionGame::CNPCHPRenderManager::Reset()
 {
-	m_NormalHPRender.clear();
-	m_BossHPRender.clear();
+	normalHPRender_.clear();
+	bossHPRender_.clear();
 }
 
-void ActionGame::NPCHPRenderManager::Sort()
+void ActionGame::CNPCHPRenderManager::Sort()
 {
-	//“GHPƒo[‚Ì•`‰æ“ü‚ê‘Ö‚¦
-	std::sort(m_NormalHPRender.begin(), m_NormalHPRender.end(),
+	//HPƒo[‚Ì•`‰æ“ü‚ê‘Ö‚¦
+	std::sort(normalHPRender_.begin(), normalHPRender_.end(),
 		[](ActionGame::NormalEnemyHPRenderPtr& obj1, ActionGame::NormalEnemyHPRenderPtr& obj2)
 		{
 			return obj1->GetViewPosition().z > obj2->GetViewPosition().z;
 		});
 }
 
-void ActionGame::NPCHPRenderManager::Add(const NormalEnemyHPRenderPtr& render)
+void ActionGame::CNPCHPRenderManager::Add(const NormalEnemyHPRenderPtr& render)
 {
-	m_NormalHPRender.push_back(render);
+	normalHPRender_.push_back(render);
 }
 
-void ActionGame::NPCHPRenderManager::Add(const BossHPRenderPtr& render)
+void ActionGame::CNPCHPRenderManager::Add(const BossHPRenderPtr& render)
 {
-	m_BossHPRender.push_back(render);
+	bossHPRender_.push_back(render);
 }

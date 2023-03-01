@@ -1,5 +1,5 @@
 #pragma once
-#include "Action.h"
+#include "BaseAction.h"
 
 
 namespace ActionGame
@@ -7,7 +7,7 @@ namespace ActionGame
     /**
      * @brief		開始ポーズアクション
      */
-    class NPCStartPoseAction : public Action
+    class CNPCStartPoseAction : public CBaseAction
     {
 	public:
 		/**
@@ -15,8 +15,6 @@ namespace ActionGame
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 			//オフセット位置
 			Vector3					offsetPos;
 			//終了時間
@@ -24,16 +22,16 @@ namespace ActionGame
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 
-		Vector3						m_TempOffsetPos;
+		Vector3						tmpOffsetPos_;
 
 		float						currentTime_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		NPCStartPoseAction(Parameter param);
+		CNPCStartPoseAction(BaseParameter baseParam, Parameter param);
 
 
 		/**
@@ -51,11 +49,6 @@ namespace ActionGame
 		 */
 		void End() override;
 
-		/*
-		* @brief		アニメーション開始
-		*/
-		void StartAnim();
-
 		/**
 		 * @brief		ステートキーの取得
 		 */
@@ -64,10 +57,10 @@ namespace ActionGame
 		/*
 		* @brief		アニメーションが終了しているか
 		*/
-		bool IsEndAnim() const noexcept;
+		bool IsEndAnimation() const noexcept;
 	};
 	//ポインタ置き換え
-    using NPCStartPoseActionPtr = std::shared_ptr<NPCStartPoseAction>;
+    using NPCStartPoseActionPtr = std::shared_ptr<CNPCStartPoseAction>;
 }
 
 

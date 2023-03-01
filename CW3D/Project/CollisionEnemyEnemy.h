@@ -8,7 +8,7 @@ namespace ActionGame
 	 * @brief		“G‚Æ“G‚Ì‚ ‚½‚è”»’è
 	 */
 	template < >
-	inline void CCollision::CollisionObj<>(Enemy& en1, Enemy& en2) {
+	inline void CCollision::CollisionObj<>(CEnemy& en1, CEnemy& en2) {
 		//‚Ç‚¿‚ç‚©‚ª”ñ•\Ž¦
 		if (!en1.IsShow() || !en2.IsShow()) { return; }
 

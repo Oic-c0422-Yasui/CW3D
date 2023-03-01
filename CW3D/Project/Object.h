@@ -7,9 +7,9 @@ namespace ActionGame
 	{
 	protected:
 		CVector3 position_;
-		CVector3 m_Size;
+		CVector3 size_;
 		CVector3 offset_;
-		bool	 m_ShowFlg;
+		bool	 isShow_;
 	public:
 		CObject(const Vector3& pos, const Vector3& size, const Vector3& offset);
 		virtual ~CObject() = default;
@@ -18,7 +18,7 @@ namespace ActionGame
 
 		CAABB GetCollider()
 		{			
-			return CAABB(position_ + offset_, m_Size);
+			return CAABB(position_ + offset_, size_);
 		}
 		const Vector3& GetPosition() const noexcept
 		{
@@ -27,12 +27,12 @@ namespace ActionGame
 
 		bool IsShow() const noexcept
 		{
-			return m_ShowFlg;
+			return isShow_;
 		}
 
 		void SetShow(bool isShow) noexcept
 		{
-			m_ShowFlg = isShow;
+			isShow_ = isShow;
 		}
 
 

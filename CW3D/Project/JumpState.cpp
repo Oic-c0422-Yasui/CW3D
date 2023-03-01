@@ -1,20 +1,20 @@
 #include "JumpState.h"
 
-ActionGame::JumpState::JumpState()
-	: State()
+ActionGame::CJumpState::CJumpState()
+	: CState()
 {
 }
 
-void ActionGame::JumpState::Start()
+void ActionGame::CJumpState::Start()
 {
-	m_JumpAction = Actor()->GetAction<JumpAction>(GetKey());
-	m_JumpAction->Start();
+	action_ = Actor()->GetAction<CJumpAction>(GetKey());
+	action_->Start();
 
 }
 
-void ActionGame::JumpState::Execution()
+void ActionGame::CJumpState::Execution()
 {
-	m_JumpAction->Execution();
+	action_->Execution();
 	// 落下状態への移行
 	if (Actor()->GetVelocity()->GetVelocityY() <= 0.0f)
 	{
@@ -22,7 +22,7 @@ void ActionGame::JumpState::Execution()
 	}
 }
 
-void ActionGame::JumpState::InputExecution()
+void ActionGame::CJumpState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -37,7 +37,7 @@ void ActionGame::JumpState::InputExecution()
 		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
 		Input()->IsPress(INPUT_KEY_VERTICAL))
 	{
-		m_JumpAction->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 
 
@@ -64,15 +64,15 @@ void ActionGame::JumpState::InputExecution()
 
 }
 
-void ActionGame::JumpState::End()
+void ActionGame::CJumpState::End()
 {
 }
 
-void ActionGame::JumpState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CJumpState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::JumpState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CJumpState::GetKey() const
 {
 	return STATE_KEY_JUMP;
 }

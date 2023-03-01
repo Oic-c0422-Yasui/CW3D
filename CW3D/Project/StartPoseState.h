@@ -7,7 +7,7 @@ namespace ActionGame
 	/*
 	* @brief	開始ポーズステート
 	*/
-    class StartPoseState :  public State
+    class CStartPoseState :  public CState
     {
 	public:
 		/*
@@ -19,10 +19,10 @@ namespace ActionGame
 			float Time;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 
 		//開始ポーズアクション
-		StartPoseActionPtr			m_Action;
+		StartPoseActionPtr			action_;
 		//現在時間
 		float						currentTime_;
 
@@ -30,7 +30,7 @@ namespace ActionGame
 		/**
 		 * @brief		コンストラクタ
 		 */
-		StartPoseState(Parameter param);
+		CStartPoseState(Parameter param);
 
 		/**
 		 * @brief		ステート内の開始処理

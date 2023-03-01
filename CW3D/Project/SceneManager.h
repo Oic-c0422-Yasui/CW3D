@@ -14,17 +14,17 @@ namespace Scene
 	{
 	private:
 
-		ScenePtr m_Scene;
-		std::unordered_map<SCENENO, SceneCreatorPtr> m_SceneMap;
-		ActionGame::TaskManager updateTask_;
-		ActionGame::TaskManager renderTask_;
-		ActionGame::TaskManager render2DTask_;
+		ScenePtr scene_;
+		std::unordered_map<SCENENO, SceneCreatorPtr> sceneMap_;
+		Task::CTaskManager updateTask_;
+		Task::CTaskManager renderTask_;
+		Task::CTaskManager render2DTask_;
 
-		SceneChangeEffectPtr m_SceneEffect;
+		SceneChangeEffectPtr sceneEffect_;
 
-		bool m_DebugFlg;
+		bool isDebug_;
 
-		bool m_SceneInitFlg;
+		bool isSceneInit_;
 
 	private:
 		/* プライベート関数 */

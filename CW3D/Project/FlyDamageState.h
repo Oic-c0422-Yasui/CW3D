@@ -8,17 +8,17 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class FlyDamageState : public State
+	class CFlyDamageState : public CState
 	{
 	private:
 		//ダメージステート
-		FlyDamageActionPtr			m_DamageAction;
+		FlyDamageActionPtr			action_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		FlyDamageState();
+		CFlyDamageState();
 			
 
 		/**

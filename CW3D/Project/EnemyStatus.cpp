@@ -9,24 +9,24 @@ ActionGame::EnemyStatusDictionary::EnemyStatusDictionary()
 
 void ActionGame::EnemyStatusDictionary::Add(const std::string& name, const EnemyStatusPtr& status)
 {
-	m_Map[name] = status;
+	map_[name] = status;
 }
 
 const EnemyStatusPtr& ActionGame::EnemyStatusDictionary::Get(const std::string& name)
 {
 	if (IsContain(name))
 	{
-		return m_Map[name];
+		return map_[name];
 	}
 	return nullptr;
 }
 
 bool ActionGame::EnemyStatusDictionary::Delete(const std::string& name)
 {
-	auto it = m_Map.find(name);
-	if (it != m_Map.end())
+	auto it = map_.find(name);
+	if (it != map_.end())
 	{
-		m_Map.erase(it);
+		map_.erase(it);
 		return true;
 	}
 	return false;
@@ -34,6 +34,6 @@ bool ActionGame::EnemyStatusDictionary::Delete(const std::string& name)
 
 bool ActionGame::EnemyStatusDictionary::IsContain(const std::string& name)
 {
-	auto it = m_Map.find(name);
-	return it != m_Map.end();
+	auto it = map_.find(name);
+	return it != map_.end();
 }

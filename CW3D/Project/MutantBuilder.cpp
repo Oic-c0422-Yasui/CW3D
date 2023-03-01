@@ -15,13 +15,13 @@ ActionGame::MutantBuilder::MutantBuilder()
 
 ActionGame::EnemyPtr ActionGame::MutantBuilder::Create(const EnemyBuildParameterPtr& param)
 {
-    EnemyPtr enemy = std::make_shared<Enemy>();
+    EnemyPtr enemy = std::make_shared<CEnemy>();
 
     enemy->Load(param,
-        m_ActionCreator,
-        m_StateCreator,
-        m_ParameterCreator,
-        m_AiCreator);
+        actionCreator_,
+        stateCreator_,
+        parameterCreator_,
+        AICreator_);
     enemy->Initialize();
 
     return enemy;

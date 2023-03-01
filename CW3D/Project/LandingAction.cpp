@@ -1,36 +1,27 @@
 #include "LandingAction.h"
 
-ActionGame::LandingAction::LandingAction(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CLandingAction::CLandingAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::LandingAction::Start()
+void ActionGame::CLandingAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::LandingAction::Execution()
+void ActionGame::CLandingAction::Execution()
 {
 }
 
-void ActionGame::LandingAction::End()
+void ActionGame::CLandingAction::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::LandingAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CLandingAction::GetKey() const
 {
 	return STATE_KEY_LANDING;
 }

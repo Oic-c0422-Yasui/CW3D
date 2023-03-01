@@ -39,7 +39,7 @@ namespace ActionGame
 	class EnemyStatusDictionary
 	{
 	private:
-		std::map<std::string, EnemyStatusPtr> m_Map;
+		std::map<std::string, EnemyStatusPtr> map_;
 	public:
 		EnemyStatusDictionary();
 
@@ -47,7 +47,7 @@ namespace ActionGame
 
 		const std::map<std::string, EnemyStatusPtr> GetMap()
 		{
-			return m_Map;
+			return map_;
 		}
 
 		const EnemyStatusPtr& Get(const std::string& name);

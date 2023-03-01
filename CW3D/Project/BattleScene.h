@@ -16,7 +16,8 @@
 
 #include	"EnemyHPRender.h"
 
-#include	"BattleUICreater.h"
+#include	"BattleUILoader.h"
+#include	"EffectLoader.h"
 
 #include	"Collision.h"
 #include	"PlayerUIRender.h"
@@ -55,7 +56,7 @@ namespace Scene
 	{
 	private:
 		//プレイヤー
-		PlayerPtr player_;
+		ActionGame::PlayerPtr player_;
 		//敵マネージャー
 		ActionGame::EnemyManager enemyManager_;
 		//敵スポナー
@@ -63,11 +64,11 @@ namespace Scene
 		//敵生成スレッド
 		ThreadCreator enemyCreateThread_;
 		//更新タスク
-		ActionGame::TaskManager	updateTask_;
+		Task::CTaskManager	updateTask_;
 		//描画タスク
-		ActionGame::TaskManager	renderTask_;
+		Task::CTaskManager	renderTask_;
 		//Render2Dタスク
-		ActionGame::TaskManager	render2DTask_;
+		Task::CTaskManager	render2DTask_;
 
 		//ライト
 		CDirectionalLight light_;
@@ -75,15 +76,13 @@ namespace Scene
 		CFont font_;
 
 		//NPCのHPバー
-		ActionGame::NPCHPRenderManager npcHpRender_;
+		ActionGame::CNPCHPRenderManager npcHpRender_;
 		//プレイヤーUI
-		ActionGame::PlayerUIRenderPtr playerUiRender_;
-		//UI作成
-		ActionGame::BattleUICreater uiCreater_;
+		ActionGame::CPlayerUIRender playerUiRender_;
 		//ステージマネージャー
 		ActionGame::StageManager stageManager_;
 		//クリア条件に必要なものを渡すプロバイダ
-		ActionGame::ClearTermProviderPtr clearTermProvider_;
+		ClearTerm::ProviderPtr clearTermProvider_;
 
 		//現在のゲームの状態
 		GAME_STATE currentGameState_;

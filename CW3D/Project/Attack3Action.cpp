@@ -1,51 +1,46 @@
 #include "Attack3Action.h"
 
-ActionGame::Attack3Action::Attack3Action(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CAttack3Action::CAttack3Action(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::Attack3Action::Start()
+void ActionGame::CAttack3Action::Start()
 {
+	CBaseAction::Start();
+	
+	auto& vel = Velocity();
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	float rotateY = Transform()->GetRotateY();
+	//‚P‰ñ–Ú‚ÌUŒ‚‚Ì‘¬“x‚ðÝ’è
+	auto firstVel = parameter_.firstVelocity;
 	if (Transform()->IsReverse())
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-
-		Velocity()->SetVelocity(Vector3(-m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
+		firstVel *= -1;
 	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
+	vel->SetVelocity(firstVel);
 
-		Velocity()->SetVelocity(Vector3(m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
-	}
+	CBaseAction::SetRotation();
 
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 }
 
-void ActionGame::Attack3Action::Execution()
+void ActionGame::CAttack3Action::Execution()
 {
+	//‚Q‰ñ–Ú‚ÌUŒ‚‚Ì‘¬“x‚ðÝ’è
+	auto secondVel = parameter_.secondVelocity;
 	if (Transform()->IsReverse())
 	{
-		//x:0.1f
-		Velocity()->SetVelocity(Vector3(-m_Parameter.velocity2.x, m_Parameter.velocity2.y, m_Parameter.velocity2.z));
+		secondVel *= -1;
 	}
-	else
-	{
-		Velocity()->SetVelocity(Vector3(m_Parameter.velocity2.x, m_Parameter.velocity2.y, m_Parameter.velocity2.z));
-	}
+	Velocity()->SetVelocity(secondVel);
 }
 
-void ActionGame::Attack3Action::End()
+void ActionGame::CAttack3Action::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::Attack3Action::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CAttack3Action::GetKey() const
 {
 	return STATE_KEY_ATTACK3;
 }

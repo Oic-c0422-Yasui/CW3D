@@ -1,18 +1,18 @@
 #include "IdleMotionState.h"
 
-ActionGame::IdleMotionState::IdleMotionState()
-	: State()
+ActionGame::CIdleMotionState::CIdleMotionState()
+	: CState()
 {
 }
 
-void ActionGame::IdleMotionState::Start()
+void ActionGame::CIdleMotionState::Start()
 {
-	m_IdleMotionAction = Actor()->GetAction<IdleMotionAction>(GetKey());
-	m_IdleMotionAction->Start();
+	action_ = Actor()->GetAction<IdleMotionAction>(GetKey());
+	action_->Start();
 
 }
 
-void ActionGame::IdleMotionState::Execution()
+void ActionGame::CIdleMotionState::Execution()
 {
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
@@ -20,7 +20,7 @@ void ActionGame::IdleMotionState::Execution()
 	}
 }
 
-void ActionGame::IdleMotionState::InputExecution()
+void ActionGame::CIdleMotionState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -66,15 +66,15 @@ void ActionGame::IdleMotionState::InputExecution()
 	}
 }
 
-void ActionGame::IdleMotionState::End()
+void ActionGame::CIdleMotionState::End()
 {
 }
 
-void ActionGame::IdleMotionState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CIdleMotionState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::IdleMotionState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CIdleMotionState::GetKey() const
 {
 	return STATE_KEY_IDLE_MOTION;
 }

@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="ActorObject.cpp" />
     <ClCompile Include="AdditionalSkill.cpp" />
+    <ClCompile Include="AdditionalSkillRender.cpp" />
     <ClCompile Include="AICycleTension.cpp" />
     <ClCompile Include="Attack1Action.cpp" />
     <ClCompile Include="Attack1State.cpp" />
@@ -107,13 +108,16 @@
     <ClCompile Include="Attack3Action.cpp" />
     <ClCompile Include="Attack3State.cpp" />
     <ClCompile Include="AttackBaseState.cpp" />
+    <ClCompile Include="AttackStateAI.cpp" />
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BattleSceneTask.cpp" />
+    <ClCompile Include="BattleUILoader.cpp" />
     <ClCompile Include="BeamSkillAction.cpp" />
     <ClCompile Include="BeamSkillState.cpp" />
     <ClCompile Include="BossHPRender.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="BaseAction.cpp" />
     <ClCompile Include="ClearPoseAction.cpp" />
     <ClCompile Include="ClearPoseState.cpp" />
     <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp" />
@@ -127,8 +131,9 @@
     <ClCompile Include="ClearTermEnemyAllDeadText.cpp" />
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
-    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="EffectLoader.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
+    <ClCompile Include="IdleStateAI.cpp" />
     <ClCompile Include="Messenger.cpp" />
     <ClCompile Include="MoveStateAI.cpp" />
     <ClCompile Include="MutantActionCreator.cpp" />
@@ -143,9 +148,12 @@
     <ClCompile Include="NormalSpawnerBuilder.cpp" />
     <ClCompile Include="NPCStartPoseAction.cpp" />
     <ClCompile Include="NPCStartPoseState.cpp" />
+    <ClCompile Include="PlayerHPRender.cpp" />
     <ClCompile Include="PlayerParameterCreator.cpp" />
     <ClCompile Include="SceneChangeFade.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillRender.cpp" />
+    <ClCompile Include="SkillRenderContainer.cpp" />
     <ClCompile Include="SpawnerBuilder.cpp" />
     <ClCompile Include="SpawnerBuilderDictionary.cpp" />
     <ClCompile Include="StartPoseAction.cpp" />
@@ -185,7 +193,6 @@
     <ClCompile Include="JsonDivisionCreator.cpp" />
     <ClCompile Include="JsonEnemyBuildParameterLoader.cpp" />
     <ClCompile Include="JsonEnemyStatusLoader.cpp" />
-    <ClCompile Include="JsonMeshResourceCreator.cpp" />
     <ClCompile Include="JsonObjectCreator.cpp" />
     <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp" />
     <ClCompile Include="JumpAction.cpp" />
@@ -257,9 +264,9 @@
     <ClCompile Include="TimeScaleController.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UltimateGaugeRender.cpp" />
     <ClCompile Include="UltimateSkill.cpp" />
     <ClCompile Include="Utilities.cpp" />
-    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Velocity.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ZombieActionCreator.cpp" />
@@ -287,10 +294,11 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="AttackStateAI.h" />
     <ClInclude Include="BattleScene.h" />
-    <ClInclude Include="BattleUICreater.h" />
+    <ClInclude Include="BattleUILoader.h" />
     <ClInclude Include="BossHPRender.h" />
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="BaseAction.h" />
     <ClInclude Include="CharaTypeDefine.h" />
     <ClInclude Include="ClearTermAllDeadAndEnduranceText.h" />
     <ClInclude Include="ClearTermBossDead.h" />
@@ -305,9 +313,8 @@
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="ColliderBase.h" />
     <ClInclude Include="CollisionDefine.h" />
+    <ClInclude Include="EffectLoader.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="IMessenger.h" />
     <ClInclude Include="IMessageRegister.h" />
@@ -382,7 +389,6 @@
     <ClInclude Include="JsonClearTermCreator.h" />
     <ClInclude Include="JsonDivisionCreator.h" />
     <ClInclude Include="JsonEnemyStatusLoader.h" />
-    <ClInclude Include="JsonMeshResourceCreator.h" />
     <ClInclude Include="JsonObjectCreator.h" />
     <ClInclude Include="StageCreator.h" />
     <ClInclude Include="Object.h" />
@@ -401,7 +407,7 @@
     <ClInclude Include="IStateAI.h" />
     <ClInclude Include="IStateCreator.h" />
     <ClInclude Include="MoveStateAI.h" />
-    <ClInclude Include="NomalCamera.h" />
+    <ClInclude Include="NormalCamera.h" />
     <ClInclude Include="FixedKnockBack.h" />
     <ClInclude Include="FixedYInhaleKnockBack.h" />
     <ClInclude Include="InhaleKnockBack.h" />
@@ -472,7 +478,6 @@
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="ParameterMap.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RunAction.h" />
     <ClInclude Include="RunAttack1Action.h" />

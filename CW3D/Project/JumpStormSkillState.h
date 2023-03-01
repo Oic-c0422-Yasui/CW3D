@@ -10,7 +10,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class JumpStormSkillState : public AttackBaseState
+	class CJumpStormSkillState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -28,21 +28,21 @@ namespace ActionGame {
 			EffectCreateParameter EffectStatus;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		JumpStormSkillActionPtr			m_SkillAction;
-		float							m_AttackTime;
-		bool							m_ContinueFlg;
-		std::string						m_Key;
+		JumpStormSkillActionPtr			action_;
+		float							attackTime_;
+		bool							isContinue_;
+		std::string						inputKey_;
 	protected:
 		virtual const KnockBackPtr GetKnockBack() override { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
-		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpStormSkillState(Parameter param);
+		CJumpStormSkillState(Parameter param);
 
 		/**
 		 * @brief		ステート内の開始処理

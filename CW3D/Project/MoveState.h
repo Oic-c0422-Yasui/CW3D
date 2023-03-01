@@ -8,11 +8,11 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class MoveState : public State
+	class CMoveState : public CState
 	{
 	private:
 		/** 移動アクション */
-		MoveActionPtr			m_MoveAction;
+		MoveActionPtr			action_;
 
 		//ダッシュ入力
 		void InputDash();
@@ -20,7 +20,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		MoveState();
+		CMoveState();
 			
 
 		/**

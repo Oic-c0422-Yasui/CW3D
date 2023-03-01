@@ -7,18 +7,18 @@ namespace ActionGame
     /*
     * @brief	NPC開始ポーズステート
     */
-    class NPCStartPoseState : public State
+    class CNPCStartPoseState : public CState
     {
 	private:
 
 		//開始ポーズステート
-		NPCStartPoseActionPtr			m_Action;
+		NPCStartPoseActionPtr			action_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		NPCStartPoseState();
+		CNPCStartPoseState();
 
 		/**
 		 * @brief		ステート内の開始処理

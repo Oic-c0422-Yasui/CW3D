@@ -1,68 +1,64 @@
 #include "ThreadCreator.h"
 
 ThreadCreator::ThreadCreator()
-	: m_Thread()
-	, m_CompleteFlg(false)
+	: thread_()
+	, isComplete_(false)
 {
 }
 
 ThreadCreator::~ThreadCreator()
 {
-m_Thread.join();
-	/*if (m_Thread.joinable())
-	{
-		m_Thread.detach();
-	}*/
+thread_.join();
 }
 
 void ThreadCreator::Create(const CreateFunc& func)
 {
-	if (m_Thread.joinable())
+	if (thread_.joinable())
 	{
-		m_Thread.detach();
+		thread_.detach();
 	}
 
-	m_CompleteFlg.store(false);
+	isComplete_.store(false);
 
-	m_Thread = std::thread([=]()
+	thread_ = std::thread([=]()
 				{	func();
-					m_CompleteFlg.store(true);
+					isComplete_.store(true);
 				});
 }
 
 void ThreadCreator::Create(const CreateFunc& createFunc, const CompletedFunc& completedFunc)
 {
-	if (m_Thread.joinable())
+	if (thread_.joinable())
 	{
-		m_Thread.detach();
+		thread_.detach();
 	}
 
-	m_CompleteFlg.store(false);
+	isComplete_.store(false);
 
-	m_Thread = std::thread([=]()
+	thread_ = std::thread([=]()
 				{	createFunc();
-					m_CompleteFlg.store(true);
+					isComplete_.store(true);
 					completedFunc();
 				});
 }
 
 bool ThreadCreator::IsLoading()
 {
-	if (!m_Thread.joinable())
+	if (!thread_.joinable())
 	{
 		return false;
 	}
 
 
-	return m_CompleteFlg.load() ? false : true;
+	return isComplete_.load() ? false : true;
 }
 
 bool ThreadCreator::IsComplete()
 {
-	if (!m_Thread.joinable())
+	if (!thread_.joinable())
 	{
 		return false;
 	}
 
-	return m_CompleteFlg.load() ? true : false;
+	return isComplete_.load() ? true : false;
 }

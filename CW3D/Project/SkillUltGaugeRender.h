@@ -12,16 +12,16 @@ namespace ActionGame
 	{
 	private:
 
-		std::shared_ptr<CTexture>			m_pSKillFrame;
-		std::shared_ptr<CTexture>			m_pUsedSKillFrame;
-		std::shared_ptr<CTexture>			m_pGaugeFrame;
+		std::shared_ptr<CTexture>			sKillFrame_;
+		std::shared_ptr<CTexture>			usedSKillFrame_;
+		std::shared_ptr<CTexture>			gaugeFrame_;
 
-		float								m_Gauge;
-		float								m_MaxGauge;
+		float								gauge_;
+		float								maxGauge_;
 
 
 		Vector2								position_;
-		Vector2								m_GaugePosition;
+		Vector2								gaugePosition_;
 
 
 	public:
@@ -29,10 +29,10 @@ namespace ActionGame
 		 * @brief		コンストラクタ
 		 */
 		CSkillUltGaugeRender()
-			: m_Gauge(0.0f)
-			, m_MaxGauge(0.0f)
+			: gauge_(0.0f)
+			, maxGauge_(0.0f)
 			, position_(0, 0)
-			, m_GaugePosition(0,0)
+			, gaugePosition_(0,0)
 		{
 
 		}
@@ -47,28 +47,28 @@ namespace ActionGame
 
 		void Load()
 		{
-			m_pSKillFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrame");
-			m_pUsedSKillFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrameMono");
-			m_pGaugeFrame = ActionGame::ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltSkillGaugeFrame");
+			sKillFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrame");
+			usedSKillFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltFrameMono");
+			gaugeFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltSkillGaugeFrame");
 
 		}
 
 		void Initialize(const Vector2& pos)
 		{
 			position_ = pos;
-			//position_.y += m_pSKillFrame->GetHeight() * 0.5f;
-			m_GaugePosition = position_ + Vector2(13,-24);
+			//position_.y += sKillFrame_->GetHeight() * 0.5f;
+			gaugePosition_ = position_ + Vector2(13,-24);
 		}
 
 
 		void SetGauge(float gauge)
 		{
-			m_Gauge = gauge;
+			gauge_ = gauge;
 		}
 
 		void SetMaxGauge(float gauge)
 		{
-			m_MaxGauge = gauge;
+			maxGauge_ = gauge;
 		}
 
 
@@ -84,27 +84,27 @@ namespace ActionGame
 		 */
 		void Render() {
 
-			float percent = m_Gauge / m_MaxGauge;
+			float percent = gauge_ / maxGauge_;
 			percent = min(percent, 1.0f);
-			m_pUsedSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
+			usedSKillFrame_->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 
 
 
 			if (percent >= 1.0f)
 			{
-				m_pSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
+				sKillFrame_->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 			}
 
-			CRectangle rect(0, m_pGaugeFrame->GetHeight() * (1.0 - percent), m_pGaugeFrame->GetWidth(), m_pGaugeFrame->GetHeight());
+			CRectangle rect(0, gaugeFrame_->GetHeight() * (1.0 - percent), gaugeFrame_->GetWidth(), gaugeFrame_->GetHeight());
 			Vector2 pos;
 			g_pInput->GetMousePos(pos);
-			m_pGaugeFrame->Render(m_GaugePosition.x, m_GaugePosition.y, rect, TEXALIGN_BOTTOMCENTER);
+			gaugeFrame_->Render(gaugePosition_.x, gaugePosition_.y, rect, TEXALIGN_BOTTOMCENTER);
 		}
 
 		void Release(void) {
-			m_pSKillFrame.reset();
-			m_pUsedSKillFrame.reset();
-			m_pGaugeFrame.reset();
+			sKillFrame_.reset();
+			usedSKillFrame_.reset();
+			gaugeFrame_.reset();
 		}
 	};
 

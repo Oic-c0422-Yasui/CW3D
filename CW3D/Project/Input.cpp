@@ -12,11 +12,11 @@ void Input::CInput::AddKeyboardKey(const KeyType& kn, int key)
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
+		km->second.inputKey_.push_back({ key, -1, -1, KeyData::Type::Keyboard });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ key, -1, -1, KeyData::Type::Keyboard });
+		keyMap_[kn].inputKey_.push_back({ key, -1, -1, KeyData::Type::Keyboard });
 	}
 }
 
@@ -25,11 +25,11 @@ void Input::CInput::AddKeyboardKey(const KeyType& kn, int positiveKey, int negat
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
+		km->second.inputKey_.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
+		keyMap_[kn].inputKey_.push_back({ positiveKey, negativeKey, -1, KeyData::Type::Keyboard });
 	}
 }
 
@@ -38,11 +38,11 @@ void Input::CInput::AddMouseKey(const KeyType& kn, int Key)
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
+		km->second.inputKey_.push_back({ Key, -1, -1, KeyData::Type::Mouse });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ Key, -1, -1, KeyData::Type::Mouse });
+		keyMap_[kn].inputKey_.push_back({ Key, -1, -1, KeyData::Type::Mouse });
 	}
 }
 
@@ -51,11 +51,11 @@ void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key)
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
+		km->second.inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ key, -1, pad, KeyData::Type::JoyPad });
+		keyMap_[kn].inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad });
 	}
 }
 
@@ -64,11 +64,11 @@ void Input::CInput::AddJoyStickHorizontal(const KeyType& kn, int pad)
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
 	}
 }
 
@@ -77,11 +77,11 @@ void Input::CInput::AddJoyStickVertical(const KeyType& kn, int pad)
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
 	}
 	else
 	{
-		keyMap_[kn].m_Key.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
 	}
 }
 
@@ -112,7 +112,7 @@ void Input::CInput::Update()
 
 		k->second.previousValue_ = k->second.currentValue_;
 		k->second.currentValue_ = 0;
-		for (auto& key : k->second.m_Key)
+		for (auto& key : k->second.inputKey_)
 		{
 			switch (key.type_)
 			{

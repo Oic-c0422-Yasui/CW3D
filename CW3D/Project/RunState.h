@@ -1,25 +1,24 @@
 #pragma once
 
 #include	"State.h"
-#include	"RunAction.h"
+#include	"MoveAction.h"
 
 namespace ActionGame {
 
 	/**
 	 * @brief		移動ステート
 	 */
-	class RunState : public State
+	class CRunState : public CState
 	{
 	private:
 		/** 移動アクション */
-		RunActionPtr			m_RunAction;
+		MoveActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunState();
+		CRunState();
 			
-
 		/**
 		 * @brief		ステート内の開始処理
 		 */

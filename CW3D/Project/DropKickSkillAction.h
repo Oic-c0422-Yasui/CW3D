@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"Action.h"
+#include	"BaseAction.h"
 
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		攻撃アクション
 	 */
-	class DropKickSkillAction : public CAction
+	class CDropKickSkillAction : public CBaseAction
 	{
 	public:
 		/**
@@ -16,8 +16,6 @@ namespace ActionGame {
 		 */
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
 			//加速値
@@ -29,12 +27,12 @@ namespace ActionGame {
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DropKickSkillAction(Parameter param);
+		CDropKickSkillAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -64,5 +62,5 @@ namespace ActionGame {
 		const ActionKeyType GetKey() const override ;
 	};
 	//ポインタ置き換え
-	using DropKickSkillActionPtr = std::shared_ptr<DropKickSkillAction>;
+	using DropKickSkillActionPtr = std::shared_ptr<CDropKickSkillAction>;
 }

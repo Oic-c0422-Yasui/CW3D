@@ -1,39 +1,32 @@
 #include "JumpBeamSkillAction.h"
 
-ActionGame::JumpBeamSkillAction::JumpBeamSkillAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CJumpBeamSkillAction::CJumpBeamSkillAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::JumpBeamSkillAction::Start()
+void ActionGame::CJumpBeamSkillAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
-	Velocity()->SetGravityFlg(false);
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	auto& vel = Velocity();
+	vel->SetIsGravity(false);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::JumpBeamSkillAction::Execution()
+void ActionGame::CJumpBeamSkillAction::Execution()
 {
 }
 
-void ActionGame::JumpBeamSkillAction::End()
+void ActionGame::CJumpBeamSkillAction::End()
 {
-	Velocity()->SetGravityFlg(true);
+	Velocity()->SetIsGravity(true);
 }
 
-const ActionGame::ActionKeyType ActionGame::JumpBeamSkillAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CJumpBeamSkillAction::GetKey() const
 {
 	return STATE_KEY_JUMP_BEAM_SKILL;
 }

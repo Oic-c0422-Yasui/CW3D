@@ -9,22 +9,22 @@ namespace ActionGame
 	{
 	protected:
 		//アクション生成
-		ActionCreatorPtr		m_ActionCreator;
+		ActionCreatorPtr		actionCreator_;
 		//ステート生成
-		StateCreatorPtr			m_StateCreator;
+		StateCreatorPtr			stateCreator_;
 		//パラメーター生成
-		ParameterCreatorPtr		m_ParameterCreator;
+		ParameterCreatorPtr		parameterCreator_;
 		//AI生成
-		CharacterAICreatorPtr	m_AiCreator;
+		CharacterAICreatorPtr	AICreator_;
 	public:
 		EnemyBuilder(const ActionCreatorPtr& actionCreator,
 			const StateCreatorPtr& stateCreator,
 			const ParameterCreatorPtr& parameterCreator,
 			const CharacterAICreatorPtr& aiCreator)
-			: m_ActionCreator(actionCreator)
-			, m_StateCreator(stateCreator)
-			, m_ParameterCreator(parameterCreator)
-			, m_AiCreator(aiCreator)
+			: actionCreator_(actionCreator)
+			, stateCreator_(stateCreator)
+			, parameterCreator_(parameterCreator)
+			, AICreator_(aiCreator)
 		{
 		}
 		virtual ~EnemyBuilder() = default;

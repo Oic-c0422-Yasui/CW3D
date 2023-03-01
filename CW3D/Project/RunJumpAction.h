@@ -1,5 +1,5 @@
 #pragma once
-#include "Action.h"
+#include "MoveAction.h"
 
 
 namespace ActionGame {
@@ -7,44 +7,13 @@ namespace ActionGame {
 	/**
 	 * @brief		移動アクション
 	 */
-	class RunJumpAction : public Action
+	class CRunJumpAction : public CMoveAction
 	{
-	public:
-		/**
-		* @brief		攻撃アクションの設定値
-		*/
-		struct Parameter
-		{
-			//アニメーションパラメーター
-			AnimParam				anim;
-
-
-			//加速値
-			Vector3					velocity;
-			Vector3					maxVelocity;
-
-			float					gravity;
-			float					maxGravity;
-			float					jumpPower;
-		};
-	private:
-		//パラメーター
-		Parameter					m_Parameter;
-		int m_NowDirection;
-		enum tag_DIRECTION
-		{
-			DIRECTION_RIGHT,
-			DIRECTION_RIGHTUP,
-			DIRECTION_RIGHTDOWN,
-			DIRECTION_LEFT,
-			DIRECTION_LEFTUP,
-			DIRECTION_LEFTDOWN,
-		};
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunJumpAction(Parameter param);
+		CRunJumpAction(BaseParameter baseParam, CMoveAction::Parameter moveParam);
 			
 
 		/**
@@ -62,20 +31,6 @@ namespace ActionGame {
 		 */
 		void End() override;
 
-		/**
-		 * @brief		加速
-		 * @param[in]	x		加速量
-		 * @param[in]	z		加速量
-		 */
-		void Acceleration(float x, float z);
-
-
-		/**
-		 * @brief		速度リセット
-		 */
-		void Reset();
-
-
 
 		/**
 		 * @brief		ステートキーの取得
@@ -84,6 +39,6 @@ namespace ActionGame {
 
 	};
 	//ポインタ置き換え
-	using RunJumpActionPtr = std::shared_ptr<RunJumpAction>;
+	using RunJumpActionPtr = std::shared_ptr<CRunJumpAction>;
 }
 

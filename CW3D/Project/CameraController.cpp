@@ -5,20 +5,17 @@
 
 using namespace ActionGame;
 
-CameraController::CameraController()
-	: Singleton<CameraController>()
-	, m_TimerStartFlg(false)
-	, m_LeapFlg(false)
-	, m_LeapStartFlg(false)
-	, m_LeapEndFlg(false)
-	, m_LeapTime(0.0f)
+CCameraController::CCameraController()
+	: Singleton<CCameraController>()
+	, isTimerStart_(false)
+	, isLeap_(false)
+	, isLeapStart_(false)
+	, isLeapEnd_(false)
+	, leapTime_(0.0f)
 	, currentTime_(0.0f)
-	, m_TempLeapEndTime(0.0f)
-	, time_(0.0f)
-	, m_QuakePower(0.0f)
-	, m_QuakeFrequent(0.0f)
-	, m_QuakeTime(0.0f)
-	, m_QuakeCurrentTime(0.0f)
+	, leapEndTime_(0.0f)
+	, timeScale_(0.0f)
+	, quakeState_()
 	, targetPos_(0,0,0)
 	, targetLookPos_(0,0,0)
 	
@@ -27,80 +24,81 @@ CameraController::CameraController()
 
 
 
-CameraController::~CameraController()
+CCameraController::~CCameraController()
 {
 }
 
-void CameraController::Load(const CameraPtr& camera)
+void CCameraController::Load(const CameraPtr& camera)
 {
-	m_DefaultCamera = camera;
+	defaultCamera_ = camera;
 	SetDefault();
 }
 
-void CameraController::SetCamera(const CameraPtr& camera)
+void CCameraController::SetCamera(const CameraPtr& camera)
 {
 	camera_ = camera;
 	camera_->Create();
 	CGraphicsUtilities::SetCamera(&camera_->GetCamera());
 }
 
-void CameraController::SetCamera(const CameraPtr& camera, float tTime)
+void CCameraController::SetCamera(const CameraPtr& camera, float tTime)
 {
 	SetCamera(camera);
-	time_ = tTime;
+	timeScale_ = tTime;
 	currentTime_ = 0.0f;
-	m_TimerStartFlg = true;
-	if (!m_LeapStartFlg)
+	isTimerStart_ = true;
+	if (!isLeapStart_)
 	{
-		m_LeapFlg = false;
-		m_LeapEndFlg = false;
+		isLeap_ = false;
+		isLeapEnd_ = false;
 	}
 	else
 	{
-		m_LeapStartFlg = false;
+		isLeapStart_ = false;
 	}
 }
 
-void CameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtil::EASING_TYPE startEaseType, float leapStartTime, MyUtil::EASING_TYPE endEaseType,float leapEndTime)
+void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtil::EASING_TYPE startEaseType, float leapStartTime, MyUtil::EASING_TYPE endEaseType,float leapEndTime)
 {
-	InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
+	InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(
+		camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
 	pCamera->Set(leapStartTime,startEaseType, camera);
 	camera_ = pCamera;
 	SetCamera(camera_);
-	m_LeapFlg = true;
-	m_TimerStartFlg = false;
-	m_NextCamera = camera;
-	m_LeapTime = tTime;
-	m_LeapStartFlg = true;
-	m_LeapEndFlg = false;
-	m_TempLeapEndTime = leapEndTime;
-	m_EndEaseType = endEaseType;
+	isLeap_ = true;
+	isTimerStart_ = false;
+	nextCamera_ = camera;
+	leapTime_ = tTime;
+	isLeapStart_ = true;
+	isLeapEnd_ = false;
+	leapEndTime_ = leapEndTime;
+	endEaseType_ = endEaseType;
 	pCamera.reset();
 }
 
-void CameraController::SetDefault()
+void CCameraController::SetDefault()
 {
-	m_LeapStartFlg = false;
-	m_LeapFlg = false;
-	m_LeapEndFlg = false;
-	m_TimerStartFlg = false;
-	m_DefaultCamera->SetIsReset(true);
-	SetCamera(m_DefaultCamera);
+	isLeapStart_ = false;
+	isLeap_ = false;
+	isLeapEnd_ = false;
+	isTimerStart_ = false;
+	defaultCamera_->SetIsReset(true);
+	SetCamera(defaultCamera_);
 }
 
-void CameraController::Update(const Vector3& pos, const Vector3& lookPos)
+void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
 {
-	if (m_LeapStartFlg)
+	if (isLeapStart_)
 	{
 		if (camera_->IsEnd())
 		{
-			SetCamera(m_NextCamera, m_LeapTime);
+			SetCamera(nextCamera_, leapTime_);
 		}
 	}
 	//タイマー
-	if (m_TimerStartFlg)
+	if (isTimerStart_)
 	{
-		if (time_ > currentTime_)
+		if (timeScale_ > currentTime_)
 		{
 			currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 		}
@@ -108,19 +106,19 @@ void CameraController::Update(const Vector3& pos, const Vector3& lookPos)
 		{
 			//タイマー終了時
 			
-			m_TimerStartFlg = false;
+			isTimerStart_ = false;
 			//補間フラグがTrueなら
-			if (m_LeapFlg)
+			if (isLeap_)
 			{
-				m_LeapFlg = false;
-				m_LeapEndFlg = true;
+				isLeap_ = false;
+				isLeapEnd_ = true;
 				InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
-				m_DefaultCamera->SetPos(pos + m_DefaultCamera->GetOffsetPos());
-				m_DefaultCamera->SetLookPos(lookPos + m_DefaultCamera->GetOffsetLookPos());
-				m_DefaultCamera->SetTargetPos(pos + m_DefaultCamera->GetOffsetPos());
-				m_DefaultCamera->SetTargetLookPos(lookPos + m_DefaultCamera->GetOffsetLookPos());
+				defaultCamera_->SetPos(pos + defaultCamera_->GetOffsetPos());
+				defaultCamera_->SetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
+				defaultCamera_->SetTargetPos(pos + defaultCamera_->GetOffsetPos());
+				defaultCamera_->SetTargetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
 
-				pCamera->Set(m_TempLeapEndTime, m_EndEaseType, m_DefaultCamera);
+				pCamera->Set(leapEndTime_, endEaseType_, defaultCamera_);
 				camera_ = pCamera;
 				SetCamera(camera_);
 				pCamera.reset();
@@ -131,16 +129,16 @@ void CameraController::Update(const Vector3& pos, const Vector3& lookPos)
 			}
 		}
 	}
-	if (m_LeapEndFlg)
+	if (isLeapEnd_)
 	{
 		if (camera_->IsEnd())
 		{
-			m_DefaultCamera->SetPos(pos + m_DefaultCamera->GetOffsetPos());
-			m_DefaultCamera->SetLookPos(lookPos + m_DefaultCamera->GetOffsetLookPos());
-			m_DefaultCamera->SetTargetPos(pos + m_DefaultCamera->GetOffsetPos());
-			m_DefaultCamera->SetTargetLookPos(lookPos + m_DefaultCamera->GetOffsetLookPos());
+			defaultCamera_->SetPos(pos + defaultCamera_->GetOffsetPos());
+			defaultCamera_->SetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
+			defaultCamera_->SetTargetPos(pos + defaultCamera_->GetOffsetPos());
+			defaultCamera_->SetTargetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
 			SetDefault();
-			m_LeapEndFlg = false;
+			isLeapEnd_ = false;
 		}
 	}
 	camera_->Update(pos, lookPos);
@@ -148,41 +146,41 @@ void CameraController::Update(const Vector3& pos, const Vector3& lookPos)
 }
 
 
-void CameraController::Reset()
+void CCameraController::Reset()
 {
 	
 }
 
-void CameraController::Render2DDebug()
+void CCameraController::Render2DDebug()
 {
 }
 
-void CameraController::Quake(float power, float freq, float time)
+void CCameraController::Quake(float power, float freq, float time)
 {
-	m_QuakePower = m_QuakePower > power ? m_QuakePower : power;
-	m_QuakeFrequent = m_QuakeFrequent > freq ? m_QuakeFrequent : freq;
-	if (m_QuakeTime <= 0.0f)
+	quakeState_.power = quakeState_.power > power ? quakeState_.power : power;
+	quakeState_.frequent = quakeState_.frequent > freq ? quakeState_.frequent : freq;
+	if (quakeState_.time <= 0.0f)
 	{
-		m_QuakeTime = time;
+		quakeState_.time = time;
 	}
 }
 
-void CameraController::Enable(const Vector3& pos, const Vector3& lookPos)
+void CCameraController::Enable(const Vector3& pos, const Vector3& lookPos)
 {
 	targetPos_ = pos;
 	targetLookPos_ = lookPos;
 	//振動適用
-	if (m_QuakeTime > 0.0f)
+	if (quakeState_.time > 0.0f)
 	{
-		targetPos_.y += sinf(m_QuakeTime * m_QuakeFrequent) * m_QuakePower;
-		targetLookPos_.y += sinf(m_QuakeTime * m_QuakeFrequent) * m_QuakePower;
-		m_QuakeTime -= CUtilities::GetFrameSecond();
+		targetPos_.y += sinf(quakeState_.time * quakeState_.frequent) * quakeState_.power;
+		targetLookPos_.y += sinf(quakeState_.time * quakeState_.frequent) * quakeState_.power;
+		quakeState_.time -= CUtilities::GetFrameSecond();
 	}
 	else
 	{
-		m_QuakeTime = 0;
-		m_QuakeFrequent = 0;
-		m_QuakePower = 0;
+		quakeState_.time = 0;
+		quakeState_.frequent = 0;
+		quakeState_.power = 0;
 	}
 
 	camera_->Enable(targetPos_, targetLookPos_);

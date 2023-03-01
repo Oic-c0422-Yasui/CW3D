@@ -6,28 +6,28 @@ namespace ActionGame
 	class EnemyBuilderDictionary
 	{
 	private:
-		std::map<std::string, EnemyBuilderPtr> map;
+		std::map<std::string, EnemyBuilderPtr> map_;
 	public:
 		EnemyBuilderDictionary();
 		~EnemyBuilderDictionary();
 
 		void Add(const std::string& name, const EnemyBuilderPtr& builder)
 		{
-			map[name] = builder;
+			map_[name] = builder;
 		}
 
 		const EnemyBuilderPtr& Get(const std::string& name)
 		{
-			assert(map[name]);
-			return map[name];
+			assert(map_[name]);
+			return map_[name];
 		}
 
 		bool Delete(const std::string& name)
 		{
-			auto it = map.find(name);
-			if (it != map.end())
+			auto it = map_.find(name);
+			if (it != map_.end())
 			{
-				map.erase(it);
+				map_.erase(it);
 				return true;
 			}
 			return false;

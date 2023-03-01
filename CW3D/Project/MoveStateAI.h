@@ -12,46 +12,32 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class MoveStateAI : public StateAI
+	class CMoveStateAI : public CStateAI
 	{
 	private:
 		//見失った時間
 		int				currentLostTime;
-		bool			attackFlg;
+		bool			isAttack;
 
-		Vector3			m_AttackRange;
-		Vector3			m_VigilangeRange;
-		int				m_AttackTiming;
+		Vector3			attackRange_;
+		Vector3			vigilangeRange_;
+		int				attackTiming_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		MoveStateAI(Vector3 vigilangeRange , Vector3 attackRange,int timing)
-			: StateAI()
-			, currentLostTime(0)
-			, attackFlg(false)
-			, m_AttackRange(attackRange)
-			, m_VigilangeRange(vigilangeRange)
-			, m_AttackTiming(timing)
-		{
-		}
+		CMoveStateAI(Vector3 vigilangeRange, Vector3 attackRange, int timing);
+			
 
 		/**
 		 * @brief		利用キーの登録
 		 */
-		void RegisterKey() override {
-			Input()->AddKey(INPUT_KEY_HORIZONTAL);
-			Input()->AddKey(INPUT_KEY_VERTICAL);
-			Input()->AddKey(INPUT_KEY_ATTACK);
-		}
+		void RegisterKey() override;
 
 		/**
 		 * @brief		開始
 		 */
-		void Start() override {
-			currentLostTime = 0;
-			attackFlg = false;
-		}
+		void Start() override;
 
 		/**
 		 * @brief		更新

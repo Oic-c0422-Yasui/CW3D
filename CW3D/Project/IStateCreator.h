@@ -18,7 +18,9 @@ namespace ActionGame {
 		/**
 		 * @brief		生成
 		 */
-		virtual bool Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const Input::InputPtr& input) = 0;
+		virtual bool Create(const StateMachinePtr& stateMachine,
+							const ActorPtr& actor,
+							const Input::InputPtr& input) = 0;
 	};
 	//ポインタ置き換え
 	using StateCreatorPtr = std::shared_ptr<IStateCreator>;

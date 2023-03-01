@@ -3,23 +3,23 @@
 
 namespace ActionGame
 {
-	Effect::Effect(Effekseer::Handle handle)
+	CEffect::CEffect(Effekseer::Handle handle)
 		: effect_()
 		, handle_(handle)
 		, isStop_(false)
 	{
 
 	}
-	Effect::~Effect()
+	CEffect::~CEffect()
 	{
 	}
 
-	void Effect::Initialize( const Vector3& offset)
+	void CEffect::Initialize( const Vector3& offset)
 	{
 		offset_ = offset;
 	}
 
-	void Effect::Update()
+	void CEffect::Update()
 	{
 		if (!EffectRendererInstance.GetManager()->Exists(handle_))
 		{

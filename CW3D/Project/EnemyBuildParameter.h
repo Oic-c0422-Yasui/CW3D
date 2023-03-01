@@ -10,8 +10,8 @@ namespace ActionGame
 	{
 	public:
 		std::string type_;
-		Vector3 m_Pos;
-		bool m_IsBoss;
+		Vector3 position_;
+		bool isBoss_;
 
 		EnemyParam(const std::string& type,const Vector3& pos,bool isBoss);
 	};
@@ -19,20 +19,20 @@ namespace ActionGame
 	class EnemyBuildParameter
 	{
 	private:
-		EnemyParam m_Param;
-		EnemyStatusPtr m_Status;
+		EnemyParam param_;
+		EnemyStatusPtr status_;
 	public:
 		EnemyBuildParameter(const EnemyParam& param,const EnemyStatusPtr& status);
 		~EnemyBuildParameter();
 
 		const EnemyStatusPtr& GetStatus() const noexcept
 		{
-			return m_Status;
+			return status_;
 		}
 
 		const EnemyParam& GetParam() const noexcept
 		{
-			return m_Param;
+			return param_;
 		}
 
 	};

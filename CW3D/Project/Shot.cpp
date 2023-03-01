@@ -5,23 +5,23 @@ using namespace ActionGame;
 
 
 ActionGame::Shot::Shot()
-	: m_Collider(std::make_shared<CAttackCollider>())
+	: collider_(std::make_shared<CAttackCollider>())
 	, position_(0, 0, 0)
-	, m_AABB()
-	, m_Radius(0.0f)
-	, m_ShowFlg(false)
-	, m_EnableColliderFlg(false)
-	, m_ParentCharaType(CHARA_TYPE::PLAYER)
-	, m_Speed(0.0f)
-	, m_KnockBackPower(0, 0, 0)
-	, m_KnockBackDirection()
+	, AABB_()
+	, radius_(0.0f)
+	, isShow_(false)
+	, isEnableCollider(false)
+	, parentCharaType_(CHARA_TYPE::PLAYER)
+	, speed_(0.0f)
+	, knockBackPower_(0, 0, 0)
+	, knockBackDirection_()
 	, offset_(0, 0, 0)
-	, m_Damage(0)
-	, m_NextHitTime(0.0f)
-	, m_CollisionType(COLLISION_TYPE::AABB)
-	, m_ArmorBreakLevel(0)
-	, m_GetUltGauge(0.0f)
-	, m_ParentID(0)
+	, damage_(0)
+	, nextHitTime_(0.0f)
+	, collisionType_(COLLISION_TYPE::AABB)
+	, armorBreakLevel_(0)
+	, recieveUltGauge_(0.0f)
+	, parentID_(0)
 
 {
 }
@@ -34,17 +34,18 @@ void ActionGame::Shot::CreateBase(const Vector3& pos, const ShotCreateParameter&
 {
 	position_ = pos;
 	offset_ = shot.offset;
-	m_ParentCharaType = shot.type;
-	m_Damage = shot.damage;
-	m_NextHitTime = shot.nextHitTime;
-	m_Speed = 0.0f;
-	m_ShowFlg = true;
-	m_EnableColliderFlg = shot.collideFlg;
-	m_KnockBackPower = shot.knockBack;
-	m_KnockBackDirection = shot.direction;
-	m_ArmorBreakLevel = shot.armorBreakLevel;
-	m_GetUltGauge = shot.getUltGauge;
-	m_ParentID = shot.parentID;
+	parentCharaType_ = shot.type;
+	damage_ = shot.damage;
+	nextHitTime_ = shot.nextHitTime;
+	speed_ = 0.0f;
+	isShow_ = true;
+	isEnableCollider = shot.collideFlg;
+	knockBackPower_ = shot.knockBack;
+	knockBackDirection_ = shot.direction;
+	armorBreakLevel_ = shot.armorBreakLevel;
+	recieveUltGauge_ = shot.recieveUltGauge;
+	parentID_ = shot.parentID;
+	damageEffect_ = shot.damageEffect;
 }
 
 
@@ -55,10 +56,10 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotSphere& sphire)
 	CreateBase(pos, sphire);
 
 	//追加のパラメータ作成
-	m_Radius = sphire.Radius;
-	m_Collider->SetPosition(position_);
-	m_Collider->SetRadius(m_Radius);
-	m_CollisionType = COLLISION_TYPE::SPHERE;
+	radius_ = sphire.Radius;
+	collider_->SetPosition(position_);
+	collider_->SetRadius(radius_);
+	collisionType_ = COLLISION_TYPE::SPHERE;
 }
 
 void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
@@ -67,10 +68,10 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
 	CreateBase(pos, aabb);
 
 	//追加のパラメータ作成
-	m_Size = aabb.size;
-	m_AABB.Size = m_Size;
-	m_AABB.SetPosition(position_);
-	m_CollisionType = COLLISION_TYPE::AABB;
+	size_ = aabb.size;
+	AABB_.Size = size_;
+	AABB_.SetPosition(position_);
+	collisionType_ = COLLISION_TYPE::AABB;
 }
 
 void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
@@ -79,31 +80,31 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
 	CreateBase(pos, obb);
 
 	//追加のパラメータ作成
-	m_Size = obb.size;
-	m_OBB.Position = position_;
-	m_OBB.Size = m_Size;
-	m_OBB.Angle = obb.angle;
-	m_OBB.CalculateAxis();
-	m_CollisionType = COLLISION_TYPE::OBB;
+	size_ = obb.size;
+	OBB_.Position = position_;
+	OBB_.Size = size_;
+	OBB_.Angle = obb.angle;
+	OBB_.CalculateAxis();
+	collisionType_ = COLLISION_TYPE::OBB;
 }
 
 void ActionGame::Shot::ApplyColliderPosition()
 {
-	switch (m_CollisionType)
+	switch (collisionType_)
 	{
 	case COLLISION_TYPE::SPHERE:
 	{
-		m_Collider->SetPosition(position_);
+		collider_->SetPosition(position_);
 		break;
 	}
 	case COLLISION_TYPE::AABB:
 	{
-		m_AABB.SetPosition(position_);
+		AABB_.SetPosition(position_);
 		break;
 	}
 	case COLLISION_TYPE::OBB:
 	{
-		m_OBB.Position = position_;
+		OBB_.Position = position_;
 		break;
 	}
 	default:
@@ -115,12 +116,12 @@ void ActionGame::Shot::ApplyColliderPosition()
 
 void ActionGame::Shot::Update()
 {
-	if (!m_ShowFlg)
+	if (!isShow_)
 	{
 		return;
 	}
 
-	position_.x += m_Speed * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
+	position_.x += speed_ * TimeScaleControllerInstance.GetTimeScale(parentCharaType_);
 	
 	//コライダーの座標を現在の座標に合わせる
 	ApplyColliderPosition();
@@ -133,7 +134,7 @@ void ActionGame::Shot::Update()
 
 void ActionGame::Shot::Render()
 {
-	if (!m_ShowFlg)
+	if (!isShow_)
 	{
 		return;
 	}
@@ -142,11 +143,11 @@ void ActionGame::Shot::Render()
 
 void ActionGame::Shot::UpdateTime()
 {
-	for (auto& id : m_HitIDs)
+	for (auto& id : hitIDs_)
 	{
 		if (id.Time > 0.0f)
 		{
-			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(m_ParentCharaType);
+			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(parentCharaType_);
 		}
 	}
 }

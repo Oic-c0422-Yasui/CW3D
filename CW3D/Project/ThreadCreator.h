@@ -7,11 +7,11 @@
 class ThreadCreator
 {
 private:
-	std::thread m_Thread;
+	std::thread thread_;
 
 	using CreateFunc = std::function<bool()>;
 	using CompletedFunc = std::function<void()>;
-	std::atomic<bool> m_CompleteFlg;
+	std::atomic<bool> isComplete_;
 
 public:
 	ThreadCreator();

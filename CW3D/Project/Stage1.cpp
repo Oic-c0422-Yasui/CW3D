@@ -10,35 +10,35 @@ ActionGame::CStage1::CStage1()
 
 bool ActionGame::CStage1::Load(const DivisionArrayPtr& divisionArray)
 {
-	 m_pStage = ResourcePtrManager<CMeshContainer>
+	 stage_ = ResourcePtrManager<CMeshContainer>
 							::GetInstance().GetResource("Stage", "StageMesh");
 
-	 m_Divisions = divisionArray;
-	 m_CurrentDivision = GetDivision(0);
+	 divisionArray_ = divisionArray;
+	 currentDivision_ = GetDivision(0);
 	return true;
 }
 
 void ActionGame::CStage1::Initialize()
 {
 
-	m_ClearFlg = false;
-	m_Phase = 0;
-	for (auto& division : *m_Divisions)
+	isClear_ = false;
+	phase_ = 0;
+	for (auto& division : *divisionArray_)
 	{
 		division->Initialize();
 	}
 
-	m_CurrentDivision = GetDivision(m_Phase);
+	currentDivision_ = GetDivision(phase_);
 }
 
 void ActionGame::CStage1::Update()
 {
-	if (m_ClearFlg)
+	if (isClear_)
 	{
 		return;
 	}
 
-	m_CurrentDivision->Update();
+	currentDivision_->Update();
 	
 
 }
@@ -46,7 +46,7 @@ void ActionGame::CStage1::Update()
 void ActionGame::CStage1::Render()
 {
 	CMatrix44 matWorld;
-	m_pStage->Render(matWorld);
+	stage_->Render(matWorld);
 }
 
 void ActionGame::CStage1::RenderDebug()
@@ -55,18 +55,18 @@ void ActionGame::CStage1::RenderDebug()
 
 void ActionGame::CStage1::Release()
 {
-	m_pStage.reset();
-	m_Divisions.reset();
-	m_CurrentDivision.reset();
+	stage_.reset();
+	divisionArray_.reset();
+	currentDivision_.reset();
 }
 
-bool ActionGame::CStage1::IsClear(const ClearTermProviderPtr& provider)
+bool ActionGame::CStage1::IsClear(const ClearTerm::ProviderPtr& provider)
 {
-	if (m_CurrentDivision->IsClear(provider))
+	if (currentDivision_->IsClear(provider))
 	{
-		m_CurrentDivision->ClearObject();
+		currentDivision_->ClearObject();
 		//現在のフェーズが区画の数より大きいならクリア
-		if (m_Phase + 1 >= m_Divisions->size())
+		if (phase_ + 1 >= divisionArray_->size())
 		{
 			return true;
 		}

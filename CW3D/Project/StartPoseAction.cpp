@@ -1,47 +1,34 @@
 #include "StartPoseAction.h"
 
-ActionGame::StartPoseAction::StartPoseAction(Parameter param)
-	: Action()
-	, m_Parameter(param)
+ActionGame::CStartPoseAction::CStartPoseAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::StartPoseAction::Start()
+void ActionGame::CStartPoseAction::Start()
 {
-	StartAnim();
+	CBaseAction::Start();
 
-
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
 	float rotateY = Transform()->GetRotateY();
-
-	Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
-	Velocity()->SetGravity(m_Parameter.gravity);
-	Velocity()->SetMaxGravity(m_Parameter.maxGravity);
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.0f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.0f);
-	}
+	auto& vel = Velocity();
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+	vel->SetRotateY(rotateY, MOF_ToRadian(0), 0.18f);
+	vel->SetGravity(parameter_.gravity);
+	vel->SetMaxGravity(parameter_.maxGravity);
+	
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::StartPoseAction::Execution()
+void ActionGame::CStartPoseAction::Execution()
 {
 }
 
-void ActionGame::StartPoseAction::End()
+void ActionGame::CStartPoseAction::End()
 {
 }
 
-void ActionGame::StartPoseAction::StartAnim()
-{
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-}
-
-const ActionGame::ActionKeyType ActionGame::StartPoseAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CStartPoseAction::GetKey() const
 {
 	return STATE_KEY_STARTPOSE;
 }

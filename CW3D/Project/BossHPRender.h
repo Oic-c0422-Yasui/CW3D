@@ -8,9 +8,9 @@ namespace ActionGame
     {
 	private:
 
-		std::shared_ptr<CTexture>			m_pHPBar;
-		std::shared_ptr<CTexture>			m_pFrame;
-		std::shared_ptr<CTexture>			m_pDamageBar;
+		std::shared_ptr<CTexture>			HPBar_;
+		std::shared_ptr<CTexture>			HPFrame_;
+		std::shared_ptr<CTexture>			DamageBar_;
 
 		Vector2 position_;
 		Vector2 offset_;

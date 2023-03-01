@@ -1,13 +1,13 @@
 #pragma once
 
-#include	"Action.h"
+#include	"BaseAction.h"
 
 namespace ActionGame {
 
 	/**
 	 * @brief		クリアポーズアクション
 	 */
-	class ClearPoseAction : public CAction
+	class ClearPoseAction : public CBaseAction
 	{
 	public:
 		/**
@@ -16,7 +16,6 @@ namespace ActionGame {
 		struct Parameter
 		{
 			//アニメーションパラメーター
-			AnimParam				anim;
 			AnimParam				fallAnim;
 			//減速値
 			Vector3					decelerate;
@@ -25,12 +24,12 @@ namespace ActionGame {
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		ClearPoseAction(Parameter param);
+		ClearPoseAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -47,11 +46,6 @@ namespace ActionGame {
 		 * @brief		アクション内の終了処理
 		 */
 		void End() override;
-
-		/*
-		* @brief		アニメーション開始
-		*/
-		void StartAnim();
 
 		/**
 		 * @brief		ステートキーの取得

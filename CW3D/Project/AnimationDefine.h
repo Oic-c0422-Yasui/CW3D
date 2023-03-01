@@ -11,7 +11,7 @@
 *
 *	@param tTime		アニメーション補間時間
 *
-*	@param loopFlg		アニメーションループフラグ
+*	@param isLoop		アニメーションループフラグ
 */
 struct AnimParam
 {
@@ -24,5 +24,5 @@ struct AnimParam
 	//アニメーション補間時間
 	float					tTime;
 	//アニメーションループフラグ
-	bool					loopFlg;
+	bool					isLoop;
 };

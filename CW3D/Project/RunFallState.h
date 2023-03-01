@@ -8,16 +8,16 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class RunFallState : public State
+	class CRunFallState : public CState
 	{
 	private:
 		/** 移動アクション */
-		RunFallActionPtr			m_FallAction;
+		RunFallActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		RunFallState();
+		CRunFallState();
 			
 
 		/**

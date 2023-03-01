@@ -16,6 +16,7 @@ namespace ActionGame
 		if (!shot->IsShow() || !enemy->IsShow()) { return; }
 		if (!shot->IsEnableCollider()){ return; }
 		if (shot->GetParentCharaType() == CHARA_TYPE::ENEMY) { return; }
+		if (shot->GetParentCharaType() == CHARA_TYPE::BOSS) { return; }
 		if (shot->IsHit(enemy->GetID())) { return; }
 		//’e‚Ì‹éŒ`‚²‚Æ‚É”»’è
 		switch (shot->GetCollisionType())
@@ -52,9 +53,9 @@ namespace ActionGame
 		Vector3 knockBack = shot->GetKnockBackPower();
 		shot->AddHit(enemy->GetID());
 		//ƒ_ƒ[ƒWÝ’è
-		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage(), shot->GetArmorBreakLevel());
+		enemy->Damage(shot->GetDirection()->Get(enemy->GetPosition()), knockBack, shot->GetDamage(), shot->GetArmorBreakLevel(),shot->GetDamageEffect());
 		//Šl“¾•KŽE‹ZƒQ[ƒW
-		float gauge = shot->GetGetUltGauge() * enemy->GetUltBoostMag();
+		float gauge = shot->GetRecieveUltGauge() * enemy->GetUltBoostMag();
 
 		auto id = shot->GetParentID();
 

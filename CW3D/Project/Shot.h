@@ -5,6 +5,7 @@
 #include "KnockBack.h"
 #include "TimeScaleController.h"
 #include "CollisionDefine.h"
+#include "Effect.h"
 
 namespace ActionGame
 {
@@ -18,8 +19,9 @@ namespace ActionGame
 		CHARA_TYPE type;
 		KnockBackPtr direction;
 		BYTE armorBreakLevel;
-		float getUltGauge;
+		float recieveUltGauge;
 		unsigned int parentID;
+		EffectCreateParameterPtr damageEffect;
 	};
 	//球体ショット
 	struct ShotSphere : public ShotCreateParameter {
@@ -44,30 +46,31 @@ namespace ActionGame
 		//ヒット判定用構造体
 		struct Hit
 		{
-			unsigned int ID;	//ヒットした相手のアクターID
+			size_t ID;			//ヒットした相手のアクターID
 			float Time;			//当たり判定を行わない時間
 		};
-		std::list<Hit>		m_HitIDs;
+		std::list<Hit>		hitIDs_;
 
-		AttackColliderPtr	m_Collider;
-		CAABB				m_AABB;
-		COBB				m_OBB;
+		AttackColliderPtr	collider_;
+		CAABB				AABB_;
+		COBB				OBB_;
 		CVector3			position_;
-		float				m_Radius;
-		CVector3			m_Size;
+		float				radius_;
+		CVector3			size_;
 		Vector3				offset_;
-		bool				m_ShowFlg;
-		bool				m_EnableColliderFlg;
-		CHARA_TYPE			m_ParentCharaType;
-		COLLISION_TYPE		m_CollisionType;
-		float				m_Speed;
-		int					m_Damage;
-		float				m_NextHitTime;
-		KnockBackPtr		m_KnockBackDirection;
-		CVector3			m_KnockBackPower;
-		BYTE				m_ArmorBreakLevel;
-		float				m_GetUltGauge;
-		unsigned int		m_ParentID;
+		bool				isShow_;
+		bool				isEnableCollider;
+		CHARA_TYPE			parentCharaType_;
+		size_t				parentID_;
+		COLLISION_TYPE		collisionType_;
+		float				speed_;
+		int					damage_;
+		float				nextHitTime_;
+		KnockBackPtr		knockBackDirection_;
+		CVector3			knockBackPower_;
+		BYTE				armorBreakLevel_;
+		float				recieveUltGauge_;
+		EffectCreateParameterPtr damageEffect_;
 
 	protected:
 		/*		プライベート関数		*/
@@ -122,8 +125,8 @@ namespace ActionGame
 		*/
 		void AddHit(unsigned int hitId)
 		{
-			Hit hit = { hitId, m_NextHitTime };
-			m_HitIDs.push_back(hit);
+			Hit hit = { hitId, nextHitTime_ };
+			hitIDs_.push_back(hit);
 		}
 
 		/*
@@ -131,9 +134,9 @@ namespace ActionGame
 		*/
 		void DeleteHitId()
 		{
-			auto removeIt = std::remove_if(m_HitIDs.begin(), m_HitIDs.end(), [&](const Hit& id) {
+			auto removeIt = std::remove_if(hitIDs_.begin(), hitIDs_.end(), [&](const Hit& id) {
 				return id.Time <= 0.0f; });
-			m_HitIDs.erase(removeIt, m_HitIDs.end());
+			hitIDs_.erase(removeIt, hitIDs_.end());
 		}
 
 		/*
@@ -142,7 +145,7 @@ namespace ActionGame
 		*/
 		void AddDamage(int val) noexcept
 		{
-			m_Damage += val;
+			damage_ += val;
 		}
 
 		/*
@@ -165,7 +168,7 @@ namespace ActionGame
 		* @return	true　なら表示
 		*/
 		bool IsShow() const noexcept {
-			return m_ShowFlg;
+			return isShow_;
 		}
 
 		/*
@@ -174,7 +177,7 @@ namespace ActionGame
 		* @retval	false　なら無効（当たり判定を行わない）
 		*/
 		bool IsEnableCollider() const noexcept {
-			return m_EnableColliderFlg;
+			return isEnableCollider;
 		}
 
 		/*
@@ -183,7 +186,7 @@ namespace ActionGame
 		*/
 		float GetNextHitTime() const noexcept
 		{
-			return m_NextHitTime;
+			return nextHitTime_;
 		}
 
 		/*
@@ -192,25 +195,25 @@ namespace ActionGame
 		*/
 		CHARA_TYPE GetParentCharaType() const noexcept
 		{
-			return m_ParentCharaType;
+			return parentCharaType_;
 		}
 
 		/*
 		* @brief	獲得した必殺技ゲージ量を取得
 		* @return	獲得した必殺技ゲージ量
 		*/
-		float GetGetUltGauge() const noexcept
+		float GetRecieveUltGauge() const noexcept
 		{
-			return m_GetUltGauge;
+			return recieveUltGauge_;
 		}
 
 		/*
 		* @brief	親アクターのIDを取得
 		* @return	親アクターのID
 		*/
-		unsigned int GetParentID() const noexcept
+		size_t GetParentID() const noexcept
 		{
-			return m_ParentID;
+			return parentID_;
 		}
 
 		/*
@@ -219,7 +222,7 @@ namespace ActionGame
 		*/
 		const KnockBackPtr& GetDirection() const noexcept
 		{
-			return m_KnockBackDirection;
+			return knockBackDirection_;
 		}
 
 		/*
@@ -246,7 +249,7 @@ namespace ActionGame
 		*/
 		COLLISION_TYPE GetCollisionType() const noexcept
 		{
-			return m_CollisionType;
+			return collisionType_;
 		}
 
 		/*
@@ -255,7 +258,7 @@ namespace ActionGame
 		*/
 		CSphere GetColliderSphere() const noexcept 
 		{
-			return m_Collider->GetCollider();
+			return collider_->GetCollider();
 		}
 		/*
 		* @brief	球体の半径を取得(衝突判定のタイプが球体の場合)
@@ -263,7 +266,7 @@ namespace ActionGame
 		*/
 		float GetRadius() const noexcept 
 		{
-			return m_Radius;
+			return radius_;
 		}
 
 		/*
@@ -272,7 +275,7 @@ namespace ActionGame
 		*/
 		CAABB GetColliderAABB() const noexcept 
 		{
-			return m_AABB;
+			return AABB_;
 		}
 
 		/*
@@ -281,7 +284,7 @@ namespace ActionGame
 		*/
 		COBB GetColliderOBB() const noexcept
 		{
-			return	m_OBB;
+			return	OBB_;
 		}
 
 		/*
@@ -289,7 +292,7 @@ namespace ActionGame
 		* @return	ノックバックの力
 		*/
 		const Vector3& GetKnockBackPower() const noexcept {
-			return m_KnockBackPower;
+			return knockBackPower_;
 		}
 
 		/*
@@ -297,7 +300,7 @@ namespace ActionGame
 		* @return	速度
 		*/
 		float GetSpeed() const noexcept {
-			return m_Speed;
+			return speed_;
 		}
 
 		/*
@@ -305,7 +308,7 @@ namespace ActionGame
 		* @return	ダメージ
 		*/
 		int GetDamage() const noexcept {
-			return m_Damage;
+			return damage_;
 		}
 
 		/*
@@ -313,7 +316,15 @@ namespace ActionGame
 		* @return	アーマー破壊レベル
 		*/
 		BYTE GetArmorBreakLevel() const noexcept{
-			return m_ArmorBreakLevel;
+			return armorBreakLevel_;
+		}
+		
+		/*
+		* @brief	ダメージ用のエフェクトパラメータを取得
+		* @return	ダメージ用のエフェクトパラメータ
+		*/
+		const EffectCreateParameterPtr& GetDamageEffect() const noexcept{
+			return damageEffect_;
 		}
 
 		/*
@@ -323,7 +334,7 @@ namespace ActionGame
 		*/
 		bool IsHit(unsigned int hitId) const noexcept
 		{
-			for (auto& id : m_HitIDs)
+			for (auto& id : hitIDs_)
 			{
 				if (id.ID == hitId)
 				{
@@ -343,7 +354,7 @@ namespace ActionGame
 		*/
 		void SetParentCharaType(CHARA_TYPE type) noexcept
 		{
-			m_ParentCharaType = type;
+			parentCharaType_ = type;
 		}
 
 		/*
@@ -352,7 +363,7 @@ namespace ActionGame
 		*/
 		void SetShow(bool isShow) noexcept
 		{
-			m_ShowFlg = isShow;
+			isShow_ = isShow;
 		}
 
 		/*
@@ -361,7 +372,7 @@ namespace ActionGame
 		*/
 		void SetEnableCollider(bool isEnable) noexcept
 		{
-			m_EnableColliderFlg = isEnable;
+			isEnableCollider = isEnable;
 		}
 
 		/*
@@ -370,7 +381,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPower(const Vector3& val) noexcept
 		{
-			m_KnockBackPower = val;
+			knockBackPower_ = val;
 		}
 
 		/*
@@ -379,7 +390,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerX(float val) noexcept
 		{
-			m_KnockBackPower.x = val;
+			knockBackPower_.x = val;
 		}
 
 		/*
@@ -388,7 +399,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerY(float val) noexcept
 		{
-			m_KnockBackPower.y = val;
+			knockBackPower_.y = val;
 		}
 
 		/*
@@ -397,7 +408,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerZ(float val) noexcept
 		{
-			m_KnockBackPower.z = val;
+			knockBackPower_.z = val;
 		}
 
 		/*
@@ -406,7 +417,7 @@ namespace ActionGame
 		*/
 		void SetDamage(int val) noexcept
 		{
-			m_Damage = val;
+			damage_ = val;
 		}
 
 		/*
@@ -415,7 +426,7 @@ namespace ActionGame
 		*/
 		void SetNextHitTime(float sec) noexcept
 		{
-			m_NextHitTime = sec;
+			nextHitTime_ = sec;
 		}
 
 		/*
@@ -424,7 +435,7 @@ namespace ActionGame
 		*/
 		void SetSpeed(float val) noexcept
 		{
-			m_Speed = val;
+			speed_ = val;
 		}
 
 		/*
@@ -451,7 +462,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackDirection(const KnockBackPtr& dir) noexcept
 		{
-			m_KnockBackDirection = dir;
+			knockBackDirection_ = dir;
 		}
 
 		/*
@@ -460,25 +471,25 @@ namespace ActionGame
 		*/
 		void SetArmorBreakLevel(BYTE level) noexcept
 		{
-			m_ArmorBreakLevel = level;
+			armorBreakLevel_ = level;
 		}
 
 		/*
 		* @brief	獲得必殺技ゲージ量を設定
 		* @param	level 獲得必殺技ゲージ量
 		*/
-		void SetGetUltGauge(float gauge) noexcept
+		void SetRecieveUltGauge(float gauge) noexcept
 		{
-			m_GetUltGauge = gauge;
+			recieveUltGauge_ = gauge;
 		}
 
 		/*
 		* @brief	親アクターIDを設定
 		* @param	id 親アクターID
 		*/
-		void SetParentID(unsigned int id)noexcept
+		void SetParentID(size_t id)noexcept
 		{
-			m_ParentID = id;
+			parentID_ = id;
 		}
 
 	};

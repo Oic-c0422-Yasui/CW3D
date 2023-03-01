@@ -20,22 +20,22 @@ bool ActionGame::CDivisionObject::Load()
 void ActionGame::CDivisionObject::Initialize()
 {
 	CObject::Initialize();
-	m_pEffect = EffectControllerInstance.Play(param.name, GetCollider().Position, param); 
+	effect_ = EffectControllerInstance.Play(effectParam_.name, GetCollider().Position, effectParam_);
 }
 
 void ActionGame::CDivisionObject::Update()
 {
-	if (!m_ShowFlg)
+	if (!isShow_)
 	{
-		if (!m_pEffect->IsStop())
+		if (!effect_->IsStop())
 		{
-			m_pEffect->SetStop(true);
+			effect_->SetStop(true);
 		}
 		return;
 	}
-	if (m_pEffect->IsStop() || m_pEffect == nullptr)
+	if (effect_->IsStop() || effect_ == nullptr)
 	{
-		m_pEffect = EffectControllerInstance.Play(param.name, GetCollider().Position, param);
+		effect_ = EffectControllerInstance.Play(effectParam_.name, GetCollider().Position, effectParam_);
 	}
 }
 
@@ -45,5 +45,5 @@ void ActionGame::CDivisionObject::Render()
 
 void ActionGame::CDivisionObject::Release()
 {
-	m_pEffect.reset();
+	effect_.reset();
 }

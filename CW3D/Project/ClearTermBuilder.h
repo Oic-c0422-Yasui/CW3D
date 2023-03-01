@@ -4,7 +4,7 @@
 #include "json.hpp"
 
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	クリア条件ビルダー
@@ -18,7 +18,7 @@ namespace ActionGame
 		virtual ClearTermPtr Create() = 0;
 	};
 
-	using ClearTermBuilderPtr = std::shared_ptr<IClearTermBuilder>;
+	using BuilderPtr = std::shared_ptr<IClearTermBuilder>;
 }
 
 

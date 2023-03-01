@@ -9,7 +9,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class DropKickSkillState : public AttackBaseState
+	class CDropKickSkillState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -27,26 +27,26 @@ namespace ActionGame {
 			EffectCreateParameter EffectStatus;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		DropKickSkillActionPtr			m_SkillAction;
+		DropKickSkillActionPtr			action_;
 
-		bool collideStartFlg;
-		bool m_DelayInputFlg;
-		std::string m_Key;
+		bool isStartCollide_;
+		bool isDelayInput_;
+		std::string inputKey_;
 
 		AdditionalWeakSKillPtr m_SkillRef;
 		
 		//初期化
 		void Initialize();
 	protected:
-		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.ShotStatus; }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_Parameter.EffectStatus; }
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DropKickSkillState(Parameter param);
+		CDropKickSkillState(Parameter param);
 
 
 		/**

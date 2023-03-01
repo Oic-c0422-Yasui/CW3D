@@ -15,10 +15,10 @@ namespace ActionGame
 			auto& skill = player->GetSkill(skillID);
 			skill->GetCTSubject()->Subscribe([view](float ct) { view->SetCT(ct); });
 			skill->GetMaxCTSubject()->Subscribe([view](float ct) { view->SetMaxCT(ct); });
-			skill->GetCanUseSubject()->Subscribe([view](bool canUse) {view->SetCanUseFlg(canUse); });
+			skill->GetCanUseSubject()->Subscribe([view](bool canUse) {view->SetCanUse(canUse); });
 
 			view->SetCT(0.0f);
-			view->SetCanUseFlg(player->GetSkillController()->GetSkill(skillID)->IsCanUse());
+			view->SetCanUse(player->GetSkillController()->GetSkill(skillID)->IsCanUse());
 			view->SetMaxCT(player->GetSkillController()->GetSkill(skillID)->GetMaxCT());
 		}
 

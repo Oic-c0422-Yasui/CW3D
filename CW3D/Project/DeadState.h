@@ -8,17 +8,17 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class DeadState : public State
+	class CDeadState : public CState
 	{
 	private:
 		//ダメージステート
-		DeadActionPtr			m_DeadAction;
+		DeadActionPtr			action_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DeadState();
+		CDeadState();
 			
 
 		/**

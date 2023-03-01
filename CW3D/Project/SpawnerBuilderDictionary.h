@@ -6,18 +6,18 @@ namespace Spawner
 	/*
 	* @brief	スポナービルダーの辞書
 	*/
-	class SpawnerBuilderDictionary
+	class CBuilderDictionary
 	{
 	private:
-		std::unordered_map<std::string, SpawnerBuilderPtr> dictionary;
+		std::unordered_map<std::string, SpawnerBuilderPtr> dictionary_;
 	public:
-		SpawnerBuilderDictionary();
-		~SpawnerBuilderDictionary();
+		CBuilderDictionary();
+		~CBuilderDictionary();
 
 		const SpawnerBuilderPtr& Get(const std::string& key)
 		{
-			assert(dictionary[key]);
-			return dictionary[key];
+			assert(dictionary_[key]);
+			return dictionary_[key];
 		}
 	};
 

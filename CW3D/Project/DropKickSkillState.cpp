@@ -1,15 +1,15 @@
 #include "DropKickSkillState.h"
 
-ActionGame::DropKickSkillState::DropKickSkillState(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideStartFlg(false)
-	, m_Key()
-	, m_DelayInputFlg(false)
+ActionGame::CDropKickSkillState::CDropKickSkillState(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isStartCollide_(false)
+	, inputKey_()
+	, isDelayInput_(false)
 {
 }
 
-void ActionGame::DropKickSkillState::SetUp()
+void ActionGame::CDropKickSkillState::SetUp()
 {
 	auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_4);
 	m_SkillRef = std::dynamic_pointer_cast<AdditionalSkill>(skill);
@@ -19,33 +19,33 @@ void ActionGame::DropKickSkillState::SetUp()
 	}
 }
 
-void ActionGame::DropKickSkillState::Start()
+void ActionGame::CDropKickSkillState::Start()
 {
-	m_SkillAction = Actor()->GetAction<DropKickSkillAction>(GetKey());
-	m_Key = m_SkillRef.lock()->GetButton();
+	action_ = Actor()->GetAction<CDropKickSkillAction>(GetKey());
+	inputKey_ = m_SkillRef.lock()->GetButton();
 	Initialize();
 	if (m_SkillRef.lock()->IsDelayAdditional())
 	{
-		m_DelayInputFlg = true;
+		isDelayInput_ = true;
 		m_SkillRef.lock()->AddInput();
 	}
 	else
 	{
-		m_DelayInputFlg = false;
+		isDelayInput_ = false;
 	}
 }
 
-void ActionGame::DropKickSkillState::Execution()
+void ActionGame::CDropKickSkillState::Execution()
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndFrameTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -55,10 +55,10 @@ void ActionGame::DropKickSkillState::Execution()
 		}
 
 	}
-	for (auto& effect : m_pEffects)
+	for (auto& effect : effects_)
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
-		if (currentTime_ > m_Parameter.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndFrameTime)
 		{
 			if (!effect->IsStop())
 			{
@@ -68,15 +68,15 @@ void ActionGame::DropKickSkillState::Execution()
 		}
 	}
 
-	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 	{
-		collideStartFlg = true;
+		isStartCollide_ = true;
 	}
-	if (currentTime_ > m_Parameter.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndFrameTime)
 	{
-		if (m_NextInputFlg)
+		if (isNextInput_)
 		{
-			for (auto& shot : m_pShots)
+			for (auto& shot : shots_)
 			{
 				shot->SetShow(false);
 			}
@@ -97,10 +97,10 @@ void ActionGame::DropKickSkillState::Execution()
 
 	}
 
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::DropKickSkillState::InputExecution()
+void ActionGame::CDropKickSkillState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -108,18 +108,18 @@ void ActionGame::DropKickSkillState::InputExecution()
 	{
 		return;
 	}
-	if (!m_DelayInputFlg)
+	if (!isDelayInput_)
 	{
-		if (Input()->IsPush(m_Key) && !m_NextInputFlg)
+		if (Input()->IsPush(inputKey_) && !isNextInput_)
 		{
 			if (m_SkillRef.lock()->IsAdditional())
 			{
-				m_NextInputFlg = true;
+				isNextInput_ = true;
 				m_SkillRef.lock()->AddInput();
 			}
 		}
 	}
-	if (currentTime_ > m_Parameter.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndFrameTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{
@@ -145,35 +145,35 @@ void ActionGame::DropKickSkillState::InputExecution()
 			}
 		}
 	}
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::DropKickSkillState::End()
+void ActionGame::CDropKickSkillState::End()
 {
-	m_SkillAction->End();
-	AttackBaseState::End();
+	action_->End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::DropKickSkillState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CDropKickSkillState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::DropKickSkillState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CDropKickSkillState::GetKey() const
 {
 	return STATE_KEY_DROPKICK_SKILL;
 }
 
-void ActionGame::DropKickSkillState::Initialize()
+void ActionGame::CDropKickSkillState::Initialize()
 {
-	collideStartFlg = false;
-	AttackBaseState::Start();
-	m_SkillAction->Start();
+	isStartCollide_ = false;
+	CAttackBaseState::Start();
+	action_->Start();
 	CreateShotAABB();
 	CreateEffect();
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_4)->GetDamage() * 0.01f);
 		shot->SetDamage(damage);
 	}
-	m_SkillAction->Move(Actor()->IsReverse() ? -1.0f : 1.0f);
+	action_->Move(Actor()->IsReverse() ? -1.0f : 1.0f);
 }

@@ -1,26 +1,16 @@
 #include "IdleMotionAction.h"
 
-ActionGame::IdleMotionAction::IdleMotionAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::IdleMotionAction::IdleMotionAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
 void ActionGame::IdleMotionAction::Start()
 {
+	CBaseAction::Start();
 
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(180), 0.2f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(0), 0.2f);
-	}
+	CBaseAction::SetRotation();
 }
 
 void ActionGame::IdleMotionAction::Execution()
@@ -33,9 +23,10 @@ void ActionGame::IdleMotionAction::End()
 
 void ActionGame::IdleMotionAction::Acceleration(float x, float z)
 {
-	Velocity()->Acceleration(x * m_Parameter.velocity.x,
-		z * m_Parameter.velocity.z);
+	Velocity()->Acceleration(x * parameter_.velocity.x,
+		z * parameter_.velocity.z);
 }
+
 
 const ActionGame::ActionKeyType ActionGame::IdleMotionAction::GetKey() const
 {

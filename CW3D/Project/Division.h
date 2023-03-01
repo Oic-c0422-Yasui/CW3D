@@ -18,18 +18,18 @@ namespace ActionGame
 		//区画データ
 		struct DIVISION_DATA
 		{
-			ClearTermArray	ClearTerms;					//クリア条件
+			ClearTerm::ClearTermArray	ClearTerms;		//クリア条件
 			EnemyBuildParameterArrayPtr EnemysParam;	//敵生成パラメータ
 			Spawner::EnemySpawnerArrayPtr EnemySpawners;	//敵スポナー
-			int EnemyCount;								//生成する敵の数
+			size_t EnemyCount;								//生成する敵の数
 			std::vector<ObjectPtr> Objects;				//区画オブジェクト
-			int ObjectCount;							//区画オブジェクトの数
+			size_t ObjectCount;							//区画オブジェクトの数
 
 			float width;
 		};
 	private:
-		DIVISION_DATA m_Data;
-		bool m_ClearFlg;
+		DIVISION_DATA data_;
+		bool isClear_;
 	public:
 		CDivision(DIVISION_DATA data);
 		~CDivision();
@@ -53,7 +53,7 @@ namespace ActionGame
 		*/
 		const EnemyBuildParameterArrayPtr& GetEnemysParam()
 		{
-			return m_Data.EnemysParam;
+			return data_.EnemysParam;
 		}
 
 		/*
@@ -62,7 +62,7 @@ namespace ActionGame
 		*/
 		const Spawner::EnemySpawnerArrayPtr& GetEnemySpawners()
 		{
-			return m_Data.EnemySpawners;
+			return data_.EnemySpawners;
 		}
 
 		/*
@@ -72,26 +72,26 @@ namespace ActionGame
 		*/
 		const ObjectPtr& GetObj(size_t id)
 		{
-			assert(m_Data.Objects[id]);
-			return m_Data.Objects[id];
+			assert(data_.Objects[id]);
+			return data_.Objects[id];
 		}
 
 		/*
 		* @brief	区画オブジェクト数取得
 		* @return	区画オブジェクト数
 		*/
-		int GetObjCount() const noexcept
+		size_t GetObjCount() const noexcept
 		{
-			return m_Data.ObjectCount;
+			return data_.ObjectCount;
 		}
 
 		/*
 		* @brief	生成する敵の数取得
 		* @return	生成する敵の数
 		*/
-		int GetEnemyCount() const noexcept
+		size_t GetEnemyCount() const noexcept
 		{
-			return m_Data.EnemyCount;
+			return data_.EnemyCount;
 		}
 
 		/*
@@ -108,7 +108,7 @@ namespace ActionGame
 		*/
 		void SetShowObjects(bool isShow) noexcept
 		{
-			for (auto& object : m_Data.Objects)
+			for (auto& object : data_.Objects)
 			{
 				object->SetShow(isShow);
 			}
@@ -119,7 +119,7 @@ namespace ActionGame
 		* @param	provider	クリア条件に必要なパラメータを提供するプロバイダ
 		* @return	true　ならクリア
 		*/
-		bool IsClear(const ClearTermProviderPtr& provider);
+		bool IsClear(const ClearTerm::ProviderPtr& provider);
 	};
 
 	using DivisionPtr = std::shared_ptr<CDivision>;

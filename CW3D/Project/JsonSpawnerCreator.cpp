@@ -21,12 +21,13 @@ Spawner::EnemySpawnerPtr Spawner::JsonSpawnerCreator::Create(nlohmann::json& os)
 	std::string typeName;
 	os["Type"].get_to(typeName);
 
-	Spawner::SpawnerBuilderDictionary dictionary;
+	Spawner::CBuilderDictionary dictionary;
 
-	auto& dicValue = dictionary.Get(typeName);
+	//辞書からビルダーを取得
+	auto builder = dictionary.Get(typeName);
 
-	
-	EnemySpawnerPtr	spawner = dicValue->Create(os);
+	//ビルダーからスポナーを作成
+	auto spawner = builder->Create(os);
 
 	return spawner;
 }

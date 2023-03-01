@@ -9,7 +9,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ステート基底クラス
 	 */
-	class State : public IState
+	class CState : public IState
 	{
 	private:
 
@@ -43,7 +43,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		State()
+		CState()
 			: actor_()
 			, stateMachine_()
 			, input_() {
@@ -100,7 +100,7 @@ namespace ActionGame {
 		 */
 		template < typename T, typename... _Args >
 		static std::shared_ptr< T > Create(ActorPtr actor, Input::InputPtr input, _Args&& ... args) {
-			if (!std::is_base_of<State, T >::value)
+			if (!std::is_base_of<CState, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}

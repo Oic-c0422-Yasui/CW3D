@@ -4,7 +4,7 @@ ActionGame::AdditionalSkill::AdditionalSkill()
 
 	: Skill()
 	, m_AddStartTime(0.0f)
-	, m_AddCT(0.0f)
+	, addCT_(0.0f)
 	, m_AddCount(0)
 	, m_AddFlg(false)
 	, m_DelayAddFlg(false)
@@ -33,7 +33,7 @@ void ActionGame::AdditionalSkill::Reset()
 {
 	Skill::Reset();
 	m_AddStartTime = 0.0f;
-	m_AddCT = 0.0f;
+	addCT_ = 0.0f;
 	m_AddCount = 0;
 	m_AddFlg = false;
 	m_DelayAddFlg = false;
@@ -41,7 +41,7 @@ void ActionGame::AdditionalSkill::Reset()
 
 void ActionGame::AdditionalSkill::Update()
 {
-	if (!m_StartFlg)
+	if (!isStart_)
 	{
 		return;
 	}
@@ -53,17 +53,17 @@ void ActionGame::AdditionalSkill::Update()
 			if (!m_AddFlg)
 			{
 				m_AddFlg = true;
-				m_AddCT = m_AddSkillData->AddMaxCT.Get();
+				addCT_ = m_AddSkillData->AddMaxCT.Get();
 				m_DelayAddFlg = false;
 			}
 		}
 	}
-	else if (m_AddCT > 0.0f)
+	else if (addCT_ > 0.0f)
 	{
-		m_AddCT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		addCT_ -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 
-	if (m_AddCT <= 0.0f)
+	if (addCT_ <= 0.0f)
 	{
 		m_AddFlg = false;
 		Skill::AddTimerAndResetFlg();

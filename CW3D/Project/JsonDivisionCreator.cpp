@@ -38,7 +38,7 @@ using namespace ActionGame;
 			CDivision::DIVISION_DATA data{};
 
 			//ƒNƒŠƒAğŒ¶¬
-			JsonClearTermCreator clearTermCreator;
+			ClearTerm::JsonClearTermCreator clearTermCreator;
 
 			data.ClearTerms = clearTermCreator.Create(division["ClearTerms"]);
 

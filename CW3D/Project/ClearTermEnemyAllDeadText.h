@@ -1,48 +1,48 @@
 #pragma once
 #include "ClearTermText.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
-    class ClearTermEnemyAllDeadText : public ClearTermText
+    class CEnemyAllDeadText : public CClearTermText
     {
     private:
-        int m_EnemyCount;
-        int m_EnemyMaxCount;
-        Vector2 m_DescriptionPos;
-        Vector2 m_ClearTermPos;
+        size_t enemyCount_;
+        size_t enemyMaxCount_;
+        Vector2 descriptionPos_;
+        Vector2 clearTermPos_;
     public:
-        ClearTermEnemyAllDeadText();
+        CEnemyAllDeadText();
 
         void Initialize() override;
         void Render() override;
 
         void SetEnemyCount(int count) 
         {
-            m_EnemyCount = count;
+            enemyCount_ = count;
         }
         void SetEnemyMaxCount(int count)
         {
-            m_EnemyMaxCount = count;
+            enemyMaxCount_ = count;
         }
         /*
        * @brief    説明描画位置を設定
        */
         void SetDescriptionPos(const Vector2& pos)
         {
-            m_DescriptionPos = pos;
+            descriptionPos_ = pos;
         }
         /*
         * @brief    クリア条件描画位置を設定
         */
         void SetClearTermPos(const Vector2& pos)
         {
-            m_ClearTermPos = pos;
+            clearTermPos_ = pos;
         }
 
 
     };
 
-    using ClearTermEnemyAllDeadTextPtr = std::shared_ptr<ClearTermEnemyAllDeadText>;
+    using EnemyAllDeadTextPtr = std::shared_ptr<CEnemyAllDeadText>;
 
 }
 

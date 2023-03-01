@@ -1,7 +1,7 @@
 #include "EnemyManager.h"
 
 ActionGame::EnemyManager::EnemyManager()
-	: m_Enemys(std::make_shared<EnemyArray>())
+	: enemyArray_(std::make_shared<EnemyArray>())
 {
 }
 
@@ -12,7 +12,7 @@ ActionGame::EnemyManager::~EnemyManager()
 
 void ActionGame::EnemyManager::Initialize()
 {
-	for (auto& enemy : *m_Enemys)
+	for (auto& enemy : *enemyArray_)
 	{
 		enemy->Initialize();
 	}
@@ -24,7 +24,7 @@ void ActionGame::EnemyManager::Update()
 	size_t enemyShowCount = 0;
 	size_t bossCount = 0;
 
-	for (auto& enemy : *m_Enemys)
+	for (auto& enemy : *enemyArray_)
 	{
 		enemy->Update();
 
@@ -44,6 +44,7 @@ void ActionGame::EnemyManager::Update()
 		else if ((!enemy->IsDead() && !enemy->IsShow()))
 		{
 			enemyCount++;
+
 			if (enemy->IsBoss())
 			{
 				bossCount++;
@@ -53,23 +54,24 @@ void ActionGame::EnemyManager::Update()
 		}
 	}
 
-	if (m_EnemyCount != enemyCount)
+	//カウントした値が前の値と変わっていれば値を反映
+	if (enemyCount_ != enemyCount)
 	{
-		m_EnemyCount.Set(enemyCount);
+		enemyCount_.Set(enemyCount);
 	}
-	if (m_EnemyShowCount != enemyShowCount)
+	if (showEnemyCount_ != enemyShowCount)
 	{
-		m_EnemyShowCount.Set(enemyShowCount);
+		showEnemyCount_.Set(enemyShowCount);
 	}
-	if (m_BossCount != bossCount)
+	if (bossCount_ != bossCount)
 	{
-		m_BossCount.Set(bossCount);
+		bossCount_.Set(bossCount);
 	}
 }
 
 void ActionGame::EnemyManager::Render()
 {
-	for (auto& enemy : *m_Enemys)
+	for (auto& enemy : *enemyArray_)
 	{
 		enemy->Render();
 	}
@@ -77,7 +79,7 @@ void ActionGame::EnemyManager::Render()
 
 void ActionGame::EnemyManager::RenderDebug()
 {
-	for (auto& enemy : *m_Enemys)
+	for (auto& enemy : *enemyArray_)
 	{
 		enemy->RenderDebug();
 	}
@@ -85,22 +87,22 @@ void ActionGame::EnemyManager::RenderDebug()
 
 void ActionGame::EnemyManager::Release()
 {
-	for (auto& enemy : *m_Enemys)
+	for (auto& enemy : *enemyArray_)
 	{
 		enemy->Release();
 	}
-	m_Enemys->clear();
-	m_Enemys.reset();
+	enemyArray_->clear();
+	enemyArray_.reset();
 }
 
 void ActionGame::EnemyManager::AddEnemy(const EnemyPtr& enemy)
 {
-	m_Enemys->push_back(enemy);
-	m_EnemyCount = m_Enemys->size();
-	m_EnemyMaxCount = m_Enemys->size();
+	enemyArray_->push_back(enemy);
+	enemyCount_ = enemyArray_->size();
+	enemyMaxCount_ = enemyArray_->size();
 	if (enemy->IsBoss())
 	{
-		m_BossMaxCount ++;
-		m_BossCount = m_BossMaxCount;
+		bossMaxCount_ ++;
+		bossCount_ = bossMaxCount_;
 	}
 }

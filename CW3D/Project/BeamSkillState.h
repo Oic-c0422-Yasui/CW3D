@@ -9,7 +9,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class BeamSkillState : public AttackBaseState
+	class CBeamSkillState : public CAttackBaseState
 	{
 	public:
 		/*
@@ -29,28 +29,28 @@ namespace ActionGame {
 			EffectCreateParameter EffectStatus;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		/** 移動アクション */
-		BeamSkillActionPtr			m_SkillAction;
+		BeamSkillActionPtr			action_;
 
 
-		bool collideStartFlg;
-		bool m_DelayInputFlg;
+		bool isStartCollide_;
+		bool isDelayInput_;
 
 
-		EffectCreateParameter m_EffectStatus;
+		EffectCreateParameter effectStatus_;
 
 		//初期化
 		void Initialize();
 	protected:
-		virtual const ShotAABB& GetCreateShotStatusAABB() override { return m_Parameter.AABBShotStatus; }
-		virtual const ShotOBB& GetCreateShotStatusOBB() override { return m_Parameter.OBBShotStatus; }
-		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return m_EffectStatus; }
+		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.AABBShotStatus; }
+		virtual const ShotOBB& GetCreateShotStatusOBB() override { return parameter_.OBBShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return effectStatus_; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		BeamSkillState(Parameter param);
+		CBeamSkillState(Parameter param);
 			
 
 		/**

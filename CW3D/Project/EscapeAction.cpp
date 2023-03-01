@@ -1,56 +1,49 @@
 #include "EscapeAction.h"
 #include "ParameterDefine.h"
 
-ActionGame::EscapeAction::EscapeAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CEscapeAction::CEscapeAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::EscapeAction::Start()
+void ActionGame::CEscapeAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
-	float rotateY = Transform()->GetRotateY();
-	if (Transform()->IsReverse())
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-	}
-	else
-	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-	}
+	CBaseAction::Start();
+	
+	Velocity()->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
+	
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::EscapeAction::Execution()
+void ActionGame::CEscapeAction::Execution()
 {
 }
 
-void ActionGame::EscapeAction::End()
+void ActionGame::CEscapeAction::End()
 {
 	EndThrough();
 }
 
-void ActionGame::EscapeAction::Move(float x, float z)
+void ActionGame::CEscapeAction::Move(float x, float z)
 {
-	Velocity()->SetVelocityX(x * m_Parameter.velocity.x);
-	Velocity()->SetVelocityZ(z * m_Parameter.velocity.z);
+	Velocity()->SetVelocityX(x * parameter_.velocity.x);
+	Velocity()->SetVelocityZ(z * parameter_.velocity.z);
 }
 
-void ActionGame::EscapeAction::StartThrough()
+void ActionGame::CEscapeAction::StartThrough()
 {
 	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = true;
 }
 
-void ActionGame::EscapeAction::EndThrough()
+void ActionGame::CEscapeAction::EndThrough()
 {
 	auto& isThroughCollision = ParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = false;
 }
 
-const ActionGame::ActionKeyType ActionGame::EscapeAction::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CEscapeAction::GetKey() const
 {
 	return STATE_KEY_ESCAPE;
 }

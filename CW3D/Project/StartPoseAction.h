@@ -1,12 +1,12 @@
 #pragma once
-#include "Action.h"
+#include "BaseAction.h"
 
 namespace ActionGame
 {
 	/**
 	 * @brief		開始ポーズアクション
 	 */
-	class StartPoseAction : public Action
+	class CStartPoseAction : public CBaseAction
 	{
 	public:
 		/**
@@ -14,8 +14,6 @@ namespace ActionGame
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 			//減速値
 			Vector3					decelerate;
 			float					gravity;
@@ -23,12 +21,12 @@ namespace ActionGame
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		StartPoseAction(Parameter param);
+		CStartPoseAction(BaseParameter baseParam, Parameter param);
 
 
 		/**
@@ -46,17 +44,12 @@ namespace ActionGame
 		 */
 		void End() override;
 
-		/*
-		* @brief		アニメーション開始
-		*/
-		void StartAnim();
-
 		/**
 		 * @brief		ステートキーの取得
 		 */
 		const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
-	using StartPoseActionPtr = std::shared_ptr<StartPoseAction>;
+	using StartPoseActionPtr = std::shared_ptr<CStartPoseAction>;
 	
 }

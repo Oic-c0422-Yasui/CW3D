@@ -1,28 +1,27 @@
 #include "DownAction.h"
 
-ActionGame::DownAction::DownAction(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CDownAction::CDownAction(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::DownAction::Start()
+void ActionGame::CDownAction::Start()
 {
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
+	CBaseAction::Start();
 
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+	Velocity()->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 }
 
-void ActionGame::DownAction::Execution()
-{
-}
-
-void ActionGame::DownAction::End()
+void ActionGame::CDownAction::Execution()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::DownAction::GetKey() const
+void ActionGame::CDownAction::End()
+{
+}
+
+const ActionGame::ActionKeyType ActionGame::CDownAction::GetKey() const
 {
 	return STATE_KEY_DOWN;
 }

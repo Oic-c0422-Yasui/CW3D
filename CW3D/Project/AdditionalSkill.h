@@ -11,7 +11,7 @@ namespace ActionGame
 	{
 	private:
 		float m_AddStartTime;
-		ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> >	m_AddCT;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> >	addCT_;
 		int		m_AddCount;
 		bool	m_AddFlg;
 		bool	m_DelayAddFlg;
@@ -41,7 +41,7 @@ namespace ActionGame
 		*/
 		void SetAddCT(float time) noexcept
 		{
-			m_AddCT = time;
+			addCT_ = time;
 		}
 
 		/*
@@ -84,7 +84,7 @@ namespace ActionGame
 
 		float GetAddCT() const noexcept
 		{
-			return m_AddCT.Get();
+			return addCT_.Get();
 		}
 		float GetAddMaxCT() const noexcept
 		{
@@ -112,7 +112,7 @@ namespace ActionGame
 		void SetSkillData(const SkillDataPtr& skill) override;
 		
 
-		ActionGame::IObservable<float>* GetAddCTSubject() { return &(m_AddCT.Get()); }
+		ActionGame::IObservable<float>* GetAddCTSubject() { return &(addCT_.Get()); }
 		ActionGame::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
 
 	};

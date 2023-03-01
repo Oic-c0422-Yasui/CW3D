@@ -12,89 +12,48 @@ namespace ActionGame
 	class CAdditionalSkillRender : public CSkillRender
 	{
 	private:
-		float m_AddCT;
-		float m_AddMaxCT;
+		float addCT_;
+		float addMaxCT_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CAdditionalSkillRender()
-			: CSkillRender()
-			, m_AddCT(0.0f)
-			, m_AddMaxCT(0.0f)
-		{
-
-		}
+		CAdditionalSkillRender();
+			
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~CAdditionalSkillRender() {
-			Release();
-		}
+		~CAdditionalSkillRender();
 
 		void SetAddCT(float ct)
 		{
-			m_AddCT = ct;
+			addCT_ = ct;
 		}
 
 		void SetAddMaxCT(float ct)
 		{
-			m_AddMaxCT = ct;
+			addMaxCT_ = ct;
 		}
 
-		void Load(const std::string& key)
-		{
-			CSkillRender::Load(key);
-
-		}
-
-		void Initialize(const Vector2& pos)
-		{
-			CSkillRender::Initialize(pos);
-		}
+		/**
+		 * @brief		読み込み
+		 */
+		bool Load(const std::string& key) override;
+		
+		/**
+		 * @brief		初期化
+		 */
+		void Initialize(const Vector2& pos)  override;
 
 
 		/**
-		 * @brief		管理スコア初期化
+		 * @brief		描画
 		 */
-		void Render() {
+		void Render() override;
 
-			float percent = m_CT / m_MaxCT;
-			percent = min(percent, 1.0f);
-			float addPercent = m_AddCT / m_AddMaxCT;
-			addPercent = min(addPercent, 1.0f);
-			m_pUsedSKillFrame->Render(position_.x, position_.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
-			CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * percent, m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
-			m_pUsedSKillFrame->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
-
-
-			if (m_AddCT > 0.0f)
-			{
-				CRectangle rect(0, m_pUsedSKillFrame->GetHeight() * (1.0f - addPercent), m_pUsedSKillFrame->GetWidth(), m_pUsedSKillFrame->GetHeight());
-				m_pSKillFrame->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
-			}
-			if (m_CanUseFlg)
-			{
-				m_pSKillFrame->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
-			}
-
-			if (m_AddCT > 0.0f)
-			{
-				RenderStrCT(m_AddCT);
-			}
-			else
-			{
-				RenderStrCT(m_CT);
-			}
-
-		}
-
-		void Release(void) {
-			m_pSKillFrame.reset();
-			m_pFont.reset();
-		}
+		void Release() override;
 	};
 
 	using AdditionalSkillRenderPtr = std::shared_ptr<CAdditionalSkillRender>;

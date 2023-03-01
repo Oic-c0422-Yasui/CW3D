@@ -1,6 +1,29 @@
 #include "MoveStateAI.h"
 
-void ActionGame::MoveStateAI::Update()
+ActionGame::CMoveStateAI::CMoveStateAI(Vector3 vigilangeRange, Vector3 attackRange, int timing)
+	: CStateAI()
+	, currentLostTime(0)
+	, isAttack(false)
+	, attackRange_(attackRange)
+	, vigilangeRange_(vigilangeRange)
+	, attackTiming_(timing)
+{
+}
+
+void ActionGame::CMoveStateAI::RegisterKey()
+{
+	Input()->AddKey(INPUT_KEY_HORIZONTAL);
+	Input()->AddKey(INPUT_KEY_VERTICAL);
+	Input()->AddKey(INPUT_KEY_ATTACK);
+}
+
+void ActionGame::CMoveStateAI::Start()
+{
+	currentLostTime = 0;
+	isAttack = false;
+}
+
+void ActionGame::CMoveStateAI::Update()
 {
 	//プレイヤー取得
 	const auto& target = ServiceLocator< CPlayer >::GetService();
@@ -8,7 +31,7 @@ void ActionGame::MoveStateAI::Update()
 	//警戒ボックス
 	CAABB collider;
 	collider.SetPosition(transform->GetPosition());
-	collider.Size = m_VigilangeRange;
+	collider.Size = vigilangeRange_;
 	
 	//警戒範囲内にプレイヤーがいなくなるとカウントして一定後に停止
 	if (!CCollision::Collision(target->GetCollider(), collider))
@@ -50,16 +73,13 @@ void ActionGame::MoveStateAI::Update()
 	sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
 
 	//攻撃ボックス
-	collider.Size = m_AttackRange;
-	//攻撃範囲内に入ってきたら攻撃
-	/*if (!attackFlg)
-	{*/
+	collider.Size = attackRange_;
 	if (CCollision::Collision(target->GetCollider(), collider))
 	{
-		if (CUtilities::Random(m_AttackTiming) == 0)
+		if (CUtilities::Random(attackTiming_) == 0)
 		{
 			Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
-			attackFlg = true;
+			isAttack = true;
 		}
 	}
 	else
@@ -67,6 +87,5 @@ void ActionGame::MoveStateAI::Update()
 		Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
 		Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
 	}
-	//}
 
 }

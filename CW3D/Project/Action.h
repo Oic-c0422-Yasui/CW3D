@@ -13,20 +13,20 @@ namespace ActionGame {
 	class CAction : public IAction
 	{
 	private:
-		/* 姿勢クラス */
-		TransformPtr					m_Transform;
+		// 姿勢管理クラス
+		TransformPtr					transform_;
 
-		/* 速度クラス */
+		// 速度管理クラス 
 		VelocityPtr						velocity_;
 
-		/* アニメーションクラス */
-		AnimationStatePtr				m_Animation;
+		// アニメーションクラス 
+		AnimationStatePtr				animation_;
 
-		/* パラメーター情報クラス */
-		AnyParameterMapPtr				m_Parameters;
+		// パラメータ情報クラス
+		AnyParameterMapPtr				parameters_;
 
-		/* スキル操作クラス */
-		SkillControllerPtr				m_SkillController;
+		// スキル操作クラス
+		SkillControllerPtr				skillController_;
 		
 
 		/**
@@ -34,7 +34,7 @@ namespace ActionGame {
 		 */
 		void SetTransform(TransformPtr transform) final 
 		{ 
-			m_Transform = transform;
+			transform_ = transform;
 		}
 
 		/**
@@ -50,7 +50,7 @@ namespace ActionGame {
 		// */
 		void SetAnimation(AnimationStatePtr animation)  
 		{ 
-			m_Animation = animation; 
+			animation_ = animation; 
 		}
 
 		/**
@@ -58,7 +58,7 @@ namespace ActionGame {
 		 */
 		void SetParameterMap(const AnyParameterMapPtr& parameter) final 
 		{ 
-			m_Parameters = parameter; 
+			parameters_ = parameter; 
 		}
 
 		/**
@@ -66,26 +66,31 @@ namespace ActionGame {
 		 */
 		void SetSkillController(const SkillControllerPtr & skill) final 
 		{ 
-			m_SkillController = skill; 
+			skillController_ = skill; 
 		}
 
 	protected:
 		/** privateメンバ取得専用 */
-		TransformPtr Transform() { return m_Transform; }
+		//姿勢クラス
+		TransformPtr Transform() { return transform_; }
+		//速度クラス
 		VelocityPtr	 Velocity()	 { return velocity_; }
-		AnimationStatePtr AnimationState() { return m_Animation; }
-		AnyParameterMapPtr ParameterMap() { return m_Parameters; }
-		SkillControllerPtr SkillController() { return m_SkillController; }
+		//アニメーションクラス
+		AnimationStatePtr AnimationState() { return animation_; }
+		//パラメータ情報クラス
+		AnyParameterMapPtr ParameterMap() { return parameters_; }
+		//スキル操作クラス
+		SkillControllerPtr SkillController() { return skillController_; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		CAction()
-			: m_Transform()
+			: transform_()
 			, velocity_()
-			, m_Animation()
-			, m_Parameters()
-			, m_SkillController()
+			, animation_()
+			, parameters_()
+			, skillController_()
 		{
 		}
 

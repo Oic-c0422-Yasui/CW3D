@@ -7,13 +7,13 @@
 #include	"ClearTermBuilderDictionary.h"
 
 
-namespace ActionGame {
+namespace ClearTerm {
 	
 
 	class JsonClearTermCreator
 	{
 	private:
-		ClearTermBuilderDictionary dictionary_;
+		CBuilderDictionary dictionary_;
 	public:
 		/**
 		 * @brief		コンストラクタ

@@ -17,16 +17,11 @@ namespace ActionGame
 	{
 	public:
 		/**
-		 * @brief		デストラクタ
-		 */
-		virtual ~ZombieAICreator() = default;
-
-		/**
 		 * @brief		コンストラクタ
 		 */
 		CharacterAIPtr Create(const ActorPtr& actor,
 			const StateMachinePtr& machine,
-			const StateInputPtr& input) override;
+			const Input::StateInputPtr& input) override;
 	};
 
 	

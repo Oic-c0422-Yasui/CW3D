@@ -1,18 +1,16 @@
 #include "ClearTermEnduranceTime.h"
 #include "TimeScaleController.h"
 
-ActionGame::ClearTermEnduranceTime::ClearTermEnduranceTime(float time)
-    :   m_EnduranceTime(time)
+ClearTerm::CEnduranceTime::CEnduranceTime(float time)
+    :   enduranceTime_(time)
 {
 }
 
-bool ActionGame::ClearTermEnduranceTime::IsClear(const ClearTermProviderPtr& provider)
+bool ClearTerm::CEnduranceTime::IsClear(const ClearTerm::ProviderPtr& provider)
 {
 
-    if (provider->GetDivisionTime() >= m_EnduranceTime)
+    if (provider->GetDivisionTime() >= enduranceTime_)
     {
-        float t = provider->GetDivisionTime();
-
         return true;
     }
 

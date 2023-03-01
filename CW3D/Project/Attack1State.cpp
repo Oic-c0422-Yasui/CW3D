@@ -2,33 +2,33 @@
 
 using namespace ActionGame;
 
-ActionGame::Attack1State::Attack1State(Parameter param)
-	: AttackBaseState()
-	, m_Parameter(param)
-	, collideStartFlg(false)
+ActionGame::CAttack1State::CAttack1State(Parameter param)
+	: CAttackBaseState()
+	, parameter_(param)
+	, isStartCollide_(false)
 {
 }
 
-void ActionGame::Attack1State::Start()
+void ActionGame::CAttack1State::Start()
 {
-	m_Attack1Action = Actor()->GetAction<Attack1Action>(GetKey());
-	collideStartFlg = false;
-	AttackBaseState::Start();
+	action_ = Actor()->GetAction<CAttack1Action>(GetKey());
+	isStartCollide_ = false;
+	CAttackBaseState::Start();
 
-	m_Attack1Action->Start();
+	action_->Start();
 
 	//当たり判定用の弾作成
 	CreateShotAABB();
 
 }
 
-void ActionGame::Attack1State::Execution() 
+void ActionGame::CAttack1State::Execution() 
 {
 
-	for (auto& shot : m_pShots)
+	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 
@@ -39,26 +39,26 @@ void ActionGame::Attack1State::Execution()
 		}
 
 	}
-	if (currentTime_ >= m_Parameter.CollideStartFrameTime && !collideStartFlg)
+	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 	{
 		CreateEffect();
-		collideStartFlg = true;
+		isStartCollide_ = true;
 	}
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
 		ChangeState(STATE_KEY_IDLE);
 	}
-	else if (m_NextInputFlg)
+	else if (isNextInput_)
 	{
-		if (Actor()->GetAnimationState()->GetTime() > m_Parameter.NextInputFrameTime)
+		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputFrameTime)
 		{
 			ChangeState(STATE_KEY_ATTACK2);
 		}
 	}
-	AttackBaseState::Execution();
+	CAttackBaseState::Execution();
 }
 
-void ActionGame::Attack1State::InputExecution()
+void ActionGame::CAttack1State::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -68,22 +68,22 @@ void ActionGame::Attack1State::InputExecution()
 	}
 	if (Input()->IsPush(INPUT_KEY_ATTACK))
 	{
-		m_NextInputFlg = true;
+		isNextInput_ = true;
 	}
 
-	AttackBaseState::InputExecution();
+	CAttackBaseState::InputExecution();
 }
 
-void ActionGame::Attack1State::End()
+void ActionGame::CAttack1State::End()
 {
-	AttackBaseState::End();
+	CAttackBaseState::End();
 }
 
-void ActionGame::Attack1State::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CAttack1State::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const StateKeyType ActionGame::Attack1State::GetKey() const
+const StateKeyType ActionGame::CAttack1State::GetKey() const
 {
 	return STATE_KEY_ATTACK1;
 }

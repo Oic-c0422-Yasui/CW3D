@@ -10,8 +10,6 @@ namespace ActionGame
 
 	class JsonEnemyStatusLoader
 	{
-	private:
-
 	public:
 		/**
 		 * @brief		コンストラクタ

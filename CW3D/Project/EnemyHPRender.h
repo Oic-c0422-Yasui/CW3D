@@ -8,14 +8,14 @@ namespace ActionGame
 	{
 	protected:
 		//åªç›ÇÃï`âÊHP
-		float				m_CurrentHPPercent;
+		float				currentHPPercent_;
 		//åªç›ÇÃï`âÊÉQÅ[ÉW
-		float				m_CurrentHPGaugePercent;
+		float				currentHPGaugePercent_;
 
-		int m_HP;
-		int m_MaxHP;
+		int HP_;
+		int maxHP_;
 
-		bool	m_ShowFlg;
+		bool	isShow_;
 
 	public:
 		/**
@@ -50,25 +50,23 @@ namespace ActionGame
 
 		virtual void SetHP(int hp)
 		{
-			m_HP = hp;
+			HP_ = hp;
 		}
 
 		virtual void SetMaxHP(int hp)
 		{
-			m_MaxHP = hp;
+			maxHP_ = hp;
 		}
 
 		bool IsShow()
 		{
-			return m_ShowFlg;
+			return isShow_;
 		}
 
 		void SetShow(bool isShow)
 		{
-			m_ShowFlg = isShow;
+			isShow_ = isShow;
 		}
-
-
 
 	};
 

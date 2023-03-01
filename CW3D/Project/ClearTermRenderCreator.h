@@ -2,13 +2,13 @@
 #include "IClearTerm.h"
 #include "ClearTermPresenter.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	class ClearTermRenderCreator
 	{
 	public:
 
-		static ClearTermTextPtr Create(EnemyManager& manager,CTimer& timer,ClearTermArray& clearTermArray)
+		static ClearTermTextPtr Create(ActionGame::EnemyManager& manager, ActionGame::CTimer& timer,ClearTermArray& clearTermArray)
 		{
 			std::stringstream sstream;
 
@@ -21,20 +21,20 @@ namespace ActionGame
 
 			if (termType == "AllDead")
 			{
-				ClearTermEnemyAllDeadTextPtr allDead = std::make_shared<ClearTermEnemyAllDeadText>();
-				ClearTermPresenter::Present(manager, allDead);
+				EnemyAllDeadTextPtr allDead = std::make_shared<CEnemyAllDeadText>();
+				CPresenter::Present(manager, allDead);
 				return allDead;
 			}
 			else if (termType == "EnduranceTime")
 			{
-				ClearTermEnduranceTimeTextPtr renderer = std::make_shared<ClearTermEnduranceTimeText>();
-				ClearTermPresenter::Present(timer, renderer);
+				EnduranceTimeTextPtr renderer = std::make_shared<CEnduranceTimeText>();
+				CPresenter::Present(timer, renderer);
 				return renderer;
 			}
 			else if (termType == "AllDead_EnduranceTime")
 			{
-				ClearTermAllDeadAndEnduranceTextPtr renderer = std::make_shared<ClearTermAllDeadAndEnduranceText>();
-				ClearTermPresenter::Present(manager,timer, renderer);
+				AllDeadAndEnduranceTextPtr renderer = std::make_shared<CAllDeadAndEnduranceText>();
+				CPresenter::Present(manager,timer, renderer);
 				return renderer;
 			}
 

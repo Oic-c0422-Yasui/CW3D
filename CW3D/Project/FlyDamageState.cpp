@@ -1,24 +1,24 @@
 #include "FlyDamageState.h"
 #include "ParameterDefine.h"
 
-ActionGame::FlyDamageState::FlyDamageState()
-	: State()
+ActionGame::CFlyDamageState::CFlyDamageState()
+	: CState()
 {
 }
 
-void ActionGame::FlyDamageState::Start()
+void ActionGame::CFlyDamageState::Start()
 {
-	m_DamageAction = Actor()->GetAction<CFlyDamageAction>(GetKey());
-	m_DamageAction->Start();
+	action_ = Actor()->GetAction<CFlyDamageAction>(GetKey());
+	action_->Start();
 }
 
-void ActionGame::FlyDamageState::Execution()
+void ActionGame::CFlyDamageState::Execution()
 {
-	m_DamageAction->Execution();
+	action_->Execution();
 
 	if (Actor()->GetTransform()->GetPositionY() <= 0)
 	{
-		auto& hp = Actor()->GetParameterMap()->Get<ActionGame::ReactiveParameter<int>>(PARAMETER_KEY_HP);
+		auto& hp = Actor()->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
 		if (hp <= 0)
 		{
 			ChangeState(STATE_KEY_DEAD);
@@ -31,20 +31,20 @@ void ActionGame::FlyDamageState::Execution()
 	}
 }
 
-void ActionGame::FlyDamageState::InputExecution()
+void ActionGame::CFlyDamageState::InputExecution()
 {
 }
 
-void ActionGame::FlyDamageState::End()
+void ActionGame::CFlyDamageState::End()
 {
-	m_DamageAction->End();
+	action_->End();
 }
 
-void ActionGame::FlyDamageState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CFlyDamageState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::FlyDamageState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CFlyDamageState::GetKey() const
 {
 	return STATE_KEY_FLY_DAMAGE;
 }

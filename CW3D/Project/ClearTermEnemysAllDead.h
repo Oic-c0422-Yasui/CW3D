@@ -1,18 +1,16 @@
 #pragma once
 #include "IClearTerm.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	ƒNƒŠƒAğŒ(“G‚ğ‚·‚×‚Ä“|‚·)
 	*/
-	class ClearTermEnemysAllDead : public IClearTerm
+	class CEnemysAllDead : public IClearTerm
 	{
-	private:
-
 	public:
-		ClearTermEnemysAllDead();
-		bool IsClear(const ClearTermProviderPtr& provider) override;
+		CEnemysAllDead();
+		bool IsClear(const ProviderPtr& provider) override;
 		const std::string& GetType() const noexcept override { return "AllDead"; }
 	};
 }

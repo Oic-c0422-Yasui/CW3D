@@ -2,22 +2,22 @@
 
 using namespace ActionGame;
 
-FollowFixedCamera::FollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
+CFollowFixedCamera::CFollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos)
 	: CameraBase(pos, lookPos, offsetPos, offsetLookPos)
 {
 }
 
-FollowFixedCamera::~FollowFixedCamera()
+CFollowFixedCamera::~CFollowFixedCamera()
 {
 	animationData_.Release();
 }
 
-void FollowFixedCamera::Create()
+void CFollowFixedCamera::Create()
 {
 	CameraBase::Create();
 }
 
-void FollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
+void CFollowFixedCamera::Update(const Vector3& pos, const Vector3& lookPos)
 {
 	targetPos_ = pos + offsetPos_;
 	targetLookPos_ = lookPos + offsetLookPos_;

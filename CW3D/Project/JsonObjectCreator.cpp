@@ -31,8 +31,8 @@ using namespace ActionGame;
 		for (auto& object : os)
 		{
 			ObjectPtr obj;
-			CVector3 pos;
-			CVector3 size;
+			Vector3 pos;
+			Vector3 size;
 			object["PosX"].get_to(pos.x);
 			object["PosY"].get_to(pos.y);
 			object["PosZ"].get_to(pos.z);

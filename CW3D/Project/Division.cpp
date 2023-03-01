@@ -1,8 +1,8 @@
 #include "Division.h"
 
 ActionGame::CDivision::CDivision(DIVISION_DATA data)
-	: m_Data(data)
-	, m_ClearFlg(false)
+	: data_(data)
+	, isClear_(false)
 {
 }
 
@@ -13,8 +13,8 @@ ActionGame::CDivision::~CDivision()
 
 void ActionGame::CDivision::Initialize()
 {
-	m_ClearFlg = false;
-	for (auto& obj : m_Data.Objects)
+	isClear_ = false;
+	for (auto& obj : data_.Objects)
 	{
 		obj->Initialize();
 	}
@@ -22,7 +22,7 @@ void ActionGame::CDivision::Initialize()
 
 void ActionGame::CDivision::Update()
 {
-	for (auto& obj : m_Data.Objects)
+	for (auto& obj : data_.Objects)
 	{
 		obj->Update();
 	}
@@ -31,14 +31,14 @@ void ActionGame::CDivision::Update()
 
 void ActionGame::CDivision::Release()
 {
-	m_Data.Objects.clear();
-	m_Data.ClearTerms.clear();
-	m_Data.EnemysParam.reset();
+	data_.Objects.clear();
+	data_.ClearTerms.clear();
+	data_.EnemysParam.reset();
 }
 
-bool ActionGame::CDivision::IsClear(const ClearTermProviderPtr& provider)
+bool ActionGame::CDivision::IsClear(const ClearTerm::ProviderPtr& provider)
 {
-	for (auto& clearTerm : m_Data.ClearTerms)
+	for (auto& clearTerm : data_.ClearTerms)
 	{
 		bool isClear = clearTerm->IsClear(provider);
 		if (!isClear)

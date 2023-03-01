@@ -1,35 +1,35 @@
 #include "DeadState.h"
 
-ActionGame::DeadState::DeadState()
-	: State()
+ActionGame::CDeadState::CDeadState()
+	: CState()
 {
 }
 
-void ActionGame::DeadState::Start()
+void ActionGame::CDeadState::Start()
 {
-	m_DeadAction = Actor()->GetAction<DeadAction>(GetKey());
-	m_DeadAction->Start();
+	action_ = Actor()->GetAction<CDeadAction>(GetKey());
+	action_->Start();
 }
 
-void ActionGame::DeadState::Execution()
+void ActionGame::CDeadState::Execution()
 {
-	m_DeadAction->Execution();
+	action_->Execution();
 }
 
-void ActionGame::DeadState::InputExecution()
-{
-}
-
-void ActionGame::DeadState::End()
-{
-	m_DeadAction->End();
-}
-
-void ActionGame::DeadState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CDeadState::InputExecution()
 {
 }
 
-const ActionGame::StateKeyType ActionGame::DeadState::GetKey() const
+void ActionGame::CDeadState::End()
+{
+	action_->End();
+}
+
+void ActionGame::CDeadState::CollisionEvent(unsigned int type, std::any obj)
+{
+}
+
+const ActionGame::StateKeyType ActionGame::CDeadState::GetKey() const
 {
 	return STATE_KEY_DEAD;
 }

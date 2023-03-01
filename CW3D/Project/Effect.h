@@ -18,10 +18,12 @@ namespace ActionGame
 		Vector3 rotate;
 		float speed;
 	};
+	using EffectCreateParameterPtr = std::shared_ptr<EffectCreateParameter>;
+
 	/*
 	* @brief	エフェクト再生クラス
 	*/
-	class Effect
+	class CEffect
 	{
 	private:
 
@@ -34,8 +36,8 @@ namespace ActionGame
 
 	public:
 
-		Effect(Effekseer::Handle handle);
-		~Effect();
+		CEffect(Effekseer::Handle handle);
+		~CEffect();
 
 		/*
 		* @brief	初期化
@@ -88,6 +90,6 @@ namespace ActionGame
 	};
 
 	//ポインタ置き換え
-	using EffectPtr = std::shared_ptr<Effect>;
+	using EffectPtr = std::shared_ptr<CEffect>;
 }
 

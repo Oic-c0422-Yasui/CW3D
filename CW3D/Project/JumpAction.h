@@ -1,5 +1,5 @@
 #pragma once
-#include "Action.h"
+#include "BaseAction.h"
 
 
 namespace ActionGame {
@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動アクション
 	 */
-	class JumpAction : public CAction
+	class CJumpAction : public CBaseAction
 	{
 	public:
 		/**
@@ -15,8 +15,6 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
 
 
 			//加速値
@@ -29,13 +27,13 @@ namespace ActionGame {
 		};
 	private:
 		//パラメーター
-		Parameter					m_Parameter;
+		Parameter					parameter_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpAction(Parameter param);
+		CJumpAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
@@ -74,6 +72,6 @@ namespace ActionGame {
 		const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
-	using JumpActionPtr = std::shared_ptr<JumpAction>;
+	using JumpActionPtr = std::shared_ptr<CJumpAction>;
 }
 

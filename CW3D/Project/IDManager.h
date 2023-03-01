@@ -12,10 +12,10 @@ namespace ActionGame
 	class CMyID
 	{
 	private:
-		size_t Id;
+		size_t ID_;
 	public:
-		CMyID(size_t id) : Id(id) {}
-		size_t GetID()const noexcept { return Id; }
+		CMyID(size_t id) : ID_(id) {}
+		size_t GetID()const noexcept { return ID_; }
 	};
 
 	/*
@@ -26,24 +26,24 @@ namespace ActionGame
 		friend class Singleton<CIDManager>;
 	private:
 
-		size_t m_IDSeed;
+		size_t IDSeed_;
 
 		CIDManager()
 			: Singleton<CIDManager>()
 		{
-			m_IDSeed = 0;
+			IDSeed_ = 0;
 		}
 
 	public:
 
 		CMyID GetId()
 		{
-			return CMyID(m_IDSeed++);
+			return CMyID(IDSeed_++);
 		}
 
 		void Reset()
 		{
-			m_IDSeed = 0;
+			IDSeed_ = 0;
 		}
 	};
 }

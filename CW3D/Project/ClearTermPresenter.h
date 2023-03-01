@@ -7,24 +7,25 @@
 #include "Timer.h"
 #include "EnemyManager.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
-	class ClearTermPresenter
+	class CPresenter
 	{
 	public:
 
-		static void Present(EnemyManager& enemy,const ClearTermEnemyAllDeadTextPtr& view)
+		static void Present(ActionGame::EnemyManager& enemy,const ClearTerm::EnemyAllDeadTextPtr& view)
 		{
 			enemy.GetEnemyCountSubject().Subscribe([view](size_t count) {view->SetEnemyCount(count); });
 		}
 
-		static void Present(CTimer& timer, const ClearTermEnduranceTimeTextPtr& view)
+		static void Present(ActionGame::CTimer& timer, const ClearTerm::EnduranceTimeTextPtr& view)
 		{
 			timer.GetTimeSubject().Subscribe([view](float time) {view->SetCurrentTime(time); });
 			view->SetFinishTime(timer.GetTargetTime());
 		}
 
-		static void Present(EnemyManager& enemy, CTimer& timer, const ClearTermAllDeadAndEnduranceTextPtr& view)
+		static void Present(ActionGame::EnemyManager& enemy, ActionGame::CTimer& timer,
+			const ClearTerm::AllDeadAndEnduranceTextPtr& view)
 		{
 			Present(enemy, view->GetAllDeadTerm());
 		}	

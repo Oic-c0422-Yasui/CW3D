@@ -2,17 +2,17 @@
 #include "ClearTermBuilder.h"
 #include "ClearTermEnduranceTime.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	クリア条件ビルダー(時間耐久)
 	*/
-	class ClearTermEnduranceTimeBuilder : public IClearTermBuilder
+	class CEnduranceTimeBuilder : public ClearTerm::IClearTermBuilder
 	{
 	private:
-		float m_EnduranceTime;
+		float enduranceTime_;
 	public:
-		ClearTermEnduranceTimeBuilder();
+		CEnduranceTimeBuilder();
 
 		ClearTermPtr Create(nlohmann::json& os);
 		ClearTermPtr Create();

@@ -1,33 +1,32 @@
 #include "IdleState.h"
 
-ActionGame::IdleState::IdleState(Parameter param)
-	: State()
-	, time_(0.0f)
-	, m_Parameter(param)
+ActionGame::CIdleState::CIdleState(Parameter param)
+	: CState()
+	, timeScale_(0.0f)
+	, parameter_(param)
 {
 }
 
-void ActionGame::IdleState::Start()
+void ActionGame::CIdleState::Start()
 {
-	m_IdleAction = Actor()->GetAction<IdleAction>(GetKey());
-	time_ = 0.0f;
-	m_IdleAction->Start();
+	action_ = Actor()->GetAction<CIdleAction>(GetKey());
+	timeScale_ = 0.0f;
+	action_->Start();
 }
 
-void ActionGame::IdleState::Execution()
+void ActionGame::CIdleState::Execution()
 {
-	if (time_ < m_Parameter.idleTime)
+	if (timeScale_ < parameter_.idleTime)
 	{
-		time_ += CUtilities::GetFrameSecond();
+		timeScale_ += CUtilities::GetFrameSecond();
 	}
 	else
 	{
 		ChangeState(STATE_KEY_IDLE_MOTION);
-
 	}
 }
 
-void ActionGame::IdleState::InputExecution()
+void ActionGame::CIdleState::InputExecution()
 {
 	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
@@ -77,15 +76,15 @@ void ActionGame::IdleState::InputExecution()
 
 }
 
-void ActionGame::IdleState::End()
+void ActionGame::CIdleState::End()
 {
 }
 
-void ActionGame::IdleState::CollisionEvent(unsigned int type, std::any obj)
+void ActionGame::CIdleState::CollisionEvent(unsigned int type, std::any obj)
 {
 }
 
-const ActionGame::StateKeyType ActionGame::IdleState::GetKey() const
+const ActionGame::StateKeyType ActionGame::CIdleState::GetKey() const
 {
 	return STATE_KEY_IDLE;
 }

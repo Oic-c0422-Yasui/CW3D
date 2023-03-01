@@ -3,26 +3,26 @@
 #include "ClearTermEnduranceTimeText.h"
 #include "ClearTermEnemyAllDeadText.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 
-    class ClearTermAllDeadAndEnduranceText : public ClearTermText
+    class CAllDeadAndEnduranceText : public CClearTermText
     {
     private:
-        ClearTermEnemyAllDeadTextPtr allDead;
-        ClearTermEnduranceTimeTextPtr enduranceTime;
+        EnemyAllDeadTextPtr allDead;
+        EnduranceTimeTextPtr enduranceTime;
     public:
-        ClearTermAllDeadAndEnduranceText();
+        CAllDeadAndEnduranceText();
 
         void Initialize() override;
         void Render() override;
 
         float GetRenderHeight() {}
 
-        const ClearTermEnemyAllDeadTextPtr& GetAllDeadTerm() const noexcept { return allDead; }
+        const EnemyAllDeadTextPtr& GetAllDeadTerm() const noexcept { return allDead; }
     };
 
-    using ClearTermAllDeadAndEnduranceTextPtr = std::shared_ptr<ClearTermAllDeadAndEnduranceText>;
+    using AllDeadAndEnduranceTextPtr = std::shared_ptr<CAllDeadAndEnduranceText>;
 }
 
 

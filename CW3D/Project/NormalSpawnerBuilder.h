@@ -6,7 +6,7 @@ namespace Spawner
     class NormalSpawnerBuilder : public SpawnerBuilder
     {
     private:
-        float m_CycleTime;
+        float cycleTime_;
     public:
         NormalSpawnerBuilder();
 

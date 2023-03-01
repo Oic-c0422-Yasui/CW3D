@@ -3,16 +3,16 @@
 #include <vector>
 #include <string>
 
-namespace ActionGame
+namespace Task
 {
 	//タスクの優先順位（数字が低いほど優先される）
-	enum Task_Priority
+	enum class PRIORITY
 	{
-		TASK_EVENT,		//イベントタスク
-		TASK_MAIN1,		//メインタスク１
-		TASK_MAIN2,		//メインタスク２
-		TASK_MAIN3,		//メインタスク３
-		TASK_COLLISION,	//衝突タスク
+		EVENT,		//イベントタスク
+		MAIN1,		//メインタスク１
+		MAIN2,		//メインタスク２
+		MAIN3,		//メインタスク３
+		COLLISION,	//衝突タスク
 	};
 	//タスク関数
 	using Func = std::function<void()>;
@@ -21,21 +21,21 @@ namespace ActionGame
 	/*
 	* @brief	タスク処理を行う
 	*/
-	class Task
+	class CTask
 	{
 	private:
-		Task_Priority m_Priority;
-		Func m_Task;
-		std::string	m_Name;
-		bool	m_EndFlg;
+		PRIORITY priority_;
+		Func task_;
+		std::string	name_;
+		bool	isEnd_;
 	public:
 		/*
 		* @param	name	タスク名
 		* @param	pri		タスク優先順位（数字が低いほど優先順位が高い）
 		* @param	func	タスク関数
 		*/
-		Task(const std::string& name, Task_Priority pri, const Func& func);
-		~Task();
+		CTask(const std::string& name, PRIORITY pri, const Func& func);
+		~CTask();
 
 		/*
 		* @brief	タスク実行
@@ -46,18 +46,18 @@ namespace ActionGame
 		* @brief	優先順位取得
 		* @return	優先順位（数字が低いほど優先順位が高い）
 		*/
-		Task_Priority GetPriority() const noexcept
+		PRIORITY GetPriority() const noexcept
 		{
-			return m_Priority;
+			return priority_;
 		}
 
 		/*
 		* @brief	優先順位設定
 		* @param	pri	優先順位（数字が低いほど優先順位が高い）
 		*/
-		void SetPriority(Task_Priority pri) noexcept
+		void SetPriority(PRIORITY pri) noexcept
 		{
-			m_Priority = pri;
+			priority_ = pri;
 		}
 
 		/*
@@ -66,7 +66,7 @@ namespace ActionGame
 		*/
 		const std::string& GetName() const noexcept
 		{
-			return m_Name;
+			return name_;
 		}
 		/*
 		* @brief	タスクが終了したか？
@@ -74,19 +74,19 @@ namespace ActionGame
 		*/
 		bool IsEnd() const noexcept
 		{
-			return m_EndFlg;
+			return isEnd_;
 		}
 		/*
 		* @brief	タスクを終了する
 		*/
 		void End()  noexcept
 		{
-			m_EndFlg = true;
+			isEnd_ = true;
 		}
 
 	};
 	
-	using TaskPtr = std::shared_ptr<Task>;
+	using TaskPtr = std::shared_ptr<CTask>;
 	using TaskList = std::vector<TaskPtr>;
 }
 

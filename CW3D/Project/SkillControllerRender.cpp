@@ -12,6 +12,7 @@ CSkillControllerRender::CSkillControllerRender()
 
 CSkillControllerRender::~CSkillControllerRender()
 {
+	Release();
 }
 
 
@@ -19,8 +20,8 @@ CSkillControllerRender::~CSkillControllerRender()
 bool CSkillControllerRender::Load()
 {
 
-	m_pFrame = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "SkillUI");
-	m_pFont = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
+	frame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "SkillUI");
+	font_ = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
 	position_ = Vector2(582, 884);
 
 	FrameSetting();
@@ -31,7 +32,7 @@ bool CSkillControllerRender::Load()
 
 void CSkillControllerRender::Render()
 {
-	m_pFrame->Render(position_.x, position_.y);
+	frame_->Render(position_.x, position_.y);
 }
 
 void CSkillControllerRender::RenderDebug2D()
@@ -39,18 +40,17 @@ void CSkillControllerRender::RenderDebug2D()
 
 }
 
-void CSkillControllerRender::Release(void)
+void CSkillControllerRender::Release()
 {
-	m_pFrame.reset();
-	m_pSkill.reset();
-	m_pFont.reset();
+	frame_.reset();
+	font_.reset();
 }
 
 void CSkillControllerRender::RenderKeyName()
 {
 	for (int i = 0; i < SKILLMAX_COUNT; i++)
 	{
-		m_pFont->RenderString(m_SkillFrame[i].position.x - m_SkillFrame[i].rect.GetWidth() * 0.5f, m_SkillFrame[i].position.y - m_SkillFrame[i].rect.GetHeight() * 0.5f, m_SkillFrame[i].str);
+		font_->RenderString(skillFrame_[i].position.x - skillFrame_[i].rect.GetWidth() * 0.5f, skillFrame_[i].position.y - skillFrame_[i].rect.GetHeight() * 0.5f, skillFrame_[i].str);
 	}
 }
 
@@ -60,7 +60,7 @@ void CSkillControllerRender::FrameSetting()
 {
 	for (int i = 0; i < SKILLMAX_COUNT; i++)
 	{
-		m_SkillFrame[i].size = 50;
+		skillFrame_[i].size = 50;
 	}
 
 	int cnt = 0;
@@ -71,7 +71,7 @@ void CSkillControllerRender::FrameSetting()
 	{
 		for (int y = 0; y < SKILL_COLUMN_COUNT; y++)
 		{
-			m_SkillFrame[cnt].position = Vector2(736, y * 61 + 939);
+			skillFrame_[cnt].position = Vector2(736, y * 61 + 939);
 
 			cnt++;
 		}
@@ -81,7 +81,7 @@ void CSkillControllerRender::FrameSetting()
 	{
 		for (int y = 0; y < SKILL_COLUMN_COUNT; y++)
 		{
-			m_SkillFrame[cnt].position = Vector2(x * 63 + 852, y * 61 + 939);
+			skillFrame_[cnt].position = Vector2(x * 63 + 852, y * 61 + 939);
 			cnt++;
 		}
 	}
@@ -90,7 +90,7 @@ void CSkillControllerRender::FrameSetting()
 	{
 		for (int y = 0; y < SKILL_COLUMN_COUNT; y++)
 		{
-			m_SkillFrame[cnt].position = Vector2(x * 70 + 1282, y * 61 + 939);
+			skillFrame_[cnt].position = Vector2(x * 70 + 1282, y * 61 + 939);
 			cnt++;
 		}
 	}
@@ -98,9 +98,9 @@ void CSkillControllerRender::FrameSetting()
 	//“–‚½‚è”»’è—p‹éŒ`Ý’è
 	for (int i = 0; i < SKILLMAX_COUNT; i++)
 	{
-		Vector2 leftTop(m_SkillFrame[i].position.x - m_SkillFrame[i].size * 0.5f, m_SkillFrame[i].position.y - m_SkillFrame[i].size * 0.5f);
-		Vector2 rightButtom(m_SkillFrame[i].position.x + m_SkillFrame[i].size * 0.5f, m_SkillFrame[i].position.y + m_SkillFrame[i].size * 0.5f);
-		m_SkillFrame[i].rect = CRectangle(leftTop, rightButtom);
+		Vector2 leftTop(skillFrame_[i].position.x - skillFrame_[i].size * 0.5f, skillFrame_[i].position.y - skillFrame_[i].size * 0.5f);
+		Vector2 rightButtom(skillFrame_[i].position.x + skillFrame_[i].size * 0.5f, skillFrame_[i].position.y + skillFrame_[i].size * 0.5f);
+		skillFrame_[i].rect = CRectangle(leftTop, rightButtom);
 	}
 
 	SetName();
@@ -115,58 +115,58 @@ void CSkillControllerRender::SetName()
 	//ƒL[ƒ{[ƒh–¼Ý’è
 	int cnt = 0;
 
-	m_SkillFrame[cnt].str = "SHIFT";	//0
+	skillFrame_[cnt].str = "SHIFT";	//0
 	
 	cnt++;
-	m_SkillFrame[cnt].str = "SPACE";	//1
+	skillFrame_[cnt].str = "SPACE";	//1
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚p";		//2
+	skillFrame_[cnt].str = "‚p";		//2
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚`";		//3
+	skillFrame_[cnt].str = "‚`";		//3
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚v";		//4
+	skillFrame_[cnt].str = "‚v";		//4
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚r";		//5
+	skillFrame_[cnt].str = "‚r";		//5
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚d";		//6
+	skillFrame_[cnt].str = "‚d";		//6
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚c";		//7
+	skillFrame_[cnt].str = "‚c";		//7
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚q";		//8
+	skillFrame_[cnt].str = "‚q";		//8
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚e";		//9
+	skillFrame_[cnt].str = "‚e";		//9
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚s";		//10
+	skillFrame_[cnt].str = "‚s";		//10
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚b";		//11
+	skillFrame_[cnt].str = "‚b";		//11
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚f";		//12
+	skillFrame_[cnt].str = "‚f";		//12
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚u";		//13
+	skillFrame_[cnt].str = "‚u";		//13
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚P";		//14
+	skillFrame_[cnt].str = "‚P";		//14
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚R";		//15
+	skillFrame_[cnt].str = "‚R";		//15
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚Q";		//16
+	skillFrame_[cnt].str = "‚Q";		//16
 
 	cnt++;
-	m_SkillFrame[cnt].str = "‚S";		//17
+	skillFrame_[cnt].str = "‚S";		//17
 
 	//ƒL[‚ÌÀ•WÝ’è
 	keyIndexs[INPUT_KEY_SKILL1] = 7;

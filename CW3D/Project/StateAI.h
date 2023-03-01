@@ -7,7 +7,7 @@ namespace ActionGame
 	/**
 	 * @brief		AI処理
 	 */
-	class StateAI : public IStateAI
+	class CStateAI : public IStateAI
 	{
 	private:
 		//アクター
@@ -17,7 +17,7 @@ namespace ActionGame
 		StateMachinePtr				stateMachine_;
 
 		//入力クラス
-		StateInputPtr				input_;
+		Input::StateInputPtr				input_;
 
 		/**
 		 * @brief		アクター登録
@@ -35,12 +35,12 @@ namespace ActionGame
 		/**
 		 * @brief		入力登録
 		 */
-		void SetInput(const StateInputPtr& input) final { input_ = input; }
+		void SetInput(const Input::StateInputPtr& input) final { input_ = input; }
 	protected:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		StateAI()
+		CStateAI()
 			: actor_()
 			, stateMachine_()
 			, input_() {
@@ -49,7 +49,7 @@ namespace ActionGame
 		/** privateメンバ取得専用 */
 		const ActorPtr& Actor() { return actor_; }
 		const StateMachinePtr& StateMachine() { return stateMachine_; }
-		const StateInputPtr& Input() { return input_; }
+		const Input::StateInputPtr& Input() { return input_; }
 
 		/**
 		 * @brief		利用キーの登録
@@ -62,8 +62,8 @@ namespace ActionGame
 		 */
 		template < typename T, typename... _Args >
 		static std::shared_ptr< T > Create(const ActorPtr& actor, const StateMachinePtr& machine,
-			const StateInputPtr& input, _Args&& ... args) {
-			if (!std::is_base_of<StateAI, T >::value)
+			const Input::StateInputPtr& input, _Args&& ... args) {
+			if (!std::is_base_of<CStateAI, T >::value)
 			{
 				return std::shared_ptr<T>();
 			}

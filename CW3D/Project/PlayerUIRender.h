@@ -9,80 +9,43 @@
 namespace ActionGame
 {
 	/**
-	 * @brief		プレイヤーHPUI
+	 * @brief		プレイヤーUI
 	 */
 	class CPlayerUIRender
 	{
 	private:
-		PlayerHPRenderPtr m_HPRender;
-		SkillControllerRenderPtr m_SkillControllerRender;
-		SkillRenderContainerPtr m_SkillsRender;
-		UltimateGaugeUIRenderPtr m_UltGaugeRender;
+		PlayerHPRenderPtr HPRender_;
+		SkillControllerRenderPtr skillControllerRender_;
+		SkillRenderContainerPtr skillsRender_;
+		UltimateGaugeUIRenderPtr UltGaugeRender_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CPlayerUIRender()
-			: m_HPRender(std::make_shared<CPlayerHPRender>())
-			, m_SkillControllerRender(std::make_shared<CSkillControllerRender>())
-			, m_SkillsRender(std::make_shared<CSkillRenderContainer>())
-			, m_UltGaugeRender(std::make_shared<CUltimateGaugeRender>())
-		{
-
-		}
+		CPlayerUIRender();
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~CPlayerUIRender() {
-			Release();
-		}
+		~CPlayerUIRender();
 
 
-		void Load()
-		{
-			auto& player = ServiceLocator< CPlayer >::GetService();
-			m_SkillControllerRender->Load();
-			m_HPRender->Load();
-			m_SkillsRender->Load();
-			m_UltGaugeRender->Load();
-			
-			CUltGaugePresenter::Present(player, m_UltGaugeRender);
-		}
+		bool Load();
 
-		void Initialize()
-		{
-			auto GetPosition = [this](const std::string& key) { return m_SkillControllerRender->GetSkillPosition(key); };
-			m_SkillsRender->Initialize(GetPosition);
-		}
+		void Initialize();
 
 		const PlayerHPRenderPtr& GetHPRender() const noexcept
 		{
-			return m_HPRender;
+			return HPRender_;
 		}
 
 		/**
 		 * @brief		プレイヤーUI描画
 		 */
-		void Render() {
-			m_SkillControllerRender->Render();
-			m_SkillsRender->Render();
-			m_HPRender->Render();
-			m_UltGaugeRender->Render();
-			m_SkillControllerRender->RenderKeyName();
-		}
+		void Render();
 
-		void Release(void) {
-			m_SkillControllerRender->Release();
-			m_SkillControllerRender.reset();
-			m_SkillsRender->Release();
-			m_SkillsRender.reset();
-			m_HPRender->Release();
-			m_HPRender.reset();
-			m_UltGaugeRender->Release();
-			m_UltGaugeRender.reset();
-		}
+		void Release();
 
 	};
 

@@ -1,22 +1,22 @@
 #pragma once
 #include "ClearTermBuilder.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	クリア条件ビルダーの辞書
 	*/
-	class ClearTermBuilderDictionary
+	class CBuilderDictionary
 	{
 	private:
-		std::map<std::string, ClearTermBuilderPtr> dictionary;
+		std::map<std::string, BuilderPtr> dictionary_;
 	public:
-		ClearTermBuilderDictionary();
-		~ClearTermBuilderDictionary();
+		CBuilderDictionary();
+		~CBuilderDictionary();
 
-		const ClearTermBuilderPtr& Get(const std::string& key)
+		const BuilderPtr& Get(const std::string& key)
 		{
-			return dictionary[key];
+			return dictionary_[key];
 		}
 
 

@@ -142,7 +142,7 @@ namespace ActionGame
 			isSetRotate_ = true;
 		}
 
-		void SetGravityFlg(bool isGravity) noexcept {
+		void SetIsGravity(bool isGravity) noexcept {
 			isUseGravity_ = isGravity;
 		}
 

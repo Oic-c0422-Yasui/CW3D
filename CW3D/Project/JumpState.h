@@ -8,16 +8,16 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class JumpState : public State
+	class CJumpState : public CState
 	{
 	private:
 		/** 移動アクション */
-		JumpActionPtr			m_JumpAction;
+		JumpActionPtr			action_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		JumpState();
+		CJumpState();
 			
 
 		/**

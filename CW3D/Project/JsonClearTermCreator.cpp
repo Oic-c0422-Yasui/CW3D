@@ -1,13 +1,12 @@
 #include "JsonClearTermCreator.h"
 
-using namespace ActionGame;
 
-JsonClearTermCreator::JsonClearTermCreator()
+ClearTerm::JsonClearTermCreator::JsonClearTermCreator()
 	:dictionary_()
 {
 }
 
-ClearTermArray JsonClearTermCreator::Create(const std::string& name)
+ClearTerm::ClearTermArray ClearTerm::JsonClearTermCreator::Create(const std::string& name)
 {
 	std::ifstream ifs(name);
 	if (ifs.fail())
@@ -18,7 +17,7 @@ ClearTermArray JsonClearTermCreator::Create(const std::string& name)
 	return Create(os);
 }
 
-ClearTermArray JsonClearTermCreator::Create(nlohmann::json& os)
+ClearTerm::ClearTermArray ClearTerm::JsonClearTermCreator::Create(nlohmann::json& os)
 {
 	ClearTermArray	ClearTerms;
 	for (auto& str : os)
@@ -28,10 +27,11 @@ ClearTermArray JsonClearTermCreator::Create(nlohmann::json& os)
 		std::string typeName;
 		type["Name"].get_to(typeName);
 
-		auto& dicValue = dictionary_.Get(typeName);
+		//辞書からクリア条件のビルダーを取得
+		auto& builder = dictionary_.Get(typeName);
 
-		ClearTermPtr clearTerm;
-		clearTerm = dicValue->Create(type);
+		//クリア条件を生成
+		auto clearTerm = builder->Create(type);
 		ClearTerms.push_back(clearTerm);
 	}
 	return ClearTerms;

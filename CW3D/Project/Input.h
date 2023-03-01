@@ -28,7 +28,7 @@ namespace Input {
 				int				m_PadNo;
 				Type			type_;
 			};
-			std::vector<Key>	m_Key;
+			std::vector<Key>	inputKey_;
 			float				previousValue_;
 			float				currentValue_;
 			float				inputValue_;
@@ -36,7 +36,7 @@ namespace Input {
 			float				pushTime_;
 			int					m_PushCount;
 			KeyData()
-				: m_Key()
+				: inputKey_()
 				, previousValue_(0)
 				, currentValue_(0)
 				, inputValue_(0.5f)

@@ -4,14 +4,14 @@
 #include "ClearTermBossDeadBuilder.h"
 
 
-ActionGame::ClearTermBuilderDictionary::ClearTermBuilderDictionary()
+ClearTerm::CBuilderDictionary::CBuilderDictionary()
 {
-	dictionary["AllDead"] = std::make_shared<ClearTermEnemysAllDeadBuilder>();
-	dictionary["EnduranceTime"] = std::make_shared<ClearTermEnduranceTimeBuilder>();
-	dictionary["FixedDead"] = std::make_shared<ClearTermEnemysAllDeadBuilder>();
-	dictionary["BossDead"] = std::make_shared<ClearTermBossDeadBuilder>();
+	dictionary_["AllDead"] = std::make_shared<CEnemysAllDeadBuilder>();
+	dictionary_["EnduranceTime"] = std::make_shared<CEnduranceTimeBuilder>();
+	dictionary_["FixedDead"] = std::make_shared<CEnemysAllDeadBuilder>();
+	dictionary_["BossDead"] = std::make_shared<CBossDeadBuilder>();
 }
 
-ActionGame::ClearTermBuilderDictionary::~ClearTermBuilderDictionary()
+ClearTerm::CBuilderDictionary::~CBuilderDictionary()
 {
 }

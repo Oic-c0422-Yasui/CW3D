@@ -63,7 +63,7 @@ namespace ActionGame
 		///*
 		//* @brief	使用する必殺技ゲージ取得（通知用）
 		//*/
-		//ActionGame::ParameterHandle< ActionGame::ReactiveParameter<float> >& GettExpendGaugeParam()
+		//ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> >& GettExpendGaugeParam()
 		//{
 		//	return m_UltSkillData->ExpendGauge;
 		//}

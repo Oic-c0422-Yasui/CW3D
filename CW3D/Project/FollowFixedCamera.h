@@ -3,11 +3,11 @@
 
 namespace ActionGame
 {
-	class FollowFixedCamera : public CameraBase
+	class CFollowFixedCamera : public CameraBase
 	{
 	public:
-		FollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
-		~FollowFixedCamera();
+		CFollowFixedCamera(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
+		~CFollowFixedCamera();
 		void Create() override;
 		void Update(const Vector3& pos, const Vector3& lookPos) override;
 	};

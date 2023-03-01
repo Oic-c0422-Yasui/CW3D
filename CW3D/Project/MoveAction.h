@@ -1,5 +1,5 @@
 #pragma once
-#include "Action.h"
+#include "BaseAction.h"
 
 
 namespace ActionGame {
@@ -7,7 +7,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動アクション
 	 */
-	class MoveAction : public Action
+	class CMoveAction : public CBaseAction
 	{
 	public:
 		/**
@@ -15,54 +15,54 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
-			//アニメーションパラメーター
-			AnimParam				anim;
-
 			//減速値
 			Vector3					decelerate;
 			//加速値
 			Vector3					velocity;
 			Vector3					maxVelocity;
-
+			float					gravity;
 			float					maxGravity;
 		};
-	private:
+	protected:
 		//パラメーター
-		Parameter					m_Parameter;
-
-		int m_NowDirection;
-		enum tag_DIRECTION
+		Parameter					parameter_;
+		enum class DIRECTION
 		{
-			DIRECTION_RIGHT,
-			DIRECTION_RIGHTUP,
-			DIRECTION_RIGHTDOWN,
-			DIRECTION_LEFT,
-			DIRECTION_LEFTUP,
-			DIRECTION_LEFTDOWN,
+			RIGHT,
+			RIGHT_UP,
+			RIGHT_DOWN,
+			LEFT,
+			LEFT_UP,
+			LEFT_DOWN,
 		};
+		DIRECTION currentDirection_;
+
+		//向き初期化
+		void InitDirection();
+		//アクターの向きを変更する
+		void ChangeDirection();
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		MoveAction(Parameter param);
+		CMoveAction(BaseParameter baseParam, Parameter param);
 			
 
 		/**
 		 * @brief		アクション内の開始処理
 		 */
-		void Start() override;
+		virtual void Start() override;
 
 		/**
 		 * @brief		アクション内の実行処理
 		 */
-		void Execution() override;
+		virtual void Execution() override;
 
 		/**
 		 * @brief		アクション内の終了処理
 		 */
-		void End() override;
-
+		virtual void End() override;
 
 		/**
 		 * @brief		加速
@@ -71,15 +71,13 @@ namespace ActionGame {
 		 */
 		void Acceleration(float x, float z);
 
-
-
 		/**
 		 * @brief		ステートキーの取得
 		 */
-		const ActionKeyType GetKey() const override;
+		virtual const ActionKeyType GetKey() const override;
 	};
 	//ポインタ置き換え
-	using MoveActionPtr = std::shared_ptr<MoveAction>;
+	using MoveActionPtr = std::shared_ptr<CMoveAction>;
 
 }
 

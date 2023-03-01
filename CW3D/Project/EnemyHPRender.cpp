@@ -1,11 +1,11 @@
 #include "EnemyHPRender.h"
 
 ActionGame::EnemyHPRender::EnemyHPRender()
-	: m_CurrentHPPercent(1.0f)
-	, m_CurrentHPGaugePercent(1.0f)
-	, m_HP(0)
-	, m_MaxHP(0)
-	, m_ShowFlg(false)
+	: currentHPPercent_(1.0f)
+	, currentHPGaugePercent_(1.0f)
+	, HP_(0)
+	, maxHP_(0)
+	, isShow_(false)
 {
 }
 

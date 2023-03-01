@@ -1,61 +1,59 @@
 #include "TimeScale.h"
 
-ActionGame::TimeScale::TimeScale()
-	: time_(1.0f)
-	, m_ChangeFlg(false)
-	, m_ChangeTime(0.0f)
-	, m_Count(0)
+ActionGame::CTimeScale::CTimeScale()
+	: timeScale_(1.0f)
+	, isChange_(false)
+	, changeTime_(0.0f)
 	, currentTime_(0.0f)
-	, m_AnimDataArray()
+	, animDataArray_()
 {
 }
 
-void ActionGame::TimeScale::Update()
+void ActionGame::CTimeScale::Update()
 {
-	if (!m_ChangeFlg)
+	if (!isChange_)
 	{
 		return;
 	}
-	if (m_ChangeTime > currentTime_)
+	if (changeTime_ > currentTime_)
 	{
 		currentTime_ += CUtilities::GetFrameSecond();
 	}
 	else
 	{
-		m_ChangeFlg = false;
+		isChange_ = false;
 	}
-	time_ = MyUtil::InterpolationAnim(currentTime_, m_AnimDataArray);
+	timeScale_ = MyUtil::InterpolationAnim(currentTime_, animDataArray_);
 }
 
-void ActionGame::TimeScale::SetScale(float scale, float changeTime, MyUtil::EASING_TYPE easeType) noexcept
+void ActionGame::CTimeScale::SetScale(float scale, float changeTime, MyUtil::EASING_TYPE easeType) noexcept
 {
-	m_Count = 2;
 	MyUtil::ANIM_DATA_ARRAY anim(
 		{
-			{0, time_, easeType},
+			{0, timeScale_, easeType},
 			{changeTime, scale, easeType}
 		}
 	);
 
-	m_AnimDataArray = anim;
+	animDataArray_ = anim;
 	currentTime_ = 0.0f;
-	m_ChangeTime = changeTime;
-	m_ChangeFlg = true;
+	changeTime_ = changeTime;
+	isChange_ = true;
 }
 
 
-void ActionGame::TimeScale::SetScale(const MyUtil::ANIM_DATA_ARRAY& anim)
+void ActionGame::CTimeScale::SetScale(const MyUtil::ANIM_DATA_ARRAY& anim)
 {
-	m_AnimDataArray = anim;
-	m_ChangeTime = m_AnimDataArray.back().Time;
+	animDataArray_ = anim;
+	changeTime_ = animDataArray_.back().Time;
 	currentTime_ = 0.0f;
-	m_ChangeFlg = true;
+	isChange_ = true;
 }
 
-void ActionGame::TimeScale::Reset() noexcept
+void ActionGame::CTimeScale::Reset() noexcept
 {
-	time_ = 1.0f;
+	timeScale_ = 1.0f;
 	currentTime_ = 0.0f;
-	m_ChangeTime = 0.0f;
-	m_ChangeFlg = false;
+	changeTime_ = 0.0f;
+	isChange_ = false;
 }

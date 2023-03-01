@@ -1,18 +1,18 @@
 #pragma once
 #include "IClearTerm.h"
 
-namespace ActionGame
+namespace ClearTerm
 {
 	/*
 	* @brief	クリア条件(ボスを倒す)
 	*/
-    class ClearTermBossDead :  public IClearTerm
+    class CBossDead :  public IClearTerm
     {
     private:
 
     public:
-        ClearTermBossDead();
-		bool IsClear(const ClearTermProviderPtr& provider) override;
+        CBossDead();
+		bool IsClear(const ClearTerm::ProviderPtr& provider) override;
 		const std::string& GetType() const noexcept override { return "BossDead"; }
     };
 

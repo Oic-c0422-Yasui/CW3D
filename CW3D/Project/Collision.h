@@ -155,7 +155,7 @@ namespace ActionGame
 		}
 
 		//アクターとアクターとの当たり判定
-		static void CollisionActorObject(ActorObject& obj1, ActorObject& obj2)
+		static void CollisionActorObject(CActorObject& obj1, CActorObject& obj2)
 		{
 			if (!obj1.IsShow() || !obj2.IsShow())
 			{
@@ -218,7 +218,7 @@ namespace ActionGame
 		}
 
 		//オブジェクトとアクターとの当たり判定
-		static void CollisionObject(ActorObject& actor, CObject& obj)
+		static void CollisionObject(CActorObject& actor, CObject& obj)
 		{
 			if (!actor.IsShow() || !obj.IsShow())
 			{

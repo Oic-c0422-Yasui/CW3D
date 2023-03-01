@@ -22,7 +22,7 @@ void ActionGame::UltimateSkill::Create(const std::string& key, const std::string
 void ActionGame::UltimateSkill::Start()
 {
 	Skill::Start();
-	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	currentGauge -= m_UltSkillData->ExpendGauge.Get();
 }
 
@@ -36,20 +36,20 @@ void ActionGame::UltimateSkill::Reset()
 void ActionGame::UltimateSkill::Update()
 
 {
-	if (!m_CanUseFlg.Get() && !m_StartFlg)
+	if (!m_CanUseFlg.Get() && !isStart_)
 	{
-		auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+		auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 		if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
 		{
 			m_CanUseFlg = true;
 		}
 	}
-	if (!m_StartFlg)
+	if (!isStart_)
 	{
 		return;
 	}
 	Skill::AddTimer();
-	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<ReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
+	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
 	{
 		Skill::ResetFlg();

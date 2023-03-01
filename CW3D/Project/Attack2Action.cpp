@@ -1,42 +1,39 @@
 #include "Attack2Action.h"
 
-ActionGame::Attack2Action::Attack2Action(Parameter param)
-	: CAction()
-	, m_Parameter(param)
+ActionGame::CAttack2Action::CAttack2Action(BaseParameter baseParam, Parameter param)
+	: CBaseAction(baseParam)
+	, parameter_(param)
 {
 }
 
-void ActionGame::Attack2Action::Start()
+void ActionGame::CAttack2Action::Start()
 {
 
-	AnimationState()->ChangeMotionByName(m_Parameter.anim.name, m_Parameter.anim.startTime, m_Parameter.anim.speed,
-		m_Parameter.anim.tTime, m_Parameter.anim.loopFlg, MOTIONLOCK_OFF, TRUE);
-	float rotateY = Transform()->GetRotateY();
+	CBaseAction::Start();
+	
+	auto& vel = Velocity();
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 	if (Transform()->IsReverse())
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(90), 0.18f);
-		//x:0.1f
-		Velocity()->SetVelocity(Vector3(-m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
+		vel->SetVelocity(Vector3(-parameter_.velocity.x, parameter_.velocity.y, parameter_.velocity.z));
 	}
 	else
 	{
-		Velocity()->SetRotateY(rotateY, MOF_ToRadian(-90), 0.18f);
-		//x:0.1f
-		Velocity()->SetVelocity(Vector3(m_Parameter.velocity.x, m_Parameter.velocity.y, m_Parameter.velocity.z));
+		vel->SetVelocity(Vector3(parameter_.velocity.x, parameter_.velocity.y, parameter_.velocity.z));
 	}
-	//PLAYERSPEED * 0.3
-	Velocity()->SetDecelerate(m_Parameter.decelerate.x, m_Parameter.decelerate.z);
+
+	CBaseAction::SetRotation();
 }
 
-void ActionGame::Attack2Action::Execution()
+void ActionGame::CAttack2Action::Execution()
 {
 }
 
-void ActionGame::Attack2Action::End()
+void ActionGame::CAttack2Action::End()
 {
 }
 
-const ActionGame::ActionKeyType ActionGame::Attack2Action::GetKey() const
+const ActionGame::ActionKeyType ActionGame::CAttack2Action::GetKey() const
 {
 	return STATE_KEY_ATTACK2;
 }

@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class DamageState : public State
+	class CDamageState : public CState
 	{
 	public:
 		struct Parameter
@@ -16,9 +16,9 @@ namespace ActionGame {
 			float time;
 		};
 	private:
-		Parameter m_Parameter;
+		Parameter parameter_;
 		//ダメージステート
-		DamageActionPtr			m_DamageAction;
+		DamageActionPtr			action_;
 		//現在時間
 		float						currentTime_;
 
@@ -26,7 +26,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		DamageState(Parameter param);
+		CDamageState(Parameter param);
 			
 
 		/**
