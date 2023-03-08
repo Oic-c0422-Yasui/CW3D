@@ -154,6 +154,11 @@ namespace ActionGame
 		*/
 		void Enable(const Vector3& pos, const Vector3& lookPos);
 
+		/*
+		* @brief	ƒJƒƒ‰‚Ì“Š‰es—ñİ’è‚ğæ“¾‚·‚é
+		* @return	“Š‰es—ñİ’è
+		*/
+		const PerspectiveParam& GetPerspectiveParam() const noexcept;
 	};
 
 }

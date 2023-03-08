@@ -42,6 +42,16 @@ bool Scene::CBattleScene::Load()
 	{
 		return false;
 	}
+	//プレイヤー読み込み
+	auto input = InputManagerInstance.GetInput(0);
+	player_->SetInput(input);
+	if (player_->Load() == false)
+	{
+		return false;
+	}
+	//カメラ読み込み
+	CameraPtr camera = std::make_shared<CNormalCamera>(player_->GetPosition(), player_->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
+	CameraControllerInstance.Load(camera);
 
 	//エフェクト読み込み
 	EffectRendererInstance.Initialize();
@@ -62,13 +72,6 @@ bool Scene::CBattleScene::Load()
 	stageManager_.Load(stage, stageLoader.GetDivisionArray());
 
 
-	//プレイヤー読み込み
-	auto input = InputManagerInstance.GetInput(0);
-	player_->SetInput(input);
-	if (player_->Load() == false)
-	{
-		return false;
-	}
 	//サービスロケーターの設定
 	ServiceLocator<CPlayer>::SetService(player_);
 
@@ -77,9 +80,6 @@ bool Scene::CBattleScene::Load()
 	CHPPresenter::Present(player_, playerUiRender_.GetHPRender());
 
 
-	//カメラ読み込み
-	CameraPtr camera = std::make_shared<CNormalCamera>(player_->GetPosition(), player_->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
-	CameraControllerInstance.Load(camera);
 
 	//プレイヤーをマネージャーに登録
 	ActorObjectManagerInstance.Add(player_);

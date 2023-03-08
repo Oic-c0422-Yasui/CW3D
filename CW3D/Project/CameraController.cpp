@@ -186,3 +186,8 @@ void CCameraController::Enable(const Vector3& pos, const Vector3& lookPos)
 	camera_->Enable(targetPos_, targetLookPos_);
 }
 
+const PerspectiveParam& ActionGame::CCameraController::GetPerspectiveParam() const noexcept
+{
+	return camera_->GetPerspectiveParam();
+}
+

@@ -19,11 +19,9 @@ namespace ActionGame
 		Effekseer::Handle handle_;
 		int currentTime_;
 
-		EffectRenderer()
-			: Singleton<EffectRenderer>()
-			, currentTime_(0)
-		{
-		}
+		EffectRenderer();
+
+		~EffectRenderer();
 
 	public:
 

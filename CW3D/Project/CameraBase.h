@@ -4,6 +4,14 @@
 
 namespace ActionGame
 {
+	struct PerspectiveParam
+	{
+		float Fov;
+		float Aspect;
+		float Near;
+		float Far;
+	};
+
 	class CameraBase
 	{
 	protected:
@@ -16,6 +24,9 @@ namespace ActionGame
 		CVector3	targetLookPos_;
 		bool		isEndAnimation_;
 		bool		isReset_;
+
+		
+		PerspectiveParam perspectiveParam_;
 
 		//アニメーション用構造体
 		struct AnimationData
@@ -204,6 +215,11 @@ namespace ActionGame
 		void SetIsReset(bool isReset) noexcept
 		{
 			isReset_ = isReset;
+		}
+
+		const PerspectiveParam& GetPerspectiveParam() const noexcept
+		{
+			return perspectiveParam_;
 		}
 	};
 

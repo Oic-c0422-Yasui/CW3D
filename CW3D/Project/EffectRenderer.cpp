@@ -6,6 +6,24 @@
 
 
 
+ActionGame::EffectRenderer::EffectRenderer()
+	: Singleton<EffectRenderer>()
+	, currentTime_(0)
+	, renderer_()
+	, sound_()
+	, handle_()
+{
+}
+
+
+ActionGame::EffectRenderer::~EffectRenderer()
+{
+	manager_->StopAllEffects();
+	sound_.Reset();
+	manager_.Reset();
+	renderer_.Reset();
+}
+
 void ActionGame::EffectRenderer::Initialize()
 {
 	// 管理モジュールの設定
@@ -28,19 +46,20 @@ void ActionGame::EffectRenderer::Initialize()
 	manager_->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 
 	// 投影行列を設定
+	const auto& pers = CameraControllerInstance.GetPerspectiveParam();
 	renderer_->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
-		MOF_ToRadian(30),
-		(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(),
-		1.0f, 500.0f));
-	//// サウンドモジュールの設定
-	//sound_ = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
+		pers.Fov,
+		pers.Aspect,
+		pers.Near, pers.Far));
+	// サウンドモジュールの設定
+	sound_ = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
 
-	//// 音再生用インスタンスから再生機能を指定
-	//manager_->SetSoundPlayer(sound_->CreateSoundPlayer());
+	// 音再生用インスタンスから再生機能を指定
+	manager_->SetSoundPlayer(sound_->CreateSoundPlayer());
 
-	//// サウンドデータの読込機能を設定する。
-	//// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
-	//manager_->SetSoundLoader(sound_->CreateSoundLoader());
+	// サウンドデータの読込機能を設定する。
+	// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
+	manager_->SetSoundLoader(sound_->CreateSoundLoader());
 }
 
 Effekseer::Handle ActionGame::EffectRenderer::Play(const std::string& key)

@@ -24,8 +24,17 @@ void CameraBase::Create()
 	position_ = targetPos_ + offsetPos_;
 	lookPos_ = targetLookPos_ + offsetLookPos_;
 	camera_.LookAt(position_, lookPos_, Vector3(0, 1, 0));
-	camera_.PerspectiveFov(MOF_ToRadian(30), 1920.0f / 1080.0f, 0.01f, 250.0f);
+	perspectiveParam_ = { MOF_ToRadian(30) ,
+						(float)g_pGraphics->GetTargetWidth() / (float)g_pGraphics->GetTargetHeight(), 
+						0.01f, 
+						250.0f };
+	auto& param = perspectiveParam_;
+	camera_.PerspectiveFov(param.Fov,
+		param.Aspect,
+		param.Near,
+		param.Far);
 	camera_.Update();
+
 }
 
 void CameraBase::UpdateCamera()
