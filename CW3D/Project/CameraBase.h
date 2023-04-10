@@ -4,6 +4,7 @@
 
 namespace ActionGame
 {
+	//カメラの投影行列パラメータ
 	struct PerspectiveParam
 	{
 		float Fov;
@@ -217,6 +218,10 @@ namespace ActionGame
 			isReset_ = isReset;
 		}
 
+		/*
+		* @brief	カメラの投影行列パラメータ取得
+		* @return	カメラの投影行列パラメータ
+		*/
 		const PerspectiveParam& GetPerspectiveParam() const noexcept
 		{
 			return perspectiveParam_;

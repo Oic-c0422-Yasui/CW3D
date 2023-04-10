@@ -12,8 +12,8 @@ namespace ActionGame
 	{
 	private:
 		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float>>	currentTime_;
-		float	m_TargetTime;
-		bool	m_AchieveFlg;
+		float	targetTime_;
+		bool	isAchieve_;
 		bool	isStop_;
 	public:
 		CTimer();
@@ -29,13 +29,13 @@ namespace ActionGame
 		 */
 		void Start(float targetTime);
 
-
-
 		void Stop();
 
 		void Update();
 
 		void Update(CHARA_TYPE timeScaleType);
+
+		void Reset();
 
 		/**
 		 * @brief		ñ⁄ïWéûä‘ÇíBê¨ÇµÇƒÇ¢ÇÈÇ©ÅH
@@ -43,7 +43,7 @@ namespace ActionGame
 		 */
 		bool IsAchieve() const noexcept
 		{
-			return m_AchieveFlg;
+			return isAchieve_;
 		}
 
 		bool IsTimerStop() const noexcept
@@ -74,7 +74,7 @@ namespace ActionGame
 		 */
 		float GetTargetTime() const noexcept
 		{
-			return m_TargetTime;
+			return targetTime_;
 		}
 
 		/**
@@ -83,7 +83,7 @@ namespace ActionGame
 		 */
 		void SetTargetTime(float time) noexcept
 		{
-			m_TargetTime = time;
+			targetTime_ = time;
 		}
 	};
 

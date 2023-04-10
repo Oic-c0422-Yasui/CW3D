@@ -1,16 +1,19 @@
 #include "EnemyManager.h"
 
-ActionGame::EnemyManager::EnemyManager()
+ActionGame::CEnemyManager::CEnemyManager()
 	: enemyArray_(std::make_shared<EnemyArray>())
+	, enemyMaxCount_(0)
+	, bossMaxCount_(0)
+	, showEnemyCount_(0)
 {
 }
 
-ActionGame::EnemyManager::~EnemyManager()
+ActionGame::CEnemyManager::~CEnemyManager()
 {
 }
 
 
-void ActionGame::EnemyManager::Initialize()
+void ActionGame::CEnemyManager::Initialize()
 {
 	for (auto& enemy : *enemyArray_)
 	{
@@ -18,7 +21,7 @@ void ActionGame::EnemyManager::Initialize()
 	}
 }
 
-void ActionGame::EnemyManager::Update()
+void ActionGame::CEnemyManager::Update()
 {
 	size_t enemyCount = 0;
 	size_t enemyShowCount = 0;
@@ -69,7 +72,7 @@ void ActionGame::EnemyManager::Update()
 	}
 }
 
-void ActionGame::EnemyManager::Render()
+void ActionGame::CEnemyManager::Render()
 {
 	for (auto& enemy : *enemyArray_)
 	{
@@ -77,7 +80,7 @@ void ActionGame::EnemyManager::Render()
 	}
 }
 
-void ActionGame::EnemyManager::RenderDebug()
+void ActionGame::CEnemyManager::RenderDebug()
 {
 	for (auto& enemy : *enemyArray_)
 	{
@@ -85,7 +88,7 @@ void ActionGame::EnemyManager::RenderDebug()
 	}
 }
 
-void ActionGame::EnemyManager::Release()
+void ActionGame::CEnemyManager::Release()
 {
 	for (auto& enemy : *enemyArray_)
 	{
@@ -95,7 +98,7 @@ void ActionGame::EnemyManager::Release()
 	enemyArray_.reset();
 }
 
-void ActionGame::EnemyManager::AddEnemy(const EnemyPtr& enemy)
+void ActionGame::CEnemyManager::AddEnemy(const EnemyPtr& enemy)
 {
 	enemyArray_->push_back(enemy);
 	enemyCount_ = enemyArray_->size();
@@ -105,4 +108,14 @@ void ActionGame::EnemyManager::AddEnemy(const EnemyPtr& enemy)
 		bossMaxCount_ ++;
 		bossCount_ = bossMaxCount_;
 	}
+}
+
+void ActionGame::CEnemyManager::ClearEnemyArray()
+{
+	enemyArray_->clear();
+	enemyCount_.Set(0);
+	showEnemyCount_.Set(0);
+	bossCount_.Set(0);
+	enemyMaxCount_ = 0;
+	bossMaxCount_ = 0;
 }

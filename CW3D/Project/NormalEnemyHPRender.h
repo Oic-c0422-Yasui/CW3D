@@ -8,16 +8,16 @@ namespace ActionGame
 	/**
 	 * @brief		敵HPUI
 	 */
-	class NormalEnemyHPRender : public EnemyHPRender
+	class CNormalEnemyHPRender : public CEnemyHPRender
 	{
 	private:
 		
 		std::shared_ptr<CSprite3D>			HPBar_;
 		std::shared_ptr<CSprite3D>			HPFrame_;
-		std::shared_ptr<CSprite3D>			DamageBar_;
+		std::shared_ptr<CSprite3D>			damageBar_;
 
-		Vector3 position_;
-		Vector3 m_ViewPosition;
+		Vector3								position_;
+		Vector3								viewPosition_;
 
 		Vector3								offset_;
 		Vector3								size_;
@@ -26,12 +26,12 @@ namespace ActionGame
 		/**
 		 * @brief		コンストラクタ
 		 */
-		NormalEnemyHPRender();
+		CNormalEnemyHPRender();
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		~NormalEnemyHPRender();
+		~CNormalEnemyHPRender();
 		
 		bool Load() override;
 
@@ -69,11 +69,11 @@ namespace ActionGame
 		const Vector3& GetViewPosition()
 		{
 			LPCamera cam = CGraphicsUtilities::GetCamera();
-			m_ViewPosition = position_;
-			m_ViewPosition *= cam->GetViewMatrix();
-			return m_ViewPosition;
+			viewPosition_ = position_;
+			viewPosition_ *= cam->GetViewMatrix();
+			return viewPosition_;
 		}
 	};
 
-	using NormalEnemyHPRenderPtr = std::shared_ptr<NormalEnemyHPRender>;
+	using NormalEnemyHPRenderPtr = std::shared_ptr<CNormalEnemyHPRender>;
 }

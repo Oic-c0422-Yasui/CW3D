@@ -4,6 +4,7 @@
 #include	"StateMachine.h"
 #include	"ParameterDefine.h"
 #include	"StateDefine.h"
+#include	"NormalMapParameter.h"
 
 namespace ActionGame
 {
@@ -14,6 +15,7 @@ namespace ActionGame
 	{
 	protected:
 		std::shared_ptr<CMeshContainer>		mesh_;
+		MyClass::NormalMapParameterPtr		normalMap_;
 		StateMachinePtr						stateMachine_;
 		AnimationStatePtr					motion_;
 		ActorPtr							actor_;
@@ -47,7 +49,7 @@ namespace ActionGame
 		////////////////////////////////////////////////////////
 		/**
 		 * @brief		アクター取得
-		 * @return アクター
+		 * @return		アクター
 		 */
 		const ActorPtr& GetActor() const noexcept
 		{
@@ -55,7 +57,7 @@ namespace ActionGame
 		}
 		/**
 		 * @brief		キャラタイプ取得
-		 * @return キャラタイプ
+		 * @return		キャラタイプ
 		 */
 		CHARA_TYPE GetType() const noexcept
 		{
@@ -123,7 +125,7 @@ namespace ActionGame
 		 * @brief		アクターID取得
 		 * @return		アクターID
 		 */
-		size_t GetID() const noexcept
+		uint32_t GetID() const noexcept
 		{
 			return actor_->GetID();
 		}

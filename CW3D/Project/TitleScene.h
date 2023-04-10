@@ -4,21 +4,22 @@
 #include "InputManager.h"
 #include "GameDefine.h"
 #include "SceneChanger.h"
+#include "SceneChangeFade.h"
 
 namespace Scene
 {
 	/*
 	* @brief	タイトルシーン
 	*/
-	class TitleScene : public IScene
+	class CTitleScene : public IScene
 	{
 	private:
-		std::shared_ptr<CTexture> m_BackTexture;
-		CFont m_TitleLogoFont;
-		CFont m_TextFont;
+		std::shared_ptr<CTexture> backTexture_;
+		CFont titleLogoFont_;
+		CFont textFont_;
 	public:
-		TitleScene();
-		~TitleScene();
+		CTitleScene();
+		~CTitleScene();
 		bool Load() override;
 		void Initialize() override;
 		void Update() override;

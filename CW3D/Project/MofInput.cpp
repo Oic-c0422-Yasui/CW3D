@@ -59,7 +59,9 @@ float CMofInput::GetJoypadStickHorizontal(int padNo) const {
 	{
 		return 0;
 	}
-	return pad->GetStickHorizontal();
+	if (pad->GetStickHorizontal() >= minInputValue_) { return pad->GetStickHorizontal(); }
+	if (pad->GetStickHorizontal() <= -minInputValue_) { return pad->GetStickHorizontal(); }
+	return 0;
 }
 
 /**
@@ -73,7 +75,9 @@ float CMofInput::GetJoypadStickVertical(int padNo) const {
 	{
 		return 0;
 	}
-	return pad->GetStickVertical();
+	if (pad->GetStickVertical() >= minInputValue_) { return pad->GetStickVertical(); }
+	if (pad->GetStickVertical() <= -minInputValue_) { return pad->GetStickVertical(); }
+	return 0;
 }
 
 #endif

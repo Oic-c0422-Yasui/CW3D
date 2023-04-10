@@ -13,6 +13,7 @@ CActorObject::CActorObject()
 	, colliderSize_(1, 1, 1)
 	, ultBoostMag_(0.0f)
 	, weight_(50.0f)
+	, normalMap_(nullptr)
 {
 	actor_->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	actor_->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
@@ -67,6 +68,7 @@ void CActorObject::Render()
 	auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	motion_->RefreshBoneMatrix(matWorld_);
 	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha));
+
 }
 
 void CActorObject::Release()

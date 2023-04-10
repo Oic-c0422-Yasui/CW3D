@@ -2,72 +2,70 @@
 
 
 
-ActionGame::BossHPRender::BossHPRender()
-	: EnemyHPRender()
+ActionGame::CBossHPRender::CBossHPRender()
+	: CEnemyHPRender()
 	, position_(0, 0)
 	, offset_(0, 0)
-	, m_HPBar()
+	, HPBarParam_()
 
 {
 
 }
 
-bool ActionGame::BossHPRender::Load()
+bool ActionGame::CBossHPRender::Load()
 {
 	HPBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
 	HPFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPFrame");
-	DamageBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
+	damageBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
 
 	return true;
 }
 
-void ActionGame::BossHPRender::Initialize()
+void ActionGame::CBossHPRender::Initialize()
 {
 	Load();
 
 	position_ = Vector2(763, 100);
-	m_HPBar.CountPos = Vector2(763, 150);
+	HPBarParam_.CountPos = Vector2(763, 150);
 	offset_ = Vector2(58, 1);
-	m_HPColors[0] = MOF_XRGB(218, 93, 93);
-	m_HPColors[1] = MOF_XRGB(93, 218, 93);
-	m_HPColors[2] = MOF_XRGB(93, 93, 218);
-	m_HPBar.CurrentColorId = 0;
-	m_HPBar.NextColorId = 1;
+	HPColors_[0] = MOF_XRGB(218, 93, 93);
+	HPColors_[1] = MOF_XRGB(93, 218, 93);
+	HPColors_[2] = MOF_XRGB(93, 93, 218);
+	HPBarParam_.CurrentColorId = 0;
+	HPBarParam_.NextColorId = 1;
 }
 
-void ActionGame::BossHPRender::Reset() noexcept
+void ActionGame::CBossHPRender::Reset() noexcept
 {
 	currentHPPercent_ = 1.0f;
 	currentHPGaugePercent_ = 1.0f;
 }
 
-void ActionGame::BossHPRender::Render()
+void ActionGame::CBossHPRender::Render()
 {
 	if (!isShow_)
 	{
 		return;
 	}
 
-	//g_pInput->GetMousePos(offset_);
-	float parcent = (HP_ % m_HPBar.Limit) / (float)m_HPBar.Limit;
+	float parcent = (HP_ % HPBarParam_.Limit) / (float)HPBarParam_.Limit;
 	parcent = min(parcent, 1.0f);
 	//HPバーのパーセントが視認不可まで下がればリセット
-	if (parcent <= 0.001f && m_HPBar.Count > 0)
+	if (parcent <= 0.001f && HPBarParam_.Count > 0)
 	{
 		parcent = 1.0f;
-
 	}
 	currentHPPercent_ = parcent;
 
 	//現在のHPバーの数
-	int currentCount = HP_ / m_HPBar.Limit;
+	int currentCount = HP_ / HPBarParam_.Limit;
 	
 	//カウントが減ったら
-	if (m_HPBar.Count != currentCount)
+	if (HPBarParam_.Count != currentCount)
 	{
 		//現在のダメージのパーセントをリセット
 		currentHPGaugePercent_ = 1.0f;
-		m_HPBar.Count = currentCount;
+		HPBarParam_.Count = currentCount;
 		SettingNextColor();
 	}
 
@@ -76,44 +74,45 @@ void ActionGame::BossHPRender::Render()
 	//HPフレーム描画
 	HPFrame_->Render(position_.x, position_.y);
 
-	if (currentHPPercent_ < 1.0f && m_HPBar.Count > 0)
+	if (currentHPPercent_ < 1.0f && HPBarParam_.Count > 0)
 	{
 		CRectangle rect(0, 0, HPBar_->GetWidth(), HPBar_->GetHeight());
-		HPBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, m_HPColors[m_HPBar.NextColorId]);
+		HPBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, HPColors_[HPBarParam_.NextColorId]);
 	}
 	//表示ゲージを徐々に変化させる
 	if (fabsf(currentHPGaugePercent_ - currentHPPercent_) > 0.01f)
 	{
 		currentHPGaugePercent_ += (currentHPPercent_ - currentHPGaugePercent_) * 0.02f;
-		CRectangle rect(0, 0, DamageBar_->GetWidth() * currentHPGaugePercent_, DamageBar_->GetHeight());
-		DamageBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect);
+		CRectangle rect(0, 0, damageBar_->GetWidth() * currentHPGaugePercent_, damageBar_->GetHeight());
+		damageBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect);
 	}
 	else
 	{
 		currentHPGaugePercent_ = currentHPPercent_;
 	}
 	CRectangle rect(0, 0, HPBar_->GetWidth() * currentHPPercent_, HPBar_->GetHeight());
-	HPBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, m_HPColors[m_HPBar.CurrentColorId]);
+	HPBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, HPColors_[HPBarParam_.CurrentColorId]);
 
-	CGraphicsUtilities::RenderString(m_HPBar.CountPos.x, m_HPBar.CountPos.y, "×%d", m_HPBar.Count);
+	//HPバーの数
+	CGraphicsUtilities::RenderString(HPBarParam_.CountPos.x, HPBarParam_.CountPos.y, "×%d", HPBarParam_.Count);
 }
 
-void ActionGame::BossHPRender::Release()
+void ActionGame::CBossHPRender::Release()
 {
 	HPBar_.reset();
 	HPFrame_.reset();
-	DamageBar_.reset();
+	damageBar_.reset();
 }
 
-void ActionGame::BossHPRender::SettingNextColor()
+void ActionGame::CBossHPRender::SettingNextColor()
 {
-	m_HPBar.CurrentColorId = m_HPBar.NextColorId;
-	if (m_HPBar.NextColorId + 1 >= _countof(m_HPColors))
+	HPBarParam_.CurrentColorId = HPBarParam_.NextColorId;
+	if (HPBarParam_.NextColorId + 1 >= _countof(HPColors_))
 	{
-		m_HPBar.NextColorId = 0;
+		HPBarParam_.NextColorId = 0;
 	}
 	else
 	{
-		m_HPBar.NextColorId++;
+		HPBarParam_.NextColorId++;
 	}
 }

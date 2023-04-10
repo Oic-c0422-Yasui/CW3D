@@ -11,7 +11,7 @@
 #include "CharaTypeDefine.h"
 #include "ParameterDefine.h"
 #include "CollisionDefine.h"
-
+#include "SceneServiceDefine.h"
 
 //仮
 #define PLAYER_SPEED 0.02f
@@ -28,10 +28,7 @@ constexpr float GameFrameTime = 1.0f / 60.0f;
 
 
 
-//画面遷移用サービス
-using SceneChangeService = ActionGame::ServiceLocator<Scene::ISceneChanger>;
-//画面初期化用サービス
-using SceneInitializeService = ActionGame::ServiceLocator<Scene::ISceneInitializer>;
+
 
 
 

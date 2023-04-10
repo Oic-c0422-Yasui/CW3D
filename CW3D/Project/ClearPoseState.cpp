@@ -1,6 +1,7 @@
 #include "ClearPoseState.h"
 #include "CameraController.h"
 #include "FixedCamera.h"
+#include "SendMessageServiceDefine.h"
 
 ActionGame::CClearPoseState::CClearPoseState()
 	: CState()
@@ -15,6 +16,7 @@ void ActionGame::CClearPoseState::Start()
 	action_ = Actor()->GetAction<ClearPoseAction>(GetKey());
 	action_->Start();
 	isAnimStart_ = false;
+	SendMessageService::GetService()->Send(GameMessageType::UI_Disable);
 }
 
 void ActionGame::CClearPoseState::Execution()
@@ -56,6 +58,7 @@ void ActionGame::CClearPoseState::Execution()
 void ActionGame::CClearPoseState::End()
 {
 	action_->End();
+	SendMessageService::GetService()->Send(GameMessageType::UI_Visible);
 }
 
 void ActionGame::CClearPoseState::CollisionEvent(unsigned int type, std::any obj)

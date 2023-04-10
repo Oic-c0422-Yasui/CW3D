@@ -50,7 +50,7 @@ void ActionGame::CFallState::InputExecution()
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
-		if (!Actor()->GetSkillController()->GetSkill(i)->IsCanUse() || Actor()->GetSkillController()->GetSkill(i)->GetFlyState() == NULL)
+		if (!Actor()->GetSkillController()->GetSkill(i)->CanUseSkill() || Actor()->GetSkillController()->GetSkill(i)->GetFlyState() == NULL)
 		{
 			continue;
 		}

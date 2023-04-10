@@ -135,7 +135,7 @@ namespace ActionGame {
 		/**
 		 * @brief		IDŽæ“¾
 		 */
-		virtual size_t GetID() const = 0;
+		virtual uint32_t GetID() const = 0;
 
 		/**
 		 * @brief		ƒ^ƒCƒvŽæ“¾

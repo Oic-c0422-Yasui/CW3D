@@ -316,6 +316,12 @@
     <Filter Include="ソース ファイル\Message">
       <UniqueIdentifier>{b3c6d017-5343-4785-be12-9a76168de567}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Combo">
+      <UniqueIdentifier>{10025319-ce0b-449f-b1f5-3c60d8626950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{081b7a64-3de7-4587-9803-d9b1ee340c16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -804,7 +810,7 @@
     <ClCompile Include="PlayerHPRender.cpp">
       <Filter>ソース ファイル\UI\Render\HP</Filter>
     </ClCompile>
-    <ClCompile Include="SkillControllerRender.cpp">
+    <ClCompile Include="SkillInfoRender.cpp">
       <Filter>ソース ファイル\UI\Render\Skill</Filter>
     </ClCompile>
     <ClCompile Include="BattleUILoader.cpp">
@@ -840,13 +846,28 @@
     <ClCompile Include="AdditionalSkillRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="UltimateGaugeRender.cpp">
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalMapParameter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Combo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="IdleStateAI.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\AI</Filter>
     </ClCompile>
     <ClCompile Include="AttackStateAI.cpp">
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="UltimateGaugeRender.cpp">
+      <Filter>ソース ファイル\UI\Render\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboRender.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboPresenter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1115,7 +1136,7 @@
     <ClInclude Include="AdditionalSkillRender.h">
       <Filter>ヘッダー ファイル\UI\Render\Skill\CT</Filter>
     </ClInclude>
-    <ClInclude Include="SkillControllerRender.h">
+    <ClInclude Include="SkillInfoRender.h">
       <Filter>ヘッダー ファイル\UI\Render\Skill</Filter>
     </ClInclude>
     <ClInclude Include="SkillRenderContainer.h">
@@ -1306,9 +1327,6 @@
     </ClInclude>
     <ClInclude Include="SpawnCycleRandonRange.h">
       <Filter>ヘッダー ファイル\Spawner</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadCreator.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
@@ -1615,6 +1633,36 @@
     </ClInclude>
     <ClInclude Include="EnemyHPRender.h">
       <Filter>ヘッダー ファイル\UI\Render\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneServiceDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="RegistMessageServiceDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="SendMessageServiceDefine.h">
+      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Combo.h">
+      <Filter>ヘッダー ファイル\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="ICombo.h">
+      <Filter>ヘッダー ファイル\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalMapParameter.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadCreator.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboPresenter.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

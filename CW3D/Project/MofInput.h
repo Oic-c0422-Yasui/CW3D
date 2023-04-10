@@ -12,6 +12,9 @@ namespace Input {
 	class CMofInput : public CInput
 	{
 	protected:
+		//最小入力値
+		const float minInputValue_ = 0.3f;
+	protected:
 		/**
 		 * @brief		キーボードキーの取得
 		 * @param[in]	positive		＋方向のキー

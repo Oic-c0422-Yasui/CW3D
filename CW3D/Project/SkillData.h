@@ -14,7 +14,7 @@ namespace ActionGame
 	struct SkillData
 	{
 		//ダメージ量（％）
-		int	DamagePercent;	
+		uint32_t	DamagePercent;
 		//最大のクールタイム
 		ParameterHandle< CReactiveParameter<float>>	MaxCT;
 		SkillData()
@@ -24,7 +24,7 @@ namespace ActionGame
 		{
 		}
 
-		SkillData(int dmg, float maxCT)
+		SkillData(uint32_t dmg, float maxCT)
 			: DamagePercent(dmg)
 			, MaxCT(maxCT)
 
@@ -45,7 +45,7 @@ namespace ActionGame
 		//開始時間
 		float StartTime;
 		//追加する使用可能回数
-		int Count;
+		BYTE Count;
 		AdditionalSkillData()
 			: SkillData()
 			, AddMaxCT(0)
@@ -54,7 +54,7 @@ namespace ActionGame
 		{
 		}
 
-		AdditionalSkillData(int dmg, float maxCT,float addmaxCT,float st,int cnt)
+		AdditionalSkillData(uint32_t dmg, float maxCT,float addmaxCT,float st,int cnt)
 			: SkillData(dmg, maxCT)
 			, AddMaxCT(addmaxCT)
 			, StartTime(st)
@@ -77,7 +77,7 @@ namespace ActionGame
 			, ExpendGauge(0)
 		{
 		}
-		UltimateSkillData(int dmg, float maxCT,float gauge)
+		UltimateSkillData(uint32_t dmg, float maxCT,float gauge)
 			: SkillData(dmg, maxCT)
 			, ExpendGauge(gauge)
 		{

@@ -3,8 +3,8 @@
 
 enum GameMessageType
 {
-    UI_Visible,
-    UI_Disable,
+    UI_Visible,     //UI•\Ž¦
+    UI_Disable,     //UI”ñ•\Ž¦
 
     MessageCount
 };

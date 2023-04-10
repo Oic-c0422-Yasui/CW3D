@@ -1,109 +1,146 @@
 #include "LoadingScene.h"
-#include "ServiceLocator.h"
+#include "SceneServiceDefine.h"
+#include "SceneChangeFade.h"
 
-Scene::LoadingScene::LoadingScene(ScenePtr loadingScene)
-	: m_LoadingScene(loadingScene)
-	, m_LoadThread()
-	, m_BackTex(std::make_shared<CTexture>())
+
+Scene::CLoadingScene::CLoadingScene(ScenePtr loadingScene)
+	: loadingScene_(loadingScene)
+	, loadThread_()
+	, backTexture_(std::make_shared<CTexture>())
 	, font_(std::make_shared<CFont>())
+	, loadingStr_()
+	, currentAnimCount_(0)
+	, timer_()
 {
 }
 
-Scene::LoadingScene::~LoadingScene()
+Scene::CLoadingScene::~CLoadingScene()
 {
 	Release();
 }
 
-bool Scene::LoadingScene::Load()
+bool Scene::CLoadingScene::Load()
 {
 
+	//リソースの名前定義
+	auto tag = "Texture";
+	auto name = "LoadingTex";
 	//テクスチャがすでに読み込まれているなら、リソースを取り出す
-	if (ResourcePtrManager<CTexture>::GetInstance().IsContainResource("Texture", "LoadingTex"))
+	if (ResourcePtrManager<CTexture>::GetInstance().IsContainResource(tag, name))
 	{
-		m_BackTex = ResourcePtrManager<CTexture>::GetInstance().GetResource("Texture", "LoadingTex");
+		backTexture_ = ResourcePtrManager<CTexture>::GetInstance().GetResource(tag, name);
 	}
 	else
 	{
 		//テクスチャ読み込み
-		if (!m_BackTex->Load("BackImage/LoadingBack.png"))
+		if (!backTexture_->Load("BackImage/LoadingBack.png"))
 		{
 			return false;
 		}
 		//テクスチャを登録
-		ResourcePtrManager<CTexture>::GetInstance().AddResource("Texture", "LoadingTex", m_BackTex);
+		ResourcePtrManager<CTexture>::GetInstance().AddResource(tag, name, backTexture_);
 	}
 
 	font_->Create(50, "ＭＳ ゴシック");
 
 	//ロードするシーンがあるか確認
-	assert(m_LoadingScene);
+	assert(loadingScene_);
 
 	//シーンをロード
-	m_LoadThread.Create([this]()
+	loadThread_.Create([this]()
 								{
-									m_LoadingScene->Load();
-									m_LoadingScene->Initialize();
+									loadingScene_->Load();
+									loadingScene_->Initialize();
 									return true;
 								});
-
-	
 
 	return true;
 }
 
-void Scene::LoadingScene::Initialize()
+void Scene::CLoadingScene::Initialize()
 {
+	const float animTime = 0.3f;
+	currentAnimCount_ = 0;
+	loadingStr_ = "";
+	timer_.Start(animTime);
 }
 
-void Scene::LoadingScene::Update()
+void Scene::CLoadingScene::Update()
 {
 	//シーンのロードが完了したら
-	if (m_LoadThread.IsComplete())
+	if (loadThread_.IsComplete())
 	{
+		//フェード
+		float time = 0.5f;
+		auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
 		//ロードしたシーンへ遷移する
-		ActionGame::ServiceLocator<Scene::ISceneChanger>::GetService()->ChangeScene(m_LoadingScene);
+		SceneChangeService::GetService()->ChangeScene(loadingScene_, sceneEffect);
+		return;
 	}
+	timer_.Update();
+
+	if (timer_.IsAchieve())
+	{
+		//ロードアニメーションの数
+		const BYTE animCount = 3;
+		if (animCount > currentAnimCount_)
+		{
+			currentAnimCount_++;
+			loadingStr_.push_back('.');
+		}
+		else
+		{
+			currentAnimCount_ = 0;
+			loadingStr_ = "";
+		}
+
+		//タイマーリセット
+		timer_.Reset();
+	}
+	
 }
 
-void Scene::LoadingScene::Render()
+void Scene::CLoadingScene::Render()
 {
 	
 }
 
-void Scene::LoadingScene::RenderDebug()
+void Scene::CLoadingScene::RenderDebug()
 {
 }
 
-void Scene::LoadingScene::Render2D()
+void Scene::CLoadingScene::Render2D()
 {
 	//画面のサイズ
 	float width = g_pGraphics->GetTargetWidth();
 	float height = g_pGraphics->GetTargetHeight();
 	//背景
 	CRectangle rect(0, 0, width, height);
-	m_BackTex->Render(rect);
+	backTexture_->Render(rect);
 
 	//ローディングテキスト
-	font_->CalculateStringRect(0, 0, "NowLoading...", rect);
-	font_->RenderString(width - (rect.GetWidth() + 200), height * 0.9f, "NowLoading...");
+	font_->CalculateStringRect(0, 0, "NowLoading", rect);
+	font_->RenderString(width - (rect.GetWidth() + 200), height * 0.9f, "NowLoading");
+	font_->RenderString(width - 200, height * 0.9f, loadingStr_.c_str());
+
 }
 
-void Scene::LoadingScene::Render2DDebug()
+void Scene::CLoadingScene::Render2DDebug()
 {
 }
 
-void Scene::LoadingScene::Release()
+void Scene::CLoadingScene::Release()
 {
-	if (m_BackTex)
+	if (backTexture_)
 	{
-		m_BackTex.reset();
+		backTexture_.reset();
 	}
 	if (font_)
 	{
 		font_.reset();
 	}
-	if (m_LoadingScene)
+	if (loadingScene_)
 	{
-		m_LoadingScene.reset();
+		loadingScene_.reset();
 	}
 }

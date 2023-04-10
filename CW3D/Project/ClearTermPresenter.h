@@ -13,7 +13,7 @@ namespace ClearTerm
 	{
 	public:
 
-		static void Present(ActionGame::EnemyManager& enemy,const ClearTerm::EnemyAllDeadTextPtr& view)
+		static void Present(ActionGame::CEnemyManager& enemy,const ClearTerm::EnemyAllDeadTextPtr& view)
 		{
 			enemy.GetEnemyCountSubject().Subscribe([view](size_t count) {view->SetEnemyCount(count); });
 		}
@@ -24,7 +24,7 @@ namespace ClearTerm
 			view->SetFinishTime(timer.GetTargetTime());
 		}
 
-		static void Present(ActionGame::EnemyManager& enemy, ActionGame::CTimer& timer,
+		static void Present(ActionGame::CEnemyManager& enemy, ActionGame::CTimer& timer,
 			const ClearTerm::AllDeadAndEnduranceTextPtr& view)
 		{
 			Present(enemy, view->GetAllDeadTerm());

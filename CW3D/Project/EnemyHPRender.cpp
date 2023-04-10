@@ -1,6 +1,6 @@
 #include "EnemyHPRender.h"
 
-ActionGame::EnemyHPRender::EnemyHPRender()
+ActionGame::CEnemyHPRender::CEnemyHPRender()
 	: currentHPPercent_(1.0f)
 	, currentHPGaugePercent_(1.0f)
 	, HP_(0)

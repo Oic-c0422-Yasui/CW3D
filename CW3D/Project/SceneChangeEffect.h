@@ -23,8 +23,8 @@ namespace Scene
 		/**
 		 * @brief		シーン変更効果描画
 		 */
-		virtual void Render(ScenePtr& prev,
-						ScenePtr& current) = 0;
+		virtual void Render(const  ScenePtr& prev,
+							const  ScenePtr& current) = 0;
 
 		/**
 		 * @brief		シーン変更効果終了判定

@@ -20,7 +20,7 @@ namespace ActionGame
 
 		std::shared_ptr<CTexture>			HPBar_;
 		std::shared_ptr<CTexture>			HPFrame_;
-		std::shared_ptr<CTexture>			DamageBar_;
+		std::shared_ptr<CTexture>			damageBar_;
 
 		int HP_;
 		int maxHP_;

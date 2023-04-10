@@ -7,10 +7,10 @@ Spawner::EnemySpawnParameter::EnemySpawnParameter(const ActionGame::EnemyBuildPa
 
 void Spawner::EnemySpawnParameter::Next()
 {
-	CurrentParameterNum_++;
-	if (param_->size() <= CurrentParameterNum_)
+	currentParameterNum_++;
+	if (param_->size() <= currentParameterNum_)
 	{
-		CurrentParameterNum_ = 0;
+		currentParameterNum_ = 0;
 	}
 }
 
@@ -21,5 +21,5 @@ void Spawner::EnemySpawnParameter::Reset()
 
 const ActionGame::EnemyBuildParameterPtr& Spawner::EnemySpawnParameter::GetParameter() const noexcept
 {
-	return param_->at(CurrentParameterNum_);
+	return param_->at(currentParameterNum_);
 }

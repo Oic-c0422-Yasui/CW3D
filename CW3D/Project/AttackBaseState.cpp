@@ -166,7 +166,7 @@ void ActionGame::CAttackBaseState::InputExecution() {
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
 		SKillPtr skill = Actor()->GetSkillController()->GetSkill(i);
-		if (!skill->IsCanUse() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
+		if (!skill->CanUseSkill() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
 		{
 			continue;
 		}

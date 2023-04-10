@@ -10,7 +10,7 @@ namespace Spawner
 	{
 	private:
 		ActionGame::EnemyBuildParameterArrayPtr param_;
-		size_t CurrentParameterNum_;
+		size_t currentParameterNum_;
 	public:
 		/**
 		 *	@brief		コンストラクタ

@@ -3,40 +3,38 @@
 #include	<memory>
 #include	"Singleton.h"
 
-namespace ActionGame {
+
+/**
+ * @brief		サービスロケーター
+ */
+template <typename T>
+class CServiceLocator : public Singleton< CServiceLocator< T > >
+{
+	friend class Singleton<CServiceLocator< T >>;
+	using Service = std::shared_ptr< T >;
+protected:
+	//サービスの共有ポインタ
+	Service			service_;
 
 	/**
-	 * @brief		サービスロケーター
+	 * @brief		コンストラクタ
 	 */
-	template <typename T>
-	class ServiceLocator : public Singleton< ServiceLocator< T > >
-	{
-		friend class Singleton<ServiceLocator< T >>;
-		using Service = std::shared_ptr< T >;
-	protected:
-		//サービスの共有ポインタ
-		Service			service_;
+	CServiceLocator()
+		: service_() {
+	}
+public:
+	/**
+	 * @brief		サービスの設定
+	 */
+	static void SetService(const Service& obj) noexcept {
+		Singleton< CServiceLocator< T > >::GetInstance().service_ = obj;
+	}
 
-		/**
-		 * @brief		コンストラクタ
-		 */
-		ServiceLocator()
-			: service_() {
-		}
-	public:
-		/**
-		 * @brief		サービスの設定
-		 */
-		static void SetService(const Service& obj) noexcept {
-			Singleton< ServiceLocator< T > >::GetInstance().service_ = obj;
-		}
-
-		/**
-		 * @brief		サービスの取得
-		 */
-		static Service& GetService() noexcept {
-			return Singleton< ServiceLocator< T > >::GetInstance().service_;
-		}
-	};
-}
+	/**
+	 * @brief		サービスの取得
+	 */
+	static Service& GetService() noexcept {
+		return Singleton< CServiceLocator< T > >::GetInstance().service_;
+	}
+};
 

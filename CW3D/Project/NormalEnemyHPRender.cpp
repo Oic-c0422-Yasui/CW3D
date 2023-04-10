@@ -1,8 +1,8 @@
 #include "NormalEnemyHPRender.h"
 
 
-ActionGame::NormalEnemyHPRender::NormalEnemyHPRender()
-	: ActionGame::EnemyHPRender()
+ActionGame::CNormalEnemyHPRender::CNormalEnemyHPRender()
+	: ActionGame::CEnemyHPRender()
 	, position_(0, 0, 0)
 	, offset_(0, 0, 0)
 	, size_(0, 0, 0)
@@ -10,20 +10,20 @@ ActionGame::NormalEnemyHPRender::NormalEnemyHPRender()
 
 }
 
-ActionGame::NormalEnemyHPRender::~NormalEnemyHPRender()
+ActionGame::CNormalEnemyHPRender::~CNormalEnemyHPRender()
 {
 	Release();
 }
 
-bool ActionGame::NormalEnemyHPRender::Load()
+bool ActionGame::CNormalEnemyHPRender::Load()
 {
 	HPBar_ = ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "DamageBar");
 	HPFrame_ = ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPFrame");
-	DamageBar_ = ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPBar");
+	damageBar_ = ResourcePtrManager<CSprite3D>::GetInstance().GetResource("UI", "HPBar");
 	return true;
 }
 
-void ActionGame::NormalEnemyHPRender::Initialize()
+void ActionGame::CNormalEnemyHPRender::Initialize()
 {
 	Load();
 
@@ -32,24 +32,24 @@ void ActionGame::NormalEnemyHPRender::Initialize()
 	size_ = Vector3(1, 0.85f, 1);
 	HPBar_->m_Angle.z = MOF_ToRadian(180);
 	HPFrame_->m_Angle.z = MOF_ToRadian(180);
-	DamageBar_->m_Angle.z = MOF_ToRadian(180);
+	damageBar_->m_Angle.z = MOF_ToRadian(180);
 	HPBar_->m_Angle.x = MOF_ToRadian(0);
 	HPFrame_->m_Angle.x = MOF_ToRadian(0);
-	DamageBar_->m_Angle.x = MOF_ToRadian(0);
+	damageBar_->m_Angle.x = MOF_ToRadian(0);
 	HPFrame_->m_Scale = size_;
 	HPBar_->m_Scale = size_;
-	DamageBar_->m_Scale = size_;
+	damageBar_->m_Scale = size_;
 	HPFrame_->m_Color = CVector4(1.0f, 1.0f, 1.0f, 0.75f);
 
 }
 
-void ActionGame::NormalEnemyHPRender::Reset() noexcept
+void ActionGame::CNormalEnemyHPRender::Reset() noexcept
 {
 	currentHPPercent_ = 1.0f;
 	currentHPGaugePercent_ = 1.0f;
 }
 
-void ActionGame::NormalEnemyHPRender::Render()
+void ActionGame::CNormalEnemyHPRender::Render()
 {
 
 	if (!isShow_)
@@ -59,7 +59,7 @@ void ActionGame::NormalEnemyHPRender::Render()
 
 	HPFrame_->m_Position = position_ + offset_;
 	HPBar_->m_Position = position_ + offset_;
-	DamageBar_->m_Position = position_ + offset_;
+	damageBar_->m_Position = position_ + offset_;
 
 	float parcent = (float)HP_ / (float)maxHP_;
 	parcent = min(parcent, 1.0f);
@@ -74,12 +74,12 @@ void ActionGame::NormalEnemyHPRender::Render()
 	if (fabsf(currentHPGaugePercent_ - currentHPPercent_) > 0.01f)
 	{
 		currentHPGaugePercent_ += (currentHPPercent_ - currentHPGaugePercent_) * 0.02f;
-		DamageBar_->m_Scale.x = size_.x * currentHPGaugePercent_;
-		float offset = (size_.x - DamageBar_->m_Scale.x) * 0.5f;
-		DamageBar_->m_Position.x = (position_.x + offset_.x) - offset;
-		DamageBar_->Update();
-		DamageBar_->m_World.Multiply3x3(cam->GetBillBoardMatrix());
-		DamageBar_->Render();
+		damageBar_->m_Scale.x = size_.x * currentHPGaugePercent_;
+		float offset = (size_.x - damageBar_->m_Scale.x) * 0.5f;
+		damageBar_->m_Position.x = (position_.x + offset_.x) - offset;
+		damageBar_->Update();
+		damageBar_->m_World.Multiply3x3(cam->GetBillBoardMatrix());
+		damageBar_->Render();
 	}
 	else
 	{
@@ -95,9 +95,9 @@ void ActionGame::NormalEnemyHPRender::Render()
 
 }
 
-void ActionGame::NormalEnemyHPRender::Release(void)
+void ActionGame::CNormalEnemyHPRender::Release(void)
 {
 	HPBar_.reset();
 	HPFrame_.reset();
-	DamageBar_.reset();
+	damageBar_.reset();
 }

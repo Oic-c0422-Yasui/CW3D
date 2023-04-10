@@ -21,14 +21,14 @@ namespace ActionGame
 
 		EffectRenderer();
 
-		~EffectRenderer();
+		~EffectRenderer() override;
 
 	public:
 
 		/*
 		* @brief	‰Šúİ’è
 		*/
-		void Initialize();
+		void SetUp();
 		 /*
 		  * @brief	XV
 		  */

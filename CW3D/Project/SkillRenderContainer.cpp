@@ -11,36 +11,39 @@ ActionGame::CSkillRenderContainer::~CSkillRenderContainer()
 
 bool ActionGame::CSkillRenderContainer::Load()
 {
-	auto& player = ServiceLocator< CPlayer >::GetService();
+	auto& player = CServiceLocator< CPlayer >::GetService();
 	auto& skillController = player->GetSkillController();
+	
 	for (size_t i = 0; i < skillController->GetCount(); i++)
 	{
-		auto& skillPtr = skillController->GetSkill(i);
+		auto& skill = skillController->GetSkill(i);
 
 		SkillRenderPtr render;
-		if (std::dynamic_pointer_cast<AdditionalSkill>(skillPtr) != nullptr)
+		
+		//追加入力攻撃スキルならロード
+		if (std::dynamic_pointer_cast<CAdditionalSkill>(skill) != nullptr)
 		{
-			//追加攻撃スキルならロード
-			auto addRender = std::make_shared<CAdditionalSkillRender>();
-			CSkillPresenter::Present(player, addRender, i);
-			render = addRender;
+			auto addSkill = std::make_shared<CAdditionalSkillRender>();
+			CSkillPresenter::Present(player, addSkill, i);
+			render = addSkill;
 		}
 		else
 		{
 			render = std::make_shared<CSkillRender>();
 		}
+
 		CSkillPresenter::Present(player, render, i);
 
-		render->Load(skillPtr->GetTexName());
+		render->Load(skill->GetTexName());
 		skillRenderArray_.push_back(render);
 
 		//必殺技ならロード
-		if (std::dynamic_pointer_cast<UltimateSkill>(skillPtr) != nullptr)
+		if (std::dynamic_pointer_cast<UltimateSkill>(skill) != nullptr)
 		{
-			auto gauge = std::make_shared<CSkillUltGaugeRender>();
-			gauge->Load();
-			CSkillUltGaugePresenter::Present(player, gauge, i);
-			ultGaugeRenderArray_.push_back(gauge);
+			auto ultSkill = std::make_shared<CSkillUltGaugeRender>();
+			ultSkill->Load();
+			CSkillUltGaugePresenter::Present(player, ultSkill, i);
+			ultGaugeRenderArray_.push_back(ultSkill);
 		}
 	}
 
@@ -49,11 +52,12 @@ bool ActionGame::CSkillRenderContainer::Load()
 
 void ActionGame::CSkillRenderContainer::Initialize(std::function<Vector2(const std::string&)> fn)
 {
-	auto& player = ServiceLocator< CPlayer >::GetService();
+	const auto& player = CServiceLocator< CPlayer >::GetService();
 	auto& skillController = player->GetSkillController();
 	size_t ultIndex = 0;
 	for (size_t i = 0; i < skillController->GetCount(); i++)
 	{
+		//登録されているボタンの座標で初期化
 		auto& skillPtr = skillController->GetSkill(i);
 		skillRenderArray_[i]->Initialize(fn(skillPtr->GetButton()));
 

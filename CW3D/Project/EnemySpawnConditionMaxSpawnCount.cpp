@@ -1,12 +1,12 @@
 #include "EnemySpawnConditionCountLimit.h"
 
-Spawner::EnemySpawnConditionCountLimit::EnemySpawnConditionCountLimit(size_t maxCount)
-	: m_MaxCount(maxCount)
+Spawner::CEnemySpawnConditionCountLimit::CEnemySpawnConditionCountLimit(size_t maxCount)
+	: maxCount_(maxCount)
 	, count_(0)
 {
 }
 
-bool Spawner::EnemySpawnConditionCountLimit::IsValid() const noexcept
+bool Spawner::CEnemySpawnConditionCountLimit::IsValid() const noexcept
 {
-	return count_ < m_MaxCount;
+	return count_ < maxCount_;
 }

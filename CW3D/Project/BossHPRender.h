@@ -4,45 +4,53 @@
 
 namespace ActionGame
 {
-    class BossHPRender : public EnemyHPRender
+	/*
+	* @brief	ボスHP描画
+	*/
+    class CBossHPRender : public CEnemyHPRender
     {
 	private:
 
 		std::shared_ptr<CTexture>			HPBar_;
 		std::shared_ptr<CTexture>			HPFrame_;
-		std::shared_ptr<CTexture>			DamageBar_;
+		std::shared_ptr<CTexture>			damageBar_;
 
 		Vector2 position_;
 		Vector2 offset_;
 
-		struct HPBar
+		struct HPBarParam
 		{
 			const int Limit = 100;
-			size_t Count;
+			uint32_t Count;
 			Vector2 CountPos;
 			
-			size_t CurrentColorId;
-			size_t NextColorId;
+			uint32_t CurrentColorId;
+			uint32_t NextColorId;
 		};
+		HPBarParam HPBarParam_;
 
-		HPBar m_HPBar;
-
-		MofU32 m_HPColors[3];
+		MofU32 HPColors_[3];
 
 	private:
 		/* プライベート関数　*/
+		//次の色を設定
 		void SettingNextColor();
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		BossHPRender();
+		CBossHPRender();
 
-
+		/*
+		* @brief	読み込み
+		* @return	true　なら成功
+		*/
 		bool Load();
 
+		/*
+		* @brief	初期化
+		*/
 		void Initialize() override;
-
 
 		/**
 		 * @brief		リセット
@@ -50,14 +58,17 @@ namespace ActionGame
 		void Reset() noexcept override;
 
 		/**
-		 * @brief		管理スコア初期化
+		 * @brief		描画
 		 */
 		void Render() override;
 
+		/*
+		* @brief	解放
+		*/
 		void Release();
 
     };
-	using BossHPRenderPtr = std::shared_ptr<BossHPRender>;
+	using BossHPRenderPtr = std::shared_ptr<CBossHPRender>;
 }
 
 

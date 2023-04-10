@@ -26,7 +26,7 @@ void ActionGame::CNPCStartPoseAction::Start()
 	currentTime_ = 0.0f;
 	Transform()->AddPosition(tmpOffsetPos_);
 	
-	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	invincible = parameter_.finishTime;
 
 	auto& showHP = ParameterMap()->Get<ActionGame::CReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
@@ -38,7 +38,7 @@ void ActionGame::CNPCStartPoseAction::Start()
 void ActionGame::CNPCStartPoseAction::Execution()
 {
 
-	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	auto& alpha = ParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = MyUtil::Timer(0.0f, currentTime_, 1.0f, parameter_.finishTime);
@@ -47,7 +47,7 @@ void ActionGame::CNPCStartPoseAction::Execution()
 void ActionGame::CNPCStartPoseAction::End()
 {
 	Transform()->AddPosition(-tmpOffsetPos_);
-	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = ParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	auto& showHP = ParameterMap()->Get<ActionGame::CReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	showHP = true;
 	invincible = 0.0f;

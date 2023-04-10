@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include	"CameraController.h"
-
+#include "ServiceLocator.h"
+#include "ICombo.h"
 
 using namespace ActionGame;
 
@@ -46,6 +47,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	{
 		return false;
 	}
+	//シェーダー読み込み
+	normalMap_ = ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().GetResource("Shader", "NormalMap");
 
 	//モーション作成
 	motion_ = mesh_->CreateMotionController();
@@ -84,7 +87,7 @@ void CEnemy::Initialize()
 	HP_ = maxHP_.Get();
 	auto& alpha = param->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
-	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	invincible = 0.0f;
 	auto& isShowHP = param->Get<ActionGame::CReactiveParameter<bool>>(PARAMETER_KEY_SHOW_HP);
 	isShowHP = false;
@@ -114,7 +117,7 @@ void CEnemy::Update()
 
 
 	//無敵時間中なら時間を減らす
-	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	if (invincible > 0.0f)
 	{
 		invincible -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
@@ -186,6 +189,8 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 	auto& hp = actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
 	hp -= damage;
 
+	//コンボ数追加
+	CServiceLocator<ICombo>::GetService()->AddCount();
 
 	//カメラを揺らす
 	CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
@@ -233,7 +238,7 @@ void ActionGame::CEnemy::Damage(const Vector3& direction, const Vector3& power, 
 
 bool CEnemy::IsInvincible() const
 {
-	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	return invincible > 0.0f || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DEAD || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DOWN;
 }
 

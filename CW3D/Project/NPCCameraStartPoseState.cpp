@@ -2,7 +2,7 @@
 #include "FixedCamera.h"
 #include "CameraController.h"
 #include "TimeScaleController.h"
-
+#include "SendMessageServiceDefine.h"
 
 
 ActionGame::CNPCFollowCameraStartPoseState::CNPCFollowCameraStartPoseState(Parameter param)
@@ -28,6 +28,8 @@ void ActionGame::CNPCFollowCameraStartPoseState::Execution()
 	{
 		SettingCamera();
 		isStart_ = true;
+		//UI非表示メッセージを送る
+		SendMessageService::GetService()->Send(UI_Disable);
 	}
 	if (parameter_.EffectStartTime < currentTime_ && !isEffectStart_)
 	{
@@ -57,6 +59,8 @@ void ActionGame::CNPCFollowCameraStartPoseState::End()
 	//カメラをデフォルトに戻す
 	CameraControllerInstance.SetDefault();
 	TimeScaleControllerInstance.SetOtherTimeScale(Actor()->GetType(), 1.0f, 0.0f);
+	//UI表示メッセージを送る
+	SendMessageService::GetService()->Send(UI_Visible);
 }
 
 void ActionGame::CNPCFollowCameraStartPoseState::CollisionEvent(unsigned int type, std::any obj)

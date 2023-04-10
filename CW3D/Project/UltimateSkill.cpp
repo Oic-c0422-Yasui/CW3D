@@ -3,7 +3,7 @@
 
 ActionGame::UltimateSkill::UltimateSkill(const ActorWeakPtr& actor)
 
-	: Skill()
+	: CSkill()
 	, m_ActorRef(actor)
 	, m_MaxGaugeFlg(false)
 {
@@ -15,43 +15,43 @@ ActionGame::UltimateSkill::~UltimateSkill()
 
 void ActionGame::UltimateSkill::Create(const std::string& key, const std::string& inputKey, const std::string& texName, char* state, char* flyState)
 {
-	Skill::Create(key, inputKey, texName, state, flyState);
-	m_CanUseFlg = false;
+	CSkill::Create(key, inputKey, texName, state, flyState);
+	canUse_ = false;
 }
 
 void ActionGame::UltimateSkill::Start()
 {
-	Skill::Start();
+	CSkill::Start();
 	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 	currentGauge -= m_UltSkillData->ExpendGauge.Get();
 }
 
 void ActionGame::UltimateSkill::Reset()
 {
-	Skill::Reset();
-	m_CanUseFlg = false;
+	CSkill::Reset();
+	canUse_ = false;
 	m_MaxGaugeFlg = false;
 }
 
 void ActionGame::UltimateSkill::Update()
 
 {
-	if (!m_CanUseFlg.Get() && !isStart_)
+	if (!canUse_.Get() && !isStart_)
 	{
 		auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-		if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
+		if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && CT_ <= 0.0f)
 		{
-			m_CanUseFlg = true;
+			canUse_ = true;
 		}
 	}
 	if (!isStart_)
 	{
 		return;
 	}
-	Skill::AddTimer();
+	CSkill::AddTimer();
 	auto& currentGauge = m_ActorRef.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
-	if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && m_CT <= 0.0f)
+	if (currentGauge >= m_UltSkillData->ExpendGauge.Get() && CT_ <= 0.0f)
 	{
-		Skill::ResetFlg();
+		CSkill::ResetFlg();
 	}
 }

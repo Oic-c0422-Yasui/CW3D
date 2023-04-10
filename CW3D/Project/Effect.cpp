@@ -12,6 +12,7 @@ namespace ActionGame
 	}
 	CEffect::~CEffect()
 	{
+		effect_.Reset();
 	}
 
 	void CEffect::Initialize( const Vector3& offset)

@@ -12,10 +12,10 @@ namespace ActionGame
 	class CMyID
 	{
 	private:
-		size_t ID_;
+		uint32_t ID_;
 	public:
-		CMyID(size_t id) : ID_(id) {}
-		size_t GetID()const noexcept { return ID_; }
+		CMyID(uint32_t id) : ID_(id) {}
+		uint32_t GetID()const noexcept { return ID_; }
 	};
 
 	/*
@@ -26,7 +26,7 @@ namespace ActionGame
 		friend class Singleton<CIDManager>;
 	private:
 
-		size_t IDSeed_;
+		uint32_t IDSeed_;
 
 		CIDManager()
 			: Singleton<CIDManager>()
@@ -35,12 +35,17 @@ namespace ActionGame
 		}
 
 	public:
-
-		CMyID GetId()
+		/*
+		* @brief　一意のIDを生成する
+		*/
+		CMyID CreateID()
 		{
 			return CMyID(IDSeed_++);
 		}
 
+		/*
+		* @brief	生成IDをリセットする
+		*/
 		void Reset()
 		{
 			IDSeed_ = 0;

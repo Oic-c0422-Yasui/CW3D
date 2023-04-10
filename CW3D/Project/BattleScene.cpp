@@ -1,16 +1,13 @@
 #include "BattleScene.h"
 #include "HPPresenter.h"
 #include "SkillPresenter.h"
-#include	"NormalCamera.h"
-
-#include	"ActorObjectManager.h"
-#include	"Stage1.h"
-#include	"JsonStageLoader.h"	
+#include "NormalCamera.h"
+#include "ActorObjectManager.h"
+#include "Stage1.h"
+#include "JsonStageLoader.h"	
 
 
 using namespace ActionGame;
-
-
 
 Scene::CBattleScene::CBattleScene()
 	: player_(std::make_shared<CPlayer>())
@@ -18,6 +15,7 @@ Scene::CBattleScene::CBattleScene()
 	, enemySpawner_(std::make_shared<Spawner::EnemySpawnerArray>())
 	, currentGameState_(GAME_STATE::NOMAL)
 	, playerUiRender_()
+	, normalMap_(std::make_shared<MyClass::CNormalMapParameter>())
 {
 }
 
@@ -29,63 +27,78 @@ bool Scene::CBattleScene::Load()
 {
 	
 	//メッシュ読み込み
-	std::shared_ptr<CMeshContainer> tempMesh = std::make_shared<CMeshContainer>();
-	if (tempMesh->Load("chara.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	auto tempMesh = std::make_shared<CMeshContainer>();
+	if (tempMesh->Load("Mesh/player.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", "Player", tempMesh);
 
-	
 	//UIテクスチャ読み込み
-	if (ActionGame::CBattleUILoader::Load() == false)
+	if (!ActionGame::CBattleUILoader::Load())
 	{
 		return false;
 	}
+
+	//シェーダー読み込み
+	normalMap_ = std::make_shared<MyClass::CNormalMapParameter>();
+	if (!normalMap_->Load("Shader/NormalMap.hlsl"))
+	{
+		return false;
+	}
+	ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().AddResource("Shader","NormalMap", normalMap_);
+
 	//プレイヤー読み込み
 	auto input = InputManagerInstance.GetInput(0);
 	player_->SetInput(input);
-	if (player_->Load() == false)
+	if (!player_->Load())
 	{
 		return false;
 	}
+	//サービスロケーターの設定
+	CServiceLocator<CPlayer>::SetService(player_);
+
+	//プレイヤーUI読み込み
+	if (!playerUiRender_.Load(player_))
+	{
+		return false;
+	}
+
 	//カメラ読み込み
-	CameraPtr camera = std::make_shared<CNormalCamera>(player_->GetPosition(), player_->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
+	auto camera = std::make_shared<CNormalCamera>(
+		player_->GetPosition(), player_->GetPosition(),Vector3(0,0,0), Vector3(0, 0, 0));
 	CameraControllerInstance.Load(camera);
+	
+
 
 	//エフェクト読み込み
-	EffectRendererInstance.Initialize();
-	if (ActionGame::EffectLoader::Load() == false)
+	EffectRendererInstance.SetUp();
+	if (!ActionGame::EffectLoader::Load())
 	{
 		return false;
 	}
 
 	//ステージ情報読み込み
 	JsonStageLoader stageLoader;
-	if (stageLoader.Load("Text/Stage1.json") == false)
+	if (!stageLoader.Load("Data/Stage1.json"))
 	{
 		return false;
 	}
 	
 	//ステージ読み込み
-	StagePtr stage = std::make_shared<CStage1>();
+	auto stage = std::make_shared<CStage1>();
 	stageManager_.Load(stage, stageLoader.GetDivisionArray());
-
-
-	//サービスロケーターの設定
-	ServiceLocator<CPlayer>::SetService(player_);
-
-	//プレイヤーUI読み込み
-	playerUiRender_.Load();
-	CHPPresenter::Present(player_, playerUiRender_.GetHPRender());
-
-
 
 	//プレイヤーをマネージャーに登録
 	ActorObjectManagerInstance.Add(player_);
+
+	//UI非表示のメッセージ登録
+	npcHpRender_.RegistSendMessage();
 	
 	//フォント作成
 	font_.Create(225, "ＭＳ ゴシック");
+
+	
 
 	return true;
 }
@@ -120,7 +133,7 @@ void Scene::CBattleScene::Initialize()
 	enemyManager_.GetBossCountSubject().Subscribe([provider](size_t count) {provider->SetBossCount(count); });
 	timer_.GetTimeSubject().Subscribe([provider](float time) { provider->SetDivisionTime(time); });
 	
-	//敵生成
+	//敵生成スレッド作成
 	enemyCreateThread_.Create( [this]() { return CreateEnemys(); },
 								[this]() {RegisterAfterSpawn(); }
 								);
@@ -146,13 +159,24 @@ void Scene::CBattleScene::Update()
 	if (currentGameState_ == GAME_STATE::CLEAR || 
 		currentGameState_ == GAME_STATE::OVER)
 	{
+		//フェードエフェクト
+		const float time = 0.5f;
+		auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
 		//遷移
 		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
 		{
 			//タイトルへ遷移
-			SceneChangeService::GetService()->ChangeScene(SCENENO::TITLE);
+			SceneChangeService::GetService()->ChangeScene(SCENENO::TITLE, sceneEffect);
 			return;
 		}
+		//リトライ
+		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
+		{
+			//初期化
+			SceneInitializeService::GetService()->InitializeScene(sceneEffect);
+			return;
+		}
+
 	}
 
 	//更新タスク実行
@@ -181,6 +205,9 @@ void Scene::CBattleScene::Update()
 
 void Scene::CBattleScene::Render()
 {
+	//シェーダーにカメラ情報設定
+	normalMap_->SetCamera();
+
 	//描画タスク実行
 	renderTask_.Excution();
 
@@ -270,15 +297,19 @@ void Scene::CBattleScene::Release()
 	//プレイヤー解放
 	player_->Release();
 	player_.reset();
-	ServiceLocator<CPlayer>::Release();
+	CServiceLocator<CPlayer>::Release();
 	playerUiRender_.Release();
 
 	//敵解放
 	enemyManager_.Release();
 	enemySpawner_.reset();
 
+
 	//HPバー解放
 	npcHpRender_.Release();
+
+	//シェーダー解放
+	normalMap_.reset();
 	
 	//リソース解放
 	ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
@@ -286,7 +317,7 @@ void Scene::CBattleScene::Release()
 	ResourcePtrManager<CSprite3D>::GetInstance().Release();
 	ResourcePtrManager<CTexture>::GetInstance().Release();
 	ResourcePtrManager<CFont>::GetInstance().Release();
-
+	ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().Release();
 
 	//ショット解放
 	ShotManagerInstance.Reset();
@@ -339,11 +370,10 @@ bool Scene::CBattleScene::CreateEnemys()
 	enemySpawner_ = spawner;
 	
 
-
 	//敵のビルダーの辞書
 	EnemyBuilderDictionary dictionary;
 
-	for (int i = 0; i < enemyCount; i++)
+	for (size_t i = 0; i < enemyCount; i++)
 	{
 		//敵のタイプに合ったビルダーを取得
 		auto builder = dictionary.Get(enemysParam->at(i)->GetParam().type_);
@@ -356,13 +386,13 @@ bool Scene::CBattleScene::CreateEnemys()
 		//敵のHPバー生成＆オブザーバに登録
 		if (enemysParam->at(i)->GetParam().isBoss_)
 		{
-			auto bossHP = std::make_shared<BossHPRender>();
+			auto bossHP = std::make_shared<CBossHPRender>();
 			CHPPresenter::Present(enemyManager_.GetEnemy(i), bossHP);
 			npcHpRender_.Add(bossHP);
 		}
 		else
 		{
-			auto normalHP = std::make_shared<NormalEnemyHPRender>();
+			auto normalHP = std::make_shared<CNormalEnemyHPRender>();
 			CHPPresenter::Present(enemyManager_.GetEnemy(i), normalHP);
 			npcHpRender_.Add(normalHP);
 		}
@@ -377,6 +407,7 @@ bool Scene::CBattleScene::CreateEnemys()
 
 void Scene::CBattleScene::RegisterTask()
 {
+	//※BattleSceneTask.cppに処理を記載
 
 	//更新タスク登録
 	RegisterUpdateTask();

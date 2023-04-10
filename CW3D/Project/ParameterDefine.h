@@ -25,6 +25,8 @@ const std::string PARAMETER_KEY_ATTACK = "Attack";
 //“§–¾“x
 const std::string PARAMETER_KEY_ALPHA = "Alpha";
 //–³“GŽžŠÔ
+const std::string PARAMETER_KEY_INVINCIBLE_TIME = "InvincibleTime";
+//–³“Gƒtƒ‰ƒO
 const std::string PARAMETER_KEY_INVINCIBLE = "Invincible";
 //‰ñ”ð
 const std::string PARAMETER_KEY_ESCAPE = "Escape";

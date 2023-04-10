@@ -24,7 +24,7 @@ ActionGame::EffectRenderer::~EffectRenderer()
 	renderer_.Reset();
 }
 
-void ActionGame::EffectRenderer::Initialize()
+void ActionGame::EffectRenderer::SetUp()
 {
 	// 管理モジュールの設定
 	manager_ = ::Effekseer::Manager::Create(8000);
@@ -51,15 +51,15 @@ void ActionGame::EffectRenderer::Initialize()
 		pers.Fov,
 		pers.Aspect,
 		pers.Near, pers.Far));
-	// サウンドモジュールの設定
-	sound_ = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
+	//// サウンドモジュールの設定
+	//sound_ = ::EffekseerSound::Sound::Create( g_pSound->GetDevice(), 16, 16);
 
-	// 音再生用インスタンスから再生機能を指定
-	manager_->SetSoundPlayer(sound_->CreateSoundPlayer());
+	//// 音再生用インスタンスから再生機能を指定
+	//manager_->SetSoundPlayer(sound_->CreateSoundPlayer());
 
-	// サウンドデータの読込機能を設定する。
-	// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
-	manager_->SetSoundLoader(sound_->CreateSoundLoader());
+	//// サウンドデータの読込機能を設定する。
+	//// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
+	//manager_->SetSoundLoader(sound_->CreateSoundLoader());
 }
 
 Effekseer::Handle ActionGame::EffectRenderer::Play(const std::string& key)

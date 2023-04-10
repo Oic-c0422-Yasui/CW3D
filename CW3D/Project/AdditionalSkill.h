@@ -7,18 +7,18 @@ namespace ActionGame
 	/*
 	* @brief	追加入力が可能なスキル
 	*/
-	class AdditionalSkill : public Skill
+	class CAdditionalSkill : public CSkill
 	{
 	private:
-		float m_AddStartTime;
+		float addStartTime_;
 		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> >	addCT_;
-		int		m_AddCount;
-		bool	m_AddFlg;
-		bool	m_DelayAddFlg;
-		AdditionalSkillDataPtr m_AddSkillData;
+		int		addCount_;
+		bool	isAdd_;
+		bool	isDelayAdd_;
+		AdditionalSkillDataPtr addSkillData_;
 	public:
-		AdditionalSkill();
-		~AdditionalSkill();
+		CAdditionalSkill();
+		~CAdditionalSkill();
 
 		/*
 		* @brief	開始
@@ -50,7 +50,7 @@ namespace ActionGame
 		*/
 		void SetAddMaxCT(float time) noexcept
 		{
-			m_AddSkillData->AddMaxCT = time;
+			addSkillData_->AddMaxCT = time;
 		}
 
 		/*
@@ -58,7 +58,7 @@ namespace ActionGame
 		*/
 		void SetAddCount(float count) noexcept
 		{
-			m_AddCount = count;
+			addCount_ = count;
 		}
 
 		/*
@@ -67,7 +67,7 @@ namespace ActionGame
 		void AddInput()
 		{
 			SetAddCT(0.0f);
-			m_AddFlg = false;
+			isAdd_ = false;
 		}
 
 		/*
@@ -75,11 +75,11 @@ namespace ActionGame
 		*/
 		bool IsAdditional() const noexcept
 		{
-			return m_AddFlg;
+			return isAdd_;
 		}
 		virtual bool IsDelayAdditional()
 		{
-			return m_DelayAddFlg;
+			return isDelayAdd_;
 		}
 
 		float GetAddCT() const noexcept
@@ -88,22 +88,22 @@ namespace ActionGame
 		}
 		float GetAddMaxCT() const noexcept
 		{
-			return m_AddSkillData->AddMaxCT.Get();
+			return addSkillData_->AddMaxCT.Get();
 		}
 
 
 		int GetAddCount() const noexcept
 		{
-			return m_AddCount;
+			return addCount_;
 		}
 
 		/*
 		* @brief	使用可能か？
 		* @return	true　なら使用可能
 		*/
-		bool IsCanUse() override
+		bool CanUseSkill() override
 		{
-			return m_AddFlg | m_CanUseFlg.Get();
+			return isAdd_ | canUse_.Get();
 		}
 
 		/*
@@ -113,11 +113,11 @@ namespace ActionGame
 		
 
 		ActionGame::IObservable<float>* GetAddCTSubject() { return &(addCT_.Get()); }
-		ActionGame::IObservable<float>* GetAddMaxCTSubject() { return &(m_AddSkillData->MaxCT.Get()); }
+		ActionGame::IObservable<float>* GetAddMaxCTSubject() { return &(addSkillData_->MaxCT.Get()); }
 
 	};
 
 	//ポインタ置き換え
-	using AdditionalSKillPtr = std::shared_ptr<AdditionalSkill>;
-	using AdditionalWeakSKillPtr = std::weak_ptr<AdditionalSkill>;
+	using AdditionalSKillPtr = std::shared_ptr<CAdditionalSkill>;
+	using AdditionalWeakSKillPtr = std::weak_ptr<CAdditionalSkill>;
 }

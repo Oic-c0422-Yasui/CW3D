@@ -7,7 +7,7 @@ namespace ActionGame
 	class CUltGaugePresenter
 	{
 	public:
-		static void Present(PlayerPtr& player, const ActionGame::UltimateGaugeUIRenderPtr& view)
+		static void Present(const PlayerPtr& player, const ActionGame::UltimateGaugeUIRenderPtr& view)
 		{
 			player->GetUltSubject().Subscribe([view](float gauge) { view->SetGauge(gauge); });
 			player->GetMaxUltSubject()->Subscribe([view](float gauge) { view->SetMaxGauge(gauge); });

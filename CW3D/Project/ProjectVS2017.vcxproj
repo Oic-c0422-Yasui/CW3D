@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -23,7 +31,20 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -36,7 +57,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -46,11 +73,23 @@
     <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
+    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
+    <OutDir>$(SolutionDir)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
     <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
     <OutDir>$(SolutionDir)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>../../MofLibrary/Include;../../../MofLibrary/Include;$(IncludePath);</IncludePath>
+    <LibraryPath>../../MofLibrary/Library;../../../MofLibrary/Library;$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -72,7 +111,51 @@
       <PreprocessorDefinitions>USERNAME=$(USERNAME);</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Effekseer\include\EffekseerRendererDX11;$(SolutionDir)\Effekseer\include\Effekseer;$(SolutionDir)\Library\Include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;$(SolutionDir)\Effekseer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD;</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>USERNAME=$(USERNAME);</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Effekseer\include\EffekseerRendererDX11;$(SolutionDir)\Effekseer\include\Effekseer;$(SolutionDir)\Library\Include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Library\Library;$(SolutionDir)\Effekseer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>USERNAME=$(USERNAME);</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
@@ -131,9 +214,14 @@
     <ClCompile Include="ClearTermEnemyAllDeadText.cpp" />
     <ClCompile Include="ClearTermText.cpp" />
     <ClCompile Include="ClearTermRenderCreator.cpp" />
+    <ClCompile Include="Combo.cpp" />
+    <ClCompile Include="ComboPresenter.cpp" />
+    <ClCompile Include="ComboRender.cpp" />
+    <ClCompile Include="NormalMapParameter.cpp" />
     <ClCompile Include="EffectLoader.cpp" />
     <ClCompile Include="EnemyHPRender.cpp" />
     <ClCompile Include="IdleStateAI.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Messenger.cpp" />
     <ClCompile Include="MoveStateAI.cpp" />
     <ClCompile Include="MutantActionCreator.cpp" />
@@ -253,7 +341,7 @@
     <ClCompile Include="MoveAction.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerUIRender.cpp" />
-    <ClCompile Include="SkillControllerRender.cpp" />
+    <ClCompile Include="SkillInfoRender.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StormSkillState.cpp" />
@@ -313,13 +401,20 @@
     <ClInclude Include="ClearTermPresenter.h" />
     <ClInclude Include="ClearTermText.h" />
     <ClInclude Include="ClearTermRenderCreator.h" />
+    <ClInclude Include="Combo.h" />
+    <ClInclude Include="ComboPresenter.h" />
+    <ClInclude Include="ComboRender.h" />
+    <ClInclude Include="ICombo.h" />
+    <ClInclude Include="NormalMapParameter.h" />
     <ClInclude Include="CollisionDefine.h" />
     <ClInclude Include="EffectLoader.h" />
     <ClInclude Include="EnemyHPRender.h" />
     <ClInclude Include="IMessenger.h" />
     <ClInclude Include="IMessageRegister.h" />
     <ClInclude Include="IMessageSender.h" />
+    <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="MessageDefine.h" />
+    <ClInclude Include="SendMessageServiceDefine.h" />
     <ClInclude Include="Messenger.h" />
     <ClInclude Include="MutantActionCreator.h" />
     <ClInclude Include="MutantAICreator.h" />
@@ -335,9 +430,11 @@
     <ClInclude Include="NPCStartPoseAction.h" />
     <ClInclude Include="NPCStartPoseState.h" />
     <ClInclude Include="ParameterDefine.h" />
+    <ClInclude Include="RegistMessageServiceDefine.h" />
     <ClInclude Include="SceneChangeFade.h" />
     <ClInclude Include="SceneDefine.h" />
     <ClInclude Include="SceneInitializer.h" />
+    <ClInclude Include="SceneServiceDefine.h" />
     <ClInclude Include="SkillDefine.h" />
     <ClInclude Include="SpawnerBuilder.h" />
     <ClInclude Include="SpawnerBuilderDictionary.h" />
@@ -499,7 +596,7 @@
     <ClInclude Include="BeamSkillState.h" />
     <ClInclude Include="StormSkillAction.h" />
     <ClInclude Include="StormSkillState.h" />
-    <ClInclude Include="SkillControllerRender.h" />
+    <ClInclude Include="SkillInfoRender.h" />
     <ClInclude Include="PlayerSkillCreater.h" />
     <ClInclude Include="SkillRenderContainer.h" />
     <ClInclude Include="SkillRender.h" />

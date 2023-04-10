@@ -4,11 +4,21 @@
 
 namespace ActionGame
 {
+	/*
+	* @brief	NPC用のHP描画管理クラス
+	*/
 	class CNPCHPRenderManager
 	{
 	private:
 		std::vector<NormalEnemyHPRenderPtr> normalHPRender_;
 		std::vector<BossHPRenderPtr> bossHPRender_;
+		bool isShow_;
+	private:
+		/* プライベート関数　*/
+		//UI表示
+		void VisibleUI();
+		//UI非表示
+		void DisableUI();
 
 	public:
 		CNPCHPRenderManager();
@@ -51,6 +61,11 @@ namespace ActionGame
 		* @brief	HPバーの追加（ボスHP）
 		*/
 		void Add(const BossHPRenderPtr& render);
+
+		/*
+		* @brief	メッセージを登録する
+		*/
+		void RegistSendMessage();
 	};
 
 }

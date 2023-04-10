@@ -1,6 +1,11 @@
 #include "EffectController.h"
 #include "EffectRenderer.h"
 
+ActionGame::CEffectController::~CEffectController()
+{
+	Reset();
+}
+
 void ActionGame::CEffectController::Create(const Effekseer::Handle& handle, const Vector3& position, EffectCreateParameter param)
 {
 	SetPosition(handle, position + param.offset);

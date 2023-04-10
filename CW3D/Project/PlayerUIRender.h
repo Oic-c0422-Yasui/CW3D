@@ -1,10 +1,11 @@
 #pragma once
 
 #include "PlayerHPRender.h"
-#include "SkillControllerRender.h"
+#include "SkillInfoRender.h"
 #include "SkillRenderContainer.h"
 #include "UltimateGaugeRender.h"
 #include "UltGaugePresenter.h"
+#include "ComboPresenter.h"
 
 namespace ActionGame
 {
@@ -14,11 +15,25 @@ namespace ActionGame
 	class CPlayerUIRender
 	{
 	private:
-		PlayerHPRenderPtr HPRender_;
-		SkillControllerRenderPtr skillControllerRender_;
-		SkillRenderContainerPtr skillsRender_;
-		UltimateGaugeUIRenderPtr UltGaugeRender_;
+		//HP描画
+		PlayerHPRenderPtr			HPRender_;
+		//スキル情報描画
+		SkillInfoRenderPtr			skillControllerRender_;
+		//スキル画像描画
+		SkillRenderContainerPtr		skillsRender_;
+		UltimateGaugeUIRenderPtr	UltGaugeRender_;
+		//コンボ描画
+		ComboRenderPtr				comboRender_;
+		
+		//表示フラグ
+		bool						isShow_;
 
+	private:
+		/* プライベート関数　*/
+		//UI表示
+		void VisibleUI();
+		//UI非表示
+		void DisableUI();
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -30,21 +45,26 @@ namespace ActionGame
 		 */
 		~CPlayerUIRender();
 
+		/*
+		* @brief	読み込み
+		* @param	player　プレイヤー
+		* @return	true　なら成功
+		*/
+		bool Load(const PlayerPtr& player);
 
-		bool Load();
-
+		/*
+		* @brief	初期化
+		*/
 		void Initialize();
 
-		const PlayerHPRenderPtr& GetHPRender() const noexcept
-		{
-			return HPRender_;
-		}
-
 		/**
-		 * @brief		プレイヤーUI描画
+		 * @brief		UI描画
 		 */
 		void Render();
 
+		/**
+		 * @brief		解放
+		 */
 		void Release();
 
 	};

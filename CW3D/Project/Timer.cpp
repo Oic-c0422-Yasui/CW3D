@@ -2,8 +2,8 @@
 
 ActionGame::CTimer::CTimer()
 	: currentTime_(0.0f)
-	, m_TargetTime(0.0f)
-	, m_AchieveFlg(false)
+	, targetTime_(0.0f)
+	, isAchieve_(false)
 	, isStop_(false)
 {
 }
@@ -15,15 +15,15 @@ ActionGame::CTimer::~CTimer()
 void ActionGame::CTimer::Start()
 {
 	currentTime_ = 0.0f;
-	m_TargetTime = 0.0f;
-	m_AchieveFlg = false;
+	targetTime_ = 0.0f;
+	isAchieve_ = false;
 	isStop_ = false;
 }
 
 void ActionGame::CTimer::Start(float targetTime)
 {
 	Start();
-	m_TargetTime = targetTime;
+	targetTime_ = targetTime;
 }
 
 void ActionGame::CTimer::Stop()
@@ -38,11 +38,11 @@ void ActionGame::CTimer::Update()
 		return;
 	}
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-	if (currentTime_ >= m_TargetTime)
+	if (currentTime_ >= targetTime_)
 	{
-		if (!m_AchieveFlg)
+		if (!isAchieve_)
 		{
-			m_AchieveFlg = true;
+			isAchieve_ = true;
 		}
 	}
 }
@@ -54,11 +54,18 @@ void ActionGame::CTimer::Update(CHARA_TYPE timeScaleType)
 		return;
 	}
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(timeScaleType);
-	if (currentTime_ >= m_TargetTime)
+	if (currentTime_ >= targetTime_)
 	{
-		if (!m_AchieveFlg)
+		if (!isAchieve_)
 		{
-			m_AchieveFlg = true;
+			isAchieve_ = true;
 		}
 	}
+}
+
+void ActionGame::CTimer::Reset()
+{
+	currentTime_ = 0.0f;
+	isAchieve_ = false;
+	isStop_ = false;
 }

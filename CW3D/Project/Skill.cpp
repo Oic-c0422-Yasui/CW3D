@@ -1,46 +1,46 @@
 #include "Skill.h"
 
 
-ActionGame::Skill::Skill()
+ActionGame::CSkill::CSkill()
 
-	: inputKey_()
-	, m_InputKey()
-	, m_State(nullptr)
-	, m_FlyState(nullptr)
-	, m_CanUseFlg(false)
-	, m_CT(0.0f)
+	: skillName_()
+	, inputKey_()
+	, stateName_(nullptr)
+	, flyStateName_(nullptr)
+	, canUse_(false)
+	, CT_(0.0f)
 	, isStart_(false)
-	, m_SkillData(std::make_shared<SkillData>())
+	, skillData_(std::make_shared<SkillData>())
 
 {
 }
 
-void ActionGame::Skill::Create(const std::string& name, const std::string& inputKey, const std::string& texName, char* state, char* flyState)
+void ActionGame::CSkill::Create(const std::string& name, const std::string& inputKey, const std::string& texName, char* state, char* flyState)
 {
-	inputKey_ = name;
-	m_InputKey = inputKey;
-	m_TexName = texName;
-	m_State = state;
-	m_FlyState = flyState;
-	m_CanUseFlg = true;
+	skillName_ = name;
+	inputKey_ = inputKey;
+	texureName_ = texName;
+	stateName_ = state;
+	flyStateName_ = flyState;
+	canUse_ = true;
 	isStart_ = false;
 }
 
-void ActionGame::Skill::Reset()
+void ActionGame::CSkill::Reset()
 {
 	isStart_ = false;
-	m_CanUseFlg = true;
-	m_CT = 0.0f;
+	canUse_ = true;
+	CT_ = 0.0f;
 }
 
-void ActionGame::Skill::Start()
+void ActionGame::CSkill::Start()
 {
-	m_CT = m_SkillData->MaxCT.Get();
-	m_CanUseFlg = false;
+	CT_ = skillData_->MaxCT.Get();
+	canUse_ = false;
 	isStart_ = true;
 }
 
-void ActionGame::Skill::Update()
+void ActionGame::CSkill::Update()
 {
 	if (!isStart_)
 	{
@@ -49,33 +49,32 @@ void ActionGame::Skill::Update()
 	AddTimerAndResetFlg();
 }
 
-void ActionGame::Skill::AddTimerAndResetFlg()
+void ActionGame::CSkill::AddTimerAndResetFlg()
 {
-	if (m_CT > 0.0f)
+	if (CT_ > 0.0f)
 	{
-		m_CT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		CT_ -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 	else
 	{
 		isStart_ = false;
-		m_CanUseFlg = true;
+		canUse_ = true;
 	}
 }
 
-void ActionGame::Skill::AddTimer()
+void ActionGame::CSkill::AddTimer()
 {
-	if (m_CT > 0.0f)
+	if (CT_ > 0.0f)
 	{
-		m_CT -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		CT_ -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
 	}
 }
 
-void ActionGame::Skill::ResetFlg()
-
+void ActionGame::CSkill::ResetFlg()
 {
-	if (m_CT <= 0.0f)
+	if (CT_ <= 0.0f)
 	{
 		isStart_ = false;
-		m_CanUseFlg = true;
+		canUse_ = true;
 	}
 }

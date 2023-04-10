@@ -112,16 +112,17 @@ void CCameraController::Update(const Vector3& pos, const Vector3& lookPos)
 			{
 				isLeap_ = false;
 				isLeapEnd_ = true;
-				InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
 				defaultCamera_->SetPos(pos + defaultCamera_->GetOffsetPos());
 				defaultCamera_->SetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
 				defaultCamera_->SetTargetPos(pos + defaultCamera_->GetOffsetPos());
 				defaultCamera_->SetTargetLookPos(lookPos + defaultCamera_->GetOffsetLookPos());
 
-				pCamera->Set(leapEndTime_, endEaseType_, defaultCamera_);
-				camera_ = pCamera;
+				auto camera = std::make_shared<CInterpolateCamera>(
+					camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
+				camera->Set(leapEndTime_, endEaseType_, defaultCamera_);
+				camera_ = camera;
 				SetCamera(camera_);
-				pCamera.reset();
+				camera.reset();
 			}
 			else
 			{

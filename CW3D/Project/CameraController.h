@@ -13,19 +13,18 @@ namespace ActionGame
 		friend class Singleton<CCameraController>;
 	private:
 
-		CameraPtr	camera_;
-		CameraPtr	nextCamera_;
-		CameraPtr	defaultCamera_;
-		bool		isLeap_;
-		bool		isLeapStart_;
-		float		leapTime_;
-		bool		isLeapEnd_;
-		float		leapEndTime_;
+		CameraPtr			camera_;
+		CameraPtr			nextCamera_;
+		CameraPtr			defaultCamera_;
+		bool				isLeap_;
+		bool				isLeapStart_;
+		float				leapTime_;
+		bool				isLeapEnd_;
+		float				leapEndTime_;
 		MyUtil::EASING_TYPE endEaseType_;
-		float		timeScale_;
-		float		currentTime_;
-		bool		isTimerStart_;
-
+		float				timeScale_;
+		float				currentTime_;
+		bool				isTimerStart_;
 
 		//ÉJÉÅÉâóhÇÍ
 		struct QuakeState
@@ -35,7 +34,7 @@ namespace ActionGame
 			float time;
 			float currentTime;
 		};
-		QuakeState quakeState_;
+		QuakeState	quakeState_;
 
 		Vector3		targetPos_;
 		Vector3		targetLookPos_;

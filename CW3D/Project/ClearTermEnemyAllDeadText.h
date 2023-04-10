@@ -16,11 +16,11 @@ namespace ClearTerm
         void Initialize() override;
         void Render() override;
 
-        void SetEnemyCount(int count) 
+        void SetEnemyCount(size_t count)
         {
             enemyCount_ = count;
         }
-        void SetEnemyMaxCount(int count)
+        void SetEnemyMaxCount(size_t count)
         {
             enemyMaxCount_ = count;
         }

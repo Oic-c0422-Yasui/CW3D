@@ -21,7 +21,7 @@ void ActionGame::CAttackStateAI::Start()
 void ActionGame::CAttackStateAI::Update()
 {
 	////プレイヤー取得
-	const auto& player = ServiceLocator< CPlayer >::GetService();
+	const auto& player = CServiceLocator< CPlayer >::GetService();
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス
 	CAABB collider;

@@ -10,7 +10,7 @@ ActionGame::CDownState::CDownState(Parameter param)
 void ActionGame::CDownState::Start()
 {
 	currentTime_ = 0;
-	auto& invincible = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	invincible = parameter_.endTime;
 	action_ = Actor()->GetAction<CDownAction>(GetKey());
 	action_->Start();

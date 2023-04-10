@@ -18,7 +18,7 @@ CStageBase::~CStageBase()
 void ActionGame::CStageBase::Render()
 {
 	CMatrix44 matWorld;
-	stage_->Render(matWorld);
+	stage_->Render(matWorld,shader_->GetShader().get(),shader_->GetShaderBind().get());
 }
 
 void ActionGame::CStageBase::NextPhase()

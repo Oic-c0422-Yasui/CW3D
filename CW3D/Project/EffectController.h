@@ -19,7 +19,7 @@ namespace ActionGame
 			: Singleton<CEffectController>()
 		{
 		}
-
+		~CEffectController() override;
 
 		void Create(const Effekseer::Handle& handle, const Vector3& position, EffectCreateParameter param);
 		void Create(const Effekseer::Handle& handle, const Vector3& position, const EffectCreateParameterPtr& param);

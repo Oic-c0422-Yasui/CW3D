@@ -51,7 +51,7 @@ namespace ActionGame {
 			, parameters_(std::make_shared<AnyParameterMap>())
 			, motion_()
 			, skillController_(std::make_shared<CSkillController>())
-			, myID_(IDManagerInstance.GetId())
+			, myID_(IDManagerInstance.CreateID())
 			, charaType_()
 		{
 		}
@@ -210,7 +210,7 @@ namespace ActionGame {
 		/**
 		 * @brief		IDŽæ“¾
 		 */
-		size_t GetID() const override {
+		uint32_t GetID() const override {
 			return myID_.GetID();
 		}
 

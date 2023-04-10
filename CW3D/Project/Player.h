@@ -11,6 +11,7 @@
 #include	"PlayerSkillCreater.h"
 #include	"PlayerParameterCreator.h"
 #include	"EffectController.h"
+#include	"Combo.h"
 
 namespace ActionGame
 {
@@ -41,6 +42,9 @@ namespace ActionGame
 
 		//回避時の当たり判定サイズ
 		CVector3 escapeColliderSize_;
+
+		//コンボ
+		std::shared_ptr<CCombo>	combo_;
 
 	public:
 		CPlayer();
@@ -116,7 +120,7 @@ namespace ActionGame
 		}
 
 
-		/**
+		/*
 		* @brief		HP変化通知
 		*/
 		ActionGame::IObservable<int>& GetHPSubject() 
@@ -125,6 +129,13 @@ namespace ActionGame
 		}
 		ActionGame::IObservable<int>* GetMaxHPSubject() { return &(maxHP_.Get()); }
 
+		/*
+		* @brief		コンボ数通知
+		*/
+		ActionGame::IObservable<uint32_t>& GetComboSubject()
+		{
+			return combo_->GetCountParam();
+		}
 
 		/*
 		* @brief		スキル取得

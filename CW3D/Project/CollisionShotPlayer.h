@@ -58,7 +58,7 @@ namespace ActionGame
 		if (player->IsEscape())
 		{
 			player->AddUltGauge(20.0f);
-			auto& invincible = player->GetActor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+			auto& invincible = player->GetActor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 			invincible = 1.0f;
 			auto effect = EffectCreateParameter{ "EscapeEffect", Vector3(0, 0, -1), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f };
 			EffectControllerInstance.Play(effect.name, player->GetCollider().Position, effect);

@@ -16,6 +16,7 @@ namespace Messenger
         std::map<int, ActionGame::CSubject<void>> observeMap_;
     public:
         CMessenger();
+        ~CMessenger() override;
         
         /*
         * @brief    メッセージを送る
@@ -35,6 +36,11 @@ namespace Messenger
         * @brief    メッセージを受け取る相手を削除
         */
         void Delete(GameMessageType message) override;
+
+        /*
+       * @brief    メッセージを受け取る相手を削除
+       */
+        void Delete();
     };
 }
 

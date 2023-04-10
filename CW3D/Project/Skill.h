@@ -8,20 +8,20 @@
 namespace ActionGame
 {
 	
-	class Skill
+	class CSkill
 	{
 	public:
 	protected:
+		std::string		skillName_;
+		std::string		texureName_;
 		std::string		inputKey_;
-		std::string		m_TexName;
-		std::string		m_InputKey;
-		char*			m_State;
-		char*			m_FlyState;
+		char*			stateName_;
+		char*			flyStateName_;
 		bool			isStart_;
-		SkillDataPtr	m_SkillData;
+		SkillDataPtr	skillData_;
 		
-		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<bool> >	m_CanUseFlg;
-		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> > m_CT;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<bool> >	canUse_;
+		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> > CT_;
 
 
 	protected:
@@ -37,9 +37,9 @@ namespace ActionGame
 		void AddTimerAndResetFlg();
 
 	public:
-		Skill();
+		CSkill();
 
-		virtual ~Skill() = default;
+		virtual ~CSkill() = default;
 		
 		/*
 		* @brief	スキル生成
@@ -77,7 +77,7 @@ namespace ActionGame
 		*/
 		const std::string& GetKey() const noexcept
 		{
-			return inputKey_;
+			return skillName_;
 		}
 
 		/*
@@ -85,7 +85,7 @@ namespace ActionGame
 		*/
 		const std::string& GetTexName() const noexcept
 		{
-			return m_TexName;
+			return texureName_;
 		}
 
 		/*
@@ -93,7 +93,7 @@ namespace ActionGame
 		*/
 		const std::string& GetButton() const noexcept
 		{
-			return m_InputKey;
+			return inputKey_;
 		}
 
 		/*
@@ -101,7 +101,7 @@ namespace ActionGame
 		*/
 		char* GetState() const noexcept
 		{
-			return m_State;
+			return stateName_;
 		}
 
 		/*
@@ -109,7 +109,7 @@ namespace ActionGame
 		*/
 		char* GetFlyState() const noexcept
 		{
-			return m_FlyState;
+			return flyStateName_;
 		}
 
 		/*
@@ -117,7 +117,7 @@ namespace ActionGame
 		*/
 		float GetMaxCT() const noexcept
 		{
-			return m_SkillData->MaxCT.Get();
+			return skillData_->MaxCT.Get();
 		}
 
 		/*
@@ -125,7 +125,7 @@ namespace ActionGame
 		*/
 		float GetCT() const noexcept
 		{
-			return m_CT.Get();
+			return CT_.Get();
 		}
 
 		/*
@@ -134,25 +134,25 @@ namespace ActionGame
 		*/
 		int GetDamage() const noexcept
 		{
-			return m_SkillData->DamagePercent;
+			return skillData_->DamagePercent;
 		}
 
 		/*
 		* @brief	スキルが使用できるか？
 		* @param	true　なら使用可能
 		*/
-		virtual bool IsCanUse()
+		virtual bool CanUseSkill()
 		{
-			return m_CanUseFlg.Get();
+			return canUse_.Get();
 		}
 
 
 		/**
 		* @brief		CT変化通知
 		*/
-		ActionGame::IObservable<float>* GetCTSubject()			{ return &(m_CT.Get()); }
-		ActionGame::IObservable<float>* GetMaxCTSubject()		{ return &(m_SkillData->MaxCT.Get()); }
-		ActionGame::IObservable<bool>* GetCanUseSubject()		{ return &(m_CanUseFlg.Get()); }
+		ActionGame::IObservable<float>* GetCTSubject()			{ return &(CT_.Get()); }
+		ActionGame::IObservable<float>* GetMaxCTSubject()		{ return &(skillData_->MaxCT.Get()); }
+		ActionGame::IObservable<bool>* GetCanUseSubject()		{ return &(canUse_.Get()); }
 
 
 		/////////////////////////////////////////////////////////////////////
@@ -164,7 +164,7 @@ namespace ActionGame
 		*/
 		void SetKey(const std::string& key) noexcept
 		{
-			inputKey_ = key;
+			skillName_ = key;
 			
 		}
 
@@ -175,8 +175,8 @@ namespace ActionGame
 		*/
 		void SetState(char* state, char* flyState) noexcept
 		{
-			m_State = state;
-			m_FlyState = flyState;
+			stateName_ = state;
+			flyStateName_ = flyState;
 		}
 
 		/*
@@ -184,7 +184,7 @@ namespace ActionGame
 		*/
 		void SetButton(const std::string& button) noexcept
 		{
-			m_InputKey = button;
+			inputKey_ = button;
 		}
 
 		/*
@@ -193,7 +193,7 @@ namespace ActionGame
 		*/
 		void SetCT(float ct) noexcept
 		{
-			m_CT = ct;
+			CT_ = ct;
 		}
 		/*
 		* @brief		現在のクールタイムを減少
@@ -201,7 +201,7 @@ namespace ActionGame
 		*/
 		void SubCT(float ct) noexcept
 		{
-			m_CT = max(m_CT.Get() - ct, 0.0f);
+			CT_ = max(CT_.Get() - ct, 0.0f);
 		}
 
 		/*
@@ -210,7 +210,7 @@ namespace ActionGame
 		*/
 		void SetMaxCT(float ct) noexcept
 		{
-			m_SkillData->MaxCT = ct;
+			skillData_->MaxCT = ct;
 		}
 
 		/*
@@ -219,7 +219,7 @@ namespace ActionGame
 		*/
 		void SetDamage(float damage) noexcept
 		{
-			m_SkillData->DamagePercent = damage;
+			skillData_->DamagePercent = damage;
 		}
 
 		/*
@@ -228,7 +228,7 @@ namespace ActionGame
 		*/
 		void SetCanUse(bool isCanUse) noexcept
 		{
-			m_CanUseFlg = isCanUse;
+			canUse_ = isCanUse;
 		}
 
 		/*
@@ -237,7 +237,7 @@ namespace ActionGame
 		*/
 		virtual void SetSkillData(const SkillDataPtr& skill)
 		{
-			m_SkillData = skill;
+			skillData_ = skill;
 		}
 
 		/*
@@ -247,14 +247,14 @@ namespace ActionGame
 		*/
 		void SetSkillData(float damage, float ct) noexcept
 		{
-			m_SkillData->MaxCT = ct;
-			m_SkillData->DamagePercent = damage;
+			skillData_->MaxCT = ct;
+			skillData_->DamagePercent = damage;
 		}
 		
 
 	};
 
 	//ポインタ置き換え
-	using SKillPtr = std::shared_ptr<Skill>;
-	using SkillWeakPtr = std::weak_ptr<Skill>;
+	using SKillPtr = std::shared_ptr<CSkill>;
+	using SkillWeakPtr = std::weak_ptr<CSkill>;
 }

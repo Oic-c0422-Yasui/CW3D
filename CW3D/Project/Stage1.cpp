@@ -10,9 +10,8 @@ ActionGame::CStage1::CStage1()
 
 bool ActionGame::CStage1::Load(const DivisionArrayPtr& divisionArray)
 {
-	 stage_ = ResourcePtrManager<CMeshContainer>
-							::GetInstance().GetResource("Stage", "StageMesh");
-
+	 stage_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Stage", "StageMesh");
+	 shader_ = ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().GetResource("Shader", "NormalMap");
 	 divisionArray_ = divisionArray;
 	 currentDivision_ = GetDivision(0);
 	return true;
@@ -45,8 +44,7 @@ void ActionGame::CStage1::Update()
 
 void ActionGame::CStage1::Render()
 {
-	CMatrix44 matWorld;
-	stage_->Render(matWorld);
+	CStageBase::Render();
 }
 
 void ActionGame::CStage1::RenderDebug()

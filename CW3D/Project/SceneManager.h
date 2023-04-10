@@ -10,20 +10,30 @@ namespace Scene
 	/**
 	 * シーンマネージャー
 	 */
-	class SceneManager : public ISceneManager
+	class CSceneManager : public ISceneManager
 	{
 	private:
-
-		ScenePtr scene_;
+		//現在のシーン
+		ScenePtr currentScene_;
+		//遷移前のシーン
+		ScenePtr prevScene_;
+		//登録されているシーン
 		std::unordered_map<SCENENO, SceneCreatorPtr> sceneMap_;
+		
+		//更新タスク
 		Task::CTaskManager updateTask_;
+		//描画タスク
 		Task::CTaskManager renderTask_;
+		//２D描画タスク
 		Task::CTaskManager render2DTask_;
 
-		SceneChangeEffectPtr sceneEffect_;
+		//遷移エフェクト
+		SceneChangeEffectPtr changeEffect_;
 
+		//デバッグフラグ
 		bool isDebug_;
 
+		//現在のシーン初期化フラグ
 		bool isSceneInit_;
 
 	private:
@@ -47,8 +57,8 @@ namespace Scene
 		//遷移エフェクトタスク削除
 		void DeleteSceneChangeEffectTask();
 	public:
-		SceneManager();
-		~SceneManager();
+		CSceneManager();
+		~CSceneManager();
 
 		/*
 		 * @brief		シーンの登録
@@ -74,17 +84,25 @@ namespace Scene
 		 */
 		bool ChangeScene(SCENENO sceneNo) override;
 
+		/*
+		 * @brief		シーンの変更
+		 * @param		sceneNo	シーン番号
+		 * @param		sceneNo	シーン遷移エフェクト
+		 */
+		bool ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect) override;
+
 		/**
 		 * @brief		シーン変更(ロード画面を挟む)
 		 * @param		sceneNo シーン番号
+		 * @param		sceneNo	シーン遷移エフェクト
 		 * @param		isLoading ロード画面を挟むか？
 		 */
-		bool ChangeScene(SCENENO sceneNo,bool isLoading) override;
+		bool ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect, bool isLoading) override;
 		/*
 		 * @brief		シーンの変更（ロード、初期化は行わない）
 		 * @param		scene	ロード済みのシーン
 		 */
-		bool ChangeScene(const ScenePtr& scene) override;
+		bool ChangeScene(const ScenePtr& scene, SceneChangeEffectPtr effect) override;
 		
 
 		/*

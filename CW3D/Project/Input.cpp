@@ -118,27 +118,27 @@ void Input::CInput::Update()
 			{
 				//キーボード
 			case KeyData::Type::Keyboard:
-				k->second.currentValue_ += GetKeyboardKeyState(key.m_PositiveNo, key.m_NegativeNo);
+				k->second.currentValue_ += GetKeyboardKeyState(key.positiveNo_, key.negativeNo_);
 				break;
 
 				//マウス
 			case KeyData::Type::Mouse:
-				k->second.currentValue_ += GetMouseKeyState(key.m_PositiveNo, key.m_NegativeNo);
+				k->second.currentValue_ += GetMouseKeyState(key.positiveNo_, key.negativeNo_);
 				break;
 
 				//ジョイパッド
 			case KeyData::Type::JoyPad:
-				k->second.currentValue_ += GetJoypadKeyState(key.m_PadNo, key.m_PositiveNo, key.m_NegativeNo);
+				k->second.currentValue_ += GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
 				break;
 
 				//ジョイスティック
 			case KeyData::Type::JoyStickHorizontal:
-				k->second.currentValue_ += GetJoypadStickHorizontal(key.m_PadNo);
+				k->second.currentValue_ += GetJoypadStickHorizontal(key.padNo_);
 				break;
 
 				//ジョイスティック
 			case KeyData::Type::JoyStickVertical:
-				k->second.currentValue_ += GetJoypadStickVertical(key.m_PadNo);
+				k->second.currentValue_ += GetJoypadStickVertical(key.padNo_);
 				break;
 			}
 		}

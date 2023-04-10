@@ -18,16 +18,7 @@ void Scene::CBattleScene::RegisterUpdateTask()
 	updateTask_.AddTask("RetryTask", Task::PRIORITY::EVENT,
 		[&]()
 	{
-		//リトライ
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-		{
-			//フェード
-			float time = 0.5f;
-			auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
-			//初期化
-			SceneInitializeService::GetService()->InitializeScene(sceneEffect);
-			return;
-		}
+		
 
 	}
 	);
@@ -68,7 +59,22 @@ void Scene::CBattleScene::RegisterCollisionTask()
 	///		当たり判定タスク
 	////////////////////////////////////////////////
 
-	updateTask_.AddTask("CollisionTask1", Task::PRIORITY::COLLISION,
+	updateTask_.AddTask("CollisionTask1", Task::PRIORITY::COLLISION1,
+		[&]()
+	{
+		if (currentGameState_ == GAME_STATE::NOMAL)
+		{
+			//プレイヤーと弾の当たり判定
+			for (size_t i = 0; i < ShotManagerInstance.GetShotCount(); i++)
+			{
+				auto shot = ShotManagerInstance.GetShot(i);
+				CCollision::CollisionObj(shot, player_);
+			}
+		}
+	}
+	);
+
+	updateTask_.AddTask("CollisionTask2", Task::PRIORITY::COLLISION2,
 		[&]()
 	{
 		if (currentGameState_ == GAME_STATE::NOMAL)
@@ -78,13 +84,6 @@ void Scene::CBattleScene::RegisterCollisionTask()
 			{
 				auto obj = stageManager_.GetCurrentDivision()->GetObj(i);
 				CCollision::CollisionObj(player_, obj);
-			}
-
-			//プレイヤーと弾の当たり判定
-			for (size_t i = 0; i < ShotManagerInstance.GetShotCount(); i++)
-			{
-				auto shot = ShotManagerInstance.GetShot(i);
-				CCollision::CollisionObj(shot, player_);
 			}
 		}
 	}
@@ -160,8 +159,6 @@ void Scene::CBattleScene::RegisterAfterSpawn()
 	updateTask_.AddTask("AfterSpawnUpdate", Task::PRIORITY::MAIN1,
 		[&]()
 	{
-
-
 		//敵スポナー更新
 		for (size_t i = 0; i < enemySpawner_->size(); i++)
 		{
@@ -206,8 +203,9 @@ void Scene::CBattleScene::RegisterAfterSpawn()
 		stageManager_.Update();
 	});
 
+
 	//敵の衝突判定
-	updateTask_.AddTask("AfterSpawnCollision", Task::PRIORITY::COLLISION,
+	updateTask_.AddTask("AfterSpawnCollision", Task::PRIORITY::COLLISION1,
 		[&]()
 	{
 		//敵の当たり判定
@@ -240,6 +238,7 @@ void Scene::CBattleScene::RegisterAfterSpawn()
 		}
 	}
 	);
+
 
 	//敵の描画
 	renderTask_.AddTask("AfterSpawnRender", Task::PRIORITY::MAIN1,

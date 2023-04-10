@@ -41,7 +41,6 @@
 
 #include	"NPCHPRenderManager.h"
 
-
 namespace Scene
 {
 	//ゲームの状態
@@ -58,7 +57,7 @@ namespace Scene
 		//プレイヤー
 		ActionGame::PlayerPtr player_;
 		//敵マネージャー
-		ActionGame::EnemyManager enemyManager_;
+		ActionGame::CEnemyManager enemyManager_;
 		//敵スポナー
 		Spawner::EnemySpawnerArrayPtr enemySpawner_;
 		//敵生成スレッド
@@ -67,7 +66,7 @@ namespace Scene
 		Task::CTaskManager	updateTask_;
 		//描画タスク
 		Task::CTaskManager	renderTask_;
-		//Render2Dタスク
+		//2D描画タスク
 		Task::CTaskManager	render2DTask_;
 
 		//ライト
@@ -87,7 +86,11 @@ namespace Scene
 		//現在のゲームの状態
 		GAME_STATE currentGameState_;
 
+		//タイマー
 		ActionGame::CTimer timer_;
+
+		//ノーマルマップシェーダー
+		MyClass::NormalMapParameterPtr normalMap_;
 
 	private:
 		//敵の生成

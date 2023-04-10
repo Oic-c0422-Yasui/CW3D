@@ -6,18 +6,18 @@ namespace Spawner
 	/**
 	 *	@brief		スポーンの最大数
 	 */
-	class EnemySpawnConditionCountLimit : public ISpawnCondition
+	class CEnemySpawnConditionCountLimit : public ISpawnCondition
 	{
 	private:
 		//限界数
-		size_t		m_MaxCount;
+		size_t		maxCount_;
 		//現在数
 		size_t		count_;
 	public:
 		/**
 		 *	@brief		コンストラクタ
 		 */
-		EnemySpawnConditionCountLimit(size_t maxCount);
+		CEnemySpawnConditionCountLimit(size_t maxCount);
 	
 		/**
 		 * @brief		判定
@@ -34,7 +34,7 @@ namespace Spawner
 			count_ = count;
 		}
 	};
-	using EnemySpawnConditionCountLimitPtr = std::shared_ptr<EnemySpawnConditionCountLimit>;
+	using EnemySpawnConditionCountLimitPtr = std::shared_ptr<CEnemySpawnConditionCountLimit>;
 
 }
 

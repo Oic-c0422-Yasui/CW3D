@@ -16,9 +16,14 @@
 #include	"MofInput.h"
 #include	"StateInput.h"
 #include	"Messenger.h"
+#include	"SendMessageServiceDefine.h"
+#include	"RegistMessageServiceDefine.h"
 
 //シーンマネージャー
 Scene::SceneManagerPtr gSceneManager;
+
+//外部フォント
+LPCSTR fontPath = "Font/Mplus1-Regular.ttf";
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -50,11 +55,25 @@ MofBool CGameApp::Initialize(void){
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 0);
+	input->AddJoypadKey(INPUT_KEY_CANCEL, 0, 1);
+	input->AddJoypadKey(INPUT_KEY_SKILL1, 0, 2);
+	input->AddJoypadKey(INPUT_KEY_SKILL2, 0, 3);
+	input->AddJoypadKey(INPUT_KEY_SKILL3, 0, 4);
+	input->AddJoypadKey(INPUT_KEY_SKILL4, 0, 5);
+	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, 6);
+	input->AddJoypadKey(INPUT_KEY_RETRY, 0, 7);
+	input->AddJoypadKey(INPUT_KEY_BACK, 0, 8);
+
+	//外部フォント読み込み
+	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) <= 0)
+	{
+		MessageBox(NULL, "読み込み失敗", "", MB_OK);
+	}
 
 	//シーン登録
-	auto manager = std::make_shared<Scene::SceneManager>();
+	auto manager = std::make_shared<Scene::CSceneManager>();
 	manager->RegistScene<Scene::CBattleScene>(SCENENO::GAME);
-	manager->RegistScene<Scene::TitleScene>(SCENENO::TITLE);
+	manager->RegistScene<Scene::CTitleScene>(SCENENO::TITLE);
 
 	//画面遷移用のサービス登録
 	SceneChangeService::SetService(manager);
@@ -63,7 +82,8 @@ MofBool CGameApp::Initialize(void){
 
 	//メッセンジャー登録
 	auto messenger = std::make_shared < Messenger::CMessenger>();
-	ActionGame::ServiceLocator<Messenger::IMessenger>::SetService(messenger);
+	RegistMessageService::SetService(messenger);
+	SendMessageService::SetService(messenger);
 
 
 	gSceneManager->Initialize();
@@ -122,9 +142,12 @@ MofBool CGameApp::Render(void){
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
 	InputManagerInstance.Release();
-	ActionGame::ServiceLocator<Scene::ISceneChanger>::Release();
-	ActionGame::ServiceLocator<Scene::ISceneInitializer>::Release();
-	ActionGame::ServiceLocator<Messenger::IMessenger>::Release();
+	SceneChangeService::Release();
+	SceneInitializeService::Release();
+	SendMessageService::Release();
+	RegistMessageService::Release();
 	gSceneManager->Release();
+	//外部フォント解放
+	RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL);
 	return TRUE;
 }

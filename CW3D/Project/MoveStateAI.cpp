@@ -26,7 +26,7 @@ void ActionGame::CMoveStateAI::Start()
 void ActionGame::CMoveStateAI::Update()
 {
 	//プレイヤー取得
-	const auto& target = ServiceLocator< CPlayer >::GetService();
+	const auto& target = CServiceLocator< CPlayer >::GetService();
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス
 	CAABB collider;

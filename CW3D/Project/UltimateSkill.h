@@ -8,7 +8,7 @@ namespace ActionGame
 	/*
 	* @brief	•KŽE‹ZƒXƒLƒ‹
 	*/
-	class UltimateSkill : public Skill
+	class UltimateSkill : public CSkill
 	{
 	private:
 
@@ -74,8 +74,8 @@ namespace ActionGame
 		*/
 		void SetSkillData(const SkillDataPtr& skill) override
 		{
-			Skill::SetSkillData(skill);
-			m_UltSkillData = std::dynamic_pointer_cast<UltimateSkillData>(m_SkillData);
+			CSkill::SetSkillData(skill);
+			m_UltSkillData = std::dynamic_pointer_cast<UltimateSkillData>(skillData_);
 			if (m_UltSkillData == nullptr)
 			{
 				assert(m_UltSkillData);

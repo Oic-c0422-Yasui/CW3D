@@ -1,0 +1,71 @@
+{
+
+  "Status": [
+    {
+      "Type": "Zombie",
+      "Name": "ゾンビ",
+      "HP": 300,
+      "UltGauge": 100.0,
+      "UltGaugeBoostMag": 1.0,
+      "ATK": 10,
+      "Mesh": "Mesh/Enemy/Zombie/Zombie.mom",
+      "Weight": 1.0,
+      "ArmorLevel": 1,
+      "Scale": {
+        "SizeX": 1.0,
+        "SizeY": 1.0,
+        "SizeZ": 1.0
+      },
+      "Collider": {
+        "SizeX": 0.5,
+        "SizeY": 0.8,
+        "SizeZ": 0.5,
+        "Height": 1.0
+      }
+    },
+    {
+      "Type": "Zombie2",
+      "Name": "つよつよゾンビ",
+      "HP": 1000,
+      "UltGauge": 100.0,
+      "UltGaugeBoostMag": 1.5,
+      "ATK": 20,
+      "Mesh": "Mesh/Enemy/Zombie/Zombie.mom",
+      "Weight": 1.0,
+      "ArmorLevel": 1,
+      "Scale": {
+        "SizeX": 1.0,
+        "SizeY": 1.0,
+        "SizeZ": 1.0
+      },
+      "Collider": {
+        "SizeX": 0.5,
+        "SizeY": 0.8,
+        "SizeZ": 0.5,
+        "Height": 1.0
+      }
+    },
+    {
+      "Type": "Mutant",
+      "Name": "みゅーたん",
+      "HP": 3000,
+      "UltGauge": 100.0,
+      "UltGaugeBoostMag": 4.5,
+      "ATK": 50,
+      "Mesh": "Mesh/Enemy/Mutant/Mutant.mom",
+      "Weight": 5.0,
+      "ArmorLevel": 4,
+      "Scale": {
+        "SizeX": 2.0,
+        "SizeY": 2.0,
+        "SizeZ": 2.0
+      },
+      "Collider": {
+        "SizeX": 1.3,
+        "SizeY": 1.7,
+        "SizeZ": 1.3,
+        "Height": 1.0
+      }
+    }
+  ]
+}

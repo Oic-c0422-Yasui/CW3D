@@ -10,7 +10,7 @@ ActionGame::AICycleTension::AICycleTension(ActorPtr actor)
 bool ActionGame::AICycleTension::Update()
 {
 	//プレイヤー取得
-	const auto& player = ServiceLocator< CPlayer >::GetService();
+	const auto& player = CServiceLocator< CPlayer >::GetService();
 	const auto& transform = actor_->GetTransform();
 	//距離からインターバル算出
 	float sx = player->GetPosition().x - transform->GetPosition().x;

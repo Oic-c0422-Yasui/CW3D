@@ -1,10 +1,12 @@
 #include "Player.h"
+#include "ServiceLocator.h"
 
 using namespace ActionGame;
 
 ActionGame::CPlayer::CPlayer()
 	: ActionGame::CActorObject()
 	, input_()
+	, combo_(std::make_shared<CCombo>(5.0f))
 
 {
 	SetType(CHARA_TYPE::PLAYER);
@@ -27,10 +29,13 @@ bool ActionGame::CPlayer::Load()
 	motion_ = mesh_->CreateMotionController();
 	actor_->SetAnimationState(motion_);
 	
-	stateMachine_ = std::make_shared<ActionGame::StateMachine>();
+	//シェーダー読み込み
+	normalMap_ = ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().GetResource("Shader", "NormalMap");
+	
 	//アクション作成
 	actionCreator_.Create(actor_);
 	//ステート作成
+	stateMachine_ = std::make_shared<ActionGame::StateMachine>();
 	stateCreator_.Create(stateMachine_, actor_, input_);
 	
 	//パラメーター作成
@@ -42,6 +47,8 @@ bool ActionGame::CPlayer::Load()
 	//スキル設定
 	skillCreator_.Create(actor_);
 	
+	CServiceLocator<ICombo>::SetService(combo_);
+
 	return true;
 }
 
@@ -70,7 +77,7 @@ void ActionGame::CPlayer::Initialize()
 	hp = maxHP_.Get();
 	auto& alpha = param->Get<float>(PARAMETER_KEY_ALPHA);
 	alpha = 1.0f;
-	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = param->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	invincible = 0.0f;
 	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
@@ -78,6 +85,9 @@ void ActionGame::CPlayer::Initialize()
 	//スキル初期化
 	actor_->GetSkillController()->Reset();
 	
+	//コンボ初期化
+	combo_->Initialize();
+
 	CActorObject::Initialize();
 }
 
@@ -89,7 +99,7 @@ void ActionGame::CPlayer::Update()
 	}
 	
 	//無敵時間中なら時間を減らす
-	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	if (invincible > 0.0f)
 	{
 		invincible -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
@@ -105,6 +115,10 @@ void ActionGame::CPlayer::Update()
 			isShow_ = false;
 		}
 	}
+
+	//コンボ更新
+	combo_->Update(GetType());
+
 	ActionGame::CActorObject::Update();
 }
 
@@ -125,6 +139,8 @@ void ActionGame::CPlayer::RenderDebug2D()
 void ActionGame::CPlayer::Release()
 {
 	ActionGame::CActorObject::Release();
+	combo_.reset();
+	CServiceLocator<ICombo>::Release();
 }
 
 void ActionGame::CPlayer::Damage(const Vector3& direction, const Vector3& power, int damage,BYTE armorBreakeLevel)
@@ -133,7 +149,6 @@ void ActionGame::CPlayer::Damage(const Vector3& direction, const Vector3& power,
 	//ダメージを受けた方向に向く
 	auto& transform = actor_->GetTransform();
 	transform->SetReverse(direction.x > 0 ? true : false);
-
 
 	//ダメージ
 	auto& hp = actor_->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
@@ -182,7 +197,7 @@ void ActionGame::CPlayer::Damage(const Vector3& direction, const Vector3& power,
 
 bool ActionGame::CPlayer::IsInvincible() const
 {
-	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE);
+	auto& invincible = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
 	return invincible > 0.0f || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DEAD || stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_DOWN
 							|| stateMachine_->GetCurrentState()->GetKey() == STATE_KEY_STARTPOSE;
 }

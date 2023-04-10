@@ -1,60 +1,60 @@
 #include "AdditionalSkill.h"
 
-ActionGame::AdditionalSkill::AdditionalSkill()
+ActionGame::CAdditionalSkill::CAdditionalSkill()
 
-	: Skill()
-	, m_AddStartTime(0.0f)
+	: CSkill()
+	, addStartTime_(0.0f)
 	, addCT_(0.0f)
-	, m_AddCount(0)
-	, m_AddFlg(false)
-	, m_DelayAddFlg(false)
+	, addCount_(0)
+	, isAdd_(false)
+	, isDelayAdd_(false)
 {
 }
 
-ActionGame::AdditionalSkill::~AdditionalSkill()
+ActionGame::CAdditionalSkill::~CAdditionalSkill()
 {
 }
 
-void ActionGame::AdditionalSkill::Start()
+void ActionGame::CAdditionalSkill::Start()
 {
-	if (!m_AddFlg)
+	if (!isAdd_)
 	{
-		Skill::Start();
-		m_AddStartTime = m_AddSkillData->StartTime;
+		CSkill::Start();
+		addStartTime_ = addSkillData_->StartTime;
 	}
 	else
 	{
-		m_DelayAddFlg = true;
+		isDelayAdd_ = true;
 		AddInput();
 	}
 }
 
-void ActionGame::AdditionalSkill::Reset()
+void ActionGame::CAdditionalSkill::Reset()
 {
-	Skill::Reset();
-	m_AddStartTime = 0.0f;
+	CSkill::Reset();
+	addStartTime_ = 0.0f;
 	addCT_ = 0.0f;
-	m_AddCount = 0;
-	m_AddFlg = false;
-	m_DelayAddFlg = false;
+	addCount_ = 0;
+	isAdd_ = false;
+	isDelayAdd_ = false;
 }
 
-void ActionGame::AdditionalSkill::Update()
+void ActionGame::CAdditionalSkill::Update()
 {
 	if (!isStart_)
 	{
 		return;
 	}
-	if (m_AddStartTime > 0.0f)
+	if (addStartTime_ > 0.0f)
 	{
-		m_AddStartTime -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
-		if (m_AddStartTime <= 0.0f)
+		addStartTime_ -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale();
+		if (addStartTime_ <= 0.0f)
 		{
-			if (!m_AddFlg)
+			if (!isAdd_)
 			{
-				m_AddFlg = true;
-				addCT_ = m_AddSkillData->AddMaxCT.Get();
-				m_DelayAddFlg = false;
+				isAdd_ = true;
+				addCT_ = addSkillData_->AddMaxCT.Get();
+				isDelayAdd_ = false;
 			}
 		}
 	}
@@ -65,17 +65,17 @@ void ActionGame::AdditionalSkill::Update()
 
 	if (addCT_ <= 0.0f)
 	{
-		m_AddFlg = false;
-		Skill::AddTimerAndResetFlg();
+		isAdd_ = false;
+		CSkill::AddTimerAndResetFlg();
 	}
 }
 
-void ActionGame::AdditionalSkill::SetSkillData(const SkillDataPtr& skill)
+void ActionGame::CAdditionalSkill::SetSkillData(const SkillDataPtr& skill)
 {
-	Skill::SetSkillData(skill);
-	m_AddSkillData = std::dynamic_pointer_cast<AdditionalSkillData>(m_SkillData);
-	if (m_AddSkillData == nullptr)
+	CSkill::SetSkillData(skill);
+	addSkillData_ = std::dynamic_pointer_cast<AdditionalSkillData>(skillData_);
+	if (addSkillData_ == nullptr)
 	{
-		assert(m_AddSkillData);
+		assert(addSkillData_);
 	}
 }

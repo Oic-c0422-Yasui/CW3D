@@ -4,92 +4,96 @@
 
 bool ActionGame::EffectLoader::Load()
 {
+	//エフェクトマネージャー
 	const auto& manager = EffectRendererInstance.GetManager();
+	//リソース管理のインスタンス
 	auto& instance = ResourceManager<Effekseer::EffectRef>::GetInstance();
+	//リソースのタグ
+	constexpr auto tag = "Effect";
 
 	Effekseer::EffectRef effect = Effekseer::Effect::Create(manager, u"Effect/Laser01.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "AttackEffect1", effect);
+	instance.AddResource(tag, "AttackEffect1", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/sword.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "DamageEffect1", effect);
+	instance.AddResource(tag, "DamageEffect1", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/tuki.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "AttackEffect2", effect);
+	instance.AddResource(tag, "AttackEffect2", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/sandStome.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "SkillEffect1", effect);
+	instance.AddResource(tag, "SkillEffect1", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/Laser01.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "SkillEffect2", effect);
+	instance.AddResource(tag, "SkillEffect2", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/tornade.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "SkillEffect3", effect);
+	instance.AddResource(tag, "SkillEffect3", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/fire.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "SkillEffect4", effect);
+	instance.AddResource(tag, "SkillEffect4", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/drill.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "SkillEffect5", effect);
+	instance.AddResource(tag, "SkillEffect5", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/Track1.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "ClosedEffect", effect);
+	instance.AddResource(tag, "ClosedEffect", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/Clow1.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "AttackEffect3", effect);
+	instance.AddResource(tag, "AttackEffect3", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/A_Sylph2.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "EscapeEffect", effect);
+	instance.AddResource(tag, "EscapeEffect", effect);
 
 	effect = Effekseer::Effect::Create(manager, u"Effect/MonsterRoar.efk");
 	if (effect == nullptr)
 	{
 		return false;
 	}
-	instance.AddResource("Effect", "RoarEffect", effect);
+	instance.AddResource(tag, "RoarEffect", effect);
 
     return true;
 }

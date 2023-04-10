@@ -8,7 +8,7 @@ namespace ClearTerm
 	{
 	public:
 
-		static ClearTermTextPtr Create(ActionGame::EnemyManager& manager, ActionGame::CTimer& timer,ClearTermArray& clearTermArray)
+		static ClearTermTextPtr Create(ActionGame::CEnemyManager& manager, ActionGame::CTimer& timer,ClearTermArray& clearTermArray)
 		{
 			std::stringstream sstream;
 

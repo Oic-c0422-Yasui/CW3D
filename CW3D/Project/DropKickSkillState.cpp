@@ -12,7 +12,7 @@ ActionGame::CDropKickSkillState::CDropKickSkillState(Parameter param)
 void ActionGame::CDropKickSkillState::SetUp()
 {
 	auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_4);
-	m_SkillRef = std::dynamic_pointer_cast<AdditionalSkill>(skill);
+	m_SkillRef = std::dynamic_pointer_cast<CAdditionalSkill>(skill);
 	if (m_SkillRef.lock() == nullptr)
 	{
 		assert(m_SkillRef.lock());

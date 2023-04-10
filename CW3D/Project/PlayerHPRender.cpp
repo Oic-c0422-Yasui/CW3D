@@ -32,8 +32,8 @@ bool ActionGame::CPlayerHPRender::Load()
 		return false;
 	}
 
-	DamageBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
-	if (DamageBar_ == nullptr)
+	damageBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "PlayerHPBar");
+	if (damageBar_ == nullptr)
 	{
 		return false;
 	}
@@ -60,8 +60,8 @@ void ActionGame::CPlayerHPRender::Render()
 	if (fabsf(currentGauge_ - currentHP_) > 0.01f)
 	{
 		currentGauge_ += (currentHP_ - currentGauge_) * 0.02f;
-		CRectangle rect(0, 0, DamageBar_->GetWidth() * currentGauge_, DamageBar_->GetHeight());
-		DamageBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, MOF_XRGB(218, 93, 98));
+		CRectangle rect(0, 0, damageBar_->GetWidth() * currentGauge_, damageBar_->GetHeight());
+		damageBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect, MOF_XRGB(218, 93, 98));
 	}
 	else
 	{
@@ -76,5 +76,5 @@ void ActionGame::CPlayerHPRender::Release()
 {
 	HPBar_.reset();
 	HPFrame_.reset();
-	DamageBar_.reset();
+	damageBar_.reset();
 }

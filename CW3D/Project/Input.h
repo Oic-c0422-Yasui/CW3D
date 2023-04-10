@@ -23,9 +23,9 @@ namespace Input {
 				JoyPad,
 			};
 			struct Key {
-				int				m_PositiveNo;
-				int				m_NegativeNo;
-				int				m_PadNo;
+				int				positiveNo_;
+				int				negativeNo_;
+				int				padNo_;
 				Type			type_;
 			};
 			std::vector<Key>	inputKey_;
@@ -34,7 +34,7 @@ namespace Input {
 			float				inputValue_;
 			float				holdTime_;
 			float				pushTime_;
-			int					m_PushCount;
+			int					pushCount_;
 			KeyData()
 				: inputKey_()
 				, previousValue_(0)
@@ -42,7 +42,7 @@ namespace Input {
 				, inputValue_(0.5f)
 				, holdTime_(0.0f)
 				, pushTime_(0.0f)
-				, m_PushCount(0.0f)
+				, pushCount_(0.0f)
 			{
 			}
 		};

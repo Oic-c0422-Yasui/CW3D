@@ -24,7 +24,7 @@ bool ActionGame::PlayerSkillCreator::Create(const ActorPtr& actor)
 	skill = actor->GetSkillController()->Create(SKILL_KEY_ESCAPE, INPUT_KEY_ESCAPE, "Escape", STATE_KEY_ESCAPE, STATE_KEY_ESCAPE);
 	skill->SetMaxCT(1);
 
-	ActionGame::SKillPtr additionalSkill = std::make_shared<ActionGame::AdditionalSkill>();
+	ActionGame::SKillPtr additionalSkill = std::make_shared<ActionGame::CAdditionalSkill>();
 	skill = actor->GetSkillController()->Create(SKILL_KEY_4, INPUT_KEY_SKILL4, "DropKick", STATE_KEY_DROPKICK_SKILL, STATE_KEY_DROPKICK_SKILL, additionalSkill);
 	AdditionalSkillDataPtr addData = std::make_shared<AdditionalSkillData>(1200, 5, 2.5f, GameFrameTime * 30.0f, 0);
 	skill->SetSkillData(addData);

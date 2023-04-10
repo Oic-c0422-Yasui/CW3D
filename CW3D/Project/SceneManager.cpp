@@ -5,96 +5,127 @@ using namespace Scene;
 
 
 
-Scene::SceneManager::SceneManager()
+Scene::CSceneManager::CSceneManager()
 	: isDebug_(false)
 	, isSceneInit_(false)
-	, scene_()
+	, currentScene_()
+	, prevScene_()
+	, changeEffect_()
 {
 }
 
-Scene::SceneManager::~SceneManager()
+Scene::CSceneManager::~CSceneManager()
 {
 
 }
 
-void Scene::SceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
+void Scene::CSceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
 {
 	sceneMap_[sceneNo] = std::move(creator);
 }
 
-bool Scene::SceneManager::ChangeScene(SCENENO sceneNo)
+void Scene::CSceneManager::InitializeScene(SceneChangeEffectPtr effect)
 {
-	//古いシーンを破棄
-	if (scene_)
-	{
-		scene_->Release();
-	}
-
-	//シーン作成
-	ScenePtr temp = sceneMap_[sceneNo]->Create();
-	temp->Load();
-	temp->Initialize();
-
-	scene_ = temp;
-
-	return true;
-}
-
-bool Scene::SceneManager::ChangeScene(const ScenePtr& scene)
-{
-	auto temp = scene;
-	//古いシーンを破棄
-	if (scene_)
-	{
-		scene_->Release();
-	}
-	scene_ = temp;
-	return true;
-}
-
-void Scene::SceneManager::InitializeScene(SceneChangeEffectPtr effect)
-{
-	sceneEffect_ = effect;
+	changeEffect_ = effect;
 	isSceneInit_ = false;
 	RegisterSceneChangeEffectTask();
-	
+
 }
 
-bool Scene::SceneManager::ChangeScene(SCENENO sceneNo, bool isLoading)
+bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo)
+{
+	//シーン作成
+	auto temp = sceneMap_[sceneNo]->Create();
+	temp->Load();
+	temp->Initialize();
+	currentScene_ = temp;
+
+	return true;
+}
+
+bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo,SceneChangeEffectPtr effect)
+{
+	//変更中なら失敗
+	if (currentScene_ && prevScene_ && changeEffect_)
+	{
+		return false;
+	}
+
+	//古いシーンを破棄
+	if (currentScene_)
+	{
+		changeEffect_ = effect;
+		prevScene_ = currentScene_;
+		currentScene_.reset();
+	}
+
+	return ChangeScene(sceneNo);
+}
+
+bool Scene::CSceneManager::ChangeScene(const ScenePtr& scene, SceneChangeEffectPtr effect)
+{
+	//変更中なら失敗
+	if (currentScene_ && prevScene_ && changeEffect_)
+	{
+		return false;
+	}
+
+	auto temp = scene;
+	//古いシーンを破棄
+	if (currentScene_)
+	{
+		changeEffect_ = effect;
+		prevScene_ = currentScene_;
+		currentScene_.reset();
+	}
+	currentScene_ = temp;
+	return true;
+}
+
+
+
+bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect, bool isLoading)
 {
 	//ロードを挟まないなら普通にシーン切り替え
 	if (!isLoading)
 	{
-		return ChangeScene(sceneNo);
+		return ChangeScene(sceneNo, effect);
 	}
 
-	//シーン作成
-	ScenePtr temp = sceneMap_[sceneNo]->Create();
+	//変更中なら失敗
+	if (currentScene_ && prevScene_ && changeEffect_)
+	{
+		return false;
+	}
 
 	//古いシーンを破棄
-	if (scene_)
+	if (currentScene_)
 	{
-		scene_->Release();
+		changeEffect_ = effect;
+		prevScene_ = currentScene_;
+		currentScene_.reset();
 	}
 
+	//次のシーン作成
+	auto nextScene = sceneMap_[sceneNo]->Create();
 	//ローディングシーン作成
-	auto loading = std::make_shared<Scene::LoadingScene>(temp);
-	loading->Load();
-	loading->Initialize();
+	auto loadingScene = std::make_shared<Scene::CLoadingScene>(nextScene);
+	loadingScene->Load();
+	loadingScene->Initialize();
 
-	scene_ = loading;
+	currentScene_ = loadingScene;
 
 	return true;
 }
 
 
-bool Scene::SceneManager::Load()
+bool Scene::CSceneManager::Load()
 {
 
 	return true;
 }
 
-void Scene::SceneManager::Initialize()
+void Scene::CSceneManager::Initialize()
 {
 	updateTask_.DeleteAllTaskImmediate();
 	renderTask_.DeleteAllTaskImmediate();
@@ -103,7 +134,7 @@ void Scene::SceneManager::Initialize()
 	RegisterTask();
 }
 
-void Scene::SceneManager::Update()
+void Scene::CSceneManager::Update()
 {
 	//デバッグ切り替え
 	if (g_pInput->IsKeyHold(MOFKEY_LCONTROL) && g_pInput->IsKeyPush(MOFKEY_F1))
@@ -126,7 +157,7 @@ void Scene::SceneManager::Update()
 
 }
 
-void Scene::SceneManager::Render()
+void Scene::CSceneManager::Render()
 {
 	
 	//深度バッファ有効化
@@ -142,16 +173,22 @@ void Scene::SceneManager::Render()
 	render2DTask_.Excution();
 }
 
-void Scene::SceneManager::Release()
+void Scene::CSceneManager::Release()
 {
-	if (scene_)
+	if (prevScene_)
 	{
-		scene_->Release();
+		prevScene_->Release();
+		prevScene_.reset();
+	}
+	if (currentScene_)
+	{
+		currentScene_->Release();
+		currentScene_.reset();
 	}
 }
 
 
-void Scene::SceneManager::RegisterTask()
+void Scene::CSceneManager::RegisterTask()
 {
 	//更新タスク
 	RegisterUpdateTask();
@@ -161,41 +198,52 @@ void Scene::SceneManager::RegisterTask()
 	RegisterRender2DTask();
 }
 
-void Scene::SceneManager::RegisterUpdateTask()
+void Scene::CSceneManager::RegisterUpdateTask()
 {
 	/////////////////////////////////////////////////////
 	///			更新タスク
 	/////////////////////////////////////////////////////
 	updateTask_.AddTask("UpdateScene", Task::PRIORITY::MAIN1,
 		[&]()
-			{
-				if (scene_)
+		{
+				if (currentScene_ && prevScene_ && changeEffect_)
 				{
-					scene_->Update();
+					currentScene_->Update();
+					changeEffect_->Update();
+					if (changeEffect_->IsEnd())
+					{
+						prevScene_->Release();
+						prevScene_.reset();
+						changeEffect_.reset();
+					}
 				}
-			}
+				else if (currentScene_)
+				{ 
+					currentScene_->Update(); 
+				}
+		}
 		);
 	
 }
 
-void Scene::SceneManager::RegisterRenderTask()
+void Scene::CSceneManager::RegisterRenderTask()
 {
 	/////////////////////////////////////////////////////
 	///			描画タスク
 	/////////////////////////////////////////////////////
 	renderTask_.AddTask("RenderScene", Task::PRIORITY::MAIN1,
 		[&]()
-	{
-		if (scene_)
 		{
-			scene_->Render();
+				if(currentScene_ && (prevScene_ == nullptr || changeEffect_ == nullptr))
+				{
+					currentScene_->Render();
+				}
 		}
-	}
-	);
+		);
 
 }
 
-void Scene::SceneManager::RegisterRender2DTask()
+void Scene::CSceneManager::RegisterRender2DTask()
 {
 	/////////////////////////////////////////////////////
 	///			2D描画タスク
@@ -203,23 +251,28 @@ void Scene::SceneManager::RegisterRender2DTask()
 	render2DTask_.AddTask("Render2DScene", Task::PRIORITY::MAIN2,
 		[&]()
 	{
-		if (scene_)
+		if (currentScene_ && prevScene_ && changeEffect_)
 		{
-			scene_->Render2D();
+			changeEffect_->Render(prevScene_, currentScene_);
+
+		}
+		else if (currentScene_)
+		{
+			currentScene_->Render2D();
 		}
 	}
 	);
 	
 }
 
-void Scene::SceneManager::DeleteTask()
+void Scene::CSceneManager::DeleteTask()
 {
 	updateTask_.DeleteTask("UpdateScene");
 	renderTask_.DeleteTask("RenderScene");
 	render2DTask_.DeleteTask("Render2DScene");
 }
 
-void Scene::SceneManager::RegisterDebugTask()
+void Scene::CSceneManager::RegisterDebugTask()
 {
 	/////////////////////////////////////////////////////
 	///			デバッグタスク
@@ -248,9 +301,9 @@ void Scene::SceneManager::RegisterDebugTask()
 	renderTask_.AddTask("RenderDebug", Task::PRIORITY::MAIN1,
 		[&]()
 			{
-				if (scene_)
+				if (currentScene_)
 				{
-					scene_->RenderDebug();
+					currentScene_->RenderDebug();
 				}
 				
 			}
@@ -259,23 +312,23 @@ void Scene::SceneManager::RegisterDebugTask()
 	render2DTask_.AddTask("RenderDebug2D", Task::PRIORITY::MAIN3,
 		[&]()
 	{
-		if (scene_)
+		if (currentScene_)
 		{
-			scene_->Render2DDebug();
+			currentScene_->Render2DDebug();
 		}
 	}
 	);
 
 }
 
-void Scene::SceneManager::DeleteDebugTask()
+void Scene::CSceneManager::DeleteDebugTask()
 {
 	updateTask_.DeleteTask("UpdateDebug");
 	renderTask_.DeleteTask("RenderDebug");
 	render2DTask_.DeleteTask("RenderDebug2D");
 }
 
-void Scene::SceneManager::RegisterSceneChangeEffectTask()
+void Scene::CSceneManager::RegisterSceneChangeEffectTask()
 {
 	/////////////////////////////////////////////////////
 	///			シーン遷移エフェクトタスク
@@ -285,13 +338,13 @@ void Scene::SceneManager::RegisterSceneChangeEffectTask()
 	updateTask_.AddTask("SceneChangeEffectUpdate", Task::PRIORITY::MAIN1,
 		[&]()
 			{
-				sceneEffect_->Update();
-				if (sceneEffect_->IsHalfPoint() && !isSceneInit_)
+				changeEffect_->Update();
+				if (changeEffect_->IsHalfPoint() && !isSceneInit_)
 				{
-					scene_->Initialize();
+					currentScene_->Initialize();
 					isSceneInit_ = true;
 				}
-				if (sceneEffect_->IsEnd())
+				if (changeEffect_->IsEnd())
 				{
 					DeleteSceneChangeEffectTask();
 				}
@@ -302,12 +355,12 @@ void Scene::SceneManager::RegisterSceneChangeEffectTask()
 	render2DTask_.AddTask("SceneChangeEffectRender", Task::PRIORITY::MAIN3,
 		[&]()
 	{
-		sceneEffect_->Render(scene_, scene_);
+		changeEffect_->Render(currentScene_, currentScene_);
 	}
 	);
 }
 
-void Scene::SceneManager::DeleteSceneChangeEffectTask()
+void Scene::CSceneManager::DeleteSceneChangeEffectTask()
 {
 	/////////////////////////////////////////////////////
 	///			2D描画タスク

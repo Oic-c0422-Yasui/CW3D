@@ -2,6 +2,7 @@
 
 #include "ResourceManager.h"
 #include "Division.h"
+#include "NormalMapParameter.h"
 
 namespace ActionGame
 {
@@ -10,6 +11,7 @@ namespace ActionGame
 	{
 	protected:
 		std::shared_ptr<CMeshContainer> stage_;
+		MyClass::NormalMapParameterPtr shader_;
 		DivisionArrayPtr divisionArray_;
 		DivisionPtr currentDivision_;
 		size_t phase_;

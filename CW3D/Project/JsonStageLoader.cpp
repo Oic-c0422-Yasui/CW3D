@@ -54,7 +54,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 	divisionArray_ = divisionArray;
 
 
-	//敵で使用するメッシュ名格納
+	//敵のメッシュ名格納
 	std::vector<std::string> typeNames;
 	for (auto& division : *divisionArray)
 	{
@@ -66,12 +66,13 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 			{
 				typeNames.push_back(type);
 			}
-			for (int i = 0; i < typeNames.size(); i++)
+			for (size_t i = 0; i < typeNames.size(); i++)
 			{
 				if (type == typeNames[i])
 				{
 					break;
 				}
+				//同じタイプ名が見つからなければメッシュ名を追加
 				if (i == typeNames.size() - 1)
 				{
 					typeNames.push_back(type);
@@ -81,7 +82,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 		}
 	}
 
-	//敵で使用するメッシュをロード
+	//敵のメッシュをロード
 	for (auto& type : typeNames)
 	{
 		//敵のタイプが存在しないなら次の配列へ
@@ -98,11 +99,10 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 			continue;
 		}
 
-		//メッシュを作成
-		tempMesh = std::make_shared<CMeshContainer>();
 		//メッシュの名前をChar*へ変換
 		const char* meshName = dictionary->MeshName.c_str();
 		//メッシュのロード
+		tempMesh = std::make_shared<CMeshContainer>();
 		if (tempMesh->Load(meshName) != MOFMODEL_RESULT_SUCCEEDED)
 		{
 			return false;

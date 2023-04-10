@@ -4,7 +4,7 @@
 
 namespace ActionGame
 {
-	class EnemyHPRender
+	class CEnemyHPRender
 	{
 	protected:
 		//現在の描画HP
@@ -21,12 +21,12 @@ namespace ActionGame
 		/**
 		 * @brief		コンストラクタ
 		 */
-		EnemyHPRender();
+		CEnemyHPRender();
 
 		/**
 		 * @brief		デストラクタ
 		 */
-		virtual ~EnemyHPRender() = default;
+		virtual ~CEnemyHPRender() = default;
 
 
 		/**
@@ -70,7 +70,7 @@ namespace ActionGame
 
 	};
 
-	using EnemyHPRenderPtr = std::shared_ptr<EnemyHPRender>;
+	using EnemyHPRenderPtr = std::shared_ptr<CEnemyHPRender>;
 }
 
 
