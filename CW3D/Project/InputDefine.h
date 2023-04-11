@@ -12,11 +12,11 @@ const std::string INPUT_KEY_VERTICAL = "Vertical";
 //決定
 const std::string INPUT_KEY_ENTER = "Enter";
 //攻撃
-const std::string INPUT_KEY_ATTACK = INPUT_KEY_ENTER;
+const std::string INPUT_KEY_ATTACK = "Attack";
 //キャンセル
 const std::string INPUT_KEY_CANCEL = "Cancel";
 //ジャンプ
-const std::string INPUT_KEY_JUMP = INPUT_KEY_CANCEL;
+const std::string INPUT_KEY_JUMP = "Jump";
 //スキル１
 const std::string INPUT_KEY_SKILL1 = "Skill1";
 //スキル２

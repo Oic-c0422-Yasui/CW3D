@@ -43,7 +43,9 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_HORIZONTAL, MOFKEY_RIGHT, MOFKEY_LEFT);
 	input->AddKeyboardKey(INPUT_KEY_VERTICAL, MOFKEY_DOWN, MOFKEY_UP);
 	input->AddKeyboardKey(INPUT_KEY_ENTER, MOFKEY_Z);
+	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
 	input->AddKeyboardKey(INPUT_KEY_CANCEL, MOFKEY_X);
+	input->AddKeyboardKey(INPUT_KEY_JUMP, MOFKEY_X);
 	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
@@ -54,15 +56,17 @@ MofBool CGameApp::Initialize(void){
 	//パッド入力登録
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
-	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 0);
-	input->AddJoypadKey(INPUT_KEY_CANCEL, 0, 1);
+	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
+	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 1);
+	input->AddJoypadKey(INPUT_KEY_CANCEL, 0, 2);
+	input->AddJoypadKey(INPUT_KEY_JUMP, 0, 1);
 	input->AddJoypadKey(INPUT_KEY_SKILL1, 0, 2);
 	input->AddJoypadKey(INPUT_KEY_SKILL2, 0, 3);
 	input->AddJoypadKey(INPUT_KEY_SKILL3, 0, 4);
 	input->AddJoypadKey(INPUT_KEY_SKILL4, 0, 5);
 	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, 6);
 	input->AddJoypadKey(INPUT_KEY_RETRY, 0, 7);
-	input->AddJoypadKey(INPUT_KEY_BACK, 0, 8);
+	input->AddJoypadKey(INPUT_KEY_BACK, 0, 9);
 
 	//外部フォント読み込み
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) <= 0)

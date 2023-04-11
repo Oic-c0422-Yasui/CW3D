@@ -31,7 +31,6 @@ cbuffer cbLightParam : register(b3)
 };
 
 Texture2D txDiffuse : register(t0);
-//新規のテクスチャオブジェクトの作成
 Texture2D txNormalTex : register(t1);
 SamplerState samLinear : register(s0);
 
