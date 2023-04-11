@@ -70,16 +70,169 @@ Texture2D txNormalTex : register(t1);
 OutputVS RenderVS( InputVS inVert )
 {
 	OutputVS	outVert;
+	int bind1[4] = (int[4])inVert.bindex1;
+	int bind2[4] = (int[4])inVert.bindex2;
+	int bind3[4] = (int[4])inVert.bindex3;
+	int bind4[4] = (int[4])inVert.bindex4;
+	float bweight1[4] = (float[4])inVert.weight1;
+	float bweight2[4] = (float[4])inVert.weight2;
+	float bweight3[4] = (float[4])inVert.weight3;
+	float bweight4[4] = (float[4])inVert.weight4;
+	float lweight = 0;
 
-	matrix	mtxVP = mul( mtxView, mtxProj );
-	float4 Pos = mul( inVert.pos, mtxWorld );
-	outVert.pos = mul( Pos , mtxVP );
+	float3 cPos = mul(inVert.pos, mtxWorld[bind1[0]]) * bweight1[0];
+	float3 cNormal = mul(inVert.normal, mtxWorld[bind1[0]]) * bweight1[0];
+	float3 t = mul(inVert.Tangent, mtxWorld[bind1[0]]) * bweight1[0];
+	float3 b = mul(inVert.Binormal, mtxWorld[bind1[0]]) * bweight1[0];
+	lweight += bweight1[0];
+	if (bweight1[1] > 0)
+	{
+		cPos += mul(inVert.pos, mtxWorld[bind1[1]]) * bweight1[1];
+		cNormal += mul(inVert.normal, mtxWorld[bind1[1]]) * bweight1[1];
+		t += mul(inVert.Tangent, mtxWorld[bind1[1]]) * bweight1[1];
+		b += mul(inVert.Binormal, mtxWorld[bind1[1]]) * bweight1[1];
+		lweight += bweight1[1];
 
-	outVert.normal = normalize(mul(inVert.normal, (float3x3)mtxWorld));
-	outVert.Tangent = normalize(mul(inVert.Tangent, (float3x3)mtxWorld));
-	outVert.Binormal = normalize(mul(inVert.Binormal, (float3x3)mtxWorld));
+		if (bweight1[2] > 0)
+		{
+			cPos += mul(inVert.pos, mtxWorld[bind1[2]]) * bweight1[2];
+			cNormal += mul(inVert.normal, mtxWorld[bind1[2]]) * bweight1[2];
+			t += mul(inVert.Tangent, mtxWorld[bind1[2]]) * bweight1[2];
+			b += mul(inVert.Binormal, mtxWorld[bind1[2]]) * bweight1[2];
+			lweight += bweight1[2];
 
-	outVert.Tex = inVert.Tex;
+			if (bweight1[3] > 0)
+			{
+				cPos += mul(inVert.pos, mtxWorld[bind1[3]]) * bweight1[3];
+				cNormal += mul(inVert.normal, mtxWorld[bind1[3]]) * bweight1[3];
+				t += mul(inVert.Tangent, mtxWorld[bind1[3]]) * bweight1[3];
+				b += mul(inVert.Binormal, mtxWorld[bind1[3]]) * bweight1[3];
+				lweight += bweight1[3];
+
+				if (bweight2[0] > 0 && lweight < 1)
+				{
+					cPos += mul(inVert.pos, mtxWorld[bind2[0]]) * bweight2[0];
+					cNormal += mul(inVert.normal, mtxWorld[bind2[0]]) * bweight2[0];
+					t += mul(inVert.Tangent, mtxWorld[bind2[0]]) * bweight2[0];
+					b += mul(inVert.Binormal, mtxWorld[bind2[0]]) * bweight2[0];
+					lweight += bweight2[0];
+
+					if (bweight2[1] > 0)
+					{
+						cPos += mul(inVert.pos, mtxWorld[bind2[1]]) * bweight2[1];
+						cNormal += mul(inVert.normal, mtxWorld[bind2[1]]) * bweight2[1];
+						t += mul(inVert.Tangent, mtxWorld[bind2[1]]) * bweight2[1];
+						b += mul(inVert.Binormal, mtxWorld[bind2[1]]) * bweight2[1];
+						lweight += bweight2[1];
+
+						if (bweight2[2] > 0)
+						{
+							cPos += mul(inVert.pos, mtxWorld[bind2[2]]) * bweight2[2];
+							cNormal += mul(inVert.normal, mtxWorld[bind2[2]]) * bweight2[2];
+							t += mul(inVert.Tangent, mtxWorld[bind2[2]]) * bweight2[2];
+							b += mul(inVert.Binormal, mtxWorld[bind2[2]]) * bweight2[2];
+							lweight += bweight2[2];
+
+							if (bweight2[3] > 0)
+							{
+								cPos += mul(inVert.pos, mtxWorld[bind2[3]]) * bweight2[3];
+								cNormal += mul(inVert.normal, mtxWorld[bind2[3]]) * bweight2[3];
+								t += mul(inVert.Tangent, mtxWorld[bind2[3]]) * bweight2[3];
+								b += mul(inVert.Binormal, mtxWorld[bind2[3]]) * bweight2[3];
+								lweight += bweight2[3];
+
+								if (bweight3[0] > 0 && lweight < 1)
+								{
+									cPos += mul(inVert.pos, mtxWorld[bind3[0]]) * bweight3[0];
+									cNormal += mul(inVert.normal, mtxWorld[bind3[0]]) * bweight3[0];
+									t += mul(inVert.Tangent, mtxWorld[bind3[0]]) * bweight3[0];
+									b += mul(inVert.Binormal, mtxWorld[bind3[0]]) * bweight3[0];
+									lweight += bweight3[0];
+
+									if (bweight3[1] > 0)
+									{
+										cPos += mul(inVert.pos, mtxWorld[bind3[1]]) * bweight3[1];
+										cNormal += mul(inVert.normal, mtxWorld[bind3[1]]) * bweight3[1];
+										t += mul(inVert.Tangent, mtxWorld[bind3[1]]) * bweight3[1];
+										b += mul(inVert.Binormal, mtxWorld[bind3[1]]) * bweight3[1];
+										lweight += bweight3[1];
+
+										if (bweight3[2] > 0)
+										{
+											cPos += mul(inVert.pos, mtxWorld[bind3[2]]) * bweight3[2];
+											cNormal += mul(inVert.normal, mtxWorld[bind3[2]]) * bweight3[2];
+											t += mul(inVert.Tangent, mtxWorld[bind3[2]]) * bweight3[2];
+											b += mul(inVert.Binormal, mtxWorld[bind3[2]]) * bweight3[2];
+											lweight += bweight3[2];
+
+											if (bweight3[3] > 0)
+											{
+												cPos += mul(inVert.pos, mtxWorld[bind3[3]]) * bweight3[3];
+												cNormal += mul(inVert.normal, mtxWorld[bind3[3]]) * bweight3[3];
+												t += mul(inVert.Tangent, mtxWorld[bind3[3]]) * bweight3[3];
+												b += mul(inVert.Binormal, mtxWorld[bind3[3]]) * bweight3[3];
+												lweight += bweight3[3];
+
+												if (bweight4[0] > 0 && lweight < 1)
+												{
+													cPos += mul(inVert.pos, mtxWorld[bind4[0]]) * bweight4[0];
+													cNormal += mul(inVert.normal, mtxWorld[bind4[0]]) * bweight4[0];
+													t += mul(inVert.Tangent, mtxWorld[bind4[0]]) * bweight4[0];
+													b += mul(inVert.Binormal, mtxWorld[bind4[0]]) * bweight4[0];
+													lweight += bweight4[0];
+
+													if (bweight4[1] > 0)
+													{
+														cPos += mul(inVert.pos, mtxWorld[bind4[1]]) * bweight4[1];
+														cNormal += mul(inVert.normal, mtxWorld[bind4[1]]) * bweight4[1];
+														t += mul(inVert.Tangent, mtxWorld[bind4[1]]) * bweight4[1];
+														b += mul(inVert.Binormal, mtxWorld[bind4[1]]) * bweight4[1];
+														lweight += bweight4[1];
+
+														if (bweight4[2] > 0)
+														{
+															cPos += mul(inVert.pos, mtxWorld[bind4[2]]) * bweight4[2];
+															cNormal += mul(inVert.normal, mtxWorld[bind4[2]]) * bweight4[2];
+															t += mul(inVert.Tangent, mtxWorld[bind4[2]]) * bweight4[2];
+															b += mul(inVert.Binormal, mtxWorld[bind4[2]]) * bweight4[2];
+															lweight += bweight4[2];
+
+															if (bweight4[3] > 0)
+															{
+																cPos += mul(inVert.pos, mtxWorld[bind4[3]]) * bweight4[3];
+																cNormal += mul(inVert.normal, mtxWorld[bind4[3]]) * bweight4[3];
+																t += mul(inVert.Tangent, mtxWorld[bind4[3]]) * bweight4[3];
+																b += mul(inVert.Binormal, mtxWorld[bind4[3]]) * bweight4[3];
+																lweight += bweight4[3];
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	float4 Pos = mul(float4(cPos, 1.0f), mtxView);
+	outVert.pos = mul(Pos, mtxProj);
+	outVert.normal = normalize(cNormal);
+
+	outVert.Eye = cPos - vecViewPos.xyz;
+
+	outVert.color = inVert.color * colRevise;
+
+	outVert.Tex = inVert.Tex + CoordsRevise.xy;
+
+	outVert.Tangent = normalize(t);
+	outVert.Binormal = normalize(b);
+
 	return outVert;
 }
 

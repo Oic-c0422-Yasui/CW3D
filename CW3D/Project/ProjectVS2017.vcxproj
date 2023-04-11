@@ -201,6 +201,7 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="BaseAction.cpp" />
+    <ClCompile Include="GiveTextureToMaterial.cpp" />
     <ClCompile Include="ClearPoseAction.cpp" />
     <ClCompile Include="ClearPoseState.cpp" />
     <ClCompile Include="ClearTermAllDeadAndEnduranceText.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="BaseAction.h" />
+    <ClInclude Include="GiveTextureToMaterial.h" />
     <ClInclude Include="CharaTypeDefine.h" />
     <ClInclude Include="ClearTermAllDeadAndEnduranceText.h" />
     <ClInclude Include="ClearTermBossDead.h" />

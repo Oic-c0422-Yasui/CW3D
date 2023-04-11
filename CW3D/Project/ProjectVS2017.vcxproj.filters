@@ -322,6 +322,9 @@
     <Filter Include="ヘッダー ファイル\Shader">
       <UniqueIdentifier>{081b7a64-3de7-4587-9803-d9b1ee340c16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Combo">
+      <UniqueIdentifier>{18fec050-5a29-4e36-abd3-67e12e08cb27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -843,16 +846,10 @@
     <ClCompile Include="NPCStartPoseAction.cpp">
       <Filter>ソース ファイル\Action\Pose</Filter>
     </ClCompile>
-    <ClCompile Include="AdditionalSkillRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NormalMapParameter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Combo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="IdleStateAI.cpp">
@@ -864,10 +861,19 @@
     <ClCompile Include="UltimateGaugeRender.cpp">
       <Filter>ソース ファイル\UI\Render\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="AdditionalSkillRender.cpp">
+      <Filter>ソース ファイル\UI\Render\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Combo.cpp">
+      <Filter>ソース ファイル\Combo</Filter>
+    </ClCompile>
     <ClCompile Include="ComboRender.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\UI\Render</Filter>
     </ClCompile>
     <ClCompile Include="ComboPresenter.cpp">
+      <Filter>ソース ファイル\UI\Presenter</Filter>
+    </ClCompile>
+    <ClCompile Include="GiveTextureToMaterial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1663,6 +1669,9 @@
     </ClInclude>
     <ClInclude Include="ComboPresenter.h">
       <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="GiveTextureToMaterial.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

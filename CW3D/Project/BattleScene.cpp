@@ -25,24 +25,13 @@ Scene::CBattleScene::~CBattleScene()
 
 bool Scene::CBattleScene::Load()
 {
-	auto tempNormalTex = std::make_shared<CTexture>();
-	if (!tempNormalTex->Load("Shader/NormalTex.png"))
-	{
-		return false;
-	}
+	giveTexture_.Load();
+
 	//ƒƒbƒVƒ…“Ç‚İ‚İ
 	auto tempMesh = std::make_shared<CMeshContainer>();
 	if (tempMesh->Load("Mesh/player.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
-	}
-	for (uint32_t i = 0; i < tempMesh->GetGeometryCount(); i++)
-	{
-		auto count = tempMesh->GetGeometry(i)->GetMaterial()->GetTextureArray()->GetArrayCount();
-		if (count <= 0)
-		{
-			tempMesh->GetGeometry(i)->GetMaterial()->GetTextureArray()->Add(tempNormalTex.get());
-		}
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", "Player", tempMesh);
 

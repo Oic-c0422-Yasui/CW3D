@@ -40,6 +40,7 @@
 #include	"SceneChanger.h"
 
 #include	"NPCHPRenderManager.h"
+#include	"GiveTextureToMaterial.h"
 
 namespace Scene
 {
@@ -91,6 +92,8 @@ namespace Scene
 
 		//ノーマルマップシェーダー
 		MyClass::NormalMapParameterPtr normalMap_;
+
+		MyClass::CGiveTextureToMaterial giveTexture_;
 
 	private:
 		//敵の生成
