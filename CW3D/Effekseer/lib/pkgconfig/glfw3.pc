@@ -1,7 +1,7 @@
-prefix=D:/hamada/EffekseerRuntime161e/install_msvc2019
+prefix=D:/effekseer/EffekseerForCpp170b/install_msvc2022
 exec_prefix=${prefix}
-includedir=D:/hamada/EffekseerRuntime161e/install_msvc2019/include
-libdir=D:/hamada/EffekseerRuntime161e/install_msvc2019/lib
+includedir=D:/effekseer/EffekseerForCpp170b/install_msvc2022/include
+libdir=D:/effekseer/EffekseerForCpp170b/install_msvc2022/lib
 
 Name: GLFW
 Description: A multi-platform library for OpenGL, window and input

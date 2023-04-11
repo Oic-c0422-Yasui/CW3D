@@ -12,8 +12,8 @@ set_target_properties(Effekseer PROPERTIES
   IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/lib/Effekseerd.lib"
   )
 
-list(APPEND _IMPORT_CHECK_TARGETS Effekseer )
-list(APPEND _IMPORT_CHECK_FILES_FOR_Effekseer "${_IMPORT_PREFIX}/lib/Effekseerd.lib" )
+list(APPEND _cmake_import_check_targets Effekseer )
+list(APPEND _cmake_import_check_files_for_Effekseer "${_IMPORT_PREFIX}/lib/Effekseerd.lib" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

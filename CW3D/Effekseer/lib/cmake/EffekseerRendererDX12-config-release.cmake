@@ -12,8 +12,8 @@ set_target_properties(EffekseerRendererDX12 PROPERTIES
   IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/EffekseerRendererDX12.lib"
   )
 
-list(APPEND _IMPORT_CHECK_TARGETS EffekseerRendererDX12 )
-list(APPEND _IMPORT_CHECK_FILES_FOR_EffekseerRendererDX12 "${_IMPORT_PREFIX}/lib/EffekseerRendererDX12.lib" )
+list(APPEND _cmake_import_check_targets EffekseerRendererDX12 )
+list(APPEND _cmake_import_check_files_for_EffekseerRendererDX12 "${_IMPORT_PREFIX}/lib/EffekseerRendererDX12.lib" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)
