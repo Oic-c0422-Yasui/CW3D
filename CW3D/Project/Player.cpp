@@ -30,7 +30,7 @@ bool ActionGame::CPlayer::Load()
 	actor_->SetAnimationState(motion_);
 	
 	//シェーダー読み込み
-	normalMap_ = ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().GetResource("Shader", "NormalMap");
+	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
 	
 	//アクション作成
 	actionCreator_.Create(actor_);

@@ -16,6 +16,8 @@ Scene::CBattleScene::CBattleScene()
 	, currentGameState_(GAME_STATE::NOMAL)
 	, playerUiRender_()
 	, normalMap_(std::make_shared<MyClass::CNormalMapParameter>())
+	, normalMapSkin_(std::make_shared<MyClass::CNormalMapSkinnedParameter>())
+	, giveTexture_(std::make_shared<MyClass::CGiveTextureToMaterial>())
 {
 }
 
@@ -25,7 +27,11 @@ Scene::CBattleScene::~CBattleScene()
 
 bool Scene::CBattleScene::Load()
 {
-	giveTexture_.Load();
+	if (!giveTexture_->Load())
+	{
+		return false;
+	}
+	CServiceLocator<MyClass::CGiveTextureToMaterial>::SetService(giveTexture_);
 
 	//メッシュ読み込み
 	auto tempMesh = std::make_shared<CMeshContainer>();
@@ -34,6 +40,7 @@ bool Scene::CBattleScene::Load()
 		return false;
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", "Player", tempMesh);
+	giveTexture_->Give(tempMesh);
 
 	//UIテクスチャ読み込み
 	if (!ActionGame::CBattleUILoader::Load())
@@ -48,6 +55,12 @@ bool Scene::CBattleScene::Load()
 		return false;
 	}
 	ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().AddResource("Shader","NormalMap", normalMap_);
+	normalMapSkin_ = std::make_shared<MyClass::CNormalMapSkinnedParameter>();
+	if (!normalMapSkin_->Load("Shader/NormalMapSkin.hlsl"))
+	{
+		return false;
+	}
+	ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().AddResource("Shader", "NormalMapSkin", normalMapSkin_);
 
 	//プレイヤー読み込み
 	auto input = InputManagerInstance.GetInput(0);
@@ -208,6 +221,7 @@ void Scene::CBattleScene::Render()
 {
 	//シェーダーにカメラ情報設定
 	normalMap_->SetCamera();
+	normalMapSkin_->SetCamera();
 
 	//描画タスク実行
 	renderTask_.Excution();
@@ -311,6 +325,7 @@ void Scene::CBattleScene::Release()
 
 	//シェーダー解放
 	normalMap_.reset();
+	normalMapSkin_.reset();
 	
 	//リソース解放
 	ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
@@ -319,6 +334,9 @@ void Scene::CBattleScene::Release()
 	ResourcePtrManager<CTexture>::GetInstance().Release();
 	ResourcePtrManager<CFont>::GetInstance().Release();
 	ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().Release();
+	ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().Release();
+
+	CServiceLocator<MyClass::CGiveTextureToMaterial>::Release();
 
 	//ショット解放
 	ShotManagerInstance.Reset();

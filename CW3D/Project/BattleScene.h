@@ -92,8 +92,10 @@ namespace Scene
 
 		//ノーマルマップシェーダー
 		MyClass::NormalMapParameterPtr normalMap_;
+		//スキン用ノーマルマップシェーダー
+		MyClass::NormalMapSkinnedParameterPtr normalMapSkin_;
 
-		MyClass::CGiveTextureToMaterial giveTexture_;
+		MyClass::GiveTextureToMaterialPtr giveTexture_;
 
 	private:
 		//敵の生成

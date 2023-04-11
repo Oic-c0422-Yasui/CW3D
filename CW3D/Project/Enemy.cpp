@@ -48,7 +48,7 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 		return false;
 	}
 	//シェーダー読み込み
-	normalMap_ = ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().GetResource("Shader", "NormalMap");
+	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
 
 	//モーション作成
 	motion_ = mesh_->CreateMotionController();

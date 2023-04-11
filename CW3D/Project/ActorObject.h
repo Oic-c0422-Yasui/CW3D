@@ -4,7 +4,7 @@
 #include	"StateMachine.h"
 #include	"ParameterDefine.h"
 #include	"StateDefine.h"
-#include	"NormalMapParameter.h"
+#include	"NormalMapSkinnedParameter.h"
 
 namespace ActionGame
 {
@@ -14,20 +14,20 @@ namespace ActionGame
 	class CActorObject
 	{
 	protected:
-		std::shared_ptr<CMeshContainer>		mesh_;
-		MyClass::NormalMapParameterPtr		normalMap_;
-		StateMachinePtr						stateMachine_;
-		AnimationStatePtr					motion_;
-		ActorPtr							actor_;
-		CMatrix44							matWorld_;
-		CAABB								collider_;
-		CVector3							colliderOffset_;
-		CVector3							colliderSize_;
-		bool								isShow_;
-		bool								isDead_;
-		CVector3							prevPosision_;
-		float								ultBoostMag_;	//ïKéEãZÉQÅ[ÉWÇÃÉuÅ[ÉXÉgî{ó¶
-		float								weight_;
+		std::shared_ptr<CMeshContainer>			mesh_;
+		MyClass::NormalMapSkinnedParameterPtr	normalMap_;
+		StateMachinePtr							stateMachine_;
+		AnimationStatePtr						motion_;
+		ActorPtr								actor_;
+		CMatrix44								matWorld_;
+		CAABB									collider_;
+		CVector3								colliderOffset_;
+		CVector3								colliderSize_;
+		bool									isShow_;
+		bool									isDead_;
+		CVector3								prevPosision_;
+		float									ultBoostMag_;	//ïKéEãZÉQÅ[ÉWÇÃÉuÅ[ÉXÉgî{ó¶
+		float									weight_;
 
 
 	public:

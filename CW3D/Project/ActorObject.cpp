@@ -67,7 +67,8 @@ void CActorObject::Render()
 	}
 	auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	motion_->RefreshBoneMatrix(matWorld_);
-	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha));
+	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha),
+		normalMap_->GetShader().get(), normalMap_->GetShaderBind().get());
 
 }
 

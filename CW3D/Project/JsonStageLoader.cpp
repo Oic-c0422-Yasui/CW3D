@@ -1,5 +1,7 @@
 #include "JsonStageLoader.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
+#include "GiveTextureToMaterial.h"
 
 using namespace ActionGame;
 
@@ -107,6 +109,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 		{
 			return false;
 		}
+		CServiceLocator<MyClass::CGiveTextureToMaterial>::GetService()->Give(tempMesh);
 		//メッシュをリソースに追加
 		ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Enemy", dictionary->MeshName, tempMesh);
 	}

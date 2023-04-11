@@ -230,6 +230,7 @@
     <ClCompile Include="MutantBuilder.cpp" />
     <ClCompile Include="MutantParameterCreator.cpp" />
     <ClCompile Include="MutantStateCreator.cpp" />
+    <ClCompile Include="NormalMapSkinnedParameter.cpp" />
     <ClCompile Include="NPCCameraStartPoseState.cpp" />
     <ClCompile Include="NPCHPRenderManager.cpp" />
     <ClCompile Include="JsonSpawnerCreator.cpp" />
@@ -388,6 +389,7 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="BaseAction.h" />
+    <ClInclude Include="NormalMapSkinnedParameter.h" />
     <ClInclude Include="GiveTextureToMaterial.h" />
     <ClInclude Include="CharaTypeDefine.h" />
     <ClInclude Include="ClearTermAllDeadAndEnduranceText.h" />

@@ -31,6 +31,8 @@ namespace MyClass
 		void Give(const MeshPtr& mesh);
 
 	};
+
+	using GiveTextureToMaterialPtr = std::shared_ptr<CGiveTextureToMaterial>;
 }
 
 
