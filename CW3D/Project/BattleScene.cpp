@@ -327,6 +327,9 @@ void Scene::CBattleScene::Release()
 	normalMap_.reset();
 	normalMapSkin_.reset();
 	
+	giveTexture_.reset();
+	CServiceLocator<MyClass::CGiveTextureToMaterial>::Release();
+
 	//リソース解放
 	ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
 	ResourcePtrManager<CMeshContainer>::GetInstance().Release();
@@ -336,7 +339,6 @@ void Scene::CBattleScene::Release()
 	ResourcePtrManager<MyClass::CNormalMapParameter>::GetInstance().Release();
 	ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().Release();
 
-	CServiceLocator<MyClass::CGiveTextureToMaterial>::Release();
 
 	//ショット解放
 	ShotManagerInstance.Reset();

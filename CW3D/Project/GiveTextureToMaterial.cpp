@@ -9,6 +9,8 @@ MyClass::CGiveTextureToMaterial::CGiveTextureToMaterial()
 
 MyClass::CGiveTextureToMaterial::~CGiveTextureToMaterial()
 {
+	meshTexture_.reset();
+	normalMapTexture_.reset();
 }
 
 bool MyClass::CGiveTextureToMaterial::Load()

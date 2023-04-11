@@ -882,6 +882,9 @@
     <ClCompile Include="NormalMapSkinnedParameter.cpp">
       <Filter>ソース ファイル\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="NormalMapParameterBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -1670,9 +1673,6 @@
     <ClInclude Include="ThreadCreator.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ComboRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ComboPresenter.h">
       <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
@@ -1681,6 +1681,12 @@
     </ClInclude>
     <ClInclude Include="NormalMapSkinnedParameter.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboRender.h">
+      <Filter>ヘッダー ファイル\UI\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalMapParameterBase.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
