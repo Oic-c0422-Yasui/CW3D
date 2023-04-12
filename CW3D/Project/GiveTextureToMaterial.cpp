@@ -61,14 +61,14 @@ void MyClass::CGiveTextureToMaterial::Give(const MeshPtr& mesh)
 		//テクスチャがない場合
 		if (texArray->GetArrayCount() <= 0)
 		{
-			texArray->Add(meshTexture_.get());
-			texArray->Add(normalMapTexture_.get());
+			texArray->Add(new CTexture(*meshTexture_.get()));
+			texArray->Add(new CTexture(*normalMapTexture_.get()));
 			continue;
 		}
 		//ノーマルマップがない場合
 		if (texArray->GetArrayCount() <= 1)
 		{
-			texArray->Add(normalMapTexture_.get());
+			texArray->Add(new CTexture(*normalMapTexture_.get()));
 		}
 	}
 }

@@ -5,6 +5,7 @@
 #include	"ParameterDefine.h"
 #include	"StateDefine.h"
 #include	"NormalMapSkinnedParameter.h"
+#include	"Shadow.h"
 
 namespace ActionGame
 {
@@ -31,8 +32,7 @@ namespace ActionGame
 		CVector3								prevPosision_;
 		float									ultBoostMag_;	//必殺技ゲージのブースト倍率
 		float									weight_;
-		MeshPtr									shadow_;
-		CMatrix44								shadowMat_;
+		CShadow									shadow_;
 
 	public:
 		CActorObject();

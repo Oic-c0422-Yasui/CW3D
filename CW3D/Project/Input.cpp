@@ -59,6 +59,19 @@ void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key)
 	}
 }
 
+void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key, const ArrayKey& holdKeys)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad, holdKeys});
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad, holdKeys});
+	}
+}
+
 void Input::CInput::AddJoyStickHorizontal(const KeyType& kn, int pad)
 {
 	auto km = keyMap_.find(kn);
@@ -128,7 +141,24 @@ void Input::CInput::Update()
 
 				//ジョイパッド
 			case KeyData::Type::JoyPad:
-				k->second.currentValue_ += GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+				if (key.holdKeys_.size() > 0)
+				{
+					float value = 1.0f;
+					for (auto holdKey : key.holdKeys_)
+					{
+						value *= GetJoypadKeyState(key.padNo_, key.holdKeys_[0], -1);
+					}
+					k->second.currentValue_ += value * GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+
+					if (k->second.currentValue_ >= 1.0f)
+					{
+						keyMap_[k->second.disableKey[0]] = 0.0f;
+					}
+				}
+				else
+				{
+					k->second.currentValue_ += GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+				}
 				break;
 
 				//ジョイスティック

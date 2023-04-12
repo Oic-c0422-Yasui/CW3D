@@ -885,6 +885,9 @@
     <ClCompile Include="NormalMapParameterBase.cpp">
       <Filter>ソース ファイル\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -1687,6 +1690,9 @@
     </ClInclude>
     <ClInclude Include="NormalMapParameterBase.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

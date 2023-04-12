@@ -54,6 +54,10 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	input->AddKeyboardKey(INPUT_KEY_BACK, MOFKEY_F3);
 	//パッド入力登録
+	std::vector<int> holdKey;
+	std::vector<int> disableKey;
+	holdKey.push_back(8);
+	disableKey.push_back(INPUT_KEY_SKILL1);
 	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
 	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
 	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
@@ -67,7 +71,25 @@ MofBool CGameApp::Initialize(void){
 	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, 6);
 	input->AddJoypadKey(INPUT_KEY_RETRY, 0, 7);
 	input->AddJoypadKey(INPUT_KEY_BACK, 0, 9);
+	input->AddJoypadKey(INPUT_KEY_HOLD, 0, 8);
 
+	std::string skillParrate[] = {
+		"skill2",
+		"skill2",
+		"skill2",
+		"skill2",
+		"skill2",
+		"skill2",
+	};
+
+	if (input->IsPress(INPUT_KEY_HOLD) && input->IsPress(INPUT_KEY_SKILL1))
+	{
+		changeState(skillParrate[4]);
+	}
+	else if (input->IsPress(INPUT_KEY_SKILL1))
+	{
+		changeState(skillParrate[0]);
+	}
 	//外部フォント読み込み
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) <= 0)
 	{

@@ -10,6 +10,8 @@ namespace Input {
 	class CInput : public IInput
 	{
 	protected:
+		using ArrayKey = std::vector<int>;
+
 		/** キー状態 */
 		struct KeyData {
 			enum class Type {
@@ -23,10 +25,11 @@ namespace Input {
 				JoyPad,
 			};
 			struct Key {
-				int				positiveNo_;
-				int				negativeNo_;
-				int				padNo_;
-				Type			type_;
+				int					positiveNo_;
+				int					negativeNo_;
+				int					padNo_;
+				Type				type_;
+				ArrayKey			holdKeys_;
 			};
 			std::vector<Key>	inputKey_;
 			float				previousValue_;
@@ -48,6 +51,7 @@ namespace Input {
 		};
 		using KeyMap = std::unordered_map<KeyType, KeyData >;
 		KeyMap					keyMap_;
+
 
 		/**
 		 * @brief		キーボードキーの取得
@@ -127,6 +131,15 @@ namespace Input {
 		 * @param[in]	key				登録キー
 		 */
 		void AddJoypadKey(const KeyType& keyName, int pad, int key);
+
+		/**
+		 * @brief		登録キーの追加
+		 * @param[in]	keyName				登録キー名
+		 * @param[in]	pad				登録パッド
+		 * @param[in]	key				登録キー
+		 * @param[in]	holdKeys		登録キー配列
+		 */
+		void AddJoypadKey(const KeyType& keyName, int pad, int key,const ArrayKey& holdKeys);
 
 		/**
 		 * @brief		登録キーの追加

@@ -42,6 +42,7 @@ bool ActionGame::JsonStageLoader::Load(nlohmann::json& os)
 		return false;
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Stage", "StageMesh", tempMesh);
+	CServiceLocator<MyClass::CGiveTextureToMaterial>::GetService()->Give(tempMesh);
 
 	//“Gî•ñ‚Ì“Ç‚İ‚İ
 	auto& enemyStatusFile = os["EnemyStatusFile"];

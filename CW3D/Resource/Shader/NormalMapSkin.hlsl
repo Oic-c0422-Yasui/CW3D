@@ -255,7 +255,7 @@ float4 RenderPS( OutputVS inPixel ) : SV_TARGET
 	l *= l;
 	//ライティング結果から色を計算する
 	float3 diff = l * litDiffuse.xyz * matDiffuse.xyz;
-	float4 LP = float4(saturate(diff) , matDiffuse.w);
+	float4 LP = float4(saturate(diff) , matDiffuse.w) * colRevise;
 	return LP * txDiffuse.Sample(samLinear, inPixel.Tex);
 	
 }
@@ -269,7 +269,7 @@ float4 RenderSimplePS(OutputVS inPixel) : SV_TARGET
 	l *= l;
 	//ライティング結果から色を計算する
 	float3 diff = l * litDiffuse.xyz * matDiffuse.xyz;
-	float4 LP = float4(saturate(diff) , matDiffuse.w);
+	float4 LP = float4(saturate(diff) , matDiffuse.w) * colRevise;
 	return LP * txDiffuse.Sample(samLinear, inPixel.Tex);
 }
 
