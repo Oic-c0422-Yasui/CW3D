@@ -59,7 +59,7 @@ namespace ActionGame
 		/*
 		* @brief	‰Šú‰»
 		*/
-		virtual void Initialize();
+		virtual void Initialize() override;
 		/*
 		* @brief	XV
 		*/

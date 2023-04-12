@@ -40,6 +40,14 @@ bool Scene::CBattleScene::Load()
 		return false;
 	}
 	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Player", "Player", tempMesh);
+	//giveTexture_->Give(tempMesh);
+
+	tempMesh = std::make_shared<CMeshContainer>();
+	if (tempMesh->Load("Mesh/Shadow/Shadow.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	{
+		return false;
+	}
+	ResourcePtrManager<CMeshContainer>::GetInstance().AddResource("Chara", "Shadow", tempMesh);
 	giveTexture_->Give(tempMesh);
 
 	//UIテクスチャ読み込み

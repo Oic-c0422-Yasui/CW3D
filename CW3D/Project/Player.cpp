@@ -49,6 +49,8 @@ bool ActionGame::CPlayer::Load()
 	
 	CServiceLocator<ICombo>::SetService(combo_);
 
+	CActorObject::Load();
+
 	return true;
 }
 

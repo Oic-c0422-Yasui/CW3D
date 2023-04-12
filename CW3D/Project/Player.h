@@ -53,11 +53,11 @@ namespace ActionGame
 		* @brief	“Ç‚İ‚İ
 		* @return	true@‚È‚ç“Ç‚İ‚İ¬Œ÷
 		*/
-		bool Load();
+		bool Load() override;
 		/*
 		* @brief	‰Šú‰»
 		*/
-		void Initialize();
+		void Initialize() override;
 		/*
 		* @brief	XV
 		*/

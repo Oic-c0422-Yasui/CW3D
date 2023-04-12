@@ -8,13 +8,16 @@
 
 namespace ActionGame
 {
+	//メッシュポインタ
+	using MeshPtr = std::shared_ptr<CMeshContainer>;
+
 	/*
 	* @brief	アクターのオブジェクトクラス
 	*/
 	class CActorObject
 	{
 	protected:
-		std::shared_ptr<CMeshContainer>			mesh_;
+		MeshPtr									mesh_;
 		MyClass::NormalMapSkinnedParameterPtr	normalMap_;
 		StateMachinePtr							stateMachine_;
 		AnimationStatePtr						motion_;
@@ -28,11 +31,13 @@ namespace ActionGame
 		CVector3								prevPosision_;
 		float									ultBoostMag_;	//必殺技ゲージのブースト倍率
 		float									weight_;
-
+		MeshPtr									shadow_;
+		CMatrix44								shadowMat_;
 
 	public:
 		CActorObject();
 		virtual ~CActorObject();
+		virtual bool Load();
 		virtual void Initialize();
 		virtual void Update();
 		virtual void Render();

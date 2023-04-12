@@ -1,4 +1,5 @@
 #include "ActorObject.h"
+#include "ResourceManager.h"
 
 using namespace ActionGame;
 
@@ -14,6 +15,9 @@ CActorObject::CActorObject()
 	, ultBoostMag_(0.0f)
 	, weight_(50.0f)
 	, normalMap_(nullptr)
+	, shadow_(nullptr)
+	, matWorld_()
+	, shadowMat_()
 {
 	actor_->GetParameterMap()->Add<float>(PARAMETER_KEY_ALPHA, 1.0f);
 	actor_->GetParameterMap()->Add<Vector3>(PARAMETER_KEY_KNOCKBACK, Vector3(0,0,0));
@@ -24,11 +28,24 @@ CActorObject::~CActorObject()
 {
 }
 
+bool ActionGame::CActorObject::Load()
+{
+	
+	shadow_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Chara", "Shadow");
+	if (shadow_ == nullptr)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void ActionGame::CActorObject::Initialize()
 {
 	isShow_ = true;
 	isDead_ = false;
 	matWorld_ = actor_->GetMatrix();
+	shadowMat_ = matWorld_;
 
 	stateMachine_->SetUp();
 }
@@ -55,7 +72,12 @@ void CActorObject::Update()
 
 	//マトリクスを取得
 	matWorld_ = actor_->GetMatrix();
-
+	
+	//影の座標移動
+	auto pos = actor_->GetPosition();
+	shadowMat_.SetTranslation(pos.x,0.0f, pos.y);
+	
+	//モーションのタイマーを進める
 	motion_->AddTimer(CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(actor_->GetType()));
 }
 
@@ -69,13 +91,14 @@ void CActorObject::Render()
 	motion_->RefreshBoneMatrix(matWorld_);
 	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha),
 		normalMap_->GetShader().get(), normalMap_->GetShaderBind().get());
-
+	shadow_->Render(shadowMat_, Vector4(1.0f, 1.0f, 1.0f, alpha));
 }
 
 void CActorObject::Release()
 {
 	MOF_SAFE_DELETE(motion_);
 	mesh_.reset();
+	shadow_.reset();
 }
 
 void ActionGame::CActorObject::AddUltGauge(float gauge)

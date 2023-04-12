@@ -73,6 +73,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//AIì¬
 	AI_ = aiCreator->Create(actor_, stateMachine_, stateInput);
 
+	CActorObject::Load();
+
 	return true;
 }
 

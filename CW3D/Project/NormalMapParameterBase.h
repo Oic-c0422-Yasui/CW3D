@@ -14,11 +14,15 @@ namespace MyClass
 	class CNormalMapParameterBase
 	{
 	protected:
-		NormalMapPtr normalMap_;
-
-	protected:
-		bool CreateShaderBind(const NormalMapBindPtr& bind);
-		void SetCameraBind(const NormalMapBindPtr& bind);
+		/*
+		* @brief　読み込み（継承先用）
+		*/
+		bool Load(const std::string& fileName, const NormalMapPtr& shader,
+			const NormalMapBindPtr& shaderBind);
+		/*
+		* @brief　シェーダーにカメラを設定（継承先用）
+		*/
+		void SetCamera(const NormalMapBindPtr& bind);
 	public:
 		CNormalMapParameterBase();
 		virtual ~CNormalMapParameterBase() = default;
@@ -28,12 +32,12 @@ namespace MyClass
 		* @param fileName　シェーダーのファイル名
 		* @return true なら成功
 		*/
-		virtual bool Load(const std::string& fileName);
+		virtual bool Load(const std::string& fileName) = 0;
 
 		/*
 		* @brief　シェーダー取得
 		*/
-		virtual const NormalMapPtr& GetShader() const noexcept;
+		virtual const NormalMapPtr& GetShader() const noexcept = 0;
 		/*
 		* @brief　シェーダーバインド取得
 		*/
