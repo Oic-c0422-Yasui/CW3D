@@ -91,6 +91,7 @@ void CActorObject::Render()
 	motion_->RefreshBoneMatrix(matWorld_);
 	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha),
 		normalMap_->GetShader().get(), normalMap_->GetShaderBind().get());
+	//mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha));
 
 	shadow_.Render(Vector4(1.0f, 1.0f, 1.0f, alpha));
 }

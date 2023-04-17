@@ -38,6 +38,8 @@ namespace ActionGame {
 		/* キャラタイプ　*/
 		CHARA_TYPE				charaType_;
 
+		/* 当たり判定　*/
+		Collider				collider_;
 
 	public:
 		/**
@@ -53,6 +55,7 @@ namespace ActionGame {
 			, skillController_(std::make_shared<CSkillController>())
 			, myID_(IDManagerInstance.CreateID())
 			, charaType_()
+			, collider_()
 		{
 		}
 
@@ -136,6 +139,13 @@ namespace ActionGame {
 		}
 
 		/**
+		 * @brief		当たり判定設定
+		 */
+		void SetCollider(const Collider& collider) override {
+			collider_ = collider;
+		}
+
+		/**
 		 * @brief		アクションの取得
 		 * @param[in]	key			アクションキー
 		 * @return		アクション
@@ -216,6 +226,13 @@ namespace ActionGame {
 
 		CHARA_TYPE GetType() const override {
 			return charaType_;
+		}
+
+		/**
+		* @brief	当たり判定取得
+		*/
+		const Collider& GetCollider() const override {
+			return collider_;
 		}
 
 		/**

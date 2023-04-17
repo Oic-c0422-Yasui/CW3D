@@ -112,7 +112,8 @@ void ActionGame::CJumpBeamSkillState::Initialize()
 	}
 	for (auto& shot : shots_)
 	{
-		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage();
+		auto damage = MyUtil::CalculateAtk(shot->GetDamage(), skillDamage);
 		shot->SetDamage(damage);
 	}
 }

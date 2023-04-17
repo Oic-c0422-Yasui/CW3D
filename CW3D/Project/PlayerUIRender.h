@@ -18,7 +18,7 @@ namespace ActionGame
 		//HP描画
 		PlayerHPRenderPtr			HPRender_;
 		//スキル情報描画
-		SkillInfoRenderPtr			skillControllerRender_;
+		SkillInfoRenderPtr			skillInfoRender_;
 		//スキル画像描画
 		SkillRenderContainerPtr		skillsRender_;
 		UltimateGaugeUIRenderPtr	UltGaugeRender_;
@@ -34,6 +34,10 @@ namespace ActionGame
 		void VisibleUI();
 		//UI非表示
 		void DisableUI();
+		//キーボードUI表示
+		void ChangeKeyBoardUI();
+		//コントローラーUI表示
+		void ChangeControllerUI();
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -48,9 +52,10 @@ namespace ActionGame
 		/*
 		* @brief	読み込み
 		* @param	player　プレイヤー
+		* @param	device	操作デバイス
 		* @return	true　なら成功
 		*/
-		bool Load(const PlayerPtr& player);
+		bool Load(const PlayerPtr& player, GameDevice device);
 
 		/*
 		* @brief	初期化

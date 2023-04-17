@@ -1,11 +1,13 @@
 #include "UltimateGaugeRender.h"
+#include "ResourceManager.h"
+#include "Utilities.h"
 
 ActionGame::CUltimateGaugeRender::CUltimateGaugeRender()
 	: gauge_(0.2f)
 	, maxGauge_(1.0f)
-	, offset_(0, 0)
 	, size_(1, 1)
-	, position_(634, 1052)
+	, position_(1054, 1046)
+	, offset_(47, 0)
 {
 }
 
@@ -17,13 +19,18 @@ ActionGame::CUltimateGaugeRender::~CUltimateGaugeRender()
 bool ActionGame::CUltimateGaugeRender::Load()
 {
 
-	gaugeFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGauge");
+	gaugeBar_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGauge");
+	if (gaugeBar_ == nullptr)
+	{
+		return false;
+	}
+	gaugeFrame_ = ResourcePtrManager<CTexture>::GetInstance().GetResource("UI", "UltGaugeFrame");
 	if (gaugeFrame_ == nullptr)
 	{
 		return false;
 	}
 	font_ = ResourcePtrManager<CFont>::GetInstance().GetResource("Font", "SkillFont");
-	if (gaugeFrame_ == nullptr)
+	if (font_ == nullptr)
 	{
 		return false;
 	}
@@ -31,7 +38,7 @@ bool ActionGame::CUltimateGaugeRender::Load()
 	//•¶ŽšÀ•W
 	CRectangle fontrect;
 	font_->CalculateStringRect(0, 0, "000/000", fontrect);
-	strPosition_ = Vector2(position_.x - (fontrect.GetWidth() * 0.5f), position_.y - gaugeFrame_->GetHeight() * 0.5f - (fontrect.GetHeight() * 0.5f));
+	strPosition_ = Vector2(position_.x + (fontrect.GetWidth() * 0.5f) + 130, position_.y);
 
 	return true;
 }
@@ -39,16 +46,20 @@ bool ActionGame::CUltimateGaugeRender::Load()
 void ActionGame::CUltimateGaugeRender::Render()
 {
 	float percent = gauge_ / maxGauge_;
+	percent = std::clamp(percent, 0.0f, 1.0f);
 
-	CRectangle rect(0, gaugeFrame_->GetHeight() * (1.0 - percent), gaugeFrame_->GetWidth(), gaugeFrame_->GetHeight());
-	gaugeFrame_->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
+	//MyUtil::RenderMousePos(position_);
+	gaugeFrame_->Render(position_.x, position_.y);
+	CRectangle rect(0, 0, gaugeBar_->GetWidth() * (percent), gaugeBar_->GetHeight());
+	gaugeBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect);
 
 	font_->RenderFormatString(strPosition_.x, strPosition_.y, "%03.0f/%03.0f", gauge_, maxGauge_);
 
 }
 
-void ActionGame::CUltimateGaugeRender::Release(void)
+void ActionGame::CUltimateGaugeRender::Release()
 {
+	gaugeBar_.reset();
 	gaugeFrame_.reset();
 	font_.reset();
 }

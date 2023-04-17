@@ -1,6 +1,7 @@
 #include "JumpStormSkillState.h"
 #include "FollowFixedCamera.h"
 #include "CameraController.h"
+#include "ParameterDefine.h"
 
 ActionGame::CJumpStormSkillState::CJumpStormSkillState(Parameter param)
 	: CAttackBaseState()
@@ -21,12 +22,16 @@ void ActionGame::CJumpStormSkillState::Start()
 	CAttackBaseState::Start();
 	action_->Start();
 
+	auto param = Actor()->GetParameterMap();
+	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = parameter_.armorLevel;
 
 	CreateShotAABB();
 	CreateEffect();
 	for (auto& shot : shots_)
 	{
-		float damage = shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f);
+		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage();
+		auto damage = MyUtil::CalculateAtk(shot->GetDamage(), skillDamage);
 		shot->SetDamage(damage);
 	}
 	inputKey_ = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();

@@ -23,16 +23,18 @@ void ActionGame::CIdleStateAI::Start()
 
 void ActionGame::CIdleStateAI::Update()
 {
-	//プレイヤー取得
+	//ターゲット取得
 	const auto& target = CServiceLocator< CPlayer >::GetService();
+	//アクター取得
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス
 	CAABB collider;
 	collider.SetPosition(transform->GetPosition());
 	collider.Size = vigilangeRange_;
 
-	Vector2 vec(transform->GetPosition().x - target->GetPosition().x, transform->GetPosition().z - target->GetPosition().z);
-	float length = sqrt(vec.x * vec.x + vec.y * vec.y);
+	//距離計算
+	const Vector2 vec(transform->GetPosition().x - target->GetPosition().x, transform->GetPosition().z - target->GetPosition().z);
+	const float length = sqrt(vec.x * vec.x + vec.y * vec.y);
 
 	//警戒範囲内に入ってきたら移動
 	if (CCollision::Collision(target->GetCollider(), collider))

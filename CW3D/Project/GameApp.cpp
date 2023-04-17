@@ -18,12 +18,14 @@
 #include	"Messenger.h"
 #include	"SendMessageServiceDefine.h"
 #include	"RegistMessageServiceDefine.h"
+#include	"JoyPadDefine.h"
 
 //シーンマネージャー
 Scene::SceneManagerPtr gSceneManager;
 
 //外部フォント
 LPCSTR fontPath = "Font/Mplus1-Regular.ttf";
+
 
 /*************************************************************************//*!
 		@brief			アプリケーションの初期化
@@ -54,42 +56,25 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	input->AddKeyboardKey(INPUT_KEY_BACK, MOFKEY_F3);
 	//パッド入力登録
-	std::vector<int> holdKey;
-	std::vector<int> disableKey;
-	holdKey.push_back(8);
-	disableKey.push_back(INPUT_KEY_SKILL1);
-	input->AddJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
-	input->AddJoyStickVertical(INPUT_KEY_VERTICAL, 0);
-	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, 0);
-	input->AddJoypadKey(INPUT_KEY_ENTER, 0, 1);
-	input->AddJoypadKey(INPUT_KEY_CANCEL, 0, 2);
-	input->AddJoypadKey(INPUT_KEY_JUMP, 0, 1);
-	input->AddJoypadKey(INPUT_KEY_SKILL1, 0, 2);
-	input->AddJoypadKey(INPUT_KEY_SKILL2, 0, 3);
-	input->AddJoypadKey(INPUT_KEY_SKILL3, 0, 4);
-	input->AddJoypadKey(INPUT_KEY_SKILL4, 0, 5);
-	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, 6);
-	input->AddJoypadKey(INPUT_KEY_RETRY, 0, 7);
-	input->AddJoypadKey(INPUT_KEY_BACK, 0, 9);
-	input->AddJoypadKey(INPUT_KEY_HOLD, 0, 8);
+	input->AddLeftJoyStickHorizontal(INPUT_KEY_HORIZONTAL, 0);
+	input->AddLeftJoyStickVertical(INPUT_KEY_VERTICAL, 0);
+	input->AddJoypadKey(INPUT_KEY_ATTACK, 0, JOYPAD_X);
+	input->AddJoypadKey(INPUT_KEY_ENTER, 0, JOYPAD_A);
+	input->AddJoypadKey(INPUT_KEY_CANCEL, 0, JOYPAD_B);
+	input->AddJoypadKey(INPUT_KEY_JUMP, 0, JOYPAD_A);
+	input->AddJoypadKey(INPUT_KEY_SKILL1, 0, JOYPAD_B,
+		std::vector<int>{JOYPAD_RB});
+	input->AddJoypadKey(INPUT_KEY_SKILL2, 0, JOYPAD_Y, 
+		std::vector<int>{JOYPAD_RB});
+	input->AddJoypadKey(INPUT_KEY_SKILL3, 0, JOYPAD_X,
+		std::vector<int>{JOYPAD_RB}, std::vector<std::string>{INPUT_KEY_ATTACK});
+	input->AddJoypadKey(INPUT_KEY_SKILL4, 0, JOYPAD_A,
+		std::vector<int>{JOYPAD_RB}, std::vector<std::string>{INPUT_KEY_JUMP});
+	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, JOYPAD_B);
+	input->AddJoypadKey(INPUT_KEY_RETRY, 0, JOYPAD_START);
+	input->AddJoypadKey(INPUT_KEY_BACK, 0, JOYPAD_BACK);
 
-	std::string skillParrate[] = {
-		"skill2",
-		"skill2",
-		"skill2",
-		"skill2",
-		"skill2",
-		"skill2",
-	};
 
-	if (input->IsPress(INPUT_KEY_HOLD) && input->IsPress(INPUT_KEY_SKILL1))
-	{
-		changeState(skillParrate[4]);
-	}
-	else if (input->IsPress(INPUT_KEY_SKILL1))
-	{
-		changeState(skillParrate[0]);
-	}
 	//外部フォント読み込み
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) <= 0)
 	{
@@ -115,7 +100,6 @@ MofBool CGameApp::Initialize(void){
 	gSceneManager->Initialize();
 	//タイトルへ遷移
 	gSceneManager->ChangeScene(SCENENO::TITLE);
-
 	
 	return TRUE;
 }
@@ -148,12 +132,11 @@ MofBool CGameApp::Render(void){
 	//描画開始
 	g_pGraphics->RenderStart();
 	//画面のクリア
-	g_pGraphics->ClearTarget(0.0f,0.0f,1.0f,0.0f,1.0f,0);
+	g_pGraphics->ClearTarget(0.0f,0.0f,0.0f,0.0f,1.0f,0);
 
 	g_pGraphics->SetDepthEnable(TRUE);
 
 	gSceneManager->Render();
-
 
 	//描画の終了
 	g_pGraphics->RenderEnd();

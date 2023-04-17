@@ -1,4 +1,5 @@
 #include "TitleScene.h"
+#include "RegistMessageServiceDefine.h"
 
 
 
@@ -6,6 +7,8 @@ Scene::CTitleScene::CTitleScene()
 	: backTexture_(std::make_shared<CTexture>())
 	, titleLogoFont_()
 	, textFont_()
+	, startButtonStr_(nullptr)
+	, endButtonStr_(nullptr)
 {
 }
 
@@ -20,8 +23,29 @@ bool Scene::CTitleScene::Load()
 	{
 		return false;
 	}
-	titleLogoFont_.Create(150, "ＭＳ ゴシック");
-	textFont_.Create(50, "ＭＳ ゴシック");
+	titleLogoFont_.Create(200, "M PLUS 1");
+	titleLogoFont_.SetBold(60);
+	textFont_.Create(50, "M PLUS 1");
+
+	auto input = InputManagerInstance.GetInput(0);
+	switch (input->GetDeviceType())
+	{
+	case GameDevice::KeyBoardAndMouse:
+		ChangeKeyBoardUI();
+		break;
+	case GameDevice::Controller:
+		ChangeControllerUI();
+		break;
+	default:
+		break;
+	}
+
+	//デバイス変更によるUI変更メッセージ登録
+	const auto& message = RegistMessageService::GetService();
+	message->Regist(ChangeDevice_KeyBoard,
+		[this]() {ChangeKeyBoardUI(); });
+	message->Regist(ChangeDevice_Controller,
+		[this]() {ChangeControllerUI(); });
 
 	return true;
 }
@@ -38,12 +62,12 @@ void Scene::CTitleScene::Update()
 	if (input->IsPush(INPUT_KEY_ENTER))
 	{
 		//フェード
-		const float time = 0.5f;
+		constexpr float time = 0.5f;
 		auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
 		//ゲームシーンへ遷移
 		SceneChangeService::GetService()->ChangeScene(SCENENO::GAME, sceneEffect,true);
 	}
-	else if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_CANCEL))
+	else if (input->IsPush(INPUT_KEY_CANCEL))
 	{
 		//ゲーム終了
 		PostQuitMessage(0);
@@ -68,14 +92,19 @@ void Scene::CTitleScene::Render2D()
 	backTexture_->Render(rect);
 
 	//タイトルロゴ
-	titleLogoFont_.CalculateStringRect(0, 0, "アクションげーーーむ", rect);
-	titleLogoFont_.RenderString(width * 0.5f - (rect.GetWidth() * 0.5f), height * 0.2f , "アクションげーーーむ");
+	titleLogoFont_.CalculateStringRect(0, 0, "Go！ Action！", rect);
+	titleLogoFont_.RenderString(width * 0.2f, height * 0.2f , "Go！ Action！");
+	
+	//ボタン
+	textFont_.CalculateStringRect(width * 0.5f, height * 0.7f, "START：", rect);
+	rect += CRectangle(rect.GetWidth() * -0.5f, 0, rect.GetWidth() * -0.5f, 0);
+	textFont_.RenderString(rect.Left, rect.Top, "START：");
+	textFont_.RenderString(rect.Right, rect.Top, startButtonStr_);
 
-	//説明
-	textFont_.CalculateStringRect(0, 0, "Start：Z Key", rect);
-	textFont_.RenderString(width * 0.5f - (rect.GetWidth() * 0.5f), height * 0.7f, "Start：Z Key");
-	textFont_.CalculateStringRect(0, 0, "End：X Key", rect);
-	textFont_.RenderString(width * 0.5f - (rect.GetWidth() * 0.5f), height * 0.78f, "End：X Key");
+	textFont_.CalculateStringRect(width * 0.5f, height * 0.78f, "END：", rect);
+	rect += CRectangle(rect.GetWidth() * -0.5f, 0, rect.GetWidth() * -0.5f, 0);
+	textFont_.RenderString(rect.Left, rect.Top, "END：");
+	textFont_.RenderString(rect.Right, rect.Top, endButtonStr_);
 }
 
 void Scene::CTitleScene::Render2DDebug()
@@ -90,4 +119,16 @@ void Scene::CTitleScene::Release()
 	}
 	titleLogoFont_.Release();
 	textFont_.Release();
+}
+
+void Scene::CTitleScene::ChangeKeyBoardUI()
+{
+	startButtonStr_ = "Zキー";
+	endButtonStr_ = "Xキー";
+}
+
+void Scene::CTitleScene::ChangeControllerUI()
+{
+	startButtonStr_ = "Aボタン";
+	endButtonStr_ = "Bボタン";
 }

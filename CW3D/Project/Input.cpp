@@ -2,11 +2,20 @@
 
 using namespace Input;
 
+
+
 Input::CInput::CInput()
 	: keyMap_()
+	, operateDevice_()
 { 
 }
 
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	key				登録キー
+ */
 void Input::CInput::AddKeyboardKey(const KeyType& kn, int key)
 {
 	auto km = keyMap_.find(kn);
@@ -20,6 +29,12 @@ void Input::CInput::AddKeyboardKey(const KeyType& kn, int key)
 	}
 }
 
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	positiveKey		+方向の登録キー
+ * @param[in]	negativeKey		-方向の登録キー
+ */
 void Input::CInput::AddKeyboardKey(const KeyType& kn, int positiveKey, int negativeKey)
 {
 	auto km = keyMap_.find(kn);
@@ -33,6 +48,11 @@ void Input::CInput::AddKeyboardKey(const KeyType& kn, int positiveKey, int negat
 	}
 }
 
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName		登録キー名
+ * @param[in]	Key		登録キー
+ */
 void Input::CInput::AddMouseKey(const KeyType& kn, int Key)
 {
 	auto km = keyMap_.find(kn);
@@ -46,6 +66,12 @@ void Input::CInput::AddMouseKey(const KeyType& kn, int Key)
 	}
 }
 
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	key				登録キー
+ */
 void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key)
 {
 	auto km = keyMap_.find(kn);
@@ -59,42 +85,329 @@ void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key)
 	}
 }
 
-void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key, const ArrayKey& holdKeys)
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	positiveKey		+方向の登録キー
+ * @param[in]	negativeKey		-方向の登録キー
+ */
+void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int positiveKey, int negativeKey)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ positiveKey, negativeKey, pad, KeyData::Type::JoyPad });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ positiveKey, negativeKey, pad, KeyData::Type::JoyPad });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	key				登録キー
+ * @param[in]	holdKeys		登録キー配列
+ * @param[in]	disableKeys		入力を受け付けない登録されているキー名
+ */
+void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int key, const ArrayKey& holdKeys, const ArrayKeyType& disableKeys)
 {
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
 		km->second.inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad, holdKeys});
+		km->second.disableKeys_ = disableKeys;
 	}
 	else
 	{
 		keyMap_[kn].inputKey_.push_back({ key, -1, pad, KeyData::Type::JoyPad, holdKeys});
+		km->second.disableKeys_ = disableKeys;
 	}
 }
 
-void Input::CInput::AddJoyStickHorizontal(const KeyType& kn, int pad)
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddLeftJoyStickHorizontal(const KeyType& kn, int pad)
 {
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::Left_JoyStick_Horizontal });
 	}
 	else
 	{
-		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickHorizontal });
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::Left_JoyStick_Horizontal });
 	}
 }
 
-void Input::CInput::AddJoyStickVertical(const KeyType& kn, int pad)
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddLeftJoyStickVertical(const KeyType& kn, int pad)
 {
 	auto km = keyMap_.find(kn);
 	if (km != keyMap_.end())
 	{
-		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::Left_JoyStick_Vertical });
 	}
 	else
 	{
-		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::JoyStickVertical });
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::Left_JoyStick_Vertical });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddRightJoyStickHorizontal(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::Right_JoyStick_Horizontal });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::Right_JoyStick_Horizontal });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddRightJoyStickVertical(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::Right_JoyStick_Vertical });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::Right_JoyStick_Vertical });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddDPadLeftKey(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Left });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Left });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	holdKeys		登録キー配列
+ * @param[in]	disableKeys		入力を受け付けない登録されているキー名
+ */
+void Input::CInput::AddDPadLeftKey(const KeyType& kn, int pad, const ArrayKey& holdKeys, const ArrayKeyType& disableKeys)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Left, holdKeys});
+		km->second.disableKeys_ = disableKeys;
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Left, holdKeys });
+		keyMap_[kn].disableKeys_ = disableKeys;
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddDPadRightKey(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Right });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Right });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	holdKeys		登録キー配列
+ * @param[in]	disableKeys		入力を受け付けない登録されているキー名
+ */
+void Input::CInput::AddDPadRightKey(const KeyType& kn, int pad, const ArrayKey& holdKeys, const ArrayKeyType& disableKeys)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Right, holdKeys });
+		km->second.disableKeys_ = disableKeys;
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Right, holdKeys });
+		keyMap_[kn].disableKeys_ = disableKeys;
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddDPadUpKey(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Up });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Up });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	holdKeys		登録キー配列
+ * @param[in]	disableKeys		入力を受け付けない登録されているキー名
+ */
+void Input::CInput::AddDPadUpKey(const KeyType& kn, int pad, const ArrayKey& holdKeys, const ArrayKeyType& disableKeys)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Up, holdKeys });
+		km->second.disableKeys_ = disableKeys;
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Up, holdKeys });
+		keyMap_[kn].disableKeys_ = disableKeys;
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ */
+void Input::CInput::AddDPadDownKey(const KeyType& kn, int pad)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Down });
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Down });
+	}
+}
+
+/**
+ * @brief		登録キーの追加
+ * @param[in]	keyName				登録キー名
+ * @param[in]	pad				登録パッド
+ * @param[in]	holdKeys		登録キー配列
+ * @param[in]	disableKeys		入力を受け付けない登録されているキー名
+ */
+void Input::CInput::AddDPadDownKey(const KeyType& kn, int pad, const ArrayKey& holdKeys, const ArrayKeyType& disableKeys)
+{
+	auto km = keyMap_.find(kn);
+	if (km != keyMap_.end())
+	{
+		km->second.inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Down, holdKeys });
+		km->second.disableKeys_ = disableKeys;
+	}
+	else
+	{
+		keyMap_[kn].inputKey_.push_back({ -1, -1, pad, KeyData::Type::DPad_Down, holdKeys });
+		keyMap_[kn].disableKeys_ = disableKeys;
+	}
+}
+
+void Input::CInput::SetChangeDevice(KeyData::Type type, float currentVal)
+{
+	if (currentVal == 0)
+	{
+		return;
+	}
+	
+	switch (type)
+	{
+	case Input::CInput::KeyData::Type::Keyboard:
+	case Input::CInput::KeyData::Type::Mouse:
+		operateDevice_.ChangeDevice(GameDevice::KeyBoardAndMouse);
+		break;
+	case Input::CInput::KeyData::Type::Left_JoyStick_Horizontal:
+	case Input::CInput::KeyData::Type::Left_JoyStick_Vertical:
+	case Input::CInput::KeyData::Type::Right_JoyStick_Horizontal:
+	case Input::CInput::KeyData::Type::Right_JoyStick_Vertical:
+	case Input::CInput::KeyData::Type::DPad_Left:
+	case Input::CInput::KeyData::Type::DPad_Right:
+	case Input::CInput::KeyData::Type::DPad_Up:
+	case Input::CInput::KeyData::Type::DPad_Down:
+	case Input::CInput::KeyData::Type::JoyPad:
+		operateDevice_.ChangeDevice(GameDevice::Controller);
+		break;
+	default:
+		break;
+	}
+
+}
+
+float Input::CInput::GetHoldValue(const KeyData::Key& key)
+{
+	float value = 1.0f;
+	for (auto holdKey : key.holdKeys_)
+	{
+		value *= GetJoypadKeyState(key.padNo_, holdKey, -1);
+	}
+	return value;
+}
+
+void Input::CInput::DisableInputKey(const KeyData& data)
+{
+	if (data.currentValue_ >= 1.0f)
+	{
+		for (auto disable : data.disableKeys_)
+		{
+			keyMap_[disable].currentValue_ = data.inputValue_;
+		}
 	}
 }
 
@@ -105,6 +418,7 @@ void Input::CInput::Update()
 {
 	for (auto k = keyMap_.begin(); k != keyMap_.end(); ++k)
 	{
+		//ホールド時間
 		if (IsPress(k->first) || IsNegativePress(k->first))
 		{
 			k->second.holdTime_ += CUtilities::GetFrameSecond();
@@ -113,6 +427,7 @@ void Input::CInput::Update()
 		{
 			k->second.holdTime_ = 0;
 		}
+		//プッシュ時間
 		if (IsPush(k->first) || IsNegativePush(k->first))
 		{
 			k->second.pushTime_ = 0;
@@ -129,53 +444,184 @@ void Input::CInput::Update()
 		{
 			switch (key.type_)
 			{
-				//キーボード
-			case KeyData::Type::Keyboard:
-				k->second.currentValue_ += GetKeyboardKeyState(key.positiveNo_, key.negativeNo_);
-				break;
-
-				//マウス
-			case KeyData::Type::Mouse:
-				k->second.currentValue_ += GetMouseKeyState(key.positiveNo_, key.negativeNo_);
-				break;
-
-				//ジョイパッド
-			case KeyData::Type::JoyPad:
-				if (key.holdKeys_.size() > 0)
+					//キーボード
+				case KeyData::Type::Keyboard:
 				{
-					float value = 1.0f;
-					for (auto holdKey : key.holdKeys_)
-					{
-						value *= GetJoypadKeyState(key.padNo_, key.holdKeys_[0], -1);
-					}
-					k->second.currentValue_ += value * GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
-
-					if (k->second.currentValue_ >= 1.0f)
-					{
-						keyMap_[k->second.disableKey[0]] = 0.0f;
-					}
+					float value = GetKeyboardKeyState(key.positiveNo_, key.negativeNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
 				}
-				else
+					//マウス
+				case KeyData::Type::Mouse:
 				{
-					k->second.currentValue_ += GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+					float value = GetMouseKeyState(key.positiveNo_, key.negativeNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
 				}
-				break;
+					//ジョイパッド
+				case KeyData::Type::JoyPad:
+				{
+					float value;
+					if (key.holdKeys_.size() > 0)
+					{
+						//ホールド
+						value = GetHoldValue(key) * GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
 
-				//ジョイスティック
-			case KeyData::Type::JoyStickHorizontal:
-				k->second.currentValue_ += GetJoypadStickHorizontal(key.padNo_);
-				break;
+						//除外入力
+						DisableInputKey(k->second);
+					}
+					else
+					{
+						//通常入力
+						value = GetJoypadKeyState(key.padNo_, key.positiveNo_, key.negativeNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+					}
 
-				//ジョイスティック
-			case KeyData::Type::JoyStickVertical:
-				k->second.currentValue_ += GetJoypadStickVertical(key.padNo_);
-				break;
-			}
-		}
+					break;
+				}
+					//左ジョイスティック
+				case KeyData::Type::Left_JoyStick_Horizontal:
+				{
+					float value = GetLeftJoyStickHorizontal(key.padNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
+				}
+					//左ジョイスティック
+				case KeyData::Type::Left_JoyStick_Vertical:
+				{
+					float value = GetLeftJoyStickVertical(key.padNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
+				}
+					//右ジョイスティック
+				case KeyData::Type::Right_JoyStick_Horizontal:
+				{
+					float value = GetRightJoyStickHorizontal(key.padNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
+				}
+					//右ジョイスティック
+				case KeyData::Type::Right_JoyStick_Vertical:
+				{
+					float value = GetRightJoyStickVertical(key.padNo_);
+					k->second.currentValue_ += value;
+					SetChangeDevice(key.type_, value);
+					break;
+				}
+					//十字キー左
+				case KeyData::Type::DPad_Left:
+				{
+					float value;
+					if (key.holdKeys_.size() > 0)
+					{
+						//ホールド
+						value = GetHoldValue(key) * GetDPadLeftKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+
+						//除外入力
+						DisableInputKey(k->second);
+					}
+					else
+					{
+						//通常入力
+						value = GetDPadLeftKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+					}
+
+					break;
+				}
+					//十字キー右
+				case KeyData::Type::DPad_Right:
+				{
+					float value;
+					if (key.holdKeys_.size() > 0)
+					{
+						//ホールド
+						value = GetHoldValue(key) * GetDPadRightKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+
+						//除外入力
+						DisableInputKey(k->second);
+					}
+					else
+					{
+						//通常入力
+						value = GetDPadRightKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+					}
+
+					break;
+				}
+					//十字キー上
+				case KeyData::Type::DPad_Up:
+				{
+					float value;
+					if (key.holdKeys_.size() > 0)
+					{
+						//ホールド
+						value = value * GetDPadUpKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+
+						//除外入力
+						DisableInputKey(k->second);
+					}
+					else
+					{
+						//通常入力
+						value = GetDPadUpKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+					}
+
+					break;
+				}
+					//十字キー下
+				case KeyData::Type::DPad_Down:
+				{
+					float value;
+					if (key.holdKeys_.size() > 0)
+					{
+						//ホールド
+						value = value * GetDPadDownKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+
+						//除外入力
+						DisableInputKey(k->second);
+					}
+					else
+					{
+						//通常入力
+						value = GetDPadDownKeyState(key.padNo_);
+						k->second.currentValue_ += value;
+						SetChangeDevice(key.type_, value);
+					}
+
+					break;
+				}
+			}//end switch
+		}//end key loop
+
 		//-1～+1でクリップ
 		if (k->second.currentValue_ > 1) { k->second.currentValue_ = 1; }
 		else if (k->second.currentValue_ < -1) { k->second.currentValue_ = -1; }
 	}
+
+	//デバイス変更メッセージを送る
+	operateDevice_.SendDeviceMessage();
 }
 
 float Input::CInput::GetAxis(const KeyType& keyName) const
@@ -277,3 +723,9 @@ std::vector<Input::IInput::KeyType> Input::CInput::GetKeyList() const
 	}
 	return keys;
 }
+
+GameDevice Input::CInput::GetDeviceType() const noexcept
+{
+	return operateDevice_.GetDeviceType();
+}
+

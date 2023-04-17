@@ -19,7 +19,6 @@ namespace ActionGame {
 		* @param	ThroughEndTime	　次の入力猶予時間
 		* @param	EscapeStartTime 　回避開始時間
 		* @param	EscapeTime 　	　回避時間
-		* @param	EffectStatus 　	　エフェクトのパラメータ
 		*/
 		struct Parameter : public BaseParam
 		{

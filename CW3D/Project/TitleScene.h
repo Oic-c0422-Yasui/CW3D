@@ -15,8 +15,14 @@ namespace Scene
 	{
 	private:
 		std::shared_ptr<CTexture> backTexture_;
-		CFont titleLogoFont_;
-		CFont textFont_;
+		CFont		titleLogoFont_;
+		CFont		textFont_;
+		char*		startButtonStr_;
+		char*		endButtonStr_;
+	private:
+		void ChangeKeyBoardUI();
+		void ChangeControllerUI();
+
 	public:
 		CTitleScene();
 		~CTitleScene();

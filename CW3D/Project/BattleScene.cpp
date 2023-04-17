@@ -35,7 +35,7 @@ bool Scene::CBattleScene::Load()
 
 	//メッシュ読み込み
 	auto tempMesh = std::make_shared<CMeshContainer>();
-	if (tempMesh->Load("Mesh/player.mom") != MOFMODEL_RESULT_SUCCEEDED)
+	if (tempMesh->Load("Mesh/Player/Player.mom") != MOFMODEL_RESULT_SUCCEEDED)
 	{
 		return false;
 	}
@@ -80,8 +80,9 @@ bool Scene::CBattleScene::Load()
 	//サービスロケーターの設定
 	CServiceLocator<CPlayer>::SetService(player_);
 
+	
 	//プレイヤーUI読み込み
-	if (!playerUiRender_.Load(player_))
+	if (!playerUiRender_.Load(player_, input->GetDeviceType()))
 	{
 		return false;
 	}
@@ -95,7 +96,8 @@ bool Scene::CBattleScene::Load()
 
 	//エフェクト読み込み
 	EffectRendererInstance.SetUp();
-	if (!ActionGame::EffectLoader::Load())
+	ActionGame::JsonEffectLoader effectLoader;
+	if (!effectLoader.Load("Data/EffectSource.json"))
 	{
 		return false;
 	}
@@ -273,10 +275,14 @@ void Scene::CBattleScene::RenderDebug()
 	}
 	//プレイヤー当たり判定デバッグ描画
 	CGraphicsUtilities::RenderBox(player_->GetCollider(), Vector4(0, 1, 0, 0.2f));
+	auto Poo = player_->GetPosition();
+	auto pos = player_->GetCollider().Position;
+	auto size = player_->GetCollider().Size;
+	CGraphicsUtilities::RenderBox(CAABB(player_->GetCollider().Position, player_->GetCollider().Size), Vector4(0, 1, 0, 0.2f));
 	//プレイヤー回避時当たり判定デバッグ描画
 	if (player_->IsEscape())
 	{
-		CGraphicsUtilities::RenderBox(player_->GetEscapeCollider(), Vector4(0, 0, 1, 0.2f));
+		CGraphicsUtilities::RenderBox(CAABB(player_->GetEscapeCollider().Position, player_->GetCollider().Size), Vector4(0, 0, 1, 0.2f));
 	}
 	if (enemyCreateThread_.IsComplete())
 	{
@@ -428,7 +434,7 @@ bool Scene::CBattleScene::CreateEnemys()
 		
 	}
 
-	npcHpRender_.Load();
+	if (!npcHpRender_.Load()) { return false; }
 	npcHpRender_.Initialize();
 
 	return true;

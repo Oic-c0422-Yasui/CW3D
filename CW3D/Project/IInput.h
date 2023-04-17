@@ -1,8 +1,7 @@
 #pragma once
 
 #include	"Common.h"
-
-
+#include	"DeviceDefine.h"
 
 namespace Input 
 {
@@ -120,6 +119,12 @@ namespace Input
 		 * @return		キーの識別配列
 		 */
 		virtual std::vector<KeyType> GetKeyList() const = 0;
+
+		/**
+		* @brief		操作しているデバイスのタイプ取得
+		* @return		デバイスのタイプ
+		*/
+		virtual GameDevice GetDeviceType() const noexcept = 0;
 	};
 	//ポインタ置き換え
 	using InputPtr = std::shared_ptr<IInput>;

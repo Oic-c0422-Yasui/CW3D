@@ -13,7 +13,19 @@ namespace Input {
 	{
 	protected:
 		//最小入力値
-		const float minInputValue_ = 0.3f;
+		const float MIN_INPUT = 0.3f;
+		//スティック最大入力量
+		const float MAX_INPUTSTICK = 1000.0f;
+		//十字キー入力値
+		struct Direction
+		{
+			const int LEFT = 27000;
+			const int RIGHT = 9000;
+			const int UP = 0;
+			const int DOWN = 18000;
+		};
+		const Direction DIRECTION;
+
 	protected:
 		/**
 		 * @brief		キーボードキーの取得
@@ -41,18 +53,69 @@ namespace Input {
 		float GetJoypadKeyState(int padNo, int positive, int negative) const override;
 
 		/**
-		 * @brief		ジョイパッドスティックの取得
+		 * @brief		左ジョイパッドスティックの取得
 		 * @param[in]	padNo			パッド番号
 		 * @return		キー入力の値
 		 */
-		float GetJoypadStickHorizontal(int padNo) const override;
+		float GetLeftJoyStickHorizontal(int padNo) const override;
 
 		/**
-		 * @brief		ジョイパッドスティックの取得
+		 * @brief		左ジョイパッドスティックの取得
 		 * @param[in]	padNo			パッド番号
 		 * @return		キー入力の値
 		 */
-		float GetJoypadStickVertical(int padNo) const override;
+		float GetLeftJoyStickVertical(int padNo) const override;
+
+		/**
+		 * @brief		右ジョイパッドスティックの取得
+		 * @param[in]	padNo			パッド番号
+		 * @return		キー入力の値
+		 */
+		float GetRightJoyStickHorizontal(int padNo) const override;
+
+		/**
+		 * @brief		右ジョイパッドスティックの取得
+		 * @param[in]	padNo			パッド番号
+		 * @return		キー入力の値
+		 */
+		float GetRightJoyStickVertical(int padNo) const override;
+
+		/**
+		 * @brief		ジョイパッド十字キーの左キー取得
+		 * @param[in]	padNo			パッド番号
+		 * @param[in]	positive		＋方向のキー
+		 * @param[in]	negative		－方向のキー
+		 * @return		キー入力の値
+		 */
+		float GetDPadLeftKeyState(int padNo) const override;
+
+		/**
+		 * @brief		ジョイパッド十字キーの右キー取得
+		 * @param[in]	padNo			パッド番号
+		 * @param[in]	positive		＋方向のキー
+		 * @param[in]	negative		－方向のキー
+		 * @return		キー入力の値
+		 */
+		float GetDPadRightKeyState(int padNo) const override;
+
+		/**
+		 * @brief		ジョイパッド十字キーの上キー取得
+		 * @param[in]	padNo			パッド番号
+		 * @param[in]	positive		＋方向のキー
+		 * @param[in]	negative		－方向のキー
+		 * @return		キー入力の値
+		 */
+		float GetDPadUpKeyState(int padNo) const override;
+
+		/**
+		 * @brief		ジョイパッド十字キーの下キー取得
+		 * @param[in]	padNo			パッド番号
+		 * @param[in]	positive		＋方向のキー
+		 * @param[in]	negative		－方向のキー
+		 * @return		キー入力の値
+		 */
+		float GetDPadDownKeyState(int padNo) const override;
+
 	public:
 		/**
 		 * @brief		コンストラクタ

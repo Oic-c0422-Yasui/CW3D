@@ -12,6 +12,8 @@ namespace ActionGame {
 	
 	//アニメーション用のシェアポインタ
 	using AnimationStatePtr = LPMeshMotionController;
+	//当たり判定
+	using Collider = CAABB;
 
 	/**
 	 * @brief		アクターインタフェース
@@ -88,6 +90,11 @@ namespace ActionGame {
 		virtual void SetType(CHARA_TYPE type) = 0;
 
 		/**
+		 * @brief		当たり判定設定
+		 */
+		virtual void SetCollider(const Collider& collider) = 0;
+
+		/**
 		 * @brief		姿勢取得
 		 */
 		virtual TransformPtr GetTransform() const = 0;
@@ -143,6 +150,11 @@ namespace ActionGame {
 		virtual CHARA_TYPE GetType() const = 0;
 
 		/**
+		 * @brief		当たり判定取得
+		 */
+		virtual const Collider& GetCollider() const = 0;
+
+		/**
 		 * @brief		パラメーター取得
 		 */
 		virtual const AnyParameterMapPtr& GetParameterMap() const = 0;
@@ -156,6 +168,8 @@ namespace ActionGame {
 		 * @brief		スキル取得
 		 */
 		virtual const SkillControllerPtr& GetSkillController() const = 0;
+
+		
 
 	};
 	//ポインタ置き換え

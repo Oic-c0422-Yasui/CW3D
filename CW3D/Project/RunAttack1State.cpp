@@ -1,4 +1,5 @@
 #include "RunAttack1State.h"
+#include "AnimationUtilities.h"
 
 ActionGame::CRunAttack1State::CRunAttack1State(Parameter param)
 	: CAttackBaseState()
@@ -17,15 +18,40 @@ void ActionGame::CRunAttack1State::Start()
 	action_->Start();
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
+	isActorInSight_ = IsActorInSight(targetPos_, offsetSize_,270.0f,3.5f);
 
 }
 
 void ActionGame::CRunAttack1State::Execution()
 {
+	const auto pos = Actor()->GetPosition();
+
+	if (isActorInSight_ && currentTime_ <= 0.1f)
+	{
+		auto distance = MyUtil::DistanceSquare(pos, targetPos_->GetPosition());
+		auto mDist = std::pow(offsetSize_, 2);
+		if (distance > mDist)
+		{
+			auto setPos = MyUtil::Timer(pos, currentTime_, targetPos_->GetPosition(), 0.1f);
+			Actor()->SetPosition(Vector3(setPos.x, pos.y, setPos.z));
+		}
+		else
+		{
+			isActorInSight_ = false;
+		}
+	}
+	else
+	{
+		if (targetPos_ != nullptr)
+		{
+			targetPos_.reset();
+		}
+	}
+	
 
 	for (auto& shot : shots_)
 	{
-		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
+		shot->SetPosition(pos + shot->GetOffset());
 		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
@@ -74,6 +100,10 @@ void ActionGame::CRunAttack1State::InputExecution()
 void ActionGame::CRunAttack1State::End()
 {
 	CAttackBaseState::End();
+	if (targetPos_ != nullptr)
+	{
+		targetPos_.reset();
+	}
 }
 
 void ActionGame::CRunAttack1State::CollisionEvent(unsigned int type, std::any obj)

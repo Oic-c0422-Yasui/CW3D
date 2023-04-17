@@ -1,0 +1,37 @@
+{
+  "PlayerState": [
+    {
+      "State": 
+      {
+        "Type": "Idol",
+        "Time": 5.0
+      },
+      {
+        "Type": "IdolMotion"
+      },
+      {
+        "Type": "Move"
+      },
+      {
+        "Type": "Jump"
+      },
+      {
+        "Type": "Fall"
+      },
+      {
+        "Type": "Landing"
+      },
+      {
+        "Type": "Run"
+      },
+      {
+        "Type": "RunJump"
+      },
+      {
+        "Type": "RunJump"
+      }
+    }
+
+  ]
+
+}

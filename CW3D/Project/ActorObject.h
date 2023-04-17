@@ -24,7 +24,6 @@ namespace ActionGame
 		AnimationStatePtr						motion_;
 		ActorPtr								actor_;
 		CMatrix44								matWorld_;
-		CAABB									collider_;
 		CVector3								colliderOffset_;
 		CVector3								colliderSize_;
 		bool									isShow_;
@@ -113,10 +112,10 @@ namespace ActionGame
 		 */
 		virtual const CAABB& GetCollider()
 		{
-			collider_.Size = colliderSize_;
-			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
+			CAABB collider(actor_->GetPosition() + colliderOffset_, colliderSize_);
+			actor_->SetCollider(collider);
 
-			return collider_;
+			return actor_->GetCollider();
 		}
 		/**
 		 * @brief		更新前座標取得
@@ -199,5 +198,7 @@ namespace ActionGame
 	using ActorObjectPtr = std::shared_ptr<CActorObject>;
 	using ActorObjectWeakPtr = std::weak_ptr<CActorObject>;
 	using ActorObjectList = std::list<ActorObjectPtr>;
+	using ActorObjectWeakList = std::list<ActorObjectWeakPtr>;
+	using ActorObjectWeakListPtr = std::shared_ptr<ActorObjectWeakList>;
 }
 

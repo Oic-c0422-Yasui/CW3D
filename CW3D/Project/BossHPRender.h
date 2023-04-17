@@ -20,16 +20,16 @@ namespace ActionGame
 
 		struct HPBarParam
 		{
-			const int Limit = 100;
+			const int Limit = 500;
+			const BYTE StartColor = 200;
+			const BYTE EndColor = 100;
 			uint32_t Count;
+			uint32_t MaxCount;
 			Vector2 CountPos;
-			
-			uint32_t CurrentColorId;
-			uint32_t NextColorId;
 		};
 		HPBarParam HPBarParam_;
 
-		MofU32 HPColors_[3];
+		int HPColor_;
 
 	private:
 		/* プライベート関数　*/

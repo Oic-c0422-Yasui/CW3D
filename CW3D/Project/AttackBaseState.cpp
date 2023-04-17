@@ -1,5 +1,7 @@
 #include "AttackBaseState.h"
 #include "ParameterDefine.h"
+#include "ActorObjectManager.h"
+#include "AnimationUtilities.h"
 
 using namespace ActionGame;
 
@@ -130,6 +132,59 @@ void ActionGame::CAttackBaseState::CreateEffect()
 		}
 	}
 	effects_.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
+}
+
+bool ActionGame::CAttackBaseState::IsActorInSight(TransformPtr& outPos,float& offsetSize,float sightAngle,float maxDistance)
+{
+
+	const auto selfPos = Actor()->GetPosition();
+	bool isContain = false;
+	float minDistance = maxDistance;
+
+	//回転アニメーションで向いている方向の回転値が取れない可能性があるので回転完了後の値設定
+	auto rotate = Actor()->GetRotate();
+	if (Actor()->IsReverse())
+	{
+		rotate.y = MOF_ToRadian(90);
+	}
+	else
+	{
+		rotate.y = MOF_ToRadian(-90);
+	}
+
+	//前方ベクトル
+	auto fowardVec = MyUtil::ForwardVector(rotate);
+	MyUtil::Normalize(fowardVec);
+
+	
+
+	//敵対アクターを取得
+	auto actors = ActorObjectManagerInstance.GetHostilityActors(Actor()->GetType());
+	for (auto actor : *actors)
+	{
+		//非表示なら次へ
+		if (!actor.lock()->IsShow())
+		{
+			continue;
+		}
+
+		//視野内にアクターがいるか？
+		const auto targetPos = actor.lock()->GetPosition();
+		if (!MyUtil::IsRange(selfPos, fowardVec, targetPos,
+			sightAngle, minDistance))
+		{
+			continue;
+		}
+
+		//アクターまでの距離計算
+		float distance = MyUtil::Distance(selfPos, targetPos);
+		minDistance = distance;
+		outPos = actor.lock()->GetActor()->GetTransform();
+		offsetSize = (actor.lock()->GetCollider().Size.x + Actor()->GetCollider().Size.x) * 1.0f;
+		isContain = true;
+	}
+
+	return isContain;
 }
 
 

@@ -7,6 +7,4 @@ enum class CHARA_TYPE
 	ENEMY,	//敵
 	BOSS,	//ボス
 	OBJECT,	//オブジェクト
-
-	COUNT,	//タイプの数
 };

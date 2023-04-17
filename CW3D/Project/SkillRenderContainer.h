@@ -11,6 +11,9 @@
 
 namespace ActionGame
 {
+	//座標呼び出し用関数
+	using PositionFunc = std::function<Vector2(const std::string&)>;
+
 	/**
 	 * @brief		スキルをまとめて表示する
 	 */
@@ -40,7 +43,7 @@ namespace ActionGame
 		/**
 		 * @brief		初期化
 		 */
-		void Initialize(std::function<Vector2(const std::string&)> fn);
+		void Initialize(PositionFunc func);
 
 		/**
 		 * @brief		描画

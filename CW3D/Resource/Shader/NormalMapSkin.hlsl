@@ -19,7 +19,7 @@ cbuffer cbMaterialParam : register(b2)
 	float4		matAmbient		: packoffset(c1);
 	float4		matSpeculer		: packoffset(c2);
 	float4		matEmissive		: packoffset(c3);
-	float		matPower : packoffset(c4);
+	float		matPower		: packoffset(c4);
 };
 
 cbuffer cbLightParam : register(b3)
@@ -239,6 +239,7 @@ OutputVS RenderVS( InputVS inVert )
 //! ピクセルシェーダ
 float4 RenderPS( OutputVS inPixel ) : SV_TARGET
 {
+
 	//法線をテクスチャから取得する
 	//テクスチャの色では０～１なのでー１～１の範囲に変更する
 	float3 n = normalize(2.0f * txNormalTex.Sample(samLinear, inPixel.Tex).xyz - 1.0f);

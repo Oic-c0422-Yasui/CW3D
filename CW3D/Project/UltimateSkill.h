@@ -12,12 +12,12 @@ namespace ActionGame
 	{
 	private:
 
-		bool m_MaxGaugeFlg;
+		bool isMaxGauge_;
 
 		//所有者のアクター参照
-		ActorWeakPtr m_ActorRef;
+		ActorWeakPtr actorRef_;
 
-		UltimateSkillDataPtr m_UltSkillData;
+		UltimateSkillDataPtr ultSkillData_;
 	public:
 		/*
 		* @brief	コンストラクタ
@@ -57,16 +57,8 @@ namespace ActionGame
 		*/
 		float GetExpendGauge() const noexcept
 		{
-			return m_UltSkillData->ExpendGauge.Get();
+			return ultSkillData_->ExpendGauge.Get();
 		}
-
-		///*
-		//* @brief	使用する必殺技ゲージ取得（通知用）
-		//*/
-		//ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> >& GettExpendGaugeParam()
-		//{
-		//	return m_UltSkillData->ExpendGauge;
-		//}
 
 		/*
 		* @brief	スキルデータ設定
@@ -75,17 +67,17 @@ namespace ActionGame
 		void SetSkillData(const SkillDataPtr& skill) override
 		{
 			CSkill::SetSkillData(skill);
-			m_UltSkillData = std::dynamic_pointer_cast<UltimateSkillData>(skillData_);
-			if (m_UltSkillData == nullptr)
+			ultSkillData_ = std::dynamic_pointer_cast<UltimateSkillData>(skillData_);
+			if (ultSkillData_ == nullptr)
 			{
-				assert(m_UltSkillData);
+				assert(ultSkillData_);
 			}
 		}
 
 		/*
 		* @brief	使用する必殺技ゲージ通知
 		*/
-		ActionGame::IObservable<float>* GetSkillUltSubject(int id) { return &(m_UltSkillData->ExpendGauge.Get()); }
+		ActionGame::IObservable<float>* GetSkillUltSubject(int id) { return &(ultSkillData_->ExpendGauge.Get()); }
 	};
 
 	//ポインタ置き換え

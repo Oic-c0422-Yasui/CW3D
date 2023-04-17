@@ -29,7 +29,7 @@ void ActionGame::CMoveAction::Execution()
 {
 
 	auto& vel = Velocity();
-	bool isReverse = Transform()->IsReverse();
+	const bool isReverse = Transform()->IsReverse();
 	//左右向き変更
 	if (vel->GetVelocityX() < 0 && !isReverse)
 	{
@@ -76,8 +76,8 @@ void ActionGame::CMoveAction::InitDirection()
 void ActionGame::CMoveAction::ChangeDirection()
 {
 	auto& vel = Velocity();
-	bool isReverse = Transform()->IsReverse();
-	float rotateY = Transform()->GetRotateY();
+	const bool isReverse = Transform()->IsReverse();
+	const float rotateY = Transform()->GetRotateY();
 	
 	//進行方向に向きを回転させる
 	if (isReverse)

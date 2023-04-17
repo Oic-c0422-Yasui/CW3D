@@ -6,7 +6,7 @@
 
 ActionGame::CPlayerUIRender::CPlayerUIRender()
 	: HPRender_(std::make_shared<CPlayerHPRender>())
-	, skillControllerRender_(std::make_shared<CSkillInfoRender>())
+	, skillInfoRender_(std::make_shared<CSkillInfoRender>())
 	, skillsRender_(std::make_shared<CSkillRenderContainer>())
 	, UltGaugeRender_(std::make_shared<CUltimateGaugeRender>())
 	, comboRender_(std::make_shared<CComboRender>())
@@ -19,9 +19,9 @@ ActionGame::CPlayerUIRender::~CPlayerUIRender()
 	Release();
 }
 
-bool ActionGame::CPlayerUIRender::Load(const PlayerPtr& player)
+bool ActionGame::CPlayerUIRender::Load(const PlayerPtr& player, GameDevice device)
 {
-	if (!skillControllerRender_->Load())
+	if (!skillInfoRender_->Load(device))
 	{
 		return false;
 	}
@@ -42,26 +42,45 @@ bool ActionGame::CPlayerUIRender::Load(const PlayerPtr& player)
 		return false;
 	}
 
+	switch (device)
+	{
+	case GameDevice::KeyBoardAndMouse:
+		ChangeKeyBoardUI();
+		break;
+	case GameDevice::Controller:
+		ChangeControllerUI();
+		break;
+	default:
+		break;
+	}
+
 	CUltGaugePresenter::Present(player, UltGaugeRender_);
 	CHPPresenter::Present(player, HPRender_);
 	CComboPresenter::Present(player, comboRender_);
 
 	const auto& message = RegistMessageService::GetService();
-	//メッセージ登録
+	/* メッセージ登録 */
 	//UI表示メッセージ
 	message->Regist(UI_Visible,
-		[&]() {VisibleUI(); });
+		[this]() {VisibleUI(); });
 	//UI非表示メッセージ
 	message->Regist(UI_Disable,
-		[&]() {DisableUI(); });
+		[this]() {DisableUI(); });
+
+	//キーボード表示メッセージ
+	message->Regist(ChangeDevice_KeyBoard,
+		[this]() {ChangeKeyBoardUI(); });
+	//コントローラー表示メッセージ
+	message->Regist(ChangeDevice_Controller,
+		[this]() {ChangeControllerUI(); });
+
+	
 
 	return true;
 }
 
 void ActionGame::CPlayerUIRender::Initialize()
 {
-	auto GetPosition = [this](const std::string& key) { return skillControllerRender_->GetSkillPosition(key); };
-	skillsRender_->Initialize(GetPosition);
 	comboRender_->Initialize();
 	isShow_ = true;
 }
@@ -72,18 +91,18 @@ void ActionGame::CPlayerUIRender::Render()
 	{
 		return;
 	}
-	skillControllerRender_->Render();
+	skillInfoRender_->Render();
 	skillsRender_->Render();
 	HPRender_->Render();
 	UltGaugeRender_->Render();
-	skillControllerRender_->RenderKeyName();
+	skillInfoRender_->RenderKeyName();
 	comboRender_->Render();
 }
 
 void ActionGame::CPlayerUIRender::Release()
 {
 
-	skillControllerRender_.reset();
+	skillInfoRender_.reset();
 	skillsRender_.reset();
 	HPRender_.reset();
 	UltGaugeRender_.reset();
@@ -98,4 +117,18 @@ void ActionGame::CPlayerUIRender::VisibleUI()
 void ActionGame::CPlayerUIRender::DisableUI()
 {
 	isShow_ = false;
+}
+
+void ActionGame::CPlayerUIRender::ChangeKeyBoardUI()
+{
+	auto GetPosition = [this](const std::string& key) { return skillInfoRender_->GetKeyBoardSkillPosition(key); };
+	skillsRender_->Initialize(GetPosition);
+	skillInfoRender_->ChangeKeyBoardTexture();
+}
+
+void ActionGame::CPlayerUIRender::ChangeControllerUI()
+{
+	auto GetPosition = [this](const std::string& key) { return skillInfoRender_->GetControllerSkillPosition(key); };
+	skillsRender_->Initialize(GetPosition);
+	skillInfoRender_->ChangeControllerTexture();
 }

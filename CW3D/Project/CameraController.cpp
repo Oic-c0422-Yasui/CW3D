@@ -60,10 +60,10 @@ void CCameraController::SetCamera(const CameraPtr& camera, float tTime)
 
 void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtil::EASING_TYPE startEaseType, float leapStartTime, MyUtil::EASING_TYPE endEaseType,float leapEndTime)
 {
-	InterpolateCameraPtr pCamera = std::make_shared<CInterpolateCamera>(
+	auto tCamera = std::make_shared<CInterpolateCamera>(
 		camera_->GetTargetPos(), camera_->GetTargetLookPos(), camera_->GetOffsetPos(), camera_->GetOffsetLookPos());
-	pCamera->Set(leapStartTime,startEaseType, camera);
-	camera_ = pCamera;
+	tCamera->Set(leapStartTime,startEaseType, camera);
+	camera_ = tCamera;
 	SetCamera(camera_);
 	isLeap_ = true;
 	isTimerStart_ = false;
@@ -73,7 +73,7 @@ void CCameraController::SetCamera(const CameraPtr& camera, float tTime, MyUtil::
 	isLeapEnd_ = false;
 	leapEndTime_ = leapEndTime;
 	endEaseType_ = endEaseType;
-	pCamera.reset();
+	tCamera.reset();
 }
 
 void CCameraController::SetDefault()

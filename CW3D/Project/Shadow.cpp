@@ -1,6 +1,6 @@
 #include "Shadow.h"
 #include "ResourceManager.h"
-#include "Utilities.h"
+#include "AnimationUtilities.h"
 
 ActionGame::CShadow::CShadow()
 	: mesh_(nullptr)

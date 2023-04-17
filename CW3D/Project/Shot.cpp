@@ -4,7 +4,7 @@ using namespace ActionGame;
 
 
 
-ActionGame::Shot::Shot()
+ActionGame::CShot::CShot()
 	: collider_(std::make_shared<CAttackCollider>())
 	, position_(0, 0, 0)
 	, AABB_()
@@ -26,11 +26,11 @@ ActionGame::Shot::Shot()
 {
 }
 
-ActionGame::Shot::~Shot()
+ActionGame::CShot::~CShot()
 {
 }
 
-void ActionGame::Shot::CreateBase(const Vector3& pos, const ShotCreateParameter& shot)
+void ActionGame::CShot::CreateBase(const Vector3& pos, const ShotCreateParameter& shot)
 {
 	position_ = pos;
 	offset_ = shot.offset;
@@ -50,7 +50,7 @@ void ActionGame::Shot::CreateBase(const Vector3& pos, const ShotCreateParameter&
 
 
 
-void ActionGame::Shot::Create(const Vector3& pos, const ShotSphere& sphire)
+void ActionGame::CShot::Create(const Vector3& pos, const ShotSphere& sphire)
 {
 	//ベースのパラメータ作成
 	CreateBase(pos, sphire);
@@ -62,7 +62,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotSphere& sphire)
 	collisionType_ = COLLISION_TYPE::SPHERE;
 }
 
-void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
+void ActionGame::CShot::Create(const Vector3& pos, const ShotAABB& aabb)
 {
 	//ベースのパラメータ作成
 	CreateBase(pos, aabb);
@@ -74,7 +74,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotAABB& aabb)
 	collisionType_ = COLLISION_TYPE::AABB;
 }
 
-void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
+void ActionGame::CShot::Create(const Vector3& pos, const ShotOBB& obb)
 {
 	//ベースのパラメータ作成
 	CreateBase(pos, obb);
@@ -88,7 +88,7 @@ void ActionGame::Shot::Create(const Vector3& pos, const ShotOBB& obb)
 	collisionType_ = COLLISION_TYPE::OBB;
 }
 
-void ActionGame::Shot::ApplyColliderPosition()
+void ActionGame::CShot::ApplyColliderPosition()
 {
 	switch (collisionType_)
 	{
@@ -114,7 +114,7 @@ void ActionGame::Shot::ApplyColliderPosition()
 	}
 }
 
-void ActionGame::Shot::Update()
+void ActionGame::CShot::Update()
 {
 	if (!isShow_)
 	{
@@ -132,7 +132,7 @@ void ActionGame::Shot::Update()
 	DeleteHitId();
 }
 
-void ActionGame::Shot::Render()
+void ActionGame::CShot::Render()
 {
 	if (!isShow_)
 	{
@@ -141,7 +141,7 @@ void ActionGame::Shot::Render()
 }
 
 
-void ActionGame::Shot::UpdateTime()
+void ActionGame::CShot::UpdateTime()
 {
 	for (auto& id : hitIDs_)
 	{

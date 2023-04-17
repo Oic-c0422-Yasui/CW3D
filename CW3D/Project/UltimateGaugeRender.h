@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Common.h"
-#include "ResourceManager.h"
+
 
 namespace ActionGame
 {
@@ -12,7 +12,9 @@ namespace ActionGame
 	{
 	private:
 
+		std::shared_ptr<CTexture>			gaugeBar_;
 		std::shared_ptr<CTexture>			gaugeFrame_;
+
 
 		std::shared_ptr<CFont>				font_;
 
@@ -31,7 +33,7 @@ namespace ActionGame
 		 * @brief		コンストラクタ
 		 */
 		CUltimateGaugeRender();
-			
+
 
 		/**
 		 * @brief		デストラクタ
@@ -43,6 +45,14 @@ namespace ActionGame
 		 * @return		trueなら成功
 		 */
 		bool Load();
+		/**
+		 * @brief		描画
+		 */
+		void Render();
+		/**
+		 * @brief		解放
+		 */
+		void Release();
 
 
 		void SetGauge(float gauge)
@@ -55,12 +65,6 @@ namespace ActionGame
 			maxGauge_ = gauge;
 		}
 
-		/**
-		 * @brief		描画
-		 */
-		void Render();
-
-		void Release();
 	};
 
 	using UltimateGaugeUIRenderPtr = std::shared_ptr<CUltimateGaugeRender>;

@@ -50,7 +50,7 @@ bool ActionGame::CSkillRenderContainer::Load()
 	return true;
 }
 
-void ActionGame::CSkillRenderContainer::Initialize(std::function<Vector2(const std::string&)> fn)
+void ActionGame::CSkillRenderContainer::Initialize(PositionFunc func)
 {
 	const auto& player = CServiceLocator< CPlayer >::GetService();
 	auto& skillController = player->GetSkillController();
@@ -59,7 +59,7 @@ void ActionGame::CSkillRenderContainer::Initialize(std::function<Vector2(const s
 	{
 		//登録されているボタンの座標で初期化
 		auto& skillPtr = skillController->GetSkill(i);
-		skillRenderArray_[i]->Initialize(fn(skillPtr->GetButton()));
+		skillRenderArray_[i]->Initialize(func(skillPtr->GetButton()));
 
 		//必殺技スキルなら必殺技用のフレームを初期化
 		if (std::dynamic_pointer_cast<UltimateSkill>(skillPtr) != nullptr)

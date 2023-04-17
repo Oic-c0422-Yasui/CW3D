@@ -12,8 +12,8 @@ namespace ActionGame
 	{
 	protected:
 
-		std::shared_ptr<CTexture>			sKillFrame_;
-		std::shared_ptr<CTexture>			usedSKillFrame_;
+		std::shared_ptr<CTexture>			sKillTexture_;
+		std::shared_ptr<CTexture>			usedSKillTexture_;
 		std::shared_ptr<CFont>				font_;
 
 		float								CT_;
@@ -23,8 +23,6 @@ namespace ActionGame
 		Vector2								offset_;
 		Vector2								size_;
 		Vector2								position_;
-
-
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -45,7 +43,7 @@ namespace ActionGame
 
 		/*
 		* @brief	初期化
-		* @param	pos　表示する座標
+		* @param	pos　UIの座標
 		*/
 		virtual void Initialize(const Vector2& pos);
 

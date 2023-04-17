@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utilities.h"
+#include "AnimationUtilities.h"
 
 namespace ActionGame
 {
@@ -57,7 +57,7 @@ namespace ActionGame
 
 	public:
 		CameraBase(const Vector3& pos, const Vector3& lookPos, const Vector3& offsetPos, const Vector3& offsetLookPos);
-		virtual ~CameraBase() {};
+		virtual ~CameraBase() = default;
 		/*
 		* @brief	ê∂ê¨
 		*/

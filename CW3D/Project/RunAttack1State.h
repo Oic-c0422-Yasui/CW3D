@@ -32,6 +32,9 @@ namespace ActionGame {
 		RunAttack1ActionPtr			action_;
 
 		bool isStartCollide_;
+		TransformPtr targetPos_;
+		float	offsetSize_;
+		bool isActorInSight_;
 
 	protected:
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }

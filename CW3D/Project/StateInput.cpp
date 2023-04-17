@@ -175,3 +175,9 @@ std::vector<Input::IInput::KeyType> Input::CStateInput::GetKeyList() const
 	}
 	return keys;
 }
+
+GameDevice Input::CStateInput::GetDeviceType() const noexcept
+{
+	return GameDevice();
+}
+

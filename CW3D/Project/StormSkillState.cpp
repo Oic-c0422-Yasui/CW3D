@@ -1,6 +1,7 @@
 #include "StormSkillState.h"
 #include "FollowFixedCamera.h"
 #include "CameraController.h"
+#include "ParameterDefine.h"
 
 ActionGame::CStormSkillState::CStormSkillState(Parameter param)
 	: CAttackBaseState()
@@ -18,6 +19,9 @@ void ActionGame::CStormSkillState::Start()
 
 	isContinue_ = true;
 
+	auto param = Actor()->GetParameterMap();
+	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = parameter_.armorLevel;
 
 	CAttackBaseState::Start();
 	action_->Start();
@@ -25,11 +29,12 @@ void ActionGame::CStormSkillState::Start()
 	CreateEffect();
 	for (auto& shot : shots_)
 	{
-		int damage = (int)(shot->GetDamage() * (Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage() * 0.01f));
+		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage();
+		auto damage = MyUtil::CalculateAtk(shot->GetDamage(), skillDamage);
 		shot->SetDamage(damage);
 	}
 
-
+	
 	inputKey_ = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetButton();
 
 	Vector3 pos(0, 10, -20);
@@ -72,7 +77,7 @@ void ActionGame::CStormSkillState::Execution()
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + parameter_.EffectStatus.offset);
 	}
 
-	attackTime_ += CUtilities::GetFrameSecond();
+	attackTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 
 	if (currentTime_ > parameter_.DurationTime || !isContinue_)
 	{
@@ -87,7 +92,6 @@ void ActionGame::CStormSkillState::Execution()
 	}
 
 	CAttackBaseState::Execution();
-
 }
 
 void ActionGame::CStormSkillState::InputExecution()

@@ -4,7 +4,7 @@
     {
       "Type": "Zombie",
       "Name": "ゾンビ",
-      "HP": 300,
+      "HP": 500,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 1.0,
       "ATK": 10,
@@ -26,7 +26,7 @@
     {
       "Type": "Zombie2",
       "Name": "つよつよゾンビ",
-      "HP": 1000,
+      "HP": 1500,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 1.5,
       "ATK": 20,
@@ -48,7 +48,7 @@
     {
       "Type": "Mutant",
       "Name": "みゅーたん",
-      "HP": 3000,
+      "HP": 5000,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 4.5,
       "ATK": 50,

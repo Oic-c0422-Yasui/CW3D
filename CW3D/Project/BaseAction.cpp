@@ -38,7 +38,7 @@ void ActionGame::CBaseAction::PlayAnimation(char* name, float startTime, float s
 void ActionGame::CBaseAction::SetRotation(float rotateTime)
 {
 	auto& vel = Velocity();
-	float rotateY = Transform()->GetRotateY();
+	const float rotateY = Transform()->GetRotateY();
 	//”½“]•ûŒü‚É‰ñ“]‚³‚¹‚é
 	if (Transform()->IsReverse())
 	{

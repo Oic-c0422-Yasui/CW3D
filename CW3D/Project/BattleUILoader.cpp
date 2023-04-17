@@ -119,11 +119,18 @@ bool ActionGame::CBattleUILoader::Load()
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "UltFrameMono", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/SkillUI.png"))
+	if (!tempTex2D->Load("UI/SkillUI_PC.png"))
 	{
 		return false;
 	}
-	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "SkillUI", tempTex2D);
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "SkillUI_PC", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/SkillUI_Pad.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "SkillUI_Pad", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/UltSkillGaugeFrame.png"))
@@ -133,11 +140,18 @@ bool ActionGame::CBattleUILoader::Load()
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "UltSkillGaugeFrame", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/UltGauge.png"))
+	if (!tempTex2D->Load("UI/PlayerSPBar.png"))
 	{
 		return false;
 	}
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "UltGauge", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/PlayerSPFrame.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "UltGaugeFrame", tempTex2D);
 
 
 	//HPバー
@@ -153,6 +167,20 @@ bool ActionGame::CBattleUILoader::Load()
 		return false;
 	}
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "PlayerHPFrame", tempTex2D);
+
+	//ボスHPバー
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/BossHPBar.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "BossHPBar", tempTex2D);
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/BossHPFrame.png."))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "BossHPFrame", tempTex2D);
 
 	///////////////////////////////////////////////
 	// フォント読み込み
@@ -173,6 +201,13 @@ bool ActionGame::CBattleUILoader::Load()
 		return false;
 	}
 	ResourcePtrManager<CFont>::GetInstance().AddResource(tagFont, "SkillFont", tempFont);
+
+	tempFont = std::make_shared<CFont>();
+	if (!tempFont->Create(25, "M PLUS 1"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CFont>::GetInstance().AddResource(tagFont, "PadButtonFont", tempFont);
 
 	tempFont = std::make_shared<CFont>();
 	if (!tempFont->Create(60, "M PLUS 1"))

@@ -2,8 +2,6 @@
 
 #include "Common.h"
 
-#include "ResourceManager.h"
-
 
 namespace ActionGame
 {
@@ -13,8 +11,6 @@ namespace ActionGame
 	class CPlayerHPRender
 	{
 	private:
-		//Œ»İ‚Ì•`‰æHP
-		float				currentHP_;
 		//Œ»İ‚Ì•`‰æƒQ[ƒW
 		float				currentGauge_;
 

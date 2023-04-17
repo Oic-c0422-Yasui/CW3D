@@ -14,7 +14,10 @@ Messenger::CMessenger::~CMessenger()
 void Messenger::CMessenger::Send(GameMessageType message)
 {
 	auto it = observeMap_.find(message);
-	assert(it != observeMap_.end());
+	if (it == observeMap_.end())
+	{
+		return;
+	}
 	it->second.Notify();
 }
 

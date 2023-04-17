@@ -6,6 +6,8 @@
 #include	"EffectController.h"
 #include	"ShotManager.h"
 #include	"SkillDefine.h"
+#include	"DamageUtilities.h"
+#include	"VectorUtilities.h"
 
 namespace ActionGame {
 
@@ -52,6 +54,15 @@ namespace ActionGame {
 		virtual void CreateShotSphere();
 		//エフェクトを作成する
 		virtual void CreateEffect();
+		
+		/*
+		* @brief	視野内にアクターがいるか？
+		* @param[out]	outPos		一番近くのアクター座標を格納する(※アクターがいた場合)
+		* @param		sightAngle	視野角（度数法）
+		* @param		maxDistance 検知距離
+		* @return		true　なら存在する
+		*/
+		bool IsActorInSight(TransformPtr& outPos,float& offsetSize, float sightAngle, float maxDistance);
 	public:
 		/**
 		 * @brief		コンストラクタ

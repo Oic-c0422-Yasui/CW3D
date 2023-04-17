@@ -25,8 +25,9 @@ void ActionGame::CMoveStateAI::Start()
 
 void ActionGame::CMoveStateAI::Update()
 {
-	//プレイヤー取得
+	//ターゲット取得
 	const auto& target = CServiceLocator< CPlayer >::GetService();
+	//アクター取得
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス
 	CAABB collider;
@@ -37,8 +38,8 @@ void ActionGame::CMoveStateAI::Update()
 	if (!CCollision::Collision(target->GetCollider(), collider))
 	{
 		//距離計算
-		Vector2 vec(transform->GetPosition().x - target->GetPosition().x, transform->GetPosition().z - target->GetPosition().z);
-		float length = sqrt(vec.x * vec.x + vec.y * vec.y);
+		const Vector2 vec(transform->GetPosition().x - target->GetPosition().x, transform->GetPosition().z - target->GetPosition().z);
+		const float length = sqrt(vec.x * vec.x + vec.y * vec.y);
 
 		currentLostTime++;
 		if (currentLostTime < 5)

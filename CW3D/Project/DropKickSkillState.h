@@ -35,7 +35,7 @@ namespace ActionGame {
 		bool isDelayInput_;
 		std::string inputKey_;
 
-		AdditionalWeakSKillPtr m_SkillRef;
+		AdditionalWeakSKillPtr skillRef_;
 		
 		//‰Šú‰»
 		void Initialize();

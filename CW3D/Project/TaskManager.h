@@ -11,8 +11,8 @@ namespace Task
 	class CTaskManager
 	{
 	private:
-		TaskList m_TaskList;
-		std::mutex m_ListLock;
+		TaskList taskList_;
+		std::mutex listLock_;
 
 	private:
 		/* プライベート関数　*/

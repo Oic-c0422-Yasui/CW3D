@@ -9,6 +9,7 @@
 //設定できる最大スキル数
 #define SKILLMAX_COUNT 18
 
+/* キーボード用配列　*/
 //スキル欄左側の行の数
 #define SKILL_LEFTLINE_COUNT 1
 
@@ -21,6 +22,16 @@
 //スキル欄の列の数
 #define SKILL_COLUMN_COUNT 2
 
+/* コントローラー用 */
+enum ControllerPosCount
+{
+	Controller_Pos_Up,
+	Controller_Pos_Left,
+	Controller_Pos_Right,
+	Controller_Pos_Down,
+
+	Controller_Pos_Count
+};
 
 ///////////////////////////////////////////////
 ///			スキルキーの名称

@@ -1,0 +1,55 @@
+{
+
+  "Directory": "Effect/",
+
+  "Effects": [
+    {
+      "Name": "AttackEffect1",
+      "File": "Laser01.efk"
+    },
+    {
+      "Name": "DamageEffect1",
+      "File": "sword.efk"
+    },
+    {
+      "Name": "AttackEffect2",
+      "File": "tuki.efk"
+    },
+    {
+      "Name": "SkillEffect1",
+      "File": "sandStome.efk"
+    },
+    {
+      "Name": "SkillEffect2",
+      "File": "Laser01.efk"
+    },
+    {
+      "Name": "SkillEffect3",
+      "File": "tornade.efk"
+    },
+    {
+      "Name": "SkillEffect4",
+      "File": "fire.efk"
+    },
+    {
+      "Name": "SkillEffect5",
+      "File": "drill.efk"
+    },
+    {
+      "Name": "ClosedEffect",
+      "File": "Track1.efk"
+    },
+    {
+      "Name": "AttackEffect3",
+      "File": "Claw1.efk"
+    },
+    {
+      "Name": "EscapeEffect",
+      "File": "A_Sylph2.efk"
+    },
+    {
+      "Name": "RoarEffect",
+      "File": "MonsterRoar.efk"
+    }
+  ]
+}

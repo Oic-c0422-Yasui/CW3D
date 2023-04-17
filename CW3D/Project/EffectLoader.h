@@ -1,18 +1,28 @@
 #pragma once
+#include "json.hpp"
+#include <fstream>
+#include <codecvt>
 
 namespace ActionGame
 {
 	/*
 	* @brief	エフェクト読み込み用クラス
 	*/
-	class EffectLoader
+	class JsonEffectLoader
 	{
 	public:
-		/*
-		* @brief	エフェクト読み込み
-		* @return	true　なら成功
+		JsonEffectLoader();
+		~JsonEffectLoader();
+		/**
+		* @brief		JSonファイルからの生成
+		* @return		true　なら成功
 		*/
-		static bool Load();
+		bool Load(const std::string& name);
+		/**
+		 * @brief		生成
+		 */
+		bool Load(nlohmann::json& os);
+
 	};
 }
 

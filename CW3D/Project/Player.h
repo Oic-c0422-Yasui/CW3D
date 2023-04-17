@@ -196,17 +196,6 @@ namespace ActionGame
 		*/
 		bool IsInvincible() const;
 
-		/*
-		* @brief	“–‚½‚è”»’èŽæ“¾
-		* @return	AABB‚Ì“–‚½‚è”»’è
-		*/
-		const CAABB& GetCollider() override
-		{
-			collider_.Size = colliderSize_;
-			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
-
-			return collider_;
-		}
 
 		/*
 		* @brief	‰ñ”ðŽž‚Ì“–‚½‚è”»’èŽæ“¾
@@ -214,9 +203,9 @@ namespace ActionGame
 		*/
 		const CAABB& GetEscapeCollider() noexcept
 		{
-			collider_.Size = escapeColliderSize_;
-			collider_.SetPosition(actor_->GetPosition() + colliderOffset_);
-			return collider_;
+			CAABB collider(actor_->GetPosition() + colliderOffset_, escapeColliderSize_);
+			actor_->SetCollider(collider);
+			return actor_->GetCollider();
 		}
 
 		/*

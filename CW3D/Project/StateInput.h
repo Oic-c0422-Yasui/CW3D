@@ -153,6 +153,12 @@ namespace Input {
 		 * @return		キーの識別配列
 		 */
 		std::vector<KeyType> GetKeyList() const override;
+
+		/**
+		* @brief		操作しているデバイスのタイプ取得
+		* @return		デバイスのタイプ
+		*/
+		GameDevice GetDeviceType() const noexcept override;
 	};
 	using StateInputPtr = std::shared_ptr<CStateInput>;
 }

@@ -208,17 +208,11 @@
     <Filter Include="ヘッダー ファイル\Scene\Base">
       <UniqueIdentifier>{25f77b67-4f45-45c7-a161-6da44ed8d8fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Utility">
-      <UniqueIdentifier>{d6c7de73-394e-4cc6-a18a-335371573554}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Task">
       <UniqueIdentifier>{438c8b04-a0b5-4a7a-9832-706e06e21767}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene\Base">
       <UniqueIdentifier>{766fb873-d1dc-464b-831f-4642f952990b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Utility\Defines">
-      <UniqueIdentifier>{aed1e408-ae82-4d3b-8e48-33c1731e9b4a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Skill">
       <UniqueIdentifier>{32368bd1-b2a3-4155-86f3-fe0de1126cb8}</UniqueIdentifier>
@@ -327,6 +321,18 @@
     </Filter>
     <Filter Include="ソース ファイル\Shader">
       <UniqueIdentifier>{029e02ca-795f-42da-bd7b-279d0cc3f99b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\OperateDevice">
+      <UniqueIdentifier>{bfc10ed6-8d15-49ac-8726-93a5369accf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Utilities">
+      <UniqueIdentifier>{fb204f79-d88d-41b4-bc78-f4c89c77546c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Utilities">
+      <UniqueIdentifier>{d6c7de73-394e-4cc6-a18a-335371573554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Utilities\Defines">
+      <UniqueIdentifier>{aed1e408-ae82-4d3b-8e48-33c1731e9b4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -666,9 +672,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\State\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>ソース ファイル\State\Common</Filter>
-    </ClCompile>
     <ClCompile Include="NPCCameraStartPoseState.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
@@ -849,9 +852,6 @@
     <ClCompile Include="NPCStartPoseAction.cpp">
       <Filter>ソース ファイル\Action\Pose</Filter>
     </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="IdleStateAI.cpp">
       <Filter>ソース ファイル\AI</Filter>
     </ClCompile>
@@ -886,6 +886,30 @@
       <Filter>ソース ファイル\Shader</Filter>
     </ClCompile>
     <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateDeviceState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillUltGaugeRender.cpp">
+      <Filter>ソース ファイル\UI\Render\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="IOperateDeviceState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvertUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorObjectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageUtilities.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorUtilities.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1379,8 +1403,8 @@
     <ClInclude Include="SpawnCycleFixedRange.h">
       <Filter>ヘッダー ファイル\Spawner</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
+    <ClInclude Include="AnimationUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Task.h">
       <Filter>ヘッダー ファイル\Task</Filter>
@@ -1389,31 +1413,31 @@
       <Filter>ヘッダー ファイル\Task</Filter>
     </ClInclude>
     <ClInclude Include="GameDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="SceneDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="StateDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="AnimationDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="CharaTypeDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="SkillDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="InputDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="ParameterDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="Attack1Action.h">
       <Filter>ヘッダー ファイル\Action\Attack</Filter>
@@ -1590,7 +1614,7 @@
       <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Builder</Filter>
     </ClInclude>
     <ClInclude Include="MessageDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="Messenger.h">
       <Filter>ヘッダー ファイル\Message</Filter>
@@ -1653,16 +1677,13 @@
       <Filter>ヘッダー ファイル\UI\Render\HP</Filter>
     </ClInclude>
     <ClInclude Include="SceneServiceDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="RegistMessageServiceDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="SendMessageServiceDefine.h">
-      <Filter>ヘッダー ファイル\Utility\Defines</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="Combo.h">
       <Filter>ヘッダー ファイル\Combo</Filter>
@@ -1693,6 +1714,33 @@
     </ClInclude>
     <ClInclude Include="Shadow.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="JoyPadDefine.h">
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceDefine.h">
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateDeviceServiceDefine.h">
+      <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="OperateDeviceState.h">
+      <Filter>ヘッダー ファイル\OperateDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="IOperateDeviceState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageUtilities.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorDirection.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

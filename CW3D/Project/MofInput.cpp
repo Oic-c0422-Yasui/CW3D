@@ -53,30 +53,155 @@ float CMofInput::GetJoypadKeyState(int padNo, int positive, int negative) const 
  * @param[in]	padNo			パッド番号
  * @return		キー入力の値
  */
-float CMofInput::GetJoypadStickHorizontal(int padNo) const {
+float CMofInput::GetLeftJoyStickHorizontal(int padNo) const {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{
 		return 0;
 	}
-	if (pad->GetStickHorizontal() >= minInputValue_) { return pad->GetStickHorizontal(); }
-	if (pad->GetStickHorizontal() <= -minInputValue_) { return pad->GetStickHorizontal(); }
+	float horizontal = pad->GetStickHorizontal();
+	if (horizontal >= MIN_INPUT) { return horizontal; }
+	if (horizontal <= -MIN_INPUT) { return horizontal; }
 	return 0;
 }
+
 
 /**
  * @brief		ジョイパッドスティックの取得
  * @param[in]	padNo			パッド番号
  * @return		キー入力の値
  */
-float CMofInput::GetJoypadStickVertical(int padNo) const {
+float CMofInput::GetLeftJoyStickVertical(int padNo) const {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{
 		return 0;
 	}
-	if (pad->GetStickVertical() >= minInputValue_) { return pad->GetStickVertical(); }
-	if (pad->GetStickVertical() <= -minInputValue_) { return pad->GetStickVertical(); }
+	float vertical = pad->GetStickVertical();
+	if (vertical >= MIN_INPUT) { return vertical; }
+	if (vertical <= -MIN_INPUT) { return vertical; }
+	return 0;
+}
+
+
+/**
+ * @brief		右ジョイパッドスティックの取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetRightJoyStickHorizontal(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	float horizontal = (float)pad->GetPadState()->lZ / MAX_INPUTSTICK;
+	if (horizontal >= MIN_INPUT) { return horizontal; }
+	if (horizontal <= -MIN_INPUT) { return horizontal; }
+	return 0;
+}
+
+
+/**
+ * @brief		右ジョイパッドスティックの取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetRightJoyStickVertical(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	float vertical = (float)pad->GetPadState()->lRz / MAX_INPUTSTICK;
+	if (vertical >= MIN_INPUT) { return vertical; }
+	if (vertical <= -MIN_INPUT) { return vertical; }
+	return 0;
+}
+
+
+/**
+ * @brief		ジョイパッド十字キーの左キー取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetDPadLeftKeyState(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.LEFT)
+	{
+		return 1.0f;
+	}
+
+	return 0;
+}
+
+
+/**
+ * @brief		ジョイパッド十字キーの右キー取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetDPadRightKeyState(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.RIGHT)
+	{
+		return 1.0f;
+	}
+
+	return 0;
+}
+
+
+/**
+ * @brief		ジョイパッド十字キーの上キー取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetDPadUpKeyState(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.UP)
+	{
+		return 1.0f;
+	}
+
+	return 0;
+}
+
+
+/**
+ * @brief		ジョイパッド十字キーの下キー取得
+ * @param[in]	padNo			パッド番号
+ * @return		キー入力の値
+ */
+float Input::CMofInput::GetDPadDownKeyState(int padNo) const
+{
+	LPGamePad pad = g_pInput->GetGamePad(padNo);
+	if (pad == nullptr)
+	{
+		return 0;
+	}
+	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.DOWN)
+	{
+		return 1.0f;
+	}
+
 	return 0;
 }
 

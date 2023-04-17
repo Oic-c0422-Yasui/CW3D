@@ -33,19 +33,19 @@ void ActionGame::CAdditionalSkillRender::Render()
 	percent = min(percent, 1.0f);
 	float addPercent = addCT_ / addMaxCT_;
 	addPercent = min(addPercent, 1.0f);
-	usedSKillFrame_->Render(position_.x, position_.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
-	CRectangle rect(0, usedSKillFrame_->GetHeight() * percent, usedSKillFrame_->GetWidth(), usedSKillFrame_->GetHeight());
-	usedSKillFrame_->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
+	usedSKillTexture_->Render(position_.x, position_.y, MOF_ARGB(255, 128, 128, 128), TEXALIGN_BOTTOMCENTER);
+	CRectangle rect(0, usedSKillTexture_->GetHeight() * percent, usedSKillTexture_->GetWidth(), usedSKillTexture_->GetHeight());
+	usedSKillTexture_->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
 
 
 	if (addCT_ > 0.0f)
 	{
-		CRectangle rect(0, usedSKillFrame_->GetHeight() * (1.0f - addPercent), usedSKillFrame_->GetWidth(), usedSKillFrame_->GetHeight());
-		sKillFrame_->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
+		CRectangle rect(0, usedSKillTexture_->GetHeight() * (1.0f - addPercent), usedSKillTexture_->GetWidth(), usedSKillTexture_->GetHeight());
+		sKillTexture_->Render(position_.x, position_.y, rect, TEXALIGN_BOTTOMCENTER);
 	}
 	if (canUse_)
 	{
-		sKillFrame_->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
+		sKillTexture_->Render(position_.x, position_.y, TEXALIGN_BOTTOMCENTER);
 	}
 
 	if (addCT_ > 0.0f)
@@ -61,6 +61,6 @@ void ActionGame::CAdditionalSkillRender::Render()
 
 void ActionGame::CAdditionalSkillRender::Release()
 {
-	sKillFrame_.reset();
+	sKillTexture_.reset();
 	font_.reset();
 }

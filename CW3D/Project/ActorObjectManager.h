@@ -8,71 +8,74 @@
 namespace ActionGame
 {
 
-
+	/*
+	* アクターを管理するクラス
+	*/
 	class CActorObjectManager : public Singleton<CActorObjectManager>
 	{
 		friend class Singleton<CActorObjectManager>;
 	private:
 
-		using ActorMap = std::unordered_map<unsigned int, ActorObjectWeakPtr>;
+		using ActorMap = std::unordered_map<uint32_t, ActorObjectWeakPtr>;
 		using ActorMapPtr = std::shared_ptr<ActorMap>;
 		
 		using TagMap = std::unordered_map<CHARA_TYPE, ActorMapPtr>;
 
-		TagMap m_Tags;
+		TagMap tagMap_;
 
 		CActorObjectManager()
 			: Singleton<CActorObjectManager>()
-			, m_Tags()
+			, tagMap_()
 		{
 		}
+	private:
+		/*
+		* @brief	タグ内のアクターを追加する
+		* @param[out]	list 追加するアクターのリスト
+		*/
+		void AddActorList(CHARA_TYPE type, ActorObjectWeakListPtr& list);
 
 	public:
 
-		void Add(const ActorObjectPtr& actor)
-		{
-			auto& tagActors = m_Tags[actor->GetType()];
-			if (tagActors == nullptr)
-			{
-				tagActors = std::make_shared< ActorMap>();
-				m_Tags[actor->GetType()] = tagActors;
-			}
-			(*tagActors)[actor->GetID()] = actor;
-			
+		/*
+		* @brief	アクターを追加する
+		* @param	actor アクターポインタ
+		*/
+		void Add(const ActorObjectPtr& actor);
+
+		/*
+		* @brief	参照の切れたアクターを削除する
+		*/
+		void Delete();
+
+		/*
+		* @brief	アクターを取得する
+		* @param	id	アクターの固有ID
+		*/
+		ActorObjectPtr GetActor(uint32_t id);
+
+		/*
+		* @brief	アクターを取得する
+		* @param	type	キャラタイプ
+		* @param	id		アクターの固有ID
+		*/
+		ActorObjectPtr GetActor(CHARA_TYPE type, uint32_t id) {
+			return (*tagMap_[type])[id].lock();
 		}
 
-		void Delete()
-		{
+		/*
+		* @brief	タグ内のアクターを取得する
+		*/
+		ActorObjectWeakListPtr GetActors(CHARA_TYPE type);
 
-			for (auto& map : m_Tags)
-			{
-				for (auto it = map.second->begin(); it != map.second->end(); )
-				{
-					auto here = it++;
-					if (here->second.expired())
-					{
-						map.second->erase(here);
-					}
-				}
-			}
 
-		}
 
-		ActorObjectPtr GetActor(int id) {
-			for (auto& map : m_Tags)
-			{
-				auto& it = map.second->find(id);
-				if (it != map.second->end())
-				{
-					return it->second.lock();
-				}
-			}
-			return nullptr;
-		}
-
-		ActorObjectPtr GetActor(CHARA_TYPE type,int id) {
-			return (*m_Tags[type])[id].lock();
-		}
+		/*
+		* @brief	敵対しているアクターを取得する（プレイヤーなら敵とボス、敵ならプレイヤーを取得）
+		* @return	成功：アクター配列ポインタ
+		*			失敗：nullptr
+		*/
+		ActorObjectWeakListPtr GetHostilityActors(CHARA_TYPE type);
 
 	};
 }

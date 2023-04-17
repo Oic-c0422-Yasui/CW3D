@@ -20,7 +20,7 @@ namespace ActionGame
 		KnockBackPtr direction;
 		BYTE armorBreakLevel;
 		float recieveUltGauge;
-		unsigned int parentID;
+		uint32_t parentID;
 		EffectCreateParameterPtr damageEffect;
 	};
 	//球体ショット
@@ -39,14 +39,14 @@ namespace ActionGame
 	/*
 	* @brief　ショットクラス
 	*/
-	class Shot
+	class CShot
 	{
 	protected:
 
 		//ヒット判定用構造体
 		struct Hit
 		{
-			size_t ID;			//ヒットした相手のアクターID
+			uint32_t ID;			//ヒットした相手のアクターID
 			float Time;			//当たり判定を行わない時間
 		};
 		std::list<Hit>		hitIDs_;
@@ -61,7 +61,7 @@ namespace ActionGame
 		bool				isShow_;
 		bool				isEnableCollider;
 		CHARA_TYPE			parentCharaType_;
-		size_t				parentID_;
+		uint32_t			parentID_;
 		COLLISION_TYPE		collisionType_;
 		float				speed_;
 		int					damage_;
@@ -85,8 +85,8 @@ namespace ActionGame
 		void ApplyColliderPosition();
 
 	public:
-		Shot();
-		~Shot();
+		CShot();
+		~CShot();
 
 		/*
 		* @brief	球体のショット作成
@@ -123,7 +123,7 @@ namespace ActionGame
 		* @brief	ヒットした相手のIDを追加
 		* @param	hitId	ヒットした相手のID
 		*/
-		void AddHit(unsigned int hitId)
+		void AddHit(uint32_t hitId)
 		{
 			Hit hit = { hitId, nextHitTime_ };
 			hitIDs_.push_back(hit);
@@ -211,7 +211,7 @@ namespace ActionGame
 		* @brief	親アクターのIDを取得
 		* @return	親アクターのID
 		*/
-		size_t GetParentID() const noexcept
+		uint32_t GetParentID() const noexcept
 		{
 			return parentID_;
 		}
@@ -307,7 +307,7 @@ namespace ActionGame
 		* @brief	ダメージを取得
 		* @return	ダメージ
 		*/
-		int GetDamage() const noexcept {
+		uint32_t GetDamage() const noexcept {
 			return damage_;
 		}
 
@@ -415,7 +415,7 @@ namespace ActionGame
 		* @brief	ダメージを設定
 		* @param	val ダメージ
 		*/
-		void SetDamage(int val) noexcept
+		void SetDamage(uint32_t val) noexcept
 		{
 			damage_ = val;
 		}
@@ -487,7 +487,7 @@ namespace ActionGame
 		* @brief	親アクターIDを設定
 		* @param	id 親アクターID
 		*/
-		void SetParentID(size_t id)noexcept
+		void SetParentID(uint32_t id)noexcept
 		{
 			parentID_ = id;
 		}
@@ -495,7 +495,7 @@ namespace ActionGame
 	};
 
 	//ポインタ置き換え
-	using ShotPtr = std::shared_ptr<Shot>;
+	using ShotPtr = std::shared_ptr<CShot>;
 }
 
 

@@ -20,8 +20,9 @@ void ActionGame::CAttackStateAI::Start()
 
 void ActionGame::CAttackStateAI::Update()
 {
-	////プレイヤー取得
-	const auto& player = CServiceLocator< CPlayer >::GetService();
+	//ターゲット取得
+	const auto& target = CServiceLocator< CPlayer >::GetService();
+	//アクター取得
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス
 	CAABB collider;
@@ -29,7 +30,7 @@ void ActionGame::CAttackStateAI::Update()
 	collider.Size = Vector3(1.2f, 1, 1.0f);
 
 	//警戒範囲内に入ってきたら攻撃
-	if (CCollision::Collision(player->GetCollider(), collider))
+	if (CCollision::Collision(target->GetCollider(), collider))
 	{
 		Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
 	}
