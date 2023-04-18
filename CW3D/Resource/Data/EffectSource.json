@@ -5,7 +5,7 @@
   "Effects": [
     {
       "Name": "AttackEffect1",
-      "File": "Laser02.efk"
+      "File": "Laser01.efk"
     },
     {
       "Name": "DamageEffect1",

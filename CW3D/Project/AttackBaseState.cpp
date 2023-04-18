@@ -9,6 +9,7 @@ ActionGame::CAttackBaseState::CAttackBaseState()
 	: CState()
 	, currentTime_(0.0f)
 	, isNextInput_(false)
+	, moveCompentionParam_()
 {
 }
 
@@ -134,7 +135,7 @@ void ActionGame::CAttackBaseState::CreateEffect()
 	effects_.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
 }
 
-bool ActionGame::CAttackBaseState::IsActorInSight(TransformPtr& outPos,float& offsetSize,float sightAngle,float maxDistance)
+bool ActionGame::CAttackBaseState::IsActorInSight(TransformPtr& outPos,float& outMinDistance,float sightAngle,float maxDistance)
 {
 
 	const auto selfPos = Actor()->GetPosition();
@@ -180,11 +181,59 @@ bool ActionGame::CAttackBaseState::IsActorInSight(TransformPtr& outPos,float& of
 		float distance = MyUtil::Distance(selfPos, targetPos);
 		minDistance = distance;
 		outPos = actor.lock()->GetActor()->GetTransform();
-		offsetSize = (actor.lock()->GetCollider().Size.x + Actor()->GetCollider().Size.x) * 1.0f;
+		outMinDistance = (actor.lock()->GetCollider().Size.x + Actor()->GetCollider().Size.x) * 1.0f;
 		isContain = true;
 	}
 
 	return isContain;
+}
+
+bool ActionGame::CAttackBaseState::MoveCompensation(MoveCompensationParam& param)
+{
+	if (!param.isEnable)
+	{
+		return false;
+	}
+	if (!param.isActorInSight)
+	{
+		return false;
+	}
+
+	
+	if (param.currentTime <= param.endTime)
+	{
+		const auto selfPos = Actor()->GetPosition();
+
+		//距離計算
+		const auto distance = MyUtil::DistanceSquare(selfPos, param.targetPos->GetPosition());
+		const auto sqrMinDistance = std::pow(param.minDistance, 2);
+		if (distance > sqrMinDistance)
+		{
+			//移動
+			auto movePos = MyUtil::Timer(selfPos, param.currentTime, param.targetPos->GetPosition(), param.endTime);
+			Actor()->SetPosition(Vector3(movePos.x, selfPos.y, movePos.z));
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		//移動が完了したので補正終了
+		param.isEnable = false;
+		return true;
+	}
+
+	return false;
+}
+
+void ActionGame::CAttackBaseState::SettingMoveCompensationParam(const BaseCompensationParam& param)
+{
+	moveCompentionParam_.isEnable = param.isEnable;
+	moveCompentionParam_.endTime = param.endTime;
+	moveCompentionParam_.maxDistance = param.maxDistance;
+	moveCompentionParam_.sightAngle = param.sightAngle;
 }
 
 
@@ -201,10 +250,21 @@ void ActionGame::CAttackBaseState::Start()
 	{
 		Actor()->SetReverse(true);
 	}
+
+	//移動補正が有効ならパラメータを設定
+	auto& param = moveCompentionParam_;
+	if (param.isEnable)
+	{
+		param.isActorInSight = IsActorInSight(param.targetPos, param.minDistance, param.sightAngle, param.minDistance);
+	}
+	
 }
 
 void ActionGame::CAttackBaseState::Execution()
 {
+	//移動補正
+	MoveCompensation(moveCompentionParam_);
+
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 }
 
@@ -250,4 +310,8 @@ void ActionGame::CAttackBaseState::End()
 	auto param = Actor()->GetParameterMap();
 	auto& armorLevel =  param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
+	if (moveCompentionParam_.targetPos)
+	{
+		moveCompentionParam_.targetPos.reset();
+	}
 }

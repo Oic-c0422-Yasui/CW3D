@@ -84,6 +84,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 30.0f
 			,ShotAABB{ Vector3(0.7f, 0.8f, 0), 0.5f, 0, Vector3(0.6f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr,2,1.5f,0,damageEffect, Vector3(1.7f, 1.5f, 0.8f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f, 1.0f, 0), Vector3(0.6f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360.0f), 0.0f),2.1f }
+			,CAttackBaseState::BaseCompensationParam{true,0.1f,270.0f,3.5f}
 
 		}));
 

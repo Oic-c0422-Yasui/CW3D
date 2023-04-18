@@ -906,11 +906,11 @@
     <ClCompile Include="ActorObjectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DamageUtilities.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="VectorUtilities.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1727,20 +1727,20 @@
     <ClInclude Include="OperateDeviceState.h">
       <Filter>ヘッダー ファイル\OperateDevice</Filter>
     </ClInclude>
-    <ClInclude Include="IOperateDeviceState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ConvertUtilities.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageUtilities.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="VectorUtilities.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="VectorDirection.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IOperateDeviceState.h">
+      <Filter>ヘッダー ファイル\OperateDevice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

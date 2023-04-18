@@ -1,6 +1,7 @@
 #include "RunAttack1State.h"
 #include "AnimationUtilities.h"
 
+
 ActionGame::CRunAttack1State::CRunAttack1State(Parameter param)
 	: CAttackBaseState()
 	, parameter_(param)
@@ -13,41 +14,22 @@ void ActionGame::CRunAttack1State::Start()
 	action_ = Actor()->GetAction<CRunAttack1Action>(GetKey());
 
 	isStartCollide_ = false;
+
+	//移動補正パラメータ設定
+	SettingMoveCompensationParam(parameter_.MoveCompensationParam);
+
 	CAttackBaseState::Start();
 
 	action_->Start();
 	//当たり判定用の弾作成
 	CreateShotAABB();
-	isActorInSight_ = IsActorInSight(targetPos_, offsetSize_,270.0f,3.5f);
 
 }
 
 void ActionGame::CRunAttack1State::Execution()
 {
-	const auto pos = Actor()->GetPosition();
-
-	if (isActorInSight_ && currentTime_ <= 0.1f)
-	{
-		auto distance = MyUtil::DistanceSquare(pos, targetPos_->GetPosition());
-		auto mDist = std::pow(offsetSize_, 2);
-		if (distance > mDist)
-		{
-			auto setPos = MyUtil::Timer(pos, currentTime_, targetPos_->GetPosition(), 0.1f);
-			Actor()->SetPosition(Vector3(setPos.x, pos.y, setPos.z));
-		}
-		else
-		{
-			isActorInSight_ = false;
-		}
-	}
-	else
-	{
-		if (targetPos_ != nullptr)
-		{
-			targetPos_.reset();
-		}
-	}
 	
+	const auto pos = Actor()->GetPosition();
 
 	for (auto& shot : shots_)
 	{
