@@ -5,6 +5,15 @@
 
 using namespace Input;
 
+Input::CMofInput::CMofInput()
+	: CInput()
+{
+	direction_[Dpad_Left]	= DIRECTION_VALUE.LEFT;
+	direction_[Dpad_Right]	= DIRECTION_VALUE.RIGHT;
+	direction_[Dpad_Up]		= DIRECTION_VALUE.UP;
+	direction_[Dpad_Down]	= DIRECTION_VALUE.DOWN;
+}
+
 /**
  * @brief		キーボードキーの取得
  * @param[in]	positive		＋方向のキー
@@ -121,20 +130,20 @@ float Input::CMofInput::GetRightJoyStickVertical(int padNo) const
 	return 0;
 }
 
-
 /**
- * @brief		ジョイパッド十字キーの左キー取得
+ * @brief		ジョイパッド十字キーのキー取得
  * @param[in]	padNo			パッド番号
+ * @param[in]	direction		キーの方向
  * @return		キー入力の値
  */
-float Input::CMofInput::GetDPadLeftKeyState(int padNo) const
+float Input::CMofInput::GetDPadKeyState(int padNo, DPad_Direction direction) const
 {
 	LPGamePad pad = g_pInput->GetGamePad(padNo);
 	if (pad == nullptr)
 	{
 		return 0;
 	}
-	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.LEFT)
+	if (pad->GetPadState()->rgdwPOV[0] == direction_[direction])
 	{
 		return 1.0f;
 	}
@@ -143,66 +152,6 @@ float Input::CMofInput::GetDPadLeftKeyState(int padNo) const
 }
 
 
-/**
- * @brief		ジョイパッド十字キーの右キー取得
- * @param[in]	padNo			パッド番号
- * @return		キー入力の値
- */
-float Input::CMofInput::GetDPadRightKeyState(int padNo) const
-{
-	LPGamePad pad = g_pInput->GetGamePad(padNo);
-	if (pad == nullptr)
-	{
-		return 0;
-	}
-	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.RIGHT)
-	{
-		return 1.0f;
-	}
 
-	return 0;
-}
-
-
-/**
- * @brief		ジョイパッド十字キーの上キー取得
- * @param[in]	padNo			パッド番号
- * @return		キー入力の値
- */
-float Input::CMofInput::GetDPadUpKeyState(int padNo) const
-{
-	LPGamePad pad = g_pInput->GetGamePad(padNo);
-	if (pad == nullptr)
-	{
-		return 0;
-	}
-	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.UP)
-	{
-		return 1.0f;
-	}
-
-	return 0;
-}
-
-
-/**
- * @brief		ジョイパッド十字キーの下キー取得
- * @param[in]	padNo			パッド番号
- * @return		キー入力の値
- */
-float Input::CMofInput::GetDPadDownKeyState(int padNo) const
-{
-	LPGamePad pad = g_pInput->GetGamePad(padNo);
-	if (pad == nullptr)
-	{
-		return 0;
-	}
-	if (pad->GetPadState()->rgdwPOV[0] == DIRECTION.DOWN)
-	{
-		return 1.0f;
-	}
-
-	return 0;
-}
 
 #endif

@@ -61,6 +61,16 @@ namespace Input {
 			{
 			}
 		};
+		enum DPad_Direction
+		{
+			Dpad_Left,
+			Dpad_Right,
+			Dpad_Up,
+			Dpad_Down,
+
+			Dpad_Count,
+		};
+
 		using KeyMap = std::unordered_map<KeyType, KeyData >;
 		KeyMap					keyMap_;
 
@@ -122,32 +132,12 @@ namespace Input {
 		virtual float GetRightJoyStickVertical(int padNo) const = 0;
 
 		/**
-		 * @brief		ジョイパッド十字キーの左キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @return		キー入力の値
-		 */
-		virtual float GetDPadLeftKeyState(int padNo) const = 0;
-
-		/**
-		 * @brief		ジョイパッド十字キーの右キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @return		キー入力の値
-		 */
-		virtual float GetDPadRightKeyState(int padNo) const = 0;
-
-		/**
-		 * @brief		ジョイパッド十字キーの上キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @return		キー入力の値
-		 */
-		virtual float GetDPadUpKeyState(int padNo) const = 0;
-
-		/**
-		 * @brief		ジョイパッド十字キーの下キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @return		キー入力の値
-		 */
-		virtual float GetDPadDownKeyState(int padNo) const = 0;
+		* @brief		ジョイパッド十字キーのキー取得
+		* @param[in]	padNo			パッド番号
+		* @param[in]	direction		キーの方向
+		* @return		キー入力の値
+		*/
+		virtual float GetDPadKeyState(int padNo, DPad_Direction direction) const = 0;
 
 	private:
 		/*
@@ -162,6 +152,13 @@ namespace Input {
 		* @brief	同時入力時、指定したキーの入力を除外する
 		*/
 		void DisableInputKey(const KeyData& data);
+		/*
+		* @brief	方向キーの入力
+		* @param[in]		direction キーの方向
+		* @param[in]		key	キーの情報
+		* @param[in,out]	outData キーの入力状態
+		*/
+		void InputDPad(DPad_Direction direction,const KeyData::Key& key, KeyData& outData);
 
 	public:
 		/**

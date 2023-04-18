@@ -23,6 +23,8 @@ namespace ActionGame
 
 		~EffectRenderer() override;
 
+		CSoundBuffer aSound;
+
 	public:
 
 		/*

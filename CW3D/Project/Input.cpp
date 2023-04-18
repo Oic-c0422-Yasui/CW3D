@@ -411,6 +411,28 @@ void Input::CInput::DisableInputKey(const KeyData& data)
 	}
 }
 
+void Input::CInput::InputDPad(DPad_Direction direction, const KeyData::Key& key, KeyData& outData)
+{
+	float value = 0;
+	if (key.holdKeys_.size() > 0)
+	{
+		//ホールド
+		value = GetHoldValue(key) * GetDPadKeyState(key.padNo_,direction);
+		outData.currentValue_ += value;
+		SetChangeDevice(key.type_, value);
+
+		//除外入力
+		DisableInputKey(outData);
+	}
+	else
+	{
+		//通常入力
+		value = GetDPadKeyState(key.padNo_, direction);
+		outData.currentValue_ += value;
+		SetChangeDevice(key.type_, value);
+	}
+}
+
 /**
  * @brief		更新
  */
@@ -519,97 +541,25 @@ void Input::CInput::Update()
 					//十字キー左
 				case KeyData::Type::DPad_Left:
 				{
-					float value;
-					if (key.holdKeys_.size() > 0)
-					{
-						//ホールド
-						value = GetHoldValue(key) * GetDPadLeftKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-
-						//除外入力
-						DisableInputKey(k->second);
-					}
-					else
-					{
-						//通常入力
-						value = GetDPadLeftKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-					}
-
+					InputDPad(Dpad_Left,key, k->second);
 					break;
 				}
 					//十字キー右
 				case KeyData::Type::DPad_Right:
 				{
-					float value;
-					if (key.holdKeys_.size() > 0)
-					{
-						//ホールド
-						value = GetHoldValue(key) * GetDPadRightKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-
-						//除外入力
-						DisableInputKey(k->second);
-					}
-					else
-					{
-						//通常入力
-						value = GetDPadRightKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-					}
-
+					InputDPad(Dpad_Left, key, k->second);
 					break;
 				}
 					//十字キー上
 				case KeyData::Type::DPad_Up:
 				{
-					float value;
-					if (key.holdKeys_.size() > 0)
-					{
-						//ホールド
-						value = value * GetDPadUpKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-
-						//除外入力
-						DisableInputKey(k->second);
-					}
-					else
-					{
-						//通常入力
-						value = GetDPadUpKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-					}
-
+					InputDPad(Dpad_Left, key, k->second);
 					break;
 				}
 					//十字キー下
 				case KeyData::Type::DPad_Down:
 				{
-					float value;
-					if (key.holdKeys_.size() > 0)
-					{
-						//ホールド
-						value = value * GetDPadDownKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-
-						//除外入力
-						DisableInputKey(k->second);
-					}
-					else
-					{
-						//通常入力
-						value = GetDPadDownKeyState(key.padNo_);
-						k->second.currentValue_ += value;
-						SetChangeDevice(key.type_, value);
-					}
-
+					InputDPad(Dpad_Left, key, k->second);
 					break;
 				}
 			}//end switch

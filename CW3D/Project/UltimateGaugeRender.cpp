@@ -1,6 +1,6 @@
 #include "UltimateGaugeRender.h"
 #include "ResourceManager.h"
-#include "Utilities.h"
+#include "AnimationUtilities.h"
 
 ActionGame::CUltimateGaugeRender::CUltimateGaugeRender()
 	: gauge_(0.2f)
@@ -48,7 +48,6 @@ void ActionGame::CUltimateGaugeRender::Render()
 	float percent = gauge_ / maxGauge_;
 	percent = std::clamp(percent, 0.0f, 1.0f);
 
-	//MyUtil::RenderMousePos(position_);
 	gaugeFrame_->Render(position_.x, position_.y);
 	CRectangle rect(0, 0, gaugeBar_->GetWidth() * (percent), gaugeBar_->GetHeight());
 	gaugeBar_->Render(position_.x + offset_.x, position_.y + offset_.y, rect);

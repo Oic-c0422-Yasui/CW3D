@@ -24,7 +24,8 @@ namespace Input {
 			const int UP = 0;
 			const int DOWN = 18000;
 		};
-		const Direction DIRECTION;
+		const Direction DIRECTION_VALUE;
+		int direction_[Dpad_Count];
 
 	protected:
 		/**
@@ -81,48 +82,18 @@ namespace Input {
 		float GetRightJoyStickVertical(int padNo) const override;
 
 		/**
-		 * @brief		ジョイパッド十字キーの左キー取得
+		 * @brief		ジョイパッド十字キーのキー取得
 		 * @param[in]	padNo			パッド番号
-		 * @param[in]	positive		＋方向のキー
-		 * @param[in]	negative		－方向のキー
+		 * @param[in]	direction		キーの方向
 		 * @return		キー入力の値
 		 */
-		float GetDPadLeftKeyState(int padNo) const override;
-
-		/**
-		 * @brief		ジョイパッド十字キーの右キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @param[in]	positive		＋方向のキー
-		 * @param[in]	negative		－方向のキー
-		 * @return		キー入力の値
-		 */
-		float GetDPadRightKeyState(int padNo) const override;
-
-		/**
-		 * @brief		ジョイパッド十字キーの上キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @param[in]	positive		＋方向のキー
-		 * @param[in]	negative		－方向のキー
-		 * @return		キー入力の値
-		 */
-		float GetDPadUpKeyState(int padNo) const override;
-
-		/**
-		 * @brief		ジョイパッド十字キーの下キー取得
-		 * @param[in]	padNo			パッド番号
-		 * @param[in]	positive		＋方向のキー
-		 * @param[in]	negative		－方向のキー
-		 * @return		キー入力の値
-		 */
-		float GetDPadDownKeyState(int padNo) const override;
+		float GetDPadKeyState(int padNo,DPad_Direction direction) const override;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CMofInput()
-			: CInput()
-		{ }
+		CMofInput();
 	};
 
 }
