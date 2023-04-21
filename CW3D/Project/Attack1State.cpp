@@ -14,6 +14,7 @@ void ActionGame::CAttack1State::Start()
 	action_ = Actor()->GetAction<CAttack1Action>(GetKey());
 	isStartCollide_ = false;
 
+	//ˆÚ“®•â³ƒpƒ‰ƒ[ƒ^İ’è
 	SettingMoveCompensationParam(parameter_.MoveCompensationParam);
 	CAttackBaseState::Start();
 

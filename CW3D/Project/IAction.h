@@ -11,6 +11,8 @@ namespace ActionGame {
 	using ActionKeyType = std::string;
 	//アニメーション用のシェアポインタ
 	using AnimationStatePtr = LPMeshMotionController;
+	//当たり判定用シェアポインタ
+	using ColliderPtr = std::shared_ptr<CAABB>;
 	/**
 	 * @brief		アクションインターフェイス
 	 */
@@ -43,6 +45,11 @@ namespace ActionGame {
 		 * @brief		スキル操作登録
 		 */
 		virtual void SetSkillController(const SkillControllerPtr& skill) = 0;
+
+		/**
+		 * @brief		当たり判定登録
+		 */
+		virtual void SetCollider(const ColliderPtr& collider) = 0;
 
 	public:
 		/**

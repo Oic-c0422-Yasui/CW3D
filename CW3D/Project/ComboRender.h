@@ -14,6 +14,8 @@ namespace ActionGame
 
 		Vector2 position_;
 
+		#define COMBO_MAX 999
+
 		std::shared_ptr<CFont> font_;
 	public:
 		CComboRender();

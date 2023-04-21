@@ -21,39 +21,7 @@ namespace ActionGame {
 		{
 			BYTE armorLevel;
 		}BaseParam;
-		/*
-		* @brief	基底移動補正パラメータ
-		* @param	isEnable		補正が有効か？
-		* @param	endTime			終了時間
-		* @param	sightAngle		視野角（度数法）
-		* @param	minDistance		最小補正距離
-		*/
-		struct BaseCompensationParam
-		{
-			bool isEnable;
-			float endTime;
-			float sightAngle;
-			float maxDistance;
-		};
-		/*
-		* @brief	移動補正パラメータ
-		* @param	isEnable		補正が有効か？
-		* @param	endTime			終了時間
-		* @param	sightAngle		視野角（度数法）
-		* @param	maxDistance		最大補正距離
-		* @param	isActorInSight	視野内に目標アクターがいるか？
-		* @param	currentTime		現在時間
-		* @param	minDistance		最小補正距離
-		* @param	targetPos		目標アクターのトランスフォーム
-		*/
-		struct MoveCompensationParam : public BaseCompensationParam
-		{
-
-			bool isActorInSight;
-			float currentTime;
-			float minDistance;
-			TransformPtr targetPos;
-		};
+		
 
 	protected:
 		
@@ -65,9 +33,6 @@ namespace ActionGame {
 
 		std::vector<ShotPtr>			shots_;
 		std::vector<EffectPtr>			effects_;
-
-		
-		MoveCompensationParam moveCompentionParam_;
 
 	protected:
 		/* プライベート関数 */
@@ -95,25 +60,7 @@ namespace ActionGame {
 		//エフェクトを作成する
 		virtual void CreateEffect();
 		
-		/*
-		* @brief	視野内にアクターがいるか？
-		* @param[out]	outPos			一番近くのアクター座標を格納する(※アクターがいた場合)
-		* @param[out]	outMinDistance	最小検知距離を格納する
-		* @param		sightAngle		視野角（度数法）
-		* @param		maxDistance		最大検知距離
-		* @return		true　なら存在する
-		*/
-		bool IsActorInSight(TransformPtr& outPos,float& offsetSize, float sightAngle, float maxDistance);
-
-		/*
-		* @brief	近くのアクターに向けて移動補正をかける
-		* @param[in,out]	param		移動補正パラメータ
-		* @retval			true		移動完了
-		* @retval			false		移動中
-		*/
-		bool MoveCompensation(MoveCompensationParam& param);
-
-		void SettingMoveCompensationParam(const BaseCompensationParam& param);
+		
 	public:
 		/**
 		 * @brief		コンストラクタ

@@ -35,6 +35,8 @@ constexpr char* STATE_KEY_ATTACK3 = "Attack3";
 constexpr char* STATE_KEY_JUMP_ATTACK1 = "JumpAttack1";
 //ダッシュ攻撃１ステート
 constexpr char* STATE_KEY_RUN_ATTACK1 = "RunAttack1";
+//ダッシュ攻撃２ステート
+constexpr char* STATE_KEY_RUN_ATTACK2 = "RunAttack2";
 //空中ダッシュ攻撃１ステート
 constexpr char* STATE_KEY_RUN_JUMP_ATTACK1 = "RunJumpAttack1";
 //空中ダッシュ攻撃２ステート

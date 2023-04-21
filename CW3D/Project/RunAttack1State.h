@@ -7,7 +7,7 @@
 namespace ActionGame {
 
 	/**
-	 * @brief		移動ステート
+	 * @brief		攻撃ステート
 	 */
 	class CRunAttack1State : public CAttackBaseState
 	{
@@ -26,7 +26,6 @@ namespace ActionGame {
 			float NextInputFrameTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
-			BaseCompensationParam MoveCompensationParam;
 		};
 	private:
 		Parameter parameter_;
@@ -34,9 +33,6 @@ namespace ActionGame {
 		RunAttack1ActionPtr			action_;
 
 		bool isStartCollide_;
-		TransformPtr targetPos_;
-		float	offsetSize_;
-		bool isActorInSight_;
 
 	private:
 

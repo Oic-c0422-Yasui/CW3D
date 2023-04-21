@@ -277,9 +277,6 @@
     <Filter Include="ヘッダー ファイル\Message">
       <UniqueIdentifier>{7e034309-8244-4635-b652-59f95560f14d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\State\Common">
-      <UniqueIdentifier>{43aeac10-816c-4211-a411-b6ce8d38f316}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\AI">
       <UniqueIdentifier>{d0604cc4-6f25-4e8f-9d95-10808855bdc2}</UniqueIdentifier>
     </Filter>
@@ -333,6 +330,9 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Utilities\Defines">
       <UniqueIdentifier>{aed1e408-ae82-4d3b-8e48-33c1731e9b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Common">
+      <UniqueIdentifier>{43aeac10-816c-4211-a411-b6ce8d38f316}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -667,10 +667,10 @@
       <Filter>ソース ファイル\Chara\Enemy\Mutant\Builder</Filter>
     </ClCompile>
     <ClCompile Include="Velocity.cpp">
-      <Filter>ソース ファイル\State\Common</Filter>
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>ソース ファイル\State\Common</Filter>
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="NPCCameraStartPoseState.cpp">
       <Filter>ソース ファイル\State</Filter>
@@ -911,6 +911,12 @@
     </ClCompile>
     <ClCompile Include="DamageUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAttack2State.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCompensation.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1741,6 +1747,12 @@
     </ClInclude>
     <ClInclude Include="IOperateDeviceState.h">
       <Filter>ヘッダー ファイル\OperateDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAttack2State.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCompensation.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

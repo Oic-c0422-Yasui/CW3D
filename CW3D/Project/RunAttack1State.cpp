@@ -73,7 +73,7 @@ void ActionGame::CRunAttack1State::InputExecution()
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{
-			ChangeState(STATE_KEY_ATTACK1);
+			ChangeState(STATE_KEY_RUN_ATTACK2);
 		}
 	}
 
@@ -84,10 +84,6 @@ void ActionGame::CRunAttack1State::InputExecution()
 void ActionGame::CRunAttack1State::End()
 {
 	CAttackBaseState::End();
-	if (targetPos_ != nullptr)
-	{
-		targetPos_.reset();
-	}
 }
 
 void ActionGame::CRunAttack1State::CollisionEvent(unsigned int type, std::any obj)

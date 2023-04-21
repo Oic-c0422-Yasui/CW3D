@@ -25,7 +25,7 @@ bool ActionGame::CComboRender::Load()
 
 void ActionGame::CComboRender::Initialize()
 {
-	position_ = Vector2(100, 300);
+	position_ = Vector2(250, 300);
 	font_->SetSize(100);
 	font_->SetBold(60);
 }
@@ -36,8 +36,14 @@ void ActionGame::CComboRender::Render()
 	{
 		return;
 	}
+	
 
-	font_->RenderFormatString(position_.x, position_.y,"%dCombo", comboCount_);
+
+	const auto str = std::to_string(comboCount_);
+	CRectangle rect;
+	font_->CalculateStringRect(0,0,str.c_str(),rect);
+	font_->RenderFormatString(position_.x - rect.GetWidth(), position_.y, str.c_str());
+	font_->RenderFormatString(position_.x , position_.y, "Combo");
 
 }
 
@@ -49,4 +55,9 @@ void ActionGame::CComboRender::Release()
 void ActionGame::CComboRender::SetComboCount(uint32_t count) noexcept
 {
 	comboCount_ = count;
+
+	if (comboCount_ > COMBO_MAX)
+	{
+		comboCount_ = COMBO_MAX;
+	}
 }

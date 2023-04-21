@@ -39,7 +39,7 @@ namespace ActionGame {
 		CHARA_TYPE				charaType_;
 
 		/* “–‚½‚è”»’è@*/
-		Collider				collider_;
+		ColliderPtr				collider_;
 
 	public:
 		/**
@@ -50,12 +50,12 @@ namespace ActionGame {
 			, transform_(std::make_shared<CTransform>())
 			, velocity_(std::make_shared<CVelocity>())
 			, actionMap_()
-			, parameters_(std::make_shared<AnyParameterMap>())
+			, parameters_(std::make_shared<CAnyParameterMap>())
 			, motion_()
 			, skillController_(std::make_shared<CSkillController>())
 			, myID_(IDManagerInstance.CreateID())
 			, charaType_()
-			, collider_()
+			, collider_(std::make_shared<CAABB>())
 		{
 		}
 
@@ -141,7 +141,7 @@ namespace ActionGame {
 		/**
 		 * @brief		“–‚½‚è”»’èİ’è
 		 */
-		void SetCollider(const Collider& collider) override {
+		void SetCollider(const ColliderPtr& collider) override {
 			collider_ = collider;
 		}
 
@@ -231,7 +231,7 @@ namespace ActionGame {
 		/**
 		* @brief	“–‚½‚è”»’èæ“¾
 		*/
-		const Collider& GetCollider() const override {
+		const ColliderPtr& GetCollider() const override {
 			return collider_;
 		}
 

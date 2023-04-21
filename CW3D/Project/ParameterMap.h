@@ -6,7 +6,7 @@ namespace ActionGame {
 	/**
 	 * @brief		パラメーター保存
 	 */
-	class AnyParameterMap {
+	class CAnyParameterMap {
 	private:
 		//型置き換え
 		using Key = std::string;
@@ -18,7 +18,7 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		AnyParameterMap()
+		CAnyParameterMap()
 			: parameters_()
 		{
 		}
@@ -71,5 +71,5 @@ namespace ActionGame {
 		}
 	};
 	//ポインタ置き換え
-	using AnyParameterMapPtr = std::shared_ptr<AnyParameterMap>;
+	using AnyParameterMapPtr = std::shared_ptr<CAnyParameterMap>;
 }

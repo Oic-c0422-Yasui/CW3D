@@ -28,6 +28,8 @@ namespace ActionGame {
 		// スキル操作クラス
 		SkillControllerPtr				skillController_;
 		
+		//　当たり判定クラス
+		ColliderPtr						collider_;
 
 		/**
 		 * @brief		姿勢登録
@@ -69,6 +71,14 @@ namespace ActionGame {
 			skillController_ = skill; 
 		}
 
+		/**
+		 * @brief		当たり判定登録
+		 */
+		void SetCollider(const ColliderPtr& collider) final
+		{
+			collider_ = collider;
+		}
+
 	protected:
 		/** privateメンバ取得専用 */
 		//姿勢クラス
@@ -81,6 +91,8 @@ namespace ActionGame {
 		AnyParameterMapPtr ParameterMap() { return parameters_; }
 		//スキル操作クラス
 		SkillControllerPtr SkillController() { return skillController_; }
+		//当たり判定
+		ColliderPtr		Collider() { return collider_; }
 	public:
 		/**
 		 * @brief		コンストラクタ
@@ -91,6 +103,7 @@ namespace ActionGame {
 			, animation_()
 			, parameters_()
 			, skillController_()
+			, collider_()
 		{
 		}
 

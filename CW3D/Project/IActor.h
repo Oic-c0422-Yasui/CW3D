@@ -12,8 +12,7 @@ namespace ActionGame {
 	
 	//アニメーション用のシェアポインタ
 	using AnimationStatePtr = LPMeshMotionController;
-	//当たり判定
-	using Collider = CAABB;
+	
 
 	/**
 	 * @brief		アクターインタフェース
@@ -92,7 +91,7 @@ namespace ActionGame {
 		/**
 		 * @brief		当たり判定設定
 		 */
-		virtual void SetCollider(const Collider& collider) = 0;
+		virtual void SetCollider(const ColliderPtr& collider) = 0;
 
 		/**
 		 * @brief		姿勢取得
@@ -152,7 +151,7 @@ namespace ActionGame {
 		/**
 		 * @brief		当たり判定取得
 		 */
-		virtual const Collider& GetCollider() const = 0;
+		virtual const ColliderPtr& GetCollider() const = 0;
 
 		/**
 		 * @brief		パラメーター取得

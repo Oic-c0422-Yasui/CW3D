@@ -9,6 +9,7 @@
 #include "Attack2State.h"
 #include "Attack3State.h"
 #include "RunAttack1State.h"
+#include "RunAttack2State.h"
 #include "ShockWaveSkillState.h"
 #include "JumpState.h"
 #include "FallState.h"
