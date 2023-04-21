@@ -22,7 +22,7 @@ void ActionGame::CCombo::Update(CHARA_TYPE type)
 		//リセット
 		Initialize();
 	}
-	else
+	else if (count_.operator>(0))
 	{
 		//タイマー更新
 		timer_.Update(type);
@@ -37,6 +37,12 @@ uint32_t ActionGame::CCombo::GetCount() const noexcept
 ActionGame::CReactiveParameter<uint32_t>& ActionGame::CCombo::GetCountParam() noexcept
 {
 	return count_;
+}
+
+
+ActionGame::IObservable<float>& ActionGame::CCombo::GetTimeSubject()
+{
+	return timer_.GetTimeSubject();
 }
 
 void ActionGame::CCombo::AddCount() noexcept

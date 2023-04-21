@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Common.h"
+#include "Quake.h"
+#include "Fade.h"
 
 namespace ActionGame
 {
@@ -11,12 +13,21 @@ namespace ActionGame
 	{
 	private:
 		uint32_t comboCount_;
+		uint32_t prevComboCount_;
 
 		Vector2 position_;
 
 		#define COMBO_MAX 999
 
 		std::shared_ptr<CFont> font_;
+
+		CQuake quake_;
+		CFade fade_;
+		bool isFade_;
+		bool isShow_;
+		float showTime_;
+		float showEndTime_;
+
 	public:
 		CComboRender();
 		~CComboRender();
@@ -42,6 +53,13 @@ namespace ActionGame
 		* @brief	コンボ数設定
 		*/
 		void SetComboCount(uint32_t count) noexcept;
+
+		/*
+		* @brief	コンボ表示時間設定
+		*/
+		void SetCurrentShowTime(float time) noexcept;
+
+		void SetEndShowTime(float time) noexcept;
 	};
 
 	using ComboRenderPtr = std::shared_ptr<CComboRender>;

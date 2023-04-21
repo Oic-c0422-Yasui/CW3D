@@ -118,7 +118,7 @@ void ActionGame::CAttackBaseState::CreateShotSphere()
 void ActionGame::CAttackBaseState::CreateEffect()
 {
 	EffectCreateParameter status = GetCreateEffectStatus();
-
+	status.type = Actor()->GetType();
 	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ð”½“]
 	if (Actor()->IsReverse())
 	{

@@ -45,33 +45,13 @@ namespace ActionGame {
 		/**
 		 * @brief		コンストラクタ
 		 */
-		Actor()
-			: enable_shared_from_this()
-			, transform_(std::make_shared<CTransform>())
-			, velocity_(std::make_shared<CVelocity>())
-			, actionMap_()
-			, parameters_(std::make_shared<CAnyParameterMap>())
-			, motion_()
-			, skillController_(std::make_shared<CSkillController>())
-			, myID_(IDManagerInstance.CreateID())
-			, charaType_()
-			, collider_(std::make_shared<CCollider>())
-		{
-		}
+		Actor();
+			
 
 		/**
 		 * @brief		アクターの更新処理
 		 */
-		void Update() override {
-			//速度更新
-			velocity_->Update();
-			//速度で座標移動
-			transform_->AddPosition(velocity_);
-
-			transform_->SetRotateY(velocity_->GetRotateY());
-
-			skillController_->Update();
-		}
+		void Update() override;
 
 
 		/**
@@ -79,24 +59,14 @@ namespace ActionGame {
 		 * @param[in]	key			アクションキー
 		 * @param[in]	action		追加するアクション
 		 */
-		void AddAction(const ActionPtr& action) override {
-			AddAction(action->GetKey(), action);
-		}
+		void AddAction(const ActionPtr& action) override;
 
 		/**
 		 * @brief		アクションの追加
 		 * @param[in]	key			アクションキー
 		 * @param[in]	action		追加するアクション
 		 */
-		void AddAction(const ActionKeyType& key, const ActionPtr& action) override {
-			actionMap_[key] = action;
-			action->SetTransform(transform_);
-			action->SetVelocity(velocity_);
-			action->SetAnimation(motion_);
-			action->SetParameterMap(parameters_);
-			action->SetSkillController(skillController_);
-			action->SetCollider(collider_);
-		}
+		void AddAction(const ActionKeyType& key, const ActionPtr& action) override;
 
 		/**
 		 * @brief		座標設定

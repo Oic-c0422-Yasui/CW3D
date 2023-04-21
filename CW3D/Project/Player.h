@@ -15,6 +15,9 @@
 
 namespace ActionGame
 {
+
+	#define COMBO_SHOW_TIME 5.0f
+
 	/*
 	* @brief	プレイヤー
 	*/
@@ -129,12 +132,21 @@ namespace ActionGame
 		}
 		ActionGame::IObservable<int>* GetMaxHPSubject() { return &(maxHP_.Get()); }
 
+		
 		/*
 		* @brief		コンボ数通知
 		*/
 		ActionGame::IObservable<uint32_t>& GetComboSubject()
 		{
 			return combo_->GetCountParam();
+		}
+
+		/*
+		* @brief		コンボ表示時間通知
+		*/
+		ActionGame::IObservable<float>& GetComboTimeSubject()
+		{
+			return combo_->GetTimeSubject();
 		}
 
 		/*
@@ -201,11 +213,10 @@ namespace ActionGame
 		* @brief	回避時の当たり判定取得
 		* @return	AABBの当たり判定
 		*/
-		const CAABB& GetEscapeCollider() noexcept
+		CAABB GetEscapeCollider() noexcept
 		{
-			auto collider = std::make_shared<CCollider>(actor_->GetPosition() + colliderOffset_, escapeColliderSize_);
-			actor_->SetCollider(collider);
-			return actor_->GetCollider()->GetCollider();
+			CAABB collider(actor_->GetPosition() + colliderOffset_, escapeColliderSize_);
+			return collider;
 		}
 
 		/*

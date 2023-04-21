@@ -23,6 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SimpleProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ActionGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -180,6 +181,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorObject.cpp" />
     <ClCompile Include="ActorObjectManager.cpp" />
     <ClCompile Include="AdditionalSkill.cpp" />
@@ -204,7 +206,10 @@
     <ClCompile Include="BaseAction.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConvertUtilities.cpp" />
+    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="Quake.cpp" />
     <ClCompile Include="MoveCompensationAction.cpp" />
+    <ClCompile Include="ResultRender.cpp" />
     <ClCompile Include="RunAttack2State.cpp" />
     <ClCompile Include="DamageUtilities.cpp" />
     <ClCompile Include="IOperateDeviceState.cpp" />
@@ -402,7 +407,10 @@
     <ClInclude Include="BaseAction.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConvertUtilities.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="Quake.h" />
     <ClInclude Include="MoveCompensationAction.h" />
+    <ClInclude Include="ResultRender.h" />
     <ClInclude Include="RunAttack2State.h" />
     <ClInclude Include="DamageUtilities.h" />
     <ClInclude Include="DeviceDefine.h" />

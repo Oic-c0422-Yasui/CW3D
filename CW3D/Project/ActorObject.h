@@ -112,10 +112,6 @@ namespace ActionGame
 		 */
 		virtual const CAABB& GetCollider()
 		{
-			actor_->GetCollider()->SetPosition(actor_->GetPosition() + colliderOffset_);
-			actor_->GetCollider()->SetSize(colliderSize_);
-
-			auto co = actor_->GetCollider()->GetCollider();
 			return actor_->GetCollider()->GetCollider();
 		}
 		/**

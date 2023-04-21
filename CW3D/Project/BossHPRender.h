@@ -1,6 +1,7 @@
 #pragma once
 #include "EnemyHPRender.h"
 #include "ResourceManager.h"
+#include "Quake.h"
 
 namespace ActionGame
 {
@@ -17,10 +18,12 @@ namespace ActionGame
 
 		Vector2 position_;
 		Vector2 offset_;
+		
+		CQuake quake_;
 
 		struct HPBarParam
 		{
-			const int Limit = 500;
+			const int LimitGauge = 500;
 			const BYTE StartColor = 200;
 			const BYTE EndColor = 100;
 			uint32_t Count;
@@ -62,10 +65,14 @@ namespace ActionGame
 		 */
 		void Render() override;
 
+		void SetHP(int hp) override;
+
 		/*
 		* @brief	‰ð•ú
 		*/
 		void Release();
+
+		
 
     };
 	using BossHPRenderPtr = std::shared_ptr<CBossHPRender>;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "CharaTypeDefine.h"
 namespace ActionGame
 {
 	/*
@@ -9,6 +10,7 @@ namespace ActionGame
 	* @param	scale	大きさ
 	* @param	rotate	回転値
 	* @param	speed	速度
+	* @param	type	キャラのタイプ
 	*/
 	struct EffectCreateParameter
 	{
@@ -17,6 +19,7 @@ namespace ActionGame
 		Vector3 scale;
 		Vector3 rotate;
 		float speed;
+		CHARA_TYPE type;
 	};
 	using EffectCreateParameterPtr = std::shared_ptr<EffectCreateParameter>;
 
@@ -26,14 +29,11 @@ namespace ActionGame
 	class CEffect
 	{
 	private:
-
-		Effekseer::EffectRef				effect_;
 		Effekseer::Handle					handle_;
-		CVector3							position_;
-		Vector3								rotation_;
 		bool								isStop_;
 		Vector3								offset_;
-
+		float								speed_;
+		CHARA_TYPE							type_;
 	public:
 
 		CEffect(Effekseer::Handle handle);
@@ -43,7 +43,7 @@ namespace ActionGame
 		* @brief	初期化
 		* @param	offset	座標のオフセット
 		*/
-		void Initialize( const Vector3& offset);
+		void Initialize( const Vector3& offset,float speed,CHARA_TYPE type);
 
 		/*
 		* @brief	更新
@@ -86,6 +86,10 @@ namespace ActionGame
 			return offset_;
 		}
 
+		float GetSpeed() const noexcept
+		{
+			return speed_;
+		}
 	
 	};
 

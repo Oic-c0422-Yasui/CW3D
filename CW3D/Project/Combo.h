@@ -38,6 +38,12 @@ namespace ActionGame
 		*/
 		CReactiveParameter<uint32_t>& GetCountParam() noexcept;
 
+
+		/*
+		* @brief	コンボ表示時間パラメータ取得
+		*/
+		ActionGame::IObservable<float>& GetTimeSubject();
+
 		/*
 		* @brief	コンボ数追加
 		*/

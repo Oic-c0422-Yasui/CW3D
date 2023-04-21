@@ -6,7 +6,7 @@ using namespace ActionGame;
 ActionGame::CPlayer::CPlayer()
 	: ActionGame::CActorObject()
 	, input_()
-	, combo_(std::make_shared<CCombo>(5.0f))
+	, combo_(std::make_shared<CCombo>(COMBO_SHOW_TIME))
 
 {
 	SetType(CHARA_TYPE::PLAYER);

@@ -126,7 +126,6 @@ namespace ActionGame
 			CAABB aabb2;
 			obb1.CalculateAABB(aabb1);
 			obb2.CalculateAABB(aabb2);
-
 			//AABB‚Ì”ÍˆÍ‚É“ü‚Á‚Ä‚¢‚È‚¢‚È‚ç•Ô‚·
 			if (!aabb1.CollisionAABB(aabb2))
 			{

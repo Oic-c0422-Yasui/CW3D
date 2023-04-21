@@ -27,7 +27,7 @@ ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& res
 	ActionGame::EffectPtr efc = std::make_shared<CEffect>(EffectRendererInstance.Play(resouceName));
 	effectArray_.push_back(efc);
 	Create(efc->GetHandle(), position, param);
-	efc->Initialize(param.offset);
+	efc->Initialize(param.offset,param.speed,param.type);
 	return efc;
 }
 
@@ -36,7 +36,7 @@ ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& res
 	ActionGame::EffectPtr efc = std::make_shared<CEffect>(EffectRendererInstance.Play(resouceName));
 	effectArray_.push_back(efc);
 	Create(efc->GetHandle(), position, param);
-	efc->Initialize(param->offset);
+	efc->Initialize(param->offset, param->speed, param->type);
 	return efc;
 }
 
@@ -88,4 +88,15 @@ void ActionGame::CEffectController::AddPosition(const Effekseer::Handle& handle,
 void ActionGame::CEffectController::SetSpeed(const Effekseer::Handle& handle,float speed)
 {
 	EffectRendererInstance.GetManager()->SetSpeed(handle, speed);
+}
+
+bool ActionGame::CEffectController::Exists(const Effekseer::Handle& handle)
+{
+	
+	return EffectRendererInstance.GetManager()->Exists(handle);
+}
+
+void ActionGame::CEffectController::StopEffect(const Effekseer::Handle& handle)
+{
+	EffectRendererInstance.GetManager()->StopEffect(handle);
 }

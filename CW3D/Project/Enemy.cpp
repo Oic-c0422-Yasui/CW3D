@@ -195,7 +195,7 @@ void CEnemy::Damage(const Vector3& direction, const Vector3& power,int damage,BY
 	CServiceLocator<ICombo>::GetService()->AddCount();
 
 	//カメラを揺らす
-	CameraControllerInstance.Quake(0.20f, 40.0f, 0.2f);
+	CameraControllerInstance.Quake(0.25f, 40.0f, 0.2f);
 
 	//自身のアーマーレベルより相手のアーマー破壊レベルのほうが高いとき
 	auto& armorLevel = actor_->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);

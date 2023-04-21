@@ -21,6 +21,7 @@ namespace ActionGame
 		}
 		~CEffectController() override;
 
+	private:
 		void Create(const Effekseer::Handle& handle, const Vector3& position, EffectCreateParameter param);
 		void Create(const Effekseer::Handle& handle, const Vector3& position, const EffectCreateParameterPtr& param);
 	public:
@@ -101,7 +102,17 @@ namespace ActionGame
 		* @param	speed	再生速度
 		*/
 		void SetSpeed(const Effekseer::Handle& handle, float speed);
-
+		/*
+		* @brief	エフェクトのインスタンスが存在しているか？
+		* @param	handle エフェクトハンドル
+		* @return	true	なら存在
+		*/
+		bool Exists(const Effekseer::Handle& handle);
+		/*
+		* @brief	エフェクトを停止する
+		* @param	handle エフェクトハンドル
+		*/
+		void StopEffect(const Effekseer::Handle& handle);
 
 	};
 	//簡易アクセス用

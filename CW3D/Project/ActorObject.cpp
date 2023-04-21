@@ -42,6 +42,9 @@ void ActionGame::CActorObject::Initialize()
 	isShow_ = true;
 	isDead_ = false;
 	matWorld_ = actor_->GetMatrix();
+	actor_->GetCollider()->SetCollider(actor_->GetPosition(), colliderOffset_, colliderSize_);
+
+	//腰のボーンを参照して影のXZ座標を決める
 	const int hipBoneNum = 1;
 	auto bone = motion_->GetBoneState(hipBoneNum);
 	shadow_.Initialize(bone,actor_->GetTransform()->GetScale());
@@ -87,11 +90,11 @@ void CActorObject::Render()
 	{
 		return;
 	}
+
 	auto& alpha = actor_->GetParameterMap()->Get<float>(PARAMETER_KEY_ALPHA);
 	motion_->RefreshBoneMatrix(matWorld_);
 	mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha),
 		normalMap_->GetShader().get(), normalMap_->GetShaderBind().get());
-	//mesh_->Render(motion_, Vector4(1.0f, 1.0f, 1.0f, alpha));
 
 	shadow_.Render(Vector4(1.0f, 1.0f, 1.0f, alpha));
 }
