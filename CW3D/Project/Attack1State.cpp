@@ -13,6 +13,8 @@ void ActionGame::CAttack1State::Start()
 {
 	action_ = Actor()->GetAction<CAttack1Action>(GetKey());
 	isStartCollide_ = false;
+
+	SettingMoveCompensationParam(parameter_.MoveCompensationParam);
 	CAttackBaseState::Start();
 
 	action_->Start();
@@ -24,6 +26,7 @@ void ActionGame::CAttack1State::Start()
 
 void ActionGame::CAttack1State::Execution() 
 {
+	moveCompentionParam_.currentTime = currentTime_;
 
 	for (auto& shot : shots_)
 	{

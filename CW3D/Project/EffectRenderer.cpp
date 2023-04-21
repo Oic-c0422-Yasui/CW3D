@@ -22,7 +22,6 @@ ActionGame::EffectRenderer::~EffectRenderer()
 	sound_.Reset();
 	manager_.Reset();
 	renderer_.Reset();
-	aSound.Release();
 }
 
 void ActionGame::EffectRenderer::SetUp()
@@ -62,8 +61,6 @@ void ActionGame::EffectRenderer::SetUp()
 	// ユーザーが独自で拡張できる。現在はファイルから読み込んでいる。
 	manager_->SetSoundLoader(sound_->CreateSoundLoader());
 
-	aSound.Load("Sound/Test.wav");
-	aSound.Play();
 }
 
 Effekseer::Handle ActionGame::EffectRenderer::Play(const std::string& key)

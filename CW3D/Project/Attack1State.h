@@ -19,6 +19,7 @@ namespace ActionGame {
 		* @param	NextInputFrameTime 　次の入力猶予時間
 		* @param	AABBShotStatus 　AABBのショットパラメータ
 		* @param	EffectStatus 　	エフェクトのパラメータ
+		* @param	MoveCompensation	移動補正パラメータ
 		*/
 		struct Parameter : public BaseParam
 		{
@@ -26,6 +27,7 @@ namespace ActionGame {
 			float NextInputFrameTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
+			BaseCompensationParam MoveCompensationParam;
 		};
 	private:
 		Parameter parameter_;

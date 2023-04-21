@@ -29,8 +29,10 @@ void ActionGame::CRunAttack1State::Start()
 void ActionGame::CRunAttack1State::Execution()
 {
 	
-	const auto pos = Actor()->GetPosition();
 
+	moveCompentionParam_.currentTime = currentTime_;
+
+	const auto pos = Actor()->GetPosition();
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(pos + shot->GetOffset());

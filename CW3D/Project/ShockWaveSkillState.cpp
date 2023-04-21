@@ -66,7 +66,7 @@ void ActionGame::CShockWaveSkillState::Start()
 	CameraPtr camera;
 	camera = std::make_shared<CFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
 	camera->SetAnimation(animPos, animLookPos);
-	CameraControllerInstance.SetCamera(camera, 1, MyUtil::EASING_TYPE::IN_SINE, 0.3f, MyUtil::EASING_TYPE::IN_SINE, 0.15f);
+	CameraControllerInstance.SetCamera(camera, 1, MyUtil::EASING_TYPE::IN_SINE, 0.3f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
 
 }
 

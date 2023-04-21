@@ -154,7 +154,7 @@ bool ActionGame::CAttackBaseState::IsActorInSight(TransformPtr& outPos,float& ou
 	}
 
 	//前方ベクトル
-	auto fowardVec = MyUtil::ForwardVector(rotate);
+	Vector3 fowardVec = MyUtil::ForwardVector(rotate);
 	MyUtil::Normalize(fowardVec);
 
 	
@@ -215,6 +215,8 @@ bool ActionGame::CAttackBaseState::MoveCompensation(MoveCompensationParam& param
 		}
 		else
 		{
+			//移動が完了したので補正終了
+			param.isEnable = false;
 			return false;
 		}
 	}
@@ -230,10 +232,15 @@ bool ActionGame::CAttackBaseState::MoveCompensation(MoveCompensationParam& param
 
 void ActionGame::CAttackBaseState::SettingMoveCompensationParam(const BaseCompensationParam& param)
 {
-	moveCompentionParam_.isEnable = param.isEnable;
-	moveCompentionParam_.endTime = param.endTime;
-	moveCompentionParam_.maxDistance = param.maxDistance;
-	moveCompentionParam_.sightAngle = param.sightAngle;
+	auto& mParam = moveCompentionParam_;
+	mParam.isEnable = param.isEnable;
+	mParam.endTime = param.endTime;
+	mParam.maxDistance = param.maxDistance;
+	mParam.sightAngle = param.sightAngle;
+	mParam.currentTime = 0.0f;
+	mParam.isActorInSight = false;
+	mParam.minDistance = 0.0f;
+	if (mParam.targetPos) { mParam.targetPos.reset(); }
 }
 
 
@@ -255,7 +262,7 @@ void ActionGame::CAttackBaseState::Start()
 	auto& param = moveCompentionParam_;
 	if (param.isEnable)
 	{
-		param.isActorInSight = IsActorInSight(param.targetPos, param.minDistance, param.sightAngle, param.minDistance);
+		param.isActorInSight = IsActorInSight(param.targetPos, param.minDistance, param.sightAngle, param.maxDistance);
 	}
 	
 }
@@ -263,6 +270,7 @@ void ActionGame::CAttackBaseState::Start()
 void ActionGame::CAttackBaseState::Execution()
 {
 	//移動補正
+	if(moveCompentionParam_.targetPos)
 	MoveCompensation(moveCompentionParam_);
 
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());

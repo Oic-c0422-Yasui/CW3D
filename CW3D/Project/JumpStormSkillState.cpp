@@ -38,14 +38,9 @@ void ActionGame::CJumpStormSkillState::Start()
 
 	Vector3 pos(0, 10, -20);
 	Vector3 lookPos(0, 3, 0);
-	if (Actor()->IsReverse())
-	{
-		pos.x *= -1;
-		lookPos.x *= -1;
-	}
 	CameraPtr camera;
 	camera = std::make_shared<ActionGame::CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtil::EASING_TYPE::IN_SINE, 0.7f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
+	CameraControllerInstance.SetCamera(camera, 2.3f, MyUtil::EASING_TYPE::IN_SINE, 0.7f, MyUtil::EASING_TYPE::IN_SINE, 0.7f);
 
 }
 
@@ -129,7 +124,13 @@ void ActionGame::CJumpStormSkillState::End()
 {
 	action_->End();
 	CAttackBaseState::End();
-	CameraControllerInstance.SetDefault();
+
+	CameraPtr camera;
+	Vector3 pos(0, 10, -20);
+	Vector3 lookPos(0, 3, 0);
+	camera = std::make_shared<ActionGame::CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
+	CameraControllerInstance.SetCamera(camera, 0.01f, MyUtil::EASING_TYPE::LINER, 0.01f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
+	//CameraControllerInstance.SetDefault();
 }
 
 void ActionGame::CJumpStormSkillState::CollisionEvent(unsigned int type, std::any obj)

@@ -18,6 +18,7 @@ namespace ActionGame {
 		* @param	NextInputFrameTime 　次の入力猶予時間
 		* @param	AABBShotStatus 　AABBのショットパラメータ
 		* @param	EffectStatus 　	エフェクトのパラメータ
+		* @param	MoveCompensation	移動補正パラメータ
 		*/
 		struct Parameter : public BaseParam
 		{
@@ -25,6 +26,7 @@ namespace ActionGame {
 			float NextInputFrameTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
+			BaseCompensationParam MoveCompensationParam;
 		};
 	private:
 		Parameter parameter_;
@@ -36,13 +38,12 @@ namespace ActionGame {
 	
 	protected:
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
+		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
 		CAttack2State(Parameter param);
-
-
 
 		/**
 		 * @brief		ステート内の開始処理

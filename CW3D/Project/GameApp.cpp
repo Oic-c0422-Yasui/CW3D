@@ -101,6 +101,8 @@ MofBool CGameApp::Initialize(void){
 	//ƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
 	gSceneManager->ChangeScene(SCENENO::TITLE);
 	
+
+	//g_pGraphics->ChangeScreenMode();
 	return TRUE;
 }
 /*************************************************************************//*!
