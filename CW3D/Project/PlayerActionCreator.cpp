@@ -2,7 +2,6 @@
 #include "GameDefine.h"
 
 
-
 bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 {
 
@@ -234,6 +233,21 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 		},
 		CRunAttack1Action::Parameter{
 			Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+		}));
+	//ƒ_ƒbƒVƒ…UŒ‚‚Q
+	actor->AddAction(STATE_KEY_RUN_ATTACK2,CAction::Create<CAttack1Action>(
+		CBaseAction::BaseParameter{
+			AnimParam{
+				STATE_KEY_ATTACK1,
+				0.0f,
+				1.5f,
+				0.1f,
+				false
+			}
+		},
+		CAttack1Action::Parameter{
+			Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
+			Vector3(0.2f, 1.0f, 1.0f),
 		}));
 
 	//ƒWƒƒƒ“ƒvUŒ‚‚P
@@ -518,6 +532,31 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			GRAVITY,
 			GRAVITYMAX,
 		}));
+
+	/*
+	* ˆÚ“®•â³
+	*/
+
+	const auto type = actor->GetType();
+
+	//UŒ‚‚P
+	const std::string str = STATE_KEY_MOVECOMPENSATION;
+	actor->AddAction(str + STATE_KEY_ATTACK1,CAction::Create<CMoveCompensationAction>(
+		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+		));
+	//UŒ‚‚Q
+	actor->AddAction(str + STATE_KEY_ATTACK2, CAction::Create<CMoveCompensationAction>(
+		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 2.5f, type }
+		));
+	//ƒ_ƒbƒVƒ…UŒ‚‚P
+	actor->AddAction(str + STATE_KEY_RUN_ATTACK1, CAction::Create<CMoveCompensationAction>(
+		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+		));
+	//ƒ_ƒbƒVƒ…UŒ‚‚Q
+	actor->AddAction(str + STATE_KEY_RUN_ATTACK2, CAction::Create<CMoveCompensationAction>(
+		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 4.5f, type }
+		));
+
 
 	return true;
 }

@@ -202,8 +202,9 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="BaseAction.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConvertUtilities.cpp" />
-    <ClCompile Include="MoveCompensation.cpp" />
+    <ClCompile Include="MoveCompensationAction.cpp" />
     <ClCompile Include="RunAttack2State.cpp" />
     <ClCompile Include="DamageUtilities.cpp" />
     <ClCompile Include="IOperateDeviceState.cpp" />
@@ -399,8 +400,9 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="BaseAction.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="ConvertUtilities.h" />
-    <ClInclude Include="MoveCompensation.h" />
+    <ClInclude Include="MoveCompensationAction.h" />
     <ClInclude Include="RunAttack2State.h" />
     <ClInclude Include="DamageUtilities.h" />
     <ClInclude Include="DeviceDefine.h" />

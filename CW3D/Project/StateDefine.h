@@ -73,3 +73,6 @@ constexpr char* STATE_KEY_CLEARPOSE = "ClearPose";
 constexpr char* STATE_KEY_STARTPOSE = "StartPose";
 //NPC開始ポーズステート
 constexpr char* STATE_KEY_NPC_STARTPOSE = "NPCStartPose";
+//移動補正ステート
+constexpr char* STATE_KEY_MOVECOMPENSATION = "MoveCompensation";
+

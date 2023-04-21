@@ -60,7 +60,7 @@ void ActionGame::CRunState::InputExecution()
 	for (size_t i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
 		auto& skill = Actor()->GetSkillController()->GetSkill(i);
-		if (!skill->CanUseSkill() || skill->GetState() == NULL)
+		if (!skill->CanUseSkill() || skill->GetState() == nullptr)
 		{
 			continue;
 		}

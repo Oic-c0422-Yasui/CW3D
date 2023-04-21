@@ -12,8 +12,6 @@ void ActionGame::CRunAttack2State::Start()
 	action_ = Actor()->GetAction<CAttack1Action>(GetKey());
 	isStartCollide_ = false;
 
-	//ˆÚ“®•â³ƒpƒ‰ƒ[ƒ^Ý’è
-	SettingMoveCompensationParam(parameter_.MoveCompensationParam);
 	CAttackBaseState::Start();
 
 	action_->Start();
@@ -24,7 +22,6 @@ void ActionGame::CRunAttack2State::Start()
 
 void ActionGame::CRunAttack2State::Execution()
 {
-	moveCompentionParam_.currentTime = currentTime_;
 
 	for (auto& shot : shots_)
 	{
@@ -86,5 +83,5 @@ void ActionGame::CRunAttack2State::CollisionEvent(unsigned int type, std::any ob
 
 const ActionGame::StateKeyType ActionGame::CRunAttack2State::GetKey() const
 {
-	return StateKeyType();
+	return STATE_KEY_RUN_ATTACK2;
 }

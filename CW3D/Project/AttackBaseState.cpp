@@ -9,7 +9,7 @@ ActionGame::CAttackBaseState::CAttackBaseState()
 	: CState()
 	, currentTime_(0.0f)
 	, isNextInput_(false)
-	, moveCompentionParam_()
+	, moveCompensation_(nullptr)
 {
 }
 
@@ -150,20 +150,21 @@ void ActionGame::CAttackBaseState::Start()
 		Actor()->SetReverse(true);
 	}
 
-	//移動補正が有効ならパラメータを設定
-	auto& param = moveCompentionParam_;
-	if (param.isEnable)
+	//移動補正アクション取得
+	moveCompensation_ = Actor()->GetAction<CMoveCompensationAction>(STATE_KEY_MOVECOMPENSATION + GetKey());
+	if (moveCompensation_)
 	{
-		param.isActorInSight = IsActorInSight(param.targetPos, param.minDistance, param.sightAngle, param.maxDistance);
+		moveCompensation_->Start();
 	}
 	
 }
 
 void ActionGame::CAttackBaseState::Execution()
 {
-	//移動補正
-	if(moveCompentionParam_.targetPos)
-	MoveCompensation(moveCompentionParam_);
+	if (moveCompensation_)
+	{
+		moveCompensation_->Execution();
+	}
 
 	currentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 }
@@ -181,7 +182,7 @@ void ActionGame::CAttackBaseState::InputExecution() {
 	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
 	{
 		SKillPtr skill = Actor()->GetSkillController()->GetSkill(i);
-		if (!skill->CanUseSkill() || skill->GetState() == NULL || skill->GetFlyState() == NULL)
+		if (!skill->CanUseSkill() || skill->GetState() == nullptr || skill->GetFlyState() == nullptr)
 		{
 			continue;
 		}
@@ -210,8 +211,8 @@ void ActionGame::CAttackBaseState::End()
 	auto param = Actor()->GetParameterMap();
 	auto& armorLevel =  param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	armorLevel = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
-	if (moveCompentionParam_.targetPos)
+	if (moveCompensation_)
 	{
-		moveCompentionParam_.targetPos.reset();
+		moveCompensation_->End();
 	}
 }

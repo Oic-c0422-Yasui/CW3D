@@ -39,22 +39,22 @@ namespace ActionGame
 			collider_.z = pos.z;
 		}
 
-		void SetPositionX(const float& x) noexcept
+		void SetPositionX(float x) noexcept
 		{
 			collider_.x = x;
 		}
 
-		void SetPositionY(const float& y) noexcept
+		void SetPositionY(float y) noexcept
 		{
 			collider_.y = y;
 		}
 
-		void SetPositionZ(const float& z) noexcept
+		void SetPositionZ(float z) noexcept
 		{
 			collider_.z = z;
 		}
 
-		void SetRadius(const float& radius) noexcept
+		void SetRadius(float radius) noexcept
 		{
 			collider_.r = radius;
 		}

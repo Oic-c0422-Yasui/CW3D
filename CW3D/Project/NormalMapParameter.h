@@ -10,7 +10,9 @@ namespace MyClass
 	//ノーマルマップ用シェーダーバインドポインタ
 	using NormalMapBindPtr = std::shared_ptr<Mof::CShaderBind_BumpMapping>;
 
-
+	/*
+	* @brief	ノーマルマップ用のパラメータ
+	*/
 	class CNormalMapParameter
 	{
 	private:

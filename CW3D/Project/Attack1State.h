@@ -27,7 +27,6 @@ namespace ActionGame {
 			float NextInputFrameTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
-			BaseCompensationParam MoveCompensationParam;
 		};
 	private:
 		Parameter parameter_;

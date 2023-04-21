@@ -55,7 +55,7 @@ namespace ActionGame {
 			, skillController_(std::make_shared<CSkillController>())
 			, myID_(IDManagerInstance.CreateID())
 			, charaType_()
-			, collider_(std::make_shared<CAABB>())
+			, collider_(std::make_shared<CCollider>())
 		{
 		}
 
@@ -95,6 +95,7 @@ namespace ActionGame {
 			action->SetAnimation(motion_);
 			action->SetParameterMap(parameters_);
 			action->SetSkillController(skillController_);
+			action->SetCollider(collider_);
 		}
 
 		/**
@@ -148,11 +149,15 @@ namespace ActionGame {
 		/**
 		 * @brief		アクションの取得
 		 * @param[in]	key			アクションキー
-		 * @return		アクション
+		 * @retval		true アクション
+		 * @retval		false nullptr
 		 */
 		ActionPtr GetAction(const ActionKeyType& key) override {
 			auto& act = actionMap_.find(key);
-			assert(act != actionMap_.end());
+			if (act == actionMap_.end())
+			{
+				return nullptr;
+			}
 			return act->second;
 		}
 

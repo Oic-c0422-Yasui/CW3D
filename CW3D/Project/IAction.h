@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "ParameterMap.h"
 #include "SkillController.h"
+#include "Collider.h"
 
 
 namespace ActionGame {
@@ -11,8 +12,6 @@ namespace ActionGame {
 	using ActionKeyType = std::string;
 	//アニメーション用のシェアポインタ
 	using AnimationStatePtr = LPMeshMotionController;
-	//当たり判定用シェアポインタ
-	using ColliderPtr = std::shared_ptr<CAABB>;
 	/**
 	 * @brief		アクションインターフェイス
 	 */

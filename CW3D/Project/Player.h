@@ -203,9 +203,9 @@ namespace ActionGame
 		*/
 		const CAABB& GetEscapeCollider() noexcept
 		{
-			CAABB collider(actor_->GetPosition() + colliderOffset_, escapeColliderSize_);
+			auto collider = std::make_shared<CCollider>(actor_->GetPosition() + colliderOffset_, escapeColliderSize_);
 			actor_->SetCollider(collider);
-			return actor_->GetCollider();
+			return actor_->GetCollider()->GetCollider();
 		}
 
 		/*

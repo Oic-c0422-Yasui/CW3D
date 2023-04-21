@@ -37,6 +37,7 @@
 #include	"ClearPoseAction.h"
 #include	"DropKickSkillAction.h"
 #include	"StartPoseAction.h"
+#include	"MoveCompensationAction.h"
 
 
 namespace ActionGame {

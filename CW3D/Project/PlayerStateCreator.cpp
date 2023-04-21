@@ -53,7 +53,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 42.0f
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr ,2,2.5f,0,damageEffect,Vector3(1.2f, 1.5f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
-			,CAttackBaseState::BaseCompensationParam{ true, 0.5f, 270.0f, 2.5f }
+			
 
 		}));
 
@@ -65,7 +65,6 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 35.0f
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.0f, 0, Vector3(0.2f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr,2,2.5f,0,damageEffect, Vector3(1.2f, 1.5f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
-			,CAttackBaseState::BaseCompensationParam{ true, 0.5f, 90.0f, 2.5f }
 
 		}));
 
@@ -87,7 +86,6 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 30.0f
 			,ShotAABB{ Vector3(0.7f, 0.8f, 0), 0.5f, 0, Vector3(0.6f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr,2,3.0f,0,damageEffect, Vector3(1.7f, 1.5f, 0.8f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f, 1.0f, 0), Vector3(0.6f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360.0f), 0.0f),2.1f }
-			,CAttackBaseState::BaseCompensationParam{ true, 0.5f, 270.0f, 4.5f }
 
 		}));
 
@@ -99,7 +97,6 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 42.0f
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr ,2,2.5f,0,damageEffect,Vector3(1.2f, 1.5f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f }
-			,CAttackBaseState::BaseCompensationParam{ true, 0.5f, 270.0f, 4.5f }
 
 		}));
 

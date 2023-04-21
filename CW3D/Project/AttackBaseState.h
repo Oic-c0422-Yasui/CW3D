@@ -7,7 +7,7 @@
 #include	"ShotManager.h"
 #include	"SkillDefine.h"
 #include	"DamageUtilities.h"
-#include	"VectorUtilities.h"
+#include	"MoveCompensationAction.h"
 
 namespace ActionGame {
 
@@ -33,6 +33,9 @@ namespace ActionGame {
 
 		std::vector<ShotPtr>			shots_;
 		std::vector<EffectPtr>			effects_;
+
+		//移動補正アクション
+		MoveCompensationActionPtr		moveCompensation_;
 
 	protected:
 		/* プライベート関数 */

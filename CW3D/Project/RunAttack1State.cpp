@@ -15,9 +15,6 @@ void ActionGame::CRunAttack1State::Start()
 
 	isStartCollide_ = false;
 
-	//ˆÚ“®•â³ƒpƒ‰ƒ[ƒ^Ý’è
-	SettingMoveCompensationParam(parameter_.MoveCompensationParam);
-
 	CAttackBaseState::Start();
 
 	action_->Start();
@@ -28,9 +25,6 @@ void ActionGame::CRunAttack1State::Start()
 
 void ActionGame::CRunAttack1State::Execution()
 {
-	
-
-	moveCompentionParam_.currentTime = currentTime_;
 
 	const auto pos = Actor()->GetPosition();
 	for (auto& shot : shots_)
