@@ -97,15 +97,9 @@ void ActionGame::CShockWaveSkillState::Execution()
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
-		if (Actor()->GetTransform()->GetPositionY() > 0)
-		{
-			ChangeState(STATE_KEY_FALL);
-		}
-		else
-		{
-			ChangeState(STATE_KEY_IDLE);
-		}
+		auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_IDLE;
 
+		ChangeState(state);
 	}
 
 	CAttackBaseState::Execution();

@@ -6,7 +6,7 @@
 using namespace ActionGame;
 
 ActionGame::CAttackBaseState::CAttackBaseState()
-	: CState()
+	: CBaseState()
 	, currentTime_(0.0f)
 	, isNextInput_(false)
 	, moveCompensation_(nullptr)
@@ -170,37 +170,14 @@ void ActionGame::CAttackBaseState::Execution()
 }
 
 void ActionGame::CAttackBaseState::InputExecution() {
-
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-	{
-		SKillPtr skill = Actor()->GetSkillController()->GetSkill(i);
-		if (!skill->CanUseSkill() || skill->GetState() == nullptr || skill->GetFlyState() == nullptr)
-		{
-			continue;
-		}
-		if (Input()->IsPush(skill->GetButton()))
-		{
-
-			skill->Start();
-			if (Actor()->GetPositionY() > 0)
-			{
-				ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetFlyState());
-			}
-			else
-			{
-				ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState());
-			}
-			break;
-		}
-	}
+	ChangeSkillState();
 
 }
 

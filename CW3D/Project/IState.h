@@ -104,7 +104,11 @@ namespace ActionGame
 		 */
 		virtual const StateKeyType GetKeepKey() const = 0;
 
-		virtual void SetKeepKey(const StateKeyType& keepKey) = 0;
+		/*
+		* @brief		保持ステート設定
+		* @param[in]	keepKey		保持しておくステートキー
+		*/
+		virtual void SetKeepKey(const StateKeyType& keepKey) noexcept = 0;
 	};
 	//ポインタ置き換え
 	using StatePtr = std::shared_ptr<IState>;

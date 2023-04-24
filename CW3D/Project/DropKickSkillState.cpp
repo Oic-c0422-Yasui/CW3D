@@ -13,10 +13,8 @@ void ActionGame::CDropKickSkillState::SetUp()
 {
 	auto& skill = Actor()->GetSkillController()->GetSkill(SKILL_KEY_4);
 	skillRef_ = std::dynamic_pointer_cast<CAdditionalSkill>(skill);
-	if (skillRef_.lock() == nullptr)
-	{
-		assert(skillRef_.lock());
-	}
+
+	assert(skillRef_.lock());
 }
 
 void ActionGame::CDropKickSkillState::Start()
@@ -86,15 +84,9 @@ void ActionGame::CDropKickSkillState::Execution()
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
-		if (Actor()->GetTransform()->GetPositionY() > 0)
-		{
-			ChangeState(STATE_KEY_FALL);
-		}
-		else
-		{
-			ChangeState(STATE_KEY_IDLE);
-		}
+		auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_IDLE;
 
+		ChangeState(state);
 	}
 
 	CAttackBaseState::Execution();
@@ -102,9 +94,8 @@ void ActionGame::CDropKickSkillState::Execution()
 
 void ActionGame::CDropKickSkillState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
@@ -123,26 +114,15 @@ void ActionGame::CDropKickSkillState::InputExecution()
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{
-			if (Actor()->GetTransform()->GetPositionY() > 0.0f)
-			{
-				ChangeState(STATE_KEY_JUMP_ATTACK1);
-			}
-			else
-			{
-				ChangeState(STATE_KEY_ATTACK1);
-			}
+			auto state = IsFly() ? STATE_KEY_JUMP_ATTACK1 : STATE_KEY_ATTACK1;
+
+			ChangeState(state);
 		}
-		else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) || Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-			Input()->IsNegativePress(INPUT_KEY_VERTICAL) || Input()->IsPress(INPUT_KEY_VERTICAL))
+		else if (IsPressMoveKey())
 		{
-			if (Actor()->GetTransform()->GetPositionY() > 0.0f)
-			{
-				ChangeState(STATE_KEY_FALL);
-			}
-			else
-			{
-				ChangeState(STATE_KEY_MOVE);
-			}
+			auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_MOVE;
+
+			ChangeState(state);
 		}
 	}
 	CAttackBaseState::InputExecution();

@@ -1,7 +1,7 @@
 #include "NPCStartPoseState.h"
 
 ActionGame::CNPCStartPoseState::CNPCStartPoseState()
-	: CState()
+	: CBaseState()
 {
 }
 

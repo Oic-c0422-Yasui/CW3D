@@ -54,14 +54,9 @@ void ActionGame::CJumpBeamSkillState::Execution()
 		}
 		else
 		{
-			if (Actor()->GetTransform()->GetPositionY() > 0)
-			{
-				ChangeState(STATE_KEY_FALL);
-			}
-			else
-			{
-				ChangeState(STATE_KEY_IDLE);
-			}
+			auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_IDLE;
+
+			ChangeState(state);
 		}
 	}
 	CAttackBaseState::Execution();
@@ -112,7 +107,7 @@ void ActionGame::CJumpBeamSkillState::Initialize()
 	}
 	for (auto& shot : shots_)
 	{
-		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_2)->GetDamage();
+		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_1)->GetDamage();
 		auto damage = MyUtil::CalculateAtk(shot->GetDamage(), skillDamage);
 		shot->SetDamage(damage);
 	}

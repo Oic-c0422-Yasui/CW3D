@@ -1,7 +1,7 @@
 #include "MoveState.h"
 
 ActionGame::CMoveState::CMoveState()
-	: CState()
+	: CBaseState()
 {
 }
 
@@ -27,21 +27,19 @@ void ActionGame::CMoveState::Execution()
 
 void ActionGame::CMoveState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
-	InputDash();
-	//左右で移動
 
-	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
-		Input()->IsPress(INPUT_KEY_VERTICAL))
+	InputDash();
+
+	//左右で移動
+	if (IsPressMoveKey())
 	{
-		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), 
+							-(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 	else
 	{
@@ -60,20 +58,7 @@ void ActionGame::CMoveState::InputExecution()
 	}
 
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-	{
-		if (!Actor()->GetSkillController()->GetSkill(i)->CanUseSkill() || Actor()->GetSkillController()->GetSkill(i)->GetState() == nullptr)
-		{
-			continue;
-		}
-		if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-		{
-
-			Actor()->GetSkillController()->GetSkill(i)->Start();
-			ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(), GetKey());
-			break;
-		}
-	}
+	ChangeSkillState();
 
 }
 

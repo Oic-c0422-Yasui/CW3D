@@ -1,7 +1,7 @@
 #include "DeadState.h"
 
 ActionGame::CDeadState::CDeadState()
-	: CState()
+	: CBaseState()
 {
 }
 

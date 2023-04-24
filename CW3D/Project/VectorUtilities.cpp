@@ -48,12 +48,8 @@ bool MyUtil::IsRange(const Vector3& selfPos, const Vector3& selfDir, const Vecto
 
     //ハーフコサイン
     float cosHarf = std::cos(MOF_ToHarfRadian(sightAngle));
-
-    float tmpCos = MOF_ToDegree(cosHarf);
     
     float innerProduct = Dot(selfDir, targetDir);
-
-    float tmpinner = MOF_ToDegree(innerProduct);
 
     return innerProduct > cosHarf && targetDistance < distance;
 }

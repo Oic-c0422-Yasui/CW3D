@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"DownAction.h"
 
 namespace ActionGame {
@@ -8,9 +8,13 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class CDownState : public CState
+	class CDownState : public CBaseState
 	{
 	public:
+		/*
+		* @brief	パラメータ
+		* @param	endTime 終了時間
+		*/
 		struct Parameter
 		{
 			float endTime;

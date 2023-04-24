@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"ClearPoseAction.h"
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class CClearPoseState : public CState
+	class CClearPoseState : public CBaseState
 	{
 	public:
 

@@ -53,7 +53,14 @@ namespace ActionGame
 			, Count(0)
 		{
 		}
-
+		/*
+		* @brief	コンストラクタ
+		* @param	dmg ダメージ
+		* @param	maxCT 最大クールタイム
+		* @param	addMaxCT 追加入力クールタイム
+		* @param	st	開始時間
+		* @param	cnt	追加回数
+		*/
 		AdditionalSkillData(uint32_t dmg, float maxCT,float addmaxCT,float st,int cnt)
 			: SkillData(dmg, maxCT)
 			, AddMaxCT(addmaxCT)

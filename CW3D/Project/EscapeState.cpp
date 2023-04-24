@@ -22,21 +22,16 @@ void ActionGame::CEscapeState::Start()
 	auto& armorLevel = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
 	armorLevel = parameter_.armorLevel;
 
-	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsPress(INPUT_KEY_HORIZONTAL))
+	if (IsPressHorizontalKey())
 	{
-		action_->Move(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Move(Input()->GetAxis(INPUT_KEY_HORIZONTAL), 
+					-(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 	else
 	{
-		if (Actor()->IsReverse())
-		{
-			action_->Move(1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
-		}
-		else
-		{
-			action_->Move(-1, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
-		}
+		auto dirX = Actor()->IsReverse() ? 1.0f : -1.0f;
+
+		action_->Move(dirX, -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 }
 
@@ -76,54 +71,47 @@ void ActionGame::CEscapeState::Execution()
 
 void ActionGame::CEscapeState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
+
+	//アニメーション終了時、待機状態へ移行
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
-		if (Actor()->GetTransform()->GetPositionY() > 0)
-		{
-			ChangeState(STATE_KEY_FALL);
-		}
-		else
-		{
-			ChangeState(STATE_KEY_IDLE);
-		}
+		SwitchFlyChangeState(STATE_KEY_IDLE, STATE_KEY_FALL);
 	}
-	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
-		Input()->IsPress(INPUT_KEY_VERTICAL))
+
+	//回避終了時間が過ぎていれば移動可能
+	if (currentTime_ > parameter_.ThroughEndTime)
 	{
-		if (currentTime_ > parameter_.ThroughEndTime)
+		if (IsPressMoveKey())
 		{
-			if (Actor()->GetTransform()->GetPositionY() > 0)
+			if (IsFly())
 			{
-				if (GetKeepKey() == STATE_KEY_RUN)
-				{
-					ChangeState(STATE_KEY_RUN_FALL);
-				}
-				else
-				{
-					ChangeState(STATE_KEY_FALL);
-				}
+				auto state = GetKeepKey() == STATE_KEY_RUN ?
+					STATE_KEY_RUN_FALL : STATE_KEY_FALL;
+				ChangeState(state);
 			}
 			else
 			{
-				if (GetKeepKey() == STATE_KEY_RUN)
-				{
-					ChangeState(STATE_KEY_RUN);
-				}
-				else
-				{
-					ChangeState(STATE_KEY_MOVE);
-				}
+				auto state = GetKeepKey() == STATE_KEY_RUN ?
+					STATE_KEY_RUN : STATE_KEY_MOVE;
+				ChangeState(state);
 			}
 		}
 	}
+	//攻撃開始可能時間が過ぎていれば攻撃可能
+	if (currentTime_ > parameter_.InputAttackStartTime)
+	{
+		if (Input()->IsPush(INPUT_KEY_ATTACK))
+		{
+			SwitchFlyChangeState(STATE_KEY_ATTACK1, STATE_KEY_JUMP_ATTACK1);
+		}
+	}
+		
+
 	CAttackBaseState::InputExecution();
 }
 

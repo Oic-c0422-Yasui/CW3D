@@ -1,7 +1,7 @@
 #include "IdleState.h"
 
 ActionGame::CIdleState::CIdleState(Parameter param)
-	: CState()
+	: CBaseState()
 	, timeScale_(0.0f)
 	, parameter_(param)
 {
@@ -28,9 +28,8 @@ void ActionGame::CIdleState::Execution()
 
 void ActionGame::CIdleState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
@@ -41,8 +40,7 @@ void ActionGame::CIdleState::InputExecution()
 		ChangeState(STATE_KEY_RUN);
 	}
 	//キーボードでの移動
-	else if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) || Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsNegativePress(INPUT_KEY_VERTICAL) || Input()->IsPress(INPUT_KEY_VERTICAL))
+	else if (IsPressMoveKey())
 	{
 		ChangeState(STATE_KEY_MOVE);
 	}
@@ -59,20 +57,7 @@ void ActionGame::CIdleState::InputExecution()
 
 	
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-	for (int i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-	{
-		if (!Actor()->GetSkillController()->GetSkill(i)->CanUseSkill() || Actor()->GetSkillController()->GetSkill(i)->GetState() == NULL)
-		{
-			continue;
-		}
-		if (Input()->IsPush(Actor()->GetSkillController()->GetSkill(i)->GetButton()))
-		{
-
-			Actor()->GetSkillController()->GetSkill(i)->Start();
-			ChangeState(Actor()->GetSkillController()->GetSkill(i)->GetState(), STATE_KEY_MOVE);
-			break;
-		}
-	}
+	ChangeSkillState();
 
 }
 

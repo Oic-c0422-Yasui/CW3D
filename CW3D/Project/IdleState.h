@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"IdleAction.h"
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		待機ステート
 	 */
-	class CIdleState : public CState
+	class CIdleState : public CBaseState
 	{
 	public:
 		struct Parameter

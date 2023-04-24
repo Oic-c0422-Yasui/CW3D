@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"DeadAction.h"
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class CDeadState : public CState
+	class CDeadState : public CBaseState
 	{
 	private:
 		//ダメージステート

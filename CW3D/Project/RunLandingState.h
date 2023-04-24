@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"RunLandingAction.h"
 
 namespace ActionGame {
@@ -8,7 +8,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class CRunLandingState : public CState
+	class CRunLandingState : public CBaseState
 	{
 	private:
 		/** 移動アクション */

@@ -4,7 +4,7 @@
 #include "SendMessageServiceDefine.h"
 
 ActionGame::CClearPoseState::CClearPoseState()
-	: CState()
+	: CBaseState()
 	, currentTime_(0)
 	, isAnimStart_(false)
 {
@@ -22,11 +22,12 @@ void ActionGame::CClearPoseState::Start()
 void ActionGame::CClearPoseState::Execution()
 {
 	action_->Execution();
-	if (Actor()->GetTransform()->GetPositionY() > 0.0f || isAnimStart_)
+	if (IsFly() || isAnimStart_)
 	{
 		return;
 	}
 
+	isAnimStart_ = true;
 
 	//ƒJƒƒ‰Ý’è
 	MyUtil::ANIM_V3_DATA_ARRAY animPos(
@@ -52,7 +53,7 @@ void ActionGame::CClearPoseState::Execution()
 
 
 	action_->PlayAnimation();
-	isAnimStart_ = true;
+	
 }
 
 void ActionGame::CClearPoseState::End()

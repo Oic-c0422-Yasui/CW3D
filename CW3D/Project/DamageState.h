@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"DamageAction.h"
 
 namespace ActionGame {
@@ -8,25 +8,20 @@ namespace ActionGame {
 	/**
 	 * @brief		ダメージステート
 	 */
-	class CDamageState : public CState
+	class CDamageState : public CBaseState
 	{
 	public:
-		struct Parameter
-		{
-			float time;
-		};
+
+
 	private:
-		Parameter parameter_;
 		//ダメージステート
 		DamageActionPtr			action_;
-		//現在時間
-		float						currentTime_;
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CDamageState(Parameter param);
+		CDamageState();
 			
 
 		/**

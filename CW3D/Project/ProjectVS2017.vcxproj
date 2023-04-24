@@ -195,6 +195,7 @@
     <ClCompile Include="Attack3State.cpp" />
     <ClCompile Include="AttackBaseState.cpp" />
     <ClCompile Include="AttackStateAI.cpp" />
+    <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BattleSceneTask.cpp" />
     <ClCompile Include="BattleUILoader.cpp" />
@@ -404,6 +405,7 @@
     <ClInclude Include="AttackBaseState.h" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="AttackStateAI.h" />
+    <ClInclude Include="BaseState.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BattleUILoader.h" />
     <ClInclude Include="BossHPRender.h" />

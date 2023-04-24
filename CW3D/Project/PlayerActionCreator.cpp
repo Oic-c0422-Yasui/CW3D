@@ -464,14 +464,14 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			AnimParam{
 				STATE_KEY_ESCAPE,
 				0.4f,
-				1.4f,
+				2.0f,
 				0.1f,
 				false
 			}
 		},
 		CEscapeAction::Parameter{
-			Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
-			Vector3(PLAYER_MAXSPEED * 1.4f, 1.0f, PLAYER_MAXSPEED * 1.4f),
+			Vector3(PLAYER_SPEED * 0.5f, 1.0f, PLAYER_SPEED * 0.5f),
+			Vector3(PLAYER_MAXSPEED * 1.7f, 1.0f, PLAYER_MAXSPEED * 1.7f),
 		}));
 	//ドロップキックスキル
 	actor->AddAction(CAction::Create<CDropKickSkillAction>(

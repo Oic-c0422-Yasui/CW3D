@@ -15,15 +15,17 @@ namespace ActionGame {
 	public:
 		/*
 		* @brief	ステートパラメータ
-		* @param	ThroughStartTime　当たり判定開始時間
-		* @param	ThroughEndTime	　次の入力猶予時間
-		* @param	EscapeStartTime 　回避開始時間
-		* @param	EscapeTime 　	　回避時間
+		* @param	ThroughStartTime　		当たり判定開始時間
+		* @param	ThroughEndTime	　		次の入力猶予時間
+		* @param	InputAttackStartTime	攻撃の入力可能開始時間
+		* @param	EscapeStartTime 　		回避開始時間
+		* @param	EscapeTime 　	　		回避時間
 		*/
 		struct Parameter : public BaseParam
 		{
 			float ThroughStartTime;
 			float ThroughEndTime;
+			float InputAttackStartTime;
 			float EscapeStartTime;
 			float EscapeTime;
 		};

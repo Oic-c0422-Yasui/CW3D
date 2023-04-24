@@ -36,6 +36,7 @@ void ActionGame::CNPCFollowCameraStartPoseState::Execution()
 		CreateEffect();
 		isEffectStart_ = true;
 	}
+
 	if (parameter_.Time > currentTime_)
 	{
 		action_->Execution();

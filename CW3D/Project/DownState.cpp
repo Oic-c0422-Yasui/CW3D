@@ -2,7 +2,7 @@
 #include "ParameterDefine.h"
 
 ActionGame::CDownState::CDownState(Parameter param)
-	: CState()
+	: CBaseState()
 	, parameter_(param)
 	, currentTime_(0) {
 }

@@ -2,7 +2,7 @@
 #include "ParameterDefine.h"
 
 ActionGame::CFlyDamageState::CFlyDamageState()
-	: CState()
+	: CBaseState()
 {
 }
 
@@ -16,7 +16,7 @@ void ActionGame::CFlyDamageState::Execution()
 {
 	action_->Execution();
 
-	if (Actor()->GetTransform()->GetPositionY() <= 0)
+	if (!IsFly())
 	{
 		auto& hp = Actor()->GetParameterMap()->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP);
 		if (hp <= 0)

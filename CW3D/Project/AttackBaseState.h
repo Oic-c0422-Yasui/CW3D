@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include	"State.h"
+#include	"BaseState.h"
 #include	"FixedKnockBack.h"
 #include	"EffectController.h"
 #include	"ShotManager.h"
@@ -14,7 +14,7 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class CAttackBaseState : public CState
+	class CAttackBaseState : public CBaseState
 	{
 	public:
 		typedef struct BASEPARAM

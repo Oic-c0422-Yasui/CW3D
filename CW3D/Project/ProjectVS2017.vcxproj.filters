@@ -34,9 +34,6 @@
     <Filter Include="ヘッダー ファイル\Action\ActionBase">
       <UniqueIdentifier>{b8693d36-134d-442f-b792-3d4a0bda1511}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\State\StateBase">
-      <UniqueIdentifier>{18b97007-6082-4f23-acc9-92cc553e68cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State">
       <UniqueIdentifier>{1d779a6e-4dde-455b-8d43-b7c82daa8f37}</UniqueIdentifier>
     </Filter>
@@ -334,6 +331,15 @@
     <Filter Include="ソース ファイル\Common">
       <UniqueIdentifier>{43aeac10-816c-4211-a411-b6ce8d38f316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\State\Base">
+      <UniqueIdentifier>{18b97007-6082-4f23-acc9-92cc553e68cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Attack">
+      <UniqueIdentifier>{1d655fd1-68e8-4868-9b1e-6532a56d1b05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Base">
+      <UniqueIdentifier>{5aa7138a-9ccd-4009-97a7-f2d312cc893d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -459,9 +465,6 @@
     <ClCompile Include="ShotManager.cpp">
       <Filter>ソース ファイル\Shot</Filter>
     </ClCompile>
-    <ClCompile Include="AttackBaseState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\Chara\Enemy</Filter>
     </ClCompile>
@@ -485,15 +488,6 @@
     </ClCompile>
     <ClCompile Include="EnemySpawnConditionMaxSpawnCount.cpp">
       <Filter>ソース ファイル\Spawner</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack1State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack2State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack3State.cpp">
-      <Filter>ソース ファイル\State</Filter>
     </ClCompile>
     <ClCompile Include="DropKickSkillState.cpp">
       <Filter>ソース ファイル\State\Skill</Filter>
@@ -531,9 +525,6 @@
     <ClCompile Include="IdleState.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
-    <ClCompile Include="JumpAttack1State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
     <ClCompile Include="JumpState.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
@@ -543,19 +534,7 @@
     <ClCompile Include="MoveState.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
-    <ClCompile Include="RunAttack1State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
     <ClCompile Include="RunFallState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunJumpAttack1State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunJumpAttack2State.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunJumpAttack3State.cpp">
       <Filter>ソース ファイル\State</Filter>
     </ClCompile>
     <ClCompile Include="RunJumpState.cpp">
@@ -906,22 +885,13 @@
     <ClCompile Include="ActorObjectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="VectorUtilities.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DamageUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="RunAttack2State.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="MoveCompensationAction.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ResultRender.cpp">
@@ -947,6 +917,45 @@
     </ClCompile>
     <ClCompile Include="Result.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack1State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack2State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack3State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBaseState.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAttack1State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack1State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack2State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpAttack3State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAttack2State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpAttack1State.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>ソース ファイル\State\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -987,16 +996,16 @@
       <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
     </ClInclude>
     <ClInclude Include="IState.h">
-      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+      <Filter>ヘッダー ファイル\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="IStateMachine.h">
-      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+      <Filter>ヘッダー ファイル\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+      <Filter>ヘッダー ファイル\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
-      <Filter>ヘッダー ファイル\State\StateBase</Filter>
+      <Filter>ヘッダー ファイル\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="Velocity.h">
       <Filter>ヘッダー ファイル\Common</Filter>
@@ -1809,6 +1818,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Result.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

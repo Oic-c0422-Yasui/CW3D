@@ -57,9 +57,8 @@ void ActionGame::CRunAttack1State::Execution()
 
 void ActionGame::CRunAttack1State::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}

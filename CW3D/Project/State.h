@@ -20,9 +20,10 @@ namespace ActionGame {
 		StateMachineWeakPtr			stateMachine_;
 
 		/** 入力クラス */
-		Input::InputPtr					input_;
+		Input::InputPtr				input_;
 
-		StateKeyType				tempChangeKey_;
+		/** 保持しておくキーの情報　*/
+		StateKeyType				keepKey_;
 
 
 		/**
@@ -77,20 +78,29 @@ namespace ActionGame {
 		bool ChangeState(const StateKeyType& key, const StateKeyType& keepKey) override {
 			return stateMachine_.lock()->ChangeState(key,keepKey);
 		}
-
+		/*
+		* @brief	保持していたステートに変更
+		* @retval		true		成功
+		* @retval		false		失敗
+		*/
 		bool ChangeKeepState() override
 		{
-			return stateMachine_.lock()->ChangeState(tempChangeKey_);
+			return stateMachine_.lock()->ChangeState(keepKey_);
 		}
-
+		/*
+		* @brief	保持ステート取得
+		*/
 		const StateKeyType GetKeepKey() const override
 		{
-			return tempChangeKey_;
+			return keepKey_;
 		}
-
-		void SetKeepKey(const StateKeyType& keepKey) override
+		/*
+		* @brief	保持ステート設定
+		* @param[in]	keepKey		保持しておくステートキー
+		*/
+		void SetKeepKey(const StateKeyType& keepKey) noexcept override
 		{
-			tempChangeKey_ = keepKey;
+			keepKey_ = keepKey;
 		}
 
 	public:

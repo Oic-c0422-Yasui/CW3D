@@ -4,7 +4,7 @@
 #include "TimeScaleController.h"
 
 ActionGame::CStartPoseState::CStartPoseState(Parameter param)
-	: CState()
+	: CBaseState()
 	, currentTime_(0)
 	, parameter_(param)
 {

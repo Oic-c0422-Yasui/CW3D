@@ -28,10 +28,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 	//ダッシュ着地
 	stateMachine->AddState(CState::Create<CRunLandingState>(actor, input));
 	//ダメージ
-	stateMachine->AddState(CState::Create<CDamageState>(actor, input,
-		CDamageState::Parameter{
-			1.0f
-		}));
+	stateMachine->AddState(CState::Create<CDamageState>(actor, input));
 	//空中ダメージ
 	stateMachine->AddState(CState::Create<CFlyDamageState>(actor, input));
 	//死亡
@@ -181,6 +178,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			3
 			,GameFrameTime * 7.0f
 			,3.5f
+			,1.0f
 			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.15f, 0.6f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect, Vector3(4.0f, 8.0f, 4.0f) }
 			,EffectCreateParameter{ "SkillEffect3", Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f,actor->GetType() }
 
@@ -192,6 +190,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			3
 			,GameFrameTime * 7.0f
 			,3.5f
+			,1.0f
 			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.15f, 0.6f),false,actor->GetType(),nullptr,3,0.2f,0,damageEffect, Vector3(4.0f, 8.0f, 4.0f) }
 			,EffectCreateParameter{ "SkillEffect3", Vector3(0, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f,actor->GetType() }
 
@@ -202,9 +201,10 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		CEscapeState::Parameter{
 			2
 			,GameFrameTime * 5.0f
-			,GameFrameTime * 35.0f
+			,GameFrameTime * 25.0f
+			,GameFrameTime * 15.0f
 			,GameFrameTime * 0.0f
-			,GameFrameTime * 10.0f
+			,GameFrameTime * 7.0f
 		}));
 
 	//クリアポーズステート

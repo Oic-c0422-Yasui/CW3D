@@ -1,5 +1,5 @@
 #pragma once
-#include "State.h"
+#include "BaseState.h"
 #include "NPCStartPoseAction.h"
 
 namespace ActionGame
@@ -7,7 +7,7 @@ namespace ActionGame
     /*
     * @brief	NPC開始ポーズステート
     */
-    class CNPCStartPoseState : public CState
+    class CNPCStartPoseState : public CBaseState
     {
 	private:
 

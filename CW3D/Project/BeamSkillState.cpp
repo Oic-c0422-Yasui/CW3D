@@ -56,14 +56,9 @@ void ActionGame::CBeamSkillState::Execution()
 		}
 		else
 		{
-			if (Actor()->GetTransform()->GetPositionY() > 0)
-			{
-				ChangeState(STATE_KEY_FALL);
-			}
-			else
-			{
-				ChangeState(STATE_KEY_IDLE);
-			}
+			auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_IDLE;
+			
+			ChangeState(state);
 		}
 	}
 	CAttackBaseState::Execution();
@@ -100,12 +95,10 @@ void ActionGame::CBeamSkillState::Initialize()
 
 	if (Input()->IsNegativePress(INPUT_KEY_VERTICAL))
 	{
-		
 		CreateShotOBB();
 		effectStatus_.offset = Vector3(1.7f, 1.8f, 0);
 		effectStatus_.rotate = Vector3(MOF_ToRadian(-30), MOF_ToRadian(90), 0);
 		CreateEffect();
-
 	}
 	else
 	{

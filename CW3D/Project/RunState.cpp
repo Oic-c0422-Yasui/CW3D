@@ -1,7 +1,7 @@
 #include "RunState.h"
 
 ActionGame::CRunState::CRunState()
-	: CState() 
+	: CBaseState()
 {
 }
 
@@ -26,17 +26,13 @@ void ActionGame::CRunState::Execution()
 
 void ActionGame::CRunState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
 	//左右で移動
-	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
-		Input()->IsPress(INPUT_KEY_VERTICAL))
+	if (IsPressMoveKey())
 	{
 		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL),
 							-(Input()->GetAxis(INPUT_KEY_VERTICAL)));
@@ -57,20 +53,7 @@ void ActionGame::CRunState::InputExecution()
 	}
 
 	//対応したスキルのボタンが押されていたらそのスキルのステートに移動
-	for (size_t i = 0; i < Actor()->GetSkillController()->GetCount(); i++)
-	{
-		auto& skill = Actor()->GetSkillController()->GetSkill(i);
-		if (!skill->CanUseSkill() || skill->GetState() == nullptr)
-		{
-			continue;
-		}
-		if (Input()->IsPush(skill->GetButton()))
-		{
-			skill->Start();
-			ChangeState(skill->GetState(), GetKey());
-			break;
-		}
-	}
+	ChangeSkillState();
 }
 
 void ActionGame::CRunState::End()

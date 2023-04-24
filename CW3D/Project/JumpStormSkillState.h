@@ -17,6 +17,7 @@ namespace ActionGame {
 		* @brief	ステートパラメータ
 		* @param	AttackFrequencyFrameTime 当たり判定の発生頻度
 		* @param	DurationTime 　攻撃持続時間
+		* @param	ContinueTime 　攻撃を持続するかの猶予時間
 		* @param	AABBShotStatus 　AABBのショットパラメータ
 		* @param	EffectStatus 　	エフェクトのパラメータ
 		*/
@@ -24,6 +25,7 @@ namespace ActionGame {
 		{
 			float AttackFrequencyFrameTime;
 			float DurationTime;
+			float ContinueTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
 		};

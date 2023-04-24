@@ -75,14 +75,9 @@ void ActionGame::CJumpStormSkillState::Execution()
 
 	if (currentTime_ > parameter_.DurationTime || !isContinue_)
 	{
-		if (Actor()->GetTransform()->GetPositionY() > 0)
-		{
-			ChangeState(STATE_KEY_FALL);
-		}
-		else
-		{
-			ChangeState(STATE_KEY_IDLE);
-		}
+		auto state = IsFly() ? STATE_KEY_FALL : STATE_KEY_IDLE;
+
+		ChangeState(state);
 	}
 
 	CAttackBaseState::Execution();
@@ -91,30 +86,23 @@ void ActionGame::CJumpStormSkillState::Execution()
 
 void ActionGame::CJumpStormSkillState::InputExecution()
 {
-	float scale = TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
 	//タイムスケールが0以下の場合、入力を受け付けない
-	if (scale <= 0.0f)
+	if (IsTimeScaleZero())
 	{
 		return;
 	}
-	if (currentTime_ > 0.5f)
+
+	//入力猶予時間までキーが押されているなら攻撃を続ける
+	if (currentTime_ > parameter_.ContinueTime)
 	{
-		if (Input()->IsPress(inputKey_))
-		{
-			isContinue_ = true;
-		}
-		else
-		{
-			isContinue_ = false;
-		}
+		isContinue_ = Input()->IsPress(inputKey_) ?
+			true : false;
 	}
 
-	if (Input()->IsNegativePress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsPress(INPUT_KEY_HORIZONTAL) ||
-		Input()->IsNegativePress(INPUT_KEY_VERTICAL) ||
-		Input()->IsPress(INPUT_KEY_VERTICAL))
+	if (IsPressMoveKey())
 	{
-		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), -(Input()->GetAxis(INPUT_KEY_VERTICAL)));
+		action_->Acceleration(Input()->GetAxis(INPUT_KEY_HORIZONTAL), 
+							-(Input()->GetAxis(INPUT_KEY_VERTICAL)));
 	}
 
 	CAttackBaseState::InputExecution();
