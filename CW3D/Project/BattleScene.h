@@ -42,6 +42,9 @@
 #include	"NPCHPRenderManager.h"
 #include	"GiveTextureToMaterial.h"
 
+#include	"GameOver.h"
+#include	"Result.h"
+
 namespace Scene
 {
 	//ゲームの状態
@@ -97,6 +100,11 @@ namespace Scene
 
 		MyClass::GiveTextureToMaterialPtr giveTexture_;
 
+		//ゲームオーバー時処理
+		ActionGame::CGameOver		gameOver_;
+		//リザルト時処理
+		ActionGame::CResult			result_;
+
 	private:
 		//敵の生成
 		bool CreateEnemys();
@@ -112,6 +120,12 @@ namespace Scene
 		void RegisterRender2DTask();
 		//敵スポーン後タスク
 		void RegisterAfterSpawn();
+
+		//ゲームオーバー
+		void GameOver();
+
+		//リザルト
+		void Result();
 
 	public:
 		CBattleScene();

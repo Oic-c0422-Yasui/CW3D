@@ -215,6 +215,22 @@ bool ActionGame::CBattleUILoader::Load()
 		return false;
 	}
 	ResourcePtrManager<CFont>::GetInstance().AddResource(tagFont, "ComboFont", tempFont);
+	
+	tempFont = std::make_shared<CFont>();
+	if (!tempFont->Create(200, "M PLUS 1"))
+	{
+		return false;
+	}
+	tempFont->SetBold(60);
+	ResourcePtrManager<CFont>::GetInstance().AddResource(tagFont, "GameOverFont", tempFont);
+
+	tempFont = std::make_shared<CFont>();
+	if (!tempFont->Create(50, "M PLUS 1"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CFont>::GetInstance().AddResource(tagFont, "GameOverButtonFont", tempFont);
+
 
 	return true;
 }

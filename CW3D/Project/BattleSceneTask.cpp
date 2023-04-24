@@ -14,14 +14,6 @@ void Scene::CBattleScene::RegisterUpdateTask()
 	///		更新タスク
 	////////////////////////////////////////////////
 
-	//リトライタスク
-	updateTask_.AddTask("RetryTask", Task::PRIORITY::EVENT,
-		[&]()
-	{
-		
-
-	}
-	);
 	//更新タスク
 	updateTask_.AddTask("UpdateTask1", Task::PRIORITY::MAIN1,
 		[&]()
@@ -39,17 +31,45 @@ void Scene::CBattleScene::RegisterUpdateTask()
 	updateTask_.AddTask("SetConditionTask", Task::PRIORITY::MAIN2,
 		[&]()
 	{
-
 		//死亡判定
 		if (!player_->IsShow() && player_->IsDead())
 		{
-			currentGameState_ = GAME_STATE::OVER;
+			GameOver();
 		}
-
 	}
 	);
 
+	//インスタンス更新タスク
+	updateTask_.AddTask("UpdateInstanceTask", Task::PRIORITY::AFTER,
+		[&]()
+	{
+		//エフェクト描画更新
+		EffectRendererInstance.Update();
+		//エフェクト操作更新
+		EffectControllerInstance.Update();
+		//時間操作更新
+		TimeScaleControllerInstance.Update();
+		//カメラ操作更新
+		CameraControllerInstance.Update(player_->GetPosition(), player_->GetPosition());
+		//ショットマネージャー更新
+		ShotManagerInstance.Update();
+	}
+	);
+	//インスタンス削除処理タスク
+	updateTask_.AddTask("DeleteInstanceTask", Task::PRIORITY::AFTER,
+		[&]()
+	{
+		//ショット削除処理
+		ShotManagerInstance.Delete();
+		//エフェクト削除処理
+		EffectControllerInstance.Delete();
+		//アクター削除処理
+		ActorObjectManagerInstance.Delete();
+	}
+	);
+	
 
+	
 }
 
 void Scene::CBattleScene::RegisterCollisionTask()
@@ -100,6 +120,10 @@ void Scene::CBattleScene::RegisterRenderTask()
 	renderTask_.AddTask("RenderTask1", Task::PRIORITY::MAIN1,
 		[&]()
 	{
+		//シェーダーにカメラ情報設定
+		normalMap_->SetCamera();
+		normalMapSkin_->SetCamera();
+
 		//ステージ描画
 		stageManager_.Render();
 
@@ -131,19 +155,15 @@ void Scene::CBattleScene::RegisterRender2DTask()
 		///プレイヤーのUI描画
 		playerUiRender_.Render();
 
-		//リトライ描画
-		if (currentGameState_ == GAME_STATE::CLEAR || currentGameState_ == GAME_STATE::OVER)
+		//ゲームオーバー描画
+		if (currentGameState_ == GAME_STATE::OVER)
 		{
-			CGraphicsUtilities::RenderString(20, 950, "F2でリトライ");
-			CGraphicsUtilities::RenderString(20, 1000, "F3でタイトルへ");
+			gameOver_.Render();
 		}
-
 		//ゲームクリア描画
-		if (currentGameState_ == GAME_STATE::CLEAR)
+		else if (currentGameState_ == GAME_STATE::CLEAR)
 		{
-			CRectangle rect;
-			font_.CalculateStringRect(0, 0, "全部倒したあああああ", rect);
-			font_.RenderString(g_pGraphics->GetTargetWidth() * 0.5f - (rect.GetWidth() * 0.5f), g_pGraphics->GetTargetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "全部倒したあああああ");
+			result_.Render();
 		}
 	}
 	);
@@ -174,8 +194,7 @@ void Scene::CBattleScene::RegisterAfterSpawn()
 		{
 			if (currentGameState_ == GAME_STATE::NOMAL)
 			{
-				player_->ClearPose();
-				currentGameState_ = GAME_STATE::CLEAR;
+				Result();
 			}
 		}
 		//ステージの区画をクリアしているなら
@@ -260,3 +279,6 @@ void Scene::CBattleScene::RegisterAfterSpawn()
 	}
 	);
 }
+
+
+

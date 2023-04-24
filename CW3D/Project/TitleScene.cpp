@@ -1,6 +1,6 @@
 #include "TitleScene.h"
 #include "RegistMessageServiceDefine.h"
-
+#include "ChangeDeviceMessageFunc.h"
 
 
 Scene::CTitleScene::CTitleScene()
@@ -27,24 +27,9 @@ bool Scene::CTitleScene::Load()
 	titleLogoFont_.SetBold(60);
 	textFont_.Create(50, "M PLUS 1");
 
-	auto input = InputManagerInstance.GetInput(0);
-	switch (input->GetDeviceType())
-	{
-	case GameDevice::KeyBoardAndMouse:
-		ChangeKeyBoardUI();
-		break;
-	case GameDevice::Controller:
-		ChangeControllerUI();
-		break;
-	default:
-		break;
-	}
-
-	//デバイス変更によるUI変更メッセージ登録
-	const auto& message = RegistMessageService::GetService();
-	message->Regist(ChangeDevice_KeyBoard,
-		[this]() {ChangeKeyBoardUI(); });
-	message->Regist(ChangeDevice_Controller,
+	//デバイス変更時に実行する関数登録
+	MyUtil::CChangeDeviceMessageFunc::Load(
+		[this]() {ChangeKeyBoardUI();	},
 		[this]() {ChangeControllerUI(); });
 
 	return true;

@@ -23,8 +23,6 @@
 		 */
 		static void Create()
 		{
-			//エラー確認
-			//assert(!instance);
 
 			if (instance_)
 			{

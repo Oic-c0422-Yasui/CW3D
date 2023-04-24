@@ -15,6 +15,7 @@ namespace Task
 		MAIN3,		//メインタスク３
 		COLLISION1,	//衝突タスク１
 		COLLISION2,	//衝突タスク２
+		AFTER,		//最後に実行
 	};
 	//タスク関数
 	using Func = std::function<void()>;

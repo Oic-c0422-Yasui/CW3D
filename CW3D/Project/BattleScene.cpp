@@ -111,7 +111,10 @@ bool Scene::CBattleScene::Load()
 	
 	//ステージ読み込み
 	auto stage = std::make_shared<CStage1>();
-	stageManager_.Load(stage, stageLoader.GetDivisionArray());
+	if (!stageManager_.Load(stage, stageLoader.GetDivisionArray()))
+	{
+		return false;
+	};
 
 	//プレイヤーをマネージャーに登録
 	ActorObjectManagerInstance.Add(player_);
@@ -122,6 +125,16 @@ bool Scene::CBattleScene::Load()
 	//フォント作成
 	font_.Create(225, "ＭＳ ゴシック");
 
+	//ゲームオーバー時処理読み込み
+	if (!gameOver_.Load())
+	{
+		return false;
+	}
+	//ゲームクリア時処理読み込み
+	if (!result_.Load())
+	{
+		return false;
+	}
 	
 
 	return true;
@@ -171,7 +184,8 @@ void Scene::CBattleScene::Initialize()
 
 	//ゲームの状態初期化
 	currentGameState_ = GAME_STATE::NOMAL;
-
+	gameOver_.Initialize();
+	result_.Initialize();
 
 	//タスクの登録
 	RegisterTask();
@@ -180,58 +194,26 @@ void Scene::CBattleScene::Initialize()
 void Scene::CBattleScene::Update()
 {
 
-	if (currentGameState_ == GAME_STATE::CLEAR || 
-		currentGameState_ == GAME_STATE::OVER)
+	if (currentGameState_ == GAME_STATE::CLEAR)
 	{
-		//フェードエフェクト
-		const float time = 0.5f;
-		auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
-		//遷移
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_BACK))
-		{
-			//タイトルへ遷移
-			SceneChangeService::GetService()->ChangeScene(SCENENO::TITLE, sceneEffect);
-			return;
-		}
-		//リトライ
-		if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_RETRY))
-		{
-			//初期化
-			SceneInitializeService::GetService()->InitializeScene(sceneEffect);
-			return;
-		}
-
+		//ゲームクリア時処理
+		result_.Update();
+		if (result_.IsEnd()) { return; }
 	}
-
+	else if (currentGameState_ == GAME_STATE::OVER)
+	{
+		//ゲームオーバー時処理
+		gameOver_.Update();
+		return;
+	}
+	
 	//更新タスク実行
 	updateTask_.Excution();
 
-
-	//エフェクト描画更新
-	EffectRendererInstance.Update();
-	//エフェクト操作更新
-	EffectControllerInstance.Update();
-	//時間操作更新
-	TimeScaleControllerInstance.Update();
-	//カメラ操作更新
-	CameraControllerInstance.Update(player_->GetPosition(), player_->GetPosition());
-	//ショットマネージャー更新
-	ShotManagerInstance.Update();
-
-	//ショット削除処理
-	ShotManagerInstance.Delete();
-	//エフェクト削除処理
-	EffectControllerInstance.Delete();
-	//アクター削除処理
-	ActorObjectManagerInstance.Delete();
-	
 }
 
 void Scene::CBattleScene::Render()
 {
-	//シェーダーにカメラ情報設定
-	normalMap_->SetCamera();
-	normalMapSkin_->SetCamera();
 
 	//描画タスク実行
 	renderTask_.Excution();
@@ -311,6 +293,11 @@ void Scene::CBattleScene::Render2DDebug()
 	g_pInput->GetMousePos(pos);
 	CGraphicsUtilities::RenderString(400, 30, "X:%.1f Y:%.1f", pos.x, pos.y);
 
+	//クリア画面へ以降
+	if (g_pInput->IsKeyHold(MOFKEY_LCONTROL) && g_pInput->IsKeyPush(MOFKEY_Q))
+	{
+		Result();
+	}
 }
 
 void Scene::CBattleScene::Release()
@@ -341,6 +328,11 @@ void Scene::CBattleScene::Release()
 	normalMap_.reset();
 	normalMapSkin_.reset();
 	
+	//ゲームオーバー時処理解放
+	gameOver_.Release();
+	//ゲームクリア時処理解放
+	result_.Release();
+
 	giveTexture_.reset();
 	CServiceLocator<MyClass::CGiveTextureToMaterial>::Release();
 
@@ -458,3 +450,13 @@ void Scene::CBattleScene::RegisterTask()
 
 }
 
+void Scene::CBattleScene::GameOver()
+{
+	currentGameState_ = GAME_STATE::OVER;
+}
+
+void Scene::CBattleScene::Result()
+{
+	player_->ClearPose();
+	currentGameState_ = GAME_STATE::CLEAR;
+}

@@ -25,6 +25,11 @@ void ActionGame::CIdleStateAI::Update()
 {
 	//ターゲット取得
 	const auto& target = CServiceLocator< CPlayer >::GetService();
+	if (target->IsDead())
+	{
+		return;
+	}
+
 	//アクター取得
 	const auto& transform = Actor()->GetTransform();
 	//警戒ボックス

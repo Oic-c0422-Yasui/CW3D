@@ -11,7 +11,7 @@ namespace ActionGame
 	class CTimer
 	{
 	private:
-		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float>>	currentTime_;
+		ParameterHandle< CReactiveParameter<float>>	currentTime_;
 		float	targetTime_;
 		bool	isAchieve_;
 		bool	isStop_;
@@ -20,21 +20,30 @@ namespace ActionGame
 		~CTimer();
 
 		/**
-		 * @brief		タイマー開始
+		 * @brief		タイマー開始（目標時間なし）
 		 */
 		void Start();
 		/**
-		 * @brief		タイマー開始
+		 * @brief		タイマー開始（目標時間あり）
 		 * @param		目標時間
 		 */
 		void Start(float targetTime);
-
+		/*
+		* @brief	タイマー停止
+		*/
 		void Stop();
-
+		/*
+		* @brief	更新
+		*/
 		void Update();
-
+		/*
+		* @brief	キャラのタイムスケールに合わせた更新
+		* @param	キャラのタイプ
+		*/
 		void Update(CHARA_TYPE timeScaleType);
-
+		/*
+		* @brief	リセット
+		*/
 		void Reset();
 
 		/**
@@ -54,7 +63,7 @@ namespace ActionGame
 		/**
 		 * @brief		現在時間のサブスクライブ
 		 */
-		ActionGame::IObservable<float>& GetTimeSubject()
+		IObservable<float>& GetTimeSubject()
 		{
 			return currentTime_.Get();
 		}
