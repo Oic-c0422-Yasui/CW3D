@@ -50,8 +50,10 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//シェーダー読み込み
 	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
 
-	CActorObject::Load();
-	
+	//モーション作成
+	motion_ = mesh_->CreateMotionController();
+	//モーション状態設定
+	actor_->SetAnimationState(motion_);
 
 	//アクション作成
 	actionCreator->Create(actor_);
@@ -71,6 +73,7 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//AI作成
 	AI_ = aiCreator->Create(actor_, stateMachine_, stateInput);
 
+	CActorObject::Load();
 
 	return true;
 }

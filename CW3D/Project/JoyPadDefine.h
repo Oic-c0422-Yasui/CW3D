@@ -2,9 +2,9 @@
 
 enum JOYPAD_KEY
 {
+	JOYPAD_X,		//四角
 	JOYPAD_A,		//バツ
 	JOYPAD_B,		//マル
-	JOYPAD_X,		//四角
 	JOYPAD_Y,		//三角
 	JOYPAD_LB,		//L1
 	JOYPAD_RB,		//R1

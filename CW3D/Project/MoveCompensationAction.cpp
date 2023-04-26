@@ -124,6 +124,7 @@ bool ActionGame::CMoveCompensationAction::MoveCompensation(Parameter& param)
 
 		//‹——£ŒvŽZ
 		const auto selfPos = Transform()->GetPosition();
+		auto aaa = param.targetPos->GetPosition();
 
 		const auto distance = MyUtil::DistanceSquare(selfPos, param.targetPos->GetPosition());
 		const int square = 2;

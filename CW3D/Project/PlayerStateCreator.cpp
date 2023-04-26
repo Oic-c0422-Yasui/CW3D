@@ -66,7 +66,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 
 	//攻撃３
-	auto gravity = GravityScaleParam{true,1.0f,0.01f,1.0f};
+	auto gravity = GravityScaleParam{true,2.0f,0.01f,1.0f};
 	stateMachine->AddState(CState::Create<CAttack3State>(actor, input,
 		CAttack3State::Parameter{
 			2
@@ -144,7 +144,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			4
 			,GameFrameTime * 40.0f
 			,GameFrameTime * 80.0f
-			,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(0.35f, 0.15f, -0.3f),false,actor->GetType(), nullptr,4,0.0f,0,nullptr,GravityScaleParam(), Vector3(7.0f, 10.0f, 7.0f) }
+			,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(-0.3f, 0.15f, -0.3f),false,actor->GetType(), nullptr,4,0.0f,0,nullptr,GravityScaleParam(), Vector3(7.0f, 10.0f, 7.0f) }
 			,EffectCreateParameter{ "SkillEffect1", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f,actor->GetType() }
 
 		}));
@@ -174,7 +174,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 
 	//竜巻スキルステート
-	gravity = GravityScaleParam{ true,0.5f,0.01f,1.0f };
+	gravity = GravityScaleParam{ true,1.0f,0.01f,1.0f };
 	stateMachine->AddState(CState::Create<CStormSkillState>(actor, input,
 		CStormSkillState::Parameter{
 			3
@@ -230,12 +230,11 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 
 	//超ジャンプスキルステート
-	gravity = GravityScaleParam{ true,1.0f,0.01f,1.0f };
 	stateMachine->AddState(CState::Create<CFlyHighSkillState>(actor, input,
 		CFlyHighSkillState::Parameter{
 			2
 			,GameFrameTime * 5.0f
-			,GameFrameTime * 10.0f
+			,GameFrameTime * 30.0f
 			,GameFrameTime * 0.0f
 			,GameFrameTime * 7.0f
 			,ShotAABB{ Vector3(0.0f, -1.0f, 0), 2.5f, 0, Vector3(0.0f, 0.35f, 0.0f),false,actor->GetType(), nullptr,3,1.0f,0,damageEffect,gravity, Vector3(2.0f, 3.0f, 2.0f) }

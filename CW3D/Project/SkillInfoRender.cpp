@@ -323,7 +323,7 @@ void ActionGame::CSkillInfoRender::SetControllerName()
 	*/
 	auto& frame = skillFrame_[Device_Controller];
 	frame[16].str = "Y";	//三角
-	frame[17].str = "B";	//丸
+	frame[17].str = "A";	//丸
 
 
 	//キーの座標設定
