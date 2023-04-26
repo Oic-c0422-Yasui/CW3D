@@ -417,6 +417,7 @@
     <ClInclude Include="ChangeDeviceMessageFunc.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConvertUtilities.h" />
+    <ClInclude Include="FixedXYInhaleKnockBack.h" />
     <ClInclude Include="FlyHighSkillState.h" />
     <ClInclude Include="GravityScale.h" />
     <ClInclude Include="GravityUtilities.h" />

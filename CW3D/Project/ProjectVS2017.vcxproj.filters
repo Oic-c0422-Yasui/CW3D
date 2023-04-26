@@ -1841,6 +1841,9 @@
     <ClInclude Include="FlyHighSkillState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="FixedXYInhaleKnockBack.h">
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
