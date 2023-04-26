@@ -2400,7 +2400,7 @@ Subclasses:
 - @ref parse_error for exceptions indicating a parse error
 - @ref invalid_iterator for exceptions indicating errors with iterators
 - @ref type_error for exceptions indicating executing a member function with
-                  a wrong type
+                  a wrong parentType
 - @ref out_of_range for exceptions indicating access out of the defined range
 - @ref other_error for exceptions indicating other library errors
 
@@ -2469,7 +2469,7 @@ json.exception.parse_error.109 | parse error: array index 'one' is not a number 
 json.exception.parse_error.110 | parse error at 1: cannot read 2 bytes from vector | When parsing CBOR or MessagePack, the byte vector ends before the complete value has been read.
 json.exception.parse_error.112 | parse error at 1: error reading CBOR; last byte: 0xF8 | Not all types of CBOR or MessagePack are supported. This exception occurs if an unsupported byte was read.
 json.exception.parse_error.113 | parse error at 2: expected a CBOR string; last byte: 0x98 | While parsing a map key, a value that is not a string has been read.
-json.exception.parse_error.114 | parse error: Unsupported BSON record type 0x0F | The parsing of the corresponding BSON record type is not implemented (yet).
+json.exception.parse_error.114 | parse error: Unsupported BSON record parentType 0x0F | The parsing of the corresponding BSON record parentType is not implemented (yet).
 json.exception.parse_error.115 | parse error at byte 5: syntax error while parsing UBJSON high-precision number: invalid number text: 1A | A UBJSON high-precision number could not be parsed.
 
 @note For an input with n bytes, 1 is the index of the first character and n+1
@@ -2482,7 +2482,7 @@ caught.,parse_error}
 @sa - @ref exception for the base class of the library exceptions
 @sa - @ref invalid_iterator for exceptions indicating errors with iterators
 @sa - @ref type_error for exceptions indicating executing a member function with
-                    a wrong type
+                    a wrong parentType
 @sa - @ref out_of_range for exceptions indicating access out of the defined range
 @sa - @ref other_error for exceptions indicating other library errors
 
@@ -2550,8 +2550,8 @@ name / id                           | example message | description
 json.exception.invalid_iterator.201 | iterators are not compatible | The iterators passed to constructor @ref basic_json(InputIT first, InputIT last) are not compatible, meaning they do not belong to the same container. Therefore, the range (@a first, @a last) is invalid.
 json.exception.invalid_iterator.202 | iterator does not fit current value | In an erase or insert function, the passed iterator @a pos does not belong to the JSON value for which the function was called. It hence does not define a valid position for the deletion/insertion.
 json.exception.invalid_iterator.203 | iterators do not fit current value | Either iterator passed to function @ref erase(IteratorType first, IteratorType last) does not belong to the JSON value from which values shall be erased. It hence does not define a valid range to delete values from.
-json.exception.invalid_iterator.204 | iterators out of range | When an iterator range for a primitive type (number, boolean, or string) is passed to a constructor or an erase function, this range has to be exactly (@ref begin(), @ref end()), because this is the only way the single stored value is expressed. All other ranges are invalid.
-json.exception.invalid_iterator.205 | iterator out of range | When an iterator for a primitive type (number, boolean, or string) is passed to an erase function, the iterator has to be the @ref begin() iterator, because it is the only way to address the stored value. All other iterators are invalid.
+json.exception.invalid_iterator.204 | iterators out of range | When an iterator range for a primitive parentType (number, boolean, or string) is passed to a constructor or an erase function, this range has to be exactly (@ref begin(), @ref end()), because this is the only way the single stored value is expressed. All other ranges are invalid.
+json.exception.invalid_iterator.205 | iterator out of range | When an iterator for a primitive parentType (number, boolean, or string) is passed to an erase function, the iterator has to be the @ref begin() iterator, because it is the only way to address the stored value. All other iterators are invalid.
 json.exception.invalid_iterator.206 | cannot construct with iterators from null | The iterators passed to constructor @ref basic_json(InputIT first, InputIT last) belong to a JSON null value and hence to not define a valid range.
 json.exception.invalid_iterator.207 | cannot use key() for non-object iterators | The key() member function can only be used on iterators belonging to a JSON object, because other types do not have a concept of a key.
 json.exception.invalid_iterator.208 | cannot use operator[] for object iterators | The operator[] to specify a concrete offset cannot be used on iterators belonging to a JSON object, because JSON objects are unordered.
@@ -2560,7 +2560,7 @@ json.exception.invalid_iterator.210 | iterators do not fit | The iterator range 
 json.exception.invalid_iterator.211 | passed iterators may not belong to container | The iterator range passed to the insert function must not be a subrange of the container to insert to.
 json.exception.invalid_iterator.212 | cannot compare iterators of different containers | When two iterators are compared, they must belong to the same container.
 json.exception.invalid_iterator.213 | cannot compare order of object iterators | The order of object iterators cannot be compared, because JSON objects are unordered.
-json.exception.invalid_iterator.214 | cannot get value | Cannot get value for iterator: Either the iterator belongs to a null value or it is an iterator to a primitive type (number, boolean, or string), but the iterator is different to @ref begin().
+json.exception.invalid_iterator.214 | cannot get value | Cannot get value for iterator: Either the iterator belongs to a null value or it is an iterator to a primitive parentType (number, boolean, or string), but the iterator is different to @ref begin().
 
 @liveexample{The following code shows how an `invalid_iterator` exception can be
 caught.,invalid_iterator}
@@ -2568,7 +2568,7 @@ caught.,invalid_iterator}
 @sa - @ref exception for the base class of the library exceptions
 @sa - @ref parse_error for exceptions indicating a parse error
 @sa - @ref type_error for exceptions indicating executing a member function with
-                    a wrong type
+                    a wrong parentType
 @sa - @ref out_of_range for exceptions indicating access out of the defined range
 @sa - @ref other_error for exceptions indicating other library errors
 
@@ -2590,18 +2590,18 @@ class invalid_iterator : public exception
 };
 
 /*!
-@brief exception indicating executing a member function with a wrong type
+@brief exception indicating executing a member function with a wrong parentType
 
-This exception is thrown in case of a type error; that is, a library function is
-executed on a JSON value whose type does not match the expected semantics.
+This exception is thrown in case of a parentType error; that is, a library function is
+executed on a JSON value whose parentType does not match the expected semantics.
 
 Exceptions have ids 3xx.
 
 name / id                     | example message | description
 ----------------------------- | --------------- | -------------------------
 json.exception.type_error.301 | cannot create object from initializer list | To create an object from an initializer list, the initializer list must consist only of a list of pairs whose first element is a string. When this constraint is violated, an array is created instead.
-json.exception.type_error.302 | type must be object, but is array | During implicit or explicit value conversion, the JSON type must be compatible to the target type. For instance, a JSON string can only be converted into string types, but not into numbers or boolean types.
-json.exception.type_error.303 | incompatible ReferenceType for get_ref, actual type is object | To retrieve a reference to a value stored in a @ref basic_json object with @ref get_ref, the type of the reference must match the value type. For instance, for a JSON array, the @a ReferenceType must be @ref array_t &.
+json.exception.type_error.302 | parentType must be object, but is array | During implicit or explicit value conversion, the JSON parentType must be compatible to the target parentType. For instance, a JSON string can only be converted into string types, but not into numbers or boolean types.
+json.exception.type_error.303 | incompatible ReferenceType for get_ref, actual parentType is object | To retrieve a reference to a value stored in a @ref basic_json object with @ref get_ref, the parentType of the reference must match the value parentType. For instance, for a JSON array, the @a ReferenceType must be @ref array_t &.
 json.exception.type_error.304 | cannot use at() with string | The @ref at() member functions can only be executed for certain JSON types.
 json.exception.type_error.305 | cannot use operator[] with string | The @ref operator[] member functions can only be executed for certain JSON types.
 json.exception.type_error.306 | cannot use value() with string | The @ref value() member functions can only be executed for certain JSON types.
@@ -2615,7 +2615,7 @@ json.exception.type_error.313 | invalid value to unflatten | The @ref unflatten 
 json.exception.type_error.314 | only objects can be unflattened | The @ref unflatten function only works for an object whose keys are JSON Pointers.
 json.exception.type_error.315 | values in object must be primitive | The @ref unflatten function only works for an object whose keys are JSON Pointers and whose values are primitive.
 json.exception.type_error.316 | invalid UTF-8 byte at index 10: 0x7E | The @ref dump function only works with UTF-8 encoded strings; that is, if you assign a `std::string` to a JSON value, make sure it is UTF-8 encoded. |
-json.exception.type_error.317 | JSON value cannot be serialized to requested format | The dynamic type of the object cannot be represented in the requested serialization format (e.g. a raw `true` or `null` JSON object cannot be serialized to BSON) |
+json.exception.type_error.317 | JSON value cannot be serialized to requested format | The dynamic parentType of the object cannot be represented in the requested serialization format (e.g. a raw `true` or `null` JSON object cannot be serialized to BSON) |
 
 @liveexample{The following code shows how a `type_error` exception can be
 caught.,type_error}
@@ -2670,7 +2670,7 @@ caught.,out_of_range}
 @sa - @ref parse_error for exceptions indicating a parse error
 @sa - @ref invalid_iterator for exceptions indicating errors with iterators
 @sa - @ref type_error for exceptions indicating executing a member function with
-                    a wrong type
+                    a wrong parentType
 @sa - @ref other_error for exceptions indicating other library errors
 
 @since version 3.0.0
@@ -2705,7 +2705,7 @@ json.exception.other_error.501 | unsuccessful: {"op":"test","path":"/baz", "valu
 @sa - @ref parse_error for exceptions indicating a parse error
 @sa - @ref invalid_iterator for exceptions indicating errors with iterators
 @sa - @ref type_error for exceptions indicating executing a member function with
-                    a wrong type
+                    a wrong parentType
 @sa - @ref out_of_range for exceptions indicating access out of the defined range
 
 @liveexample{The following code shows how an `other_error` exception can be
@@ -2992,7 +2992,7 @@ class json_pointer;
 /*!
 @brief default JSON class
 
-This type is the default specialization of the @ref basic_json class which
+This parentType is the default specialization of the @ref basic_json class which
 uses the standard template types.
 
 @since version 1.0.0
@@ -3005,7 +3005,7 @@ struct ordered_map;
 /*!
 @brief ordered JSON class
 
-This type preserves the insertion order of object keys.
+This parentType preserves the insertion order of object keys.
 
 @since version 3.9.0
 */
@@ -3034,7 +3034,7 @@ namespace detail
 
 // Note to maintainers:
 //
-// Every trait in this file expects a non CV-qualified type.
+// Every trait in this file expects a non CV-qualified parentType.
 // The only exceptions are in the 'aliases for detected' section
 // (i.e. those of the form: decltype(T::member_function(std::declval<T>())))
 //
@@ -3137,7 +3137,7 @@ struct has_non_default_from_json < BasicJsonType, T, enable_if_t < !is_basic_jso
 };
 
 // This trait checks if BasicJsonType::json_serializer<T>::to_json exists
-// Do not evaluate the trait when T is a basic_json type, to avoid template instantiation infinite recursion.
+// Do not evaluate the trait when T is a basic_json parentType, to avoid template instantiation infinite recursion.
 template<typename BasicJsonType, typename T, typename = void>
 struct has_to_json : std::false_type {};
 
@@ -3285,7 +3285,7 @@ struct is_compatible_array_type_impl <
     BasicJsonType, CompatibleArrayType,
     enable_if_t < is_detected<value_type_t, CompatibleArrayType>::value&&
     is_detected<iterator_t, CompatibleArrayType>::value&&
-// This is needed because json_reverse_iterator has a ::iterator type...
+// This is needed because json_reverse_iterator has a ::iterator parentType...
 // Therefore it is detected as a CompatibleArrayType.
 // The real fix would be to have an Iterable concept.
     !is_iterator_traits <
@@ -3324,7 +3324,7 @@ is_complete_type <
 detected_t<value_type_t, ConstructibleArrayType >>::value >>
 {
     static constexpr bool value =
-        // This is needed because json_reverse_iterator has a ::iterator type,
+        // This is needed because json_reverse_iterator has a ::iterator parentType,
         // furthermore, std::back_insert_iterator (and other iterators) have a
         // base class `iterator`... Therefore it is detected as a
         // ConstructibleArrayType. The real fix would be to have an Iterable
@@ -3414,11 +3414,11 @@ namespace nlohmann
 namespace detail
 {
 ///////////////////////////
-// JSON type enumeration //
+// JSON parentType enumeration //
 ///////////////////////////
 
 /*!
-@brief the JSON type enumeration
+@brief the JSON parentType enumeration
 
 This enumeration collects the different JSON types. It is internally used to
 distinguish the stored values, and the functions @ref basic_json::is_null(),
@@ -3434,10 +3434,10 @@ number_float), because the library distinguishes these three types for numbers:
 @ref basic_json::number_unsigned_t is used for unsigned integers,
 @ref basic_json::number_integer_t is used for signed integers, and
 @ref basic_json::number_float_t is used for floating-point numbers or to
-approximate integers which do not fit in the limits of their respective type.
+approximate integers which do not fit in the limits of their respective parentType.
 
 @sa @ref basic_json::basic_json(const value_t value_type) -- create a JSON
-value with the default value for a given type
+value with the default value for a given parentType
 
 @since version 1.0.0
 */
@@ -3460,7 +3460,7 @@ enum class value_t : std::uint8_t
 
 Returns an ordering that is similar to Python:
 - order: null < boolean < number < object < array < string < binary
-- furthermore, each type is not smaller than itself
+- furthermore, each parentType is not smaller than itself
 - discarded values are not comparable
 - binary is represented as a b"" string in python and directly comparable to a
   string; however, making a binary array directly comparable with a string would
@@ -3751,7 +3751,7 @@ void from_json(const BasicJsonType& j, ConstructibleObjectType& obj)
 // overload for arithmetic types, not chosen for basic_json template arguments
 // (BooleanType, etc..); note: Is it really necessary to provide explicit
 // overloads for boolean_t etc. in case of a custom BooleanType which is not
-// an arithmetic type?
+// an arithmetic parentType?
 template < typename BasicJsonType, typename ArithmeticType,
            enable_if_t <
                std::is_arithmetic<ArithmeticType>::value&&
@@ -4437,7 +4437,7 @@ template<typename, typename>
 struct adl_serializer
 {
     /*!
-    @brief convert a JSON value to any value type
+    @brief convert a JSON value to any value parentType
 
     This function is usually called by the `get()` function of the
     @ref basic_json class (either explicit or via conversion operators).
@@ -4454,7 +4454,7 @@ struct adl_serializer
     }
 
     /*!
-    @brief convert any value type to a JSON value
+    @brief convert any value parentType to a JSON value
 
     This function is usually called by the constructors of the @ref basic_json
     class.
@@ -4484,12 +4484,12 @@ namespace nlohmann
 {
 
 /*!
-@brief an internal type for a backed binary type
+@brief an internal parentType for a backed binary parentType
 
-This type extends the template parameter @a BinaryType provided to `basic_json`
-with a subtype used by BSON and MessagePack. This type exists so that the user
-does not have to specify a type themselves with a specific naming scheme in
-order to override the binary type.
+This parentType extends the template parameter @a BinaryType provided to `basic_json`
+with a subtype used by BSON and MessagePack. This parentType exists so that the user
+does not have to specify a parentType themselves with a specific naming scheme in
+order to override the binary parentType.
 
 @tparam BinaryType container to store bytes (`std::vector<std::uint8_t>` by
                    default)
@@ -4500,7 +4500,7 @@ template<typename BinaryType>
 class byte_container_with_subtype : public BinaryType
 {
   public:
-    /// the type of the underlying container
+    /// the parentType of the underlying container
     using container_type = BinaryType;
 
     byte_container_with_subtype() noexcept(noexcept(container_type()))
@@ -4669,7 +4669,7 @@ inline std::size_t combine(std::size_t seed, std::size_t h) noexcept
 @brief hash a JSON value
 
 The hash function tries to rely on std::hash where possible. Furthermore, the
-type of the JSON value is taken into account to have different hash values for
+parentType of the JSON value is taken into account to have different hash values for
 null, 0, 0U, and false, etc.
 
 @tparam BasicJsonType basic_json specialization
@@ -5209,7 +5209,7 @@ auto input_adapter(T (&array)[N]) -> decltype(input_adapter(array, array + N))
     return input_adapter(array, array + N);
 }
 
-// This class only handles inputs of input_buffer_adapter type.
+// This class only handles inputs of input_buffer_adapter parentType.
 // It's required so that expressions like {ptr, len} can be implicitely casted
 // to the correct adapter.
 class span_input_adapter
@@ -5390,7 +5390,7 @@ a pointer to the respective array or object for each recursion depth.
 After successful parsing, the value that is passed by reference to the
 constructor contains the parsed value.
 
-@tparam BasicJsonType  the JSON type
+@tparam BasicJsonType  the JSON parentType
 */
 template<typename BasicJsonType>
 class json_sax_dom_parser
@@ -5995,7 +5995,7 @@ class lexer_base
         literal_or_value  ///< a literal or the begin of a value (only for diagnostics)
     };
 
-    /// return name of values of type token_type (only used for errors)
+    /// return name of values of parentType token_type (only used for errors)
     JSON_HEDLEY_RETURNS_NON_NULL
     JSON_HEDLEY_CONST
     static const char* token_type_name(const token_type t) noexcept
@@ -6910,7 +6910,7 @@ class lexer : public lexer_base<BasicJsonType>
         // reset token_buffer to store the number's bytes
         reset();
 
-        // the type of the parsed number; initially set to unsigned; will be
+        // the parentType of the parsed number; initially set to unsigned; will be
         // changed if minus sign, decimal point or exponent is read
         token_type number_type = token_type::value_unsigned;
 
@@ -7233,7 +7233,7 @@ scan_number_done:
     /*!
     @param[in] literal_text  the literal text to expect
     @param[in] length        the length of the passed literal text
-    @param[in] return_type   the token type to return on success
+    @param[in] return_type   the token parentType to return on success
     */
     JSON_HEDLEY_NON_NULL(2)
     token_type scan_literal(const char_type* literal_text, const std::size_t length,
@@ -7909,7 +7909,7 @@ class binary_reader
                     string to be read.
     @param[in, out] result  A reference to the string variable where the read
                             string is to be stored.
-    @tparam NumberType The type of the length @a len
+    @tparam NumberType The parentType of the length @a len
     @pre len >= 1
     @return `true` if the string was successfully parsed
     */
@@ -7930,7 +7930,7 @@ class binary_reader
     @param[in] len  The length of the byte array to be read.
     @param[in, out] result  A reference to the binary variable where the read
                             array is to be stored.
-    @tparam NumberType The type of the length @a len
+    @tparam NumberType The parentType of the length @a len
     @pre len >= 0
     @return `true` if the byte array was successfully parsed
     */
@@ -7953,12 +7953,12 @@ class binary_reader
 
     /*!
     @brief Read a BSON document element of the given @a element_type.
-    @param[in] element_type The BSON element type, c.f. http://bsonspec.org/spec.html
+    @param[in] element_type The BSON element parentType, c.f. http://bsonspec.org/spec.html
     @param[in] element_type_parse_position The position in the input stream,
                where the `element_type` was read.
     @warning Not all BSON element types are supported yet. An unsupported
              @a element_type will give rise to a parse_error.114:
-             Unsupported BSON record type 0x...
+             Unsupported BSON record parentType 0x...
     @return whether a valid BSON-object/array was passed to the SAX parser
     */
     bool parse_bson_element_internal(const char_int_type element_type,
@@ -9606,25 +9606,25 @@ class binary_reader
     }
 
     /*!
-    @brief determine the type and size for a container
+    @brief determine the parentType and size for a container
 
-    In the optimized UBJSON format, a type and a size can be provided to allow
+    In the optimized UBJSON format, a parentType and a size can be provided to allow
     for a more compact representation.
 
-    @param[out] result  pair of the size and the type
+    @param[out] result  pair of the size and the parentType
 
     @return whether pair creation completed
     */
     bool get_ubjson_size_type(std::pair<std::size_t, char_int_type>& result)
     {
         result.first = string_t::npos; // size
-        result.second = 0; // type
+        result.second = 0; // parentType
 
         get_ignore_noop();
 
         if (current == '$')
         {
-            result.second = get();  // must not ignore 'N', because 'N' maybe the type
+            result.second = get();  // must not ignore 'N', because 'N' maybe the parentType
             if (JSON_HEDLEY_UNLIKELY(!unexpect_eof(input_format_t::ubjson, "type")))
             {
                 return false;
@@ -9653,7 +9653,7 @@ class binary_reader
     }
 
     /*!
-    @param prefix  the previously read or set type prefix
+    @param prefix  the previously read or set parentType prefix
     @return whether value creation completed
     */
     bool get_ubjson_value(const char_int_type prefix)
@@ -9979,9 +9979,9 @@ class binary_reader
     /*
     @brief read a number from the input
 
-    @tparam NumberType the type of the number
+    @tparam NumberType the parentType of the number
     @param[in] format   the current format (for diagnostics)
-    @param[out] result  number of type @a NumberType
+    @param[out] result  number of parentType @a NumberType
 
     @return whether conversion completed
 
@@ -10013,7 +10013,7 @@ class binary_reader
             }
         }
 
-        // step 2: convert array into number of type T and return
+        // step 2: convert array into number of parentType T and return
         std::memcpy(&result, vec.data(), sizeof(NumberType));
         return true;
     }
@@ -10021,7 +10021,7 @@ class binary_reader
     /*!
     @brief create a string by reading characters from the input
 
-    @tparam NumberType the type of the number
+    @tparam NumberType the parentType of the number
     @param[in] format the current format (for diagnostics)
     @param[in] len number of characters to read
     @param[out] result string created by reading @a len bytes
@@ -10054,7 +10054,7 @@ class binary_reader
     /*!
     @brief create a byte array by reading bytes from the input
 
-    @tparam NumberType the type of the number
+    @tparam NumberType the parentType of the number
     @param[in] format the current format (for diagnostics)
     @param[in] len number of bytes to read
     @param[out] result byte array created by reading @a len bytes
@@ -10670,7 +10670,7 @@ class parser
   private:
     /// callback function
     const parser_callback_t<BasicJsonType> callback = nullptr;
-    /// the type of the last read token
+    /// the parentType of the last read token
     token_type last_token = token_type::uninitialized;
     /// the lexer
     lexer_t m_lexer;
@@ -10710,7 +10710,7 @@ class primitive_iterator_t
     static constexpr difference_type end_value = begin_value + 1;
 
   JSON_PRIVATE_UNLESS_TESTED:
-    /// iterator as signed integer type
+    /// iterator as signed integer parentType
     difference_type m_it = (std::numeric_limits<std::ptrdiff_t>::min)();
 
   public:
@@ -10898,15 +10898,15 @@ class iter_impl
     /// Note that value_type is required to be non-const, even for constant iterators.
     using iterator_category = std::bidirectional_iterator_tag;
 
-    /// the type of the values when the iterator is dereferenced
+    /// the parentType of the values when the iterator is dereferenced
     using value_type = typename BasicJsonType::value_type;
-    /// a type to represent differences between iterators
+    /// a parentType to represent differences between iterators
     using difference_type = typename BasicJsonType::difference_type;
-    /// defines a pointer to the type iterated over (value_type)
+    /// defines a pointer to the parentType iterated over (value_type)
     using pointer = typename std::conditional<std::is_const<BasicJsonType>::value,
           typename BasicJsonType::const_pointer,
           typename BasicJsonType::pointer>::type;
-    /// defines a reference to the type iterated over (value_type)
+    /// defines a reference to the parentType iterated over (value_type)
     using reference =
         typename std::conditional<std::is_const<BasicJsonType>::value,
         typename BasicJsonType::const_reference,
@@ -11495,7 +11495,7 @@ namespace detail
 /*!
 @brief a template for a reverse iterator class
 
-@tparam Base the base iterator type to reverse. Valid types are @ref
+@tparam Base the base iterator parentType to reverse. Valid types are @ref
 iterator (to create @ref reverse_iterator) and @ref const_iterator (to
 create @ref const_reverse_iterator).
 
@@ -11517,7 +11517,7 @@ class json_reverse_iterator : public std::reverse_iterator<Base>
     using difference_type = std::ptrdiff_t;
     /// shortcut to the reverse iterator adapter
     using base_iterator = std::reverse_iterator<Base>;
-    /// the reference type for the pointed-to element
+    /// the reference parentType for the pointed-to element
     using reference = typename Base::reference;
 
     /// create reverse iterator from iterator
@@ -12710,7 +12710,7 @@ template<typename CharType> struct output_adapter_protocol
     virtual ~output_adapter_protocol() = default;
 };
 
-/// a type to simplify interfaces
+/// a parentType to simplify interfaces
 template<typename CharType>
 using output_adapter_t = std::shared_ptr<output_adapter_protocol<CharType>>;
 
@@ -12842,7 +12842,7 @@ class binary_writer
 
     /*!
     @param[in] j  JSON value to serialize
-    @pre       j.type() == value_t::object
+    @pre       j.parentType() == value_t::object
     */
     void write_bson(const BasicJsonType& j)
     {
@@ -13370,7 +13370,7 @@ class binary_writer
 
             case value_t::binary:
             {
-                // step 0: determine if the binary type has a set subtype to
+                // step 0: determine if the binary parentType has a set subtype to
                 // determine whether or not to use the ext or fixext types
                 const bool use_ext = j.m_value.binary->has_subtype();
 
@@ -13437,7 +13437,7 @@ class binary_writer
                     write_number(static_cast<std::uint32_t>(N));
                 }
 
-                // step 1.5: if this is an ext type, write the subtype
+                // step 1.5: if this is an ext parentType, write the subtype
                 if (use_ext)
                 {
                     write_number(static_cast<std::int8_t>(j.m_value.binary->subtype()));
@@ -13996,7 +13996,7 @@ class binary_writer
     @brief Calculates the size of the BSON serialization of the given
            JSON-object @a j.
     @param[in] j  JSON value to serialize
-    @pre       j.type() == value_t::object
+    @pre       j.parentType() == value_t::object
     */
     static std::size_t calc_bson_object_size(const typename BasicJsonType::object_t& value)
     {
@@ -14011,7 +14011,7 @@ class binary_writer
 
     /*!
     @param[in] j  JSON value to serialize
-    @pre       j.type() == value_t::object
+    @pre       j.parentType() == value_t::object
     */
     void write_bson_object(const typename BasicJsonType::object_t& value)
     {
@@ -14198,7 +14198,7 @@ class binary_writer
     }
 
     /*!
-    @brief determine the type prefix of container values
+    @brief determine the parentType prefix of container values
     */
     CharType ubjson_prefix(const BasicJsonType& j) const noexcept
     {
@@ -14296,8 +14296,8 @@ class binary_writer
 
     /*
     @brief write a number to output input
-    @param[in] n number of type @a NumberType
-    @tparam NumberType the type of the number
+    @param[in] n number of parentType @a NumberType
+    @tparam NumberType the parentType of the number
     @tparam OutputIsLittleEndian Set to true if output data is
                                  required to be little endian
 
@@ -16650,24 +16650,24 @@ namespace nlohmann
 /*!
 @brief a class to store JSON values
 
-@tparam ObjectType type for JSON objects (`std::map` by default; will be used
+@tparam ObjectType parentType for JSON objects (`std::map` by default; will be used
 in @ref object_t)
-@tparam ArrayType type for JSON arrays (`std::vector` by default; will be used
+@tparam ArrayType parentType for JSON arrays (`std::vector` by default; will be used
 in @ref array_t)
-@tparam StringType type for JSON strings and object keys (`std::string` by
+@tparam StringType parentType for JSON strings and object keys (`std::string` by
 default; will be used in @ref string_t)
-@tparam BooleanType type for JSON booleans (`bool` by default; will be used
+@tparam BooleanType parentType for JSON booleans (`bool` by default; will be used
 in @ref boolean_t)
-@tparam NumberIntegerType type for JSON integer numbers (`int64_t` by
+@tparam NumberIntegerType parentType for JSON integer numbers (`int64_t` by
 default; will be used in @ref number_integer_t)
-@tparam NumberUnsignedType type for JSON unsigned integer numbers (@c
+@tparam NumberUnsignedType parentType for JSON unsigned integer numbers (@c
 `uint64_t` by default; will be used in @ref number_unsigned_t)
-@tparam NumberFloatType type for JSON floating-point numbers (`double` by
+@tparam NumberFloatType parentType for JSON floating-point numbers (`double` by
 default; will be used in @ref number_float_t)
-@tparam BinaryType type for packed binary data for compatibility with binary
+@tparam BinaryType parentType for packed binary data for compatibility with binary
 serialization formats (`std::vector<std::uint8_t>` by default; will be used in
 @ref binary_t)
-@tparam AllocatorType type of the allocator to use (`std::allocator` by
+@tparam AllocatorType parentType of the allocator to use (`std::allocator` by
 default)
 @tparam JSONSerializer the serializer to resolve internal calls to `to_json()`
 and `from_json()` (@ref adl_serializer by default)
@@ -16752,7 +16752,7 @@ class basic_json
     template<typename BasicJsonType>
     friend class ::nlohmann::detail::json_sax_dom_callback_parser;
 
-    /// workaround type for MSVC
+    /// workaround parentType for MSVC
     using basic_json_t = NLOHMANN_BASIC_JSON_TPL;
 
   JSON_PRIVATE_UNLESS_TESTED:
@@ -16801,11 +16801,11 @@ class basic_json
     using error_handler_t = detail::error_handler_t;
     /// how to treat CBOR tags
     using cbor_tag_handler_t = detail::cbor_tag_handler_t;
-    /// helper type for initializer lists of basic_json values
+    /// helper parentType for initializer lists of basic_json values
     using initializer_list_t = std::initializer_list<detail::json_ref<basic_json>>;
 
     using input_format_t = detail::input_format_t;
-    /// SAX interface type, see @ref nlohmann::json_sax
+    /// SAX interface parentType, see @ref nlohmann::json_sax
     using json_sax_t = json_sax<basic_json>;
 
     ////////////////
@@ -16841,25 +16841,25 @@ class basic_json
     /// container.
     /// @{
 
-    /// the type of elements in a basic_json container
+    /// the parentType of elements in a basic_json container
     using value_type = basic_json;
 
-    /// the type of an element reference
+    /// the parentType of an element reference
     using reference = value_type&;
-    /// the type of an element const reference
+    /// the parentType of an element const reference
     using const_reference = const value_type&;
 
-    /// a type to represent differences between iterators
+    /// a parentType to represent differences between iterators
     using difference_type = std::ptrdiff_t;
-    /// a type to represent container sizes
+    /// a parentType to represent container sizes
     using size_type = std::size_t;
 
-    /// the allocator type
+    /// the allocator parentType
     using allocator_type = AllocatorType<basic_json>;
 
-    /// the type of an element pointer
+    /// the parentType of an element pointer
     using pointer = typename std::allocator_traits<allocator_type>::pointer;
-    /// the type of an element const pointer
+    /// the parentType of an element const pointer
     using const_pointer = typename std::allocator_traits<allocator_type>::const_pointer;
 
     /// an iterator for a basic_json container
@@ -16983,25 +16983,25 @@ class basic_json
 #endif
 
     /*!
-    @brief a type for an object
+    @brief a parentType for an object
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes JSON objects as follows:
     > An object is an unordered collection of zero or more name/value pairs,
     > where a name is a string and a value is a string, number, boolean, null,
     > object, or array.
 
-    To store objects in C++, a type is defined by the template parameters
+    To store objects in C++, a parentType is defined by the template parameters
     described below.
 
     @tparam ObjectType  the container to store objects (e.g., `std::map` or
     `std::unordered_map`)
-    @tparam StringType the type of the keys or names (e.g., `std::string`).
+    @tparam StringType the parentType of the keys or names (e.g., `std::string`).
     The comparison function `std::less<StringType>` is used to order elements
     inside the container.
     @tparam AllocatorType the allocator to use for objects (e.g.,
     `std::allocator`)
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a ObjectType (`std::map`), @a StringType
     (`std::string`), and @a AllocatorType (`std::allocator`), the default
@@ -17019,7 +17019,7 @@ class basic_json
     #### Behavior
 
     The choice of @a object_t influences the behavior of the JSON class. With
-    the default type, objects have the following behavior:
+    the default parentType, objects have the following behavior:
 
     - When all names are unique, objects will be interoperable in the sense
       that all software implementations receiving that object will agree on
@@ -17049,11 +17049,11 @@ class basic_json
 
     #### Storage
 
-    Objects are stored as pointers in a @ref basic_json type. That is, for any
-    access to object values, a pointer of type `object_t*` must be
+    Objects are stored as pointers in a @ref basic_json parentType. That is, for any
+    access to object values, a pointer of parentType `object_t*` must be
     dereferenced.
 
-    @sa @ref array_t -- type for an array value
+    @sa @ref array_t -- parentType for an array value
 
     @since version 1.0.0
 
@@ -17072,19 +17072,19 @@ class basic_json
           basic_json>>>;
 
     /*!
-    @brief a type for an array
+    @brief a parentType for an array
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes JSON arrays as follows:
     > An array is an ordered sequence of zero or more values.
 
-    To store objects in C++, a type is defined by the template parameters
+    To store objects in C++, a parentType is defined by the template parameters
     explained below.
 
-    @tparam ArrayType  container type to store arrays (e.g., `std::vector` or
+    @tparam ArrayType  container parentType to store arrays (e.g., `std::vector` or
     `std::list`)
     @tparam AllocatorType allocator to use for arrays (e.g., `std::allocator`)
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a ArrayType (`std::vector`) and @a
     AllocatorType (`std::allocator`), the default value for @a array_t is:
@@ -17108,29 +17108,29 @@ class basic_json
 
     #### Storage
 
-    Arrays are stored as pointers in a @ref basic_json type. That is, for any
-    access to array values, a pointer of type `array_t*` must be dereferenced.
+    Arrays are stored as pointers in a @ref basic_json parentType. That is, for any
+    access to array values, a pointer of parentType `array_t*` must be dereferenced.
 
-    @sa @ref object_t -- type for an object value
+    @sa @ref object_t -- parentType for an object value
 
     @since version 1.0.0
     */
     using array_t = ArrayType<basic_json, AllocatorType<basic_json>>;
 
     /*!
-    @brief a type for a string
+    @brief a parentType for a string
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes JSON strings as follows:
     > A string is a sequence of zero or more Unicode characters.
 
-    To store objects in C++, a type is defined by the template parameter
+    To store objects in C++, a parentType is defined by the template parameter
     described below. Unicode values are split by the JSON class into
     byte-sized characters during deserialization.
 
     @tparam StringType  the container to store strings (e.g., `std::string`).
     Note this container is used for keys/names in objects, see @ref object_t.
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a StringType (`std::string`), the default
     value for @a string_t is:
@@ -17162,8 +17162,8 @@ class basic_json
 
     #### Storage
 
-    String values are stored as pointers in a @ref basic_json type. That is,
-    for any access to string values, a pointer of type `string_t*` must be
+    String values are stored as pointers in a @ref basic_json parentType. That is,
+    for any access to string values, a pointer of parentType `string_t*` must be
     dereferenced.
 
     @since version 1.0.0
@@ -17171,15 +17171,15 @@ class basic_json
     using string_t = StringType;
 
     /*!
-    @brief a type for a boolean
+    @brief a parentType for a boolean
 
     [RFC 7159](http://rfc7159.net/rfc7159) implicitly describes a boolean as a
-    type which differentiates the two literals `true` and `false`.
+    parentType which differentiates the two literals `true` and `false`.
 
-    To store objects in C++, a type is defined by the template parameter @a
-    BooleanType which chooses the type to use.
+    To store objects in C++, a parentType is defined by the template parameter @a
+    BooleanType which chooses the parentType to use.
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a BooleanType (`bool`), the default value for
     @a boolean_t is:
@@ -17190,14 +17190,14 @@ class basic_json
 
     #### Storage
 
-    Boolean values are stored directly inside a @ref basic_json type.
+    Boolean values are stored directly inside a @ref basic_json parentType.
 
     @since version 1.0.0
     */
     using boolean_t = BooleanType;
 
     /*!
-    @brief a type for a number (integer)
+    @brief a parentType for a number (integer)
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes numbers as follows:
     > The representation of numbers is similar to that used in most
@@ -17214,10 +17214,10 @@ class basic_json
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store integer numbers in C++, a type is defined by the template
-    parameter @a NumberIntegerType which chooses the type to use.
+    To store integer numbers in C++, a parentType is defined by the template
+    parameter @a NumberIntegerType which chooses the parentType to use.
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a NumberIntegerType (`int64_t`), the default
     value for @a number_integer_t is:
@@ -17240,7 +17240,7 @@ class basic_json
     [RFC 7159](http://rfc7159.net/rfc7159) specifies:
     > An implementation may set limits on the range and precision of numbers.
 
-    When the default type is used, the maximal integer number that can be
+    When the default parentType is used, the maximal integer number that can be
     stored is `9223372036854775807` (INT64_MAX) and the minimal integer number
     that can be stored is `-9223372036854775808` (INT64_MIN). Integer numbers
     that are out of range will yield over/underflow when used in a
@@ -17254,22 +17254,22 @@ class basic_json
     > that implementations will agree exactly on their numeric values.
 
     As this range is a subrange of the exactly supported range [INT64_MIN,
-    INT64_MAX], this class's integer type is interoperable.
+    INT64_MAX], this class's integer parentType is interoperable.
 
     #### Storage
 
-    Integer number values are stored directly inside a @ref basic_json type.
+    Integer number values are stored directly inside a @ref basic_json parentType.
 
-    @sa @ref number_float_t -- type for number values (floating-point)
+    @sa @ref number_float_t -- parentType for number values (floating-point)
 
-    @sa @ref number_unsigned_t -- type for number values (unsigned integer)
+    @sa @ref number_unsigned_t -- parentType for number values (unsigned integer)
 
     @since version 1.0.0
     */
     using number_integer_t = NumberIntegerType;
 
     /*!
-    @brief a type for a number (unsigned)
+    @brief a parentType for a number (unsigned)
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes numbers as follows:
     > The representation of numbers is similar to that used in most
@@ -17286,10 +17286,10 @@ class basic_json
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store unsigned integer numbers in C++, a type is defined by the
-    template parameter @a NumberUnsignedType which chooses the type to use.
+    To store unsigned integer numbers in C++, a parentType is defined by the
+    template parameter @a NumberUnsignedType which chooses the parentType to use.
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a NumberUnsignedType (`uint64_t`), the
     default value for @a number_unsigned_t is:
@@ -17312,7 +17312,7 @@ class basic_json
     [RFC 7159](http://rfc7159.net/rfc7159) specifies:
     > An implementation may set limits on the range and precision of numbers.
 
-    When the default type is used, the maximal integer number that can be
+    When the default parentType is used, the maximal integer number that can be
     stored is `18446744073709551615` (UINT64_MAX) and the minimal integer
     number that can be stored is `0`. Integer numbers that are out of range
     will yield over/underflow when used in a constructor. During
@@ -17325,22 +17325,22 @@ class basic_json
     > that implementations will agree exactly on their numeric values.
 
     As this range is a subrange (when considered in conjunction with the
-    number_integer_t type) of the exactly supported range [0, UINT64_MAX],
-    this class's integer type is interoperable.
+    number_integer_t parentType) of the exactly supported range [0, UINT64_MAX],
+    this class's integer parentType is interoperable.
 
     #### Storage
 
-    Integer number values are stored directly inside a @ref basic_json type.
+    Integer number values are stored directly inside a @ref basic_json parentType.
 
-    @sa @ref number_float_t -- type for number values (floating-point)
-    @sa @ref number_integer_t -- type for number values (integer)
+    @sa @ref number_float_t -- parentType for number values (floating-point)
+    @sa @ref number_integer_t -- parentType for number values (integer)
 
     @since version 2.0.0
     */
     using number_unsigned_t = NumberUnsignedType;
 
     /*!
-    @brief a type for a number (floating-point)
+    @brief a parentType for a number (floating-point)
 
     [RFC 7159](http://rfc7159.net/rfc7159) describes numbers as follows:
     > The representation of numbers is similar to that used in most
@@ -17357,10 +17357,10 @@ class basic_json
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store floating-point numbers in C++, a type is defined by the template
-    parameter @a NumberFloatType which chooses the type to use.
+    To store floating-point numbers in C++, a parentType is defined by the template
+    parameter @a NumberFloatType which chooses the parentType to use.
 
-    #### Default type
+    #### Default parentType
 
     With the default values for @a NumberFloatType (`double`), the default
     value for @a number_float_t is:
@@ -17397,22 +17397,22 @@ class basic_json
     #### Storage
 
     Floating-point number values are stored directly inside a @ref basic_json
-    type.
+    parentType.
 
-    @sa @ref number_integer_t -- type for number values (integer)
+    @sa @ref number_integer_t -- parentType for number values (integer)
 
-    @sa @ref number_unsigned_t -- type for number values (unsigned integer)
+    @sa @ref number_unsigned_t -- parentType for number values (unsigned integer)
 
     @since version 1.0.0
     */
     using number_float_t = NumberFloatType;
 
     /*!
-    @brief a type for a packed binary type
+    @brief a parentType for a packed binary parentType
 
-    This type is a type designed to carry binary data that appears in various
+    This parentType is a parentType designed to carry binary data that appears in various
     serialized formats, such as CBOR's Major Type 2, MessagePack's bin, and
-    BSON's generic binary subtype. This type is NOT a part of standard JSON and
+    BSON's generic binary subtype. This parentType is NOT a part of standard JSON and
     exists solely for compatibility with these binary types. As such, it is
     simply defined as an ordered sequence of zero or more byte values.
 
@@ -17422,39 +17422,39 @@ class basic_json
     numbering is incompatible with each other, and it is up to the user to
     translate between them).
 
-    [CBOR's RFC 7049](https://tools.ietf.org/html/rfc7049) describes this type
+    [CBOR's RFC 7049](https://tools.ietf.org/html/rfc7049) describes this parentType
     as:
-    > Major type 2: a byte string. The string's length in bytes is represented
-    > following the rules for positive integers (major type 0).
+    > Major parentType 2: a byte string. The string's length in bytes is represented
+    > following the rules for positive integers (major parentType 0).
 
-    [MessagePack's documentation on the bin type
+    [MessagePack's documentation on the bin parentType
     family](https://github.com/msgpack/msgpack/blob/master/spec.md#bin-format-family)
-    describes this type as:
+    describes this parentType as:
     > Bin format family stores an byte array in 2, 3, or 5 bytes of extra bytes
     > in addition to the size of the byte array.
 
     [BSON's specifications](http://bsonspec.org/spec.html) describe several
-    binary types; however, this type is intended to represent the generic binary
-    type which has the description:
+    binary types; however, this parentType is intended to represent the generic binary
+    parentType which has the description:
     > Generic binary subtype - This is the most commonly used binary subtype and
     > should be the 'default' for drivers and tools.
 
     None of these impose any limitations on the internal representation other
-    than the basic unit of storage be some type of array whose parts are
+    than the basic unit of storage be some parentType of array whose parts are
     decomposable into bytes.
 
     The default representation of this binary format is a
     `std::vector<std::uint8_t>`, which is a very common way to represent a byte
     array in modern C++.
 
-    #### Default type
+    #### Default parentType
 
     The default values for @a BinaryType is `std::vector<std::uint8_t>`
 
     #### Storage
 
-    Binary Arrays are stored as pointers in a @ref basic_json type. That is,
-    for any access to array values, a pointer of the type `binary_t*` must be
+    Binary Arrays are stored as pointers in a @ref basic_json parentType. That is,
+    for any access to array values, a pointer of the parentType `binary_t*` must be
     dereferenced.
 
     #### Notes on subtypes
@@ -17511,7 +17511,7 @@ class basic_json
     union combines the different storage types for the JSON value types
     defined in @ref value_t.
 
-    JSON type | value_t type    | used type
+    JSON parentType | value_t parentType    | used parentType
     --------- | --------------- | ------------------------
     object    | object          | pointer to @ref object_t
     array     | array           | pointer to @ref array_t
@@ -17558,7 +17558,7 @@ class basic_json
         json_value(number_unsigned_t v) noexcept : number_unsigned(v) {}
         /// constructor for numbers (floating-point)
         json_value(number_float_t v) noexcept : number_float(v) {}
-        /// constructor for empty values of a given type
+        /// constructor for empty values of a given parentType
         json_value(value_t t)
         {
             switch (t)
@@ -17677,13 +17677,13 @@ class basic_json
             binary = create<binary_t>(std::move(value));
         }
 
-        /// constructor for binary arrays (internal type)
+        /// constructor for binary arrays (internal parentType)
         json_value(const binary_t& value)
         {
             binary = create<binary_t>(value);
         }
 
-        /// constructor for rvalue binary arrays (internal type)
+        /// constructor for rvalue binary arrays (internal parentType)
         json_value(binary_t&& value)
         {
             binary = create<binary_t>(std::move(value));
@@ -17786,7 +17786,7 @@ class basic_json
 
     This function asserts the class invariants. It needs to be called at the
     end of every constructor to make sure that created objects respect the
-    invariant. Furthermore, it has to be called each time the type of a JSON
+    invariant. Furthermore, it has to be called each time the parentType of a JSON
     value is changed, because the invariant expresses a relationship between
     @a m_type and @a m_value.
     */
@@ -17821,7 +17821,7 @@ class basic_json
     using parse_event_t = detail::parse_event_t;
 
     /*!
-    @brief per-element parser callback type
+    @brief per-element parser callback parentType
 
     With a parser callback function, the result of parsing a JSON text can be
     influenced. When passed to @ref parse, it is called on certain events
@@ -17830,16 +17830,16 @@ class basic_json
     callback function is a boolean indicating whether the element that emitted
     the callback shall be kept or not.
 
-    We distinguish six scenarios (determined by the event type) in which the
+    We distinguish six scenarios (determined by the event parentType) in which the
     callback function can be called. The following table describes the values
     of the parameters @a depth, @a event, and @a parsed.
 
     parameter @a event | description | parameter @a depth | parameter @a parsed
     ------------------ | ----------- | ------------------ | -------------------
-    parse_event_t::object_start | the parser read `{` and started to process a JSON object | depth of the parent of the JSON object | a JSON value with type discarded
+    parse_event_t::object_start | the parser read `{` and started to process a JSON object | depth of the parent of the JSON object | a JSON value with parentType discarded
     parse_event_t::key | the parser read a key of a value in an object | depth of the currently parsed JSON object | a JSON string containing the key
     parse_event_t::object_end | the parser read `}` and finished processing a JSON object | depth of the parent of the JSON object | the parsed JSON object
-    parse_event_t::array_start | the parser read `[` and started to process a JSON array | depth of the parent of the JSON array | a JSON value with type discarded
+    parse_event_t::array_start | the parser read `[` and started to process a JSON array | depth of the parent of the JSON array | a JSON value with parentType discarded
     parse_event_t::array_end | the parser read `]` and finished processing a JSON array | depth of the parent of the JSON array | the parsed JSON array
     parse_event_t::value | the parser finished reading a JSON value | depth of the value | the parsed JSON value
 
@@ -17850,12 +17850,12 @@ class basic_json
 
     - Discarded values in structured types are skipped. That is, the parser
       will behave as if the discarded value was never read.
-    - In case a value outside a structured type is skipped, it is replaced
+    - In case a value outside a structured parentType is skipped, it is replaced
       with `null`. This case happens if the top-level element is skipped.
 
     @param[in] depth  the depth of the recursion during parsing
 
-    @param[in] event  an event of type parse_event_t indicating the context in
+    @param[in] event  an event of parentType parse_event_t indicating the context in
     the callback function has been called
 
     @param[in,out] parsed  the current intermediate parse result; note that
@@ -17881,12 +17881,12 @@ class basic_json
     /// @{
 
     /*!
-    @brief create an empty value with a given type
+    @brief create an empty value with a given parentType
 
-    Create an empty JSON value with a given type. The value will be default
-    initialized with an empty value which depends on the type:
+    Create an empty JSON value with a given parentType. The value will be default
+    initialized with an empty value which depends on the parentType:
 
-    Value type  | initial value
+    Value parentType  | initial value
     ----------- | -------------
     null        | `null`
     boolean     | `false`
@@ -17896,7 +17896,7 @@ class basic_json
     array       | `[]`
     binary      | empty array
 
-    @param[in] v  the type of the value to create
+    @param[in] v  the parentType of the value to create
 
     @complexity Constant.
 
@@ -17948,7 +17948,7 @@ class basic_json
     parameter @a val to that method (to `json_serializer<U>::to_json` method
     with `U = uncvref_t<CompatibleType>`, to be exact).
 
-    Template type @a CompatibleType includes, but is not limited to, the
+    Template parentType @a CompatibleType includes, but is not limited to, the
     following types:
     - **arrays**: @ref array_t and all kinds of compatible containers such as
       `std::vector`, `std::deque`, `std::list`, `std::forward_list`,
@@ -17968,19 +17968,19 @@ class basic_json
     - **boolean**: @ref boolean_t / `bool` can be used.
     - **binary**: @ref binary_t / `std::vector<uint8_t>` may be used,
       unfortunately because string literals cannot be distinguished from binary
-      character arrays by the C++ type system, all types compatible with `const
+      character arrays by the C++ parentType system, all types compatible with `const
       char*` will be directed to the string constructor instead.  This is both
-      for backwards compatibility, and due to the fact that a binary type is not
-      a standard JSON type.
+      for backwards compatibility, and due to the fact that a binary parentType is not
+      a standard JSON parentType.
 
     See the examples below.
 
-    @tparam CompatibleType a type such that:
+    @tparam CompatibleType a parentType such that:
     - @a CompatibleType is not derived from `std::istream`,
     - @a CompatibleType is not @ref basic_json (to avoid hijacking copy/move
          constructors),
-    - @a CompatibleType is not a different @ref basic_json type (i.e. with different template arguments)
-    - @a CompatibleType is not a @ref basic_json nested type (e.g.,
+    - @a CompatibleType is not a different @ref basic_json parentType (i.e. with different template arguments)
+    - @a CompatibleType is not a @ref basic_json nested parentType (e.g.,
          @ref json_pointer, @ref iterator, etc ...)
     - @ref @ref json_serializer<U> has a
          `to_json(basic_json_t&, CompatibleType&&)` method
@@ -18024,8 +18024,8 @@ class basic_json
 
     The constructor tries to convert the internal @ref m_value of the parameter.
 
-    @tparam BasicJsonType a type such that:
-    - @a BasicJsonType is a @ref basic_json type.
+    @tparam BasicJsonType a parentType such that:
+    - @a BasicJsonType is a @ref basic_json parentType.
     - @a BasicJsonType has different template arguments than @ref basic_json_t.
 
     @param[in] val the @ref basic_json value to be converted.
@@ -18096,8 +18096,8 @@ class basic_json
     /*!
     @brief create a container (array or object) from an initializer list
 
-    Creates a JSON value of type array or object from the passed initializer
-    list @a init. In case @a type_deduction is `true` (default), the type of
+    Creates a JSON value of parentType array or object from the passed initializer
+    list @a init. In case @a type_deduction is `true` (default), the parentType of
     the JSON value to be created is deducted from the initializer list @a init
     according to the following rules:
 
@@ -18113,11 +18113,11 @@ class basic_json
     1. The empty initializer list is written as `{}` which is exactly an empty
        JSON object.
     2. C++ has no way of describing mapped types other than to list a list of
-       pairs. As JSON requires that keys must be of type string, rule 2 is the
+       pairs. As JSON requires that keys must be of parentType string, rule 2 is the
        weakest constraint one can pose on initializer lists to interpret them
        as an object.
     3. In all other cases, the initializer list could not be interpreted as
-       JSON object type, so interpreting it as JSON array type is safe.
+       JSON object parentType, so interpreting it as JSON array parentType is safe.
 
     With the rules described above, the following JSON values cannot be
     expressed by an initializer list:
@@ -18134,14 +18134,14 @@ class basic_json
 
     @param[in] init  initializer list with JSON values
 
-    @param[in] type_deduction internal parameter; when set to `true`, the type
+    @param[in] type_deduction internal parameter; when set to `true`, the parentType
     of the JSON value is deducted from the initializer list @a init; when set
-    to `false`, the type provided via @a manual_type is forced. This mode is
+    to `false`, the parentType provided via @a manual_type is forced. This mode is
     used by the functions @ref array(initializer_list_t) and
     @ref object(initializer_list_t).
 
     @param[in] manual_type internal parameter; when @a type_deduction is set
-    to `false`, the created JSON value will use the provided type (only @ref
+    to `false`, the created JSON value will use the provided parentType (only @ref
     value_t::array and @ref value_t::object are valid); when @a type_deduction
     is set to `true`, this parameter has no effect
 
@@ -18179,7 +18179,7 @@ class basic_json
             return element_ref->is_array() && element_ref->size() == 2 && (*element_ref)[0].is_string();
         });
 
-        // adjust type if type deduction is not wanted
+        // adjust parentType if parentType deduction is not wanted
         if (!type_deduction)
         {
             // if array is wanted, do not create an object though possible
@@ -18232,10 +18232,10 @@ class basic_json
     JSON arrays and JSON binary arrays are backed with some form of a
     `std::vector`. Because JSON binary arrays are a non-standard extension it
     was decided that it would be best to prevent automatic initialization of a
-    binary array type, for backwards compatibility and so it does not happen on
+    binary array parentType, for backwards compatibility and so it does not happen on
     accident.
 
-    @param[in] init container containing bytes to use as binary type
+    @param[in] init container containing bytes to use as binary parentType
 
     @return JSON binary array value
 
@@ -18268,10 +18268,10 @@ class basic_json
     JSON arrays and JSON binary arrays are backed with some form of a
     `std::vector`. Because JSON binary arrays are a non-standard extension it
     was decided that it would be best to prevent automatic initialization of a
-    binary array type, for backwards compatibility and so it does not happen on
+    binary array parentType, for backwards compatibility and so it does not happen on
     accident.
 
-    @param[in] init container containing bytes to use as binary type
+    @param[in] init container containing bytes to use as binary parentType
     @param[in] subtype subtype to use in MessagePack and BSON
 
     @return JSON binary array value
@@ -18433,7 +18433,7 @@ class basic_json
 
     Constructs the JSON value with the contents of the range `[first, last)`.
     The semantics depends on the different types a JSON value can have:
-    - In case of a null type, invalid_iterator.206 is thrown.
+    - In case of a null parentType, invalid_iterator.206 is thrown.
     - In case of other primitive types (number, boolean, or string), @a first
       must be `begin()` and @a last must be `end()`. In this case, the value is
       copied. Otherwise, invalid_iterator.204 is thrown.
@@ -18441,7 +18441,7 @@ class basic_json
       similar versions for `std::vector` or `std::map`; that is, a JSON array
       or object is constructed from the values in the range.
 
-    @tparam InputIT an input iterator type (@ref iterator or @ref
+    @tparam InputIT an input iterator parentType (@ref iterator or @ref
     const_iterator)
 
     @param[in] first begin of the range to copy from (included)
@@ -18467,7 +18467,7 @@ class basic_json
     compatible (i.e., do not belong to the same JSON value). In this case,
     the range `[first, last)` is undefined.
     @throw invalid_iterator.204 if iterators @a first and @a last belong to a
-    primitive type (number, boolean, or string), but @a first does not point
+    primitive parentType (number, boolean, or string), but @a first does not point
     to the first element any more. In this case, the range `[first, last)` is
     undefined. See example code below.
     @throw invalid_iterator.206 if iterators @a first and @a last belong to a
@@ -18497,7 +18497,7 @@ class basic_json
             JSON_THROW(invalid_iterator::create(201, "iterators are not compatible"));
         }
 
-        // copy type from first iterator
+        // copy parentType from first iterator
         m_type = first.m_object->m_type;
 
         // check if iterator range is complete for primitive values
@@ -18789,7 +18789,7 @@ class basic_json
     ///////////////////////
 
     /// @name object inspection
-    /// Functions to inspect the type of a JSON value.
+    /// Functions to inspect the parentType of a JSON value.
     /// @{
 
     /*!
@@ -18860,13 +18860,13 @@ class basic_json
     }
 
     /*!
-    @brief return the type of the JSON value (explicit)
+    @brief return the parentType of the JSON value (explicit)
 
-    Return the type of the JSON value as a value from the @ref value_t
+    Return the parentType of the JSON value as a value from the @ref value_t
     enumeration.
 
-    @return the type of the JSON value
-            Value type                | return value
+    @return the parentType of the JSON value
+            Value parentType                | return value
             ------------------------- | -------------------------
             null                      | value_t::null
             boolean                   | value_t::boolean
@@ -18885,10 +18885,10 @@ class basic_json
     exceptions.
 
     @liveexample{The following code exemplifies `type()` for all JSON
-    types.,type}
+    types.,parentType}
 
-    @sa @ref operator value_t() -- return the type of the JSON value (implicit)
-    @sa @ref type_name() -- return the type as string
+    @sa @ref operator value_t() -- return the parentType of the JSON value (implicit)
+    @sa @ref type_name() -- return the parentType as string
 
     @since version 1.0.0
     */
@@ -18898,12 +18898,12 @@ class basic_json
     }
 
     /*!
-    @brief return whether type is primitive
+    @brief return whether parentType is primitive
 
-    This function returns true if and only if the JSON type is primitive
+    This function returns true if and only if the JSON parentType is primitive
     (string, number, boolean, or null).
 
-    @return `true` if type is primitive (string, number, boolean, or null),
+    @return `true` if parentType is primitive (string, number, boolean, or null),
     `false` otherwise.
 
     @complexity Constant.
@@ -18929,12 +18929,12 @@ class basic_json
     }
 
     /*!
-    @brief return whether type is structured
+    @brief return whether parentType is structured
 
-    This function returns true if and only if the JSON type is structured
+    This function returns true if and only if the JSON parentType is structured
     (array or object).
 
-    @return `true` if type is structured (array or object), `false` otherwise.
+    @return `true` if parentType is structured (array or object), `false` otherwise.
 
     @complexity Constant.
 
@@ -18960,7 +18960,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is null.
 
-    @return `true` if type is null, `false` otherwise.
+    @return `true` if parentType is null, `false` otherwise.
 
     @complexity Constant.
 
@@ -18982,7 +18982,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is a boolean.
 
-    @return `true` if type is boolean, `false` otherwise.
+    @return `true` if parentType is boolean, `false` otherwise.
 
     @complexity Constant.
 
@@ -19005,8 +19005,8 @@ class basic_json
     This function returns true if and only if the JSON value is a number. This
     includes both integer (signed and unsigned) and floating-point values.
 
-    @return `true` if type is number (regardless whether integer, unsigned
-    integer or floating-type), `false` otherwise.
+    @return `true` if parentType is number (regardless whether integer, unsigned
+    integer or floating-parentType), `false` otherwise.
 
     @complexity Constant.
 
@@ -19035,7 +19035,7 @@ class basic_json
     This function returns true if and only if the JSON value is a signed or
     unsigned integer number. This excludes floating-point values.
 
-    @return `true` if type is an integer or unsigned integer number, `false`
+    @return `true` if parentType is an integer or unsigned integer number, `false`
     otherwise.
 
     @complexity Constant.
@@ -19064,7 +19064,7 @@ class basic_json
     This function returns true if and only if the JSON value is an unsigned
     integer number. This excludes floating-point and signed integer values.
 
-    @return `true` if type is an unsigned integer number, `false` otherwise.
+    @return `true` if parentType is an unsigned integer number, `false` otherwise.
 
     @complexity Constant.
 
@@ -19092,7 +19092,7 @@ class basic_json
     This function returns true if and only if the JSON value is a
     floating-point number. This excludes signed and unsigned integer values.
 
-    @return `true` if type is a floating-point number, `false` otherwise.
+    @return `true` if parentType is a floating-point number, `false` otherwise.
 
     @complexity Constant.
 
@@ -19119,7 +19119,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is an object.
 
-    @return `true` if type is object, `false` otherwise.
+    @return `true` if parentType is object, `false` otherwise.
 
     @complexity Constant.
 
@@ -19141,7 +19141,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is an array.
 
-    @return `true` if type is array, `false` otherwise.
+    @return `true` if parentType is array, `false` otherwise.
 
     @complexity Constant.
 
@@ -19163,7 +19163,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is a string.
 
-    @return `true` if type is string, `false` otherwise.
+    @return `true` if parentType is string, `false` otherwise.
 
     @complexity Constant.
 
@@ -19185,7 +19185,7 @@ class basic_json
 
     This function returns true if and only if the JSON value is a binary array.
 
-    @return `true` if type is binary array, `false` otherwise.
+    @return `true` if parentType is binary array, `false` otherwise.
 
     @complexity Constant.
 
@@ -19212,7 +19212,7 @@ class basic_json
     That is, discarded values can only occur during parsing, but will be
     removed when inside a structured value or replaced by null in other cases.
 
-    @return `true` if type is discarded, `false` otherwise.
+    @return `true` if parentType is discarded, `false` otherwise.
 
     @complexity Constant.
 
@@ -19230,12 +19230,12 @@ class basic_json
     }
 
     /*!
-    @brief return the type of the JSON value (implicit)
+    @brief return the parentType of the JSON value (implicit)
 
-    Implicitly return the type of the JSON value as a value from the @ref
+    Implicitly return the parentType of the JSON value as a value from the @ref
     value_t enumeration.
 
-    @return the type of the JSON value
+    @return the parentType of the JSON value
 
     @complexity Constant.
 
@@ -19245,8 +19245,8 @@ class basic_json
     @liveexample{The following code exemplifies the @ref value_t operator for
     all JSON types.,operator__value_t}
 
-    @sa @ref type() -- return the type of the JSON value (explicit)
-    @sa @ref type_name() -- return the type as string
+    @sa @ref parentType() -- return the parentType of the JSON value (explicit)
+    @sa @ref type_name() -- return the parentType as string
 
     @since version 1.0.0
     */
@@ -19378,7 +19378,7 @@ class basic_json
     @tparam ThisType will be deduced as `basic_json` or `const basic_json`
 
     @throw type_error.303 if ReferenceType does not match underlying value
-    type of the current JSON
+    parentType of the current JSON
     */
     template<typename ReferenceType, typename ThisType>
     static ReferenceType get_ref_impl(ThisType& obj)
@@ -19425,7 +19425,7 @@ class basic_json
     @brief get special-case overload
 
     This overloads converts the current @ref basic_json in a different
-    @ref basic_json type
+    @ref basic_json parentType
 
     @tparam BasicJsonType == @ref basic_json
 
@@ -19447,7 +19447,7 @@ class basic_json
     /*!
     @brief get a value (explicit)
 
-    Explicit type conversion between the JSON value and a compatible value
+    Explicit parentType conversion between the JSON value and a compatible value
     which is [CopyConstructible](https://en.cppreference.com/w/cpp/named_req/CopyConstructible)
     and [DefaultConstructible](https://en.cppreference.com/w/cpp/named_req/DefaultConstructible).
     The value is converted by calling the @ref json_serializer<ValueType>
@@ -19467,8 +19467,8 @@ class basic_json
     - @ref json_serializer<ValueType> does not have a `from_json()` method of
       the form `ValueType from_json(const basic_json&)`
 
-    @tparam ValueTypeCV the provided value type
-    @tparam ValueType the returned value type
+    @tparam ValueTypeCV the provided value parentType
+    @tparam ValueType the returned value parentType
 
     @return copy of the JSON value, converted to @a ValueType
 
@@ -19508,7 +19508,7 @@ class basic_json
     /*!
     @brief get a value (explicit); special case
 
-    Explicit type conversion between the JSON value and a compatible value
+    Explicit parentType conversion between the JSON value and a compatible value
     which is **not** [CopyConstructible](https://en.cppreference.com/w/cpp/named_req/CopyConstructible)
     and **not** [DefaultConstructible](https://en.cppreference.com/w/cpp/named_req/DefaultConstructible).
     The value is converted by calling the @ref json_serializer<ValueType>
@@ -19527,8 +19527,8 @@ class basic_json
     @note If @ref json_serializer<ValueType> has both overloads of
     `from_json()`, this one is chosen.
 
-    @tparam ValueTypeCV the provided value type
-    @tparam ValueType the returned value type
+    @tparam ValueTypeCV the provided value parentType
+    @tparam ValueType the returned value parentType
 
     @return copy of the JSON value, converted to @a ValueType
 
@@ -19551,7 +19551,7 @@ class basic_json
     /*!
     @brief get a value (explicit)
 
-    Explicit type conversion between the JSON value and a compatible value.
+    Explicit parentType conversion between the JSON value and a compatible value.
     The value is filled into the input parameter by calling the @ref json_serializer<ValueType>
     `from_json()` method.
 
@@ -19566,7 +19566,7 @@ class basic_json
     - @ref json_serializer<ValueType> has a `from_json()` method of the form
       `void from_json(const basic_json&, ValueType&)`, and
 
-    @tparam ValueType the input parameter type.
+    @tparam ValueType the input parameter parentType.
 
     @return the input parameter, allowing chaining calls.
 
@@ -19628,19 +19628,19 @@ class basic_json
     @warning Writing data to the pointee of the result yields an undefined
     state.
 
-    @tparam PointerType pointer type; must be a pointer to @ref array_t, @ref
+    @tparam PointerType pointer parentType; must be a pointer to @ref array_t, @ref
     object_t, @ref string_t, @ref boolean_t, @ref number_integer_t,
     @ref number_unsigned_t, or @ref number_float_t. Enforced by a static
     assertion.
 
     @return pointer to the internally stored JSON value if the requested
-    pointer type @a PointerType fits to the JSON value; `nullptr` otherwise
+    pointer parentType @a PointerType fits to the JSON value; `nullptr` otherwise
 
     @complexity Constant.
 
     @liveexample{The example below shows how pointers to internal values of a
-    JSON value can be requested. Note that no type conversions are made and a
-    `nullptr` is returned if the value and the requested pointer type does not
+    JSON value can be requested. Note that no parentType conversions are made and a
+    `nullptr` is returned if the value and the requested pointer parentType does not
     match.,get_ptr}
 
     @since version 1.0.0
@@ -19675,18 +19675,18 @@ class basic_json
     @warning The pointer becomes invalid if the underlying JSON object
     changes.
 
-    @tparam PointerType pointer type; must be a pointer to @ref array_t, @ref
+    @tparam PointerType pointer parentType; must be a pointer to @ref array_t, @ref
     object_t, @ref string_t, @ref boolean_t, @ref number_integer_t,
     @ref number_unsigned_t, or @ref number_float_t.
 
     @return pointer to the internally stored JSON value if the requested
-    pointer type @a PointerType fits to the JSON value; `nullptr` otherwise
+    pointer parentType @a PointerType fits to the JSON value; `nullptr` otherwise
 
     @complexity Constant.
 
     @liveexample{The example below shows how pointers to internal values of a
-    JSON value can be requested. Note that no type conversions are made and a
-    `nullptr` is returned if the value and the requested pointer type does not
+    JSON value can be requested. Note that no parentType conversions are made and a
+    `nullptr` is returned if the value and the requested pointer parentType does not
     match.,get__PointerType}
 
     @sa @ref get_ptr() for explicit pointer-member access
@@ -19722,15 +19722,15 @@ class basic_json
     @warning Writing data to the referee of the result yields an undefined
     state.
 
-    @tparam ReferenceType reference type; must be a reference to @ref array_t,
+    @tparam ReferenceType reference parentType; must be a reference to @ref array_t,
     @ref object_t, @ref string_t, @ref boolean_t, @ref number_integer_t, or
     @ref number_float_t. Enforced by static assertion.
 
     @return reference to the internally stored JSON value if the requested
-    reference type @a ReferenceType fits to the JSON value; throws
+    reference parentType @a ReferenceType fits to the JSON value; throws
     type_error.303 otherwise
 
-    @throw type_error.303 in case passed type @a ReferenceType is incompatible
+    @throw type_error.303 in case passed parentType @a ReferenceType is incompatible
     with the stored JSON value; see example below
 
     @complexity Constant.
@@ -19763,19 +19763,19 @@ class basic_json
     /*!
     @brief get a value (implicit)
 
-    Implicit type conversion between the JSON value and a compatible value.
+    Implicit parentType conversion between the JSON value and a compatible value.
     The call is realized by calling @ref get() const.
 
-    @tparam ValueType non-pointer type compatible to the JSON value, for
+    @tparam ValueType non-pointer parentType compatible to the JSON value, for
     instance `int` for JSON integer numbers, `bool` for JSON booleans, or
-    `std::vector` types for JSON arrays. The character type of @ref string_t
-    as well as an initializer list of this type is excluded to avoid
+    `std::vector` types for JSON arrays. The character parentType of @ref string_t
+    as well as an initializer list of this parentType is excluded to avoid
     ambiguities as these types implicitly convert to `std::string`.
 
-    @return copy of the JSON value, converted to type @a ValueType
+    @return copy of the JSON value, converted to parentType @a ValueType
 
-    @throw type_error.302 in case passed type @a ValueType is incompatible
-    to the JSON value type (e.g., the JSON value is of type boolean, but a
+    @throw type_error.302 in case passed parentType @a ValueType is incompatible
+    to the JSON value parentType (e.g., the JSON value is of parentType boolean, but a
     string is requested); see example below
 
     @complexity Linear in the size of the JSON value.
@@ -20330,15 +20330,15 @@ class basic_json
     @param[in] key  key of the element to access
     @param[in] default_value  the value to return if @a key is not found
 
-    @tparam ValueType type compatible to JSON values, for instance `int` for
+    @tparam ValueType parentType compatible to JSON values, for instance `int` for
     JSON integer numbers, `bool` for JSON booleans, or `std::vector` types for
-    JSON arrays. Note the type of the expected value at @a key and the default
+    JSON arrays. Note the parentType of the expected value at @a key and the default
     value @a default_value must be compatible.
 
     @return copy of the element at key @a key or @a default_value if @a key
     is not found
 
-    @throw type_error.302 if @a default_value does not match the type of the
+    @throw type_error.302 if @a default_value does not match the parentType of the
     value at @a key
     @throw type_error.306 if the JSON value is not an object; in that case,
     using `value()` with a key makes no sense.
@@ -20378,7 +20378,7 @@ class basic_json
     }
 
     /*!
-    @brief overload for a default value of type const char*
+    @brief overload for a default value of parentType const char*
     @copydoc basic_json::value(const typename object_t::key_type&, const ValueType&) const
     */
     string_t value(const typename object_t::key_type& key, const char* default_value) const
@@ -20407,15 +20407,15 @@ class basic_json
     @param[in] ptr  a JSON pointer to the element to access
     @param[in] default_value  the value to return if @a ptr found no value
 
-    @tparam ValueType type compatible to JSON values, for instance `int` for
+    @tparam ValueType parentType compatible to JSON values, for instance `int` for
     JSON integer numbers, `bool` for JSON booleans, or `std::vector` types for
-    JSON arrays. Note the type of the expected value at @a key and the default
+    JSON arrays. Note the parentType of the expected value at @a key and the default
     value @a default_value must be compatible.
 
     @return copy of the element at key @a key or @a default_value if @a key
     is not found
 
-    @throw type_error.302 if @a default_value does not match the type of the
+    @throw type_error.302 if @a default_value does not match the parentType of the
     value at @a ptr
     @throw type_error.306 if the JSON value is not an object; in that case,
     using `value()` with a key makes no sense.
@@ -20451,7 +20451,7 @@ class basic_json
     }
 
     /*!
-    @brief overload for a default value of type const char*
+    @brief overload for a default value of parentType const char*
     @copydoc basic_json::value(const json_pointer&, ValueType) const
     */
     JSON_HEDLEY_NON_NULL(3)
@@ -20466,7 +20466,7 @@ class basic_json
     Returns a reference to the first element in the container. For a JSON
     container `c`, the expression `c.front()` is equivalent to `*c.begin()`.
 
-    @return In case of a structured type (array or object), a reference to the
+    @return In case of a structured parentType (array or object), a reference to the
     first element is returned. In case of number, string, boolean, or binary
     values, a reference to the value is returned.
 
@@ -20509,7 +20509,7 @@ class basic_json
     return *tmp;
     @endcode
 
-    @return In case of a structured type (array or object), a reference to the
+    @return In case of a structured parentType (array or object), a reference to the
     last element is returned. In case of number, string, boolean, or binary
     values, a reference to the value is returned.
 
@@ -20553,7 +20553,7 @@ class basic_json
     be valid and dereferenceable. Thus the `end()` iterator (which is valid,
     but is not dereferenceable) cannot be used as a value for @a pos.
 
-    If called on a primitive type other than `null`, the resulting JSON value
+    If called on a primitive parentType other than `null`, the resulting JSON value
     will be `null`.
 
     @param[in] pos iterator to the element to remove
@@ -20570,11 +20570,11 @@ class basic_json
     @throw invalid_iterator.202 if called on an iterator which does not belong
     to the current JSON value; example: `"iterator does not fit current
     value"`
-    @throw invalid_iterator.205 if called on a primitive type with invalid
+    @throw invalid_iterator.205 if called on a primitive parentType with invalid
     iterator (i.e., any iterator which is not `begin()`); example: `"iterator
     out of range"`
 
-    @complexity The complexity depends on the type:
+    @complexity The complexity depends on the parentType:
     - objects: amortized constant
     - arrays: linear in distance between @a pos and the end of the container
     - strings and binary: linear in the length of the member
@@ -20666,7 +20666,7 @@ class basic_json
     @a first does not need to be dereferenceable if `first == last`: erasing
     an empty range is a no-op.
 
-    If called on a primitive type other than `null`, the resulting JSON value
+    If called on a primitive parentType other than `null`, the resulting JSON value
     will be `null`.
 
     @param[in] first iterator to the beginning of the range to remove
@@ -20683,11 +20683,11 @@ class basic_json
     erase() with null"`
     @throw invalid_iterator.203 if called on iterators which does not belong
     to the current JSON value; example: `"iterators do not fit current value"`
-    @throw invalid_iterator.204 if called on a primitive type with invalid
+    @throw invalid_iterator.204 if called on a primitive parentType with invalid
     iterators (i.e., if `first != begin()` and `last != end()`); example:
     `"iterators out of range"`
 
-    @complexity The complexity depends on the type:
+    @complexity The complexity depends on the parentType:
     - objects: `log(size()) + std::distance(first, last)`
     - arrays: linear in the distance between @a first and @a last, plus linear
       in the distance between @a last and end of the container
@@ -20783,13 +20783,13 @@ class basic_json
     @param[in] key value of the elements to remove
 
     @return Number of elements removed. If @a ObjectType is the default
-    `std::map` type, the return value will always be `0` (@a key was not
+    `std::map` parentType, the return value will always be `0` (@a key was not
     found) or `1` (@a key was found).
 
     @post References and iterators to the erased elements are invalidated.
     Other references and iterators are not affected.
 
-    @throw type_error.307 when called on a type other than JSON object;
+    @throw type_error.307 when called on a parentType other than JSON object;
     example: `"cannot use erase() with null"`
 
     @complexity `log(size()) + count(key)`
@@ -20822,7 +20822,7 @@ class basic_json
 
     @param[in] idx index of the element to remove
 
-    @throw type_error.307 when called on a type other than JSON object;
+    @throw type_error.307 when called on a parentType other than JSON object;
     example: `"cannot use erase() with null"`
     @throw out_of_range.401 when `idx >= size()`; example: `"array index 17
     is out of range"`
@@ -20874,7 +20874,7 @@ class basic_json
     element is not found or the JSON value is not an object, end() is
     returned.
 
-    @note This method always returns @ref end() when executed on a JSON type
+    @note This method always returns @ref end() when executed on a JSON parentType
           that is not an object.
 
     @param[in] key key value of the element to search for.
@@ -20925,10 +20925,10 @@ class basic_json
     @brief returns the number of occurrences of a key in a JSON object
 
     Returns the number of elements with key @a key. If ObjectType is the
-    default `std::map` type, the return value will always be `0` (@a key was
+    default `std::map` parentType, the return value will always be `0` (@a key was
     not found) or `1` (@a key was found).
 
-    @note This method always returns `0` when executed on a JSON type that is
+    @note This method always returns `0` when executed on a JSON parentType that is
           not an object.
 
     @param[in] key key value of the element to count
@@ -20956,7 +20956,7 @@ class basic_json
     @a key. If the element is not found or the JSON value is not an object,
     false is returned.
 
-    @note This method always returns false when executed on a JSON type
+    @note This method always returns false when executed on a JSON parentType
           that is not an object.
 
     @param[in] key key value to check its existence.
@@ -20987,7 +20987,7 @@ class basic_json
     Check whether the given JSON pointer @a ptr can be resolved in the current
     JSON value.
 
-    @note This method can be executed on any JSON value type.
+    @note This method can be executed on any JSON value parentType.
 
     @param[in] ptr JSON pointer to check its existence.
 
@@ -21318,7 +21318,7 @@ class basic_json
     @code{cpp}
     for (auto it : j_object)
     {
-        // "it" is of type json::reference and has no key() member
+        // "it" is of parentType json::reference and has no key() member
         std::cout << "value: " << it << '\n';
     }
     @endcode
@@ -21390,7 +21390,7 @@ class basic_json
     @code{cpp}
     for (auto it : j_object)
     {
-        // "it" is of type json::reference and has no key() member
+        // "it" is of parentType json::reference and has no key() member
         std::cout << "value: " << it << '\n';
     }
     @endcode
@@ -21466,7 +21466,7 @@ class basic_json
 
     @return The return value depends on the different types and is
             defined as follows:
-            Value type  | return value
+            Value parentType  | return value
             ----------- | -------------
             null        | `true`
             boolean     | `false`
@@ -21538,7 +21538,7 @@ class basic_json
 
     @return The return value depends on the different types and is
             defined as follows:
-            Value type  | return value
+            Value parentType  | return value
             ----------- | -------------
             null        | `0`
             boolean     | `1`
@@ -21613,7 +21613,7 @@ class basic_json
 
     @return The return value depends on the different types and is
             defined as follows:
-            Value type  | return value
+            Value parentType  | return value
             ----------- | -------------
             null        | `0` (same as `size()`)
             boolean     | `1` (same as `size()`)
@@ -21684,9 +21684,9 @@ class basic_json
 
     Clears the content of a JSON value and resets it to the default value as
     if @ref basic_json(value_t) would have been called with the current value
-    type from @ref type():
+    parentType from @ref parentType():
 
-    Value type  | initial value
+    Value parentType  | initial value
     ----------- | -------------
     null        | `null`
     boolean     | `false`
@@ -21698,7 +21698,7 @@ class basic_json
 
     @post Has the same effect as calling
     @code {.cpp}
-    *this = basic_json(type());
+    *this = basic_json(parentType());
     @endcode
 
     @liveexample{The example below shows the effect of `clear()` to different
@@ -21782,7 +21782,7 @@ class basic_json
 
     @param[in] val the value to add to the JSON array
 
-    @throw type_error.308 when called on a type other than JSON array or
+    @throw type_error.308 when called on a parentType other than JSON array or
     null; example: `"cannot use push_back() with number"`
 
     @complexity Amortized constant.
@@ -21867,7 +21867,7 @@ class basic_json
 
     @param[in] val the value to add to the JSON object
 
-    @throw type_error.308 when called on a type other than JSON object or
+    @throw type_error.308 when called on a parentType other than JSON object or
     null; example: `"cannot use push_back() with number"`
 
     @complexity Logarithmic in the size of the container, O(log(`size()`)).
@@ -21969,7 +21969,7 @@ class basic_json
 
     @return reference to the inserted element
 
-    @throw type_error.311 when called on a type other than JSON array or
+    @throw type_error.311 when called on a parentType other than JSON array or
     null; example: `"cannot use emplace_back() with number"`
 
     @complexity Amortized constant.
@@ -22021,7 +22021,7 @@ class basic_json
             already-existing element if no insertion happened, and a bool
             denoting whether the insertion took place.
 
-    @throw type_error.311 when called on a type other than JSON object or
+    @throw type_error.311 when called on a parentType other than JSON object or
     null; example: `"cannot use emplace() with number"`
 
     @complexity Logarithmic in the size of the container, O(log(`size()`)).
@@ -22639,7 +22639,7 @@ class basic_json
     @brief comparison: equal
 
     Compares two JSON values for equality according to the following rules:
-    - Two JSON values are equal if (1) they are from the same type and (2)
+    - Two JSON values are equal if (1) they are from the same parentType and (2)
       their stored values are the same according to their respective
       `operator==`.
     - Integer and floating-point numbers are automatically converted before
@@ -22652,7 +22652,7 @@ class basic_json
     [comparison function](https://github.com/mariokonrad/marnav/blob/master/include/marnav/math/floatingpoint.hpp#L34-#L39)
     could be used, for instance
     @code {.cpp}
-    template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::type>
+    template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value, T>::parentType>
     inline bool is_same(T a, T b, T epsilon = std::numeric_limits<T>::epsilon()) noexcept
     {
         return std::abs(a - b) <= epsilon;
@@ -22661,8 +22661,8 @@ class basic_json
     Or you can self-defined operator equal function like this:
     @code {.cpp}
     bool my_equal(const_reference lhs, const_reference rhs) {
-    const auto lhs_type lhs.type();
-    const auto rhs_type rhs.type();
+    const auto lhs_type lhs.parentType();
+    const auto rhs_type rhs.parentType();
     if (lhs_type == rhs_type) {
         switch(lhs_type)
             // self_defined case
@@ -22830,7 +22830,7 @@ class basic_json
 
     Compares whether one JSON value @a lhs is less than another JSON value @a
     rhs according to the following rules:
-    - If @a lhs and @a rhs have the same type, the values are compared using
+    - If @a lhs and @a rhs have the same parentType, the values are compared using
       the default `<` operator.
     - Integer and floating-point numbers are automatically converted before
       comparison
@@ -23175,7 +23175,7 @@ class basic_json
       iterators.
 
     @param[in] i  input to read from
-    @param[in] cb  a parser callback function of type @ref parser_callback_t
+    @param[in] cb  a parser callback function of parentType @ref parser_callback_t
     which is used to control the deserialization by filtering unwanted values
     (optional)
     @param[in] allow_exceptions  whether to throw exceptions in case of a
@@ -23229,12 +23229,12 @@ class basic_json
     /*!
     @brief deserialize from a pair of character iterators
 
-    The value_type of the iterator must be a integral type with size of 1, 2 or
+    The value_type of the iterator must be a integral parentType with size of 1, 2 or
     4 bytes, which will be interpreted respectively as UTF-8, UTF-16 and UTF-32.
 
     @param[in] first iterator to start of character range
     @param[in] last  iterator to end of character range
-    @param[in] cb  a parser callback function of type @ref parser_callback_t
+    @param[in] cb  a parser callback function of parentType @ref parser_callback_t
     which is used to control the deserialization by filtering unwanted values
     (optional)
     @param[in] allow_exceptions  whether to throw exceptions in case of a
@@ -23461,13 +23461,13 @@ class basic_json
     ///////////////////////////
 
     /*!
-    @brief return the type as string
+    @brief return the parentType as string
 
-    Returns the type name as string to be used in error messages - usually to
-    indicate that a function was called on a wrong JSON type.
+    Returns the parentType name as string to be used in error messages - usually to
+    indicate that a function was called on a wrong JSON parentType.
 
     @return a string representation of a the @a m_type member:
-            Value type  | return value
+            Value parentType  | return value
             ----------- | -------------
             null        | `"null"`
             boolean     | `"boolean"`
@@ -23485,8 +23485,8 @@ class basic_json
     @liveexample{The following code exemplifies `type_name()` for all JSON
     types.,type_name}
 
-    @sa @ref type() -- return the type of the JSON value
-    @sa @ref operator value_t() -- return the type of the JSON value (implicit)
+    @sa @ref parentType() -- return the parentType of the JSON value
+    @sa @ref operator value_t() -- return the parentType of the JSON value (implicit)
 
     @since version 1.0.0, public since 2.1.0, `const char*` and `noexcept`
     since 3.0.0
@@ -23523,7 +23523,7 @@ class basic_json
     // member variables //
     //////////////////////
 
-    /// the type of the current element
+    /// the parentType of the current element
     value_t m_type = value_t::null;
 
     /// the value of the current element
@@ -23548,7 +23548,7 @@ class basic_json
     The library uses the following mapping from JSON values types to
     CBOR types according to the CBOR specification (RFC 7049):
 
-    JSON value type | value/range                                | CBOR type                          | first byte
+    JSON value parentType | value/range                                | CBOR parentType                          | first byte
     --------------- | ------------------------------------------ | ---------------------------------- | ---------------
     null            | `null`                                     | Null                               | 0xF6
     boolean         | `true`                                     | True                               | 0xF5
@@ -23591,7 +23591,7 @@ class basic_json
     binary          | *size*: 65536..4294967295                  | byte string (4 bytes follow)       | 0x5A
     binary          | *size*: 4294967296..18446744073709551615   | byte string (8 bytes follow)       | 0x5B
 
-    @note The mapping is **complete** in the sense that any JSON value type
+    @note The mapping is **complete** in the sense that any JSON value parentType
           can be converted to a CBOR value.
 
     @note If NaN or Infinity are stored inside a JSON number, they are
@@ -23658,7 +23658,7 @@ class basic_json
     The library uses the following mapping from JSON values types to
     MessagePack types according to the MessagePack specification:
 
-    JSON value type | value/range                       | MessagePack type | first byte
+    JSON value parentType | value/range                       | MessagePack parentType | first byte
     --------------- | --------------------------------- | ---------------- | ----------
     null            | `null`                            | nil              | 0xC0
     boolean         | `true`                            | true             | 0xC3
@@ -23694,7 +23694,7 @@ class basic_json
     binary          | *size*: 256..65535                | bin 16           | 0xC5
     binary          | *size*: 65536..4294967295         | bin 32           | 0xC6
 
-    @note The mapping is **complete** in the sense that any JSON value type
+    @note The mapping is **complete** in the sense that any JSON value parentType
           can be converted to a MessagePack value.
 
     @note The following values can **not** be converted to a MessagePack value:
@@ -23753,7 +23753,7 @@ class basic_json
     The library uses the following mapping from JSON values types to
     UBJSON types according to the UBJSON specification:
 
-    JSON value type | value/range                       | UBJSON type | marker
+    JSON value parentType | value/range                       | UBJSON parentType | marker
     --------------- | --------------------------------- | ----------- | ------
     null            | `null`                            | null        | `Z`
     boolean         | `true`                            | true        | `T`
@@ -23777,7 +23777,7 @@ class basic_json
     array           | *see notes on optimized format*   | array       | `[`
     object          | *see notes on optimized format*   | map         | `{`
 
-    @note The mapping is **complete** in the sense that any JSON value type
+    @note The mapping is **complete** in the sense that any JSON value parentType
           can be converted to a UBJSON value.
 
     @note The following values can **not** be converted to a UBJSON value:
@@ -23797,14 +23797,14 @@ class basic_json
     @note The optimized formats for containers are supported: Parameter
           @a use_size adds size information to the beginning of a container and
           removes the closing marker. Parameter @a use_type further checks
-          whether all elements of a container have the same type and adds the
-          type marker to the beginning of the container. The @a use_type
+          whether all elements of a container have the same parentType and adds the
+          parentType marker to the beginning of the container. The @a use_type
           parameter must only be used together with @a use_size = true. Note
           that @a use_size = true alone may result in larger representations -
           the benefit of this parameter is that the receiving side is
           immediately informed on the number of elements of the container.
 
-    @note If the JSON data contains the binary type, the value stored is a list
+    @note If the JSON data contains the binary parentType, the value stored is a list
           of integers, as suggested by the UBJSON documentation.  In particular,
           this means that serialization and the deserialization of a JSON
           containing binary values into UBJSON and back will result in a
@@ -23812,7 +23812,7 @@ class basic_json
 
     @param[in] j  JSON value to serialize
     @param[in] use_size  whether to add size annotations to container types
-    @param[in] use_type  whether to add type annotations to container types
+    @param[in] use_type  whether to add parentType annotations to container types
                          (must be combined with @a use_size = true)
     @return UBJSON serialization as byte vector
 
@@ -23860,7 +23860,7 @@ class basic_json
 
     The library uses the following mapping from JSON values types to BSON types:
 
-    JSON value type | value/range                       | BSON type   | marker
+    JSON value parentType | value/range                       | BSON parentType   | marker
     --------------- | --------------------------------- | ----------- | ------
     null            | `null`                            | null        | 0x0A
     boolean         | `true`, `false`                   | boolean     | 0x08
@@ -23944,7 +23944,7 @@ class basic_json
 
     The library maps CBOR types to JSON value types as follows:
 
-    CBOR type              | JSON value type | first byte
+    CBOR parentType              | JSON value parentType | first byte
     ---------------------- | --------------- | ----------
     Integer                | number_unsigned | 0x00..0x17
     Unsigned integer       | number_unsigned | 0x18
@@ -23997,7 +23997,7 @@ class basic_json
              - simple values (0xE0..0xF3, 0xF8)
              - undefined (0xF7)
 
-    @warning CBOR allows map keys of any type, whereas JSON only allows
+    @warning CBOR allows map keys of any parentType, whereas JSON only allows
              strings as keys in object values. Therefore, CBOR maps with keys
              other than UTF-8 strings are rejected (parse_error.113).
 
@@ -24103,7 +24103,7 @@ class basic_json
 
     The library maps MessagePack types to JSON value types as follows:
 
-    MessagePack type | JSON value type | first byte
+    MessagePack parentType | JSON value parentType | first byte
     ---------------- | --------------- | ----------
     positive fixint  | number_unsigned | 0x00..0x7F
     fixmap           | object          | 0x80..0x8F
@@ -24243,7 +24243,7 @@ class basic_json
 
     The library maps UBJSON types to JSON value types as follows:
 
-    UBJSON type | JSON value type                         | marker
+    UBJSON parentType | JSON value parentType                         | marker
     ----------- | --------------------------------------- | ------
     no-op       | *no value, next value is read*          | `N`
     null        | `null`                                  | `Z`
@@ -24358,7 +24358,7 @@ class basic_json
 
     The library maps BSON record types to JSON value types as follows:
 
-    BSON type       | BSON marker byte | JSON value type
+    BSON parentType       | BSON marker byte | JSON value parentType
     --------------- | ---------------- | ---------------------------
     double          | 0x01             | number_float
     string          | 0x02             | string
@@ -24394,7 +24394,7 @@ class basic_json
             @a allow_exceptions set to `false`, the return value will be
             value_t::discarded.
 
-    @throw parse_error.114 if an unsupported BSON record type is encountered
+    @throw parse_error.114 if an unsupported BSON record parentType is encountered
 
     @complexity Linear in the size of the input @a i.
 
@@ -24665,7 +24665,7 @@ class basic_json
     @return the original JSON from a flattened version
 
     @note Empty objects and arrays are flattened by @ref flatten() to `null`
-          values and can not unflattened to their original type. Apart from
+          values and can not unflattened to their original parentType. Apart from
           this example, for a JSON value `j`, the following is always true:
           `j == j.flatten().unflatten()`.
 
@@ -24869,7 +24869,7 @@ class basic_json
             }
         };
 
-        // type check: top level value must be an array
+        // parentType check: top level value must be an array
         if (JSON_HEDLEY_UNLIKELY(!json_patch.is_array()))
         {
             JSON_THROW(parse_error::create(104, 0, "JSON patch must be an array of objects"));
@@ -24895,7 +24895,7 @@ class basic_json
                     JSON_THROW(parse_error::create(105, 0, error_msg + " must have member '" + member + "'"));
                 }
 
-                // check if result is of type string
+                // check if result is of parentType string
                 if (JSON_HEDLEY_UNLIKELY(string_type && !it->second.is_string()))
                 {
                     JSON_THROW(parse_error::create(105, 0, error_msg + " must have string member '" + member + "'"));
@@ -24905,7 +24905,7 @@ class basic_json
                 return it->second;
             };
 
-            // type check: every element of the array must be an object
+            // parentType check: every element of the array must be an object
             if (JSON_HEDLEY_UNLIKELY(!val.is_object()))
             {
                 JSON_THROW(parse_error::create(104, 0, "JSON patch must be an array of objects"));
@@ -25150,7 +25150,7 @@ class basic_json
 
             default:
             {
-                // both primitive type: replace value
+                // both primitive parentType: replace value
                 result.push_back(
                 {
                     {"op", "replace"}, {"path", path}, {"value", target}

@@ -208,6 +208,8 @@
     <ClCompile Include="ChangeDeviceMessageFunc.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConvertUtilities.cpp" />
+    <ClCompile Include="FlyHighSkillState.cpp" />
+    <ClCompile Include="GravityUtilities.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -415,6 +417,9 @@
     <ClInclude Include="ChangeDeviceMessageFunc.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConvertUtilities.h" />
+    <ClInclude Include="FlyHighSkillState.h" />
+    <ClInclude Include="GravityScale.h" />
+    <ClInclude Include="GravityUtilities.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="GameOver.h" />
@@ -481,6 +486,7 @@
     <ClInclude Include="SceneInitializer.h" />
     <ClInclude Include="SceneServiceDefine.h" />
     <ClInclude Include="Shadow.h" />
+    <ClInclude Include="ShotParameter.h" />
     <ClInclude Include="SkillDefine.h" />
     <ClInclude Include="SpawnerBuilder.h" />
     <ClInclude Include="SpawnerBuilderDictionary.h" />

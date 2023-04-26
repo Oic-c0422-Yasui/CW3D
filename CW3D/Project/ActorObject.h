@@ -157,7 +157,7 @@ namespace ActionGame
 		////////////////////////////////////////////////////////
 		/**
 		 * @brief		キャラタイプを設定
-		 * @param		type キャラタイプ
+		 * @param		parentType キャラタイプ
 		 */
 		void SetType(CHARA_TYPE type) noexcept
 		{

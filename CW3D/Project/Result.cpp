@@ -15,6 +15,10 @@ ActionGame::CResult::CResult()
 	, isShowFirstStr_(false)
 	, speed_(0.0f)
 	, movePosX_(0.0f)
+	, secondMovePosX_(0.0f)
+	, thirdMovePosX_(0.0f)
+	, isInit_(false)
+	, fade_()
 
 {
 }
@@ -51,6 +55,8 @@ void ActionGame::CResult::Initialize()
 	str_.push_back("全部倒した");
 	str_.push_back("あああああああああ");
 	
+	fade_.Initialize(0,2.5f,255);
+	fade_.Start();
 	isInit_ = false;
 	isEnd_ = false;
 	isShowFirstStr_ = true;
@@ -77,6 +83,13 @@ void ActionGame::CResult::Update()
 	movePosX_ -= speed_;
 	secondMovePosX_ -= speed_;
 	thirdMovePosX_ -= speed_;
+
+	if (!fade_.IsEnd())
+	{
+		fade_.Update();
+		return;
+	}
+
 	//フェードエフェクト
 	const float time = 0.5f;
 	auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);

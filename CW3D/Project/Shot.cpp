@@ -10,19 +10,9 @@ ActionGame::CShot::CShot()
 	, AABB_()
 	, radius_(0.0f)
 	, isShow_(false)
-	, isEnableCollider(false)
-	, parentCharaType_(CHARA_TYPE::PLAYER)
 	, speed_(0.0f)
-	, knockBackPower_(0, 0, 0)
-	, knockBackDirection_()
-	, offset_(0, 0, 0)
-	, damage_(0)
-	, nextHitTime_(0.0f)
 	, collisionType_(COLLISION_TYPE::AABB)
-	, armorBreakLevel_(0)
-	, recieveUltGauge_(0.0f)
-	, parentID_(0)
-
+	, param_()
 {
 }
 
@@ -32,20 +22,10 @@ ActionGame::CShot::~CShot()
 
 void ActionGame::CShot::CreateBase(const Vector3& pos, const ShotCreateParameter& shot)
 {
-	position_ = pos;
-	offset_ = shot.offset;
-	parentCharaType_ = shot.type;
-	damage_ = shot.damage;
-	nextHitTime_ = shot.nextHitTime;
+	param_ = shot;
 	speed_ = 0.0f;
 	isShow_ = true;
-	isEnableCollider = shot.collideFlg;
-	knockBackPower_ = shot.knockBack;
-	knockBackDirection_ = shot.direction;
-	armorBreakLevel_ = shot.armorBreakLevel;
-	recieveUltGauge_ = shot.recieveUltGauge;
-	parentID_ = shot.parentID;
-	damageEffect_ = shot.damageEffect;
+
 }
 
 
@@ -121,7 +101,7 @@ void ActionGame::CShot::Update()
 		return;
 	}
 
-	position_.x += speed_ * TimeScaleControllerInstance.GetTimeScale(parentCharaType_);
+	position_.x += speed_ * TimeScaleControllerInstance.GetTimeScale(param_.parentType);
 	
 	//コライダーの座標を現在の座標に合わせる
 	ApplyColliderPosition();
@@ -147,7 +127,7 @@ void ActionGame::CShot::UpdateTime()
 	{
 		if (id.Time > 0.0f)
 		{
-			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(parentCharaType_);
+			id.Time -= CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(param_.parentType);
 		}
 	}
 }

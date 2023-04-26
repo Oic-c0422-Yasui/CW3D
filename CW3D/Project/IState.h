@@ -65,7 +65,7 @@ namespace ActionGame
 
 		/**
 		 * @brief		ステート内の接触イベント
-		 * @param[in]	type		当たった相手のタイプ
+		 * @param[in]	parentType		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
 		virtual void CollisionEvent(unsigned int type, std::any obj) = 0;

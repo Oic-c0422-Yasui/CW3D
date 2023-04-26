@@ -3,6 +3,7 @@
 
 #include	"AttackBaseState.h"
 #include	"ShockWaveSkillAction.h"
+#include	"FixedYInhaleKnockBack.h"
 
 namespace ActionGame {
 
@@ -33,6 +34,7 @@ namespace ActionGame {
 
 		bool isStartCollide_;
 	protected:
+		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
 		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 
@@ -68,7 +70,7 @@ namespace ActionGame {
 
 		/**
 		 * @brief		ステート内の接触イベント
-		 * @param[in]	type		当たった相手のタイプ
+		 * @param[in]	parentType		当たった相手のタイプ
 		 * @param[in]	obj			当たった相手のオブジェクト
 		 */
 		void CollisionEvent(unsigned int type, std::any obj) override;

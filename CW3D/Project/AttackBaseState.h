@@ -62,7 +62,8 @@ namespace ActionGame {
 		virtual void CreateShotSphere();
 		//エフェクトを作成する
 		virtual void CreateEffect();
-		
+		//アーマーレベルを設定する
+		virtual void SetArmorLevel(BYTE level);
 		
 	public:
 		/**

@@ -33,6 +33,7 @@
 #include "ClearPoseState.h"
 #include "DropKickSkillState.h"
 #include "StartPoseState.h"
+#include "FlyHighSkillState.h"
 
 
 

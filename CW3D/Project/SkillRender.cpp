@@ -88,10 +88,11 @@ void ActionGame::CSkillRender::RenderCT(float ct)
 
 	if (ct > 1.0f)
 	{
+		const auto& str = std::to_string((int)ct);
 		CRectangle rect;
-		font_->CalculateStringRect(0, 0, "0", rect);
+		font_->CalculateStringRect(0, 0, str.c_str(), rect);
 		font_->RenderFormatString(position_.x - (rect.GetWidth() * 0.5f),
-			position_.y - usedSKillTexture_->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), "%.0f", ct);
+			position_.y - usedSKillTexture_->GetHeight() * 0.5f - (rect.GetHeight() * 0.5f), str.c_str());
 	}
 	//クールタイムが1秒未満なら小数点まで描画
 	else

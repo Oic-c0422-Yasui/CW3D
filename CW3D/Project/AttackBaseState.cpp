@@ -68,7 +68,7 @@ void ActionGame::CAttackBaseState::CreateShotAABB()
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 	ShotAABB status = GetCreateShotStatusAABB();
 	status.damage += attack;
-	status.type = Actor()->GetType();
+	status.parentType = Actor()->GetType();
 	status.parentID = Actor()->GetID();
 	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ğ”½“]
 	if (Actor()->IsReverse())
@@ -86,7 +86,7 @@ void ActionGame::CAttackBaseState::CreateShotOBB()
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 	ShotOBB status = GetCreateShotStatusOBB();
 	status.damage += attack;
-	status.type = Actor()->GetType();
+	status.parentType = Actor()->GetType();
 	status.parentID = Actor()->GetID();
 	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ğ”½“]
 	if (Actor()->IsReverse())
@@ -104,7 +104,7 @@ void ActionGame::CAttackBaseState::CreateShotSphere()
 	auto& attack = Actor()->GetParameterMap()->Get<int>(PARAMETER_KEY_ATTACK);
 	ShotSphere status = GetCreateShotStatusSphere();
 	status.damage += attack;
-	status.type = Actor()->GetType();
+	status.parentType = Actor()->GetType();
 	status.parentID = Actor()->GetID();
 	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ğ”½“]
 	if (Actor()->IsReverse())
@@ -135,12 +135,19 @@ void ActionGame::CAttackBaseState::CreateEffect()
 	effects_.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
 }
 
+void ActionGame::CAttackBaseState::SetArmorLevel(BYTE level)
+{
+	auto& armorLevel = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armorLevel = level;
+}
+
 
 
 void ActionGame::CAttackBaseState::Start()
 {
 	currentTime_ = 0.0f;
 	isNextInput_ = false;
+
 	if (Input()->IsPress(INPUT_KEY_HORIZONTAL))
 	{
 		Actor()->SetReverse(false);

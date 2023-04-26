@@ -76,6 +76,8 @@ namespace ActionGame
 		}
 		else
 		{
+			//重力スケール設定
+			MyUtil::SetGravityScale(player->GetActor()->GetVelocity(), shot->GetGravityScale());
 			//ノックバック値設定
 			Vector3 knockBack = shot->GetKnockBackPower();
 			shot->AddHit(player->GetID());

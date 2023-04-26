@@ -52,6 +52,7 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
 	input->AddKeyboardKey(INPUT_KEY_SKILL4, MOFKEY_F);
+	input->AddKeyboardKey(INPUT_KEY_SKILL5, MOFKEY_Q);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	input->AddKeyboardKey(INPUT_KEY_BACK, MOFKEY_F3);
@@ -70,6 +71,8 @@ MofBool CGameApp::Initialize(void){
 		std::vector<int>{JOYPAD_RB}, std::vector<std::string>{INPUT_KEY_ATTACK});
 	input->AddJoypadKey(INPUT_KEY_SKILL4, 0, JOYPAD_A,
 		std::vector<int>{JOYPAD_RB}, std::vector<std::string>{INPUT_KEY_JUMP});
+	input->AddJoypadKey(INPUT_KEY_SKILL5, 0, JOYPAD_A,
+		std::vector<int>{JOYPAD_LB}, std::vector<std::string>{INPUT_KEY_JUMP});
 	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, JOYPAD_B);
 	input->AddJoypadKey(INPUT_KEY_RETRY, 0, JOYPAD_START);
 	input->AddJoypadKey(INPUT_KEY_BACK, 0, JOYPAD_BACK);
@@ -101,8 +104,6 @@ MofBool CGameApp::Initialize(void){
 	//ƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
 	gSceneManager->ChangeScene(SCENENO::TITLE);
 	
-
-	//g_pGraphics->ChangeScreenMode();
 	return TRUE;
 }
 /*************************************************************************//*!

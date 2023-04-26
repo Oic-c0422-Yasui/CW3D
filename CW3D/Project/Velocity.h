@@ -31,15 +31,40 @@ namespace ActionGame
 		//重力加速度
 		float					gravity_;
 
+		
+
 		CHARA_TYPE				type_;
 
-		//回転用変数
-		bool					isSetRotate_;
-		float					currentTime_;
-		float					moveTime_;
-		float					targetY_;
-		float					startY_;
-		float					currentY_;
+		//回転用構造体
+		struct RotateParam
+		{
+			bool					isStart;
+			float					currentTime;
+			float					endTime;
+			float					targetY;
+			float					startY;
+			float					currentY;
+		};
+		RotateParam rotate_;
+
+		//重力スケール用構造体
+		struct GravityScaleParam
+		{
+			bool					isStart;
+			float					currentTime;
+			float					endTime;
+			float					targetScale;
+			float					startScale;
+			float					currentScale;
+		};
+		GravityScaleParam gravityScale_;
+
+
+	protected:
+		void UpdateRotate();
+		void UpdateGravity();
+		void UpdateGravityScale();
+		void UpdateVelocity();
 
 	public:
 		/**
@@ -123,9 +148,33 @@ namespace ActionGame
 		 * @brief		重力加速設定
 		 * @param[in]	val		加速量
 		 */
-		void SetGravity(float val) {
+		void SetGravity(float val)  noexcept {
 			gravity_ = val;
 		}
+		/*
+		* @brief	重力スケール設定
+		* @param[in]	startScale	開始重力スケール
+		* @param[in]	endScale	終了重力スケール
+		* @param[in]	time		開始スケール継続時間
+		*/
+		void SetGravityScale(float startScale,float endScale,float time) {
+			gravityScale_.startScale = startScale;
+			gravityScale_.currentScale = gravityScale_.startScale;
+			gravityScale_.targetScale = endScale;
+			gravityScale_.endTime = time;
+			gravityScale_.currentTime = 0;
+			gravityScale_.isStart = true;
+		}
+		/*
+		* @brief	重力スケール設定
+		* @param[in]	startScale	開始重力スケール
+		* @param[in]	endScale	終了重力スケール
+		* @param[in]	time		開始スケール継続時間
+		*/
+		void SetGravityScale(float startScale, float time) {
+			SetGravityScale(startScale, gravityScale_.currentScale, time);
+		}
+
 		/**
 		 * @brief		最大速度の設定
 		 */
@@ -134,12 +183,12 @@ namespace ActionGame
 		}
 
 		void SetRotateY(float startRotate,float endRotate, float time) {
-			startY_ = startRotate;
-			currentY_ = startY_;
-			targetY_ = endRotate;
-			moveTime_ = time;
-			currentTime_ = 0;
-			isSetRotate_ = true;
+			rotate_.startY = startRotate;
+			rotate_.currentY = rotate_.startY;
+			rotate_.targetY = endRotate;
+			rotate_.endTime = time;
+			rotate_.currentTime = 0;
+			rotate_.isStart = true;
 		}
 
 		void SetIsGravity(bool isGravity) noexcept {
@@ -177,11 +226,15 @@ namespace ActionGame
 		}
 
 		float GetRotateY() const noexcept {
-			return currentY_;
+			return rotate_.currentY;
 		}
 
 		bool IsGravity() const noexcept {
 			return isUseGravity_;
+		}
+
+		bool GetGravityScale() const noexcept {
+			return gravityScale_.currentScale;
 		}
 
 	};

@@ -9,11 +9,13 @@ bool ActionGame::PlayerSkillCreator::Create(const ActorPtr& actor)
 
 
 	skill = actor->GetSkillController()->Create(SKILL_KEY_1, INPUT_KEY_SKILL2, "Skill1", STATE_KEY_BEAM_SKILL, STATE_KEY_JUMP_BEAM_SKILL);
-	skill->SetSkillData(180, 8);
+	skill->SetSkillData(180, 10);
 
 	skill = actor->GetSkillController()->Create(SKILL_KEY_2, INPUT_KEY_SKILL3, "Skill2", STATE_KEY_STORM_SKILL, STATE_KEY_JUMP_STORM_SKILL);
 	skill->SetSkillData(125, 15);
 
+	skill = actor->GetSkillController()->Create(SKILL_KEY_5, INPUT_KEY_SKILL5, "Skill2", STATE_KEY_FLYHIGH_SKILL, STATE_KEY_FLYHIGH_SKILL);
+	skill->SetSkillData(200, 6);
 
 	ActionGame::SKillPtr ult = std::make_shared<ActionGame::UltimateSkill>(actor);
 	skill = actor->GetSkillController()->Create(SKILL_KEY_3, INPUT_KEY_SKILL1, "Skill3", STATE_KEY_SHOCKWAVE_SKILL, STATE_KEY_SHOCKWAVE_SKILL, ult);

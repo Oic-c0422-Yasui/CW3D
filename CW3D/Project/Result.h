@@ -1,11 +1,13 @@
 #pragma once
 #include "Common.h"
+#include "Fade.h"
 
 namespace ActionGame
 {
 	class CResult
 	{
 	private:
+		CFade fade_;
 		std::shared_ptr<CFont> buttonFont_;
 		std::shared_ptr<CFont> textFont_;
 		bool isEnd_;

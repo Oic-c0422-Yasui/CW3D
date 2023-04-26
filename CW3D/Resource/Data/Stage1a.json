@@ -1,0 +1,44 @@
+{
+  "StageMesh": "Stage/stage.mom",
+
+  "EnemyStatusFile": "Data/EnemyStatus.json",
+
+  "Divisions": [
+    {
+      "BGM": "",
+      "ClearTerms": [
+        {
+          "Type": {
+            "Name": "AllDead"
+          }
+        }
+      ],
+      
+      "Enemys": [
+        {
+          "PosX": -25,
+          "PosY": 0,
+          "PosZ": 2,
+          "Type": "Zombie",
+          "Spawner":
+            {
+              "Type": "Normal",
+              "Time": 1
+            }
+        }
+      ],
+      "Objects": [
+        {
+          "PosX": 9,
+          "PosY": 1,
+          "PosZ": 0,
+          "SizeX": 1,
+          "SizeY": 30,
+          "SizeZ": 18
+        }
+      ]
+
+    }
+
+  ]
+}

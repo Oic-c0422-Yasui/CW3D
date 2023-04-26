@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Shot.h"
 #include "ActorObjectManager.h"
+#include "GravityUtilities.h"
 
 namespace ActionGame
 {
@@ -57,7 +58,8 @@ namespace ActionGame
 		//Šl“¾•KE‹ZƒQ[ƒW
 		float gauge = shot->GetRecieveUltGauge() * enemy->GetUltBoostMag();
 
-		auto id = shot->GetParentID();
+		//d—ÍƒXƒP[ƒ‹İ’è
+		MyUtil::SetGravityScale(enemy->GetActor()->GetVelocity(), shot->GetGravityScale());
 
 		auto actor =  ActorObjectManagerInstance.GetActor(shot->GetParentCharaType(), shot->GetParentID());
 		actor->AddUltGauge(gauge);

@@ -56,7 +56,7 @@ namespace ActionGame
 
 		/*
 		* @brief	アクターを取得する
-		* @param	type	キャラタイプ
+		* @param	parentType	キャラタイプ
 		* @param	id		アクターの固有ID
 		*/
 		ActorObjectPtr GetActor(CHARA_TYPE type, uint32_t id) {

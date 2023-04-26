@@ -10,7 +10,7 @@ namespace ActionGame
 	* @param	scale	大きさ
 	* @param	rotate	回転値
 	* @param	speed	速度
-	* @param	type	キャラのタイプ
+	* @param	parentType	キャラのタイプ
 	*/
 	struct EffectCreateParameter
 	{

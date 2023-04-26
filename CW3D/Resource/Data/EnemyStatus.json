@@ -51,7 +51,7 @@
       "HP": 5000,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 4.5,
-      "ATK": 50,
+      "ATK": 40,
       "Mesh": "Mesh/Enemy/Mutant/Mutant.mom",
       "Weight": 5.0,
       "ArmorLevel": 4,

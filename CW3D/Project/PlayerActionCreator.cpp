@@ -156,7 +156,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 		CLandingAction::Parameter{
 			
 		}));
-	//ジャンプ着地
+	//ダッシュ着地
 	actor->AddAction(CAction::Create<CRunLandingAction>(
 		CBaseAction::BaseParameter{
 			AnimParam{
@@ -209,7 +209,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			AnimParam{
 				STATE_KEY_ATTACK3,
 				0.0f,
-				1.7f,
+				2.3f,
 				0.1f,
 				false
 			}
@@ -531,6 +531,25 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
 			GRAVITY,
 			GRAVITYMAX,
+		}));
+
+	//超ジャンプスキル
+	actor->AddAction(STATE_KEY_FLYHIGH_SKILL,CAction::Create<CJumpAction>(
+		CBaseAction::BaseParameter{
+			AnimParam{
+				STATE_KEY_JUMP,
+				0.3f,
+				2.0f,
+				0.1f,
+				false
+			}
+		},
+		CJumpAction::Parameter{
+			Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
+			Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+			GRAVITY,
+			GRAVITYMAX,
+			PLAYER_JUMPPOWER * 1.5f,
 		}));
 
 	/*

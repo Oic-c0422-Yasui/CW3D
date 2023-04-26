@@ -25,6 +25,8 @@ const std::string INPUT_KEY_SKILL2 = "Skill2";
 const std::string INPUT_KEY_SKILL3 = "Skill3";
 //スキル４
 const std::string INPUT_KEY_SKILL4 = "Skill4";
+//スキル５
+const std::string INPUT_KEY_SKILL5 = "Skill5";
 //回避
 const std::string INPUT_KEY_ESCAPE = "Escape";
 //リトライ

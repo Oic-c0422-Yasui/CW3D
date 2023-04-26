@@ -957,6 +957,12 @@
     <ClCompile Include="BaseState.cpp">
       <Filter>ソース ファイル\State\Base</Filter>
     </ClCompile>
+    <ClCompile Include="GravityUtilities.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyHighSkillState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -1821,6 +1827,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BaseState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityScale.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityUtilities.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotParameter.h">
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyHighSkillState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

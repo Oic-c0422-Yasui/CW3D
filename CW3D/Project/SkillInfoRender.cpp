@@ -307,6 +307,7 @@ void CSkillInfoRender::SetKeyBoardName()
 	key[INPUT_KEY_SKILL3] = 5;
 	key[INPUT_KEY_ESCAPE] = 1;
 	key[INPUT_KEY_SKILL4] = 9;
+	key[INPUT_KEY_SKILL5] = 2;
 }
 
 void ActionGame::CSkillInfoRender::SetControllerName()
@@ -332,4 +333,5 @@ void ActionGame::CSkillInfoRender::SetControllerName()
 	key[INPUT_KEY_SKILL3] = 9;
 	key[INPUT_KEY_ESCAPE] = 17;
 	key[INPUT_KEY_SKILL4] = 11;
+	key[INPUT_KEY_SKILL5] = 7;
 }

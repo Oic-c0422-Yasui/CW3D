@@ -19,7 +19,7 @@ namespace ActionGame
 		* @param	endTime			終了時間
 		* @param	sightAngle		視野角（度数法）
 		* @param	minDistance		最小補正距離
-		* @param	type			キャラタイプ
+		* @param	parentType			キャラタイプ
 		*/
 		struct BaseParameter
 		{
@@ -37,7 +37,7 @@ namespace ActionGame
 		* @param	endTime			終了時間
 		* @param	sightAngle		視野角（度数法）
 		* @param	maxDistance		最大補正距離
-		* @param	type			キャラタイプ
+		* @param	parentType			キャラタイプ
 		* @param	isActorInSight	視野内に目標アクターがいるか？
 		* @param	currentTime		現在時間
 		* @param	minDistance		最小補正距離
@@ -65,7 +65,7 @@ namespace ActionGame
 		* @brief	視野内にアクターがいるか？
 		* @param[out]	outPos			一番近くのアクター座標を格納する(※アクターがいた場合)
 		* @param[out]	outMinDistance	最小検知距離を格納する
-		* @param		type			キャラタイプ
+		* @param		parentType			キャラタイプ
 		* @param		sightAngle		視野角（度数法）
 		* @param		maxDistance		最大検知距離
 		* @return		true　なら存在する

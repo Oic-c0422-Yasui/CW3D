@@ -1,40 +1,14 @@
 #pragma once
 
 #include "AttackCollider.h"
-
-#include "KnockBack.h"
 #include "TimeScaleController.h"
-#include "CollisionDefine.h"
-#include "Effect.h"
+#include "ShotParameter.h"
+
+
 
 namespace ActionGame
 {
-	//ショットパラメーター
-	struct ShotCreateParameter {
-		Vector3 offset;
-		float	nextHitTime;
-		int		damage;
-		Vector3	knockBack;
-		bool	collideFlg;
-		CHARA_TYPE type;
-		KnockBackPtr direction;
-		BYTE armorBreakLevel;
-		float recieveUltGauge;
-		uint32_t parentID;
-		EffectCreateParameterPtr damageEffect;
-	};
-	//球体ショット
-	struct ShotSphere : public ShotCreateParameter {
-		float Radius;
-	};
-	//箱ショット
-	struct ShotAABB : public ShotCreateParameter{
-		Vector3 size;
-	};
-	//回転を考慮した箱ショット
-	struct ShotOBB : public ShotAABB {
-		Vector3 angle;
-	};
+	
 
 	/*
 	* @brief　ショットクラス
@@ -57,20 +31,10 @@ namespace ActionGame
 		CVector3			position_;
 		float				radius_;
 		CVector3			size_;
-		Vector3				offset_;
 		bool				isShow_;
-		bool				isEnableCollider;
-		CHARA_TYPE			parentCharaType_;
-		uint32_t			parentID_;
 		COLLISION_TYPE		collisionType_;
 		float				speed_;
-		int					damage_;
-		float				nextHitTime_;
-		KnockBackPtr		knockBackDirection_;
-		CVector3			knockBackPower_;
-		BYTE				armorBreakLevel_;
-		float				recieveUltGauge_;
-		EffectCreateParameterPtr damageEffect_;
+		ShotCreateParameter param_;
 
 	protected:
 		/*		プライベート関数		*/
@@ -125,7 +89,7 @@ namespace ActionGame
 		*/
 		void AddHit(uint32_t hitId)
 		{
-			Hit hit = { hitId, nextHitTime_ };
+			Hit hit = { hitId, param_.nextHitTime };
 			hitIDs_.push_back(hit);
 		}
 
@@ -145,7 +109,7 @@ namespace ActionGame
 		*/
 		void AddDamage(int val) noexcept
 		{
-			damage_ += val;
+			param_.damage += val;
 		}
 
 		/*
@@ -177,7 +141,7 @@ namespace ActionGame
 		* @retval	false　なら無効（当たり判定を行わない）
 		*/
 		bool IsEnableCollider() const noexcept {
-			return isEnableCollider;
+			return param_.isEnableCollider;
 		}
 
 		/*
@@ -186,7 +150,7 @@ namespace ActionGame
 		*/
 		float GetNextHitTime() const noexcept
 		{
-			return nextHitTime_;
+			return param_.nextHitTime;
 		}
 
 		/*
@@ -195,7 +159,7 @@ namespace ActionGame
 		*/
 		CHARA_TYPE GetParentCharaType() const noexcept
 		{
-			return parentCharaType_;
+			return param_.parentType;
 		}
 
 		/*
@@ -204,7 +168,7 @@ namespace ActionGame
 		*/
 		float GetRecieveUltGauge() const noexcept
 		{
-			return recieveUltGauge_;
+			return param_.recieveUltGauge;
 		}
 
 		/*
@@ -213,7 +177,7 @@ namespace ActionGame
 		*/
 		uint32_t GetParentID() const noexcept
 		{
-			return parentID_;
+			return param_.parentID;
 		}
 
 		/*
@@ -222,7 +186,7 @@ namespace ActionGame
 		*/
 		const KnockBackPtr& GetDirection() const noexcept
 		{
-			return knockBackDirection_;
+			return param_.direction;
 		}
 
 		/*
@@ -240,7 +204,7 @@ namespace ActionGame
 		*/
 		const Vector3& GetOffset() const noexcept 
 		{
-			return offset_;
+			return param_.offset;
 		}
 
 		/*
@@ -292,7 +256,7 @@ namespace ActionGame
 		* @return	ノックバックの力
 		*/
 		const Vector3& GetKnockBackPower() const noexcept {
-			return knockBackPower_;
+			return param_.knockBack;
 		}
 
 		/*
@@ -308,7 +272,7 @@ namespace ActionGame
 		* @return	ダメージ
 		*/
 		uint32_t GetDamage() const noexcept {
-			return damage_;
+			return param_.damage;
 		}
 
 		/*
@@ -316,7 +280,7 @@ namespace ActionGame
 		* @return	アーマー破壊レベル
 		*/
 		BYTE GetArmorBreakLevel() const noexcept{
-			return armorBreakLevel_;
+			return param_.armorBreakLevel;
 		}
 		
 		/*
@@ -324,7 +288,12 @@ namespace ActionGame
 		* @return	ダメージ用のエフェクトパラメータ
 		*/
 		const EffectCreateParameterPtr& GetDamageEffect() const noexcept{
-			return damageEffect_;
+			return param_.damageEffect;
+		}
+
+		const GravityScaleParam& GetGravityScale() const noexcept
+		{
+			return param_.gravity;
 		}
 
 		/*
@@ -350,11 +319,11 @@ namespace ActionGame
 
 		/*
 		* @brief	親のキャラタイプを設定
-		* @param	type 親のキャラタイプ
+		* @param	parentType 親のキャラタイプ
 		*/
 		void SetParentCharaType(CHARA_TYPE type) noexcept
 		{
-			parentCharaType_ = type;
+			param_.parentType = type;
 		}
 
 		/*
@@ -372,7 +341,7 @@ namespace ActionGame
 		*/
 		void SetEnableCollider(bool isEnable) noexcept
 		{
-			isEnableCollider = isEnable;
+			param_.isEnableCollider = isEnable;
 		}
 
 		/*
@@ -381,7 +350,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPower(const Vector3& val) noexcept
 		{
-			knockBackPower_ = val;
+			param_.knockBack = val;
 		}
 
 		/*
@@ -390,7 +359,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerX(float val) noexcept
 		{
-			knockBackPower_.x = val;
+			param_.knockBack.x = val;
 		}
 
 		/*
@@ -399,7 +368,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerY(float val) noexcept
 		{
-			knockBackPower_.y = val;
+			param_.knockBack.y = val;
 		}
 
 		/*
@@ -408,7 +377,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackPowerZ(float val) noexcept
 		{
-			knockBackPower_.z = val;
+			param_.knockBack.z = val;
 		}
 
 		/*
@@ -417,7 +386,7 @@ namespace ActionGame
 		*/
 		void SetDamage(uint32_t val) noexcept
 		{
-			damage_ = val;
+			param_.damage = val;
 		}
 
 		/*
@@ -426,7 +395,7 @@ namespace ActionGame
 		*/
 		void SetNextHitTime(float sec) noexcept
 		{
-			nextHitTime_ = sec;
+			param_.nextHitTime = sec;
 		}
 
 		/*
@@ -453,7 +422,7 @@ namespace ActionGame
 		*/
 		void SetOffset(const Vector3& offset) noexcept
 		{
-			offset_ = offset;
+			param_.offset = offset;
 		}
 
 		/*
@@ -462,7 +431,7 @@ namespace ActionGame
 		*/
 		void SetKnockBackDirection(const KnockBackPtr& dir) noexcept
 		{
-			knockBackDirection_ = dir;
+			param_.direction = dir;
 		}
 
 		/*
@@ -471,7 +440,7 @@ namespace ActionGame
 		*/
 		void SetArmorBreakLevel(BYTE level) noexcept
 		{
-			armorBreakLevel_ = level;
+			param_.armorBreakLevel = level;
 		}
 
 		/*
@@ -480,7 +449,7 @@ namespace ActionGame
 		*/
 		void SetRecieveUltGauge(float gauge) noexcept
 		{
-			recieveUltGauge_ = gauge;
+			param_.recieveUltGauge = gauge;
 		}
 
 		/*
@@ -489,7 +458,16 @@ namespace ActionGame
 		*/
 		void SetParentID(uint32_t id)noexcept
 		{
-			parentID_ = id;
+			param_.parentID = id;
+		}
+
+		/*
+		* @brief	重力スケールパラメータ設定
+		* @param	scale 重力スケールパラメータ
+		*/
+		void SetGravityScale(GravityScaleParam scale) noexcept
+		{
+			param_.gravity = scale;
 		}
 
 	};

@@ -5,7 +5,7 @@ ActionGame::CEscapeState::CEscapeState(Parameter param)
 	: CAttackBaseState()
 	, parameter_(param)
 	, isThrough_(false)
-	, isEscapeCurrentTime_(0.0f)
+	, currenteEcapeTime_(0.0f)
 	, isEscape_(false)
 {
 }
@@ -16,11 +16,10 @@ void ActionGame::CEscapeState::Start()
 	CAttackBaseState::Start();
 	isThrough_ = false;
 	isEscape_ = false;
-	isEscapeCurrentTime_ = 0.0f;
+	currenteEcapeTime_ = 0.0f;
 	action_->Start();
 
-	auto& armorLevel = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
-	armorLevel = parameter_.armorLevel;
+	SetArmorLevel(parameter_.armorLevel);
 
 	if (IsPressHorizontalKey())
 	{
@@ -48,15 +47,15 @@ void ActionGame::CEscapeState::Execution()
 	if (currentTime_ >= parameter_.EscapeStartTime)
 	{
 
-		if (isEscapeCurrentTime_ < parameter_.EscapeTime)
+		if (currenteEcapeTime_ < parameter_.EscapeTime)
 		{
 			auto& isEscape_ = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_ESCAPE);
 			if (!isEscape_)
 			{
 				isEscape_ = true;
 			}
-			isEscapeCurrentTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
-			if (isEscapeCurrentTime_ >= parameter_.EscapeTime)
+			currenteEcapeTime_ += CUtilities::GetFrameSecond() * TimeScaleControllerInstance.GetTimeScale(Actor()->GetType());
+			if (currenteEcapeTime_ >= parameter_.EscapeTime)
 			{
 				isEscape_ = false;
 			}
