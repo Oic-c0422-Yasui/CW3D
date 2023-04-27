@@ -91,6 +91,62 @@ bool ActionGame::CBattleUILoader::Load()
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill4Mono", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill5.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill5", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill5Mono.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill5Mono", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill6.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill6", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill6Mono.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill6Mono", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill7.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill7", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill7Mono.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill7Mono", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill8.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill8", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
+	if (!tempTex2D->Load("UI/Skill8Mono.png"))
+	{
+		return false;
+	}
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill8Mono", tempTex2D);
+
+	tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/Escape.png"))
 	{
 		return false;
