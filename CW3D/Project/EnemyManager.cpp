@@ -92,7 +92,7 @@ void ActionGame::CEnemyManager::Release()
 {
 	for (auto& enemy : *enemyArray_)
 	{
-		enemy->Release();
+		enemy.reset();
 	}
 	enemyArray_->clear();
 	enemyArray_.reset();
@@ -112,6 +112,10 @@ void ActionGame::CEnemyManager::AddEnemy(const EnemyPtr& enemy)
 
 void ActionGame::CEnemyManager::ClearEnemyArray()
 {
+	for (auto& enemy : *enemyArray_)
+	{
+		enemy.reset();
+	}
 	enemyArray_->clear();
 	enemyCount_.Set(0);
 	showEnemyCount_.Set(0);

@@ -45,7 +45,13 @@ const std::string SKILL_KEY_2 = "SkillKey2";
 const std::string SKILL_KEY_3 = "SkillKey3";
 //スキル４
 const std::string SKILL_KEY_4 = "SkillKey4";
-//スキル４
+//スキル５
 const std::string SKILL_KEY_5 = "SkillKey5";
+//スキル６
+const std::string SKILL_KEY_6 = "SkillKey6";
+//スキル７
+const std::string SKILL_KEY_7 = "SkillKey7";
+//スキル８
+const std::string SKILL_KEY_8 = "SkillKey8";
 //回避スキル
 const std::string SKILL_KEY_ESCAPE = "EscapeKey";

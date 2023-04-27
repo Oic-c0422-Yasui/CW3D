@@ -4,8 +4,8 @@
 bool ActionGame::PlayerParameterCreator::Create(const AnyParameterMapPtr& param)
 {
 
-	param->Add<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP, 120);
-	param->Add<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP, 120);
+	param->Add<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_HP, 250);
+	param->Add<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP, 250);
 	param->Add<int>(PARAMETER_KEY_DAMAGE, 0);
 	param->Add<int>(PARAMETER_KEY_ATTACK, 25);
 	param->Add<float>(PARAMETER_KEY_INVINCIBLE_TIME, 0.0f);

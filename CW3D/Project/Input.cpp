@@ -107,7 +107,7 @@ void Input::CInput::AddJoypadKey(const KeyType& kn, int pad, int positiveKey, in
 
 /**
  * @brief		“o˜^ƒL[‚Ì’Ç‰Á
- * @param[in]	keyName				“o˜^ƒL[–¼
+ * @param[in]	keyName			“o˜^ƒL[–¼
  * @param[in]	pad				“o˜^ƒpƒbƒh
  * @param[in]	key				“o˜^ƒL[
  * @param[in]	holdKeys		“o˜^ƒL[”z—ñ

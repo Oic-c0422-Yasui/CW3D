@@ -291,7 +291,7 @@ namespace ActionGame
 			return param_.damageEffect;
 		}
 
-		const GravityScaleParam& GetGravityScale() const noexcept
+		const GravityScale& GetGravityScale() const noexcept
 		{
 			return param_.gravity;
 		}
@@ -465,7 +465,7 @@ namespace ActionGame
 		* @brief	重力スケールパラメータ設定
 		* @param	scale 重力スケールパラメータ
 		*/
-		void SetGravityScale(GravityScaleParam scale) noexcept
+		void SetGravityScale(GravityScale scale) noexcept
 		{
 			param_.gravity = scale;
 		}

@@ -24,14 +24,14 @@ void ActionGame::CFlyHighSkillState::Start()
 
 	for (auto& shot : shots_)
 	{
-		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage();
+		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_5)->GetDamage();
 		auto damage = MyUtil::CalculateAtk(shot->GetDamage(), skillDamage);
 		shot->SetDamage(damage);
 	}
 
 
-	Vector3 pos(0, 10, -15);
-	Vector3 lookPos(0, 1, 0);
+	Vector3 pos(0, 11, -18);
+	Vector3 lookPos(0, -1, 0);
 	
 	//”½“]ˆ—
 	if (Actor()->IsReverse())

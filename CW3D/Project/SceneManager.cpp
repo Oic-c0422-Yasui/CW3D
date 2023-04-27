@@ -234,7 +234,7 @@ void Scene::CSceneManager::RegisterRenderTask()
 	renderTask_.AddTask("RenderScene", Task::PRIORITY::MAIN1,
 		[&]()
 		{
-				if(currentScene_ && (prevScene_ == nullptr || changeEffect_ == nullptr))
+				if(currentScene_ && (prevScene_ == nullptr && changeEffect_ == nullptr))
 				{
 					currentScene_->Render();
 				}
@@ -346,6 +346,7 @@ void Scene::CSceneManager::RegisterSceneChangeEffectTask()
 				}
 				if (changeEffect_->IsEnd())
 				{
+					changeEffect_.reset();
 					DeleteSceneChangeEffectTask();
 				}
 			}
@@ -355,7 +356,10 @@ void Scene::CSceneManager::RegisterSceneChangeEffectTask()
 	render2DTask_.AddTask("SceneChangeEffectRender", Task::PRIORITY::MAIN3,
 		[&]()
 	{
-		changeEffect_->Render(currentScene_, currentScene_);
+		if (currentScene_ && changeEffect_)
+		{
+			changeEffect_->Render(currentScene_, currentScene_);
+		}
 	}
 	);
 }

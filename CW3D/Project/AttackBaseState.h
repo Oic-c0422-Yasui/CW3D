@@ -62,6 +62,8 @@ namespace ActionGame {
 		virtual void CreateShotSphere();
 		//エフェクトを作成する
 		virtual void CreateEffect();
+		//エフェクトを作成する
+		virtual void CreateEffect(const EffectCreateParameter& effect);
 		//アーマーレベルを設定する
 		virtual void SetArmorLevel(BYTE level);
 		

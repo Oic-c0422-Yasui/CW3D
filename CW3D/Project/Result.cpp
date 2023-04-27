@@ -4,7 +4,7 @@
 #include "SceneChangeFade.h"
 #include "InputDefine.h"
 #include "ResourceManager.h"
-#include "ChangeDeviceMessageFunc.h"
+#include "MessengerUtilities.h"
 
 ActionGame::CResult::CResult()
 	: isEnd_(false)
@@ -19,6 +19,7 @@ ActionGame::CResult::CResult()
 	, thirdMovePosX_(0.0f)
 	, isInit_(false)
 	, fade_()
+	, str_()
 
 {
 }
@@ -39,7 +40,7 @@ bool ActionGame::CResult::Load()
 	textFont_->Create(300, "ＭＳ ゴシック");
 
 	//デバイス変更時に実行する関数登録
-	MyUtil::CChangeDeviceMessageFunc::Load(
+	MyUtil::CChangeDeviceMessageFunc::Load("Result",
 		[this]() {ChangeKeyBoardUI(); },
 		[this]() {ChangeControllerUI(); });
 
@@ -161,6 +162,7 @@ void ActionGame::CResult::Release()
 	textFont_.reset();
 	buttonFont_.reset();
 	str_.clear();
+	MyUtil::CChangeDeviceMessageFunc::Delete("Result");
 }
 
 bool ActionGame::CResult::IsEnd() const noexcept

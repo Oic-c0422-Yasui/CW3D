@@ -44,6 +44,15 @@ namespace ActionGame
 			float					targetY;
 			float					startY;
 			float					currentY;
+			RotateParam()
+			{
+				isStart = false;
+				currentTime = 0.0f;
+				endTime = 0.0f;
+				targetY = 0.0f;
+				startY = 0.0f;
+				currentY = 0.0f;
+			}
 		};
 		RotateParam rotate_;
 
@@ -56,6 +65,15 @@ namespace ActionGame
 			float					targetScale;
 			float					startScale;
 			float					currentScale;
+			GravityScaleParam()
+			{
+				isStart = false;
+				currentTime = 0.0f;
+				endTime = 0.0f;
+				targetScale = 0.0f;
+				startScale = 0.0f;
+				currentScale = 1.0f;
+			}
 		};
 		GravityScaleParam gravityScale_;
 

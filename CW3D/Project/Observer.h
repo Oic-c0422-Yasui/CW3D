@@ -48,5 +48,27 @@ namespace ActionGame {
 		}
 	};
 
+	/**
+	 * 関数単体での登録用
+	 */
+	template <>
+	class ObserverFunction<void> : public IObserver<void> {
+	private:
+		/** 通知時に実行する関数 */
+		std::function<void()>	func_;
+	public:
+		/**
+		 * コンストラクタ
+		 */
+		ObserverFunction(std::function<void()>& f)
+			: func_(f) {
+		}
 
+		/**
+		 * @brief	通知メソッド
+		 */
+		void Notify() override {
+			func_();
+		}
+	};
 }

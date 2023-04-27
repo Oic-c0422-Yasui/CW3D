@@ -14,6 +14,7 @@ ActionGame::CPlayer::CPlayer()
 
 ActionGame::CPlayer::~CPlayer()
 {
+	Release();
 }
 
 bool ActionGame::CPlayer::Load()
@@ -25,9 +26,8 @@ bool ActionGame::CPlayer::Load()
 	{
 		return false;
 	}
-	//モーション読み込み
-	motion_ = mesh_->CreateMotionController();
-	actor_->SetAnimationState(motion_);
+	CActorObject::Load();
+	
 	
 	//シェーダー読み込み
 	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
@@ -49,7 +49,6 @@ bool ActionGame::CPlayer::Load()
 	
 	CServiceLocator<ICombo>::SetService(combo_);
 
-	CActorObject::Load();
 
 	return true;
 }

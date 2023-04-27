@@ -1,6 +1,6 @@
 #include "TitleScene.h"
 #include "RegistMessageServiceDefine.h"
-#include "ChangeDeviceMessageFunc.h"
+#include "MessengerUtilities.h"
 
 
 Scene::CTitleScene::CTitleScene()
@@ -28,7 +28,7 @@ bool Scene::CTitleScene::Load()
 	textFont_.Create(50, "M PLUS 1");
 
 	//デバイス変更時に実行する関数登録
-	MyUtil::CChangeDeviceMessageFunc::Load(
+	MyUtil::CChangeDeviceMessageFunc::Load("Title",
 		[this]() {ChangeKeyBoardUI();	},
 		[this]() {ChangeControllerUI(); });
 
@@ -41,6 +41,7 @@ void Scene::CTitleScene::Initialize()
 
 void Scene::CTitleScene::Update()
 {
+
 	//キー入力
 	auto input = InputManagerInstance.GetInput(0);
 
@@ -104,6 +105,7 @@ void Scene::CTitleScene::Release()
 	}
 	titleLogoFont_.Release();
 	textFont_.Release();
+	MyUtil::CChangeDeviceMessageFunc::Delete("Title");
 }
 
 void Scene::CTitleScene::ChangeKeyBoardUI()

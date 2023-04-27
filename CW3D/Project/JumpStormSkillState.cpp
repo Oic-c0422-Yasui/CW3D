@@ -14,7 +14,7 @@ ActionGame::CJumpStormSkillState::CJumpStormSkillState(Parameter param)
 
 void ActionGame::CJumpStormSkillState::Start()
 {
-	action_ = Actor()->GetAction<CJumpStormSkillAction>(GetKey());
+	action_ = Actor()->GetAction<CNoneGravityAction>(GetKey());
 
 	attackTime_ = 0.0f;
 	isContinue_ = true;
@@ -116,9 +116,8 @@ void ActionGame::CJumpStormSkillState::End()
 	CameraPtr camera;
 	Vector3 pos(0, 10, -20);
 	Vector3 lookPos(0, 3, 0);
-	camera = std::make_shared<ActionGame::CFollowFixedCamera>(Actor()->GetPosition(), Actor()->GetPosition(), pos, lookPos);
-	CameraControllerInstance.SetCamera(camera, 0.01f, MyUtil::EASING_TYPE::LINER, 0.01f, MyUtil::EASING_TYPE::IN_SINE, 0.5f);
-	//CameraControllerInstance.SetDefault();
+	
+	CameraControllerInstance.SetDefault();
 }
 
 void ActionGame::CJumpStormSkillState::CollisionEvent(unsigned int type, std::any obj)

@@ -4,7 +4,7 @@
 #include "SceneChangeFade.h"
 #include "InputDefine.h"
 #include "ResourceManager.h"
-#include "ChangeDeviceMessageFunc.h"
+#include "MessengerUtilities.h"
 
 ActionGame::CGameOver::CGameOver()
 	: fade_()
@@ -35,7 +35,7 @@ bool ActionGame::CGameOver::Load()
 	}
 
 	//デバイス変更時に実行する関数登録
-	MyUtil::CChangeDeviceMessageFunc::Load(
+	MyUtil::CChangeDeviceMessageFunc::Load("GameOver",
 		[this]() {ChangeKeyBoardUI(); },
 		[this]() {ChangeControllerUI(); });
 
@@ -122,6 +122,7 @@ void ActionGame::CGameOver::Release()
 {
 	textFont_.reset();
 	buttonFont_.reset();
+	MyUtil::CChangeDeviceMessageFunc::Delete("GameOver");
 }
 
 bool ActionGame::CGameOver::IsEnd() const noexcept

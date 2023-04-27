@@ -1,8 +1,6 @@
 #include "PlayerUIRender.h"
-#include "RegistMessageServiceDefine.h"
 #include "HPPresenter.h"
-
-
+#include "MessengerUtilities.h"
 
 ActionGame::CPlayerUIRender::CPlayerUIRender()
 	: HPRender_(std::make_shared<CPlayerHPRender>())
@@ -16,7 +14,7 @@ ActionGame::CPlayerUIRender::CPlayerUIRender()
 
 ActionGame::CPlayerUIRender::~CPlayerUIRender()
 {
-	Release();
+
 }
 
 bool ActionGame::CPlayerUIRender::Load(const PlayerPtr& player, GameDevice device)
@@ -42,39 +40,21 @@ bool ActionGame::CPlayerUIRender::Load(const PlayerPtr& player, GameDevice devic
 		return false;
 	}
 
-	switch (device)
-	{
-	case GameDevice::KeyBoardAndMouse:
-		ChangeKeyBoardUI();
-		break;
-	case GameDevice::Controller:
-		ChangeControllerUI();
-		break;
-	default:
-		break;
-	}
-
 	CUltGaugePresenter::Present(player, UltGaugeRender_);
 	CHPPresenter::Present(player, HPRender_);
 	CComboPresenter::Present(player, comboRender_);
 
-	const auto& message = RegistMessageService::GetService();
 	/* メッセージ登録 */
-	//UI表示メッセージ
-	message->Regist(UI_Visible,
-		[this]() {VisibleUI(); });
-	//UI非表示メッセージ
-	message->Regist(UI_Disable,
+	//UIの表示・非表示
+	MyUtil::CUIMessageFunc::Load("PlayerUI",
+		[this]() {VisibleUI(); },
 		[this]() {DisableUI(); });
-
-	//キーボード表示メッセージ
-	message->Regist(ChangeDevice_KeyBoard,
-		[this]() {ChangeKeyBoardUI(); });
-	//コントローラー表示メッセージ
-	message->Regist(ChangeDevice_Controller,
+	//デバイス変更時のUI変更
+	MyUtil::CChangeDeviceMessageFunc::Load("PlayerUI",
+		[this]() {ChangeKeyBoardUI(); },
 		[this]() {ChangeControllerUI(); });
 
-	
+
 
 	return true;
 }
@@ -101,7 +81,8 @@ void ActionGame::CPlayerUIRender::Render()
 
 void ActionGame::CPlayerUIRender::Release()
 {
-
+	MyUtil::CUIMessageFunc::Delete("PlayerUI");
+	MyUtil::CChangeDeviceMessageFunc::Delete("PlayerUI");
 	skillInfoRender_.reset();
 	skillsRender_.reset();
 	HPRender_.reset();
@@ -121,14 +102,14 @@ void ActionGame::CPlayerUIRender::DisableUI()
 
 void ActionGame::CPlayerUIRender::ChangeKeyBoardUI()
 {
-	auto GetPosition = [this](const std::string& key) { return skillInfoRender_->GetKeyBoardSkillPosition(key); };
+	auto GetPosition = [&](const std::string& key) { return skillInfoRender_->GetKeyBoardSkillPosition(key); };
 	skillsRender_->Initialize(GetPosition);
 	skillInfoRender_->ChangeKeyBoardTexture();
 }
 
 void ActionGame::CPlayerUIRender::ChangeControllerUI()
 {
-	auto GetPosition = [this](const std::string& key) { return skillInfoRender_->GetControllerSkillPosition(key); };
+	auto GetPosition = [&](const std::string& key) { return skillInfoRender_->GetControllerSkillPosition(key); };
 	skillsRender_->Initialize(GetPosition);
 	skillInfoRender_->ChangeControllerTexture();
 }

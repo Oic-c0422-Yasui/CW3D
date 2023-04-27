@@ -97,9 +97,8 @@ bool ActionGame::CMoveCompensationAction::IsActorInSight(TransformPtr& outPos, f
 		float distance = MyUtil::Distance(selfPos, targetPos);
 		minDistance = distance;
 		param_.targetPos = actor.lock()->GetActor()->GetTransform();
-		auto aaa = actor.lock()->GetCollider().Size.x;
-		auto bbb = Collider()->GetSize().x;
-		auto size = aaa + bbb;
+
+		auto size = actor.lock()->GetCollider().Size.x + Collider()->GetSize().x;
 		param_.minDistance = size;
 		isContain = true;
 	}
@@ -124,7 +123,6 @@ bool ActionGame::CMoveCompensationAction::MoveCompensation(Parameter& param)
 
 		//‹——£ŒvŽZ
 		const auto selfPos = Transform()->GetPosition();
-		auto aaa = param.targetPos->GetPosition();
 
 		const auto distance = MyUtil::DistanceSquare(selfPos, param.targetPos->GetPosition());
 		const int square = 2;

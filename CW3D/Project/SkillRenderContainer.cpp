@@ -52,7 +52,8 @@ bool ActionGame::CSkillRenderContainer::Load()
 
 void ActionGame::CSkillRenderContainer::Initialize(PositionFunc func)
 {
-	const auto& player = CServiceLocator< CPlayer >::GetService();
+	auto& player = CServiceLocator< CPlayer >::GetService();
+	if (!player) return;
 	auto& skillController = player->GetSkillController();
 	size_t ultIndex = 0;
 	for (size_t i = 0; i < skillController->GetCount(); i++)

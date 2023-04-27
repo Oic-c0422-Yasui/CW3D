@@ -48,11 +48,14 @@ MofBool CGameApp::Initialize(void){
 	input->AddKeyboardKey(INPUT_KEY_ATTACK, MOFKEY_Z);
 	input->AddKeyboardKey(INPUT_KEY_CANCEL, MOFKEY_X);
 	input->AddKeyboardKey(INPUT_KEY_JUMP, MOFKEY_X);
-	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_D);
+	input->AddKeyboardKey(INPUT_KEY_SKILL1, MOFKEY_F);
 	input->AddKeyboardKey(INPUT_KEY_SKILL2, MOFKEY_A);
 	input->AddKeyboardKey(INPUT_KEY_SKILL3, MOFKEY_S);
-	input->AddKeyboardKey(INPUT_KEY_SKILL4, MOFKEY_F);
+	input->AddKeyboardKey(INPUT_KEY_SKILL4, MOFKEY_D);
 	input->AddKeyboardKey(INPUT_KEY_SKILL5, MOFKEY_Q);
+	input->AddKeyboardKey(INPUT_KEY_SKILL6, MOFKEY_W);
+	input->AddKeyboardKey(INPUT_KEY_SKILL7, MOFKEY_E);
+	input->AddKeyboardKey(INPUT_KEY_SKILL8, MOFKEY_R);
 	input->AddKeyboardKey(INPUT_KEY_ESCAPE, MOFKEY_SPACE);
 	input->AddKeyboardKey(INPUT_KEY_RETRY, MOFKEY_F2);
 	input->AddKeyboardKey(INPUT_KEY_BACK, MOFKEY_F3);
@@ -73,6 +76,12 @@ MofBool CGameApp::Initialize(void){
 		std::vector<int>{JOYPAD_RB}, std::vector<std::string>{INPUT_KEY_JUMP});
 	input->AddJoypadKey(INPUT_KEY_SKILL5, 0, JOYPAD_A,
 		std::vector<int>{JOYPAD_LB}, std::vector<std::string>{INPUT_KEY_JUMP});
+	input->AddJoypadKey(INPUT_KEY_SKILL6, 0, JOYPAD_Y,
+		std::vector<int>{JOYPAD_LB});
+	input->AddJoypadKey(INPUT_KEY_SKILL7, 0, JOYPAD_X,
+		std::vector<int>{JOYPAD_LB}, std::vector<std::string>{INPUT_KEY_ATTACK});
+	input->AddJoypadKey(INPUT_KEY_SKILL8, 0, JOYPAD_B,
+		std::vector<int>{JOYPAD_LB}, std::vector<std::string>{INPUT_KEY_ESCAPE});
 	input->AddJoypadKey(INPUT_KEY_ESCAPE, 0, JOYPAD_B);
 	input->AddJoypadKey(INPUT_KEY_RETRY, 0, JOYPAD_START);
 	input->AddJoypadKey(INPUT_KEY_BACK, 0, JOYPAD_BACK);
@@ -153,12 +162,12 @@ MofBool CGameApp::Render(void){
 						それ以外	失敗、エラーコードが戻り値となる
 *//**************************************************************************/
 MofBool CGameApp::Release(void){
-	InputManagerInstance.Release();
+	gSceneManager->Release();
 	SceneChangeService::Release();
 	SceneInitializeService::Release();
 	SendMessageService::Release();
 	RegistMessageService::Release();
-	gSceneManager->Release();
+	InputManagerInstance.Release();
 	//外部フォント解放
 	RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL);
 	return TRUE;

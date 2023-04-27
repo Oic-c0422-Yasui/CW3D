@@ -2,7 +2,7 @@
 
 
 #include	"AttackBaseState.h"
-#include	"JumpStormSkillAction.h"
+#include	"NoneGravityAction.h"
 #include	"FixedYInhaleKnockBack.h"
 
 namespace ActionGame {
@@ -32,7 +32,7 @@ namespace ActionGame {
 	private:
 		Parameter parameter_;
 		/** ˆÚ“®ƒAƒNƒVƒ‡ƒ“ */
-		JumpStormSkillActionPtr			action_;
+		NoneGravityActionPtr			action_;
 		float							attackTime_;
 		bool							isContinue_;
 		std::string						inputKey_;

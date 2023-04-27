@@ -36,12 +36,16 @@ void ActionGame::UltimateSkill::Reset()
 void ActionGame::UltimateSkill::Update()
 
 {
-	if (!canUse_.Get() && !isStart_)
+	if (!isStart_)
 	{
 		auto& currentGauge = actorRef_.lock()->GetParameterMap()->Get<CReactiveParameter<float>>(PARAMETER_KEY_ULTGAUGE);
 		if (currentGauge >= ultSkillData_->ExpendGauge.Get() && CT_ <= 0.0f)
 		{
 			canUse_ = true;
+		}
+		else
+		{
+			canUse_ = false;
 		}
 	}
 	if (!isStart_)

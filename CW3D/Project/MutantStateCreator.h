@@ -1,12 +1,7 @@
 #pragma once
 
 #include "IStateCreator.h"
-#include "IdleState.h"
-#include "MoveState.h"
-#include "Attack1State.h"
-#include "DeadState.h"
-#include "DamageState.h"
-#include "NPCCameraStartPoseState.h"
+
 
 namespace ActionGame
 {

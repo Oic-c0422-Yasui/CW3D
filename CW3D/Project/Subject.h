@@ -73,7 +73,7 @@ namespace ActionGame {
 	class CSubject<void> : public IObservable<void> {
 	private:
 		/** 通知を受けるオブザーバーリスト */
-		std::vector<NotifyFunc> observerList_;
+		std::vector<std::shared_ptr< IObserver<void> >> observerList_;
 	public:
 		/**
 		 * コンストラクタ
@@ -92,8 +92,27 @@ namespace ActionGame {
 		/**
 		 * @brief	通知を受けるオブザーバーの登録
 		 */
-		void Subscribe(const NotifyFunc& pobs) override {
+		void Subscribe(std::shared_ptr < IObserver<void> > pobs) override {
 			observerList_.push_back(pobs);
+		}
+
+		/**
+		 * @brief	通知を受けるオブザーバーの登録
+		 */
+		std::shared_ptr < ObserverFunction<void> > Subscribe(std::function<void()> f) override {
+			auto func = std::make_shared< ObserverFunction<void> >(f);
+			observerList_.push_back(func);
+			return func;
+		}
+
+		/**
+		 * @brief	通知を受けるオブザーバーの削除
+		 */
+		void Dispose(std::shared_ptr < IObserver<void> > pobs) override {
+			observerList_.erase(std::remove_if(
+				observerList_.begin(), observerList_.end(),
+				[&](const std::shared_ptr < IObserver<void> >& o) {return o == pobs; }),
+				observerList_.end());
 		}
 
 		/**
@@ -108,7 +127,7 @@ namespace ActionGame {
 		 */
 		void Notify() {
 			for (auto& obj : observerList_) {
-				obj();
+				obj->Notify();
 			}
 		}
 	};

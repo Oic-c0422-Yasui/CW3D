@@ -7,7 +7,7 @@ using namespace ActionGame;
 CActorObject::CActorObject()
 	: actor_(std::make_shared<ActionGame::Actor>())
 	, stateMachine_(std::make_shared<ActionGame::StateMachine>())
-	, motion_()
+	, motion_(nullptr)
 	, isShow_(false)
 	, isDead_(false)
 	, colliderOffset_(0,0,0)
@@ -33,6 +33,9 @@ bool ActionGame::CActorObject::Load()
 	{
 		return false;
 	}
+
+	motion_ = mesh_->CreateMotionController();
+	actor_->SetAnimationState(motion_);
 
 	return true;
 }
@@ -101,7 +104,11 @@ void CActorObject::Render()
 
 void CActorObject::Release()
 {
-	MOF_SAFE_DELETE(motion_);
+	if (motion_)
+	{
+		delete motion_;
+		motion_ = nullptr;
+	}
 	mesh_.reset();
 	shadow_.Release();
 }

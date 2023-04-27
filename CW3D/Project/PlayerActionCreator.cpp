@@ -1,5 +1,42 @@
 #include "PlayerActionCreator.h"
 #include "GameDefine.h"
+#include	"IdleAction.h"
+#include	"MoveAction.h"
+#include	"JumpAction.h"
+#include	"FallAction.h"
+#include	"LandingAction.h"
+#include	"Attack1Action.h"
+#include	"Attack2Action.h"
+#include	"Attack3Action.h"
+
+#include	"RunAction.h"
+#include	"IdleMotionAction.h"
+
+#include	"RunAttack1Action.h"
+#include	"ShockWaveSkillAction.h"
+
+#include	"RunJumpAction.h"
+#include	"RunFallAction.h"
+#include	"RunLandingAction.h"
+#include	"RunJumpAttack1Action.h"
+#include	"RunJumpAttack2Action.h"
+#include	"RunJumpAttack3Action.h"
+#include	"JumpAttack1Action.h"
+#include	"BeamSkillAction.h"
+#include	"JumpBeamSkillAction.h"
+#include	"StormSkillAction.h"
+#include	"NoneGravityAction.h"
+#include	"FlyDamageAction.h"
+#include	"DownAction.h"
+
+#include	"DamageAction.h"
+#include	"DeadAction.h"
+#include	"EscapeAction.h"
+#include	"ClearPoseAction.h"
+#include	"DropKickSkillAction.h"
+#include	"StartPoseAction.h"
+#include	"MoveCompensationAction.h"
+
 
 
 bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
@@ -443,7 +480,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
 		}));
 	//空中竜巻スキル
-	actor->AddAction(CAction::Create<CJumpStormSkillAction>(
+	actor->AddAction(CAction::Create<CNoneGravityAction>(
 		CBaseAction::BaseParameter{
 			AnimParam{
 				STATE_KEY_STORM_SKILL,
@@ -453,7 +490,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 				true
 			}
 		},
-		CJumpStormSkillAction::Parameter{
+		CNoneGravityAction::Parameter{
 			Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
 			Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
 			Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
@@ -551,30 +588,131 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			GRAVITYMAX,
 			PLAYER_JUMPPOWER * 1.5f,
 		}));
+	{
+		//ファイアフレイムスキル
+		const std::string str = STATE_KEY_FIREFLAME_SKILL;
+		actor->AddAction(str,
+			CAction::Create<CNoneGravityAction>(
+				CBaseAction::BaseParameter{
+					AnimParam{
+						"FireFlameStart",
+						0.0f,
+						1.0f,
+						0.1f,
+						false
+					}
+				},
+				CNoneGravityAction::Parameter{
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED)
+				}));
+		actor->AddAction(str + STATE_KEY_FALL,
+			CAction::Create<CFallAction>(
+				CBaseAction::BaseParameter{
+					AnimParam{
+						"FireFlameEnd",
+						0.0f,
+						1.0f,
+						0.1f,
+						false
+					}
+				},
+				CFallAction::Parameter{
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+					GRAVITY * 1.8f,
+					GRAVITYMAX * 1.8f,
+				}));
+	}
+	{
+		//インパクトスキル
+		const std::string fire = STATE_KEY_IMPACT_SKILL;
+		actor->AddAction(fire,
+			CAction::Create<CFallAction>(
+				CBaseAction::BaseParameter{
+					AnimParam{
+						STATE_KEY_IMPACT_SKILL,
+						0.0f,
+						1.8f,
+						0.1f,
+						false
+					}
+				},
+				CFallAction::Parameter{
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
+					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
+					GRAVITY * 1.5f,
+					GRAVITYMAX * 1.5f,
+				}));
+		actor->AddAction(fire + STATE_KEY_ATTACK1,
+			CAction::Create<CAttack1Action>(
+				CBaseAction::BaseParameter{
+					AnimParam{
+						STATE_KEY_IMPACT_SKILL,
+						0.0f,
+						1.8f,
+						0.1f,
+						false
+					}
+				},
+				CAttack1Action::Parameter{
+					Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
+					Vector3(0.2f, 1.0f, 1.0f),
+				}));
+	}
+	//インパクトスキル
+	actor->AddAction(STATE_KEY_CHASE_SKILL,
+		CAction::Create<CDropKickSkillAction>(
+			CBaseAction::BaseParameter{
+				AnimParam{
+					STATE_KEY_CHASE_SKILL,
+					0.0f,
+					1.8f,
+					0.1f,
+					true
+				}
+			},
+			CDropKickSkillAction::Parameter{
+				Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+				Vector3(PLAYER_MAXSPEED * 2.0f, 1.0f, 1.0f),
+				GRAVITY,
+				GRAVITYMAX,
+				PLAYER_JUMPPOWER * 0.5f,
+			}));
+	
 
 	/*
 	* 移動補正
 	*/
+	{
+		const auto type = actor->GetType();
 
-	const auto type = actor->GetType();
-
-	//攻撃１
-	const std::string str = STATE_KEY_MOVECOMPENSATION;
-	actor->AddAction(str + STATE_KEY_ATTACK1,CAction::Create<CMoveCompensationAction>(
-		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+		//攻撃１
+		const std::string str = STATE_KEY_MOVECOMPENSATION;
+		actor->AddAction(str + STATE_KEY_ATTACK1, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
 		));
-	//攻撃２
-	actor->AddAction(str + STATE_KEY_ATTACK2, CAction::Create<CMoveCompensationAction>(
-		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 2.5f, type }
+		//攻撃２
+		actor->AddAction(str + STATE_KEY_ATTACK2, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 2.5f, type }
 		));
-	//ダッシュ攻撃１
-	actor->AddAction(str + STATE_KEY_RUN_ATTACK1, CAction::Create<CMoveCompensationAction>(
-		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+		//ダッシュ攻撃１
+		actor->AddAction(str + STATE_KEY_RUN_ATTACK1, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
 		));
-	//ダッシュ攻撃２
-	actor->AddAction(str + STATE_KEY_RUN_ATTACK2, CAction::Create<CMoveCompensationAction>(
-		CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 4.5f, type }
+		//ダッシュ攻撃２
+		actor->AddAction(str + STATE_KEY_RUN_ATTACK2, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 4.5f, type }
 		));
+		//チェイススキル
+		actor->AddAction(str + STATE_KEY_CHASE_SKILL, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, true, 0.5f, 360.0f, 7.5f, type }
+		));
+	}
+	
 
 
 	return true;

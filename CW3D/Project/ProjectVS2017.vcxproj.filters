@@ -702,7 +702,7 @@
     <ClCompile Include="JumpBeamSkillAction.cpp">
       <Filter>ソース ファイル\Action\Attack\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="JumpStormSkillAction.cpp">
+    <ClCompile Include="NoneGravityAction.cpp">
       <Filter>ソース ファイル\Action\Attack\Skill</Filter>
     </ClCompile>
     <ClCompile Include="ClearPoseAction.cpp">
@@ -912,7 +912,7 @@
     <ClCompile Include="Revival.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeDeviceMessageFunc.cpp">
+    <ClCompile Include="MessengerUtilities.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Result.cpp">
@@ -961,6 +961,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="FlyHighSkillState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FireFlameSkillState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactSkillState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseSkillState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1154,7 +1163,7 @@
     <ClInclude Include="JumpBeamSkillAction.h">
       <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="JumpStormSkillAction.h">
+    <ClInclude Include="NoneGravityAction.h">
       <Filter>ヘッダー ファイル\Action\Attack\Skill</Filter>
     </ClInclude>
     <ClInclude Include="ShockWaveSkillAction.h">
@@ -1820,7 +1829,7 @@
     <ClInclude Include="Revival.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ChangeDeviceMessageFunc.h">
+    <ClInclude Include="MessengerUtilities.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Result.h">
@@ -1839,6 +1848,18 @@
       <Filter>ヘッダー ファイル\KnockBack</Filter>
     </ClInclude>
     <ClInclude Include="FlyHighSkillState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedXYInhaleKnockBack.h">
+      <Filter>ヘッダー ファイル\KnockBack</Filter>
+    </ClInclude>
+    <ClInclude Include="FireFlameSkillState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactSkillState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseSkillState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

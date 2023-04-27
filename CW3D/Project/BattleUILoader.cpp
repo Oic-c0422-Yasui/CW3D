@@ -77,18 +77,18 @@ bool ActionGame::CBattleUILoader::Load()
 	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill3Mono", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/DropKick.png"))
+	if (!tempTex2D->Load("UI/Skill4.png"))
 	{
 		return false;
 	}
-	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "DropKick", tempTex2D);
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill4", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
-	if (!tempTex2D->Load("UI/DropKickMono.png"))
+	if (!tempTex2D->Load("UI/Skill4Mono.png"))
 	{
 		return false;
 	}
-	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "DropKickMono", tempTex2D);
+	ResourcePtrManager<CTexture>::GetInstance().AddResource(tagUI, "Skill4Mono", tempTex2D);
 
 	tempTex2D = std::make_shared<CTexture>();
 	if (!tempTex2D->Load("UI/Escape.png"))

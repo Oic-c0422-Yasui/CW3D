@@ -18,7 +18,7 @@ namespace ActionGame
 		* @param	isEnableYaxis	Y軸にも補正をかけるか？
 		* @param	endTime			終了時間
 		* @param	sightAngle		視野角（度数法）
-		* @param	minDistance		最小補正距離
+		* @param	maxDistance		最大補正距離
 		* @param	parentType			キャラタイプ
 		*/
 		struct BaseParameter

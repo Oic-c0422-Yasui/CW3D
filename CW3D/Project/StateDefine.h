@@ -67,6 +67,14 @@ constexpr char* STATE_KEY_DROPKICK_SKILL = "DropKick";
 constexpr char* STATE_KEY_JUMP_DROPKICK_SKILL = "JumpDropKickSkill";
 //超ジャンプスキルステート
 constexpr char* STATE_KEY_FLYHIGH_SKILL = "FlyHighSkill";
+//ファイアフレイムスキルステート
+constexpr char* STATE_KEY_FIREFLAME_SKILL = "FireFlameSkill";
+//チェイススキルステート
+constexpr char* STATE_KEY_CHASE_SKILL = "ChaseAttack";
+//吸引スキルステート
+constexpr char* STATE_KEY_INHALE_SKILL = "Inhale";
+//叩きつけスキルステート
+constexpr char* STATE_KEY_IMPACT_SKILL = "Impact";
 //回避ステート
 constexpr char* STATE_KEY_ESCAPE = "Escape";
 //クリアポーズステート

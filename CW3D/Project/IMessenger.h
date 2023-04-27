@@ -13,7 +13,6 @@ namespace Messenger
 	public:
 		virtual ~IMessenger() = default;
 		
-		
 	};
 	using MessengerPtr = std::shared_ptr<IMessenger>;
 }

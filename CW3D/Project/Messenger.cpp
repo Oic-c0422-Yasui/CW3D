@@ -11,30 +11,51 @@ Messenger::CMessenger::~CMessenger()
 	observeMap_.clear();
 }
 
-void Messenger::CMessenger::Send(GameMessageType message)
+bool Messenger::CMessenger::Send(GameMessageType message)
 {
 	auto it = observeMap_.find(message);
-	if (it == observeMap_.end())
+	if (it != observeMap_.end())
 	{
-		return;
+		//‘—M
+		for (auto message : it->second)
+		{
+			message.second.Notify();
+		}
+		return true;
 	}
-	it->second.Notify();
+	return false;
 }
 
-void Messenger::CMessenger::Regist(GameMessageType message,const std::function<void()>& func)
+void Messenger::CMessenger::Regist(GameMessageType type, const MessageName& name, const MessageFuncPtr& func)
 {
-	observeMap_[message].Subscribe(func);
+	observeMap_[type][name].Subscribe(func);
 }
 
-void Messenger::CMessenger::Delete(GameMessageType message)
+Messenger::MessageFuncPtr Messenger::CMessenger::Regist(GameMessageType type, const MessageName& name, const MessageFunc& func)
 {
-	observeMap_[message].Dispose();
+	return observeMap_[type][name].Subscribe(func);
 }
 
-void Messenger::CMessenger::Delete()
+bool Messenger::CMessenger::Delete(GameMessageType type, const MessageName& name)
 {
-	for (auto observer : observeMap_)
+	auto& map = observeMap_[type];
+	auto it = map.find(name);
+	if (it != map.end())
 	{
-		observer.second.Dispose();
+		it->second.Dispose();
+		return true;
 	}
+	return false;
+}
+
+bool Messenger::CMessenger::Delete()
+{
+	for (auto map : observeMap_)
+	{
+		for (auto observer : map.second)
+		{
+			observer.second.Dispose();
+		}
+	}
+	return true;
 }

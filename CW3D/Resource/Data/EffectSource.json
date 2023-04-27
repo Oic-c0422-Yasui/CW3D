@@ -16,6 +16,14 @@
       "File": "tuki.efk"
     },
     {
+      "Name": "AttackEffect3",
+      "File": "Claw1.efk"
+    },
+    {
+      "Name": "AttackEffect4",
+      "File": "Blow3.efk"
+    },
+    {
       "Name": "SkillEffect1",
       "File": "sandStome.efk"
     },
@@ -36,12 +44,24 @@
       "File": "drill.efk"
     },
     {
-      "Name": "ClosedEffect",
-      "File": "Track1.efk"
+      "Name": "SkillEffect6",
+      "File": "PhantasmMeteor_Single.efk"
     },
     {
-      "Name": "AttackEffect3",
-      "File": "Claw1.efk"
+      "Name": "SkillEffect7_1",
+      "File": "Sword_Ember_Charge.efk"
+    },
+    {
+      "Name": "SkillEffect7_2",
+      "File": "Sword_Ember.efk"
+    },
+    {
+      "Name": "SkillEffect8",
+      "File": "Sword3.efk"
+    },
+    {
+      "Name": "ClosedEffect",
+      "File": "Track1.efk"
     },
     {
       "Name": "EscapeEffect",
@@ -50,6 +70,12 @@
     {
       "Name": "RoarEffect",
       "File": "MonsterRoar.efk"
+    },
+    {
+      "Name": "BossAttackEffect",
+      "File": "BloodLance.efk"
     }
+
+
   ]
 }

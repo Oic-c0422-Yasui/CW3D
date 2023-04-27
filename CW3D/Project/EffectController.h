@@ -32,7 +32,7 @@ namespace ActionGame
 		* @param	pos	エフェクト座標
 		* @param	param	エフェクト作成パラメータ
 		*/
-		EffectPtr Play(const std::string& key,const Vector3& pos, EffectCreateParameter param);
+		EffectPtr Play(const std::string& key,const Vector3& pos, const EffectCreateParameter& param);
 
 		/*
 		* @brief	エフェクト再生

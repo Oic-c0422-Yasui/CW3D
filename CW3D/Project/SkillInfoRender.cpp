@@ -302,12 +302,15 @@ void CSkillInfoRender::SetKeyBoardName()
 
 	//キーの座標設定
 	auto& key = keyIndexs_[Device_Keyboard];
-	key[INPUT_KEY_SKILL1] = 7;
+	key[INPUT_KEY_SKILL1] = 9;
 	key[INPUT_KEY_SKILL2] = 3;
 	key[INPUT_KEY_SKILL3] = 5;
 	key[INPUT_KEY_ESCAPE] = 1;
-	key[INPUT_KEY_SKILL4] = 9;
+	key[INPUT_KEY_SKILL4] = 7;
 	key[INPUT_KEY_SKILL5] = 2;
+	key[INPUT_KEY_SKILL6] = 4;
+	key[INPUT_KEY_SKILL7] = 6;
+	key[INPUT_KEY_SKILL8] = 8;
 }
 
 void ActionGame::CSkillInfoRender::SetControllerName()
@@ -323,7 +326,7 @@ void ActionGame::CSkillInfoRender::SetControllerName()
 	*/
 	auto& frame = skillFrame_[Device_Controller];
 	frame[16].str = "Y";	//三角
-	frame[17].str = "A";	//丸
+	frame[17].str = "B";	//丸
 
 
 	//キーの座標設定
@@ -334,4 +337,7 @@ void ActionGame::CSkillInfoRender::SetControllerName()
 	key[INPUT_KEY_ESCAPE] = 17;
 	key[INPUT_KEY_SKILL4] = 11;
 	key[INPUT_KEY_SKILL5] = 7;
+	key[INPUT_KEY_SKILL6] = 4;
+	key[INPUT_KEY_SKILL7] = 5;
+	key[INPUT_KEY_SKILL8] = 6;
 }

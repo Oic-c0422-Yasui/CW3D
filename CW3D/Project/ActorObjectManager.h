@@ -60,6 +60,7 @@ namespace ActionGame
 		* @param	id		アクターの固有ID
 		*/
 		ActorObjectPtr GetActor(CHARA_TYPE type, uint32_t id) {
+			assert((*tagMap_[type])[id].lock());
 			return (*tagMap_[type])[id].lock();
 		}
 

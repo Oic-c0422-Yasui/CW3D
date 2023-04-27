@@ -13,7 +13,6 @@ ActionGame::CVelocity::CVelocity()
 	, rotate_()
 	, type_()
 {
-	gravityScale_.currentScale = 1.0f;
 }
 
 void ActionGame::CVelocity::Update()

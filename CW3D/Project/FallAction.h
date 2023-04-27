@@ -62,8 +62,6 @@ namespace ActionGame {
 		 */
 		void Reset();
 
-
-
 		/**
 		 * @brief		ステートキーの取得
 		 */

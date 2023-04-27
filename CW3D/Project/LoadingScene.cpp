@@ -16,7 +16,6 @@ Scene::CLoadingScene::CLoadingScene(ScenePtr loadingScene)
 
 Scene::CLoadingScene::~CLoadingScene()
 {
-	Release();
 }
 
 bool Scene::CLoadingScene::Load()

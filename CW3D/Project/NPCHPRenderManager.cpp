@@ -1,5 +1,5 @@
 #include "NPCHPRenderManager.h"
-#include "RegistMessageServiceDefine.h"
+#include "MessengerUtilities.h"
 
 
 
@@ -77,16 +77,9 @@ void ActionGame::CNPCHPRenderManager::Render2D()
 
 void ActionGame::CNPCHPRenderManager::Release()
 {
-	for (auto normal : normalHPRender_)
-	{
-		normal->Release();
-	}
-	for (auto boss : bossHPRender_)
-	{
-		boss->Release();
-	}
 	normalHPRender_.clear();
 	bossHPRender_.clear();
+	MyUtil::CUIMessageFunc::Delete("NPCHP");
 }
 
 void ActionGame::CNPCHPRenderManager::Reset()
@@ -117,14 +110,9 @@ void ActionGame::CNPCHPRenderManager::Add(const BossHPRenderPtr& render)
 
 void ActionGame::CNPCHPRenderManager::RegistSendMessage()
 {
-	const auto& message = RegistMessageService::GetService();
-	//メッセージ登録
-	//UI表示メッセージ
-	message->Regist(UI_Visible,
-		[&]() {VisibleUI(); });
-	//UI非表示メッセージ
-	message->Regist(UI_Disable,
-		[&]() {DisableUI(); });
+	MyUtil::CUIMessageFunc::Load("NPCHP",
+		[this]() {VisibleUI();},
+		[this]() {DisableUI(); });
 }
 
 void ActionGame::CNPCHPRenderManager::VisibleUI()

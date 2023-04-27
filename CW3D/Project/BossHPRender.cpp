@@ -8,9 +8,13 @@ ActionGame::CBossHPRender::CBossHPRender()
 	, offset_(0, 0)
 	, quake_()
 	, HPBarParam_()
-
 {
 
+}
+
+ActionGame::CBossHPRender::~CBossHPRender()
+{
+	Release();
 }
 
 bool ActionGame::CBossHPRender::Load()

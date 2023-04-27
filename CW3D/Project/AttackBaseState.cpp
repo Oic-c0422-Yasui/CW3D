@@ -117,22 +117,27 @@ void ActionGame::CAttackBaseState::CreateShotSphere()
 
 void ActionGame::CAttackBaseState::CreateEffect()
 {
-	EffectCreateParameter status = GetCreateEffectStatus();
-	status.type = Actor()->GetType();
+	CreateEffect(GetCreateEffectStatus());
+}
+
+void ActionGame::CAttackBaseState::CreateEffect(const EffectCreateParameter& effect)
+{
+	EffectCreateParameter param = effect;
+	param.type = Actor()->GetType();
 	//ƒAƒNƒ^[‚ª”½“]ó‘Ô‚È‚çŒü‚«‚ð”½“]
 	if (Actor()->IsReverse())
 	{
-		status.offset.x *= -1;
-		if (status.rotate.y == MOF_ToRadian(360))
+		param. offset.x *= -1;
+		if (param.rotate.y == MOF_ToRadian(360))
 		{
-			status.rotate.y = MOF_ToRadian(180);
+			param.rotate.y = MOF_ToRadian(180);
 		}
 		else
 		{
-			status.rotate.y *= -1;
+			param.rotate.y *= -1;
 		}
 	}
-	effects_.push_back(EffectControllerInstance.Play(status.name, Actor()->GetPosition(), status));
+	effects_.push_back(EffectControllerInstance.Play(param.name, Actor()->GetPosition(), param));
 }
 
 void ActionGame::CAttackBaseState::SetArmorLevel(BYTE level)

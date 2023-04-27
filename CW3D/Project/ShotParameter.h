@@ -34,7 +34,7 @@ namespace ActionGame
 		float recieveUltGauge;
 		uint32_t parentID;
 		EffectCreateParameterPtr damageEffect;
-		GravityScaleParam gravity;
+		GravityScale gravity;
 	};
 
 	/*

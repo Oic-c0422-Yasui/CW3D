@@ -1,6 +1,7 @@
 #pragma once
 
 #include	"IStateAI.h"
+#include	"InputDefine.h"
 
 namespace ActionGame
 {

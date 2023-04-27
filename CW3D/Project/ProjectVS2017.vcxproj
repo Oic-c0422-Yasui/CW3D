@@ -205,7 +205,10 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="BaseAction.cpp" />
-    <ClCompile Include="ChangeDeviceMessageFunc.cpp" />
+    <ClCompile Include="ChaseSkillState.cpp" />
+    <ClCompile Include="FireFlameSkillState.cpp" />
+    <ClCompile Include="ImpactSkillState.cpp" />
+    <ClCompile Include="MessengerUtilities.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConvertUtilities.cpp" />
     <ClCompile Include="FlyHighSkillState.cpp" />
@@ -314,7 +317,7 @@
     <ClCompile Include="JumpBeamSkillAction.cpp" />
     <ClCompile Include="JumpBeamSkillState.cpp" />
     <ClCompile Include="JumpState.cpp" />
-    <ClCompile Include="JumpStormSkillAction.cpp" />
+    <ClCompile Include="NoneGravityAction.cpp" />
     <ClCompile Include="JumpStormSkillState.cpp" />
     <ClCompile Include="LandingAction.cpp" />
     <ClCompile Include="LandingState.cpp" />
@@ -414,9 +417,13 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="BaseAction.h" />
-    <ClInclude Include="ChangeDeviceMessageFunc.h" />
+    <ClInclude Include="ChaseSkillState.h" />
+    <ClInclude Include="FireFlameSkillState.h" />
+    <ClInclude Include="ImpactSkillState.h" />
+    <ClInclude Include="MessengerUtilities.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ConvertUtilities.h" />
+    <ClInclude Include="FixedXYInhaleKnockBack.h" />
     <ClInclude Include="FlyHighSkillState.h" />
     <ClInclude Include="GravityScale.h" />
     <ClInclude Include="GravityUtilities.h" />
@@ -604,7 +611,7 @@
     <ClInclude Include="JumpAttack1State.h" />
     <ClInclude Include="JumpBeamSkillAction.h" />
     <ClInclude Include="JumpBeamSkillState.h" />
-    <ClInclude Include="JumpStormSkillAction.h" />
+    <ClInclude Include="NoneGravityAction.h" />
     <ClInclude Include="JumpStormSkillState.h" />
     <ClInclude Include="Observable.h" />
     <ClInclude Include="Observer.h" />

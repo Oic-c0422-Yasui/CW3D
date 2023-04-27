@@ -10,7 +10,7 @@ namespace MyUtil
 	* @param	gravity 重力スケールパラメータ
 	*/
 	void SetGravityScale(const ActionGame::VelocityPtr& velocity,
-						ActionGame::GravityScaleParam gravity);
+						ActionGame::GravityScale gravity);
 	/*
 	* @brief	重力スケールを設定する
 	* @param	velocity 速度ポインタ
@@ -19,7 +19,7 @@ namespace MyUtil
 	* @param	armorBrake アーマー破壊レベル
 	*/
 	void SetGravityScale(const ActionGame::VelocityPtr& velocity,
-						ActionGame::GravityScaleParam gravity,
+						ActionGame::GravityScale gravity,
 						BYTE armor,BYTE armorBrake);
 }
 

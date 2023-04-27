@@ -44,6 +44,8 @@ namespace ActionGame
 		 */
 		CBossHPRender();
 
+		~CBossHPRender() override;
+
 		/*
 		* @brief	“Ç‚İ‚İ
 		* @return	true@‚È‚ç¬Œ÷

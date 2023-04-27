@@ -5,7 +5,7 @@ void ActionGame::CActorObjectManager::Add(const ActorObjectPtr& actor)
 	auto& tagActors = tagMap_[actor->GetType()];
 	if (tagActors == nullptr)
 	{
-		tagActors = std::make_shared< ActorMap>();
+		tagActors = std::make_shared<ActorMap>();
 		tagMap_[actor->GetType()] = tagActors;
 	}
 	(*tagActors)[actor->GetID()] = actor;

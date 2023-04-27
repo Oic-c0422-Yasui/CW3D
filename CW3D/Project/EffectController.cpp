@@ -22,7 +22,7 @@ void ActionGame::CEffectController::Create(const Effekseer::Handle& handle, cons
 	SetSpeed(handle, param->speed);
 }
 
-ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& resouceName,const Vector3& position, EffectCreateParameter param)
+ActionGame::EffectPtr ActionGame::CEffectController::Play(const std::string& resouceName,const Vector3& position, const EffectCreateParameter& param)
 {
 	ActionGame::EffectPtr efc = std::make_shared<CEffect>(EffectRendererInstance.Play(resouceName));
 	effectArray_.push_back(efc);

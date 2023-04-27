@@ -1,11 +1,13 @@
 #pragma once
 #include "IMessenger.h"
-#include    <map>
-#include    <cassert>
+#include <map>
+#include <cassert>
 #include "Subject.h"
 
 namespace Messenger
 {
+    using ObserveMessage = std::unordered_map<std::string, ActionGame::CSubject<void>>;
+    using ObserveMessageMap = std::unordered_map<int, ObserveMessage>;
 
     /*
     * @brief    メッセージを送るクラス
@@ -13,7 +15,7 @@ namespace Messenger
     class CMessenger : public IMessenger
     {
     private:
-        std::map<int, ActionGame::CSubject<void>> observeMap_;
+        ObserveMessageMap observeMap_;
     public:
         CMessenger();
         ~CMessenger() override;
@@ -22,25 +24,32 @@ namespace Messenger
         * @brief    メッセージを送る
         * @param    message　メッセージの種類
         */
-        void Send(GameMessageType message) override;
+        bool Send(GameMessageType message) override;
+
+        /*
+         * @brief    メッセージを受け取った際の処理を追加
+         * @param    message　メッセージの種類
+         * @param    func    処理内容の関数ポインタ
+         */
+        void Regist(GameMessageType type, const MessageName& name,const MessageFuncPtr& func) override;
 
         /*
          * @brief    メッセージを受け取った際の処理を追加
          * @param    message　メッセージの種類
          * @param    func    処理内容の関数
          */
-        void Regist(GameMessageType message,const std::function<void()>& func) override;
+        MessageFuncPtr Regist(GameMessageType type, const MessageName& name, const MessageFunc& func) override;
         
 
         /*
         * @brief    メッセージを受け取る相手を削除
         */
-        void Delete(GameMessageType message) override;
+        bool Delete(GameMessageType type, const MessageName& name) override;
 
         /*
        * @brief    メッセージを受け取る相手を削除
        */
-        void Delete();
+        bool Delete();
     };
 }
 

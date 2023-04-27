@@ -1,6 +1,6 @@
 #pragma once
 #include "AttackBaseState.h"
-#include "FixedYInhaleKnockBack.h"
+#include "InhaleKnockBack.h"
 #include "JumpAction.h"
 
 namespace ActionGame
@@ -34,7 +34,7 @@ namespace ActionGame
 		float currenteEcapeTime_;
 		bool isStartCollide_;
 	protected:
-		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CFixedYInhaleKnockBack>(Actor()); }
+		virtual const KnockBackPtr GetKnockBack() { return std::make_shared<CInhaleKnockBack>(Actor()); }
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
 		virtual const EffectCreateParameter& GetCreateEffectStatus() override { return parameter_.EffectStatus; }
 

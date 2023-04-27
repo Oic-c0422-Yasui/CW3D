@@ -27,6 +27,18 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	const ParameterCreatorPtr& paramCreator,
 	const CharacterAICreatorPtr& aiCreator)
 {
+
+	//メッシュ取得
+	mesh_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->MeshName);
+	if (mesh_ == nullptr)
+	{
+		return false;
+	}
+	CActorObject::Load();
+
+	//シェーダー読み込み
+	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
+	
 	//初期位置
 	defaultPos_ = eneParam->GetParam().position_;
 
@@ -41,19 +53,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	auto& stateInput = std::make_shared<Input::CStateInput>();
 	input_ = stateInput;
 
-	//メッシュ取得
-	mesh_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Enemy", eneParam->GetStatus()->MeshName);
-	if (mesh_ == nullptr)
-	{
-		return false;
-	}
-	//シェーダー読み込み
-	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
 
-	//モーション作成
-	motion_ = mesh_->CreateMotionController();
-	//モーション状態設定
-	actor_->SetAnimationState(motion_);
+
 
 	//アクション作成
 	actionCreator->Create(actor_);
@@ -73,7 +74,6 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//AI作成
 	AI_ = aiCreator->Create(actor_, stateMachine_, stateInput);
 
-	CActorObject::Load();
 
 	return true;
 }

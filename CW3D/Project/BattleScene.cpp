@@ -309,9 +309,9 @@ void Scene::CBattleScene::Release()
 
 	//ステージ解放
 	stageManager_.Release();
+	ResourcePtrManager<CMeshContainer>::GetInstance().Release();
 
 	//プレイヤー解放
-	player_->Release();
 	player_.reset();
 	CServiceLocator<CPlayer>::Release();
 	playerUiRender_.Release();
@@ -338,7 +338,6 @@ void Scene::CBattleScene::Release()
 
 	//リソース解放
 	ResourceManager<Effekseer::EffectRef>::GetInstance().Release();
-	ResourcePtrManager<CMeshContainer>::GetInstance().Release();
 	ResourcePtrManager<CSprite3D>::GetInstance().Release();
 	ResourcePtrManager<CTexture>::GetInstance().Release();
 	ResourcePtrManager<CFont>::GetInstance().Release();
@@ -366,14 +365,14 @@ bool Scene::CBattleScene::CreateEnemys()
 	//配列初期化
 	enemyManager_.ClearEnemyArray();
 	npcHpRender_.Reset();
-	for (auto spawner : *enemySpawner_)
+	for (const auto& spawner : *enemySpawner_)
 	{
 		spawner->Reset();
 	}
 
 	//現在の区画から敵の情報を受け取る
-	auto division = stageManager_.GetCurrentDivision();
-	auto enemysParam = division->GetEnemysParam();
+	const auto& division = stageManager_.GetCurrentDivision();
+	const auto& enemysParam = division->GetEnemysParam();
 	size_t enemyCount = division->GetEnemyCount();
 
 	//クリア条件に敵の数を設定
@@ -381,7 +380,7 @@ bool Scene::CBattleScene::CreateEnemys()
 
 	//ボス数取得
 	size_t bossCount = 0;
-	for (auto param : *enemysParam)
+	for (const auto& param : *enemysParam)
 	{
 		if (param->GetParam().isBoss_)
 		{
@@ -393,7 +392,7 @@ bool Scene::CBattleScene::CreateEnemys()
 	clearTermProvider_->SetBossMaxCount(enemyCount);
 
 	//敵のスポナー取得
-	auto spawner = division->GetEnemySpawners();
+	const auto& spawner = division->GetEnemySpawners();
 	enemySpawner_ = spawner;
 	
 
@@ -403,7 +402,7 @@ bool Scene::CBattleScene::CreateEnemys()
 	for (size_t i = 0; i < enemyCount; i++)
 	{
 		//敵のタイプに合ったビルダーを取得
-		auto builder = dictionary.Get(enemysParam->at(i)->GetParam().type_);
+		const auto& builder = dictionary.Get(enemysParam->at(i)->GetParam().type_);
 
 		//敵を追加する
 		enemyManager_.AddEnemy(builder->Create(enemysParam->at(i)));
