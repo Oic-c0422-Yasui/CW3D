@@ -85,4 +85,6 @@ constexpr char* STATE_KEY_STARTPOSE = "StartPose";
 constexpr char* STATE_KEY_NPC_STARTPOSE = "NPCStartPose";
 //移動補正ステート
 constexpr char* STATE_KEY_MOVECOMPENSATION = "MoveCompensation";
+//槍攻撃ステート
+constexpr char* STATE_KEY_SPEAR_ATTACK = "SpearAttack";
 

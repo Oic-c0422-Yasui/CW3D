@@ -49,6 +49,7 @@ bool ActionGame::MutantActionCreator::Create(const ActorPtr& actor)
 		},
 		CAttack1Action::Parameter{
 			Vector3(PLAYER_SPEED * 0.3f, 1.0f, PLAYER_SPEED * 0.3f),
+			Vector3(0.0f, 1.0f, 0.0f)
 		}));
 
 	//ƒ_ƒ[ƒW
@@ -115,5 +116,23 @@ bool ActionGame::MutantActionCreator::Create(const ActorPtr& actor)
 			Vector3(0.0f, 0.0f, 0.0f),
 			1.0f,
 		}));
+
+	//UŒ‚‚P
+	actor->AddAction(STATE_KEY_SPEAR_ATTACK,CAction::Create<CAttack1Action>(
+		CBaseAction::BaseParameter{
+			AnimParam{
+				STATE_KEY_STARTPOSE,
+				0.0f,
+				1.2f,
+				0.1f,
+				false
+			}
+		},
+		CAttack1Action::Parameter{
+			Vector3(0.0f, 1.0f, 0.0f),
+			Vector3(0.0f, 1.0f, 0.0f)
+		}));
+
+
     return true;
 }

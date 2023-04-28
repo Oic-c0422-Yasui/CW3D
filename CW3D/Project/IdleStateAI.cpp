@@ -1,8 +1,8 @@
 #include "IdleStateAI.h"
 
 ActionGame::CIdleStateAI::CIdleStateAI(Vector3 vigilanceRange, Vector3 attackRange, int attackTiming)
-	: CStateAI()
-	, isAttack(false)
+	: CBaseStateAI()
+	, isAttack_(false)
 	, vigilangeRange_(vigilanceRange)
 	, attackRange_(attackRange)
 	, attackTiming_(attackTiming)
@@ -18,7 +18,7 @@ void ActionGame::CIdleStateAI::RegisterKey()
 
 void ActionGame::CIdleStateAI::Start()
 {
-	isAttack = false;
+	isAttack_ = false;
 }
 
 void ActionGame::CIdleStateAI::Update()
@@ -32,27 +32,20 @@ void ActionGame::CIdleStateAI::Update()
 
 	//ƒAƒNƒ^[Žæ“¾
 	const auto& transform = Actor()->GetTransform();
-	//Œx‰úƒ{ƒbƒNƒX
-	CAABB collider;
-	collider.SetPosition(transform->GetPosition());
-	collider.Size = vigilangeRange_;
 
-	//‹——£ŒvŽZ
-	const Vector2 vec(transform->GetPosition().x - target->GetPosition().x, transform->GetPosition().z - target->GetPosition().z);
-	const float length = sqrt(vec.x * vec.x + vec.y * vec.y);
 
 	//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çˆÚ“®
-	if (CCollision::Collision(target->GetCollider(), collider))
+	if (IsInRange(vigilangeRange_, target->GetCollider()))
 	{
-		collider.Size = attackRange_;
+
 		//UŒ‚”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
-		if (CCollision::Collision(target->GetCollider(), collider))
+		if (IsInRange(attackRange_, target->GetCollider()))
 		{
 			if (!Input()->IsPush(INPUT_KEY_ATTACK) && CUtilities::Random(attackTiming_) == 0)
 			{
 				transform->SetReverse(target->GetPosition().x < transform->GetPosition().x ? true : false);
 				Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
-				isAttack = true;
+				isAttack_ = true;
 			}
 		}
 		else
@@ -72,6 +65,7 @@ void ActionGame::CIdleStateAI::Update()
 	//’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
 	else if (CUtilities::Random(50) == 0)
 	{
+
 		Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
 			transform->IsReverse() ? 1.0f : -1.0f);
 
@@ -83,17 +77,10 @@ void ActionGame::CIdleStateAI::Update()
 			target->GetPosition().x < transform->GetPosition().x ? -1.0f : 1.0f);
 	}
 	//ƒvƒŒƒCƒ„[‚Æ5‚ˆÈã—£‚ê‚Ä‚¢‚éê‡
-	else if (length > 5.0f)
+	else if (!IsInRange(5.0f,target->GetPosition()))
 	{
 		//ˆÚ“®“ü—Í
-		float sx = target->GetPosition().x - transform->GetPosition().x;
-		float sz = target->GetPosition().z - transform->GetPosition().z;
-		sx /= 5.0f;
-		sz /= 5.0f;
-		sx = ((sx < -1.0f) ? -1.0f : ((sx > 1.0f) ? 1.0f : sx));
-		sz = -((sz < -1.0f) ? -1.0f : ((sz > 1.0f) ? 1.0f : sz));
-		Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, sx);
-		Input()->SetKeyValue(INPUT_KEY_VERTICAL, sz);
+		InputMove(5.0f, target->GetPosition());
 	}
 
 }

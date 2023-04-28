@@ -6,6 +6,7 @@
 #include "DeadState.h"
 #include "DamageState.h"
 #include "NPCCameraStartPoseState.h"
+#include "SpearAttackState.h"
 
 bool ActionGame::MutantStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const Input::InputPtr& input)
 {
@@ -38,6 +39,16 @@ bool ActionGame::MutantStateCreator::Create(const StateMachinePtr& stateMachine,
 			3.0f
 			,EffectCreateParameter{ "RoarEffect", Vector3(0.0f,1.0f,0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(0), 0.0f),1.0f,actor->GetType() }
 			,1.0f
+		}));
+	stateMachine->AddState(CState::Create<CSpearAttackState>(actor, input,
+		CSpearAttackState::Parameter{
+			5
+			,GameFrameTime * 130.0f
+			,GameFrameTime * 200.0f
+			,GameFrameTime * 300.0f
+			,ShotAABB{ Vector3(0.0f, 0.7f, 0), 1.5f, 150, Vector3(0.3f, 0.3f, 0.3f),false,CHARA_TYPE::PLAYER, nullptr ,1,0.0f,0,damageEffect,GravityScale(),Vector3(3.0f, 3.5f, 3.0f)}
+			,EffectCreateParameter{ "BossAttackEffect", Vector3(0.0f,0.0f,0), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.0f, 0.0, 0.0f),1.5f,actor->GetType() }
+
 		}));
 
     return true;

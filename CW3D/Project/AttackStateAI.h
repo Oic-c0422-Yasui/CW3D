@@ -14,7 +14,7 @@ namespace ActionGame {
 	{
 	private:
 		//見失った時間
-		int				currentLostTime;
+		int				currentLostTime_;
 	public:
 		/**
 		 * @brief		コンストラクタ

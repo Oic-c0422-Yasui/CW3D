@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"StateAI.h"
+#include	"BaseStateAI.h"
 #include	"Player.h"
 #include	"Collision.h"
 #include	"InputDefine.h"
@@ -12,12 +12,12 @@ namespace ActionGame {
 	/**
 	 * @brief		移動ステート
 	 */
-	class CMoveStateAI : public CStateAI
+	class CMoveStateAI : public CBaseStateAI
 	{
 	private:
 		//見失った時間
-		int				currentLostTime;
-		bool			isAttack;
+		int				currentLostTime_;
+		bool			isAttack_;
 
 		Vector3			attackRange_;
 		Vector3			vigilangeRange_;

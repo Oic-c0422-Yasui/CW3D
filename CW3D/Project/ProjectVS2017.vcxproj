@@ -205,7 +205,9 @@
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="BaseAction.cpp" />
+    <ClCompile Include="BaseStateAI.cpp" />
     <ClCompile Include="ChaseSkillState.cpp" />
+    <ClCompile Include="SpearAttackState.cpp" />
     <ClCompile Include="FireFlameSkillState.cpp" />
     <ClCompile Include="ImpactSkillState.cpp" />
     <ClCompile Include="MessengerUtilities.cpp" />
@@ -213,6 +215,7 @@
     <ClCompile Include="ConvertUtilities.cpp" />
     <ClCompile Include="FlyHighSkillState.cpp" />
     <ClCompile Include="GravityUtilities.cpp" />
+    <ClCompile Include="MutantIdleStateAI.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -417,7 +420,9 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="BaseAction.h" />
+    <ClInclude Include="BaseStateAI.h" />
     <ClInclude Include="ChaseSkillState.h" />
+    <ClInclude Include="SpearAttackState.h" />
     <ClInclude Include="FireFlameSkillState.h" />
     <ClInclude Include="ImpactSkillState.h" />
     <ClInclude Include="MessengerUtilities.h" />
@@ -427,6 +432,7 @@
     <ClInclude Include="FlyHighSkillState.h" />
     <ClInclude Include="GravityScale.h" />
     <ClInclude Include="GravityUtilities.h" />
+    <ClInclude Include="MutantIdleStateAI.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="GameOver.h" />

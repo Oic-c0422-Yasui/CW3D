@@ -1,10 +1,6 @@
 #pragma once
 #include "ICharacterAICreator.h"
-#include	"CharacterStateAI.h"
-#include	"IdleStateAI.h"
-#include	"MoveStateAI.h"
-#include	"AttackStateAI.h"
-#include	"AICycleTension.h"
+
 
 namespace ActionGame
 {

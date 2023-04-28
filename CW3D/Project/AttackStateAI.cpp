@@ -2,7 +2,7 @@
 
 ActionGame::CAttackStateAI::CAttackStateAI()
 	: CStateAI()
-	, currentLostTime(0)
+	, currentLostTime_(0)
 {
 }
 
@@ -15,7 +15,7 @@ void ActionGame::CAttackStateAI::RegisterKey()
 
 void ActionGame::CAttackStateAI::Start()
 {
-	currentLostTime = 0;
+	currentLostTime_ = 0;
 }
 
 void ActionGame::CAttackStateAI::Update()

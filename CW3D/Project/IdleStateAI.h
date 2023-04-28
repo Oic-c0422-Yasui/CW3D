@@ -1,6 +1,6 @@
 #pragma once
 
-#include	"StateAI.h"
+#include	"BaseStateAI.h"
 #include	"Player.h"
 #include	"Collision.h"
 #include	"Common.h"
@@ -12,10 +12,10 @@ namespace ActionGame {
 	/**
 	 * @brief		待機ステート
 	 */
-	class CIdleStateAI : public CStateAI
+	class CIdleStateAI : public CBaseStateAI
 	{
-	private:
-		bool			isAttack;
+	protected:
+		bool			isAttack_;
 
 		Vector3			vigilangeRange_;
 
@@ -31,21 +31,21 @@ namespace ActionGame {
 		/**
 		 * @brief		利用キーの登録
 		 */
-		void RegisterKey() override;
+		virtual void RegisterKey() override;
 
 		/**
 		 * @brief		開始
 		 */
-		void Start() override;
+		virtual void Start() override;
 
 		/**
 		 * @brief		更新
 		 */
-		void Update() override;
+		virtual void Update() override;
 
 		/**
 		 * @brief		終了
 		 */
-		void End() override;
+		virtual void End() override;
 	};
 }
