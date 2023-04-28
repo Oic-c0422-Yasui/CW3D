@@ -24,6 +24,8 @@ void ActionGame::CFireFlameSkillState::Start()
 	
 	CreateShotAABB();
 	CreateEffect(parameter_.ChargeEffectStatus);
+
+	SetArmorLevel(parameter_.armorLevel);
 	
 	for (auto& shot : shots_)
 	{

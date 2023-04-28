@@ -18,6 +18,8 @@ void ActionGame::CImpactSkillState::Start()
 	fallAction_->Start();
 	moveAction_->Start();
 
+	SetArmorLevel(parameter_.armorLevel);
+
 	CreateShotAABB();
 
 	for (auto& shot : shots_)

@@ -19,9 +19,7 @@ void ActionGame::CStormSkillState::Start()
 
 	isContinue_ = true;
 
-	auto param = Actor()->GetParameterMap();
-	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
-	armorLevel = parameter_.armorLevel;
+	SetArmorLevel(parameter_.armorLevel);
 
 	CAttackBaseState::Start();
 	action_->Start();

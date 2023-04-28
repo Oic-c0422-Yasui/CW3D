@@ -266,7 +266,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 
 	//超ジャンプスキルステート
-	gravity = GravityScale{ true,1.8f,0.0f,1.0f };
+	gravity = GravityScale{ true,1.0f,0.0f,1.0f };
 	stateMachine->AddState(CState::Create<CFlyHighSkillState>(actor, input,
 		CFlyHighSkillState::Parameter{
 			2
@@ -278,20 +278,20 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,EffectCreateParameter{ "SkillEffect4", Vector3(0, 1.2f, 0), Vector3(0.5f, 1.0f, 0.5f), Vector3(MOF_ToRadian(180), 0.0f, 0.0f),1.8f,actor->GetType() }
 		}));
 	//ファイアフレイムスキルステート
-	gravity = GravityScale{ true,1.0f,0.2f,1.0f };
+	gravity = GravityScale{ true,0.5f,0.2f,1.0f };
 	stateMachine->AddState(CState::Create<CFireFlameSkillState>(actor, input,
 		CFireFlameSkillState::Parameter{
 			3
-			,GameFrameTime * 50.0f
+			,GameFrameTime * 30.0f
 			,GameFrameTime * 5.0f
 			,GameFrameTime * 20.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 2.5f, 0, Vector3(0.5f, 0.2f, 0.5f),false,actor->GetType(), nullptr,4,0.0f,0,damageEffect,gravity, Vector3(5.0f, 5.0f, 5.0f) }
+			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 2.5f, 0, Vector3(-0.8f, 0.3f, -0.8f),false,actor->GetType(), nullptr,4,0.0f,0,damageEffect,gravity, Vector3(5.0f, 5.0f, 5.0f) }
 			,EffectCreateParameter{ "SkillEffect7_1", Vector3(0, -2.2f, 0), Vector3(0.5f, 0.5f, 0.5f), Vector3(MOF_ToRadian(180), 0.0f, 0.0f),1.8f,actor->GetType() }
 			,EffectCreateParameter{ "SkillEffect7_2", Vector3(0, -2.2f, 0), Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 0.0f, 0.0f),1.2f,actor->GetType() }
 		}));
 	//インパクトスキルステート
-	gravity = GravityScale{ true,1.5f,0.01f,1.0f };
+	gravity = GravityScale{ true,2.5f,0.01f,1.0f };
 	stateMachine->AddState(CState::Create<CImpactSkillState>(actor, input,
 		CImpactSkillState::Parameter{
 			3
@@ -302,7 +302,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,EffectCreateParameter{ "SkillEffect8", Vector3(2.5f, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f,MOF_ToRadian(-90), 0.0f),2.0f,actor->GetType() }
 		}));
 	//チェイススキルステート
-	gravity = GravityScale{ true,2.5f,0.01f,1.0f };
+	gravity = GravityScale{ true,0.5f,0.01f,1.0f };
 	stateMachine->AddState(CState::Create<CChaseSkillState>(actor, input,
 		CChaseSkillState::Parameter{
 			3

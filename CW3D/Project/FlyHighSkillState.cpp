@@ -22,6 +22,8 @@ void ActionGame::CFlyHighSkillState::Start()
 	CreateShotAABB();
 	CreateEffect();
 
+	SetArmorLevel(parameter_.armorLevel);
+
 	for (auto& shot : shots_)
 	{
 		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_5)->GetDamage();

@@ -70,7 +70,7 @@ void ActionGame::CDropKickSkillState::Execution()
 	{
 		isStartCollide_ = true;
 	}
-	if (currentTime_ > parameter_.CollideEndFrameTime)
+	/*if (currentTime_ > parameter_.CollideEndFrameTime)
 	{
 		if (isNextInput_)
 		{
@@ -79,8 +79,9 @@ void ActionGame::CDropKickSkillState::Execution()
 				shot->SetShow(false);
 			}
 			Initialize();
+			return;
 		}
-	}
+	}*/
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
@@ -107,6 +108,13 @@ void ActionGame::CDropKickSkillState::InputExecution()
 			{
 				isNextInput_ = true;
 				skillRef_.lock()->AddInput();
+				for (auto& shot : shots_)
+				{
+					shot->SetShow(false);
+				}
+				Initialize();
+				return;
+
 			}
 		}
 	}
@@ -150,6 +158,9 @@ void ActionGame::CDropKickSkillState::Initialize()
 	action_->Start();
 	CreateShotAABB();
 	CreateEffect();
+
+	SetArmorLevel(parameter_.armorLevel);
+
 	for (auto& shot : shots_)
 	{
 		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_4)->GetDamage();

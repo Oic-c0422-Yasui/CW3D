@@ -622,8 +622,8 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
 					Vector3(PLAYER_SPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_SPEED * PLAYER_WALKSPEED),
 					Vector3(PLAYER_MAXSPEED * PLAYER_WALKSPEED, 1.0f, PLAYER_MAXSPEED * PLAYER_WALKSPEED),
-					GRAVITY * 1.8f,
-					GRAVITYMAX * 1.8f,
+					GRAVITY * 2.5f,
+					GRAVITYMAX * 2.5f,
 				}));
 	}
 	{
@@ -663,7 +663,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 					Vector3(0.2f, 1.0f, 1.0f),
 				}));
 	}
-	//インパクトスキル
+	//チェイススキル
 	actor->AddAction(STATE_KEY_CHASE_SKILL,
 		CAction::Create<CDropKickSkillAction>(
 			CBaseAction::BaseParameter{
@@ -709,7 +709,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 		));
 		//チェイススキル
 		actor->AddAction(str + STATE_KEY_CHASE_SKILL, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, true, 0.5f, 360.0f, 7.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, true, 0.5f, 270.0f, 7.5f, type }
 		));
 	}
 	

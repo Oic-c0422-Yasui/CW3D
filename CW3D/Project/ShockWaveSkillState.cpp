@@ -17,6 +17,7 @@ void ActionGame::CShockWaveSkillState::Start()
 	action_->Start();
 	CreateShotAABB();
 	CreateEffect();
+	SetArmorLevel(parameter_.armorLevel);
 	for (auto& shot : shots_)
 	{
 		auto skillDamage = Actor()->GetSkillController()->GetSkill(SKILL_KEY_3)->GetDamage();

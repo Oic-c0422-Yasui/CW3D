@@ -60,7 +60,7 @@ namespace ActionGame {
 			auto& nextState = stateMap_.find(key);
 			if (nextState == stateMap_.end())
 			{
-				return true;
+				return false;
 			}
 			//前のステートの終了
 			if (currentState_)
@@ -71,7 +71,7 @@ namespace ActionGame {
 			currentState_ = nextState->second;
 			currentState_->SetKeepKey(tempChangeKey_);
 			currentState_->Start();
-			return false;
+			return true;
 		}
 		/**
 		 * @brief		ステートの変更
@@ -83,7 +83,7 @@ namespace ActionGame {
 			auto& nextState = stateMap_.find(key);
 			if (nextState == stateMap_.end())
 			{
-				return true;
+				return false;
 			}
 			//前のステートの終了
 			if (currentState_)
@@ -95,7 +95,7 @@ namespace ActionGame {
 			currentState_ = nextState->second;
 			currentState_->SetKeepKey(tempChangeKey_);
 			currentState_->Start();
-			return false;
+			return true;
 		}
 
 		/**

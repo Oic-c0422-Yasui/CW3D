@@ -22,9 +22,7 @@ void ActionGame::CJumpStormSkillState::Start()
 	CAttackBaseState::Start();
 	action_->Start();
 
-	auto param = Actor()->GetParameterMap();
-	auto& armorLevel = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
-	armorLevel = parameter_.armorLevel;
+	SetArmorLevel(parameter_.armorLevel);
 
 	CreateShotAABB();
 	CreateEffect();

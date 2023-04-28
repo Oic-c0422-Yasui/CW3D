@@ -36,11 +36,11 @@ bool ActionGame::PlayerSkillCreator::Create(const ActorPtr& actor)
 
 	ActionGame::SKillPtr addSkill = std::make_shared<ActionGame::CAdditionalSkill>();
 	skill = actor->GetSkillController()->Create(SKILL_KEY_4, INPUT_KEY_SKILL4, "Skill3", STATE_KEY_DROPKICK_SKILL, STATE_KEY_DROPKICK_SKILL, addSkill);
-	auto addData = std::make_shared<AdditionalSkillData>(800, 8, 3.5f, GameFrameTime * 30.0f, 0);
+	auto addData = std::make_shared<AdditionalSkillData>(800, 8, 3.5f, GameFrameTime * 20.0f, 0);
 	skill->SetSkillData(addData);
 	addSkill = std::make_shared<ActionGame::CAdditionalSkill>();
 	skill = actor->GetSkillController()->Create(SKILL_KEY_7, INPUT_KEY_SKILL7, "Skill7", STATE_KEY_CHASE_SKILL, STATE_KEY_CHASE_SKILL, addSkill);
-	addData = std::make_shared<AdditionalSkillData>(100, 5, 3.5f, GameFrameTime * 20.0f, 0);
+	addData = std::make_shared<AdditionalSkillData>(100, 5, 3.5f, GameFrameTime * 30.0f, 0);
 	skill->SetSkillData(addData);
 
 	return true;
