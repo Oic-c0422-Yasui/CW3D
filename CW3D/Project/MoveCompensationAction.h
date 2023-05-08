@@ -16,6 +16,7 @@ namespace ActionGame
 		* @brief	基底移動補正パラメータ
 		* @param	isEnable		補正が有効か？
 		* @param	isEnableYaxis	Y軸にも補正をかけるか？
+		* @param	isFixedPos		目標地点が固定されているか？
 		* @param	endTime			終了時間
 		* @param	sightAngle		視野角（度数法）
 		* @param	maxDistance		最大補正距離
@@ -25,6 +26,7 @@ namespace ActionGame
 		{
 			bool isEnable;
 			bool isEnableYaxis;
+			bool isFixedPos;
 			float endTime;
 			float sightAngle;
 			float maxDistance;
@@ -34,6 +36,7 @@ namespace ActionGame
 		* @brief	移動補正パラメータ
 		* @param	isEnable		補正が有効か？
 		* @param	isEnableYaxis	Y軸にも補正をかけるか？
+		* @param	isFixedPos		目標地点が固定されているか？
 		* @param	endTime			終了時間
 		* @param	sightAngle		視野角（度数法）
 		* @param	maxDistance		最大補正距離
@@ -42,6 +45,7 @@ namespace ActionGame
 		* @param	currentTime		現在時間
 		* @param	minDistance		最小補正距離
 		* @param	targetPos		目標アクターのトランスフォーム
+		* @param	fixedTargetPos	目標地点
 		*/
 		struct Parameter : public BaseParameter
 		{
@@ -50,6 +54,7 @@ namespace ActionGame
 			float currentTime;
 			float minDistance;
 			TransformPtr targetPos;
+			Vector3 fixedTargetPos;
 		};
 
 	protected:

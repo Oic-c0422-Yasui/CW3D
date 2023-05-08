@@ -11,17 +11,23 @@ namespace ActionGame {
 	class CDamageState : public CBaseState
 	{
 	public:
-
-
+		/*
+		* @brief	ステートパラメータ
+		* @param	ColliderStartFrameTime 当たり判定開始時間
+		*/
+		struct Parameter
+		{
+			BYTE armor;
+		};
 	private:
 		//ダメージステート
 		DamageActionPtr			action_;
-
+		Parameter parameter_;
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CDamageState();
+		CDamageState(Parameter param);
 			
 
 		/**

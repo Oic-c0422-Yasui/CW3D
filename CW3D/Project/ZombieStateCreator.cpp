@@ -11,7 +11,10 @@ bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine,
 
 		}));
 	stateMachine->AddState(CState::Create<CMoveState>(actor, input));
-	stateMachine->AddState(CState::Create<CDamageState>(actor, input));
+	stateMachine->AddState(CState::Create<CDamageState>(actor, input,
+		CDamageState::Parameter{
+			2
+		}));
 	stateMachine->AddState(CState::Create<CFlyDamageState>(actor, input));
 	stateMachine->AddState(CState::Create<CDeadState>(actor, input));
 	stateMachine->AddState(CState::Create<CDownState>(actor, input,
@@ -26,6 +29,7 @@ bool ActionGame::ZombieStateCreator::Create(const StateMachinePtr& stateMachine,
 		CAttack1State::Parameter{
 			2
 			,GameFrameTime * 38.0f
+			,GameFrameTime * 40.0f
 			,GameFrameTime * 45.0f
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,CHARA_TYPE::PLAYER, nullptr ,1,0.0f,0,damageEffect,GravityScale(),Vector3(1.2f, 1.0f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f,actor->GetType() }

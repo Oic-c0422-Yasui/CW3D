@@ -332,6 +332,7 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			}
 		},
 		CRunJumpAttack2Action::Parameter{
+			Vector3(PLAYER_SPEED, 1.0f, PLAYER_SPEED),
 			Vector3(0.25f, 0.0f,0.0f),
 			PLAYER_JUMPPOWER * 0.4f,
 			GRAVITY * 0.7f,
@@ -693,24 +694,37 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 		//UŒ‚‚P
 		const std::string str = STATE_KEY_MOVECOMPENSATION;
 		actor->AddAction(str + STATE_KEY_ATTACK1, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, false,false, 0.5f, 270.0f, 4.5f, type }
 		));
 		//UŒ‚‚Q
 		actor->AddAction(str + STATE_KEY_ATTACK2, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 2.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, false,false, 0.5f, 90.0f, 2.5f, type }
 		));
 		//ƒ_ƒbƒVƒ…UŒ‚‚P
 		actor->AddAction(str + STATE_KEY_RUN_ATTACK1, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 270.0f, 4.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, false,false, 0.5f, 270.0f, 4.5f, type }
 		));
 		//ƒ_ƒbƒVƒ…UŒ‚‚Q
 		actor->AddAction(str + STATE_KEY_RUN_ATTACK2, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, false, 0.5f, 90.0f, 4.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, false,false, 0.5f, 90.0f, 4.5f, type }
 		));
 		//ƒ`ƒFƒCƒXƒXƒLƒ‹
 		actor->AddAction(str + STATE_KEY_CHASE_SKILL, CAction::Create<CMoveCompensationAction>(
-			CMoveCompensationAction::BaseParameter{ true, true, 0.5f, 270.0f, 7.5f, type }
+			CMoveCompensationAction::BaseParameter{ true, true,false, 0.5f, 270.0f, 7.5f, type }
 		));
+		//ƒWƒƒƒ“ƒvUŒ‚‚P
+		actor->AddAction(str + STATE_KEY_JUMP_ATTACK1, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, true,false, 0.5f, 120.0f, 3.5f, type }
+		));
+		//ƒ_ƒbƒVƒ…ƒWƒƒƒ“ƒvUŒ‚‚P
+		actor->AddAction(str + STATE_KEY_RUN_JUMP_ATTACK1, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, true,false, 0.5f, 120.0f, 3.5f, type }
+		));
+		//ƒ_ƒbƒVƒ…ƒWƒƒƒ“ƒvUŒ‚‚Q
+		actor->AddAction(str + STATE_KEY_RUN_JUMP_ATTACK2, CAction::Create<CMoveCompensationAction>(
+			CMoveCompensationAction::BaseParameter{ true, false,false, 0.5f, 120.0f, 2.5f, type }
+		));
+
 	}
 	
 

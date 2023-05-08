@@ -33,7 +33,7 @@ void ActionGame::CChaseSkillState::Start()
 	}
 	Actor()->GetVelocity()->SetGravityScale(0.1f,
 											1.0f,
-											parameter_.CollideEndFrameTime);
+											parameter_.CollideEndTime);
 }
 
 void ActionGame::CChaseSkillState::Execution()
@@ -43,11 +43,11 @@ void ActionGame::CChaseSkillState::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -60,7 +60,7 @@ void ActionGame::CChaseSkillState::Execution()
 	for (auto& effect : effects_)
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (!effect->IsStop())
 			{
@@ -70,11 +70,11 @@ void ActionGame::CChaseSkillState::Execution()
 		}
 	}
 
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		isStartCollide_ = true;
 	}
-	if (currentTime_ > parameter_.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndTime)
 	{
 		if (isNextInput_)
 		{
@@ -86,7 +86,7 @@ void ActionGame::CChaseSkillState::Execution()
 		}
 	}
 
-	if (currentTime_ > parameter_.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndTime)
 	{
 		SwitchFlyChangeState(STATE_KEY_IDLE, STATE_KEY_FALL);
 	}
@@ -112,7 +112,7 @@ void ActionGame::CChaseSkillState::InputExecution()
 			}
 		}
 	}
-	if (currentTime_ > parameter_.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{

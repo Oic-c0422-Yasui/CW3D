@@ -26,8 +26,8 @@ namespace ActionGame {
 		struct Parameter : public BaseParam
 		{
 			float ChargeTime;
-			float CollideStartFrameTime;
-			float CollideEndFrameTime;
+			float CollideStartTime;
+			float CollideEndTime;
 			float EndTime;
 			ShotAABB ShotStatus;
 			EffectCreateParameter ChargeEffectStatus;

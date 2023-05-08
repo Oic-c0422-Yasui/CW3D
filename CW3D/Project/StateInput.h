@@ -21,7 +21,7 @@ namespace Input {
 			KeyData()
 				: previousValue_(0)
 				, currentValue_(0)
-				, inputValue_(0.1f)
+				, inputValue_(0.3f)
 				, pushTime_(0.0f)
 				, holdTime_(0.0f)
 			{

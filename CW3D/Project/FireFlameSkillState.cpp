@@ -87,11 +87,11 @@ void ActionGame::CFireFlameSkillState::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -100,7 +100,7 @@ void ActionGame::CFireFlameSkillState::Execution()
 		}
 
 	}
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		isStartCollide_ = true;
 	}

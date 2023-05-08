@@ -2,7 +2,7 @@
 
 ActionGame::CIdleState::CIdleState(Parameter param)
 	: CBaseState()
-	, timeScale_(0.0f)
+	, time_(0.0f)
 	, parameter_(param)
 {
 }
@@ -10,15 +10,15 @@ ActionGame::CIdleState::CIdleState(Parameter param)
 void ActionGame::CIdleState::Start()
 {
 	action_ = Actor()->GetAction<CIdleAction>(GetKey());
-	timeScale_ = 0.0f;
+	time_ = 0.0f;
 	action_->Start();
 }
 
 void ActionGame::CIdleState::Execution()
 {
-	if (timeScale_ < parameter_.idleTime)
+	if (time_ < parameter_.idleTime)
 	{
-		timeScale_ += CUtilities::GetFrameSecond();
+		time_ += CUtilities::GetFrameSecond();
 	}
 	else
 	{

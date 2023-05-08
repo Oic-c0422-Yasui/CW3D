@@ -12,6 +12,8 @@ void ActionGame::CRunJumpAttack1State::Start()
 	action_ = Actor()->GetAction<CRunJumpAttack1Action>(GetKey());
 	CAttackBaseState::Start();
 	action_->Start();
+	const auto& gravity = parameter_.Gravity;
+	Actor()->GetVelocity()->SetGravityScale(gravity.startScale, gravity.endScale, gravity.time);
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 
@@ -23,12 +25,12 @@ void ActionGame::CRunJumpAttack1State::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
 	}
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		CreateEffect();
 		isStartCollide_ = true;
@@ -41,7 +43,7 @@ void ActionGame::CRunJumpAttack1State::Execution()
 	}
 	else if (isNextInput_)
 	{
-		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputFrameTime)
+		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputTime)
 		{
 			ChangeState(STATE_KEY_RUN_JUMP_ATTACK2);
 		}

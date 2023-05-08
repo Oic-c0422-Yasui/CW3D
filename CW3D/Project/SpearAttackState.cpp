@@ -1,4 +1,5 @@
 #include "SpearAttackState.h"
+#include "ParameterDefine.h"
 
 ActionGame::CSpearAttackState::CSpearAttackState(Parameter param)
 	: CAttackBaseState()
@@ -16,7 +17,8 @@ void ActionGame::CSpearAttackState::Start()
 	CAttackBaseState::Start();
 
 	action_->Start();
-
+	auto& param = Actor()->GetParameterMap()->Get<float>(PARAMETER_KEY_INVINCIBLE_TIME);
+	param = parameter_.CollideStartTime;
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 	CreateEffect();
@@ -32,20 +34,27 @@ void ActionGame::CSpearAttackState::Execution()
 			shot->SetEnableCollider(true);
 
 		}
-		else if (shot->IsEnableCollider())
+		if (currentTime_ > parameter_.ColliderEndTime)
 		{
-			shot->SetEnableCollider(false);
+			if (shot->IsEnableCollider())
+			{
+				shot->SetEnableCollider(false);
+			}
 		}
-
 	}
+	for (auto& effect : effects_)
+	{
+		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
+	}
+
 	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		
 		isStartCollide_ = true;
 	}
-	if (currentTime_ >= parameter_.CollideStartTime)
+	if (currentTime_ >= parameter_.EndTime)
 	{
-		ChangeState(STATE_KEY_IDLE);
+		ChangeState(STATE_KEY_TIRED);
 	}
 
 	CAttackBaseState::Execution();

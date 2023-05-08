@@ -30,18 +30,18 @@ void ActionGame::CAttack1State::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 
 		}
-		else if (shot->IsEnableCollider())
+		else if (currentTime_ >= parameter_.CollideEndTime && shot->IsEnableCollider())
 		{
 			shot->SetEnableCollider(false);
 		}
 
 	}
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		CreateEffect();
 		isStartCollide_ = true;
@@ -52,7 +52,7 @@ void ActionGame::CAttack1State::Execution()
 	}
 	else if (isNextInput_)
 	{
-		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputFrameTime)
+		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputTime)
 		{
 			ChangeState(STATE_KEY_ATTACK2);
 		}

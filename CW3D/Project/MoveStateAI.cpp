@@ -15,6 +15,7 @@ void ActionGame::CMoveStateAI::RegisterKey()
 	Input()->AddKey(INPUT_KEY_HORIZONTAL);
 	Input()->AddKey(INPUT_KEY_VERTICAL);
 	Input()->AddKey(INPUT_KEY_ATTACK);
+	Input()->AddKey(INPUT_KEY_SKILL1);
 }
 
 void ActionGame::CMoveStateAI::Start()
@@ -40,9 +41,11 @@ void ActionGame::CMoveStateAI::Update()
 	{
 
 		currentLostTime_++;
-		if (currentLostTime_ < 5)
+		if (currentLostTime_ < 30)
 		{
-			Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, transform->IsReverse() ? -1.0f : 1.0f);
+			//ˆÚ“®“ü—Í
+			InputMove(-1.0f, target->GetPosition());
+			Input()->SetKeyValue(INPUT_KEY_HORIZONTAL, target->IsReverse() ? -1.0f : 1.0f);
 		}
 		//ƒvƒŒƒCƒ„[‚Æ5‚ˆÈã—£‚ê‚Ä‚¢‚éê‡
 		else if (!IsInRange(5.0f, target->GetPosition()))
@@ -50,7 +53,7 @@ void ActionGame::CMoveStateAI::Update()
 			//ˆÚ“®“ü—Í
 			InputMove(-5.0f, target->GetPosition());
 		}
-		return;
+
 	}
 	else
 	{
@@ -64,7 +67,6 @@ void ActionGame::CMoveStateAI::Update()
 		if (CUtilities::Random(attackTiming_) == 0)
 		{
 			Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
-			isAttack_ = true;
 		}
 	}
 	else

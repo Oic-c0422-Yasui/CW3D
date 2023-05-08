@@ -16,15 +16,20 @@ namespace ActionGame
 		ParameterCreatorPtr		parameterCreator_;
 		//AIê∂ê¨
 		CharacterAICreatorPtr	AICreator_;
+		//ÉXÉLÉãê∂ê¨
+		SkillCreatorPtr			skillCreator_;
+
 	public:
 		EnemyBuilder(const ActionCreatorPtr& actionCreator,
 			const StateCreatorPtr& stateCreator,
 			const ParameterCreatorPtr& parameterCreator,
-			const CharacterAICreatorPtr& aiCreator)
+			const CharacterAICreatorPtr& aiCreator,
+			const SkillCreatorPtr& skillCreator)
 			: actionCreator_(actionCreator)
 			, stateCreator_(stateCreator)
 			, parameterCreator_(parameterCreator)
 			, AICreator_(aiCreator)
+			, skillCreator_(skillCreator)
 		{
 		}
 		virtual ~EnemyBuilder() = default;

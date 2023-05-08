@@ -25,7 +25,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	const ActionCreatorPtr& actionCreator,
 	const StateCreatorPtr& stateCreator,
 	const ParameterCreatorPtr& paramCreator,
-	const CharacterAICreatorPtr& aiCreator)
+	const CharacterAICreatorPtr& aiCreator,
+	const SkillCreatorPtr& skillCreator)
 {
 
 	//メッシュ取得
@@ -67,6 +68,8 @@ bool CEnemy::Load(const EnemyBuildParameterPtr& eneParam,
 	//パラメータ設定
 	SettingParameter(param, eneParam->GetStatus());
 
+	//スキル作成
+	skillCreator->Create(actor_);
 
 	//初期位置設定
 	position_ = defaultPos_;

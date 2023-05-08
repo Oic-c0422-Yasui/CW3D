@@ -16,13 +16,15 @@ namespace ActionGame {
 		* @brief	ステートパラメータ
 		* @param	ColliderStartFrameTime 当たり判定開始時間
 		* @param	ColliderEndFrameTime 　当たり判定終了時間
+		* @param	Gravity 　			　重力スケール
 		* @param	AABBShotStatus 　AABBのショットパラメータ
 		* @param	EffectStatus 　	エフェクトのパラメータ
 		*/
 		struct Parameter : public BaseParam
 		{
-			float CollideStartFrameTime;
-			float CollideEndFrameTime;
+			float CollideStartTime;
+			float CollideEndTime;
+			GravityScale Gravity;
 			ShotAABB ShotStatus;
 			EffectCreateParameter EffectStatus;
 		};

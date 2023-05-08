@@ -11,6 +11,8 @@ void ActionGame::CRunJumpAttack2State::Start()
 	action_ = Actor()->GetAction<CRunJumpAttack2Action>(GetKey());
 	CAttackBaseState::Start();
 	action_->Start();
+	const auto& gravity = parameter_.Gravity;
+	Actor()->GetVelocity()->SetGravityScale(gravity.startScale, gravity.endScale, gravity.time);
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 }
@@ -29,7 +31,7 @@ void ActionGame::CRunJumpAttack2State::Execution()
 	}
 	if (isNextInput_)
 	{
-		if (currentTime_ > parameter_.NextInputFrameTime)
+		if (currentTime_ > parameter_.NextInputTime)
 		{
 			ChangeState(STATE_KEY_RUN_JUMP_ATTACK3);
 		}

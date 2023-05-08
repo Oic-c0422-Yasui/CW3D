@@ -8,7 +8,7 @@
 #include	"Observer.h"
 #include	"PlayerActionCreator.h"
 #include	"PlayerStateCreator.h"
-#include	"PlayerSkillCreater.h"
+#include	"PlayerSkillCreator.h"
 #include	"PlayerParameterCreator.h"
 #include	"EffectController.h"
 #include	"Combo.h"

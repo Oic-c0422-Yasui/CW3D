@@ -3,8 +3,8 @@
 ActionGame::CAttack3State::CAttack3State(Parameter param)
 	: CAttackBaseState()
 	, parameter_(param)
-	, isCollideStartFirst(false)
-	, isCollideStartSecond(false)
+	, isCollideStartFirst_(false)
+	, isCollideStartSecond_(false)
 {
 }
 
@@ -15,8 +15,8 @@ void ActionGame::CAttack3State::Start()
 	CAttackBaseState::Start();
 
 	action_->Start();
-	isCollideStartFirst = false;
-	isCollideStartSecond = false;
+	isCollideStartFirst_ = false;
+	isCollideStartSecond_ = false;
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 
@@ -28,11 +28,11 @@ void ActionGame::CAttack3State::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if ((currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
-			|| (currentTime_ >= parameter_.CollideSecondStartFrameTime && !isCollideStartSecond))
+		if ((currentTime_ >= parameter_.CollideFirstStartTime && !isCollideStartFirst_)
+			|| (currentTime_ >= parameter_.CollideSecondStartTime && !isCollideStartSecond_))
 		{
 			shot->SetEnableCollider(true);
-			if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
+			if (currentTime_ >= parameter_.CollideFirstStartTime && !isCollideStartFirst_)
 			{
 				action_->Execution();
 
@@ -45,13 +45,13 @@ void ActionGame::CAttack3State::Execution()
 		}
 
 	}
-	if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isCollideStartFirst)
+	if (currentTime_ >= parameter_.CollideFirstStartTime && !isCollideStartFirst_)
 	{
-		isCollideStartFirst = true;
+		isCollideStartFirst_ = true;
 	}
-	if (currentTime_ >= parameter_.CollideSecondStartFrameTime && !isCollideStartSecond)
+	if (currentTime_ >= parameter_.CollideSecondStartTime && !isCollideStartSecond_)
 	{
-		isCollideStartSecond = true;
+		isCollideStartSecond_ = true;
 	}
 	;
 

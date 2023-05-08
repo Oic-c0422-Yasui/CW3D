@@ -1,4 +1,5 @@
 #include "AdditionalSkillRender.h"
+#include "ResourceManager.h"
 
 ActionGame::CAdditionalSkillRender::CAdditionalSkillRender()
 	: CSkillRender()

@@ -1,6 +1,7 @@
-#include "PlayerSkillCreater.h"
+#include "PlayerSkillCreator.h"
 #include "GameDefine.h"
-
+#include	"AdditionalSkill.h"
+#include	"UltimateSkill.h"
 
 bool ActionGame::PlayerSkillCreator::Create(const ActorPtr& actor)
 {

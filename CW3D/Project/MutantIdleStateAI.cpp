@@ -1,47 +1,115 @@
 #include "MutantIdleStateAI.h"
 #include "ParameterDefine.h"
+#include	"Player.h"
+#include	"Collision.h"
+#include	"Common.h"
+#include	"InputDefine.h"
+#include	"ServiceLocator.h"
 
-ActionGame::CMutantIdleStateAI::CMutantIdleStateAI(Vector3 vigilanceRange, Vector3 attackRange, int attackTiming)
-	: CIdleStateAI(vigilanceRange, attackRange, attackTiming)
-	, isAngry(false)
+
+ActionGame::CMutantIdleStateAI::CMutantIdleStateAI(Vector3 vigilanceRange, Vector3 attackRange, Vector3 skillRange,
+					int attackTiming, int skillTiming, float skillStartHpRate)
+	: CBaseStateAI()
+	, vigilanceRange_(vigilanceRange)
+	, attackRange_(attackRange)
+	, skillRange_(skillRange)
+	, attackTiming_(attackTiming)
+	, skillTiming_(skillTiming)
+	, startSkillHPRate_(skillStartHpRate)
 {
 }
 
 void ActionGame::CMutantIdleStateAI::RegisterKey()
 {
-	CIdleStateAI::RegisterKey();
-
+	Input()->AddKey(INPUT_KEY_HORIZONTAL);
+	Input()->AddKey(INPUT_KEY_VERTICAL);
+	Input()->AddKey(INPUT_KEY_ATTACK);
+	Input()->AddKey(INPUT_KEY_SKILL1);
 }
 
 void ActionGame::CMutantIdleStateAI::Start()
 {
-	CIdleStateAI::Start();
-	const auto& hp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_HP);
-	const auto& maxHp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
-	float ratio = (float)hp / (float)maxHp;
-	if (ratio > 0.4f)
-	{
-		isAngry = false;
-	}
+
 }
 
 void ActionGame::CMutantIdleStateAI::Update()
 {
-	CIdleStateAI::Update();
-	const auto& hp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_HP);
-	const auto& maxHp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
-	float ratio = (float)hp / (float)maxHp;
-	if (ratio <= 0.4f)
+
+	//ƒ^[ƒQƒbƒgŽæ“¾
+	const auto& target = CServiceLocator< CPlayer >::GetService();
+	if (target->IsDead())
 	{
-		if (!isAngry)
+		return;
+	}
+
+	//ƒAƒNƒ^[Žæ“¾
+	const auto& transform = Actor()->GetTransform();
+
+
+	//Œx‰ú”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çˆÚ“®
+	if (IsInRange(vigilanceRange_, target->GetCollider()))
+	{
+		
+		//UŒ‚”ÍˆÍ“à‚É“ü‚Á‚Ä‚«‚½‚çUŒ‚
+		if (IsInRange(attackRange_, target->GetCollider()))
 		{
-			StateMachine()->ChangeState(STATE_KEY_SPEAR_ATTACK);
-			isAngry = true;
+			if (CUtilities::Random(attackTiming_) == 0)
+			{
+				transform->SetReverse(target->GetPosition().x < transform->GetPosition().x ? true : false);
+				Input()->SetKeyValue(INPUT_KEY_ATTACK, 1.0f);
+			}
+			
+		}
+		else
+		{
+			if (!Input()->IsPush(INPUT_KEY_HORIZONTAL) && !Input()->IsNegativePush(INPUT_KEY_HORIZONTAL))
+			{
+				Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+					target->GetPosition().x < transform->GetPosition().x ? -CUtilities::RandomFloat() : CUtilities::RandomFloat());
+			}
+			if (!Input()->IsPush(INPUT_KEY_VERTICAL) && !Input()->IsNegativePush(INPUT_KEY_VERTICAL) && CUtilities::Random(10) == 0)
+			{
+				Input()->SetKeyValue(INPUT_KEY_VERTICAL,
+					CUtilities::Random(10) < 4 ? -CUtilities::RandomFloat() : CUtilities::RandomFloat());
+			}
+		}
+
+		if (IsInRange(skillRange_, target->GetCollider()))
+		{
+			if (CUtilities::Random(skillTiming_) == 0)
+			{
+				transform->SetReverse(target->GetPosition().x < transform->GetPosition().x ? true : false);
+				StateMachine()->ChangeState(STATE_KEY_SLASH_ATTACK);
+			}
+			else if (CUtilities::Random(attackTiming_) == 0)
+			{
+				ActivateSkill();
+			}
 		}
 	}
+	//’âŽ~’†‚Éƒ‰ƒ“ƒ_ƒ€‚Å“K“–‚É‹t•ûŒü“ü—Í
+	else if (CUtilities::Random(50) == 0)
+	{
+
+		Input()->SetKeyValue(INPUT_KEY_HORIZONTAL,
+			transform->IsReverse() ? 1.0f : -1.0f);
+
+	}
+
 }
 
 void ActionGame::CMutantIdleStateAI::End()
 {
-	CIdleStateAI::End();
+	
+}
+
+void ActionGame::CMutantIdleStateAI::ActivateSkill()
+{
+	const auto& hp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_HP);
+	const auto& maxHp = Actor()->GetParameterMap()->Get<CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
+	float ratio = (float)hp / (float)maxHp;
+	if (ratio <= startSkillHPRate_)
+	{
+		Input()->SetKeyValue(INPUT_KEY_SKILL1, 1.0f);
+	}
 }

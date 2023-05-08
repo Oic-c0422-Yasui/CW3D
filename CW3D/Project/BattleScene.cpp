@@ -238,17 +238,17 @@ void Scene::CBattleScene::RenderDebug()
 		{
 		case COLLISION_TYPE::SPHERE:
 		{
-			CGraphicsUtilities::RenderLineSphere(shot->GetColliderSphere(), Vector4(1, 0, 0, 0.2f));
+			CGraphicsUtilities::RenderLineSphere(shot->GetColliderSphere(), Vector4(1, 0, 0, 0.5f));
 			break;
 		}
 		case COLLISION_TYPE::AABB:
 		{
-			CGraphicsUtilities::RenderBox(shot->GetColliderAABB(), Vector4(1, 0, 0, 0.2f)); 
+			CGraphicsUtilities::RenderBox(shot->GetColliderAABB(), Vector4(1, 0, 0, 0.5f)); 
 			break;
 		}
 		case COLLISION_TYPE::OBB:
 		{
-			CGraphicsUtilities::RenderBox(shot->GetColliderOBB(), Vector4(1, 0, 0, 0.2f));
+			CGraphicsUtilities::RenderBox(shot->GetColliderOBB(), Vector4(1, 0, 0, 0.5f));
 			break;
 		}
 		default:

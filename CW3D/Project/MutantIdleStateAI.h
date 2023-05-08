@@ -1,23 +1,32 @@
 #pragma once
 
 
-#include	"IdleStateAI.h"
+#include	"BaseStateAI.h"
 
 namespace ActionGame {
 
 	/**
 	 * @brief		待機ステート
 	 */
-	class CMutantIdleStateAI : public CIdleStateAI
+	class CMutantIdleStateAI : public CBaseStateAI
 	{
 	private:
-		bool isAngry;
+		float			startSkillHPRate_;
+		Vector3			vigilanceRange_;
+		Vector3			attackRange_;
+		Vector3			skillRange_;
+		int				attackTiming_;
+		int				skillTiming_;
+
+	private:
+		void ActivateSkill();
 
 	public:
 		/**
 		 * @brief		コンストラクタ
 		 */
-		CMutantIdleStateAI(Vector3 vigilanceRange, Vector3 attackRange, int attackTiming);
+		CMutantIdleStateAI(Vector3 vigilanceRange, Vector3 attackRange, Vector3 skillRange,
+			int attackTiming, int skillTiming, float skillStartHpRate);
 
 		/**
 		 * @brief		利用キーの登録
@@ -39,4 +48,5 @@ namespace ActionGame {
 		 */
 		void End() override;
 	};
+
 }

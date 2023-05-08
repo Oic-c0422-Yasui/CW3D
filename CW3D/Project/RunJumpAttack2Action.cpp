@@ -13,6 +13,7 @@ void ActionGame::CRunJumpAttack2Action::Start()
 	auto& vel = Velocity();
 	vel->SetVelocityY(parameter_.jumpPower);
 	vel->SetGravity(parameter_.gravity);
+	vel->SetDecelerate(parameter_.decelerate.x, parameter_.decelerate.z);
 
 	if (Transform()->IsReverse())
 	{

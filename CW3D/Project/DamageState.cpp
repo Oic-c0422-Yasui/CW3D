@@ -1,14 +1,18 @@
 #include "DamageState.h"
 #include "ParameterDefine.h"
 
-ActionGame::CDamageState::CDamageState()
+
+
+ActionGame::CDamageState::CDamageState(Parameter param)
 	: CBaseState()
+	, parameter_(param)
 {
 }
 
 void ActionGame::CDamageState::Start()
 {
-
+	auto& armor = Actor()->GetParameterMap()->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	armor = parameter_.armor;
 	action_ = Actor()->GetAction<CDamageAction>(GetKey());
 	action_->Start();
 
@@ -27,7 +31,7 @@ void ActionGame::CDamageState::Execution()
 	}
 	else
 	{
-		//衝突判定回避ON
+		//衝突判定回避OFF
 		auto& isThroughCollision = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 		isThroughCollision = false;
 	}
@@ -51,9 +55,15 @@ void ActionGame::CDamageState::InputExecution()
 void ActionGame::CDamageState::End()
 {
 	action_->End();
-	//衝突判定回避ON
-	auto& isThroughCollision = Actor()->GetParameterMap()->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
+
+	//衝突判定回避OFF
+	auto& param = Actor()->GetParameterMap();
+	auto& isThroughCollision = param->Get<bool>(PARAMETER_KEY_THROUGH_COLLISION);
 	isThroughCollision = false;
+	//アーマーレベルを元に戻す
+	auto& armor = param->Get<BYTE>(PARAMETER_KEY_ARMORLEVEL);
+	const auto& defaultArmor = param->Get<BYTE>(PARAMETER_KEY_DEFAULT_ARMORLEVEL);
+	armor = defaultArmor;
 }
 
 void ActionGame::CDamageState::CollisionEvent(unsigned int type, std::any obj)

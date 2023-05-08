@@ -20,8 +20,8 @@ namespace ActionGame {
 		*/
 		struct Parameter : public BaseParam
 		{
-			float CollideFirstStartFrameTime;
-			float CollideSecondStartFrameTime;
+			float CollideFirstStartTime;
+			float CollideSecondStartTime;
 			ShotAABB ShotStatus;
 		};
 	private:
@@ -31,8 +31,8 @@ namespace ActionGame {
 		Attack3ActionPtr			action_;
 
 
-		bool isCollideStartFirst;
-		bool isCollideStartSecond;
+		bool isCollideStartFirst_;
+		bool isCollideStartSecond_;
 	protected:
 		virtual const ShotAABB& GetCreateShotStatusAABB() override { return parameter_.ShotStatus; }
 	public:

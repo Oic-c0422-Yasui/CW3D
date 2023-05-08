@@ -13,6 +13,8 @@ void ActionGame::CRunJumpAttack3State::Start()
 	CAttackBaseState::Start();
 	isStartCollide_ = false;
 	action_->Start();
+	const auto& gravity = parameter_.Gravity;
+	Actor()->GetVelocity()->SetGravityScale(gravity.startScale, gravity.endScale, gravity.time);
 	//“–‚½‚è”»’è—p‚Ì’eì¬
 	CreateShotAABB();
 
@@ -23,19 +25,19 @@ void ActionGame::CRunJumpAttack3State::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideFirstStartTime && !isStartCollide_)
 		{
 			action_->Execution();
 			action_->Jump();
 
 		}
-		else if (currentTime_ >= parameter_.CollideSecondStartFrameTime && shot->IsEnableCollider())
+		else if (currentTime_ >= parameter_.CollideSecondStartTime && shot->IsEnableCollider())
 		{
 			shot->SetEnableCollider(false);
 		}
 
 	}
-	if (currentTime_ >= parameter_.CollideFirstStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideFirstStartTime && !isStartCollide_)
 	{
 		isStartCollide_ = true;
 	}

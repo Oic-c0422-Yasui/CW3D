@@ -207,6 +207,9 @@
     <ClCompile Include="BaseAction.cpp" />
     <ClCompile Include="BaseStateAI.cpp" />
     <ClCompile Include="ChaseSkillState.cpp" />
+    <ClCompile Include="MutantMoveStateAI.cpp" />
+    <ClCompile Include="MutantSkillCreator.cpp" />
+    <ClCompile Include="SlashAttackState.cpp" />
     <ClCompile Include="SpearAttackState.cpp" />
     <ClCompile Include="FireFlameSkillState.cpp" />
     <ClCompile Include="ImpactSkillState.cpp" />
@@ -226,7 +229,6 @@
     <ClCompile Include="RevivalCount.cpp" />
     <ClCompile Include="RunAttack2State.cpp" />
     <ClCompile Include="DamageUtilities.cpp" />
-    <ClCompile Include="IOperateDeviceState.cpp" />
     <ClCompile Include="OperateDeviceState.cpp" />
     <ClCompile Include="GiveTextureToMaterial.cpp" />
     <ClCompile Include="ClearPoseAction.cpp" />
@@ -278,6 +280,7 @@
     <ClCompile Include="StartPoseAction.cpp" />
     <ClCompile Include="StartPoseState.cpp" />
     <ClCompile Include="StateInput.cpp" />
+    <ClCompile Include="TackleAttackState.cpp" />
     <ClCompile Include="ThreadCreator.cpp" />
     <ClCompile Include="CreateWindow.cpp" />
     <ClCompile Include="DamageAction.cpp" />
@@ -326,7 +329,7 @@
     <ClCompile Include="LandingState.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="PlayerActionCreator.cpp" />
-    <ClCompile Include="PlayerSkillCreater.cpp" />
+    <ClCompile Include="PlayerSkillCreator.cpp" />
     <ClCompile Include="PlayerStateCreator.cpp" />
     <ClCompile Include="RunAction.cpp" />
     <ClCompile Include="RunAttack1Action.cpp" />
@@ -381,6 +384,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimeScale.cpp" />
     <ClCompile Include="TimeScaleController.cpp" />
+    <ClCompile Include="TiredState.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UltimateGaugeRender.cpp" />
@@ -393,6 +397,7 @@
     <ClCompile Include="ZombieAICreator.cpp" />
     <ClCompile Include="ZombieBuilder.cpp" />
     <ClCompile Include="ZombieParameterCreator.cpp" />
+    <ClCompile Include="ZombieSkillCreator.cpp" />
     <ClCompile Include="ZombieStateCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -422,6 +427,10 @@
     <ClInclude Include="BaseAction.h" />
     <ClInclude Include="BaseStateAI.h" />
     <ClInclude Include="ChaseSkillState.h" />
+    <ClInclude Include="ISkillCreator.h" />
+    <ClInclude Include="MutantMoveStateAI.h" />
+    <ClInclude Include="MutantSkillCreator.h" />
+    <ClInclude Include="SlashAttackState.h" />
     <ClInclude Include="SpearAttackState.h" />
     <ClInclude Include="FireFlameSkillState.h" />
     <ClInclude Include="ImpactSkillState.h" />
@@ -505,6 +514,7 @@
     <ClInclude Include="SpawnerBuilderDictionary.h" />
     <ClInclude Include="StartPoseAction.h" />
     <ClInclude Include="StartPoseState.h" />
+    <ClInclude Include="TackleAttackState.h" />
     <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />
     <ClInclude Include="EnemyBuilder.h" />
@@ -532,6 +542,7 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="TaskManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TiredState.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="VectorDirection.h" />
     <ClInclude Include="VectorUtilities.h" />
@@ -664,7 +675,7 @@
     <ClInclude Include="StormSkillAction.h" />
     <ClInclude Include="StormSkillState.h" />
     <ClInclude Include="SkillInfoRender.h" />
-    <ClInclude Include="PlayerSkillCreater.h" />
+    <ClInclude Include="PlayerSkillCreator.h" />
     <ClInclude Include="SkillRenderContainer.h" />
     <ClInclude Include="SkillRender.h" />
     <ClInclude Include="SkillData.h" />
@@ -693,6 +704,7 @@
     <ClInclude Include="ZombieActionCreator.h" />
     <ClInclude Include="ZombieBuilder.h" />
     <ClInclude Include="ZombieParameterCreator.h" />
+    <ClInclude Include="ZombieSkillCreator.h" />
     <ClInclude Include="ZombieStateCreator.h" />
     <ClInclude Include="StateDefine.h" />
   </ItemGroup>

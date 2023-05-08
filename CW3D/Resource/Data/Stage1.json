@@ -71,12 +71,11 @@
           "PosX": -15,
           "PosY": 0,
           "PosZ": 3,
-          "Type": "Mutant",
+          "Type": "Zombie2",
           "Spawner": {
             "Type": "Normal",
             "Time": 4
           }
-          ,"Boss": true
         },
         {
           "PosX": -5,

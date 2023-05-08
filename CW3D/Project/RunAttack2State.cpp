@@ -26,7 +26,7 @@ void ActionGame::CRunAttack2State::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 
@@ -37,7 +37,7 @@ void ActionGame::CRunAttack2State::Execution()
 		}
 
 	}
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		CreateEffect();
 		isStartCollide_ = true;
@@ -48,7 +48,7 @@ void ActionGame::CRunAttack2State::Execution()
 	}
 	else if (isNextInput_)
 	{
-		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputFrameTime)
+		if (Actor()->GetAnimationState()->GetTime() > parameter_.NextInputTime)
 		{
 			ChangeState(STATE_KEY_ATTACK2);
 		}

@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "SkillUltGaugeRender.h"
+#include "UltimateSkill.h"
 
 namespace ActionGame
 {

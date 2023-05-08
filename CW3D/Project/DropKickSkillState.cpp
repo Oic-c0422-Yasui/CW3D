@@ -39,11 +39,11 @@ void ActionGame::CDropKickSkillState::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -56,7 +56,7 @@ void ActionGame::CDropKickSkillState::Execution()
 	for (auto& effect : effects_)
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (!effect->IsStop())
 			{
@@ -66,22 +66,10 @@ void ActionGame::CDropKickSkillState::Execution()
 		}
 	}
 
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		isStartCollide_ = true;
 	}
-	/*if (currentTime_ > parameter_.CollideEndFrameTime)
-	{
-		if (isNextInput_)
-		{
-			for (auto& shot : shots_)
-			{
-				shot->SetShow(false);
-			}
-			Initialize();
-			return;
-		}
-	}*/
 
 	if (Actor()->GetAnimationState()->IsEndMotion())
 	{
@@ -102,23 +90,20 @@ void ActionGame::CDropKickSkillState::InputExecution()
 	}
 	if (!isDelayInput_)
 	{
-		if (Input()->IsPush(inputKey_) && !isNextInput_)
+		if (Input()->IsPush(inputKey_) && !isNextInput_ && skillRef_.lock()->IsAdditional())
 		{
-			if (skillRef_.lock()->IsAdditional())
+			isNextInput_ = true;
+			skillRef_.lock()->AddInput();
+			for (auto& shot : shots_)
 			{
-				isNextInput_ = true;
-				skillRef_.lock()->AddInput();
-				for (auto& shot : shots_)
-				{
-					shot->SetShow(false);
-				}
-				Initialize();
-				return;
-
+				shot->SetShow(false);
 			}
+			Initialize();
+			return;
+
 		}
 	}
-	if (currentTime_ > parameter_.CollideEndFrameTime)
+	if (currentTime_ > parameter_.CollideEndTime)
 	{
 		if (Input()->IsPush(INPUT_KEY_ATTACK))
 		{
@@ -160,6 +145,9 @@ void ActionGame::CDropKickSkillState::Initialize()
 	CreateEffect();
 
 	SetArmorLevel(parameter_.armorLevel);
+
+	auto gravity = parameter_.Gravity;
+	Actor()->GetVelocity()->SetGravityScale(gravity.startScale, gravity.endScale, gravity.time);
 
 	for (auto& shot : shots_)
 	{

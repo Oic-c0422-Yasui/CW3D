@@ -15,6 +15,7 @@ namespace ActionGame
 	* @param	damage			ダメージ
 	* @param	knockBack		ノックバック力
 	* @param	isEnableCollider 当たり判定有効化
+	* @param	parentType		親タイプ
 	* @param	direction		ノックバック方向
 	* @param	armorBreakLevel アーマー破壊レベル
 	* @param	recieveUltGauge 受け取る必殺技ゲージ量
@@ -44,6 +45,7 @@ namespace ActionGame
 	* @param	damage			ダメージ
 	* @param	knockBack		ノックバック力
 	* @param	isEnableCollider 当たり判定有効化
+	* @param	parentType		親タイプ
 	* @param	direction		ノックバック方向
 	* @param	armorBreakLevel アーマー破壊レベル
 	* @param	recieveUltGauge 受け取る必殺技ゲージ量
@@ -62,6 +64,7 @@ namespace ActionGame
 	* @param	damage			ダメージ
 	* @param	knockBack		ノックバック力
 	* @param	isEnableCollider 当たり判定有効化
+	* @param	parentType		親タイプ
 	* @param	direction		ノックバック方向
 	* @param	armorBreakLevel アーマー破壊レベル
 	* @param	recieveUltGauge 受け取る必殺技ゲージ量
@@ -80,6 +83,7 @@ namespace ActionGame
 	* @param	damage			ダメージ
 	* @param	knockBack		ノックバック力
 	* @param	isEnableCollider 当たり判定有効化
+	* @param	parentType		親タイプ
 	* @param	direction		ノックバック方向
 	* @param	armorBreakLevel アーマー破壊レベル
 	* @param	recieveUltGauge 受け取る必殺技ゲージ量

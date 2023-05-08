@@ -64,7 +64,10 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 	//ダッシュ着地
 	stateMachine->AddState(CState::Create<CRunLandingState>(actor, input));
 	//ダメージ
-	stateMachine->AddState(CState::Create<CDamageState>(actor, input));
+	stateMachine->AddState(CState::Create<CDamageState>(actor, input,
+		CDamageState::Parameter{
+			4
+		}));
 	//空中ダメージ
 	stateMachine->AddState(CState::Create<CFlyDamageState>(actor, input));
 	//死亡
@@ -83,6 +86,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		CAttack1State::Parameter{
 			2
 			,GameFrameTime * 20.0f
+			,GameFrameTime * 25.0f
 			,GameFrameTime * 32.0f
 			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,actor->GetType(), nullptr ,2,2.5f,0,damageEffect,GravityScale(),Vector3(1.2f, 1.5f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f,actor->GetType() }
@@ -102,13 +106,13 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 
 	//攻撃３
-	auto gravity = GravityScale{true,1.0f,0.01f,1.0f};
+	auto targetGravity = GravityScale{true,1.0f,0.1f,1.0f};
 	stateMachine->AddState(CState::Create<CAttack3State>(actor, input,
 		CAttack3State::Parameter{
 			2
 			,GameFrameTime * 10.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 0.15f, 15, Vector3(0.3f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,3.5f,0,damageEffect,gravity, Vector3(1.5f, 2.5f, 1.5f)}
+			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 0.15f, 15, Vector3(0.3f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,3.5f,0,damageEffect,targetGravity, Vector3(1.5f, 2.5f, 1.5f)}
 
 		}));
 
@@ -129,17 +133,23 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			2
 			,GameFrameTime * 20.0f
 			,GameFrameTime * 32.0f
-			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,actor->GetType(), nullptr ,2,2.5f,0,damageEffect,GravityScale(),Vector3(1.2f, 1.5f, 1.0f) }
+			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 1.5f, 0, Vector3(0.3f, 0.0f, 0.0f),false,actor->GetType(), nullptr ,1,2.5f,0,damageEffect,GravityScale(),Vector3(1.2f, 1.5f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f,actor->GetType() }
 
 		}));
 
 	//ジャンプ攻撃１
+	targetGravity = GravityScale{ true,0.5f,0.1f,1.0f };
+	auto selfGravity = GravityScale{ true,0.5f,0.05f,1.0f };
 	stateMachine->AddState(CState::Create<CJumpAttack1State>(actor, input,
 		CJumpAttack1State::Parameter{
 			2
+			,GameFrameTime * 10.0f
+			,GameFrameTime * 30.0f
 			,GameFrameTime * 20.0f
-			,ShotAABB{ Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.25f, 0.0f),false,actor->GetType(), nullptr,2,2.0f,0,damageEffect,gravity, Vector3(1.0f, 1.2f, 1.0f) }
+			,GameFrameTime * 30.0f
+			,selfGravity
+			,ShotAABB{ Vector3(0.7f, 0.8f, 0), 10.0f, 0, Vector3(0.1f, 0.25f, 0.0f),false,actor->GetType(), nullptr,2,2.0f,0,damageEffect,targetGravity, Vector3(1.0f, 1.2f, 1.0f) }
 			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,1.0f,0), Vector3(0.3f, 0.4f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),2.0f,actor->GetType() }
 
 		}));
@@ -150,8 +160,9 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			2
 			,GameFrameTime * 15.0f
 			,GameFrameTime * 22.0f
-			,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,2.0f,0,damageEffect,gravity, Vector3(1.5f, 1.5f, 1.5f) }
-			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.5f, 0.8f, 0.0f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f,actor->GetType() }
+			,selfGravity
+			,ShotAABB{ Vector3(0.8f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,2.0f,0,damageEffect,targetGravity, Vector3(1.5f, 1.5f, 1.5f) }
+			,EffectCreateParameter{ "AttackEffect2", Vector3(0.8f,0.8f,0), Vector3(0.8f, 0.8f,0.8f), Vector3(0.0f, MOF_ToRadian(360), 0.0f),1.5f,actor->GetType() }
 
 		}));
 
@@ -160,17 +171,20 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		CRunJumpAttack2State::Parameter{
 			2
 			,GameFrameTime * 20.0f
-			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),true,actor->GetType(), nullptr,2,2.0f,0,damageEffect,gravity, Vector3(1.5f, 1.5f, 1.5f) }
+			,selfGravity
+			,ShotAABB{ Vector3(0.7f, 0.7f, 0), 10.0f, 0, Vector3(0.35f, 0.2f, 0.0f),true,actor->GetType(), nullptr,2,2.0f,0,damageEffect,targetGravity, Vector3(1.5f, 1.5f, 1.5f) }
 
 		}));
 
 	//空中ダッシュ攻撃３ステート
+	selfGravity = GravityScale{ true,1.0f,0.05f,1.0f };
 	stateMachine->AddState(CState::Create<CRunJumpAttack3State>(actor, input,
 		CRunJumpAttack3State::Parameter{
 			2
 			,GameFrameTime * 12.0f
 			,GameFrameTime * 40.0f
-			,ShotAABB{ Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.45f, 0.2f, 0.0f),true,actor->GetType(), nullptr,2,3.5f,0,damageEffect,gravity, Vector3(1.5f, 2.0f, 1.5f) }
+			,selfGravity
+			,ShotAABB{ Vector3(0.7f, 1.2f, 0), 0.3f, 0, Vector3(0.45f, 0.2f, 0.0f),true,actor->GetType(), nullptr,2,3.5f,0,damageEffect,targetGravity, Vector3(1.5f, 2.0f, 1.5f) }
 
 		}));
 
@@ -180,7 +194,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			4
 			,GameFrameTime * 40.0f
 			,GameFrameTime * 80.0f
-			,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(0.35f, 0.15f, -0.3f),false,actor->GetType(), nullptr,4,0.0f,0,nullptr,GravityScale(), Vector3(7.0f, 10.0f, 7.0f) }
+			,ShotAABB{ Vector3(5.0f, 0.7f, 0), 0.05f, 0, Vector3(0.35f, 0.15f, -0.3f),false,actor->GetType(), nullptr,5,0.0f,0,nullptr,GravityScale(), Vector3(7.0f, 10.0f, 7.0f) }
 			,EffectCreateParameter{ "SkillEffect1", Vector3(0.8f, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.8f,actor->GetType() }
 
 		}));
@@ -191,8 +205,8 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			3
 			,GameFrameTime * 15.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f) }
-			,ShotOBB{ Vector3(1.0f, 2.0f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f), Vector3(0, 0, MOF_ToRadian(30))}
+			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f) }
+			,ShotOBB{ Vector3(1.0f, 2.0f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f), Vector3(0, 0, MOF_ToRadian(30))}
 			,EffectCreateParameter{ "SkillEffect2", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f,actor->GetType() }
 
 		}));
@@ -203,21 +217,21 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			3
 			,GameFrameTime * 15.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f) }
-			,ShotOBB{ Vector3(2.0f, 1.4f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f),Vector3(0, 0, MOF_ToRadian(-30)) }
+			,ShotAABB{ Vector3(6.0f, 0.7f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f) }
+			,ShotOBB{ Vector3(2.0f, 1.4f, 0), 0.0f, 0, Vector3(0.05f, 0.2f, 0.0f),false,actor->GetType(), nullptr,2,0.2f,0,damageEffect,GravityScale(), Vector3(5.0f, 2.0f, 2.0f),Vector3(0, 0, MOF_ToRadian(-30)) }
 			,EffectCreateParameter{ "SkillEffect2", Vector3(1.7f, 1.2f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, MOF_ToRadian(90), 0.0f),1.2f,actor->GetType() }
 
 		}));
 
 	//竜巻スキルステート
-	gravity = GravityScale{ true,0.5f,0.01f,1.0f };
+	targetGravity = GravityScale{ true,1.0f,0.0f,1.0f };
 	stateMachine->AddState(CState::Create<CStormSkillState>(actor, input,
 		CStormSkillState::Parameter{
 			3
 			,GameFrameTime * 7.0f
 			,3.5f
 			,1.0f
-			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.1f, 0.6f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,gravity, Vector3(4.0f, 8.0f, 4.0f) }
+			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.1f, 0.6f),false,actor->GetType(), nullptr,3,0.2f,0,damageEffect,targetGravity, Vector3(4.0f, 8.0f, 4.0f) }
 			,EffectCreateParameter{ "SkillEffect3", Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f,actor->GetType() }
 
 		}));
@@ -229,7 +243,7 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 7.0f
 			,3.5f
 			,1.0f
-			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.1f, 0.6f),false,actor->GetType(),nullptr,3,0.2f,0,damageEffect,gravity, Vector3(4.0f, 8.0f, 4.0f) }
+			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 0.25f, 0, Vector3(0.6f, 0.2f, 0.6f),false,actor->GetType(),nullptr,3,0.2f,0,damageEffect,targetGravity, Vector3(4.0f, 8.0f, 4.0f) }
 			,EffectCreateParameter{ "SkillEffect3", Vector3(0, -1.5f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f, 0, 0.0f),1.8f,actor->GetType() }
 
 		}));
@@ -255,18 +269,21 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 		}));
 	
 	//ドロップキックスキルステート
+	targetGravity = GravityScale{ true,1.0f,0.3f,1.0f };
+	selfGravity = GravityScale{ true,0.5f,0.1f,1.0f };
 	stateMachine->AddState(CState::Create<CDropKickSkillState>(actor, input,
 		CDropKickSkillState::Parameter{
 			3
 			,GameFrameTime * 5.0f
 			,GameFrameTime * 30.0f
-			,ShotAABB{ Vector3(1.0f, 0.7f, 0), 2.0f, 0, Vector3(0.7f, 0.32f, 0.0f),false,actor->GetType(), nullptr,4,1.0f,0,damageEffect,GravityScale(), Vector3(4.0f, 3.0f, 3.0f) }
+			,selfGravity
+			,ShotAABB{ Vector3(1.0f, 0.7f, 0), 2.0f, 0, Vector3(0.7f, 0.32f, 0.0f),false,actor->GetType(), nullptr,3,1.0f,0,damageEffect,GravityScale(), Vector3(4.0f, 3.0f, 3.0f) }
 			,EffectCreateParameter{ "SkillEffect5", Vector3(5.5f, 1.2f, 0), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.0f, MOF_ToRadian(-90), 0.0f),1.8f,actor->GetType() }
 
 		}));
 
 	//超ジャンプスキルステート
-	gravity = GravityScale{ true,1.0f,0.0f,1.0f };
+	targetGravity = GravityScale{ true,1.0f,0.0f,1.0f };
 	stateMachine->AddState(CState::Create<CFlyHighSkillState>(actor, input,
 		CFlyHighSkillState::Parameter{
 			2
@@ -274,11 +291,11 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 10.0f
 			,GameFrameTime * 0.0f
 			,GameFrameTime * 7.0f
-			,ShotAABB{ Vector3(0.0f, -1.0f, 0), 2.5f, 0, Vector3(0.7f, 0.3f, 0.7f),false,actor->GetType(), nullptr,3,3.0f,0,damageEffect,gravity, Vector3(2.0f, 3.0f, 2.0f) }
+			,ShotAABB{ Vector3(0.0f, -1.0f, 0), 2.5f, 0, Vector3(0.7f, 0.3f, 0.7f),false,actor->GetType(), nullptr,3,3.0f,0,damageEffect,targetGravity, Vector3(2.0f, 3.0f, 2.0f) }
 			,EffectCreateParameter{ "SkillEffect4", Vector3(0, 1.2f, 0), Vector3(0.5f, 1.0f, 0.5f), Vector3(MOF_ToRadian(180), 0.0f, 0.0f),1.8f,actor->GetType() }
 		}));
 	//ファイアフレイムスキルステート
-	gravity = GravityScale{ true,0.5f,0.2f,1.0f };
+	targetGravity = GravityScale{ true,2.0f,0.005f,1.0f };
 	stateMachine->AddState(CState::Create<CFireFlameSkillState>(actor, input,
 		CFireFlameSkillState::Parameter{
 			3
@@ -286,29 +303,29 @@ bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine,
 			,GameFrameTime * 5.0f
 			,GameFrameTime * 20.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 2.5f, 0, Vector3(-0.8f, 0.3f, -0.8f),false,actor->GetType(), nullptr,4,0.0f,0,damageEffect,gravity, Vector3(5.0f, 5.0f, 5.0f) }
+			,ShotAABB{ Vector3(0.0f, 0.0f, 0), 2.5f, 0, Vector3(0.2f, 0.28f, 0.2f),false,actor->GetType(), nullptr,5,0.0f,0,damageEffect,targetGravity, Vector3(5.0f, 5.0f, 5.0f) }
 			,EffectCreateParameter{ "SkillEffect7_1", Vector3(0, -2.2f, 0), Vector3(0.5f, 0.5f, 0.5f), Vector3(MOF_ToRadian(180), 0.0f, 0.0f),1.8f,actor->GetType() }
 			,EffectCreateParameter{ "SkillEffect7_2", Vector3(0, -2.2f, 0), Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 0.0f, 0.0f),1.2f,actor->GetType() }
 		}));
 	//インパクトスキルステート
-	gravity = GravityScale{ true,2.5f,0.01f,1.0f };
+	targetGravity = GravityScale{ true,2.5f,0.005f,1.0f };
 	stateMachine->AddState(CState::Create<CImpactSkillState>(actor, input,
 		CImpactSkillState::Parameter{
 			3
 			,GameFrameTime * 5.0f
 			,GameFrameTime * 20.0f
 			,GameFrameTime * 25.0f
-			,ShotAABB{ Vector3(2.5f, 0.0f, 0), 2.5f, 0, Vector3(0.0f, 0.2f, 0.0f),false,actor->GetType(), nullptr,4,3.0f,0,damageEffect,gravity, Vector3(3.0f, 4.0f, 2.5f) }
+			,ShotAABB{ Vector3(2.5f, 0.0f, 0), 2.5f, 0, Vector3(0.0f, 0.25f, 0.0f),false,actor->GetType(), nullptr,4,3.0f,0,damageEffect,targetGravity, Vector3(3.0f, 4.0f, 2.5f) }
 			,EffectCreateParameter{ "SkillEffect8", Vector3(2.5f, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0.0f,MOF_ToRadian(-90), 0.0f),2.0f,actor->GetType() }
 		}));
 	//チェイススキルステート
-	gravity = GravityScale{ true,0.5f,0.01f,1.0f };
+	targetGravity = GravityScale{ true,0.5f,0.01f,1.0f };
 	stateMachine->AddState(CState::Create<CChaseSkillState>(actor, input,
 		CChaseSkillState::Parameter{
 			3
 			,GameFrameTime * 5.0f
 			,GameFrameTime * 30.0f
-			,ShotAABB{ Vector3(0.0f, 0.7f, 0), 0.05f, 0, Vector3(0.0f, 0.1f, 0.0f),false,actor->GetType(), nullptr,1,1.0f,0,damageEffect,gravity, Vector3(2.0f, 3.0f, 2.0f) }
+			,ShotAABB{ Vector3(0.0f, 0.7f, 0), 0.05f, 0, Vector3(0.0f, 0.1f, 0.0f),false,actor->GetType(), nullptr,2,0.3f,0,damageEffect,targetGravity, Vector3(2.0f, 3.0f, 2.0f) }
 			,EffectCreateParameter{ "SkillEffect3", Vector3(0.0f, 1.2f, 0), Vector3(0.1f, 0.1f, 0.1f), Vector3(0.0f, 0.0f, 0.0f),1.8f,actor->GetType() }
 		}));
 

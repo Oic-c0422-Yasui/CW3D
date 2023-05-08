@@ -20,11 +20,11 @@ void ActionGame::CJumpBeamSkillState::Execution()
 	for (auto& shot : shots_)
 	{
 		shot->SetPosition(Actor()->GetTransform()->GetPosition() + shot->GetOffset());
-		if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+		if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 		{
 			shot->SetEnableCollider(true);
 		}
-		if (currentTime_ > parameter_.CollideEndFrameTime)
+		if (currentTime_ > parameter_.CollideEndTime)
 		{
 			if (shot->IsEnableCollider())
 			{
@@ -37,7 +37,7 @@ void ActionGame::CJumpBeamSkillState::Execution()
 	{
 		EffectControllerInstance.SetPosition(effect->GetHandle(), Actor()->GetPosition() + effect->GetOffset());
 	}
-	if (currentTime_ >= parameter_.CollideStartFrameTime && !isStartCollide_)
+	if (currentTime_ >= parameter_.CollideStartTime && !isStartCollide_)
 	{
 		isStartCollide_ = true;
 	}

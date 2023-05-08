@@ -48,7 +48,7 @@
     {
       "Type": "Mutant",
       "Name": "みゅーたん",
-      "HP": 5000,
+      "HP": 6000,
       "UltGauge": 100.0,
       "UltGaugeBoostMag": 4.5,
       "ATK": 40,

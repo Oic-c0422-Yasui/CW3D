@@ -9,6 +9,7 @@
 #include	"IParameterCreator.h"
 #include	"ICharacterAICreator.h"
 #include	"EnemyBuildParameter.h"
+#include	"ISkillCreator.h"
 
 #include	"ActorObject.h"
 #include	"EffectController.h"
@@ -49,13 +50,15 @@ namespace ActionGame
 		* @param	actionCreator アクションの生成
 		* @param	stateCreator ステートの生成
 		* @param	paramCreator パラメータの生成
-		* @param	aiCreator AIの生成
+		* @param	aiCreator	　AIの生成
+		* @param	skillCreator　スキルの生成
 		*/
 		virtual bool Load(const EnemyBuildParameterPtr& eneParam,
 				const ActionCreatorPtr& actionCreator,
 				const StateCreatorPtr& stateCreator,
 				const ParameterCreatorPtr& paramCreator,
-				const CharacterAICreatorPtr& aiCreator);
+				const CharacterAICreatorPtr& aiCreator,
+				const SkillCreatorPtr& skillCreator);
 		/*
 		* @brief	初期化
 		*/

@@ -16,6 +16,8 @@ namespace ActionGame {
 		*/
 		struct Parameter
 		{
+			//Œ¸‘¬’l
+			Vector3					decelerate;
 			//‰Á‘¬’l
 			Vector3					velocity;
 			float					jumpPower;

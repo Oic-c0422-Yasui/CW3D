@@ -31,9 +31,6 @@
     <Filter Include="ソース ファイル\Action">
       <UniqueIdentifier>{2544aa60-1001-41b9-96c4-51add0f9339b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Action\ActionBase">
-      <UniqueIdentifier>{b8693d36-134d-442f-b792-3d4a0bda1511}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\State">
       <UniqueIdentifier>{1d779a6e-4dde-455b-8d43-b7c82daa8f37}</UniqueIdentifier>
     </Filter>
@@ -316,9 +313,6 @@
     <Filter Include="ソース ファイル\Shader">
       <UniqueIdentifier>{029e02ca-795f-42da-bd7b-279d0cc3f99b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\OperateDevice">
-      <UniqueIdentifier>{bfc10ed6-8d15-49ac-8726-93a5369accf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Utilities">
       <UniqueIdentifier>{fb204f79-d88d-41b4-bc78-f4c89c77546c}</UniqueIdentifier>
     </Filter>
@@ -339,6 +333,27 @@
     </Filter>
     <Filter Include="ソース ファイル\State\Base">
       <UniqueIdentifier>{5aa7138a-9ccd-4009-97a7-f2d312cc893d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Action\Base">
+      <UniqueIdentifier>{b8693d36-134d-442f-b792-3d4a0bda1511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Pose">
+      <UniqueIdentifier>{51a654ed-0773-4a7f-bb27-edb9b8b323a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Damage">
+      <UniqueIdentifier>{109e2ac1-7a66-43fd-847a-6b213a1bd848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\State\Move">
+      <UniqueIdentifier>{e28e1710-e891-4d94-b1af-6e8c043d7645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Device">
+      <UniqueIdentifier>{5ff199c8-1b2f-4464-9f9a-22bbc28bc83d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Device">
+      <UniqueIdentifier>{bfc10ed6-8d15-49ac-8726-93a5369accf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Actor">
+      <UniqueIdentifier>{ffe8ff67-6d25-41ef-aea0-ff438d9c3c36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -380,9 +395,6 @@
     </ClCompile>
     <ClCompile Include="Stage1.cpp">
       <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="ActorObject.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
     </ClCompile>
     <ClCompile Include="BattleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -459,9 +471,6 @@
     <ClCompile Include="CreateWindow.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadCreator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ShotManager.cpp">
       <Filter>ソース ファイル\Shot</Filter>
     </ClCompile>
@@ -495,56 +504,8 @@
     <ClCompile Include="JumpBeamSkillState.cpp">
       <Filter>ソース ファイル\State\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="ClearPoseState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
     <ClCompile Include="BeamSkillState.cpp">
       <Filter>ソース ファイル\State\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="DamageState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DeadState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DownState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="EscapeState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="FallState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="FlyDamageState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleMotionState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="LandingState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunFallState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunJumpState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunLandingState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="RunState.cpp">
-      <Filter>ソース ファイル\State</Filter>
     </ClCompile>
     <ClCompile Include="StormSkillState.cpp">
       <Filter>ソース ファイル\State\Skill</Filter>
@@ -588,7 +549,7 @@
     <ClCompile Include="PlayerActionCreator.cpp">
       <Filter>ソース ファイル\Chara\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerSkillCreater.cpp">
+    <ClCompile Include="PlayerSkillCreator.cpp">
       <Filter>ソース ファイル\Chara\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStateCreator.cpp">
@@ -651,15 +612,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="NPCCameraStartPoseState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="NPCStartPoseState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
-    <ClCompile Include="StartPoseState.cpp">
-      <Filter>ソース ファイル\State</Filter>
-    </ClCompile>
     <ClCompile Include="AICycleTension.cpp">
       <Filter>ソース ファイル\AI</Filter>
     </ClCompile>
@@ -668,9 +620,6 @@
     </ClCompile>
     <ClCompile Include="StateInput.cpp">
       <Filter>Inputファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BattleSceneTask.cpp">
-      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Attack1Action.cpp">
       <Filter>ソース ファイル\Action\Attack</Filter>
@@ -852,9 +801,6 @@
     <ClCompile Include="ComboPresenter.cpp">
       <Filter>ソース ファイル\UI\Presenter</Filter>
     </ClCompile>
-    <ClCompile Include="GiveTextureToMaterial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NormalMapParameter.cpp">
       <Filter>ソース ファイル\Shader</Filter>
     </ClCompile>
@@ -864,17 +810,8 @@
     <ClCompile Include="NormalMapParameterBase.cpp">
       <Filter>ソース ファイル\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="OperateDeviceState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SkillUltGaugeRender.cpp">
       <Filter>ソース ファイル\UI\Render\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="IOperateDeviceState.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="AnimationUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
@@ -882,37 +819,13 @@
     <ClCompile Include="ConvertUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="ActorObjectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DamageUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveCompensationAction.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ResultRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Quake.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Fade.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameOver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="RevivalCount.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Revival.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MessengerUtilities.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Result.cpp">
@@ -945,9 +858,6 @@
     <ClCompile Include="RunAttack2State.cpp">
       <Filter>ソース ファイル\State\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>ソース ファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="VectorUtilities.cpp">
       <Filter>ソース ファイル\Utilities</Filter>
     </ClCompile>
@@ -957,29 +867,149 @@
     <ClCompile Include="BaseState.cpp">
       <Filter>ソース ファイル\State\Base</Filter>
     </ClCompile>
-    <ClCompile Include="GravityUtilities.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FlyHighSkillState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FireFlameSkillState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ImpactSkillState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ChaseSkillState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="MutantSkillCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Mutant\Creator</Filter>
     </ClCompile>
     <ClCompile Include="MutantIdleStateAI.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="MutantMoveStateAI.cpp">
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleSceneTask.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="BaseStateAI.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearPoseState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageState.cpp">
+      <Filter>ソース ファイル\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>ソース ファイル\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="DownState.cpp">
+      <Filter>ソース ファイル\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="FallState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="FireFlameSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyDamageState.cpp">
+      <Filter>ソース ファイル\State\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyHighSkillState.cpp">
+      <Filter>ソース ファイル\State\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleMotionState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="LandingState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCCameraStartPoseState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCStartPoseState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="RunFallState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="RunJumpState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="RunLandingState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="RunState.cpp">
+      <Filter>ソース ファイル\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="StartPoseState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="TiredState.cpp">
+      <Filter>ソース ファイル\State\Pose</Filter>
+    </ClCompile>
+    <ClCompile Include="SlashAttackState.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
     </ClCompile>
     <ClCompile Include="SpearAttackState.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="TackleAttackState.cpp">
+      <Filter>ソース ファイル\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateDeviceState.cpp">
+      <Filter>ソース ファイル\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCompensationAction.cpp">
+      <Filter>ソース ファイル\Action\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorObjectManager.cpp">
+      <Filter>ソース ファイル\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorObject.cpp">
+      <Filter>ソース ファイル\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>ソース ファイル\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GiveTextureToMaterial.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="MessengerUtilities.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Quake.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultRender.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RevivalCount.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieSkillCreator.cpp">
+      <Filter>ソース ファイル\Chara\Enemy\Zombie\Creator</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadCreator.cpp">
+      <Filter>ソース ファイル\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>ソース ファイル\Chara</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1014,10 +1044,10 @@
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Action.h">
-      <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
+      <Filter>ヘッダー ファイル\Action\Base</Filter>
     </ClInclude>
     <ClInclude Include="IAction.h">
-      <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
+      <Filter>ヘッダー ファイル\Action\Base</Filter>
     </ClInclude>
     <ClInclude Include="IState.h">
       <Filter>ヘッダー ファイル\State\Base</Filter>
@@ -1072,9 +1102,6 @@
     </ClInclude>
     <ClInclude Include="SkillData.h">
       <Filter>ヘッダー ファイル\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="IDManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>ヘッダー ファイル\Common</Filter>
@@ -1198,12 +1225,6 @@
     </ClInclude>
     <ClInclude Include="StormSkillState.h">
       <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="IStateCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
-    </ClInclude>
-    <ClInclude Include="IActionCreator.h">
-      <Filter>ヘッダー ファイル\Creator</Filter>
     </ClInclude>
     <ClInclude Include="FollowFixedCamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
@@ -1406,7 +1427,7 @@
     <ClInclude Include="PlayerActionCreator.h">
       <Filter>ヘッダー ファイル\Character\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerSkillCreater.h">
+    <ClInclude Include="PlayerSkillCreator.h">
       <Filter>ヘッダー ファイル\Character\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerParameterCreator.h">
@@ -1710,7 +1731,7 @@
       <Filter>ヘッダー ファイル\ClearTerm</Filter>
     </ClInclude>
     <ClInclude Include="BaseAction.h">
-      <Filter>ヘッダー ファイル\Action\ActionBase</Filter>
+      <Filter>ヘッダー ファイル\Action\Base</Filter>
     </ClInclude>
     <ClInclude Include="IMessageSender.h">
       <Filter>ヘッダー ファイル\Message</Filter>
@@ -1769,9 +1790,6 @@
     <ClInclude Include="ComboPresenter.h">
       <Filter>ヘッダー ファイル\UI\Render</Filter>
     </ClInclude>
-    <ClInclude Include="GiveTextureToMaterial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="NormalMapSkinnedParameter.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
@@ -1780,9 +1798,6 @@
     </ClInclude>
     <ClInclude Include="NormalMapParameterBase.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="JoyPadDefine.h">
       <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
@@ -1794,7 +1809,7 @@
       <Filter>ヘッダー ファイル\Utilities\Defines</Filter>
     </ClInclude>
     <ClInclude Include="OperateDeviceState.h">
-      <Filter>ヘッダー ファイル\OperateDevice</Filter>
+      <Filter>ヘッダー ファイル\Device</Filter>
     </ClInclude>
     <ClInclude Include="ConvertUtilities.h">
       <Filter>ヘッダー ファイル\Utilities</Filter>
@@ -1809,27 +1824,9 @@
       <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="IOperateDeviceState.h">
-      <Filter>ヘッダー ファイル\OperateDevice</Filter>
-    </ClInclude>
-    <ClInclude Include="RunAttack2State.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveCompensationAction.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Device</Filter>
     </ClInclude>
     <ClInclude Include="ResultRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Quake.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="RevivalCount.h">
@@ -1838,47 +1835,101 @@
     <ClInclude Include="Revival.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MessengerUtilities.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Result.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityScale.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityUtilities.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ShotParameter.h">
       <Filter>ヘッダー ファイル\KnockBack</Filter>
     </ClInclude>
-    <ClInclude Include="FlyHighSkillState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="FixedXYInhaleKnockBack.h">
       <Filter>ヘッダー ファイル\KnockBack</Filter>
     </ClInclude>
-    <ClInclude Include="FireFlameSkillState.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="MutantSkillCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\Mutant\Creator</Filter>
     </ClInclude>
-    <ClInclude Include="ImpactSkillState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ChaseSkillState.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="ZombieSkillCreator.h">
+      <Filter>ヘッダー ファイル\Character\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="MutantIdleStateAI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\AI</Filter>
     </ClInclude>
     <ClInclude Include="BaseStateAI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="MutantMoveStateAI.h">
+      <Filter>ヘッダー ファイル\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ISkillCreator.h">
+      <Filter>ヘッダー ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseState.h">
+      <Filter>ヘッダー ファイル\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SlashAttackState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
     </ClInclude>
     <ClInclude Include="SpearAttackState.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="TackleAttackState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="TiredState.h">
+      <Filter>ヘッダー ファイル\State\State\Pose</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAttack2State.h">
+      <Filter>ヘッダー ファイル\State\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyHighSkillState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="FireFlameSkillState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseSkillState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactSkillState.h">
+      <Filter>ヘッダー ファイル\State\State\Attack\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCompensationAction.h">
+      <Filter>ヘッダー ファイル\Action\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="IActionCreator.h">
+      <Filter>ヘッダー ファイル\Action\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="IStateCreator.h">
+      <Filter>ヘッダー ファイル\State\State</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityScale.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="MessengerUtilities.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IDManager.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Quake.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>ヘッダー ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="GiveTextureToMaterial.h">
+      <Filter>ヘッダー ファイル\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

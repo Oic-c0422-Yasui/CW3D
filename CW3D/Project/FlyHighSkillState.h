@@ -19,8 +19,8 @@ namespace ActionGame
 		*/
 		struct Parameter : public BaseParam
 		{
-			float CollideStartFrameTime;
-			float CollideEndFrameTime;
+			float CollideStartTime;
+			float CollideEndTime;
 			float EscapeStartTime;
 			float EscapeTime;
 			ShotAABB ShotStatus;

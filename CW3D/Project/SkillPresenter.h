@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "SkillRender.h"
 #include "AdditionalSkillRender.h"
+#include "AdditionalSkill.h"
 
 namespace ActionGame
 {

@@ -103,6 +103,11 @@ bool ActionGame::CMoveCompensationAction::IsActorInSight(TransformPtr& outPos, f
 		isContain = true;
 	}
 
+	if (isContain)
+	{
+		param_.fixedTargetPos = param_.targetPos->GetPosition();
+	}
+
 	return isContain;
 }
 
@@ -124,7 +129,8 @@ bool ActionGame::CMoveCompensationAction::MoveCompensation(Parameter& param)
 		//‹——£ŒvŽZ
 		const auto selfPos = Transform()->GetPosition();
 
-		const auto distance = MyUtil::DistanceSquare(selfPos, param.targetPos->GetPosition());
+		const auto distance = param.isFixedPos ? MyUtil::DistanceSquare(selfPos, param.fixedTargetPos)
+											   : MyUtil::DistanceSquare(selfPos, param.targetPos->GetPosition());
 		const int square = 2;
 		const auto sqrMinDistance = std::pow(param.minDistance, square);
 		if (distance > sqrMinDistance)
@@ -162,12 +168,14 @@ void ActionGame::CMoveCompensationAction::SettingMoveCompensationParam(const Bas
 {
 	saveParam_.isEnable		 = param.isEnable;
 	saveParam_.isEnableYaxis = param.isEnableYaxis;
+	saveParam_.isFixedPos	 = param.isFixedPos;
 	saveParam_.endTime		 = param.endTime;
 	saveParam_.maxDistance	 = param.maxDistance;
 	saveParam_.sightAngle	 = param.sightAngle;
 	saveParam_.type			 = param.type;
 	saveParam_.currentTime   = 0.0f;
 	saveParam_.minDistance   = 0.0f;
+	saveParam_.fixedTargetPos = Vector3(0, 0, 0);
 	saveParam_.isActorInSight = false;
 	if (saveParam_.targetPos) { saveParam_.targetPos.reset(); }
 }

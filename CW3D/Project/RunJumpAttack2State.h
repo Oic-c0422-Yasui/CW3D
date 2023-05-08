@@ -15,11 +15,13 @@ namespace ActionGame {
 		/*
 		* @brief	ステートパラメータ
 		* @param	NextInputFrameTime 　次の入力猶予時間
+		* @param	Gravity 　重力スケール
 		* @param	AABBShotStatus 　AABBのショットパラメータ
 		*/
 		struct Parameter : public BaseParam
 		{
-			float NextInputFrameTime;
+			float NextInputTime;
+			GravityScale Gravity;
 			ShotAABB ShotStatus;
 		};
 	private:

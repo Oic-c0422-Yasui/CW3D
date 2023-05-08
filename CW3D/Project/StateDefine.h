@@ -11,6 +11,8 @@ constexpr char* STATE_KEY_MOVE = "Move";
 constexpr char* STATE_KEY_IDLE = "Idle";
 //待機モーションステート
 constexpr char* STATE_KEY_IDLE_MOTION = "IdleMotion";
+//待機ステート
+constexpr char* STATE_KEY_TIRED = "Tired";
 //ダッシュステート
 constexpr char* STATE_KEY_RUN = "Run";
 //ジャンプステート
@@ -33,6 +35,10 @@ constexpr char* STATE_KEY_ATTACK2 = "Attack2";
 constexpr char* STATE_KEY_ATTACK3 = "Attack3";
 //空中攻撃１ステート
 constexpr char* STATE_KEY_JUMP_ATTACK1 = "JumpAttack1";
+//空中攻撃２ステート
+constexpr char* STATE_KEY_JUMP_ATTACK2 = "JumpAttack2";
+//空中攻撃３ステート
+constexpr char* STATE_KEY_JUMP_ATTACK3 = "JumpAttack3";
 //ダッシュ攻撃１ステート
 constexpr char* STATE_KEY_RUN_ATTACK1 = "RunAttack1";
 //ダッシュ攻撃２ステート
@@ -87,4 +93,10 @@ constexpr char* STATE_KEY_NPC_STARTPOSE = "NPCStartPose";
 constexpr char* STATE_KEY_MOVECOMPENSATION = "MoveCompensation";
 //槍攻撃ステート
 constexpr char* STATE_KEY_SPEAR_ATTACK = "SpearAttack";
+//攻撃ステート
+constexpr char* STATE_KEY_TACKLE_ATTACK = "TackleAttack";
+//攻撃ステート
+constexpr char* STATE_KEY_SLASH_ATTACK = "SlashAttack";
+//攻撃ステート
+constexpr char* STATE_KEY_FALL_ATTACK = "FallAttack";
 
