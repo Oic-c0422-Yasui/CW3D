@@ -51,7 +51,7 @@ void Scene::CTitleScene::Update()
 		constexpr float time = 0.5f;
 		auto sceneEffect = std::make_shared<Scene::SceneChangeFade>(time, time, time);
 		//ƒQ[ƒ€ƒV[ƒ“‚Ö‘JˆÚ
-		SceneChangeService::GetService()->ChangeScene(SCENENO::GAME, sceneEffect,true);
+		SceneChangeService::GetService()->ChangeScene(SCENE_NO::GAME, sceneEffect,true);
 	}
 	else if (input->IsPush(INPUT_KEY_CANCEL))
 	{

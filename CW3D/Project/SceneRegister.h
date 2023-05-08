@@ -19,7 +19,7 @@ namespace Scene
 		 * @param		sceneNo	シーン番号
 		 * @param		creator	シーン生成クラス
 		 */
-		virtual void RegistScene(SCENENO sceneNo, SceneCreatorPtr creator) = 0;
+		virtual void RegistScene(SCENE_NO sceneNo, SceneCreatorPtr creator) = 0;
 	};
 	using SceneRegisterPtr = std::shared_ptr<ISceneRegister>;
 }

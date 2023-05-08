@@ -106,7 +106,7 @@ void ActionGame::CResult::Update()
 	else if (InputManagerInstance.GetInput(0)->IsPush(INPUT_KEY_CANCEL))
 	{
 		//ƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
-		SceneChangeService::GetService()->ChangeScene(SCENENO::TITLE, sceneEffect);
+		SceneChangeService::GetService()->ChangeScene(SCENE_NO::TITLE, sceneEffect);
 		isEnd_ = true;
 		return;
 	}

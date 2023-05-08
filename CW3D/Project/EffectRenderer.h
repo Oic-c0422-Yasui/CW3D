@@ -16,6 +16,7 @@ namespace ActionGame
 		EffekseerRendererDX11::RendererRef renderer_;
 		Effekseer::ManagerRef manager_;
 		EffekseerSound::SoundRef sound_;
+		EffekseerSound::SoundDataRef soundData_;
 		Effekseer::Handle handle_;
 		int currentTime_;
 

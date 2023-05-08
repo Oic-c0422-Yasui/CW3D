@@ -19,7 +19,7 @@ Scene::CSceneManager::~CSceneManager()
 
 }
 
-void Scene::CSceneManager::RegistScene(SCENENO sceneNo, SceneCreatorPtr creator)
+void Scene::CSceneManager::RegistScene(SCENE_NO sceneNo, SceneCreatorPtr creator)
 {
 	sceneMap_[sceneNo] = std::move(creator);
 }
@@ -32,7 +32,7 @@ void Scene::CSceneManager::InitializeScene(SceneChangeEffectPtr effect)
 
 }
 
-bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo)
+bool Scene::CSceneManager::ChangeScene(SCENE_NO sceneNo)
 {
 	//シーン作成
 	auto temp = sceneMap_[sceneNo]->Create();
@@ -43,7 +43,7 @@ bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo)
 	return true;
 }
 
-bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo,SceneChangeEffectPtr effect)
+bool Scene::CSceneManager::ChangeScene(SCENE_NO sceneNo,SceneChangeEffectPtr effect)
 {
 	//変更中なら失敗
 	if (currentScene_ && prevScene_ && changeEffect_)
@@ -84,7 +84,7 @@ bool Scene::CSceneManager::ChangeScene(const ScenePtr& scene, SceneChangeEffectP
 
 
 
-bool Scene::CSceneManager::ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect, bool isLoading)
+bool Scene::CSceneManager::ChangeScene(SCENE_NO sceneNo, SceneChangeEffectPtr effect, bool isLoading)
 {
 	//ロードを挟まないなら普通にシーン切り替え
 	if (!isLoading)
@@ -287,11 +287,11 @@ void Scene::CSceneManager::RegisterDebugTask()
 				{
 					if (g_pInput->IsKeyPush(MOFKEY_1))
 					{
-						ChangeScene(SCENENO::TITLE);
+						ChangeScene(SCENE_NO::TITLE);
 					}
 					else if (g_pInput->IsKeyPush(MOFKEY_2))
 					{
-						ChangeScene(SCENENO::GAME);
+						ChangeScene(SCENE_NO::GAME);
 					}
 				}
 			}

@@ -67,7 +67,6 @@ Effekseer::Handle ActionGame::EffectRenderer::Play(const std::string& key)
 {
 	//リソースマネージャーから指定されたエフェクトを取り出す
 	Effekseer::EffectRef effect = ResourceManager<Effekseer::EffectRef>::GetInstance().GetResource(key);
-
 	//再生
 	return manager_->Play(effect, 0.0f, 0.0f, 0.0f);
 }
@@ -97,6 +96,7 @@ void ActionGame::EffectRenderer::Render()
 			::Effekseer::Vector3D(pos.x, pos.y, pos.z),
 			::Effekseer::Vector3D(look.x, look.y, look.z),
 			::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
+	//描画
 	renderer_->BeginRendering();
 	manager_->Draw(param);
 	renderer_->EndRendering();

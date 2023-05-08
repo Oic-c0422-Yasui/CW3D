@@ -20,14 +20,14 @@ namespace Scene
 		 * @brief		シーン変更
 		 * @param		シーン番号
 		 */
-		virtual bool ChangeScene(SCENENO sceneNo) = 0;
+		virtual bool ChangeScene(SCENE_NO sceneNo) = 0;
 
 		/**
 		 * @brief		シーン変更
 		 * @param		シーン番号
 		 * @param		シーン遷移エフェクト
 		 */
-		virtual bool ChangeScene(SCENENO sceneNo,SceneChangeEffectPtr effect) = 0;
+		virtual bool ChangeScene(SCENE_NO sceneNo,SceneChangeEffectPtr effect) = 0;
 
 		/**
 		 * @brief		シーン変更(ロード画面を挟む)
@@ -35,7 +35,7 @@ namespace Scene
 		 * @param		シーン遷移エフェクト
 		 * @param		isLoading ロード画面を挟むか？
 		 */
-		virtual bool ChangeScene(SCENENO sceneNo,SceneChangeEffectPtr effect,bool isLoading) = 0;
+		virtual bool ChangeScene(SCENE_NO sceneNo,SceneChangeEffectPtr effect,bool isLoading) = 0;
 		
 		/**
 		 * @brief		シーン変更（読み込み、初期化は行わない）

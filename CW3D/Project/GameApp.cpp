@@ -95,8 +95,8 @@ MofBool CGameApp::Initialize(void){
 
 	//シーン登録
 	auto manager = std::make_shared<Scene::CSceneManager>();
-	manager->RegistScene<Scene::CBattleScene>(SCENENO::GAME);
-	manager->RegistScene<Scene::CTitleScene>(SCENENO::TITLE);
+	manager->RegistScene<Scene::CBattleScene>(SCENE_NO::GAME);
+	manager->RegistScene<Scene::CTitleScene>(SCENE_NO::TITLE);
 
 	//画面遷移用のサービス登録
 	SceneChangeService::SetService(manager);
@@ -111,7 +111,7 @@ MofBool CGameApp::Initialize(void){
 
 	gSceneManager->Initialize();
 	//タイトルへ遷移
-	gSceneManager->ChangeScene(SCENENO::TITLE);
+	gSceneManager->ChangeScene(SCENE_NO::TITLE);
 	
 	return TRUE;
 }

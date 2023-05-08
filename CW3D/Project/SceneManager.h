@@ -18,7 +18,7 @@ namespace Scene
 		//遷移前のシーン
 		ScenePtr prevScene_;
 		//登録されているシーン
-		std::unordered_map<SCENENO, SceneCreatorPtr> sceneMap_;
+		std::unordered_map<SCENE_NO, SceneCreatorPtr> sceneMap_;
 		
 		//更新タスク
 		Task::CTaskManager updateTask_;
@@ -65,14 +65,14 @@ namespace Scene
 		 * @param		sceneNo	シーン番号
 		 * @param		creator	シーン生成クラス
 		 */
-		void RegistScene(SCENENO sceneNo, SceneCreatorPtr creator) override;
+		void RegistScene(SCENE_NO sceneNo, SceneCreatorPtr creator) override;
 
 		/*
 		 * @brief		シーンの登録
 		 * @param		sceneNo	シーン番号
 		 */
 		template < class T >
-		void RegistScene(SCENENO sceneNo) 
+		void RegistScene(SCENE_NO sceneNo) 
 		{
 			RegistScene(sceneNo, std::make_unique<SceneCreator<T>>());
 		}
@@ -82,14 +82,14 @@ namespace Scene
 		 * @brief		シーンの変更
 		 * @param		sceneNo	シーン番号
 		 */
-		bool ChangeScene(SCENENO sceneNo) override;
+		bool ChangeScene(SCENE_NO sceneNo) override;
 
 		/*
 		 * @brief		シーンの変更
 		 * @param		sceneNo	シーン番号
 		 * @param		sceneNo	シーン遷移エフェクト
 		 */
-		bool ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect) override;
+		bool ChangeScene(SCENE_NO sceneNo, SceneChangeEffectPtr effect) override;
 
 		/**
 		 * @brief		シーン変更(ロード画面を挟む)
@@ -97,7 +97,7 @@ namespace Scene
 		 * @param		sceneNo	シーン遷移エフェクト
 		 * @param		isLoading ロード画面を挟むか？
 		 */
-		bool ChangeScene(SCENENO sceneNo, SceneChangeEffectPtr effect, bool isLoading) override;
+		bool ChangeScene(SCENE_NO sceneNo, SceneChangeEffectPtr effect, bool isLoading) override;
 		/*
 		 * @brief		シーンの変更（ロード、初期化は行わない）
 		 * @param		scene	ロード済みのシーン

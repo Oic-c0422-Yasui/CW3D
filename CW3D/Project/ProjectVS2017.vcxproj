@@ -210,6 +210,8 @@
     <ClCompile Include="MutantMoveStateAI.cpp" />
     <ClCompile Include="MutantSkillCreator.cpp" />
     <ClCompile Include="SlashAttackState.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpearAttackState.cpp" />
     <ClCompile Include="FireFlameSkillState.cpp" />
     <ClCompile Include="ImpactSkillState.cpp" />
@@ -428,9 +430,14 @@
     <ClInclude Include="BaseStateAI.h" />
     <ClInclude Include="ChaseSkillState.h" />
     <ClInclude Include="ISkillCreator.h" />
+    <ClInclude Include="ISoundPlayer.h" />
+    <ClInclude Include="ISoundRegister.h" />
     <ClInclude Include="MutantMoveStateAI.h" />
     <ClInclude Include="MutantSkillCreator.h" />
     <ClInclude Include="SlashAttackState.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundDefine.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpearAttackState.h" />
     <ClInclude Include="FireFlameSkillState.h" />
     <ClInclude Include="ImpactSkillState.h" />
