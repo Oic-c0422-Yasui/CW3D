@@ -6,12 +6,6 @@ MyClass::CSound::CSound()
 {
 }
 
-MyClass::CSound::CSound(SoundBufferPtr buffer, const SoundData& data)
-	: buffer_(buffer)
-	, data_(data)
-{
-}
-
 MyClass::CSound::~CSound()
 {
 	buffer_.reset();
@@ -22,7 +16,6 @@ bool MyClass::CSound::Load(const char* fileName, const SoundData& data)
 	data_ = data;
 
 	SoundBufferPtr tmp;
-	
 	switch (data_.type)
 	{
 	case SOUND_TYPE::SOUND_BGM:
@@ -73,6 +66,11 @@ bool MyClass::CSound::Resume()
 bool MyClass::CSound::IsLoop() const noexcept
 {
 	return buffer_->IsLoop();
+}
+
+bool MyClass::CSound::IsPlay() const noexcept
+{
+	return buffer_->IsPlay();
 }
 
 float MyClass::CSound::GetTime() const noexcept

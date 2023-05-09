@@ -1,16 +1,20 @@
 #pragma once
-#include "SoundDefine.h"
+#include "Sound.h"
+
+using SoundId = uint32_t;
 
 class __declspec(novtable) ISoundPlayer
 {
 public:
 	virtual ~ISoundPlayer() = default;
 
-	virtual bool Play(const MyClass::SoundPtr& sound) const = 0;
-	virtual bool Stop(const SoundName& name) const = 0;
-	virtual bool Pause(const SoundName& name) const = 0;
-	virtual bool Resume(const SoundName& name) const = 0;
-	virtual bool IsPlay(const SoundName& name) const = 0;
+	virtual SoundId Play(const MyClass::SoundPtr& sound) = 0;
+	virtual bool Stop(SoundId id) = 0;
+	virtual bool Stop(SOUND_TYPE type) = 0;
+	virtual bool AllStop() = 0;
+	virtual bool Pause(SoundId id) = 0;
+	virtual bool Resume(SoundId id) = 0;
+	virtual bool IsPlay(SoundId id) const noexcept = 0;
 	virtual float GetVolume(SOUND_TYPE type) const noexcept = 0;
 	virtual void SetVolume(SOUND_TYPE type,float volume) noexcept = 0;
 };

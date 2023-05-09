@@ -27,18 +27,12 @@ namespace MyClass
 		SoundData data_;
 	public:
 		CSound();
-		/*
-		* @brief	コンストラクタ
-		* @param	buffer	読み込み済みのサウンドバッファのポインタ
-		* @param	data	サウンドデータ
-		*/
-		CSound(SoundBufferPtr buffer,const SoundData& data);
 		~CSound();
 		/*
 		* @brief	読み込み
 		* @param	fileName	読み込むファイル名
 		* @param	name	サウンド名
-		* @param	type	サウンドのタイプ
+		* @param	type	サウンドのタイプ(countとmasterは含まない)
 		* @param	isLoop	ループするか？
 		*/
 		bool Load(const char* fileName, const SoundData& data);
@@ -46,7 +40,7 @@ namespace MyClass
 		* @brief	読み込み
 		* @param	buffer	読み込み済みのサウンドバッファのポインタ
 		* @param	name	サウンド名
-		* @param	type	サウンドのタイプ
+		* @param	type	サウンドのタイプ(countとmasterは含まない)
 		* @param	isLoop	ループするか？
 		*/
 		bool Load(SoundBufferPtr buffer, const SoundData& data);
@@ -77,6 +71,11 @@ namespace MyClass
 		* @return	true　ならループ
 		*/
 		bool IsLoop() const noexcept;
+		/*
+		* @brief	再生しているか？
+		* @return	true　なら再生中
+		*/
+		bool IsPlay() const noexcept;
 		/*
 		* @brief	総時間取得
 		* @return	総時間
