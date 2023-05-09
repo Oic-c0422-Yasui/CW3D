@@ -3,20 +3,32 @@
 #include "ISoundRegister.h"
 #include <map>
 
-class CSoundManager : public ISoundPlayer,ISoundRegister
+class CSoundPlayer : public ISoundPlayer
 {
 private:
+	struct Sound_
+	{
+		MyClass::SoundPtr sound;
+		uint32_t id;
+	};
 	//サウンド辞書
-	using SoundMap = std::unordered_map<SoundName, MyClass::SoundPtr>;
-	//タグ付きサウンド辞書
-	using TagSoundMap = std::unordered_map<SCENE_SOUND_TAG, SoundMap>;
+	using SoundMap = std::vector<impl>;
 	
-	TagSoundMap soundMap_;
+	SoundMap currentPlaySounds_;
+	uint32_t settingId_;
+
+	float volume_[SOUND_COUNT];
 
 public:
-	CSoundManager();
-	~CSoundManager();
+	CSoundPlayer();
+	~CSoundPlayer();
 
-	bool Play(const SoundName& name) const override;
+	bool Play(const MyClass::SoundPtr& sound) const override;
+	bool Stop(const SoundName& name) const override;
+	bool Pause(const SoundName& name) const override;
+	bool Resume(const SoundName& name) const override;
+	float GetVolume(SOUND_TYPE type) const noexcept override;
+	void SetVolume(SOUND_TYPE type, float volume) noexcept override;
+
 };
 

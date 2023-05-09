@@ -97,6 +97,11 @@ namespace MyClass
 		* @return	ピッチ
 		*/
 		float GetPitch() const noexcept;
+		/*
+		* @brief	サウンドタイプ取得
+		* @return	サウンドタイプ
+		*/
+		SOUND_TYPE GetType() const noexcept;
 
 		/*
 		* @brief	ループ設定
@@ -113,6 +118,7 @@ namespace MyClass
 		* @param	pitch　ピッチ
 		*/
 		void SetPitch(float pitch) noexcept;
+		
 	};
 
 	using SoundPtr = std::shared_ptr<CSound>;

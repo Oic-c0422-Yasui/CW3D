@@ -7,10 +7,13 @@ using SoundName = std::string;
 /*
 * @brief	サウンドタイプ
 */
-enum class SOUND_TYPE
+enum SOUND_TYPE
 {
-	SE,
-	BGM
+	SOUND_SE,
+	SOUND_BGM,
+	SOUND_MASTER,
+
+	SOUND_COUNT,
 };
 
 /*

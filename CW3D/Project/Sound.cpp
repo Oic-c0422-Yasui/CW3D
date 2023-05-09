@@ -12,10 +12,6 @@ MyClass::CSound::CSound(SoundBufferPtr buffer, const SoundData& data)
 {
 }
 
-MyClass::CSound::CSound(SoundBufferPtr buffer, const SoundData& data)
-{
-}
-
 MyClass::CSound::~CSound()
 {
 	buffer_.reset();
@@ -29,13 +25,13 @@ bool MyClass::CSound::Load(const char* fileName, const SoundData& data)
 	
 	switch (data_.type)
 	{
-	case SOUND_TYPE::BGM:
+	case SOUND_TYPE::SOUND_BGM:
 		tmp = std::make_shared<CStreamingSoundBuffer>();
 		break;
-	case SOUND_TYPE::SE:
+	case SOUND_TYPE::SOUND_SE:
 		tmp = std::make_shared<CSoundBuffer>();
 		break;
-	default: break;
+	default: return false;
 	}
 
 	if (!tmp->Load(fileName)) return false;
@@ -97,6 +93,11 @@ float MyClass::CSound::GetVolume() const noexcept
 float MyClass::CSound::GetPitch() const noexcept
 {
 	return buffer_->GetPitch();
+}
+
+SOUND_TYPE MyClass::CSound::GetType() const noexcept
+{
+	return data_.type;
 }
 
 void MyClass::CSound::SetLoop(bool isLoop) noexcept
