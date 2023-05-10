@@ -5,8 +5,8 @@ using namespace ActionGame;
 
 ActionGame::CPlayer::CPlayer()
 	: ActionGame::CActorObject()
-	, input_()
 	, combo_(std::make_shared<CCombo>(COMBO_SHOW_TIME))
+	, initMotionName_()
 
 {
 	SetType(CHARA_TYPE::PLAYER);
@@ -17,7 +17,12 @@ ActionGame::CPlayer::~CPlayer()
 	Release();
 }
 
-bool ActionGame::CPlayer::Load()
+bool ActionGame::CPlayer::Load(const ActionCreatorPtr& actionCreator,
+							   const StateCreatorPtr& stateCreator,
+							   const ParameterCreatorPtr& paramCreator,
+							   const Input::InputPtr& input,
+							   const SkillCreatorPtr& skillCreator,
+							   const std::string& initMotion)
 {
 	//メッシュ取得
 	mesh_ = ResourcePtrManager<CMeshContainer>::GetInstance().GetResource("Player", "Player");
@@ -28,27 +33,29 @@ bool ActionGame::CPlayer::Load()
 	}
 	CActorObject::Load();
 	
-	
 	//シェーダー読み込み
 	normalMap_ = ResourcePtrManager<MyClass::CNormalMapSkinnedParameter>::GetInstance().GetResource("Shader", "NormalMapSkin");
 	
 	//アクション作成
-	actionCreator_.Create(actor_);
+	actionCreator->Create(actor_);
 	//ステート作成
 	stateMachine_ = std::make_shared<ActionGame::StateMachine>();
-	stateCreator_.Create(stateMachine_, actor_, input_);
-	
+	stateCreator->Create(stateMachine_, actor_, input);
 	//パラメーター作成
 	auto& param = actor_->GetParameterMap();
-	parameterCreator_.Create(param);
+	paramCreator->Create(param);
+	//スキル作成
+	skillCreator->Create(actor_);
+
+
 	//パラメーター設定
 	maxHP_ = param->Get<ActionGame::CReactiveParameter<int>>(PARAMETER_KEY_MAX_HP);
 	maxUltGauge_ = param->Get<ActionGame::CReactiveParameter<float>>(PARAMETER_KEY_MAX_ULTGAUGE);
-	//スキル設定
-	skillCreator_.Create(actor_);
+
+	//初期モーション名設定
+	initMotionName_ = initMotion;
 	
 	CServiceLocator<ICombo>::SetService(combo_);
-
 
 	return true;
 }
@@ -64,8 +71,8 @@ void ActionGame::CPlayer::Initialize()
 	escapeColliderSize_ = colliderSize_ + Vector3(1.2f,0.5f,1.2f);
 	actor_->SetReverse(false);
 
-	//初期は待機モーション
-	stateMachine_->ChangeState(STATE_KEY_STARTPOSE);
+	//初期モーション
+	stateMachine_->ChangeState(initMotionName_);
 
 	//相手が獲得する必殺技ゲージの倍率
 	SetUltBoostMag(1.0f);

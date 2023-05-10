@@ -4,7 +4,8 @@
 #include "NormalCamera.h"
 #include "ActorObjectManager.h"
 #include "Stage1.h"
-#include "JsonStageLoader.h"	
+#include "JsonStageLoader.h"
+#include "BattlePlayerLoader.h"
 
 
 using namespace ActionGame;
@@ -72,8 +73,7 @@ bool Scene::CBattleScene::Load()
 
 	//ƒvƒŒƒCƒ„[“Ç‚İ‚İ
 	auto input = InputManagerInstance.GetInput(0);
-	player_->SetInput(input);
-	if (!player_->Load())
+	if (!BattlePlayerLoader::Load(player_, input))
 	{
 		return false;
 	}

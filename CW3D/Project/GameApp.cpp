@@ -19,9 +19,14 @@
 #include	"SendMessageServiceDefine.h"
 #include	"RegistMessageServiceDefine.h"
 #include	"JoyPadDefine.h"
+#include	"SoundPlayer.h"
+#include	"SoundPlayerServiceDefine.h"
 
 //シーンマネージャー
 Scene::SceneManagerPtr gSceneManager;
+
+//サウンド再生
+std::shared_ptr<CSoundPlayer> gSoundPlayer;
 
 //外部フォント
 LPCSTR fontPath = "Font/Mplus1-Regular.ttf";
@@ -93,6 +98,10 @@ MofBool CGameApp::Initialize(void){
 		MessageBox(NULL, "読み込み失敗", "", MB_OK);
 	}
 
+	//音再生登録
+	gSoundPlayer = std::make_shared<CSoundPlayer>();
+	SoundPlayerService::SetService(gSoundPlayer);
+
 	//シーン登録
 	auto manager = std::make_shared<Scene::CSceneManager>();
 	manager->RegistScene<Scene::CBattleScene>(SCENE_NO::GAME);
@@ -128,8 +137,10 @@ MofBool CGameApp::Update(void){
 
 	//入力更新
 	InputManagerInstance.Update();
-
 	gSceneManager->Update();
+	
+	//再生し終わったサウンドを消す
+	gSoundPlayer->DeleteFinishSound();
 
 	return TRUE;
 }
@@ -167,6 +178,8 @@ MofBool CGameApp::Release(void){
 	SceneInitializeService::Release();
 	SendMessageService::Release();
 	RegistMessageService::Release();
+	gSoundPlayer.reset();
+	SoundPlayerService::Release();
 	InputManagerInstance.Release();
 	//外部フォント解放
 	RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL);

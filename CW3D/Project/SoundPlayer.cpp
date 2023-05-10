@@ -122,7 +122,7 @@ void CSoundPlayer::SetVolume(SOUND_TYPE type, float volume) noexcept
 void CSoundPlayer::DeleteFinishSound() noexcept
 {
 	auto removeIt = std::remove_if(currentPlaySounds_.begin(), currentPlaySounds_.end(),
-					[&](const MyClass::SoundPtr& sound) { return sound->IsPlay() == false; });
+					[&](SoundMap sound) { return sound.sound->IsPlay() == false; });
 		
 	currentPlaySounds_.erase(removeIt, currentPlaySounds_.end());
 }

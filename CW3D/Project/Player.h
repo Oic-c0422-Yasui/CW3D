@@ -25,29 +25,20 @@ namespace ActionGame
 	{
 	private:
 
-		//インプットキー
-		Input::InputPtr		input_;
-
 		//オブザーバー最大HP
 		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<int> > maxHP_;
 
 		//オブザーバー最大必殺技ゲージ
 		ActionGame::ParameterHandle< ActionGame::CReactiveParameter<float> > maxUltGauge_;
 
-		//アクション生成
-		ActionGame::PlayerActionCreator actionCreator_;
-		//状態生成
-		ActionGame::PlayerStateCreator stateCreator_;
-		//スキル生成
-		ActionGame::PlayerSkillCreator skillCreator_;
-		//パラメータ生成
-		ActionGame::PlayerParameterCreator parameterCreator_;
 
 		//回避時の当たり判定サイズ
 		CVector3 escapeColliderSize_;
 
 		//コンボ
 		std::shared_ptr<CCombo>	combo_;
+
+		std::string initMotionName_;
 
 	public:
 		CPlayer();
@@ -56,7 +47,12 @@ namespace ActionGame
 		* @brief	読み込み
 		* @return	true　なら読み込み成功
 		*/
-		bool Load() override;
+		bool Load(const ActionCreatorPtr& actionCreator,
+				  const StateCreatorPtr& stateCreator,
+				  const ParameterCreatorPtr& paramCreator,
+				  const Input::InputPtr& input,
+				  const SkillCreatorPtr& skillCreator,
+				  const std::string& initMotion);
 		/*
 		* @brief	初期化
 		*/
@@ -103,15 +99,6 @@ namespace ActionGame
 					int damage,
 					BYTE armorBrakeLevel,
 					const EffectCreateParameterPtr& effect);
-
-		/*
-		* @brief		インプットキーの設定
-		* @param ptr	インプット
-		*/
-		void SetInput(const Input::InputPtr& input) noexcept
-		{
-			input_ = input;
-		}
 
 		/*
 		* @brief		HPの取得

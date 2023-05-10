@@ -55,6 +55,9 @@ namespace Scene
 		OVER,	//ゲームオーバー
 	};
 
+	/*
+	* @brief	戦闘画面
+	*/
 	class CBattleScene : public IScene
 	{
 	private:

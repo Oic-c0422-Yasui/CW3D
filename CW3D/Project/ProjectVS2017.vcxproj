@@ -196,6 +196,7 @@
     <ClCompile Include="AttackBaseState.cpp" />
     <ClCompile Include="AttackStateAI.cpp" />
     <ClCompile Include="BaseState.cpp" />
+    <ClCompile Include="BattlePlayerLoader.cpp" />
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="BattleSceneTask.cpp" />
     <ClCompile Include="BattleUILoader.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="BaseAction.cpp" />
     <ClCompile Include="BaseStateAI.cpp" />
     <ClCompile Include="ChaseSkillState.cpp" />
+    <ClCompile Include="HomeScene.cpp" />
     <ClCompile Include="MutantMoveStateAI.cpp" />
     <ClCompile Include="MutantSkillCreator.cpp" />
     <ClCompile Include="SlashAttackState.cpp" />
@@ -421,6 +423,7 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="AttackStateAI.h" />
     <ClInclude Include="BaseState.h" />
+    <ClInclude Include="BattlePlayerLoader.h" />
     <ClInclude Include="BattleScene.h" />
     <ClInclude Include="BattleUILoader.h" />
     <ClInclude Include="BossHPRender.h" />
@@ -429,6 +432,7 @@
     <ClInclude Include="BaseAction.h" />
     <ClInclude Include="BaseStateAI.h" />
     <ClInclude Include="ChaseSkillState.h" />
+    <ClInclude Include="HomeScene.h" />
     <ClInclude Include="ISkillCreator.h" />
     <ClInclude Include="ISoundPlayer.h" />
     <ClInclude Include="ISoundRegister.h" />
@@ -438,6 +442,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundDefine.h" />
     <ClInclude Include="SoundPlayer.h" />
+    <ClInclude Include="SoundPlayerServiceDefine.h" />
     <ClInclude Include="SpearAttackState.h" />
     <ClInclude Include="FireFlameSkillState.h" />
     <ClInclude Include="ImpactSkillState.h" />
