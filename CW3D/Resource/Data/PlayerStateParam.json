@@ -1,7 +1,6 @@
 {
-  "PlayerState": [
-    {
-      "State": 
+  "PlayerState": {
+    "State": [
       {
         "Type": "Idol",
         "Time": 5.0
@@ -28,10 +27,123 @@
         "Type": "RunJump"
       },
       {
-        "Type": "RunJump"
-      }
-    }
+        "Type": "RunFall"
+      },
+      {
+        "Type": "RunLanding"
+      },
+      {
+        "Type": "Damage",
+        "Time": 4.0
+      },
+      {
+        "Type": "Dead"
+      },
+      {
+        "Type": "Down",
+        "Time": 1.0
+      },
+      {
+        "Type": "FlyDamage"
+      },
+      {
+        "Type": "ClearPose"
+      },
+      {
+        "Type": "StartPose",
+        "Time": 3.0
+      },
+      {
+        "Type": "Escape",
+        "ArmorLevel": 2,
+        "ThroughStartFTime": 5,
+        "ThroughEndFTime": 25,
+        "CanAttackFTime": 10,
+        "EscapeStartFTime": 0,
+        "EscapeEndFTime": 7
+      },
+      {
+        "Type": "Attack1",
+        "DamageEffect": {
+          "Name": "DamageEffect1",
+          "Offset": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "Rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
 
-  ]
+        }
+      },
+      {
+        "Type": "Attack2"
+      },
+      {
+        "Type": "Attack3"
+      },
+      {
+        "Type": "JumpAttack1"
+      },
+      {
+        "Type": "RunAttack1"
+      },
+      {
+        "Type": "RunAttack2"
+      },
+      {
+        "Type": "RunJumpAttack1"
+      },
+      {
+        "Type": "RunJumpAttack1"
+      },
+      {
+        "Type": "RunJumpAttack2"
+      },
+      {
+        "Type": "RunJumpAttack3"
+      },
+      {
+        "Type": "BeamSkill"
+      },
+      {
+        "Type": "JumpBeamSkill"
+      },
+      {
+        "Type": "StormSkill"
+      },
+      {
+        "Type": "JumpStormSkill"
+      },
+      {
+        "Type": "ShockWaveSkill"
+      },
+      {
+        "Type": "ChaseSkill"
+      },
+      {
+        "Type": "DropKickSkill"
+      },
+      {
+        "Type": "FireFlameSkill"
+      },
+      {
+        "Type": "FlyHighSkill"
+      },
+      {
+        "Type": "ImpactSkill"
+      }
+    ] // State
+
+  } //PlayerState
+
 
 }
