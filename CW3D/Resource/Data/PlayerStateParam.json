@@ -1,5 +1,26 @@
 {
   "PlayerState": {
+    "DefaultHitEffect": {
+      "DamageEffect": {
+        "Name": "DamageEffect1",
+        "Offset": {
+          "x": 0.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "Scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "Rotate": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "Speed": 1.0
+      }
+    },
     "State": [
       {
         "Type": "Idol",
@@ -64,28 +85,102 @@
       },
       {
         "Type": "Attack1",
-        "DamageEffect": {
-          "Name": "DamageEffect1",
+        "ArmorLevel": 2,
+        "ColliderStartFTime": 20.0,
+        "ColliderEndFTime": 25.0,
+        "NextInputFTime": 32.0,
+        "Shot": {
+          "Type": "AABB",
           "Offset": {
-            "x": 0.0,
-            "y": 1.0,
+            "x": 0.7,
+            "y": 0.7,
             "z": 0.0
           },
-          "Scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-          },
-          "Rotate": {
-            "x": 0.0,
+          "NextHitTime": 1.5,
+          "Damage": 0,
+          "KnockBack": {
+            "x": 0.3,
             "y": 0.0,
             "z": 0.0
           },
-
+          "ArmorBrakeLevel": 2,
+          "RecieveUltGauge": 2.5,
+          "DamageEffect": "Default",
+          "GravityParam": null,
+          "Size": {
+            "x": 1.2,
+            "y": 1.5,
+            "z": 1.0
+          }
+        },
+        "Effect": {
+          "Type": "AttackEffect2",
+          "Offset": {
+            "x": 0.8,
+            "y": 0.8,
+            "z": 0.8
+          },
+          "Scale": {
+            "x": 0.5,
+            "y": 0.8,
+            "z": 0.0
+          },
+          "Rotate": {
+            "x": 0,
+            "y": 360,
+            "z": 0
+          },
+          "Speed": 1.5
         }
       },
       {
-        "Type": "Attack2"
+        "Type": "Attack2",
+        "ArmorLevel": 2,
+        "ColliderStartFTime": 10.0,
+        "NextInputFTime": 25.0,
+        "Shot": {
+          "Type": "AABB",
+          "Offset": {
+            "x": 0.7,
+            "y": 0.7,
+            "z": 0.0
+          },
+          "NextHitTime": 1.0,
+          "Damage": 0,
+          "KnockBack": {
+            "x": 0.2,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "ArmorBrakeLevel": 2,
+          "RecieveUltGauge": 2.5,
+          "DamageEffect": "Default",
+          "GravityParam": null,
+          "Size": {
+            "x": 1.2,
+            "y": 1.5,
+            "z": 1.0
+          }
+        },
+        "Effect": {
+          "Type": "AttackEffect2",
+          "Offset": {
+            "x": 0.8,
+            "y": 0.8,
+            "z": 0.8
+          },
+          "Scale": {
+            "x": 0.5,
+            "y": 0.8,
+            "z": 0.0
+          },
+          "Rotate": {
+            "x": 0,
+            "y": 360,
+            "z": 0
+          },
+          "Speed": 1.5
+        } 
       },
       {
         "Type": "Attack3"
@@ -98,9 +193,6 @@
       },
       {
         "Type": "RunAttack2"
-      },
-      {
-        "Type": "RunJumpAttack1"
       },
       {
         "Type": "RunJumpAttack1"
@@ -141,9 +233,8 @@
       {
         "Type": "ImpactSkill"
       }
-    ] // State
-
-  } //PlayerState
+    ]
+  }
 
 
 }

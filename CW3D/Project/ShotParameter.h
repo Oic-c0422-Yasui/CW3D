@@ -24,18 +24,18 @@ namespace ActionGame
 	* @param	gravity		　	重力パラメータ
 	*/
 	struct ShotCreateParameter {
-		Vector3 offset;
-		float	nextHitTime;
-		int		damage;
-		Vector3	knockBack;
-		bool	isEnableCollider;
-		CHARA_TYPE parentType;
-		KnockBackPtr direction;
-		BYTE armorBreakLevel;
-		float recieveUltGauge;
-		uint32_t parentID;
+		Vector3					 offset;
+		float					 nextHitTime;
+		int						 damage;
+		Vector3					 knockBack;
+		bool					 isEnableCollider;
+		CHARA_TYPE				 parentType;
+		KnockBackPtr			 direction;
+		BYTE					 armorBreakLevel;
+		float					 recieveUltGauge;
+		uint32_t				 parentID;
 		EffectCreateParameterPtr damageEffect;
-		GravityScale gravity;
+		GravityScale			 gravity;
 	};
 
 	/*

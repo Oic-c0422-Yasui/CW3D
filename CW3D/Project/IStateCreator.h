@@ -2,7 +2,8 @@
 
 #include	"IStateMachine.h"
 
-namespace ActionGame {
+namespace ActionGame 
+{
 
 	/**
 	 * @brief		ステート生成インターフェイス

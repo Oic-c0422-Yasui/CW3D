@@ -209,6 +209,8 @@
     <ClCompile Include="BaseStateAI.cpp" />
     <ClCompile Include="ChaseSkillState.cpp" />
     <ClCompile Include="HomeScene.cpp" />
+    <ClCompile Include="IdleStateBuilder.cpp" />
+    <ClCompile Include="JsonStateCreator.cpp" />
     <ClCompile Include="MutantMoveStateAI.cpp" />
     <ClCompile Include="MutantSkillCreator.cpp" />
     <ClCompile Include="SlashAttackState.cpp" />
@@ -283,6 +285,8 @@
     <ClCompile Include="SpawnerBuilderDictionary.cpp" />
     <ClCompile Include="StartPoseAction.cpp" />
     <ClCompile Include="StartPoseState.cpp" />
+    <ClCompile Include="StateBuilderDictionary.cpp" />
+    <ClCompile Include="StateDictionary.cpp" />
     <ClCompile Include="StateInput.cpp" />
     <ClCompile Include="TackleAttackState.cpp" />
     <ClCompile Include="ThreadCreator.cpp" />
@@ -433,9 +437,11 @@
     <ClInclude Include="BaseStateAI.h" />
     <ClInclude Include="ChaseSkillState.h" />
     <ClInclude Include="HomeScene.h" />
+    <ClInclude Include="IdleStateBuilder.h" />
     <ClInclude Include="ISkillCreator.h" />
     <ClInclude Include="ISoundPlayer.h" />
     <ClInclude Include="ISoundRegister.h" />
+    <ClInclude Include="JsonStateCreator.h" />
     <ClInclude Include="MutantMoveStateAI.h" />
     <ClInclude Include="MutantSkillCreator.h" />
     <ClInclude Include="SlashAttackState.h" />
@@ -526,6 +532,8 @@
     <ClInclude Include="SpawnerBuilderDictionary.h" />
     <ClInclude Include="StartPoseAction.h" />
     <ClInclude Include="StartPoseState.h" />
+    <ClInclude Include="StateBuilder.h" />
+    <ClInclude Include="StateBuilderDictionary.h" />
     <ClInclude Include="TackleAttackState.h" />
     <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />
