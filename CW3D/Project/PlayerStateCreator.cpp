@@ -39,6 +39,8 @@
 
 bool ActionGame::PlayerStateCreator::Create(const StateMachinePtr& stateMachine, const ActorPtr& actor, const Input::InputPtr& input)
 {
+	//TODO:Jsonにパラメータを書き出す
+
 	//待機
 	stateMachine->AddState(CState::Create<CIdleState>(actor, input,
 		CIdleState::Parameter{

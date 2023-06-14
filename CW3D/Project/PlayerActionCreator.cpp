@@ -41,7 +41,7 @@
 
 bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 {
-
+	//TODO:Jsonにパラメータを書き出す
 
 	//待機
 	actor->AddAction(CAction::Create<CIdleAction>(

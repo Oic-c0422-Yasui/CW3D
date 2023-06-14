@@ -5,7 +5,7 @@
 
 bool ActionGame::PlayerSkillCreator::Create(const ActorPtr& actor)
 {
-
+	//TODO:Jsonにパラメータを書き出す
 	ActionGame::SKillPtr skill;
 
 
