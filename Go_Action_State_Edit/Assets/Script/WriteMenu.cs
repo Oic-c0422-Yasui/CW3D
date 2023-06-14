@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using System.IO;
+
+public class WriteMenu : MonoBehaviour
+{
+
+    [MenuItem("StateCreator/Json書き出し", false, 1)]
+    static void OutputState()
+    {
+
+        //指定したディレクトリ内のすべてのファイル名を取得する
+        const string directoryPath = "Assets/Parameters";
+        var filePathArray = Directory.GetFiles (directoryPath, "*", SearchOption.AllDirectories);
+
+
+        //IJsonWriterを継承しているスクリプタブルオブジェクトを取得し、
+        //Jsonで保存する
+        foreach(string filePath in filePathArray)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(filePath) as IJsonWriter;
+            if(asset != null)
+            {
+                asset.SaveJson();
+            }
+        }
+        
+    }
+
+
+}
