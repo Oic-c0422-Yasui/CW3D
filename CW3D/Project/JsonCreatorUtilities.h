@@ -1,0 +1,12 @@
+#pragma once
+#include "Common.h"
+#include "json.hpp"
+
+namespace MyUtil
+{
+	/*
+	* @brief	JsonÇ©ÇÁVector3çÏê¨
+	*/
+	Vector3 CreateVector3(nlohmann::json& os);
+}
+

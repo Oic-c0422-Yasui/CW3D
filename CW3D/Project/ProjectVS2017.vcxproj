@@ -189,6 +189,7 @@
     <ClCompile Include="AICycleTension.cpp" />
     <ClCompile Include="Attack1Action.cpp" />
     <ClCompile Include="Attack1State.cpp" />
+    <ClCompile Include="Attack1StateBuilder.cpp" />
     <ClCompile Include="Attack2Action.cpp" />
     <ClCompile Include="Attack2State.cpp" />
     <ClCompile Include="Attack3Action.cpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="ChaseSkillState.cpp" />
     <ClCompile Include="HomeScene.cpp" />
     <ClCompile Include="IdleStateBuilder.cpp" />
+    <ClCompile Include="JsonCreatorUtilities.cpp" />
     <ClCompile Include="JsonStateCreator.cpp" />
     <ClCompile Include="MutantMoveStateAI.cpp" />
     <ClCompile Include="MutantSkillCreator.cpp" />
@@ -286,6 +288,7 @@
     <ClCompile Include="StartPoseAction.cpp" />
     <ClCompile Include="StartPoseState.cpp" />
     <ClCompile Include="StateBuilderDictionary.cpp" />
+    <ClCompile Include="StateBuilderUtilities.cpp" />
     <ClCompile Include="StateDictionary.cpp" />
     <ClCompile Include="StateInput.cpp" />
     <ClCompile Include="TackleAttackState.cpp" />
@@ -419,6 +422,7 @@
     <ClInclude Include="AnimationDefine.h" />
     <ClInclude Include="Attack1Action.h" />
     <ClInclude Include="Attack1State.h" />
+    <ClInclude Include="Attack1StateBuilder.h" />
     <ClInclude Include="Attack2Action.h" />
     <ClInclude Include="Attack2State.h" />
     <ClInclude Include="Attack3Action.h" />
@@ -441,6 +445,7 @@
     <ClInclude Include="ISkillCreator.h" />
     <ClInclude Include="ISoundPlayer.h" />
     <ClInclude Include="ISoundRegister.h" />
+    <ClInclude Include="JsonCreatorUtilities.h" />
     <ClInclude Include="JsonStateCreator.h" />
     <ClInclude Include="MutantMoveStateAI.h" />
     <ClInclude Include="MutantSkillCreator.h" />
@@ -534,6 +539,7 @@
     <ClInclude Include="StartPoseState.h" />
     <ClInclude Include="StateBuilder.h" />
     <ClInclude Include="StateBuilderDictionary.h" />
+    <ClInclude Include="StateBuilderUtilities.h" />
     <ClInclude Include="TackleAttackState.h" />
     <ClInclude Include="ThreadCreator.h" />
     <ClInclude Include="CreateWindow.h" />
