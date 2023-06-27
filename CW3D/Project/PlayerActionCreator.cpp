@@ -530,6 +530,47 @@ bool ActionGame::PlayerActionCreator::Create(const ActorPtr& actor)
 			PLAYER_JUMPPOWER * 0.5f,
 		}));
 
+	/*class JsonActionCreator
+	{
+	public:
+		json Load(filename)
+		{
+		}
+
+		template <typename T >
+		bool Create(actor, filename)
+		{
+			static_assert
+		}
+	};
+
+	template <>
+	bool Create<Attack1Action>(actor, filename)
+	{
+		json = Load(filename)
+		actor->AddAction(CAction::Create<ClearPoseAction>(
+			CBaseAction::BaseParameter{
+				AnimParam{
+					STATE_KEY_CLEARPOSE,
+					0.0f,
+					1.0f,
+					0.0f,
+					true
+				}
+			},
+			ClearPoseAction::Parameter{
+				AnimParam{
+					STATE_KEY_JUMP,
+					0.83f,
+					1.0f,
+					0.2f,
+					false
+				},
+				Vector3(PLAYER_MAXSPEED, 1.0f, PLAYER_MAXSPEED),
+				GRAVITY,
+				GRAVITYMAX,
+			}));
+	}*/
 	//クリアポーズ
 	actor->AddAction(CAction::Create<ClearPoseAction>(
 		CBaseAction::BaseParameter{
